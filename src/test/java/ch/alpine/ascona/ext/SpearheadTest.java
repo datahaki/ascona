@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class SpearheadTest {
   @Test
   public void testSimple() {
-    // TODO
+    // TODO ASCONA
     // Tensor polygon = Spearhead.of(Tensors.vector(-0.806, -0.250, -0.524), RealScalar.of(0.1));
     // Sign.requirePositive(PolygonArea.of(polygon));
   }

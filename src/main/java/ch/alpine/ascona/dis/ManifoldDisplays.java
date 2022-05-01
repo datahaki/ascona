@@ -4,7 +4,7 @@ package ch.alpine.ascona.dis;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO OWL filter candidantes dynamically for properties
+// TODO ASCONA filter candidantes dynamically for properties
 public enum ManifoldDisplays {
   ;
   public static final List<ManifoldDisplay> ALL = Arrays.asList( //

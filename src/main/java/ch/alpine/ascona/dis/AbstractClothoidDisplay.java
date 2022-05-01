@@ -17,7 +17,7 @@ import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-// TODO OWL ALG probably obsolete: instead use Se2 and Se2Covering with different clothoid builders
+// TODO ASCONA ALG probably obsolete: instead use Se2 and Se2Covering with different clothoid builders
 public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serializable {
   private static final Tensor SPEARHEAD = Arrowhead.of(0.2).unmodifiable();
   // PolygonNormalize.of( //

@@ -21,7 +21,7 @@ import ch.alpine.tensor.red.Times;
 public class H2ArrayPlot implements HsArrayPlot, Serializable {
   private final Scalar radius;
 
-  // TODO OWL use CoordinateBoundingBox
+  // TODO ASCONA use CoordinateBoundingBox
   public H2ArrayPlot(Scalar radius) {
     this.radius = Objects.requireNonNull(radius);
   }

@@ -47,7 +47,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
     }
   }
 
-  // TODO SOPHUS DEMO manage by reflection
+  // TODO ASCONA DEMO manage by reflection
   final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
 
   public MinimumSpanningTreeDemo() {

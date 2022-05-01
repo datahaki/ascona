@@ -122,7 +122,7 @@ import ch.alpine.tensor.red.Mean;
             .map(points -> points.get(Tensor.ALL, 1)) //
             .map(CoordinateBounds::of) //
             .map(CoordinateBoundingBox::min));
-        // TODO OWL DEMO code below is broken
+        // TODO ASCONA DEMO code below is broken
         // double min = Quantile.of(tensorMin).apply(RationalScalar.of(1, CURVE_SUBDIVISION_SCHEMES.size() - 1)).number().doubleValue();
         // Tensor tensorMax = Tensor.of(visualSet2.visualRows().stream() //
         // .map(VisualRow::points) //

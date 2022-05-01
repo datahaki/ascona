@@ -99,7 +99,7 @@ import ch.alpine.tensor.img.ColorDataLists;
           System.out.println(logWeighting);
           TensorScalarFunction tensorUnaryOperator = function(sequence, reference.multiply(DoubleScalar.of(spinnerFactor.getValue())));
           HsArrayPlot geodesicArrayPlot = manifoldDisplay().geodesicArrayPlot();
-          // TODO OWL ALG redundant
+          // TODO ASCONA ALG redundant
           Tensor matrix = geodesicArrayPlot.raster(512, tensorUnaryOperator, DoubleScalar.INDETERMINATE);
           BufferedImage bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1).export();
           ImageIO.write(bufferedImage, "png", new File(folder, logWeighting.toString() + ".png"));

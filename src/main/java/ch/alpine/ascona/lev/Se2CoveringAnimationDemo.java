@@ -20,7 +20,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Timing;
 
-// TODO OWL ALG refactor with S2AnimationDemo
+// TODO ASCONA ALG refactor with S2AnimationDemo
 /* package */ class Se2CoveringAnimationDemo extends LogWeightingDemo {
   private final JToggleButton jToggleAxes = new JToggleButton("axes");
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");

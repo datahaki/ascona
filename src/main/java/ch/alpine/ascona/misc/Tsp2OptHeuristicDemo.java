@@ -55,8 +55,8 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     // ---
     Distribution distribution = UniformDistribution.of(-4, 4);
     setControlPointsSe2(RandomVariate.of(distribution, 200, 3));
-    // TODO OWL random sample
-    // TODO refresh when manifold selection changes
+    // TODO ASCONA random sample
+    // TODO ASCONA refresh when manifold selection changes
     Tensor matrix = distanceMatrix(getGeodesicControlPoints());
     tsp2OptHeuristic = new Tsp2OptHeuristic(matrix, new Random());
   }
@@ -83,7 +83,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     // pointsRender.show(manifoldDisplay()::matrixLift, getControlPointShape(), Tensors.of(sequence.get(index))).render(geometricLayer, graphics);
     // }
     int[] index = tsp2OptHeuristic.index();
-    // TODO OWL is there a smart way to select how to draw lines
+    // TODO ASCONA is there a smart way to select how to draw lines
     int res = manifoldDisplay.equals(R2Display.INSTANCE) ? 1 : 10;
     Tensor domain = Subdivide.of(0.0, 1.0, res);
     graphics.setColor(Color.CYAN);

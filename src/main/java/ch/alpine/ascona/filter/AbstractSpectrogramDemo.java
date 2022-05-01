@@ -39,7 +39,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   protected final SpinnerLabel<String> spinnerLabelString = new SpinnerLabel<>();
   protected final SpinnerLabel<Integer> spinnerLabelLimit = new SpinnerLabel<>();
   protected final SpinnerLabel<WindowFunctions> spinnerKernel = new SpinnerLabel<>();
-  // TODO OWL ALG refactor
+  // TODO ASCONA ALG refactor
   protected Tensor _control = null;
   // protected final SpinnerLabel<ColorDataGradients> spinnerLabelCDG = new SpinnerLabel<>();
 

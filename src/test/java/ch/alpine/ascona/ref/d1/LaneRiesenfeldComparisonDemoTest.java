@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class LaneRiesenfeldComparisonDemoTest {
   @Test
   public void testSimple() {
-    // TODO OWL TEST reinstate test after demo is fixed
+    // TODO ASCONA TEST reinstate test after demo is fixed
     // AbstractDemoHelper.offscreen(new LaneRiesenfeldComparisonDemo());
   }
 }

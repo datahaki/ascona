@@ -26,7 +26,7 @@ import ch.alpine.tensor.red.Tally;
   public ClassificationResult result(Tensor weights) {
     Integers.requireEquals(weights.length(), labels.length);
     // ---
-    // TODO OWL ALG this is not finished yet!
+    // TODO ASCONA ALG this is not finished yet!
     Map<Tensor, Long> map = Tally.of(Ordering.INCREASING.stream(weights) //
         .limit(k) //
         .map(i -> labels[i]) //

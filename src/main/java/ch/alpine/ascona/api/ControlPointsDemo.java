@@ -37,7 +37,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** class is used in other projects outside of owl */
 @ReflectionMarker
-// TODO OWL possibly create TABs for each Manifold Display (in order to leave ctrl points)
+// TODO ASCONA possibly create TABs for each Manifold Display (in order to leave ctrl points)
 public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
   /** mouse snaps 20 pixel to control points */
   private static final Scalar PIXEL_THRESHOLD = RealScalar.of(20.0);
@@ -233,7 +233,7 @@ public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
     return PIXEL_THRESHOLD.divide(Sqrt.FUNCTION.apply(Abs.of(Det.of(timerFrame.geometricComponent.getModel2Pixel()))));
   }
 
-  // TODO OWL API function should not be here!
+  // TODO ASCONA API function should not be here!
   public final void addButtonDubins() {
     JButton jButton = new JButton("dubins");
     jButton.setToolTipText("project control points to dubins path");
@@ -249,7 +249,7 @@ public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
 
   /** @return control points as matrix of dimensions N x 3 */
   public final Tensor getControlPointsSe2() {
-    return control.unmodifiable(); // TODO OWL API should return copy!?
+    return control.unmodifiable(); // TODO ASCONA API should return copy!?
   }
 
   /** @return control points for selected {@link ManifoldDisplay} */

@@ -16,7 +16,7 @@ import ch.alpine.tensor.alg.Subdivide;
 public class R2ArrayPlot implements HsArrayPlot, Serializable {
   private final Scalar radius;
 
-  // TODO OWL use CoordinateBoundingBox
+  // TODO ASCONA use CoordinateBoundingBox
   public R2ArrayPlot(Scalar radius) {
     this.radius = Objects.requireNonNull(radius);
   }

@@ -28,7 +28,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.red.Times;
 
-// TODO OWL ALG demo does not seem correct
+// TODO ASCONA ALG demo does not seem correct
 public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 

@@ -54,7 +54,7 @@ public class RootScalar extends MultiplexScalar implements //
   @Override // from Scalar
   public Scalar multiply(Scalar scalar) {
     if (scalar instanceof RealScalar)
-      // TODO OWL ALG check for exact precision
+      // TODO ASCONA ALG check for exact precision
       return new RootScalar(re.multiply(scalar), im.multiply(scalar), ba);
     if (scalar instanceof RootScalar) {
       RootScalar rootScalar = (RootScalar) scalar;
@@ -112,14 +112,17 @@ public class RootScalar extends MultiplexScalar implements //
 
   @Override
   public Scalar eachMap(UnaryOperator<Scalar> unaryOperator) {
-    // TODO Auto-generated method stub
-    return null;
+    return of( //
+        unaryOperator.apply(re), //
+        unaryOperator.apply(im), //
+        unaryOperator.apply(ba));
   }
 
   @Override
   public boolean allMatch(Predicate<Scalar> predicate) {
-    // TODO Auto-generated method stub
-    return false;
+    return predicate.test(re) //
+        && predicate.test(im) //
+        && predicate.test(ba);
   }
 
   public Scalar explicit() {

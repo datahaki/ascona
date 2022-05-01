@@ -15,7 +15,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-// TODO OWL ALG jToggleArrows does not have effect
+// TODO ASCONA ALG jToggleArrows does not have effect
 /* package */ class Se2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor ORIGIN = Arrowhead.of(RealScalar.of(0.2));
 

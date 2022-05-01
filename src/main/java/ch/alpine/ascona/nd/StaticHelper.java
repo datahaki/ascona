@@ -15,7 +15,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 enum StaticHelper {
   ;
   public static void draw(CoordinateBoundingBox coordinateBoundingBox, GeometricLayer geometricLayer, Graphics2D graphics) {
-    // TODO OWL refactor once CoordinateBoundingBox -> polygon is available
+    // TODO ASCONA refactor once CoordinateBoundingBox -> polygon is available
     Tensor lc = coordinateBoundingBox.min();
     Tensor rc = coordinateBoundingBox.max();
     Tensor l1 = lc.copy();

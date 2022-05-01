@@ -10,7 +10,7 @@ class Se2ClothoidDisplayTest {
     // 2 2.5597567801548426
     // 3 2.5640965868005288
     // 4 2.564420707620397
-    // TODO
+    // TODO ASCONA
     // Tensor p = Tensors.vector(0, 0, 0);
     // Tensor q = Tensors.vector(0, 2, 0);
     // Scalar scalar = Se2ClothoidDisplay.ANALYTIC.parametricDistance().distance(p, q);
@@ -21,7 +21,7 @@ class Se2ClothoidDisplayTest {
 
   @Test
   public void testShapeArea() {
-    // TODO
+    // TODO ASCONA
     // Scalar a1 = PolygonArea.of(Arrowhead.of(0.4));
     // Scalar a2 = PolygonArea.of(Se2ClothoidDisplay.ANALYTIC.shape());
     // Tolerance.CHOP.requireClose(a1, a2);

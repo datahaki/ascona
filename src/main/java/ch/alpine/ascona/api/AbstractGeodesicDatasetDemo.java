@@ -10,7 +10,7 @@ import ch.alpine.ascona.io.GokartPoseData;
 import ch.alpine.java.ref.ann.ReflectionMarker;
 import ch.alpine.javax.swing.SpinnerLabel;
 
-// TODO OWL the contents of this package need to be restructured
+// TODO ASCONA the contents of this package need to be restructured
 @ReflectionMarker
 public abstract class AbstractGeodesicDatasetDemo extends AbstractGeodesicDisplayDemo {
   protected final GokartPoseData gokartPoseData;
