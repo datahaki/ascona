@@ -25,11 +25,4 @@ class GokartPoseDataTest {
     Objects.requireNonNull(tensor);
     assertTrue(ArrayQ.of(tensor));
   }
-
-  @Test
-  public void testResourceOwl() {
-    Tensor tensor = ResourceData.of("/io/delta_free.png"); // resource in owl
-    Objects.requireNonNull(tensor);
-    assertTrue(ArrayQ.of(tensor));
-  }
 }
