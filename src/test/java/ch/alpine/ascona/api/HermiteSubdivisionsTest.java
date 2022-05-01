@@ -1,9 +1,8 @@
 // code by jph
-package ch.alpine.ascona.ext;
+package ch.alpine.ascona.api;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascona.api.HermiteSubdivisions;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;

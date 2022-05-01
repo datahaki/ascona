@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.ext;
+package ch.alpine.ascona.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,11 +1,10 @@
 // code by jph
-package ch.alpine.ascona.dis;
+package ch.alpine.ascona.arp;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascona.arp.R2ArrayPlot;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.ext.Serialization;
 

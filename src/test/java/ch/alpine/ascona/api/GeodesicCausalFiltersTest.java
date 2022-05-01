@@ -1,11 +1,10 @@
 // code by jph
-package ch.alpine.ascona.ext;
+package ch.alpine.ascona.api;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascona.api.GeodesicCausalFilters;
 import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.tensor.RationalScalar;

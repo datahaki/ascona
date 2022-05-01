@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.ext;
+package ch.alpine.ascona.api;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascona.api.GeodesicFilters;
 import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.Se2Display;
 import ch.alpine.ascona.io.GokartPoseData;
