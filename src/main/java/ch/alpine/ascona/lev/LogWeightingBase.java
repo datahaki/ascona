@@ -9,7 +9,7 @@ import java.util.List;
 import ch.alpine.ascona.api.LogWeighting;
 import ch.alpine.ascona.api.LogWeightings;
 import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.javax.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;

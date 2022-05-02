@@ -7,9 +7,9 @@ import java.util.stream.IntStream;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.java.fig.ListPlot;
-import ch.alpine.java.fig.Spectrogram;
-import ch.alpine.java.fig.VisualSet;
+import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.Spectrogram;
+import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.sophus.hs.HsDifferences;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.TSnMemberQ;

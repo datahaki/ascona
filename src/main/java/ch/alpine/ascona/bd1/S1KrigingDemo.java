@@ -7,8 +7,8 @@ import java.awt.geom.Path2D;
 import java.util.Arrays;
 
 import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.java.ren.PathRender;
 import ch.alpine.java.ren.PointsRender;
 import ch.alpine.sophus.hs.r2.ArcTan2D;

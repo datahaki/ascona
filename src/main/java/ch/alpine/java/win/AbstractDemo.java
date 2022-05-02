@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.java.win;
 
-import ch.alpine.java.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.java.ren.RenderInterface;
 
 @ReflectionMarker

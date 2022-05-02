@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

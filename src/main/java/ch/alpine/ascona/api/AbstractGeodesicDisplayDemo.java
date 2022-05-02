@@ -6,12 +6,12 @@ import java.util.List;
 
 import ch.alpine.ascona.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.java.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.java.win.AbstractDemo;
 import ch.alpine.java.win.BaseFrame;
 import ch.alpine.java.win.DemoInterface;
-import ch.alpine.javax.swing.SpinnerLabel;
-import ch.alpine.javax.swing.SpinnerListener;
 
 @ReflectionMarker
 public abstract class AbstractGeodesicDisplayDemo extends AbstractDemo implements DemoInterface {

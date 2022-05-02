@@ -5,11 +5,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldInteger;
-import ch.alpine.java.ref.ann.FieldSelectionArray;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.java.ren.PathRender;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

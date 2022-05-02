@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.java.ren.PathRender;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.spline.BSplineLimitMatrix;

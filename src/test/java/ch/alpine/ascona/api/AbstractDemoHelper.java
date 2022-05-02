@@ -4,7 +4,7 @@ package ch.alpine.ascona.api;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.java.win.AbstractDemo;
 
 public enum AbstractDemoHelper {

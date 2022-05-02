@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.bd2;
 
-import ch.alpine.java.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.amp.Amplifiers;
 import ch.alpine.sophus.gbc.it.IterativeAffineCoordinate;

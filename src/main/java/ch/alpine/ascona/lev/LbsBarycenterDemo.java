@@ -12,10 +12,10 @@ import ch.alpine.ascona.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
-import ch.alpine.javax.swing.SpinnerListener;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 

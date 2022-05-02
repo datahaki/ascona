@@ -3,7 +3,7 @@ package ch.alpine.ascona.nd;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.opt.nd.NdCenterInterface;

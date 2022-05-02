@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import ch.alpine.ascona.arp.HsArrayPlot;
 import ch.alpine.ascona.arp.S2ArrayPlot;
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.hs.sn.TSnProjection;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

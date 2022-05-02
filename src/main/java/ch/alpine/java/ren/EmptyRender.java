@@ -3,7 +3,7 @@ package ch.alpine.java.ren;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 
 public enum EmptyRender implements RenderInterface {
   INSTANCE;

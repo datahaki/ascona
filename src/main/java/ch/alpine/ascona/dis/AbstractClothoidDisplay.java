@@ -3,7 +3,7 @@ package ch.alpine.ascona.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.clt.ClothoidBuilder;

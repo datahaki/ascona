@@ -4,8 +4,8 @@ package ch.alpine.ascona.arp;
 import java.awt.Dimension;
 import java.util.function.Function;
 
-import ch.alpine.java.fig.ArrayPlot;
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.math.AppendOne;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

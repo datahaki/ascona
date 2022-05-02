@@ -4,8 +4,8 @@ package ch.alpine.ascona.api;
 import java.awt.BasicStroke;
 import java.awt.Stroke;
 
-import ch.alpine.java.fig.VisualRow;
-import ch.alpine.java.fig.VisualSet;
+import ch.alpine.bridge.fig.VisualRow;
+import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.sophus.crv.d2.Curvature2D;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.lie.so2.So2;

@@ -14,13 +14,13 @@ import java.util.stream.IntStream;
 
 import javax.swing.JScrollPane;
 
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
-import ch.alpine.java.ref.ann.FieldClip;
-import ch.alpine.java.ref.ann.FieldFuse;
-import ch.alpine.java.ref.ann.FieldInteger;
-import ch.alpine.java.ref.ann.ReflectionMarker;
-import ch.alpine.java.ref.util.PanelFieldsEditor;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldFuse;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.PanelFieldsEditor;
 import ch.alpine.java.win.AbstractDemo;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

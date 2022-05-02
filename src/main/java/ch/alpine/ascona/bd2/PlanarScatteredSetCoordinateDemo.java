@@ -14,9 +14,9 @@ import ch.alpine.ascona.dis.H2Display;
 import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.R2Display;
 import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.util.PanelFieldsEditor;
-import ch.alpine.javax.swing.SpinnerListener;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.util.PanelFieldsEditor;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.tensor.Tensors;
 
 /** transfer weights from barycentric coordinates defined by set of control points

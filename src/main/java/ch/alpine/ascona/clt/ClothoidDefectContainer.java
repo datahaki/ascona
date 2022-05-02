@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.java.ren.PathRender;
 import ch.alpine.java.ren.RenderInterface;
 import ch.alpine.sophus.clt.Clothoid;

@@ -8,9 +8,9 @@ import java.io.IOException;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.java.fig.ListPlot;
-import ch.alpine.java.fig.VisualRow;
-import ch.alpine.java.fig.VisualSet;
+import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.VisualRow;
+import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.sophus.math.var.VariogramFunctions;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;

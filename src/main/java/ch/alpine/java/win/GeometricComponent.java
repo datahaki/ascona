@@ -20,8 +20,8 @@ import javax.swing.JComponent;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
 
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.java.ren.RenderInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

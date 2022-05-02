@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 
 /** suitable for time-variant state space models */

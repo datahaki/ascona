@@ -3,7 +3,7 @@ package ch.alpine.ascona.avg;
 
 import ch.alpine.ascona.sym.SymGeodesic;
 import ch.alpine.ascona.sym.SymScalar;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

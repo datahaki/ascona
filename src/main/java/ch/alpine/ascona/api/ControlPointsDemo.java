@@ -15,8 +15,8 @@ import java.util.Optional;
 import javax.swing.JButton;
 
 import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.java.ren.PointsRender;
 import ch.alpine.java.ren.RenderInterface;
 import ch.alpine.sophus.hs.r2.Extract2D;

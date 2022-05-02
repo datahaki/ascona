@@ -7,8 +7,8 @@ import java.util.List;
 
 import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.io.GokartPoseData;
-import ch.alpine.java.ref.ann.ReflectionMarker;
-import ch.alpine.javax.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.swing.SpinnerLabel;
 
 // TODO ASCONA the contents of this package need to be restructured
 @ReflectionMarker

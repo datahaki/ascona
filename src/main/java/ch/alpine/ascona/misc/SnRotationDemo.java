@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.java.ren.RenderInterface;
 import ch.alpine.java.win.AbstractDemo;
 import ch.alpine.sophus.hs.sn.SnRandomSample;

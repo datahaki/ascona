@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
 
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.fit.WeiszfeldMethod;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

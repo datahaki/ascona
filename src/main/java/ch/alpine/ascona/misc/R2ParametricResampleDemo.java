@@ -7,10 +7,10 @@ import java.awt.Graphics2D;
 
 import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldClip;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.java.ren.AxesRender;
 import ch.alpine.java.ren.PointsRender;
 import ch.alpine.sophus.crv.d2.ParametricResample;

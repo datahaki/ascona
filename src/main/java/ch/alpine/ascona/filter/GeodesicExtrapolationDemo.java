@@ -11,7 +11,7 @@ import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.sym.SymGeodesic;
 import ch.alpine.ascona.sym.SymLinkImage;
 import ch.alpine.ascona.sym.SymScalar;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolationFilter;
 import ch.alpine.tensor.Tensor;

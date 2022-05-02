@@ -7,10 +7,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldPreferredWidth;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.java.ren.AxesRender;
 import ch.alpine.java.win.AbstractDemo;
 import ch.alpine.sophus.lie.rn.RnGeodesic;

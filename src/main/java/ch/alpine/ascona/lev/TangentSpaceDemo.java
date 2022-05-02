@@ -14,11 +14,11 @@ import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.bd2.GenesisDequeProperties;
 import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.fig.ListPlot;
-import ch.alpine.java.fig.VisualSet;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
-import ch.alpine.java.ref.util.PanelFieldsEditor;
+import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.ref.util.PanelFieldsEditor;
 import ch.alpine.java.ren.AxesRender;
 import ch.alpine.java.ren.PathRender;
 import ch.alpine.java.ren.PointsRender;

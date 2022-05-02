@@ -17,7 +17,7 @@ import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.R2Display;
 import ch.alpine.ascona.dis.S2Display;
 import ch.alpine.ascona.dis.Se2AbstractDisplay;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.java.ren.MatrixRender;
 import ch.alpine.java.ren.PointsRender;
 import ch.alpine.sophus.api.Exponential;

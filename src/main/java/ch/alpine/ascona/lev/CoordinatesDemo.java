@@ -4,7 +4,7 @@ package ch.alpine.ascona.lev;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 
 /* package */ class CoordinatesDemo extends AbstractHoverDemo {

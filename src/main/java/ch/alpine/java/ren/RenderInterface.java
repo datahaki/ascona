@@ -3,7 +3,7 @@ package ch.alpine.java.ren;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.java.win.GeometricComponent;
 
 /** capability for drawing in {@link GeometricComponent} */

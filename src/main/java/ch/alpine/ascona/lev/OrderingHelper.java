@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 import ch.alpine.ascona.arp.HsArrayPlot;
 import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.java.ren.BarLegend;
 import ch.alpine.java.ren.ImageRender;
 import ch.alpine.tensor.RationalScalar;

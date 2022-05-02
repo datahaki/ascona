@@ -8,7 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-import ch.alpine.java.awt.RenderQuality;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;

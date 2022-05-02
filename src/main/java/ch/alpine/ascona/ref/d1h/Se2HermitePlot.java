@@ -4,9 +4,9 @@ package ch.alpine.ascona.ref.d1h;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.java.awt.Hsluv;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.awt.Hsluv;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.java.ren.RenderInterface;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

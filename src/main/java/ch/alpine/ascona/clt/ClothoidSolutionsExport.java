@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import ch.alpine.java.util.DisjointSets;
+import ch.alpine.bridge.util.DisjointSets;
 import ch.alpine.sophus.clt.ClothoidSolutions;
 import ch.alpine.sophus.clt.ClothoidSolutions.Search;
 import ch.alpine.tensor.RealScalar;

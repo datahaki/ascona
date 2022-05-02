@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.io.GokartPoseData;
-import ch.alpine.javax.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 /* package */ abstract class AbstractDatasetKernelDemo extends AbstractSpectrogramDemo {

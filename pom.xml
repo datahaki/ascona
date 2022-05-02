@@ -22,7 +22,7 @@
 		</dependency>
 		<dependency>
 			<groupId>ch.alpine</groupId>
-			<artifactId>java</artifactId>
+			<artifactId>bridge</artifactId>
 			<version>0.3.2</version>
 		</dependency>
 		<dependency>

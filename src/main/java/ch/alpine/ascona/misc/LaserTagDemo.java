@@ -9,10 +9,10 @@ import java.awt.geom.Point2D;
 
 import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.java.ren.PathRender;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

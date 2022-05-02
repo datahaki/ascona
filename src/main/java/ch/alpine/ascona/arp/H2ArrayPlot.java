@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.Function;
 
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
 import ch.alpine.sophus.math.AppendOne;
 import ch.alpine.tensor.RationalScalar;

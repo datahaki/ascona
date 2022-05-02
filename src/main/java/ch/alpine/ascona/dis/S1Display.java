@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.dis;
 
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;

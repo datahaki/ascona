@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.api.Box2D;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.java.ren.RenderInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

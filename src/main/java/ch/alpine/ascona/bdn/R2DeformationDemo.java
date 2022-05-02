@@ -10,7 +10,7 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.api.Box2D;
 import ch.alpine.ascona.api.MixedLogWeightings;
 import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.java.ren.RenderInterface;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.RealScalar;

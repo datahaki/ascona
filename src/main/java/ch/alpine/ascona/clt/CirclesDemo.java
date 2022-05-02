@@ -6,12 +6,12 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.java.fig.ListPlot;
-import ch.alpine.java.fig.VisualSet;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldClip;
-import ch.alpine.java.ref.ann.FieldSlider;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.java.ren.AxesRender;
 import ch.alpine.java.win.AbstractDemo;
 import ch.alpine.tensor.RealScalar;

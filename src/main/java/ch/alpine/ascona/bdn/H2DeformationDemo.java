@@ -5,7 +5,7 @@ import java.awt.Dimension;
 
 import ch.alpine.ascona.api.LogWeightings;
 import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.javax.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
 import ch.alpine.tensor.RealScalar;

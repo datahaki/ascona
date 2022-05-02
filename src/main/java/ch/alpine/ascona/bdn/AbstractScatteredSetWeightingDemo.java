@@ -10,7 +10,7 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.api.LogWeighting;
 import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.lev.LogWeightingDemo;
-import ch.alpine.javax.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 

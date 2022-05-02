@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 

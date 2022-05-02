@@ -4,7 +4,7 @@ package ch.alpine.ascona.arp;
 import java.awt.image.BufferedImage;
 import java.util.stream.IntStream;
 
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.math.AppendOne;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RationalScalar;

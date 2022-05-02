@@ -3,8 +3,8 @@ package ch.alpine.ascona.ref.d1h;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.java.fig.ListPlot;
-import ch.alpine.java.fig.VisualSet;
+import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;

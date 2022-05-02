@@ -14,8 +14,8 @@ import ch.alpine.ascona.sym.SymLink;
 import ch.alpine.ascona.sym.SymLinkBuilder;
 import ch.alpine.ascona.sym.SymLinkImage;
 import ch.alpine.ascona.sym.SymScalar;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 

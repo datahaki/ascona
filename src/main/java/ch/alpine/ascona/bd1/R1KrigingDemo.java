@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.java.ren.AxesRender;
 import ch.alpine.java.ren.PathRender;
 import ch.alpine.sophus.itp.Kriging;
