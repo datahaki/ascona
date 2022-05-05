@@ -8,9 +8,9 @@ import java.awt.Stroke;
 import java.awt.geom.Line2D;
 
 import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.lev.LogWeightingDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.AxesRender;

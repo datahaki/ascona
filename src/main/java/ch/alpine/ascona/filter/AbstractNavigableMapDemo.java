@@ -15,10 +15,10 @@ import javax.swing.JSlider;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.io.GokartPoseDataV1;
 import ch.alpine.ascona.io.GokartPoseDatas;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.swing.SpinnerLabel;

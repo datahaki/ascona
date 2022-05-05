@@ -4,8 +4,8 @@ package ch.alpine.ascona.api;
 import java.awt.Dimension;
 import java.util.List;
 
-import ch.alpine.ascona.dis.GeodesicDisplayRender;
-import ch.alpine.ascona.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;

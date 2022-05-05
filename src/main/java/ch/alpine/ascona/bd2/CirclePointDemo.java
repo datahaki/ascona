@@ -5,9 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.lev.LeversHud;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.Genesis;

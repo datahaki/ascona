@@ -11,7 +11,7 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.api.AbstractGeodesicDisplayDemo;
 import ch.alpine.ascona.api.BufferedImageSupplier;
-import ch.alpine.ascona.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.GridRender;

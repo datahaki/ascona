@@ -4,10 +4,10 @@ package ch.alpine.ascona.misc;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.dis.GeodesicDisplayRender;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;

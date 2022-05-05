@@ -11,8 +11,8 @@ import javax.swing.JToggleButton;
 import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.lev.LogWeightingDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;

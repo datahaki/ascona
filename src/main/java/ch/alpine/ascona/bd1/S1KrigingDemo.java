@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Arrays;
 
-import ch.alpine.ascona.dis.R2Display;
+import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;

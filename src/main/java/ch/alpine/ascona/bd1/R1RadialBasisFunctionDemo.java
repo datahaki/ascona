@@ -4,7 +4,7 @@ package ch.alpine.ascona.bd1;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.dis.R2Display;
+import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.AxesRender;

@@ -12,9 +12,9 @@ import java.util.List;
 import javax.swing.JSlider;
 
 import ch.alpine.ascona.api.BufferedImageSupplier;
-import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.io.PolyDuckietownData;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;

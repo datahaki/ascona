@@ -9,7 +9,8 @@ import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.api.LogWeighting;
 import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.cls.Classification;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;

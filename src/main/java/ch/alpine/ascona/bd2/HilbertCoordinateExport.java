@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import ch.alpine.ascona.dis.R2Display;
+import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataGradients;

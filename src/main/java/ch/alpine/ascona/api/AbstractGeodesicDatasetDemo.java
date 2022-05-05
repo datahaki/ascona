@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import java.util.Arrays;
 import java.util.List;
 
-import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.io.GokartPoseData;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerLabel;
 

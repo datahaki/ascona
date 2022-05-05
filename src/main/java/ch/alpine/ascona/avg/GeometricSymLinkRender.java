@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.sym.SymLink;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.RenderInterface;

@@ -7,9 +7,9 @@ import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.api.ImageReshape;
 import ch.alpine.ascona.arp.HsArrayPlot;
-import ch.alpine.ascona.dis.GeodesicDisplayRender;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.S2Display;
+import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;

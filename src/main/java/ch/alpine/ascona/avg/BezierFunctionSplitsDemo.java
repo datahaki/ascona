@@ -5,7 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.JSlider;
 
-import ch.alpine.ascona.dis.S2Display;
+import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;

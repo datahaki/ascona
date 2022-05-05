@@ -4,7 +4,7 @@ package ch.alpine.ascona.clt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.dis.Se2ClothoidDisplay;
+import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;

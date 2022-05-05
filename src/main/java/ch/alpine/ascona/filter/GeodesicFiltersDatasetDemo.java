@@ -8,9 +8,9 @@ import java.util.Arrays;
 
 import ch.alpine.ascona.api.BufferedImageSupplier;
 import ch.alpine.ascona.api.GeodesicFilters;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.io.GokartPoseDataV1;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;

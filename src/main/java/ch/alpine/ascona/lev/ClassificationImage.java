@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.ascona.lev;
 
+import ch.alpine.ascona.util.cls.Classification;
+import ch.alpine.ascona.util.cls.ClassificationResult;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;

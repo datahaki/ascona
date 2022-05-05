@@ -7,9 +7,9 @@ import java.awt.Graphics2D;
 import java.util.Arrays;
 
 import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.ascona.dis.Se2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;

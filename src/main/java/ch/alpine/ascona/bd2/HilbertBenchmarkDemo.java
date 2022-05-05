@@ -12,8 +12,8 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.api.Box2D;
 import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;

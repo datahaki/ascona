@@ -13,10 +13,10 @@ import java.awt.geom.Point2D;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.ascona.dis.Se2AbstractDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
 import ch.alpine.ascona.util.ren.MatrixRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;

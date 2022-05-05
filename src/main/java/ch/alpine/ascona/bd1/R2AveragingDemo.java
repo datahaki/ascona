@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.bd1;
 
-import ch.alpine.ascona.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.tensor.Tensors;
 
 /* package */ class R2AveragingDemo extends A2AveragingDemo {

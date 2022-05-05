@@ -4,8 +4,8 @@ package ch.alpine.ascona.curve;
 import java.awt.Graphics2D;
 import java.util.List;
 
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;

@@ -1,7 +1,7 @@
 // code by ob, jph
 package ch.alpine.ascona.api;
 
-import ch.alpine.ascona.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.sophus.bm.BiinvariantMean;

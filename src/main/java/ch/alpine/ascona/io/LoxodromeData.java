@@ -3,7 +3,7 @@ package ch.alpine.ascona.io;
 
 import java.io.IOException;
 
-import ch.alpine.ascona.dis.S2Display;
+import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;

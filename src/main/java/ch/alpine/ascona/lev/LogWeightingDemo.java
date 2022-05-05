@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import ch.alpine.ascona.api.LogWeighting;
 import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Biinvariant;

@@ -8,8 +8,8 @@ import java.util.Arrays;
 import javax.swing.JSlider;
 
 import ch.alpine.ascona.api.GeodesicCausalFilters;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.io.GokartPoseDataV2;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.api.Geodesic;

@@ -10,11 +10,11 @@ import java.awt.geom.Rectangle2D;
 import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.api.AbstractGeodesicDatasetDemo;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.io.GokartPoseData;
 import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.io.GokartPoseDatas;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;

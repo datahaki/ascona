@@ -11,11 +11,11 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascona.api.AbstractGeodesicDisplayDemo;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.io.GokartPoseData;
 import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.io.GokartPoseDatas;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;

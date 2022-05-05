@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.io.GokartPoseDataV2;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.flt.CenterFilter;

@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.ascona.util.cls.Classification;
+import ch.alpine.ascona.util.cls.ClassificationResult;
+import ch.alpine.ascona.util.cls.Classifier;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

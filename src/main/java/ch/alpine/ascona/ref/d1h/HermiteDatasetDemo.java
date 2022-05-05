@@ -15,10 +15,10 @@ import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.api.AbstractGeodesicDatasetDemo;
 import ch.alpine.ascona.api.HermiteSubdivisions;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.io.GokartPoseDatas;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;

@@ -4,7 +4,7 @@ package ch.alpine.ascona.bdn;
 import java.awt.Dimension;
 
 import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.RealScalar;

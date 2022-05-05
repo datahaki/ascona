@@ -3,6 +3,9 @@ package ch.alpine.ascona.lev;
 
 import java.util.function.Function;
 
+import ch.alpine.ascona.util.cls.Classification;
+import ch.alpine.ascona.util.cls.Classifier;
+import ch.alpine.ascona.util.cls.KNearestClassifier;
 import ch.alpine.tensor.Tensor;
 
 /* package */ enum Labels implements Function<Tensor, Classification> {

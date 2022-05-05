@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.ref.d1;
 
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.R2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.api.MidpointInterface;
 import ch.alpine.sophus.api.SplitInterface;

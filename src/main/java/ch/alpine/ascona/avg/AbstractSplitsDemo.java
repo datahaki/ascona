@@ -8,8 +8,8 @@ import java.util.stream.IntStream;
 
 import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.avg.GeometricSymLinkRender.Link;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymLink;
 import ch.alpine.ascona.util.sym.SymLinkBuilder;
 import ch.alpine.ascona.util.sym.SymLinkImage;

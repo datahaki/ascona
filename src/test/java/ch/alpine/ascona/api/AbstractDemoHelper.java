@@ -3,7 +3,7 @@ package ch.alpine.ascona.api;
 
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.AbstractDemo;
 

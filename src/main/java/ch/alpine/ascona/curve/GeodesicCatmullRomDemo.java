@@ -7,9 +7,9 @@ import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.api.Curvature2DRender;
 import ch.alpine.ascona.api.DubinsGenerator;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.Se2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;

@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.lev.LogWeightingDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;

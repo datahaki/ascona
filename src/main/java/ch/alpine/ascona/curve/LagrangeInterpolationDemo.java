@@ -11,8 +11,8 @@ import javax.swing.JSlider;
 
 import ch.alpine.ascona.api.Curvature2DRender;
 import ch.alpine.ascona.api.DubinsGenerator;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.R2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymScalar;

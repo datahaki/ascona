@@ -15,9 +15,9 @@ import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.api.CurveVisualSet;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.Se2ClothoidDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualRow;

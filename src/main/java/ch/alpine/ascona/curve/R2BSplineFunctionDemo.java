@@ -4,7 +4,7 @@ package ch.alpine.ascona.curve;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;

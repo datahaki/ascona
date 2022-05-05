@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.bd1;
 
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.S2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

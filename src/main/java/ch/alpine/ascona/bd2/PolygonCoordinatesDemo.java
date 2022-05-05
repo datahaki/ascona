@@ -13,11 +13,11 @@ import javax.imageio.ImageIO;
 
 import ch.alpine.ascona.api.LogWeighting;
 import ch.alpine.ascona.api.PolygonCoordinates;
-import ch.alpine.ascona.dis.H2Display;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.ascona.dis.S2Display;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.dis.H2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.io.HtmlUtf8;
