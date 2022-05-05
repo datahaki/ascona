@@ -17,7 +17,7 @@ import ch.alpine.ascona.dis.Spd2Display;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.java.ren.AxesRender;
+import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.VectorLogManifold;

@@ -22,7 +22,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.java.ren.GridRender;
+import ch.alpine.bridge.win.GridRender;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.r2.ArcTan2D;

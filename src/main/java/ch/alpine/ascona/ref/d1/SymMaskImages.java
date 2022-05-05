@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.sym.SymGeodesic;
-import ch.alpine.ascona.sym.SymLinkImage;
-import ch.alpine.ascona.sym.SymScalar;
+import ch.alpine.ascona.util.sym.SymGeodesic;
+import ch.alpine.ascona.util.sym.SymLinkImage;
+import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;

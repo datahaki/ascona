@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.avg;
 
-import ch.alpine.ascona.sym.SymGeodesic;
-import ch.alpine.ascona.sym.SymScalar;
+import ch.alpine.ascona.util.sym.SymGeodesic;
+import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.tensor.Tensor;

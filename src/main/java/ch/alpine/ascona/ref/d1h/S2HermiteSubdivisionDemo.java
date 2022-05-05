@@ -20,7 +20,7 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.java.ren.PathRender;
+import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.hs.sn.SnExponential;

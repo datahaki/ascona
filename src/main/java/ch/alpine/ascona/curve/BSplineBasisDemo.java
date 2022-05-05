@@ -13,7 +13,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.java.win.LookAndFeels;
+import ch.alpine.bridge.win.LookAndFeels;
 import ch.alpine.sophus.crv.spline.GeodesicBSplineFunction;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.RealScalar;

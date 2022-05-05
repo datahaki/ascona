@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import ch.alpine.bridge.awt.Hsluv;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.java.ren.RenderInterface;
+import ch.alpine.bridge.win.RenderInterface;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.Cross;

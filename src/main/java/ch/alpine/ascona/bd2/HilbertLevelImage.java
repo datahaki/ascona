@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.arp.HsArrayPlot;
 import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.java.ren.ArrayPlotRender;
+import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;

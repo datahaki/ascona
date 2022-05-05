@@ -16,7 +16,7 @@ import ch.alpine.ascona.api.LogWeightings;
 import ch.alpine.ascona.arp.HsArrayPlot;
 import ch.alpine.ascona.bdn.AbstractScatteredSetWeightingDemo;
 import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.java.ren.ArrayPlotRender;
+import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.MetricBiinvariant;

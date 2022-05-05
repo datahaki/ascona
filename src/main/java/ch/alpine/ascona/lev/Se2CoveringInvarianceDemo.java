@@ -14,7 +14,7 @@ import ch.alpine.ascona.dis.Se2Display;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.java.ren.AxesRender;
+import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.VectorLogManifold;

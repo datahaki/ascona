@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.java.ren.PathRender;
-import ch.alpine.java.ren.RenderInterface;
+import ch.alpine.bridge.win.PathRender;
+import ch.alpine.bridge.win.RenderInterface;
 import ch.alpine.sophus.clt.Clothoid;
 import ch.alpine.sophus.clt.ClothoidContext;
 import ch.alpine.sophus.clt.ClothoidEmit;

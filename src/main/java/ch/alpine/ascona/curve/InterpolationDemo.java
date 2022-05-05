@@ -8,7 +8,7 @@ import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.java.ren.PathRender;
+import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.spline.BSplineLimitMatrix;
 import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;

@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.java.ren.PathRender;
+import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.crv.d2.CurvatureComb;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;

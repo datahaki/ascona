@@ -10,7 +10,7 @@ import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.java.ren.AxesRender;
+import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.crv.d2.Arrowhead;

@@ -11,7 +11,7 @@ import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.java.ren.AxesRender;
+import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupOps;

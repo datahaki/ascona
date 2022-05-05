@@ -21,7 +21,7 @@ import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.java.ren.PathRender;
+import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.decim.DecimationResult;
 import ch.alpine.sophus.decim.LineDistances;

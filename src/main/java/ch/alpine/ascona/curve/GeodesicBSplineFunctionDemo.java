@@ -10,7 +10,7 @@ import ch.alpine.ascona.api.BufferedImageSupplier;
 import ch.alpine.ascona.api.Curvature2DRender;
 import ch.alpine.ascona.api.DubinsGenerator;
 import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.sym.SymLinkImages;
+import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;

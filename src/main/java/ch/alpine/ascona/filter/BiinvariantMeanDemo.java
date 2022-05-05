@@ -15,7 +15,7 @@ import ch.alpine.ascona.dis.Se2CoveringDisplay;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.java.ren.AxesRender;
+import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.fit.HsWeiszfeldMethod;

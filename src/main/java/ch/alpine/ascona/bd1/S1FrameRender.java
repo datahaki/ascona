@@ -8,7 +8,7 @@ import java.awt.geom.Path2D;
 import ch.alpine.ascona.api.Box2D;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.java.ren.RenderInterface;
+import ch.alpine.bridge.win.RenderInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.r2.CirclePoints;

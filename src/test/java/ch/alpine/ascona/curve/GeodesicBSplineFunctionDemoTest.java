@@ -8,8 +8,8 @@ import java.awt.image.BufferedImage;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.ascona.api.AbstractDemoHelper;
-import ch.alpine.ascona.sym.SymLinkImage;
-import ch.alpine.ascona.sym.SymLinkImages;
+import ch.alpine.ascona.util.sym.SymLinkImage;
+import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

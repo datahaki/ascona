@@ -11,7 +11,7 @@ import ch.alpine.ascona.api.GeodesicFilters;
 import ch.alpine.ascona.dis.ManifoldDisplay;
 import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.io.GokartPoseDataV1;
-import ch.alpine.ascona.sym.SymLinkImages;
+import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.flt.CenterFilter;

@@ -24,7 +24,7 @@ import ch.alpine.bridge.fig.VisualRow;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.java.ren.PathRender;
+import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
