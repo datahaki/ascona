@@ -3,7 +3,7 @@ package ch.alpine.ascona.bdn;
 
 import java.awt.Dimension;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -22,13 +22,13 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Times;
 
 // TODO ASCONA recomputes every frame right now
-/* package */ class S2DeformationDemo extends AbstractDeformationDemo {
+public class S2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.05));
   private static final Scalar ZHEIGHT = RealScalar.of(1.0); // 1.8 for initial pics
   // ---
   private final SpinnerLabel<SnMeans> spinnerSnMeans = SpinnerLabel.of(SnMeans.values());
 
-  S2DeformationDemo() {
+  public S2DeformationDemo() {
     super(ManifoldDisplays.S2_ONLY, LogWeightings.coordinates());
     // ---
     spinnerSnMeans.setValue(SnMeans.FAST);

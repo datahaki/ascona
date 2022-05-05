@@ -3,6 +3,7 @@ package ch.alpine.ascona.avg;
 
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.tensor.Tensor;
@@ -10,6 +11,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
+@ReflectionMarker
 public class GeodesicCenterSplitsDemo extends AbstractSplitsDemo {
   public WindowFunctions kernel = WindowFunctions.DIRICHLET;
 

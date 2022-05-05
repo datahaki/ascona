@@ -3,9 +3,9 @@ package ch.alpine.ascona.curve;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.Curvature2DRender;
-import ch.alpine.ascona.api.DubinsGenerator;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.Curvature2DRender;
+import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -30,7 +30,7 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
   @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
   public Scalar radius = RealScalar.of(9);
 
-  GeodesicMeanFilterDemo() {
+  public GeodesicMeanFilterDemo() {
     super(true, ManifoldDisplays.ALL);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     {

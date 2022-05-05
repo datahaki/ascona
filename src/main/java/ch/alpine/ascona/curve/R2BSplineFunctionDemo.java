@@ -9,6 +9,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.PathRender;
 import ch.alpine.tensor.RealScalar;
@@ -22,6 +23,7 @@ import ch.alpine.tensor.itp.BSplineFunctionCyclic;
 import ch.alpine.tensor.itp.BSplineFunctionString;
 
 /** use of tensor lib {@link BSplineFunction} */
+@ReflectionMarker
 public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
   @FieldInteger
   @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })

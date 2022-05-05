@@ -7,9 +7,9 @@ import java.awt.Container;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 
-import ch.alpine.ascona.api.Box2D;
-import ch.alpine.ascona.api.InsideConvexHullLogWeighting;
-import ch.alpine.ascona.api.LogWeighting;
+import ch.alpine.ascona.util.api.Box2D;
+import ch.alpine.ascona.util.api.InsideConvexHullLogWeighting;
+import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
@@ -21,7 +21,7 @@ import ch.alpine.tensor.Tensors;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
-/* package */ class PlanarScatteredSetCoordinateDemo extends A2ScatteredSetCoordinateDemo implements SpinnerListener<ManifoldDisplay> {
+public class PlanarScatteredSetCoordinateDemo extends A2ScatteredSetCoordinateDemo implements SpinnerListener<ManifoldDisplay> {
   private final GenesisDequeProperties dequeGenesisProperties = new GenesisDequeProperties();
 
   public PlanarScatteredSetCoordinateDemo() {

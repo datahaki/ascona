@@ -6,8 +6,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.HermiteSubdivisions;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -19,6 +19,7 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.api.Geodesic;
@@ -34,6 +35,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.red.Times;
 
+@ReflectionMarker
 public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
   @FieldSlider

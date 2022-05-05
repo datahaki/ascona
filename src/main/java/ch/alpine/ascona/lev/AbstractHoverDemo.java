@@ -8,7 +8,7 @@ import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;

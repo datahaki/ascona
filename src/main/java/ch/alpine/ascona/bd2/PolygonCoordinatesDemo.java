@@ -11,9 +11,9 @@ import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
-import ch.alpine.ascona.api.LogWeighting;
-import ch.alpine.ascona.api.PolygonCoordinates;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
@@ -31,7 +31,7 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
-/* package */ class PolygonCoordinatesDemo extends A2ScatteredSetCoordinateDemo //
+public class PolygonCoordinatesDemo extends A2ScatteredSetCoordinateDemo //
     implements SpinnerListener<ManifoldDisplay> {
   public static final ColorDataIndexed COLOR_DATA_INDEXED = HueColorData.of(6, 3);
   private final List<LogWeighting> array;

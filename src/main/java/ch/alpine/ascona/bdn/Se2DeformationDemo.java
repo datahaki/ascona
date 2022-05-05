@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.bdn;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -16,10 +16,10 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 // TODO ASCONA ALG jToggleArrows does not have effect
-/* package */ class Se2DeformationDemo extends AbstractDeformationDemo {
+public class Se2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor ORIGIN = Arrowhead.of(RealScalar.of(0.2));
 
-  Se2DeformationDemo() {
+  public Se2DeformationDemo() {
     super(ManifoldDisplays.SE2C_SE2, LogWeightings.coordinates());
     // ---
     timerFrame.geometricComponent.setOffset(300, 500);

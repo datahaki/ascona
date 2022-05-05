@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.alpine.ascona.api.LogWeighting;
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;

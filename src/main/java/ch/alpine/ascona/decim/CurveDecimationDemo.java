@@ -9,10 +9,10 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.AbstractGeodesicDatasetDemo;
 import ch.alpine.ascona.io.GokartPoseData;
 import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.io.GokartPoseDatas;
+import ch.alpine.ascona.util.api.AbstractGeodesicDatasetDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -20,6 +20,7 @@ import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.decim.CurveDecimation;
@@ -41,7 +42,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.pow.Power;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-/* package */ class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
+public class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 160);
   private static final Color COLOR_RECON = new Color(128, 128, 128, 255);
@@ -52,6 +53,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
 
   // ---
+  @ReflectionMarker
   public static class Param {
     @FieldSelectionArray(value = { "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })
     public Scalar width = RealScalar.of(0);
@@ -71,6 +73,10 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   // private final JToggleButton jToggleButton = new JToggleButton("error");
   protected Tensor _control = Tensors.empty();
   private final Param param = new Param();
+
+  public CurveDecimationDemo() {
+    this(GokartPoseDataV2.RACING_DAY);
+  }
 
   public CurveDecimationDemo(GokartPoseData gokartPoseData) {
     super(ManifoldDisplays.SE2_R2, gokartPoseData);

@@ -11,6 +11,7 @@ import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.AbstractDemo;
 import ch.alpine.bridge.win.AxesRender;
@@ -23,6 +24,7 @@ import ch.alpine.tensor.sca.Ceiling;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
+@ReflectionMarker
 public class CirclesDemo extends AbstractDemo {
   @FieldSlider
   @FieldClip(min = "1", max = "20")

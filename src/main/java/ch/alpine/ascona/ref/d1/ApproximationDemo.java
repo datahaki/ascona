@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.api.AbstractGeodesicDisplayDemo;
 import ch.alpine.ascona.io.GokartPoseData;
 import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.io.GokartPoseDatas;
+import ch.alpine.ascona.util.api.AbstractGeodesicDisplayDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -34,7 +34,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 
-/* package */ class ApproximationDemo extends AbstractGeodesicDisplayDemo {
+public class ApproximationDemo extends AbstractGeodesicDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final Scalar MARKER_SCALE = RealScalar.of(0.1);
@@ -72,6 +72,10 @@ import ch.alpine.tensor.sca.win.GaussianWindow;
   private final SpinnerLabel<Integer> spinnerLabelLevel = new SpinnerLabel<>();
   // ---
   private Container _container = null;
+
+  public ApproximationDemo() {
+    this(GokartPoseDataV2.RACING_DAY);
+  }
 
   public ApproximationDemo(GokartPoseData gokartPoseData) {
     super(ManifoldDisplays.SE2_R2);

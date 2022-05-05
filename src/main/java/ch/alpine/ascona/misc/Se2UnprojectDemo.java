@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -29,7 +29,7 @@ import ch.alpine.tensor.mat.pd.Orthogonalize;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-/* package */ class Se2UnprojectDemo extends ControlPointsDemo {
+public class Se2UnprojectDemo extends ControlPointsDemo {
   private static final Tensor ARROWHEAD = Arrowhead.of(0.5);
 
   public Se2UnprojectDemo() {

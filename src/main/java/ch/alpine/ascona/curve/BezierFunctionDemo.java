@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
-import ch.alpine.ascona.api.Curvature2DRender;
+import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -14,6 +14,7 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.bridge.win.LookAndFeels;
@@ -28,6 +29,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 
 /** Bezier function with extrapolation */
+@ReflectionMarker
 public class BezierFunctionDemo extends AbstractCurvatureDemo {
   @FieldPreferredWidth(200)
   @FieldSlider

@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import ch.alpine.ascona.api.BufferedImageSupplier;
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.CurveVisualSet;
+import ch.alpine.ascona.util.api.BufferedImageSupplier;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.CurveVisualSet;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.fig.ListPlot;

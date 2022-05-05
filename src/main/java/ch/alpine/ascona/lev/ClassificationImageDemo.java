@@ -17,9 +17,9 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-import ch.alpine.ascona.api.LogWeighting;
-import ch.alpine.ascona.api.LogWeightings;
 import ch.alpine.ascona.arp.HsArrayPlot;
+import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -46,7 +46,7 @@ import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
-/* package */ class ClassificationImageDemo extends LogWeightingDemo implements ActionListener {
+public class ClassificationImageDemo extends LogWeightingDemo implements ActionListener {
   private static final int REFINEMENT = 160;
   private static final Random RANDOM = new Random();
 

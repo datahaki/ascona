@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.AbstractGeodesicDisplayDemo;
+import ch.alpine.ascona.util.api.AbstractGeodesicDisplayDemo;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.Spectrogram;

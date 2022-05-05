@@ -34,7 +34,7 @@ import ch.alpine.tensor.sca.Round;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
-/* package */ class ClothoidDemo extends AbstractDemo implements DemoInterface {
+public class ClothoidDemo extends AbstractDemo implements DemoInterface {
   private static final Tensor START = Array.zeros(3).unmodifiable();
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 100);
   private static final Tensor ARROWS = Subdivide.of(0.0, 1.0, 10);

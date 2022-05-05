@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -20,7 +20,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 
-/* package */ class R2AnimationDemo extends LogWeightingDemo {
+public class R2AnimationDemo extends LogWeightingDemo {
   private final JToggleButton jToggleAxes = new JToggleButton("axes");
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();

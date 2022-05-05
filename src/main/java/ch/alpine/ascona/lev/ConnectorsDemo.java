@@ -16,7 +16,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.itp.Interpolation;
 import ch.alpine.tensor.itp.LinearInterpolation;
 
-/* package */ class ConnectorsDemo extends AbstractHoverDemo {
+public class ConnectorsDemo extends AbstractHoverDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
     Tensor weights = operator(leversRender.getSequence()).apply(leversRender.getOrigin());

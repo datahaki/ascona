@@ -26,7 +26,7 @@ import ch.alpine.tensor.red.Nest;
  * {@link So2LinearBiinvariantMean}
  * {@link So2FilterBiinvariantMean}
  * {@link So2PhongBiinvariantMean} */
-/* package */ class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
+public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
   private final SpinnerLabel<Se2BiinvariantMeans> spinnerFilters = new SpinnerLabel<>();
   private final SpinnerLabel<Integer> spinnerConvolution = new SpinnerLabel<>();
 

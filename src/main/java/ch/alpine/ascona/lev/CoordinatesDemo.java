@@ -3,11 +3,11 @@ package ch.alpine.ascona.lev;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 
-/* package */ class CoordinatesDemo extends AbstractHoverDemo {
+public class CoordinatesDemo extends AbstractHoverDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
     Tensor weights = operator(leversRender.getSequence()).apply(leversRender.getOrigin());

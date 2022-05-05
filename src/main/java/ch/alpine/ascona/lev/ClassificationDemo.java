@@ -7,8 +7,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.api.LogWeighting;
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-/* package */ class ClassificationDemo extends AbstractHoverDemo {
+public class ClassificationDemo extends AbstractHoverDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_O = ColorDataLists._097.cyclic();
   private static final ColorDataIndexed COLOR_DATA_INDEXED_T = COLOR_DATA_INDEXED_O.deriveWithAlpha(128);
   // ---

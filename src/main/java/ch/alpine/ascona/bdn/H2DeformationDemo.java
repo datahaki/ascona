@@ -3,7 +3,7 @@ package ch.alpine.ascona.bdn;
 
 import java.awt.Dimension;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -17,12 +17,12 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 
 // TODO ASCONA ugly when computation fails (probably for accuracy reasons)
-/* package */ class H2DeformationDemo extends AbstractDeformationDemo {
+public class H2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.05));
   // ---
   private final SpinnerLabel<HnMeans> spinnerMeans = SpinnerLabel.of(HnMeans.values());
 
-  H2DeformationDemo() {
+  public H2DeformationDemo() {
     super(ManifoldDisplays.H2_ONLY, LogWeightings.coordinates());
     // ---
     spinnerMeans.setValue(HnMeans.EXACT);

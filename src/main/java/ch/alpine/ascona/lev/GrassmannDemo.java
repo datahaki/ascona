@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
@@ -24,7 +24,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 
-/* package */ class GrassmannDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class GrassmannDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   private final SpinnerLabel<ColorDataGradient> spinnerColorData = SpinnerLabel.of(ColorDataGradients.values());
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 

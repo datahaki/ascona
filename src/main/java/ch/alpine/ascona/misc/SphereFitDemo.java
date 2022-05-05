@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Optional;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.DubinsGenerator;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -37,7 +37,7 @@ import ch.alpine.tensor.opt.hun.BipartiteMatching;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 
-/* package */ class SphereFitDemo extends ControlPointsDemo {
+public class SphereFitDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
   private static final Tensor CIRCLE = CirclePoints.of(10).multiply(RealScalar.of(3));
   // ---

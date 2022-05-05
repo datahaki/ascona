@@ -39,7 +39,7 @@ import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-/* package */ class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<ManifoldDisplay> {
+public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<ManifoldDisplay> {
   private static final GridRender GRID_RENDER = new GridRender(Tensors.vector(-1, 0, 1), Color.LIGHT_GRAY);
   private static final Color DOMAIN_F = new Color(192, 192, 64, 64);
   private static final Color DOMAIN_D = new Color(192, 192, 64, 192);

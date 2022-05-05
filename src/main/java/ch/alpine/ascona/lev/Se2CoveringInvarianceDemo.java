@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
@@ -24,7 +24,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 
-/* package */ class Se2CoveringInvarianceDemo extends LogWeightingDemo {
+public class Se2CoveringInvarianceDemo extends LogWeightingDemo {
   private final JToggleButton jToggleAxes = new JToggleButton("axes");
   private final JTextField jTextField = new JTextField();
 

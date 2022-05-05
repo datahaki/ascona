@@ -10,7 +10,7 @@ import java.util.Random;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
@@ -36,8 +36,8 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-@ReflectionMarker
 public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
+  @ReflectionMarker
   public static class Param {
     @FieldInteger
     public Scalar attempts = RealScalar.of(20);

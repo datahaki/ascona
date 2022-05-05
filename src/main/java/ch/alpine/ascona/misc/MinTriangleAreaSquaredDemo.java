@@ -3,9 +3,9 @@ package ch.alpine.ascona.misc;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.DubinsGenerator;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -24,7 +24,7 @@ import ch.alpine.tensor.red.Times;
 /** Reference:
  * "Polygon Laplacian Made Simple"
  * by Astrid Bunge, Philipp Herholz, Misha Kazhdan, Mario Botsch, 2020 */
-/* package */ class MinTriangleAreaSquaredDemo extends ControlPointsDemo {
+public class MinTriangleAreaSquaredDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
   // ---
   private final PathRender pathRender = new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5f);

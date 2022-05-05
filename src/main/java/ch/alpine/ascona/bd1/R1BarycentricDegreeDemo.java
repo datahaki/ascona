@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -33,7 +33,7 @@ import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.N;
 
-/* package */ class R1BarycentricDegreeDemo extends ControlPointsDemo {
+public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private final JToggleButton jToggleButton = new JToggleButton("lagrange");

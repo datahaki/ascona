@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.bd1;
 
-import ch.alpine.ascona.api.MixedLogWeightings;
+import ch.alpine.ascona.util.api.MixedLogWeightings;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -11,7 +11,7 @@ import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.N;
 
-/* package */ class R1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
+public class R1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
   private static final Scalar MARGIN = RealScalar.of(2);
 
   public R1BarycentricCoordinateDemo() {

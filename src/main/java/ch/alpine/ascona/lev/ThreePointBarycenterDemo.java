@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.PolygonCoordinates;
+import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -21,7 +21,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-/* package */ class ThreePointBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class ThreePointBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public ThreePointBarycenterDemo() {

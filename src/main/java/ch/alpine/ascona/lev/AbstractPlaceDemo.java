@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import javax.swing.JButton;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Round;

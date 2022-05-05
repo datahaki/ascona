@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.api.Curvature2DRender;
-import ch.alpine.ascona.api.DubinsGenerator;
+import ch.alpine.ascona.util.api.Curvature2DRender;
+import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
@@ -17,6 +17,7 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.crv.spline.GeodesicCatmullRom;
@@ -35,6 +36,7 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
+@ReflectionMarker
 public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   @FieldInteger
   @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })

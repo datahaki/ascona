@@ -8,7 +8,7 @@ import java.awt.geom.Path2D;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -31,7 +31,7 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.sca.Round;
 
-/* package */ class Se2LineDistanceDemo extends ControlPointsDemo {
+public class Se2LineDistanceDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
   // ---

@@ -7,12 +7,13 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.List;
 
-import ch.alpine.ascona.api.Curvature2DRender;
+import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.win.AbstractDemo;
@@ -26,6 +27,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
+@ReflectionMarker
 public class GeodesicDemo extends AbstractDemo implements DemoInterface {
   private static final Color COLOR = new Color(128, 128, 128, 128);
   private static final int SPLITS = 20;

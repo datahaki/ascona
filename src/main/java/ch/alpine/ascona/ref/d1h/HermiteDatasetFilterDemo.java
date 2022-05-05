@@ -12,9 +12,9 @@ import javax.swing.JToggleButton;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.AbstractGeodesicDatasetDemo;
 import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.io.GokartPoseDatas;
+import ch.alpine.ascona.util.api.AbstractGeodesicDatasetDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -33,7 +33,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-/* package */ class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
+public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
@@ -48,6 +48,10 @@ import ch.alpine.tensor.Tensors;
   private final JToggleButton jToggleAdjoint = new JToggleButton("ad");
   private final JToggleButton jToggleButton = new JToggleButton("derivatives");
   protected Tensor _control = Tensors.empty();
+
+  public HermiteDatasetFilterDemo() {
+    this(GokartPoseDataV2.RACING_DAY);
+  }
 
   public HermiteDatasetFilterDemo(GokartPoseDataV2 gokartPoseData) {
     super(ManifoldDisplays.SE2_ONLY, gokartPoseData);

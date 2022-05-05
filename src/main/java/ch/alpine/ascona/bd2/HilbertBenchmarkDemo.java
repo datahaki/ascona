@@ -10,9 +10,9 @@ import java.util.Objects;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.Box2D;
-import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.api.Box2D;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -27,7 +27,7 @@ import ch.alpine.tensor.sca.pow.Power;
 /** References:
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
-/* package */ class HilbertBenchmarkDemo extends ControlPointsDemo {
+public class HilbertBenchmarkDemo extends ControlPointsDemo {
   final SpinnerLabel<Integer> spinnerLevels = new SpinnerLabel<>();
   final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
   JToggleButton jToggleButton = new JToggleButton("ctrl points");

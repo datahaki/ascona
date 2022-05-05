@@ -18,6 +18,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.LieGroup;
@@ -32,6 +33,7 @@ import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
+@ReflectionMarker
 /* package */ abstract class AbstractSpectrogramDemo extends AbstractDatasetFilterDemo {
   private static final ScalarUnaryOperator MAGNITUDE_PER_SECONDS = QuantityMagnitude.SI().in("s^-1");
   // ---

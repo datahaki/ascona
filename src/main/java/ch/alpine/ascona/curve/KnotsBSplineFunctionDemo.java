@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.api.BufferedImageSupplier;
-import ch.alpine.ascona.api.Curvature2DRender;
-import ch.alpine.ascona.api.DubinsGenerator;
+import ch.alpine.ascona.util.api.BufferedImageSupplier;
+import ch.alpine.ascona.util.api.Curvature2DRender;
+import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymLinkImage;
@@ -18,6 +18,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.crv.spline.GeodesicBSplineFunction;
 import ch.alpine.sophus.math.win.KnotSpacing;
@@ -30,6 +31,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.red.Times;
 
+@ReflectionMarker
 public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   @FieldSlider
   @FieldPreferredWidth(200)

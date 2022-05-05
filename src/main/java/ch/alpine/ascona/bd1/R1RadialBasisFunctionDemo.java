@@ -19,7 +19,7 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** TODO ASCONA ALG investigate, this produces some nice results for kriging+metric+power */
-/* package */ class R1RadialBasisFunctionDemo extends A1AveragingDemo {
+public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
   public R1RadialBasisFunctionDemo() {
     super(R2Display.INSTANCE);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 2, 0}, {2, -1, 0}}"));

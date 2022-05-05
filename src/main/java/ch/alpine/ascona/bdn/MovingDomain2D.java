@@ -3,7 +3,7 @@ package ch.alpine.ascona.bdn;
 
 import java.util.Objects;
 
-import ch.alpine.ascona.api.ImageReshape;
+import ch.alpine.ascona.util.api.ImageReshape;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

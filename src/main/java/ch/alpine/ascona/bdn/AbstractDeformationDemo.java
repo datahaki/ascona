@@ -12,8 +12,8 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.LogWeighting;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ArrayRender;

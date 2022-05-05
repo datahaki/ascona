@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
-import ch.alpine.ascona.api.BufferedImageSupplier;
-import ch.alpine.ascona.api.GeodesicFilters;
 import ch.alpine.ascona.io.GokartPoseDataV1;
+import ch.alpine.ascona.util.api.BufferedImageSupplier;
+import ch.alpine.ascona.util.api.GeodesicFilters;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymLinkImages;
@@ -20,7 +20,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Nest;
 
-/* package */ class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implements BufferedImageSupplier {
+public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implements BufferedImageSupplier {
   private final SpinnerLabel<GeodesicFilters> spinnerFilters = new SpinnerLabel<>();
   private final SpinnerLabel<Integer> spinnerConvolution = new SpinnerLabel<>();
 

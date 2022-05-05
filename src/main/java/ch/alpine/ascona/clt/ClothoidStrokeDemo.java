@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.exp.Exp;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
-/* package */ class ClothoidStrokeDemo extends AbstractDemo {
+public class ClothoidStrokeDemo extends AbstractDemo {
   private static final Tensor START = Array.zeros(3).unmodifiable();
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 100);
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //

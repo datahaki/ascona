@@ -18,15 +18,16 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.Curvature2DRender;
-import ch.alpine.ascona.api.DubinsGenerator;
 import ch.alpine.ascona.curve.AbstractCurvatureDemo;
+import ch.alpine.ascona.util.api.Curvature2DRender;
+import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.StandardMenu;
@@ -46,6 +47,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.red.Times;
 
 /** split interface and biinvariant mean based curve subdivision */
+@ReflectionMarker
 public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
   private final PathRender pathRender = new PathRender(new Color(0, 255, 0, 128));
   final SpinnerLabel<CurveSubdivisionSchemes> spinnerLabel = new SpinnerLabel<>();

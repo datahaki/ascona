@@ -3,7 +3,7 @@ package ch.alpine.ascona.spiral;
 
 import ch.alpine.sophus.crv.se2c.LogarithmicSpiral;
 
-/* package */ class LogarithmicSpiralDemo extends AbstractSpiralDemo {
+public class LogarithmicSpiralDemo extends AbstractSpiralDemo {
   public LogarithmicSpiralDemo() {
     super(LogarithmicSpiral.of(1, 0.2));
   }

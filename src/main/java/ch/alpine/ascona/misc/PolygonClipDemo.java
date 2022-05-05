@@ -28,7 +28,7 @@ import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.red.Mean;
 
-/* package */ class PolygonClipDemo extends AbstractPlaceDemo {
+public class PolygonClipDemo extends AbstractPlaceDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict();
   private static final Tensor CIRCLE = CirclePoints.of(7).multiply(RealScalar.of(4));
   private static final SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);

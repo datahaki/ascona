@@ -2,6 +2,7 @@
 package ch.alpine.ascona.bd2;
 
 import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.amp.Amplifiers;
 import ch.alpine.sophus.gbc.it.IterativeAffineCoordinate;
@@ -12,6 +13,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
+@ReflectionMarker
 public class GenesisDequeProperties {
   public Boolean lagrange = false;
   public Amplifiers amplifiers = Amplifiers.EXP;

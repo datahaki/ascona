@@ -36,7 +36,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.lie.r2.ConvexHull;
 import ch.alpine.tensor.red.Times;
 
-/* package */ class TangentSpaceDemo extends AbstractPlaceDemo {
+public class TangentSpaceDemo extends AbstractPlaceDemo {
   private static final int WIDTH = 300;
   // ---
   private final GenesisDequeProperties iterativeAffineProperties = new GenesisDequeProperties();

@@ -4,7 +4,7 @@ package ch.alpine.ascona.curve;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.red.Nest;
 
 // TODO ASCONA ALG functionality/purpose is not clear
-/* package */ class InterpolationDemo extends ControlPointsDemo {
+public class InterpolationDemo extends ControlPointsDemo {
   public InterpolationDemo() {
     super(true, ManifoldDisplays.SE2C_SE2_R2);
     // ---

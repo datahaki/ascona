@@ -7,9 +7,9 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.Curvature2DRender;
-import ch.alpine.ascona.api.HermiteSubdivisions;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.Curvature2DRender;
+import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
@@ -18,6 +18,7 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.bridge.win.GridRender;
@@ -38,6 +39,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.r2.AngleVector;
 import ch.alpine.tensor.red.Mean;
 
+@ReflectionMarker
 public class HermiteSubdivisionDemo extends ControlPointsDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;

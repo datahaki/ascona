@@ -8,6 +8,7 @@ import javax.swing.JSlider;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.LookAndFeels;
 import ch.alpine.sophus.crv.bezier.BezierFunction;
@@ -19,6 +20,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 /** visualization of geodesic average along geodesics */
+@ReflectionMarker
 public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   private final JSlider jSlider = new JSlider(0, 1000, 500);
 

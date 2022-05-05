@@ -8,7 +8,7 @@ import java.awt.Rectangle;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -18,6 +18,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.LookAndFeels;
 import ch.alpine.bridge.win.PathRender;
@@ -35,10 +36,11 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-/* package */ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
+public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   private static final int WIDTH = 400;
   private static final int HEIGHT = 300;
 
+  @ReflectionMarker
   public static class Param {
     @FieldPreferredWidth(50)
     @FieldSelectionArray(value = { "0", "1/4", "1/2", "3/4", "1" })

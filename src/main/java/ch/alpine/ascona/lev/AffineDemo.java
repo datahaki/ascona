@@ -23,7 +23,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 
-/* package */ class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<ManifoldDisplay> {
+public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<ManifoldDisplay> {
   private final SpinnerLabel<ColorDataGradient> spinnerColorData = SpinnerLabel.of(ColorDataGradients.values());
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 

@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.red.Times;
 
-/* package */ class S2AveragingDemo extends A2AveragingDemo {
+public class S2AveragingDemo extends A2AveragingDemo {
   public S2AveragingDemo() {
     super(ManifoldDisplays.S2_RP2);
     // ---

@@ -4,7 +4,7 @@ package ch.alpine.ascona.bd1;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.tensor.Tensors;
 
-/* package */ class R2AveragingDemo extends A2AveragingDemo {
+public class R2AveragingDemo extends A2AveragingDemo {
   public R2AveragingDemo() {
     super(ManifoldDisplays.R2_H2);
     timerFrame.geometricComponent.setOffset(400, 400);

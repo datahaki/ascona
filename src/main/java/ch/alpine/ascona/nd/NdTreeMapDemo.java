@@ -34,7 +34,7 @@ import ch.alpine.tensor.opt.nd.NdTreeMap;
 import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.sca.Abs;
 
-/* package */ class NdTreeMapDemo extends AbstractDemo {
+public class NdTreeMapDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     @FieldPreferredWidth(40)

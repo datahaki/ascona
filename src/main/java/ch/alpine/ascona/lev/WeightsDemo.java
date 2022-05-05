@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.S2Display;
@@ -28,7 +28,7 @@ import ch.alpine.tensor.ext.ArgMin;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 
-/* package */ class WeightsDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   private final JToggleButton jToggleAxes = new JToggleButton("axes");
 
   public WeightsDemo() {

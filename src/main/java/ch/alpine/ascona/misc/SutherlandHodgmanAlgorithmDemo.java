@@ -33,7 +33,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.red.Times;
 
-/* package */ class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
+public class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict();
   private static final Tensor CIRCLE = CirclePoints.of(7).multiply(RealScalar.of(2));
   private static final SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);

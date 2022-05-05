@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 import javax.swing.JSlider;
 
-import ch.alpine.ascona.api.GeodesicCausalFilters;
 import ch.alpine.ascona.io.GokartPoseDataV2;
+import ch.alpine.ascona.util.api.GeodesicCausalFilters;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -27,7 +27,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-/* package */ class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
+public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
   protected final SpinnerLabel<GeodesicCausalFilters> spinnerCausalFilter = new SpinnerLabel<>();
   /** parameter to blend extrapolation with measurement */
   private final JSlider jSlider = new JSlider(1, 999, 500);

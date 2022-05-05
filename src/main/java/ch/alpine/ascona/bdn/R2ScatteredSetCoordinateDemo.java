@@ -10,9 +10,9 @@ import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.ImageReshape;
-import ch.alpine.ascona.api.LogWeightings;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.api.ImageReshape;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
@@ -38,7 +38,7 @@ import ch.alpine.tensor.red.Entrywise;
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 // TODO ASCONA ALG possibly only recompute when points have changed
-/* package */ class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
+public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final double RANGE = 5;
   // ---
   private final JToggleButton jToggleButtonAxes = new JToggleButton("axes");

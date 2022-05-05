@@ -4,13 +4,14 @@ package ch.alpine.ascona.curve;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.Curvature2DRender;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.crv.spline.GeodesicBSplineFunction;
@@ -27,6 +28,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
+@ReflectionMarker
 public class NonuniformSplineDemo extends ControlPointsDemo {
   @FieldInteger
   @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
@@ -35,7 +37,7 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
   @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" })
   public Scalar refine = RealScalar.of(4);
 
-  NonuniformSplineDemo() {
+  public NonuniformSplineDemo() {
     super(true, ManifoldDisplays.R2_ONLY);
     // ---
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);

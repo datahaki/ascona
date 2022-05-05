@@ -3,8 +3,8 @@ package ch.alpine.ascona.misc;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -14,7 +14,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.red.Times;
 
-/* package */ class S2LogDemo extends ControlPointsDemo {
+public class S2LogDemo extends ControlPointsDemo {
   public S2LogDemo() {
     super(true, ManifoldDisplays.S2_ONLY);
     // ---

@@ -7,8 +7,8 @@ import java.awt.geom.Path2D;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.Box2D;
-import ch.alpine.ascona.api.MixedLogWeightings;
+import ch.alpine.ascona.util.api.Box2D;
+import ch.alpine.ascona.util.api.MixedLogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.RenderInterface;
@@ -25,7 +25,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 /** moving least squares */
-/* package */ class R2DeformationDemo extends AbstractDeformationDemo {
+public class R2DeformationDemo extends AbstractDeformationDemo {
   private static final double EXTENT = 5.0;
   private static final Tensor ORIGIN = CirclePoints.of(3).multiply(RealScalar.of(0.1));
   // ---
@@ -40,7 +40,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
     }
   };
 
-  R2DeformationDemo() {
+  public R2DeformationDemo() {
     super(ManifoldDisplays.R2_ONLY, MixedLogWeightings.scattered());
     // ---
     {

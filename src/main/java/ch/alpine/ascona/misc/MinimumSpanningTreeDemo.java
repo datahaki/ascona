@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.alpine.ascona.api.LogWeightings;
 import ch.alpine.ascona.lev.LogWeightingDemo;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -37,7 +37,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-/* package */ class MinimumSpanningTreeDemo extends LogWeightingDemo {
+public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   private static record EdgeComparator(Tensor matrix) implements Comparator<IntUndirectedEdge> {
     @Override
     public int compare(IntUndirectedEdge edge1, IntUndirectedEdge edge2) {

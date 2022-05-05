@@ -3,6 +3,7 @@ package ch.alpine.ascona.avg;
 
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
 import ch.alpine.tensor.Tensor;
@@ -11,6 +12,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 /** visualization of geodesic average along geodesics */
+@ReflectionMarker
 public class ExtrapolationSplitsDemo extends AbstractSplitsDemo {
   public WindowFunctions kernel = WindowFunctions.DIRICHLET;
 

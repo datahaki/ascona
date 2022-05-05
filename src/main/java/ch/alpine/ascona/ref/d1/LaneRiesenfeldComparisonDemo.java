@@ -13,8 +13,8 @@ import javax.swing.JToggleButton;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.CurveVisualSet;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.CurveVisualSet;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
@@ -37,7 +37,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.red.Mean;
 
 /** compare different levels of smoothing in the LaneRiesenfeldCurveSubdivision */
-/* package */ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
+public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLORS = ColorDataLists._097.cyclic();
   private static final List<CurveSubdivisionSchemes> CURVE_SUBDIVISION_SCHEMES = //
       CurveSubdivisionHelper.LANE_RIESENFELD;

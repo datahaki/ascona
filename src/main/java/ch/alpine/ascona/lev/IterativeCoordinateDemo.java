@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.util.Arrays;
 import java.util.Optional;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
@@ -23,7 +23,7 @@ import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-/* package */ class IterativeCoordinateDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class IterativeCoordinateDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   private final SpinnerLabel<Integer> spinnerTotal = new SpinnerLabel<>();
   // private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 

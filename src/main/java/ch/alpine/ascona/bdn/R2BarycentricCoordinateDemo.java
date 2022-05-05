@@ -15,11 +15,11 @@ import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.ImageReshape;
-import ch.alpine.ascona.api.LogWeighting;
-import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.api.MixedLogWeightings;
-import ch.alpine.ascona.api.PolygonCoordinates;
+import ch.alpine.ascona.util.api.ImageReshape;
+import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.api.MixedLogWeightings;
+import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
@@ -53,7 +53,7 @@ import ch.alpine.tensor.red.Entrywise;
 import ch.alpine.tensor.red.VectorAngle;
 import ch.alpine.tensor.sca.Sign;
 
-/* package */ class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDemo {
+public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
 

@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.api.BufferedImageSupplier;
 import ch.alpine.ascona.io.GokartPoseDataV2;
+import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
@@ -19,7 +19,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-/* package */ class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo implements BufferedImageSupplier {
+public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo implements BufferedImageSupplier {
   private Tensor refined = Tensors.empty();
 
   public GeodesicExtrapolationDemo() {

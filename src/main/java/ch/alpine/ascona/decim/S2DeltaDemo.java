@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.api.AbstractGeodesicDisplayDemo;
+import ch.alpine.ascona.util.api.AbstractGeodesicDisplayDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -39,7 +39,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-/* package */ class S2DeltaDemo extends AbstractGeodesicDisplayDemo {
+public class S2DeltaDemo extends AbstractGeodesicDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 128 + 64);
   private static final Color COLOR_SHAPE = new Color(128, 255, 128, 128 + 64);
   private static final int WIDTH = 360;

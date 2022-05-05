@@ -13,12 +13,12 @@ import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.Box2D;
-import ch.alpine.ascona.api.LogWeighting;
-import ch.alpine.ascona.api.PolygonCoordinates;
 import ch.alpine.ascona.arp.HsArrayPlot;
 import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.lev.LogWeightingBase;
+import ch.alpine.ascona.util.api.Box2D;
+import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -43,7 +43,7 @@ import ch.alpine.tensor.img.ColorDataLists;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
-/* package */ class CheckerBoardDemo extends LogWeightingBase //
+public class CheckerBoardDemo extends LogWeightingBase //
     implements SpinnerListener<ManifoldDisplay> {
   public static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._000.strict();
   // ---

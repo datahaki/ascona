@@ -4,8 +4,8 @@ package ch.alpine.ascona.bd1;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.api.LogWeightings;
 import ch.alpine.ascona.lev.LogWeightingDemo;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -23,7 +23,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Times;
 
-/* package */ class S1InterpolationDemo extends LogWeightingDemo {
+public class S1InterpolationDemo extends LogWeightingDemo {
   public S1InterpolationDemo() {
     super(true, ManifoldDisplays.R2_ONLY, LogWeightings.list());
     setMidpointIndicated(false);

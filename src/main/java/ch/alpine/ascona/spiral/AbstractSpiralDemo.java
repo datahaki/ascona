@@ -4,7 +4,7 @@ package ch.alpine.ascona.spiral;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
 import ch.alpine.ascona.util.ren.PointsRender;

@@ -4,9 +4,9 @@ package ch.alpine.ascona.bd2;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.lev.LeversHud;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -24,7 +24,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.pi.LeastSquares;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
-/* package */ class CirclePointDemo extends ControlPointsDemo {
+public class CirclePointDemo extends ControlPointsDemo {
   public CirclePointDemo() {
     super(true, ManifoldDisplays.R2_ONLY);
     Tensor sequence = Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(2)).stream().map(PadRight.zeros(3)));

@@ -9,11 +9,12 @@ import java.util.List;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.AbstractGeodesicDisplayDemo;
-import ch.alpine.ascona.api.BufferedImageSupplier;
+import ch.alpine.ascona.util.api.AbstractGeodesicDisplayDemo;
+import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.win.GridRender;
 import ch.alpine.bridge.win.PathRender;
 import ch.alpine.tensor.RealScalar;
@@ -21,6 +22,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 
+@ReflectionMarker
 /* package */ abstract class AbstractDatasetFilterDemo extends AbstractGeodesicDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);

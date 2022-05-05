@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.PolygonCoordinates;
+import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -22,7 +22,7 @@ import ch.alpine.tensor.Tensors;
 /** Visualization of
  * "Spherical Barycentric Coordinates"
  * by Torsten Langer, Alexander Belyaev, Hans-Peter Seidel, 2005 */
-/* package */ class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public LbsBarycenterDemo() {

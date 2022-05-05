@@ -3,8 +3,8 @@ package ch.alpine.ascona.ref.d1h;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascona.api.AbstractDemoHelper;
 import ch.alpine.ascona.io.GokartPoseDataV2;
+import ch.alpine.ascona.util.AbstractDemoHelper;
 
 class HermiteDatasetDemoTest {
   @Test

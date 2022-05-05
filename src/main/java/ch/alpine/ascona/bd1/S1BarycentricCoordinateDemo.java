@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.bd1;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
@@ -9,7 +9,7 @@ import ch.alpine.tensor.lie.r2.AngleVector;
 import ch.alpine.tensor.num.Pi;
 
 // TODO ASCONA ALG crashes when only 2 control points exist
-/* package */ class S1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
+public class S1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
   public S1BarycentricCoordinateDemo() {
     super(LogWeightings.list());
   }

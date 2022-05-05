@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.avg.GeometricSymLinkRender.Link;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymLink;
@@ -16,9 +16,11 @@ import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
+@ReflectionMarker
 public abstract class AbstractSplitsDemo extends ControlPointsDemo {
   private static final Font FONT = new Font(Font.DIALOG, Font.PLAIN, 13);
   public Boolean closest = true;

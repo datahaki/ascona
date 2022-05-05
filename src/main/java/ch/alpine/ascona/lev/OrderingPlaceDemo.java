@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import javax.swing.JButton;
 
-import ch.alpine.ascona.api.LogWeightings;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
@@ -27,7 +27,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 
-/* package */ class OrderingPlaceDemo extends LogWeightingDemo {
+public class OrderingPlaceDemo extends LogWeightingDemo {
   private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
   private final JButton jButton = new JButton("shuffle");
   private final SpinnerLabel<ColorDataGradient> spinnerColorData = SpinnerLabel.of(ColorDataGradients.values());

@@ -11,10 +11,10 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-import ch.alpine.ascona.api.LogWeighting;
-import ch.alpine.ascona.api.LogWeightings;
 import ch.alpine.ascona.arp.HsArrayPlot;
 import ch.alpine.ascona.bdn.AbstractScatteredSetWeightingDemo;
+import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.sophus.hs.Biinvariant;

@@ -6,14 +6,15 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.api.BufferedImageSupplier;
-import ch.alpine.ascona.api.Curvature2DRender;
-import ch.alpine.ascona.api.DubinsGenerator;
+import ch.alpine.ascona.util.api.BufferedImageSupplier;
+import ch.alpine.ascona.util.api.Curvature2DRender;
+import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.Se2CoveringDisplay;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.crv.spline.GeodesicBSplineFunction;
@@ -29,6 +30,7 @@ import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.red.Times;
 
 // TODO ASCONA ALG demo does not seem correct
+@ReflectionMarker
 public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 

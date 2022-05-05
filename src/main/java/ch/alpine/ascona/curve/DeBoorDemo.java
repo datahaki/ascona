@@ -27,7 +27,7 @@ import ch.alpine.tensor.itp.BSplineFunctionString;
 import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.mat.re.Inverse;
 
-/* package */ class DeBoorDemo extends AbstractDemo {
+public class DeBoorDemo extends AbstractDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final Color TICKS_COLOR = new Color(0, 0, 0, 128);
 

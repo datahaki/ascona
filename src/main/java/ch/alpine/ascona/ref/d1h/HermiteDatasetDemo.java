@@ -13,10 +13,10 @@ import javax.swing.JTextField;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.AbstractGeodesicDatasetDemo;
-import ch.alpine.ascona.api.HermiteSubdivisions;
 import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.io.GokartPoseDatas;
+import ch.alpine.ascona.util.api.AbstractGeodesicDatasetDemo;
+import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -66,6 +66,10 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
   public Scalar level = RealScalar.of(3);
   public Boolean diff = true;
   protected Tensor _control = Tensors.empty();
+
+  public HermiteDatasetDemo() {
+    this(GokartPoseDataV2.RACING_DAY);
+  }
 
   public HermiteDatasetDemo(GokartPoseDataV2 gokartPoseData) {
     super(ManifoldDisplays.SE2C_SE2, gokartPoseData);

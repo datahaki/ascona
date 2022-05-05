@@ -32,7 +32,7 @@ import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.N;
 
 // FIXME ASCONA DEMO what does this demo do: there is no curve shown
-/* package */ class S1KrigingDemo extends AnAveragingDemo {
+public class S1KrigingDemo extends AnAveragingDemo {
   private static final Tensor DOMAIN = Drop.tail(CirclePoints.of(161).map(N.DOUBLE), 80);
 
   public S1KrigingDemo() {

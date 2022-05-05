@@ -10,9 +10,9 @@ import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.ImageReshape;
-import ch.alpine.ascona.api.LogWeightings;
 import ch.alpine.ascona.bd2.AbstractExportWeightingDemo;
+import ch.alpine.ascona.util.api.ImageReshape;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
@@ -30,7 +30,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.num.Pi;
 
-/* package */ class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
+public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
   private static final Font FONT = new Font(Font.DIALOG, Font.BOLD, 14);
   private static final double RANGE = 3;
   // ---

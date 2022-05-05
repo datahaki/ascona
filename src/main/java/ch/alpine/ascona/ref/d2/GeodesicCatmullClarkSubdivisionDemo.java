@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -36,7 +36,7 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   @FieldClip(min = "0", max = "5")
   public Scalar refine = RealScalar.of(2);
 
-  GeodesicCatmullClarkSubdivisionDemo() {
+  public GeodesicCatmullClarkSubdivisionDemo() {
     super(false, ManifoldDisplays.SE2C_SE2);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
