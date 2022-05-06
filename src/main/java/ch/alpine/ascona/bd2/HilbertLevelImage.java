@@ -3,7 +3,7 @@ package ch.alpine.ascona.bd2;
 
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.tensor.DoubleScalar;

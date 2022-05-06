@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.arp.HsArrayPlot;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.bridge.awt.RenderQuality;

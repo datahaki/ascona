@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import ch.alpine.ascona.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;

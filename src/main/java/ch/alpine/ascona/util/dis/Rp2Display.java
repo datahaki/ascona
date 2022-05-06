@@ -3,8 +3,8 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.Optional;
 
-import ch.alpine.ascona.arp.HsArrayPlot;
-import ch.alpine.ascona.arp.S2ArrayPlot;
+import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.S2ArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

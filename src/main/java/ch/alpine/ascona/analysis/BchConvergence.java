@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.util.api;
+package ch.alpine.ascona.analysis;
 
 import java.awt.Color;
 import java.io.IOException;

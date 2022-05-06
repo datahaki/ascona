@@ -21,6 +21,8 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Round;
 
+/** comparison between subdivision by geodesic averaging with
+ * unique biinvariant mean as reference */
 /* package */ enum BSpline4SplitComparisonDemo {
   ;
   public static void main(String[] args) {

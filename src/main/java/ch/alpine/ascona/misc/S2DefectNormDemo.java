@@ -9,10 +9,10 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.arp.S2ArrayHelper;
 import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.SnLineDistances;
+import ch.alpine.ascona.util.arp.S2ArrayHelper;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;

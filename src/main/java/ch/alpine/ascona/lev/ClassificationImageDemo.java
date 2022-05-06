@@ -17,9 +17,9 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-import ch.alpine.ascona.arp.HsArrayPlot;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;

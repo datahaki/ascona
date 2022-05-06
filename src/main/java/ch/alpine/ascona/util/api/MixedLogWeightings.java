@@ -15,7 +15,7 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 public enum MixedLogWeightings implements LogWeighting {
-  RADIAL_BASIS() {
+  RADIAL_BASIS {
     @Override
     public TensorUnaryOperator operator( //
         Biinvariant biinvariant, VectorLogManifold vectorLogManifold, //

@@ -3,8 +3,8 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.Random;
 
-import ch.alpine.ascona.arp.HsArrayPlot;
-import ch.alpine.ascona.arp.R2ArrayPlot;
+import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.R2ArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;

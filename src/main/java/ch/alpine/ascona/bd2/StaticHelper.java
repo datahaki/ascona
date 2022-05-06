@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.arp.HsArrayPlot;
 import ch.alpine.ascona.util.api.ImageReshape;
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.S2Display;

@@ -13,12 +13,12 @@ import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.arp.HsArrayPlot;
 import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.lev.LogWeightingBase;
 import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.PolygonCoordinates;
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;

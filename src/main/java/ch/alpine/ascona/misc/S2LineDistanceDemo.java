@@ -7,9 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.arp.S2ArrayHelper;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.SnLineDistances;
+import ch.alpine.ascona.util.arp.S2ArrayHelper;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;

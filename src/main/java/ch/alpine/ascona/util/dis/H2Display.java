@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import ch.alpine.ascona.arp.H2ArrayPlot;
-import ch.alpine.ascona.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.H2ArrayPlot;
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.tensor.Tensor;
 
 public class H2Display extends HnDisplay {

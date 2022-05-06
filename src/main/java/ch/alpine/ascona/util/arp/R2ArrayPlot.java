@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.arp;
+package ch.alpine.ascona.util.arp;
 
 import java.awt.Dimension;
 import java.io.Serializable;
