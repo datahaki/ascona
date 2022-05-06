@@ -4,8 +4,8 @@ package ch.alpine.ascona.aurora;
 import java.io.File;
 import java.io.IOException;
 
-import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
+import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Curvature2D;

@@ -7,9 +7,9 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascona.io.GokartPoseData;
-import ch.alpine.ascona.io.GokartPoseDataV1;
-import ch.alpine.ascona.io.GokartPoseDataV2;
+import ch.alpine.ascona.util.dat.GokartPoseData;
+import ch.alpine.ascona.util.dat.GokartPoseDataV1;
+import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.sophus.api.Geodesic;

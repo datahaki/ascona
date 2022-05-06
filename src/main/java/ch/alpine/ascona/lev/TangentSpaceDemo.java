@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.bd2.GenesisDequeProperties;
+import ch.alpine.ascona.gbc.d2.GenesisDequeProperties;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.fig.ListPlot;

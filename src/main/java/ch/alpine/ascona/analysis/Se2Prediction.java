@@ -3,8 +3,8 @@ package ch.alpine.ascona.analysis;
 
 import java.io.IOException;
 
-import ch.alpine.ascona.io.GokartPoseData;
-import ch.alpine.ascona.io.GokartPoseDataV2;
+import ch.alpine.ascona.util.dat.GokartPoseData;
+import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.sophus.bm.BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.so2.So2;

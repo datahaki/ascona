@@ -3,9 +3,9 @@ package ch.alpine.ascona.decim;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascona.io.GokartPoseDataV1;
-import ch.alpine.ascona.io.GokartPoseDataV2;
 import ch.alpine.ascona.util.AbstractDemoHelper;
+import ch.alpine.ascona.util.dat.GokartPoseDataV1;
+import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 
 class CurveDecimationDemoTest {
   @Test

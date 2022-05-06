@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.function.Function;
 
-import ch.alpine.ascona.io.GokartPoseDataV2;
+import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
