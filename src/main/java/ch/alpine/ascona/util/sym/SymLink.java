@@ -16,9 +16,11 @@ public class SymLink {
   private static final Scalar SHIFT_Y = RealScalar.of(0.5);
 
   public static SymLink build(SymScalar symScalar) {
-    if (symScalar.isScalar())
-      return new SymNode(symScalar.evaluate());
-    return new SymLink(build(symScalar.getP()), build(symScalar.getQ()), symScalar.ratio());
+    if (symScalar instanceof SymScalarPart symScalarPart)
+      return new SymLink(build(symScalarPart.getP()), build(symScalarPart.getQ()), symScalarPart.ratio());
+    if (symScalar instanceof SymScalarLeaf symScalarLeaf)
+      return new SymNode(symScalarLeaf.evaluate());
+    throw new IllegalArgumentException();
   }
 
   // ---

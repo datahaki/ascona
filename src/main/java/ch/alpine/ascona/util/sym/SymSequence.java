@@ -10,6 +10,6 @@ public enum SymSequence {
   /** @param length
    * @return vector of given length and node entries indexed 0, 1, 2, ..., length - 1 */
   public static Tensor of(int length) {
-    return Tensor.of(IntStream.range(0, length).mapToObj(SymScalar::leaf));
+    return Tensor.of(IntStream.range(0, length).mapToObj(SymScalarLeaf::of));
   }
 }

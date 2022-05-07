@@ -20,16 +20,16 @@ import ch.alpine.tensor.alg.Array;
   }
 
   private void visit(Scalar weight, SymScalar root) {
-    if (root.isScalar()) {
-      Scalar scalar = (Scalar) root.tensor();
+    if (root instanceof SymScalarPart symScalarPart) {
+      visit(weight.multiply(RealScalar.ONE.subtract(symScalarPart.ratio())), symScalarPart.getP());
+      visit(weight.multiply(symScalarPart.ratio()), symScalarPart.getQ());
+    } else {
+      Scalar scalar = root.evaluate();
       int index = scalar.number().intValue();
       max = Math.max(max, index);
       while (sum.length() <= index)
         sum.append(RealScalar.ZERO);
       sum.set(value -> value.add(weight), index);
-    } else {
-      visit(weight.multiply(RealScalar.ONE.subtract(root.ratio())), root.getP());
-      visit(weight.multiply(root.ratio()), root.getQ());
     }
   }
 
