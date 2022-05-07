@@ -3,6 +3,7 @@ package ch.alpine.ascona.analysis;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.Objects;
 
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
@@ -52,15 +53,17 @@ public enum BchConvergence {
       default:
         break;
       }
-      System.out.println("algebra=" + pl);
-      ad = ad.map(N.DOUBLE);
-      BakerCampbellHausdorff bakerCampbellHausdorff = (BakerCampbellHausdorff) BakerCampbellHausdorff.of(ad, 12);
-      Tensor series = bakerCampbellHausdorff.series( //
-          Tensors.vector(+0.3, +0.23, +0.37), //
-          Tensors.vector(+0.2, -0.36, +0.18));
-      Tensor tensor = Tensor.of(series.stream().map(Vector2Norm::of));
-      VisualRow visualRow = visualSet.add(Range.of(0, tensor.length()), tensor.map(Log10.FUNCTION));
-      visualRow.setLabel(pl);
+      if (Objects.nonNull(ad)) {
+        System.out.println("algebra=" + pl);
+        ad = ad.map(N.DOUBLE);
+        BakerCampbellHausdorff bakerCampbellHausdorff = (BakerCampbellHausdorff) BakerCampbellHausdorff.of(ad, 12);
+        Tensor series = bakerCampbellHausdorff.series( //
+            Tensors.vector(+0.3, +0.23, +0.37), //
+            Tensors.vector(+0.2, -0.36, +0.18));
+        Tensor tensor = Tensor.of(series.stream().map(Vector2Norm::of));
+        VisualRow visualRow = visualSet.add(Range.of(0, tensor.length()), tensor.map(Log10.FUNCTION));
+        visualRow.setLabel(pl);
+      }
     }
     JFreeChart jFreeChart = ListPlot.of(visualSet, true);
     jFreeChart.setBackgroundPaint(Color.WHITE);

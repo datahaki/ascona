@@ -65,7 +65,7 @@ import ch.alpine.tensor.sca.Round;
       spinnerColorData.addSpinnerListener(v -> recompute());
     }
     {
-      spinnerRes.setArray(20, 30, 50, 75, 100, 150, 200, 250);
+      spinnerRes.setArray(20, 30, 40, 50, 75, 100, 150, 200, 250);
       spinnerRes.setValue(30);
       spinnerRes.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "resolution");
       spinnerRes.addSpinnerListener(v -> recompute());

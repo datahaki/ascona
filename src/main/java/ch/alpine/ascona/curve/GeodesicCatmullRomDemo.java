@@ -19,6 +19,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.win.LookAndFeels;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.crv.spline.GeodesicCatmullRom;
 import ch.alpine.sophus.math.win.KnotSpacing;
@@ -39,6 +40,7 @@ import ch.alpine.tensor.sca.Clips;
 @ReflectionMarker
 public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   @FieldInteger
+  @FieldPreferredWidth(100)
   @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
   public Scalar refine = RealScalar.of(5);
   @FieldSlider
@@ -98,7 +100,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   }
 
   public static void main(String[] args) {
-    // LookAndFeels.INTELLI_J.updateUI();
+    LookAndFeels.DEFAULT.updateUI();
     new GeodesicCatmullRomDemo().setVisible(1200, 600);
   }
 }

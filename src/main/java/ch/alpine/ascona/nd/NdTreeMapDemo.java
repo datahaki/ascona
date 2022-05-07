@@ -8,12 +8,10 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
 
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
-import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.AbstractDemo;
@@ -37,18 +35,18 @@ import ch.alpine.tensor.sca.Abs;
 public class NdTreeMapDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
-    @FieldPreferredWidth(40)
+    // @FieldPreferredWidth(40)
     @FieldInteger
     public Scalar leafSizeMax = RealScalar.of(5);
-    @FieldPreferredWidth(40)
+    // @FieldPreferredWidth(100)
     @FieldInteger
     @FieldClip(min = "1", max = "10000")
     public Scalar count = RealScalar.of(1000);
-    @FieldPreferredWidth(40)
+    // @FieldPreferredWidth(40)
     @FieldInteger
     @FieldClip(min = "1", max = "20")
     public Scalar multi = RealScalar.of(10);
-    @FieldPreferredWidth(40)
+    // @FieldPreferredWidth(40)
     @FieldInteger
     public Scalar pCount = RealScalar.of(4);
     public Boolean nearest = false;
@@ -61,16 +59,12 @@ public class NdTreeMapDemo extends AbstractDemo {
 
   public NdTreeMapDemo() {
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
-    // Container container = timerFrame.jFrame.getContentPane();
-    // JScrollPane jScrollPane = new PanelFieldsEditor(param).getJScrollPane();
-    // jScrollPane.setPreferredSize(new Dimension(200, 200));
-    // container.add(BorderLayout.WEST, jScrollPane);
-    // timerFrame.geometricComponent.setOffset(100, 600);
+    timerFrame.geometricComponent.setOffset(100, 600);
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RenderQuality.setQuality(graphics);
+    // normal rendering quality
     graphics.setColor(Color.GRAY);
     Tensor points = Tensor.of(pointsAll.stream().limit(param.count.number().intValue()));
     for (Tensor point : points) {
@@ -135,7 +129,7 @@ public class NdTreeMapDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.NIMBUS.updateUI();
+    LookAndFeels.LIGHT.updateUI();
     new NdTreeMapDemo().setVisible(1000, 800);
   }
 }
