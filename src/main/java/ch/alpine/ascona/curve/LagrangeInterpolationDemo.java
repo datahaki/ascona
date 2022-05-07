@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.util.stream.IntStream;
 
 import javax.swing.JSlider;
 
@@ -65,7 +64,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     final Scalar parameter = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum()) //
         .multiply(RealScalar.of(sequence.length()));
     if (graph) {
-      Tensor vector = Tensor.of(IntStream.range(0, sequence.length()).mapToObj(SymScalar::leaf));
+      Tensor vector = SymScalar.init(sequence.length());
       ScalarTensorFunction scalarTensorFunction = LagrangeInterpolation.of(SymGeodesic.INSTANCE, vector)::at;
       Scalar scalar = N.DOUBLE.apply(parameter);
       SymScalar symScalar = (SymScalar) scalarTensorFunction.apply(scalar);

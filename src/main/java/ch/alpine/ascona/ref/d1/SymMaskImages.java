@@ -4,7 +4,6 @@ package ch.alpine.ascona.ref.d1;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
@@ -57,7 +56,7 @@ import ch.alpine.tensor.Tensor;
 
   private BufferedImage bufferedImage(int index) {
     CurveSubdivision curveSubdivision = function.apply(SymGeodesic.INSTANCE);
-    Tensor vector = Tensor.of(IntStream.range(0, support).mapToObj(SymScalar::leaf));
+    Tensor vector = SymScalar.init(support);
     Tensor tensor = curveSubdivision.cyclic(vector);
     return new SymLinkImage((SymScalar) tensor.Get(index)).bufferedImage();
   }

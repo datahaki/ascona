@@ -3,7 +3,6 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
@@ -46,7 +45,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
     ScalarUnaryOperator smoothingKernel = spinnerKernel.getValue().get();
     int radius = spinnerRadius.getValue();
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(SymGeodesic.INSTANCE, smoothingKernel);
-    Tensor vector = Tensor.of(IntStream.range(0, radius + 1).mapToObj(SymScalar::leaf));
+    Tensor vector = SymScalar.init(radius + 1);
     Tensor tensor = tensorUnaryOperator.apply(vector);
     SymLinkImage symLinkImage = new SymLinkImage((SymScalar) tensor, SymLinkImage.FONT_SMALL);
     symLinkImage.title(smoothingKernel + "[" + (radius + 1) + "]");

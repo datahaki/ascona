@@ -3,7 +3,6 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
@@ -54,7 +53,7 @@ public final class Regularization2StepDemo extends AbstractSpectrogramDemo imple
   public BufferedImage bufferedImage() {
     Scalar factor = ratio;
     TensorUnaryOperator tensorUnaryOperator = Regularization2Step.string(SymGeodesic.INSTANCE, factor);
-    Tensor vector = Tensor.of(IntStream.range(0, 3).mapToObj(SymScalar::leaf));
+    Tensor vector = SymScalar.init(3);
     Tensor tensor = tensorUnaryOperator.apply(vector);
     SymLinkImage symLinkImage = new SymLinkImage((SymScalar) tensor.get(1), SymLinkImages.FONT_SMALL);
     symLinkImage.title("Regularization2Step [" + factor + "]");

@@ -5,6 +5,7 @@ import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.win.LookAndFeels;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
 import ch.alpine.tensor.Tensor;
@@ -29,13 +30,13 @@ public class GeodesicSplitsDemo extends AbstractSplitsDemo {
       return 0 < vector.length() //
           ? (SymScalar) GeodesicExtrapolation.of(SymGeodesic.INSTANCE, kernel.get()).apply(vector)
           : null;
-
     if (!Integers.isEven(vector.length()))
       return (SymScalar) GeodesicCenter.of(SymGeodesic.INSTANCE, kernel.get()).apply(vector);
     return null;
   }
 
   public static void main(String[] args) {
+    LookAndFeels.DEFAULT.updateUI();
     new GeodesicSplitsDemo().setVisible(1000, 600);
   }
 }

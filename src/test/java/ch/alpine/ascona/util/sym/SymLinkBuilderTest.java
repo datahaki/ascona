@@ -3,8 +3,6 @@ package ch.alpine.ascona.util.sym;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.stream.IntStream;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.crv.bezier.BezierFunction;
@@ -17,7 +15,7 @@ class SymLinkBuilderTest {
   @Test
   public void testSimple() {
     Tensor control = Tensors.vector(1, 2, 3);
-    Tensor vector = Tensor.of(IntStream.range(0, control.length()).mapToObj(SymScalar::leaf));
+    Tensor vector = SymScalar.init(control.length());
     ScalarTensorFunction scalarTensorFunction = BezierFunction.of(SymGeodesic.INSTANCE, vector);
     SymScalar symScalar = (SymScalar) scalarTensorFunction.apply(RealScalar.of(0.3));
     // ---

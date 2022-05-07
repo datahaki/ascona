@@ -2,7 +2,6 @@
 package ch.alpine.ascona.util.sym;
 
 import java.awt.Font;
-import java.util.stream.IntStream;
 
 import ch.alpine.sophus.crv.spline.GeodesicBSplineFunction;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
@@ -18,7 +17,7 @@ public enum SymLinkImages {
   public static final Font FONT_SMALL = new Font(Font.DIALOG, Font.PLAIN, 11);
 
   public static SymLinkImage deboor(Tensor knots, int length, Scalar scalar) {
-    Tensor vector = Tensor.of(IntStream.range(0, length).mapToObj(SymScalar::leaf));
+    Tensor vector = SymScalar.init(length);
     ScalarTensorFunction scalarTensorFunction = DeBoor.of(SymGeodesic.INSTANCE, knots, vector);
     Tensor tensor = scalarTensorFunction.apply(scalar);
     SymLinkImage symLinkImage = new SymLinkImage((SymScalar) tensor, FONT_SMALL);
@@ -28,7 +27,7 @@ public enum SymLinkImages {
 
   public static SymLinkImage ofGC(ScalarUnaryOperator smoothingKernel, int radius) {
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(SymGeodesic.INSTANCE, smoothingKernel);
-    Tensor vector = Tensor.of(IntStream.range(0, 2 * radius + 1).mapToObj(SymScalar::leaf));
+    Tensor vector = SymScalar.init(2 * radius + 1);
     Tensor tensor = tensorUnaryOperator.apply(vector);
     SymLinkImage symLinkImage = new SymLinkImage((SymScalar) tensor, FONT_SMALL);
     symLinkImage.title(smoothingKernel + "[" + (2 * radius + 1) + "]");
@@ -36,7 +35,7 @@ public enum SymLinkImages {
   }
 
   /* package */ public static SymLinkImage symLinkImageGBSF(int degree, int length, Scalar scalar) {
-    Tensor vector = Tensor.of(IntStream.range(0, length).mapToObj(SymScalar::leaf));
+    Tensor vector = SymScalar.init(length);
     ScalarTensorFunction scalarTensorFunction = GeodesicBSplineFunction.of(SymGeodesic.INSTANCE, degree, vector);
     Tensor tensor = scalarTensorFunction.apply(scalar);
     SymLinkImage symLinkImage = new SymLinkImage((SymScalar) tensor, FONT_SMALL);

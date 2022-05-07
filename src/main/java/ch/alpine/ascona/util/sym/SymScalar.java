@@ -4,6 +4,7 @@ package ch.alpine.ascona.util.sym;
 import java.io.Serializable;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
+import java.util.stream.IntStream;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.MultiplexScalar;
@@ -13,12 +14,19 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.Tensors;
 
+// TODO ASCONA this class is two classes in one
 public class SymScalar extends MultiplexScalar implements Serializable {
+  /** @param length
+   * @return vector of given length and node entries indexed 0, 1, 2, ..., length - 1 */
+  public static Tensor init(int length) {
+    return Tensor.of(IntStream.range(0, length).mapToObj(SymScalar::leaf));
+  }
+
   /** @param p
    * @param q
    * @param ratio
    * @return */
-  public static Scalar of(Scalar p, Scalar q, Scalar ratio) {
+  /* package */ static Scalar of(Scalar p, Scalar q, Scalar ratio) {
     if (p instanceof SymScalar && q instanceof SymScalar)
       return new SymScalar(Tensors.of(p, q, ratio).unmodifiable());
     throw TensorRuntimeException.of(p, q, ratio);
@@ -26,12 +34,9 @@ public class SymScalar extends MultiplexScalar implements Serializable {
 
   /** @param number of control coordinate
    * @return */
-  public static Scalar leaf(int number) {
-    return new SymScalar(RealScalar.of(number));
+  /* package */ static Scalar leaf(int length) {
+    return new SymScalar(RealScalar.of(length));
   }
-  // public static Scalar leaf(Scalar scalar) {
-  // return new SymScalar(scalar);
-  // }
 
   // ---
   private final Tensor tensor;

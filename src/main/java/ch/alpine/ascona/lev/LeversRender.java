@@ -544,6 +544,8 @@ public class LeversRender {
 
   /** render point of coordinate evaluation */
   public void renderOrigin() {
+    if (Objects.isNull(origin))
+      return;
     ORIGIN_RENDER_0.show( //
         manifoldDisplay::matrixLift, //
         shape.multiply(RealScalar.of(1.0)), //
