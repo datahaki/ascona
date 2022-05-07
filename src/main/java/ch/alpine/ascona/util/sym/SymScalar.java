@@ -4,7 +4,6 @@ package ch.alpine.ascona.util.sym;
 import java.io.Serializable;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
-import java.util.stream.IntStream;
 
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.tensor.MultiplexScalar;
@@ -16,12 +15,6 @@ import ch.alpine.tensor.Tensors;
 
 // TODO ASCONA this class is two classes in one
 public class SymScalar extends MultiplexScalar implements Serializable {
-  /** @param length
-   * @return vector of given length and node entries indexed 0, 1, 2, ..., length - 1 */
-  public static Tensor init(int length) {
-    return Tensor.of(IntStream.range(0, length).mapToObj(SymScalar::leaf));
-  }
-
   /** @param p
    * @param q
    * @param ratio
@@ -46,27 +39,27 @@ public class SymScalar extends MultiplexScalar implements Serializable {
   }
 
   /** @return unmodifiable tensor */
-  public Tensor tensor() {
+  /* package */ Tensor tensor() {
     return tensor;
   }
 
-  public boolean isScalar() {
+  /* package */ boolean isScalar() {
     return tensor instanceof Scalar;
   }
 
-  public SymScalar getP() {
+  /* package */ SymScalar getP() {
     return (SymScalar) tensor.Get(0);
   }
 
-  public SymScalar getQ() {
+  /* package */ SymScalar getQ() {
     return (SymScalar) tensor.Get(1);
   }
 
-  public Scalar ratio() {
+  /* package */ Scalar ratio() {
     return tensor.Get(2);
   }
 
-  public Scalar evaluate() {
+  /* package */ Scalar evaluate() {
     return isScalar() //
         ? (Scalar) tensor
         : (Scalar) RnGeodesic.INSTANCE.split( //
@@ -126,11 +119,8 @@ public class SymScalar extends MultiplexScalar implements Serializable {
 
   @Override
   public boolean equals(Object object) {
-    if (object instanceof SymScalar) {
-      SymScalar symScalar = (SymScalar) object;
-      return symScalar.tensor.equals(tensor);
-    }
-    return false;
+    return object instanceof SymScalar symScalar //
+        && symScalar.tensor.equals(tensor);
   }
 
   @Override

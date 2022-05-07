@@ -14,6 +14,7 @@ import ch.alpine.ascona.util.sym.SymLink;
 import ch.alpine.ascona.util.sym.SymLinkBuilder;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.ascona.util.sym.SymSequence;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -34,7 +35,7 @@ public abstract class AbstractSplitsDemo extends ControlPointsDemo {
     Tensor control = getGeodesicControlPoints();
     // ---
     setMidpointIndicated(closest);
-    SymScalar symScalar = symScalar(SymScalar.init(control.length()));
+    SymScalar symScalar = symScalar(SymSequence.of(control.length()));
     SymLink symLink = null;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     if (Objects.nonNull(symScalar)) {

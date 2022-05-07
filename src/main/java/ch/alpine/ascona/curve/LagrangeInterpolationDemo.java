@@ -15,6 +15,7 @@ import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.ascona.util.sym.SymSequence;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
@@ -64,7 +65,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     final Scalar parameter = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum()) //
         .multiply(RealScalar.of(sequence.length()));
     if (graph) {
-      Tensor vector = SymScalar.init(sequence.length());
+      Tensor vector = SymSequence.of(sequence.length());
       ScalarTensorFunction scalarTensorFunction = LagrangeInterpolation.of(SymGeodesic.INSTANCE, vector)::at;
       Scalar scalar = N.DOUBLE.apply(parameter);
       SymScalar symScalar = (SymScalar) scalarTensorFunction.apply(scalar);

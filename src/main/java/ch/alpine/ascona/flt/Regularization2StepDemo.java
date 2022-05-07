@@ -10,7 +10,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymLinkImages;
-import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.ascona.util.sym.SymSequence;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -53,9 +53,9 @@ public final class Regularization2StepDemo extends AbstractSpectrogramDemo imple
   public BufferedImage bufferedImage() {
     Scalar factor = ratio;
     TensorUnaryOperator tensorUnaryOperator = Regularization2Step.string(SymGeodesic.INSTANCE, factor);
-    Tensor vector = SymScalar.init(3);
+    Tensor vector = SymSequence.of(3);
     Tensor tensor = tensorUnaryOperator.apply(vector);
-    SymLinkImage symLinkImage = new SymLinkImage((SymScalar) tensor.get(1), SymLinkImages.FONT_SMALL);
+    SymLinkImage symLinkImage = new SymLinkImage(tensor.get(1), SymLinkImages.FONT_SMALL);
     symLinkImage.title("Regularization2Step [" + factor + "]");
     return symLinkImage.bufferedImage();
   }

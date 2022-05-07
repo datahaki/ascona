@@ -38,12 +38,12 @@ public class SymLinkImage {
   private int minx = Integer.MAX_VALUE;
   private int maxx = 0;
 
-  public SymLinkImage(SymScalar symScalar) {
+  public SymLinkImage(Tensor symScalar) {
     this(symScalar, FONT);
   }
 
-  public SymLinkImage(SymScalar symScalar, Font font) {
-    this(symScalar, font, null);
+  public SymLinkImage(Tensor symScalar, Font font) {
+    this((SymScalar) symScalar, font, null);
   }
 
   public SymLinkImage(SymScalar symScalar, Font font, Color background) {

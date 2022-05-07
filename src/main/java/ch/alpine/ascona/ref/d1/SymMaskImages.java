@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
-import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.ascona.util.sym.SymSequence;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;
@@ -56,9 +56,9 @@ import ch.alpine.tensor.Tensor;
 
   private BufferedImage bufferedImage(int index) {
     CurveSubdivision curveSubdivision = function.apply(SymGeodesic.INSTANCE);
-    Tensor vector = SymScalar.init(support);
+    Tensor vector = SymSequence.of(support);
     Tensor tensor = curveSubdivision.cyclic(vector);
-    return new SymLinkImage((SymScalar) tensor.Get(index)).bufferedImage();
+    return new SymLinkImage(tensor.Get(index)).bufferedImage();
   }
 
   public BufferedImage image0() {
