@@ -10,6 +10,8 @@ public abstract class SymScalar extends MultiplexScalar implements Serializable 
   /** @return recursive evaluation of this coordinate */
   protected abstract Scalar evaluate();
 
+  public abstract SymLink build();
+
   @Override
   public Scalar multiply(Scalar scalar) {
     throw new UnsupportedOperationException();

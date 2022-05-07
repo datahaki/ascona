@@ -22,7 +22,6 @@ import ch.alpine.tensor.io.ImageFormat;
 
 /** used in demos */
 public class SymLinkImage {
-  public static final Font FONT_SMALL = new Font(Font.DIALOG, Font.PLAIN, 11);
   private static final int WIDTH = 100;
   /** height also appears in the model2pixel matrix */
   private static final int HEIGHT = 50;
@@ -38,16 +37,18 @@ public class SymLinkImage {
   private int minx = Integer.MAX_VALUE;
   private int maxx = 0;
 
-  public SymLinkImage(Tensor symScalar) {
-    this(symScalar, FONT);
+  /** @param tensor instance of {@link SymScalar} */
+  public SymLinkImage(Tensor tensor) {
+    this(tensor, FONT);
   }
 
-  public SymLinkImage(Tensor symScalar, Font font) {
-    this((SymScalar) symScalar, font, null);
+  public SymLinkImage(Tensor tensor, Font font) {
+    this(tensor, font, null);
   }
 
-  public SymLinkImage(SymScalar symScalar, Font font, Color background) {
-    final SymLink root = SymLink.build(symScalar);
+  private SymLinkImage(Tensor tensor, Font font, Color background) {
+    SymScalar symScalar = (SymScalar) tensor;
+    final SymLink root = symScalar.build();
     final Tensor vector = SymWeights.of(symScalar);
     final int depth = root.depth();
     Tensor position = root.getPosition();

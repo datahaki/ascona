@@ -41,6 +41,11 @@ import ch.alpine.tensor.Tensors;
   }
 
   @Override
+  public SymLink build() {
+    return new SymLinkPart(p.build(), q.build(), ratio);
+  }
+
+  @Override
   public Scalar eachMap(UnaryOperator<Scalar> unaryOperator) {
     return new SymScalarPart(p, q, unaryOperator.apply(ratio));
   }

@@ -8,6 +8,8 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 
 /* package */ class SymScalarLeaf extends SymScalar {
+  /** @param index
+   * @return */
   public static Scalar of(int index) {
     return new SymScalarLeaf(RealScalar.of(index));
   }
@@ -22,6 +24,11 @@ import ch.alpine.tensor.Scalar;
   @Override
   protected Scalar evaluate() {
     return scalar;
+  }
+
+  @Override
+  public SymLink build() {
+    return new SymLinkLeaf(scalar);
   }
 
   @Override

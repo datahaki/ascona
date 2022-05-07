@@ -9,6 +9,7 @@ import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
+import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.ascona.util.sym.SymSequence;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
@@ -47,7 +48,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(SymGeodesic.INSTANCE, smoothingKernel);
     Tensor vector = SymSequence.of(radius + 1);
     Tensor tensor = tensorUnaryOperator.apply(vector);
-    SymLinkImage symLinkImage = new SymLinkImage(tensor, SymLinkImage.FONT_SMALL);
+    SymLinkImage symLinkImage = new SymLinkImage(tensor, SymLinkImages.FONT_SMALL);
     symLinkImage.title(smoothingKernel + "[" + (radius + 1) + "]");
     return symLinkImage.bufferedImage();
   }

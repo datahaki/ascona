@@ -20,9 +20,12 @@ public class SymLinkBuilder {
 
   private SymLink build(SymScalar symScalar) {
     if (symScalar instanceof SymScalarPart symScalarPart) {
-      return new SymLink(build(symScalarPart.getP()), build(symScalarPart.getQ()), symScalarPart.ratio());
+      return new SymLinkPart( //
+          build(symScalarPart.getP()), //
+          build(symScalarPart.getQ()), //
+          symScalarPart.ratio());
     }
-    SymNode symNode = new SymNode(symScalar.evaluate());
+    SymLinkLeaf symNode = new SymLinkLeaf(symScalar.evaluate());
     symNode.position = control.get(symNode.getIndex());
     return symNode;
   }
