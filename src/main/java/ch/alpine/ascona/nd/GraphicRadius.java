@@ -10,11 +10,11 @@ import ch.alpine.tensor.opt.nd.NdCenterInterface;
 import ch.alpine.tensor.opt.nd.NdCollectRadius;
 import ch.alpine.tensor.opt.nd.NdEntry;
 
-public class GraphicSpherical<V> extends NdCollectRadius<V> {
+/* package */ class GraphicRadius<V> extends NdCollectRadius<V> {
   private final GeometricLayer geometricLayer;
   private final Graphics2D graphics;
 
-  protected GraphicSpherical( //
+  protected GraphicRadius( //
       NdCenterInterface ndCenterInterface, Scalar radius, //
       GeometricLayer geometricLayer, Graphics2D graphics) {
     super(ndCenterInterface, radius);
@@ -23,9 +23,9 @@ public class GraphicSpherical<V> extends NdCollectRadius<V> {
   }
 
   @Override
-  public boolean isViable(CoordinateBoundingBox box) {
-    StaticHelper.draw(box, geometricLayer, graphics);
-    return super.isViable(box);
+  public boolean isViable(CoordinateBoundingBox coordinateBoundingBox) {
+    StaticHelper.draw(coordinateBoundingBox, geometricLayer, graphics);
+    return super.isViable(coordinateBoundingBox);
   }
 
   @Override

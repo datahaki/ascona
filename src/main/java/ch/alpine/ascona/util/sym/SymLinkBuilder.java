@@ -25,8 +25,8 @@ public class SymLinkBuilder {
           build(symScalarPart.getQ()), //
           symScalarPart.ratio());
     }
-    SymLinkLeaf symNode = new SymLinkLeaf(symScalar.evaluate());
-    symNode.position = control.get(symNode.getIndex());
-    return symNode;
+    SymLinkLeaf symLinkLeaf = new SymLinkLeaf(symScalar.evaluate());
+    symLinkLeaf.position = control.get(symLinkLeaf.getIndex());
+    return symLinkLeaf;
   }
 }

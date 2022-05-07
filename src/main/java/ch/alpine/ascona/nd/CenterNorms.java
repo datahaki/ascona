@@ -7,7 +7,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.opt.nd.NdCenterInterface;
 import ch.alpine.tensor.opt.nd.NdCenters;
 
-public enum CenterNorms {
+/* package */ enum CenterNorms {
   _1 {
     @Override
     public NdCenterInterface ndCenterInterface(Tensor center) {

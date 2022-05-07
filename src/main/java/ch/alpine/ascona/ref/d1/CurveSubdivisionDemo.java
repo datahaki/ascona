@@ -197,7 +197,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.DARK.updateUI();
+    LookAndFeels.LIGHT.updateUI();
     new CurveSubdivisionDemo().setVisible(1200, 800);
   }
 }

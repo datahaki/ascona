@@ -9,7 +9,7 @@ import ch.alpine.tensor.opt.nd.NdCenterInterface;
 import ch.alpine.tensor.opt.nd.NdCollectNearest;
 import ch.alpine.tensor.opt.nd.NdEntry;
 
-public class GraphicNearest<V> extends NdCollectNearest<V> {
+/* package */ class GraphicNearest<V> extends NdCollectNearest<V> {
   private final GeometricLayer geometricLayer;
   private final Graphics2D graphics;
 
@@ -22,9 +22,9 @@ public class GraphicNearest<V> extends NdCollectNearest<V> {
   }
 
   @Override
-  public boolean isViable(CoordinateBoundingBox box) {
-    StaticHelper.draw(box, geometricLayer, graphics);
-    return super.isViable(box);
+  public boolean isViable(CoordinateBoundingBox coordinateBoundingBox) {
+    StaticHelper.draw(coordinateBoundingBox, geometricLayer, graphics);
+    return super.isViable(coordinateBoundingBox);
   }
 
   @Override

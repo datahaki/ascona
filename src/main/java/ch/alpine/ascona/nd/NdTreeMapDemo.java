@@ -35,18 +35,14 @@ import ch.alpine.tensor.sca.Abs;
 public class NdTreeMapDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
-    // @FieldPreferredWidth(40)
     @FieldInteger
     public Scalar leafSizeMax = RealScalar.of(5);
-    // @FieldPreferredWidth(100)
     @FieldInteger
     @FieldClip(min = "1", max = "10000")
     public Scalar count = RealScalar.of(1000);
-    // @FieldPreferredWidth(40)
     @FieldInteger
     @FieldClip(min = "1", max = "20")
     public Scalar multi = RealScalar.of(10);
-    // @FieldPreferredWidth(40)
     @FieldInteger
     public Scalar pCount = RealScalar.of(4);
     public Boolean nearest = false;
@@ -93,8 +89,8 @@ public class NdTreeMapDemo extends AbstractDemo {
       ndMap.visit(graphicNearest);
       collection = graphicNearest.queue();
     } else {
-      GraphicSpherical<Void> graphicSpherical = //
-          new GraphicSpherical<>(ndCenterInterface, radius, geometricLayer, graphics);
+      GraphicRadius<Void> graphicSpherical = //
+          new GraphicRadius<>(ndCenterInterface, radius, geometricLayer, graphics);
       ndMap.visit(graphicSpherical);
       collection = graphicSpherical.list();
     }
