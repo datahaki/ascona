@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import ch.alpine.ascona.lev.AbstractPlaceDemo;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -40,11 +41,12 @@ public class PolygonClipDemo extends AbstractPlaceDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RenderQuality.setQuality(graphics);
     new PathRender(COLOR_DATA_INDEXED.getColor(3), 1.5f).setCurve(CIRCLE, true).render(geometricLayer, graphics);
     Tensor sequence = getGeodesicControlPoints();
     {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
       leversRender.renderSequence();
     }
     new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f).setCurve(sequence, true).render(geometricLayer, graphics);
@@ -59,8 +61,8 @@ public class PolygonClipDemo extends AbstractPlaceDemo {
         Color color = COLOR_DATA_INDEXED.getColor(cind);
         PointsRender pointsRender = new PointsRender(color, Color.BLACK);
         pointsRender.show( //
-            manifoldDisplay()::matrixLift, //
-            manifoldDisplay().shape().multiply(RealScalar.of(2)), //
+            manifoldDisplay::matrixLift, //
+            manifoldDisplay.shape().multiply(RealScalar.of(2)), //
             Tensors.of(result.get(index))) //
             .render(geometricLayer, graphics);
       }
@@ -91,7 +93,7 @@ public class PolygonClipDemo extends AbstractPlaceDemo {
       graphics.draw(geometricLayer.toLine2D(nsum));
       geometricLayer.popMatrix();
     }
-    LeversRender leversRender = LeversRender.of(manifoldDisplay(), result, null, geometricLayer, graphics);
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, result, null, geometricLayer, graphics);
     leversRender.renderIndexP();
     RenderQuality.setDefault(graphics);
     // new PathRender(COLOR_DATA_INDEXED.getColor(1), 2.5f).setCurve(HILBERT, false).render(geometricLayer, graphics);

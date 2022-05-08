@@ -118,7 +118,7 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
         }
       }
       {
-        LeversRender leversRender = LeversRender.of(manifoldDisplay(), surfaceMesh.vrt, null, geometricLayer, graphics);
+        LeversRender leversRender = LeversRender.of(manifoldDisplay, surfaceMesh.vrt, null, geometricLayer, graphics);
         leversRender.renderSequence();
       }
     }

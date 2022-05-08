@@ -74,7 +74,7 @@ public class PolygonCoordinatesDemo extends A2ScatteredSetCoordinateDemo //
       final Tensor sequence = getGeodesicControlPoints();
       {
         System.out.println("computing levels image");
-        BufferedImage bufferedImage = HilbertLevelImage.of(manifoldDisplay(), sequence, resolution(), colorDataGradient(), 32);
+        BufferedImage bufferedImage = HilbertLevelImage.of(manifoldDisplay, sequence, resolution(), colorDataGradient(), 32);
         try {
           File file = new File(root, "levels.png");
           ImageIO.write(bufferedImage, "png", file);

@@ -132,31 +132,32 @@ public class CheckerBoardDemo extends LogWeightingBase //
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));
     RenderQuality.setQuality(graphics);
     {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     // ---
     if (jToggleButton.isSelected()) {
       LeversRender leversRender = LeversRender.of( //
-          manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
+          manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
       leversRender.renderSurfaceP();
       if (Objects.isNull(bufferedImage))
         recompute();
       if (Objects.nonNull(bufferedImage)) {
         RenderQuality.setDefault(graphics); // default so that raster becomes visible
-        HsArrayPlot geodesicArrayPlot = manifoldDisplay().geodesicArrayPlot();
+        HsArrayPlot geodesicArrayPlot = manifoldDisplay.geodesicArrayPlot();
         Tensor pixel2model = geodesicArrayPlot.pixel2model(new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
         ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
       }
     } else {
       reference = getGeodesicControlPoints();
       LeversRender leversRender = LeversRender.of( //
-          manifoldDisplay(), reference, null, geometricLayer, graphics);
+          manifoldDisplay, reference, null, geometricLayer, graphics);
       leversRender.renderSurfaceP();
       bufferedImage = null;
     }

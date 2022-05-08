@@ -72,17 +72,17 @@ public class DuckietownSmoothingDemo extends AbstractDatasetKernelDemo implement
 
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     final int degree = spinnerDegree.getValue();
     final int levels = spinnerRefine.getValue();
     final Tensor control = control();
     Tensor effective = control;
     TensorUnaryOperator centripedalKnotSpacing = //
-        KnotSpacing.centripetal(manifoldDisplay().parametricDistance(), 0.5);
+        KnotSpacing.centripetal(manifoldDisplay.parametricDistance(), 0.5);
     Tensor knots = centripedalKnotSpacing.apply(control);
     final Scalar upper = Last.of(knots);
     final Scalar parameter = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum()).multiply(upper);
     // ---
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicBSplineFunction scalarTensorFunction = //
         GeodesicBSplineFunction.of(manifoldDisplay.geodesic(), degree, knots, effective);
     RenderQuality.setQuality(graphics);

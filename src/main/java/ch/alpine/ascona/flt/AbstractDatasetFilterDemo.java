@@ -111,7 +111,7 @@ import ch.alpine.tensor.alg.Subdivide;
     }
     RenderQuality.setDefault(graphics);
     if (jToggleDiff.isSelected())
-      differences_render(graphics, manifoldDisplay(), refined, jToggleSpec.isSelected());
+      differences_render(graphics, manifoldDisplay, refined, jToggleSpec.isSelected());
   }
 
   public Scalar markerScale() {

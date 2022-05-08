@@ -71,8 +71,8 @@ public class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
           Color color = COLOR_DATA_INDEXED.getColor(cind);
           PointsRender pointsRender = new PointsRender(color, Color.BLACK);
           pointsRender.show( //
-              manifoldDisplay()::matrixLift, //
-              manifoldDisplay().shape().multiply(RealScalar.of(2)), //
+              manifoldDisplay::matrixLift, //
+              manifoldDisplay.shape().multiply(RealScalar.of(2)), //
               Tensors.of(result.get(index))) //
               .render(geometricLayer, graphics);
         }
@@ -106,7 +106,7 @@ public class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
         graphics.draw(geometricLayer.toLine2D(nsum));
         geometricLayer.popMatrix();
       }
-      LeversRender leversRender = LeversRender.of(manifoldDisplay(), result, null, geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, result, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     } else {
       Tensor sequence = getGeodesicControlPoints();

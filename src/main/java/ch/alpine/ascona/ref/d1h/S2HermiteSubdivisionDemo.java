@@ -77,6 +77,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     S2Display s2Display = (S2Display) manifoldDisplay();
     Scalar vscale = beta;
     Tensor control = Tensor.of(getControlPointsSe2().stream().map(xya -> {
@@ -86,7 +87,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           s2Display.project(xy0), //
           s2Display.createTangent(xy0, xya.Get(2)).multiply(vscale));
     }));
-    POINTS_RENDER_0.show(manifoldDisplay()::matrixLift, getControlPointShape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
+    POINTS_RENDER_0.show(manifoldDisplay::matrixLift, getControlPointShape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
     Geodesic geodesicInterface = s2Display.geodesic();
     { // render tangents as geodesic on sphere
       for (Tensor ctrl : control) {

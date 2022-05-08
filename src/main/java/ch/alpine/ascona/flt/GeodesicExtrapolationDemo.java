@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
@@ -31,9 +32,10 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
   protected void updateState() {
     super.updateState();
     // ---
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = //
-        GeodesicExtrapolation.of(manifoldDisplay().geodesic(), spinnerKernel.getValue().get());
-    refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay().geodesic(), spinnerRadius.getValue()).apply(control());
+        GeodesicExtrapolation.of(manifoldDisplay.geodesic(), spinnerKernel.getValue().get());
+    refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesic(), spinnerRadius.getValue()).apply(control());
   }
 
   @Override // from RenderInterface

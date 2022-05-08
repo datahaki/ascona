@@ -12,6 +12,7 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -68,6 +69,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     // ---
     Tensor control = Sort.of(getGeodesicControlPoints());
     if (1 < control.length()) {
@@ -76,7 +78,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
       // ---
       Tensor domain = domain(support);
       if (jToggleButton.isSelected()) {
-        ScalarTensorFunction geodesicNeville = InterpolatingPolynomial.of(manifoldDisplay().geodesic(), support).scalarTensorFunction(funceva);
+        ScalarTensorFunction geodesicNeville = InterpolatingPolynomial.of(manifoldDisplay.geodesic(), support).scalarTensorFunction(funceva);
         Tensor basis = domain.map(geodesicNeville);
         {
           Tensor curve = Transpose.of(Tensors.of(domain, basis));
@@ -99,7 +101,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
       }
     }
     {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }

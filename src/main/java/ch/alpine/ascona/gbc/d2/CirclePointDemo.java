@@ -52,7 +52,7 @@ public class CirclePointDemo extends ControlPointsDemo {
       graphics.setColor(Color.LIGHT_GRAY);
       graphics.draw(geometricLayer.toPath2D(CirclePoints.of(31), true));
       LeversRender leversRender = LeversRender.of( //
-          manifoldDisplay(), levers, Array.zeros(2), geometricLayer, graphics);
+          manifoldDisplay, levers, Array.zeros(2), geometricLayer, graphics);
       leversRender.renderSequence();
       if (2 < sequence.length()) {
         // ---
@@ -66,7 +66,7 @@ public class CirclePointDemo extends ControlPointsDemo {
       graphics.setColor(Color.LIGHT_GRAY);
       graphics.draw(geometricLayer.toPath2D(CirclePoints.of(31), true));
       LeversRender leversRender = LeversRender.of( //
-          manifoldDisplay(), levers, Array.zeros(2), geometricLayer, graphics);
+          manifoldDisplay, levers, Array.zeros(2), geometricLayer, graphics);
       leversRender.renderSequence();
       leversRender.renderInfluenceX(LeversHud.COLOR_DATA_GRADIENT);
       if (2 < sequence.length()) {

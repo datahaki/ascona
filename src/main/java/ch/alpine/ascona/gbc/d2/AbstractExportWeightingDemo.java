@@ -41,17 +41,18 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
 
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LogWeighting logWeighting = logWeighting();
     File root = HomeDirectory.Pictures( //
         getClass().getSimpleName(), //
-        manifoldDisplay().toString(), //
+        manifoldDisplay.toString(), //
         logWeighting.toString());
     root.mkdirs();
     for (Biinvariant biinvariant : distinct()) {
       Tensor sequence = getGeodesicControlPoints();
       TensorUnaryOperator tensorUnaryOperator = logWeighting.operator( //
           biinvariant, //
-          manifoldDisplay().hsManifold(), //
+          manifoldDisplay.hsManifold(), //
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);

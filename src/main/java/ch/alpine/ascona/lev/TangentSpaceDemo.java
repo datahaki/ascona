@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.gbc.d2.GenesisDequeProperties;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.fig.ListPlot;
@@ -58,10 +59,11 @@ public class TangentSpaceDemo extends AbstractPlaceDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Optional<Tensor> optional = getOrigin();
     if (optional.isPresent()) {
       Tensor origin = optional.get();
-      VectorLogManifold vectorLogManifold = manifoldDisplay().hsManifold();
+      VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
       final Tensor sequence = getSequence();
       HsDesign hsDesign = new HsDesign(vectorLogManifold);
       final Tensor levers2 = hsDesign.matrix(sequence, origin);
@@ -86,7 +88,7 @@ public class TangentSpaceDemo extends AbstractPlaceDemo {
           }
           {
             LeversRender leversRender = LeversRender.of( //
-                manifoldDisplay(), leversVirtual, origin.map(Scalar::zero), geometricLayer, graphics);
+                manifoldDisplay, leversVirtual, origin.map(Scalar::zero), geometricLayer, graphics);
             leversRender.renderSequence(POINTS_RENDER);
             // Tensor weights = iterativeAffineCoordinate.origin(deque, levers2);
             // leversRender.renderWeights(weights);
@@ -122,7 +124,7 @@ public class TangentSpaceDemo extends AbstractPlaceDemo {
       }
       {
         LeversRender leversRender = LeversRender.of( //
-            manifoldDisplay(), sequence, origin, geometricLayer, graphics);
+            manifoldDisplay, sequence, origin, geometricLayer, graphics);
         leversRender.renderSequence();
         leversRender.renderOrigin();
       }

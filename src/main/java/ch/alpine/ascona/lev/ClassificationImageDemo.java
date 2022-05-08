@@ -193,20 +193,20 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
 
   @Override
   public final void actionPerformed(ActionEvent actionEvent) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LogWeighting logWeighting = logWeighting();
     File root = HomeDirectory.Pictures( //
         getClass().getSimpleName(), //
-        manifoldDisplay().toString());
+        manifoldDisplay.toString());
     root.mkdirs();
     for (Biinvariant biinvariant : distinct()) {
       Tensor sequence = getGeodesicControlPoints();
       TensorUnaryOperator operator = logWeighting.operator( //
           biinvariant, //
-          manifoldDisplay().hsManifold(), //
+          manifoldDisplay.hsManifold(), //
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
       HsArrayPlot geodesicArrayPlot = manifoldDisplay.geodesicArrayPlot();
       Classification classification = spinnerLabels.getValue().apply(vector);
       ColorDataLists colorDataLists = spinnerColor.getValue();

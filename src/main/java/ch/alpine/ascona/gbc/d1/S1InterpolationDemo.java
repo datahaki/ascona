@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -37,6 +38,7 @@ public class S1InterpolationDemo extends LogWeightingDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
     final Tensor shape = getControlPointShape(); // .multiply(RealScalar.of(0.3));
     if (0 < control.length()) {
@@ -48,7 +50,7 @@ public class S1InterpolationDemo extends LogWeightingDemo {
         graphics.draw(geometricLayer.toLine2D(control.get(index), target.get(index)));
       new PointsRender(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255))
           // new PointsRender(new Color(128, 255, 128, 64), new Color(128, 255, 128, 255)) //
-          .show(manifoldDisplay()::matrixLift, shape, target) //
+          .show(manifoldDisplay::matrixLift, shape, target) //
           .render(geometricLayer, graphics);
       // ---
       Tensor values = Tensor.of(control.stream().map(Vector2Norm::of));
@@ -71,7 +73,7 @@ public class S1InterpolationDemo extends LogWeightingDemo {
       }
     }
     {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }
