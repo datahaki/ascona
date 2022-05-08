@@ -23,7 +23,7 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.PathRender;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.math.Do;
@@ -88,7 +88,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           s2Display.createTangent(xy0, xya.Get(2)).multiply(vscale));
     }));
     POINTS_RENDER_0.show(manifoldDisplay::matrixLift, getControlPointShape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
-    Geodesic geodesicInterface = s2Display.geodesic();
+    GeodesicSpace geodesicInterface = s2Display.geodesic();
     { // render tangents as geodesic on sphere
       for (Tensor ctrl : control) {
         Tensor p = ctrl.get(0); // point

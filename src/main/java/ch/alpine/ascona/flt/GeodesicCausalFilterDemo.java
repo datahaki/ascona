@@ -12,7 +12,7 @@ import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.flt.WindowSideExtrapolation;
 import ch.alpine.sophus.flt.bm.BiinvariantMeanFIRnFilter;
 import ch.alpine.sophus.flt.bm.BiinvariantMeanIIRnFilter;
@@ -53,7 +53,7 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
     if (0 < radius) {
       ScalarUnaryOperator windowFunctions = spinnerKernel.getValue().get();
       Se2BiinvariantMeans se2BiinvariantMean = Se2BiinvariantMeans.FILTER;
-      Geodesic geodesicInterface = Se2Geodesic.INSTANCE;
+      GeodesicSpace geodesicInterface = Se2Geodesic.INSTANCE;
       TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicInterface, windowFunctions);
       // ---
       GeodesicCausalFilters geodesicCausalFilters = spinnerCausalFilter.getValue();

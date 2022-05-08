@@ -21,7 +21,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.util.DisjointSets;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.fit.MinimumSpanningTree;
 import ch.alpine.sophus.math.IntUndirectedEdge;
 import ch.alpine.tensor.Scalars;
@@ -64,7 +64,7 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
     RenderQuality.setQuality(graphics);
     Tensor sequence = getGeodesicControlPoints();
     Tensor domain = Subdivide.of(0.0, 1.0, 10);

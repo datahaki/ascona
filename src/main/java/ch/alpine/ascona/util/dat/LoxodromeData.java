@@ -4,7 +4,7 @@ package ch.alpine.ascona.util.dat;
 import java.io.IOException;
 
 import ch.alpine.ascona.util.dis.S2Display;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.hs.sn.S2Loxodrome;
@@ -31,7 +31,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     tensor = tensor.add(noise);
     tensor = Tensor.of(tensor.stream().map(Vector2Norm.NORMALIZE));
     Export.of(HomeDirectory.file("loxodrome_noise.csv"), tensor);
-    Geodesic geodesicInterface = S2Display.INSTANCE.geodesic();
+    GeodesicSpace geodesicInterface = S2Display.INSTANCE.geodesic();
     for (WindowFunctions windowFunctions : WindowFunctions.values()) {
       ScalarUnaryOperator smoothingKernel = windowFunctions.get();
       TensorUnaryOperator tensorUnaryOperator = //

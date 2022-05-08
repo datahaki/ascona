@@ -2,7 +2,7 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
@@ -36,7 +36,7 @@ public enum Spd2Display implements ManifoldDisplay {
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
 
   @Override // from GeodesicDisplay
-  public Geodesic geodesic() {
+  public GeodesicSpace geodesic() {
     return SpdGeodesic.INSTANCE;
   }
 

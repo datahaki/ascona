@@ -14,7 +14,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.bridge.win.PathRender;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.decim.LineDistances;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
@@ -55,16 +55,11 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     if (0 == length)
       return;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
     graphics.setColor(Color.LIGHT_GRAY);
     // graphics.setStroke(STROKE);
     RenderQuality.setQuality(graphics);
     // graphics.setStroke(new BasicStroke(1));
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderSequence();
-      leversRender.renderIndexP();
-    }
     Tensor domain = Subdivide.of(0, 1, 10);
     {
       PathRender pathRender = new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(0));
@@ -85,6 +80,11 @@ public class BulkDecimationDemo extends ControlPointsDemo {
         pathRender.setCurve(tensor, false);
         pathRender.render(geometricLayer, graphics);
       }
+    }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
   }
 

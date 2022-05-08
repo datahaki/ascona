@@ -15,7 +15,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.AxesRender;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.tensor.RationalScalar;
@@ -54,7 +54,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
     Tensor sequence = getControlPointsSe2();
     if (sequence.length() == 4)
       try {
-        Geodesic geodesicInterface = manifoldDisplay.geodesic();
+        GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
         final ScalarTensorFunction curve = geodesicInterface.curve(sequence.get(0), sequence.get(1));
         {
           Tensor tensor = Subdivide.of(-0.5, 1.5, 55).map(curve);

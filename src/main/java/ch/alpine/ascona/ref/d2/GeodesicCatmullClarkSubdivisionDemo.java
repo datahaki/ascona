@@ -17,7 +17,7 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.ref.d2.GeodesicCatmullClarkSubdivision;
 import ch.alpine.tensor.RealScalar;
@@ -48,7 +48,7 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = //
         new GeodesicCatmullClarkSubdivision(geodesicInterface);
     Tensor refined = Nest.of( //
@@ -56,6 +56,7 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         ArrayReshape.of(control, 2, 3, 3), //
         refine.number().intValue());
     RenderQuality.setQuality(graphics);
+    // TODO ASCONA LR
     for (Tensor points : refined)
       for (Tensor point : points) {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));

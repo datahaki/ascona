@@ -34,7 +34,7 @@ import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.StandardMenu;
 import ch.alpine.bridge.win.LookAndFeels;
 import ch.alpine.bridge.win.PathRender;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -186,7 +186,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
     Tensor refined = StaticHelper.refine( //
         control, levels, spinnerLabel.getValue().of(manifoldDisplay), //
         CurveSubdivisionHelper.isDual(scheme), cyclic, geodesicInterface);

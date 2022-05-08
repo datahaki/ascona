@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.rs.Se2inR2S;
 
 public class R2S1BDisplay extends R2S1AbstractDisplay {
@@ -11,7 +11,7 @@ public class R2S1BDisplay extends R2S1AbstractDisplay {
   }
 
   @Override
-  public Geodesic geodesic() {
+  public GeodesicSpace geodesic() {
     return Se2inR2S.METHOD_1;
   }
 

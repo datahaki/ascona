@@ -24,7 +24,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.ImageRender;
 import ch.alpine.bridge.win.LookAndFeels;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.VectorLogManifold;
@@ -120,7 +120,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     // ---
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
     Tensor cp = getGeodesicControlPoints();
     ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(cp.get(0), cp.get(1));
     graphics.setStroke(STROKE);

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.StarPoints;
@@ -44,7 +44,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from GeodesicDisplay
-  public final Geodesic geodesic() {
+  public final GeodesicSpace geodesic() {
     return HnGeodesic.INSTANCE;
   }
 

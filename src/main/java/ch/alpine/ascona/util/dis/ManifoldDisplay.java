@@ -2,7 +2,7 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
@@ -19,7 +19,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * but not in the library functions. */
 public interface ManifoldDisplay {
   /** @return */
-  Geodesic geodesic();
+  GeodesicSpace geodesic();
 
   int dimensions();
 

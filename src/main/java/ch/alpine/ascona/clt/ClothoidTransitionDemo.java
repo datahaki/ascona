@@ -22,7 +22,7 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.clt.Clothoid;
 import ch.alpine.sophus.clt.ClothoidBuilder;
 import ch.alpine.sophus.clt.ClothoidSampler;
@@ -66,7 +66,7 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
-    Geodesic geodesic = manifoldDisplay.geodesic();
+    GeodesicSpace geodesic = manifoldDisplay.geodesic();
     ClothoidBuilder clothoidBuilder = (ClothoidBuilder) geodesic;
     VisualSet visualSet = new VisualSet();
     for (int index = 0; index < sequence.length() - 1; index += 2) {

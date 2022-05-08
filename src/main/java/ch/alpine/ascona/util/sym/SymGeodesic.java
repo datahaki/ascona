@@ -1,12 +1,12 @@
 // code by jph
 package ch.alpine.ascona.util.sym;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-public enum SymGeodesic implements Geodesic {
+public enum SymGeodesic implements GeodesicSpace {
   INSTANCE;
 
   @Override // from Geodesic

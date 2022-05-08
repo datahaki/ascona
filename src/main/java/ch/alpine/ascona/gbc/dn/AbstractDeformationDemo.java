@@ -22,7 +22,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.win.AxesRender;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -113,7 +113,7 @@ import ch.alpine.tensor.sca.N;
     }
     boolean isTarget = jToggleTarget.isSelected();
     if (isTarget) { // connect origin and target pairs with lines/geodesics
-      Geodesic geodesic = manifoldDisplay.geodesic();
+      GeodesicSpace geodesic = manifoldDisplay.geodesic();
       graphics.setColor(new Color(128, 128, 128, 255));
       graphics.setStroke(STROKE);
       for (int index = 0; index < origin.length(); ++index) {

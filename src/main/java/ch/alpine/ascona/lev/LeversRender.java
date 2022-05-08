@@ -21,7 +21,7 @@ import ch.alpine.ascona.util.ren.MatrixRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HsDesign;
@@ -181,7 +181,7 @@ public class LeversRender {
   }
 
   private void renderLeversRescaled(Tensor rescale) {
-    Geodesic geodesic = manifoldDisplay.geodesic();
+    GeodesicSpace geodesic = manifoldDisplay.geodesic();
     int index = 0;
     graphics.setStroke(STROKE_GEODESIC);
     for (Tensor p : sequence) {
@@ -199,7 +199,7 @@ public class LeversRender {
   public void renderLeverLength() {
     TensorMetric tensorMetric = manifoldDisplay.parametricDistance();
     if (Objects.nonNull(tensorMetric)) {
-      Geodesic geodesicInterface = manifoldDisplay.geodesic();
+      GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
       graphics.setFont(FONT_MATRIX);
       FontMetrics fontMetrics = graphics.getFontMetrics();
       int fheight = fontMetrics.getAscent();

@@ -2,7 +2,7 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
@@ -27,7 +27,7 @@ public enum R2SDisplay implements ManifoldDisplay {
   private static final Tensor ARROWHEAD = Arrowhead.of(0.2).unmodifiable();
 
   @Override // from GeodesicDisplay
-  public Geodesic geodesic() {
+  public GeodesicSpace geodesic() {
     return R2SGeodesic.INSTANCE;
   }
 

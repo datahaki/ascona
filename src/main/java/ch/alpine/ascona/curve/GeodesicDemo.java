@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.List;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -18,7 +19,7 @@ import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.win.AbstractDemo;
 import ch.alpine.bridge.win.PathRender;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -52,7 +53,7 @@ public class GeodesicDemo extends AbstractDemo {
     RenderQuality.setQuality(graphics);
     // AxesRender.INSTANCE.render(geometricLayer, graphics);
     ManifoldDisplay geodesicDisplay = geodesicDisplaySpinner.getValue();
-    Geodesic geodesicInterface = geodesicDisplay.geodesic();
+    GeodesicSpace geodesicInterface = geodesicDisplay.geodesic();
     Tensor xya = timerFrame.geometricComponent.getMouseSe2CState();
     graphics.setColor(COLOR);
     Tensor q = geodesicDisplay.project(xya);
@@ -63,11 +64,11 @@ public class GeodesicDemo extends AbstractDemo {
       graphics.fill(geometricLayer.toPath2D(geodesicDisplay.shape()));
       geometricLayer.popMatrix();
     }
-    for (Tensor split : Subdivide.of(0, 1, 1).map(scalarTensorFunction)) {
-      graphics.setColor(Color.BLUE);
-      geometricLayer.pushMatrix(geodesicDisplay.matrixLift(split));
-      graphics.fill(geometricLayer.toPath2D(geodesicDisplay.shape()));
-      geometricLayer.popMatrix();
+    {
+      Tensor sequence = Subdivide.of(0, 1, 1).map(scalarTensorFunction);
+      LeversRender leversRender = LeversRender.of(geodesicDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
     if (comb) {
       Tensor refined = Subdivide.of(0, 1, SPLITS * 6).map(scalarTensorFunction);

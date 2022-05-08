@@ -22,7 +22,7 @@ import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.bridge.win.LookAndFeels;
 import ch.alpine.bridge.win.PathRender;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.d2.PolygonArea;
 import ch.alpine.sophus.hs.r2.Extract2D;
 import ch.alpine.sophus.ref.d2.SurfaceMeshRefinement;
@@ -94,15 +94,18 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
       graphics.setColor(COLOR_DATA_INDEXED_FILL.getColor(0));
       graphics.fill(path2d);
     }
-    graphics.setColor(new Color(192, 192, 192, 192));
-    Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
-    for (Tensor mean : refine.vrt) {
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
-      graphics.fill(geometricLayer.toPath2D(shape));
-      geometricLayer.popMatrix();
+    {
+      // TODO levers render
+      graphics.setColor(new Color(192, 192, 192, 192));
+      Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
+      for (Tensor mean : refine.vrt) {
+        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
+        graphics.fill(geometricLayer.toPath2D(shape));
+        geometricLayer.popMatrix();
+      }
     }
     if (param.ctrl) {
-      Geodesic geodesicInterface = manifoldDisplay.geodesic();
+      GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
       Tensor domain = Subdivide.of(0.0, 1.0, 10);
       Set<Tensor> set = new HashSet<>();
       for (int[] array : surfaceMesh.faces()) {

@@ -2,7 +2,7 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
@@ -29,7 +29,7 @@ public enum He1Display implements ManifoldDisplay {
   private static final Tensor SQUARE = CirclePoints.of(4).multiply(RealScalar.of(0.2)).unmodifiable();
 
   @Override // from GeodesicDisplay
-  public Geodesic geodesic() {
+  public GeodesicSpace geodesic() {
     return HeGeodesic.INSTANCE;
   }
 

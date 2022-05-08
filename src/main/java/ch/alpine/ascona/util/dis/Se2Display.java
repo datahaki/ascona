@@ -3,7 +3,7 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.Random;
 
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HsManifold;
@@ -31,7 +31,7 @@ public class Se2Display extends Se2AbstractDisplay {
   }
 
   @Override // from GeodesicDisplay
-  public Geodesic geodesic() {
+  public GeodesicSpace geodesic() {
     return Se2Geodesic.INSTANCE;
   }
 

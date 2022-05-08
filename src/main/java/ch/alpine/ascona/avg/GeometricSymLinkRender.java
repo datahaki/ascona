@@ -12,7 +12,7 @@ import ch.alpine.ascona.util.sym.SymLink;
 import ch.alpine.ascona.util.sym.SymLinkPart;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.RenderInterface;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Clips;
   private static final int RESOLUTION = 91;
   // ---
   private final ManifoldDisplay manifoldDisplay;
-  private final Geodesic geodesic;
+  private final GeodesicSpace geodesic;
   public int steps = 9;
 
   public GeometricSymLinkRender(ManifoldDisplay manifoldDisplay) {

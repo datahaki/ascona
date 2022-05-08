@@ -21,7 +21,7 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.win.LookAndFeels;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.spline.GeodesicCatmullRom;
 import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.tensor.DoubleScalar;
@@ -78,7 +78,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
       leversRender.renderIndexP();
     }
     if (4 <= control.length()) {
-      Geodesic geodesicInterface = manifoldDisplay.geodesic();
+      GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
       TensorUnaryOperator centripetalKnotSpacing = //
           KnotSpacing.centripetal(manifoldDisplay.parametricDistance(), exponent);
       Tensor knots = centripetalKnotSpacing.apply(control);

@@ -4,7 +4,7 @@ package ch.alpine.ascona.util.dis;
 import java.io.Serializable;
 
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
@@ -48,7 +48,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override // from GeodesicDisplay
-  public Geodesic geodesic() {
+  public GeodesicSpace geodesic() {
     return So3Geodesic.INSTANCE;
   }
 

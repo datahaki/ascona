@@ -3,7 +3,7 @@ package ch.alpine.ascona.ref.d1;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.MidpointInterface;
 import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -38,7 +38,7 @@ import ch.alpine.tensor.itp.BinaryAverage;
   BSPLINE2 {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
-      Geodesic parametricCurve = manifoldDisplay.geodesic();
+      GeodesicSpace parametricCurve = manifoldDisplay.geodesic();
       return new BSpline2CurveSubdivision(parametricCurve);
     }
   },
@@ -105,7 +105,7 @@ import ch.alpine.tensor.itp.BinaryAverage;
   BSPLINE6 {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
-      Geodesic geodesicInterface = manifoldDisplay.geodesic();
+      GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
       return BSpline6CurveSubdivision.of(geodesicInterface);
     }
   },
@@ -174,14 +174,14 @@ import ch.alpine.tensor.itp.BinaryAverage;
   C2CUBIC {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
-      Geodesic geodesicInterface = manifoldDisplay.geodesic();
+      GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
       return DualC2FourPointCurveSubdivision.cubic(geodesicInterface);
     }
   },
   C2TIGHT {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
-      Geodesic geodesicInterface = manifoldDisplay.geodesic();
+      GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
       return DualC2FourPointCurveSubdivision.tightest(geodesicInterface);
     }
   },

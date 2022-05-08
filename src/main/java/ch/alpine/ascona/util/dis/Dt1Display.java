@@ -2,7 +2,7 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
@@ -33,7 +33,7 @@ public enum Dt1Display implements ManifoldDisplay {
   private static final ScalarUnaryOperator MAX_X = Max.function(RealScalar.of(0.001));
 
   @Override // from GeodesicDisplay
-  public Geodesic geodesic() {
+  public GeodesicSpace geodesic() {
     return DtGeodesic.INSTANCE;
   }
 

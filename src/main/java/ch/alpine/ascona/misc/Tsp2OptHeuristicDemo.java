@@ -21,7 +21,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -69,7 +69,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       points.append(Tensors.of(RealScalar.of(points.length()), tsp2OptHeuristic.cost()));
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Geodesic geodesic = manifoldDisplay.geodesic();
+    GeodesicSpace geodesic = manifoldDisplay.geodesic();
     RenderQuality.setQuality(graphics);
     Tensor sequence = getGeodesicControlPoints();
     Color color = Color.BLACK;

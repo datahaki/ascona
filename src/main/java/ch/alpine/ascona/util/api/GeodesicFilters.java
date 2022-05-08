@@ -2,7 +2,7 @@
 package ch.alpine.ascona.util.api;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.SplitInterface;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.flt.bm.BiinvariantMeanCenter;
@@ -46,7 +46,7 @@ public enum GeodesicFilters {
    * @param smoothingKernel
    * @return */
   public TensorUnaryOperator from(ManifoldDisplay manifoldDisplay, ScalarUnaryOperator smoothingKernel) {
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
     BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
     return supply(geodesicInterface, smoothingKernel, biinvariantMean);
   }
