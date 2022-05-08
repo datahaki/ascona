@@ -16,7 +16,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.crv.spline.GeodesicBSplineFunction;
+import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -55,7 +55,7 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
     // ---
     Tensor effective = control;
     ScalarTensorFunction scalarTensorFunction = //
-        GeodesicBSplineFunction.of(manifoldDisplay.geodesic(), degree, effective);
+        GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, effective);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(selected));

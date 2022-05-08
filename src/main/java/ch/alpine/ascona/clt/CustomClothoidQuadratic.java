@@ -3,8 +3,8 @@ package ch.alpine.ascona.clt;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.clt.LagrangeQuadratic;
-import ch.alpine.sophus.clt.mid.ClothoidQuadratic;
+import ch.alpine.sophus.crv.clt.LagrangeQuadratic;
+import ch.alpine.sophus.crv.clt.mid.ClothoidQuadratic;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarBinaryOperator;

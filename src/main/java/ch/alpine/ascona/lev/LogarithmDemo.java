@@ -17,12 +17,12 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
+import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.bridge.win.GridRender;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
@@ -66,7 +66,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Optional<Tensor> optional = getOrigin();
     if (optional.isPresent()) {
       Tensor sequence = getSequence();
@@ -84,7 +84,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
       }
       // ---
       CurveSubdivision curveSubdivision = //
-          new FourPointCurveSubdivision(geodesicInterface);
+          new FourPointCurveSubdivision(geodesicSpace);
       if (2 < sequence.length()) {
         Tensor refined = sequence;
         while (refined.length() < 100)
@@ -130,7 +130,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
         }
         geometricLayer.popMatrix();
         try {
-          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, geodesicInterface, refined);
+          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, geodesicSpace, refined);
           Tensor border = domain.map(scalarTensorFunction);
           LeversRender leversRender = LeversRender.of( //
               manifoldDisplay, //

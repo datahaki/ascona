@@ -53,16 +53,16 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
     if (0 < radius) {
       ScalarUnaryOperator windowFunctions = spinnerKernel.getValue().get();
       Se2BiinvariantMeans se2BiinvariantMean = Se2BiinvariantMeans.FILTER;
-      GeodesicSpace geodesicInterface = Se2Geodesic.INSTANCE;
-      TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicInterface, windowFunctions);
+      GeodesicSpace geodesicSpace = Se2Geodesic.INSTANCE;
+      TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicSpace, windowFunctions);
       // ---
       GeodesicCausalFilters geodesicCausalFilters = spinnerCausalFilter.getValue();
       // System.out.println(geodesicCausalFilters);
       // TODO ASCONA ALG should be able to do with geodesicCausalFilters.supply, but doesn't
       TensorUnaryOperator tensorUnaryOperator = geodesicCausalFilters.supply(manifoldDisplay(), windowFunctions, radius, alpha());
       tensorUnaryOperator = switch (geodesicCausalFilters) {
-      case GEODESIC_FIR -> GeodesicFIRnFilter.of(geodesicExtrapolation, geodesicInterface, radius, alpha());
-      case GEODESIC_IIR -> GeodesicIIRnFilter.of(geodesicExtrapolation, geodesicInterface, radius, alpha());
+      case GEODESIC_FIR -> GeodesicFIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
+      case GEODESIC_IIR -> GeodesicIIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
       case BIINVARIANT_MEAN_FIR -> BiinvariantMeanFIRnFilter.of( //
           se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), Se2Geodesic.INSTANCE, radius, alpha());
       case BIINVARIANT_MEAN_IIR -> BiinvariantMeanIIRnFilter.of( //

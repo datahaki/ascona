@@ -40,7 +40,7 @@ public final class Regularization2StepDemo extends AbstractSpectrogramDemo imple
   @Override // from AbstractDatasetFilterDemo
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     return Regularization2Step.string( //
-        manifoldDisplay().geodesic(), //
+        manifoldDisplay().geodesicSpace(), //
         N.DOUBLE.apply(ratio)).apply(control());
   }
 

@@ -38,7 +38,7 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from GeodesicDisplay
-  public final GeodesicSpace geodesic() {
+  public final GeodesicSpace geodesicSpace() {
     return SnGeodesic.INSTANCE;
   }
 

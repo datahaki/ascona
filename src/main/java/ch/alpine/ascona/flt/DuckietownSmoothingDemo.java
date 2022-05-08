@@ -20,7 +20,7 @@ import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.sophus.crv.spline.GeodesicBSplineFunction;
+import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -84,7 +84,7 @@ public class DuckietownSmoothingDemo extends AbstractDatasetKernelDemo implement
     final Scalar parameter = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum()).multiply(upper);
     // ---
     GeodesicBSplineFunction scalarTensorFunction = //
-        GeodesicBSplineFunction.of(manifoldDisplay.geodesic(), degree, knots, effective);
+        GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, knots, effective);
     RenderQuality.setQuality(graphics);
     Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << levels))).map(scalarTensorFunction);
     {
@@ -116,7 +116,7 @@ public class DuckietownSmoothingDemo extends AbstractDatasetKernelDemo implement
     final Scalar parameter = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum()).multiply(upper);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicBSplineFunction scalarTensorFunction = //
-        GeodesicBSplineFunction.of(manifoldDisplay.geodesic(), degree, knots, effective);
+        GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, knots, effective);
     DeBoor deBoor = scalarTensorFunction.deBoor(parameter);
     SymLinkImage symLinkImage = SymLinkImages.deboor(deBoor.knots(), deBoor.degree() + 1, parameter);
     return symLinkImage.bufferedImage();

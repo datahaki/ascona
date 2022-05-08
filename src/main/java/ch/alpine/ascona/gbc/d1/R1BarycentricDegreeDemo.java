@@ -14,11 +14,11 @@ import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.bridge.win.AxesRender;
-import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.itp.BarycentricRationalInterpolation;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -78,7 +78,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
       // ---
       Tensor domain = domain(support);
       if (jToggleButton.isSelected()) {
-        ScalarTensorFunction geodesicNeville = InterpolatingPolynomial.of(manifoldDisplay.geodesic(), support).scalarTensorFunction(funceva);
+        ScalarTensorFunction geodesicNeville = InterpolatingPolynomial.of(manifoldDisplay.geodesicSpace(), support).scalarTensorFunction(funceva);
         Tensor basis = domain.map(geodesicNeville);
         {
           Tensor curve = Transpose.of(Tensors.of(domain, basis));

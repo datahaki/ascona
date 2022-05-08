@@ -48,9 +48,9 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
-    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = //
-        new GeodesicCatmullClarkSubdivision(geodesicInterface);
+        new GeodesicCatmullClarkSubdivision(geodesicSpace);
     Tensor refined = Nest.of( //
         catmullClarkSubdivision::refine, //
         ArrayReshape.of(control, 2, 3, 3), //

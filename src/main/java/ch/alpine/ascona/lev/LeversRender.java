@@ -181,11 +181,11 @@ public class LeversRender {
   }
 
   private void renderLeversRescaled(Tensor rescale) {
-    GeodesicSpace geodesic = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     int index = 0;
     graphics.setStroke(STROKE_GEODESIC);
     for (Tensor p : sequence) {
-      ScalarTensorFunction scalarTensorFunction = geodesic.curve(origin, p);
+      ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(origin, p);
       Tensor domain = Subdivide.of(0, 1, 21);
       Tensor ms = Tensor.of(domain.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
       Tensor rgba = COLOR_DATA_GRADIENT.apply(rescale.Get(index));
@@ -199,13 +199,13 @@ public class LeversRender {
   public void renderLeverLength() {
     TensorMetric tensorMetric = manifoldDisplay.parametricDistance();
     if (Objects.nonNull(tensorMetric)) {
-      GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+      GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       graphics.setFont(FONT_MATRIX);
       FontMetrics fontMetrics = graphics.getFontMetrics();
       int fheight = fontMetrics.getAscent();
       for (Tensor point : sequence) {
         Scalar d = tensorMetric.distance(origin, point);
-        ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(origin, point);
+        ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(origin, point);
         Tensor ms = manifoldDisplay.toPoint(scalarTensorFunction.apply(RationalScalar.HALF));
         Point2D point2d = geometricLayer.toPoint2D(ms);
         String string = "" + d.map(Round._3);
@@ -370,7 +370,7 @@ public class LeversRender {
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor prev = sequence.get(Math.floorMod(index - 1, sequence.length()));
       Tensor next = sequence.get(index);
-      DOMAIN.map(manifoldDisplay.geodesic().curve(prev, next)).stream() //
+      DOMAIN.map(manifoldDisplay.geodesicSpace().curve(prev, next)).stream() //
           .map(manifoldDisplay::toPoint) //
           .forEach(all::append);
     }

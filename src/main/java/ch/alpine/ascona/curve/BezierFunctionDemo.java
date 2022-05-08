@@ -9,6 +9,9 @@ import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -17,12 +20,9 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.win.AxesRender;
-import ch.alpine.bridge.win.LookAndFeels;
-import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.crv.bezier.BezierFunction;
+import ch.alpine.sophus.crv.BezierFunction;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -78,8 +78,8 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
         new PathRender(Color.RED, 1.25f).setCurve(render, false).render(geometricLayer, graphics);
       }
     }
-    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
-    Tensor refined = domain.map(BezierFunction.of(geodesicInterface, sequence));
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+    Tensor refined = domain.map(BezierFunction.of(geodesicSpace, sequence));
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
     Curvature2DRender.of(render, false, geometricLayer, graphics);
     if (levels < 5)

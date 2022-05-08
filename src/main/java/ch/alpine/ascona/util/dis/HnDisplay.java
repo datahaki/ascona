@@ -44,7 +44,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from GeodesicDisplay
-  public final GeodesicSpace geodesic() {
+  public final GeodesicSpace geodesicSpace() {
     return HnGeodesic.INSTANCE;
   }
 

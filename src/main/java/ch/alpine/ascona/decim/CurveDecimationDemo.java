@@ -15,6 +15,7 @@ import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
@@ -22,7 +23,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.decim.DecimationResult;
 import ch.alpine.sophus.decim.LineDistances;
@@ -125,7 +125,7 @@ public class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
     // graphics.drawString("SIMPL=" + control.length(), 0, 20);
     // graphics.drawString("SIMPL=" + , 0, 30);
     Tensor refined = Nest.of( //
-        LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesic(), param.degre.number().intValue())::string, //
+        LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesicSpace(), param.degre.number().intValue())::string, //
         simplified, 5);
     pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
     {

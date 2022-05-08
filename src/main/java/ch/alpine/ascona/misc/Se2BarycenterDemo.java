@@ -12,9 +12,9 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
@@ -54,8 +54,8 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
     Tensor sequence = getControlPointsSe2();
     if (sequence.length() == 4)
       try {
-        GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
-        final ScalarTensorFunction curve = geodesicInterface.curve(sequence.get(0), sequence.get(1));
+        GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+        final ScalarTensorFunction curve = geodesicSpace.curve(sequence.get(0), sequence.get(1));
         {
           Tensor tensor = Subdivide.of(-0.5, 1.5, 55).map(curve);
           Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::toPoint)));

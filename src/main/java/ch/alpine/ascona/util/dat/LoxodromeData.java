@@ -31,11 +31,11 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     tensor = tensor.add(noise);
     tensor = Tensor.of(tensor.stream().map(Vector2Norm.NORMALIZE));
     Export.of(HomeDirectory.file("loxodrome_noise.csv"), tensor);
-    GeodesicSpace geodesicInterface = S2Display.INSTANCE.geodesic();
+    GeodesicSpace geodesicSpace = S2Display.INSTANCE.geodesicSpace();
     for (WindowFunctions windowFunctions : WindowFunctions.values()) {
       ScalarUnaryOperator smoothingKernel = windowFunctions.get();
       TensorUnaryOperator tensorUnaryOperator = //
-          new CenterFilter(GeodesicCenter.of(geodesicInterface, smoothingKernel), 7);
+          new CenterFilter(GeodesicCenter.of(geodesicSpace, smoothingKernel), 7);
       Tensor smooth = tensorUnaryOperator.apply(tensor);
       Export.of(HomeDirectory.file("loxodrome_" + smoothingKernel + ".csv"), smooth);
     }

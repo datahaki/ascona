@@ -7,10 +7,10 @@ import java.awt.geom.Path2D;
 import java.util.Arrays;
 
 import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.itp.Kriging;

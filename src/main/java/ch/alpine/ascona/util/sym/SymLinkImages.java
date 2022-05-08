@@ -3,7 +3,7 @@ package ch.alpine.ascona.util.sym;
 
 import java.awt.Font;
 
-import ch.alpine.sophus.crv.spline.GeodesicBSplineFunction;
+import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

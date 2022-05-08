@@ -16,9 +16,9 @@ import javax.swing.JButton;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.win.RenderInterface;
 import ch.alpine.sophus.hs.r2.Extract2D;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.RealScalar;
@@ -63,7 +63,7 @@ public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
     private final int index;
 
     public Midpoints() {
-      CurveSubdivision curveSubdivision = ControlMidpoints.of(geodesicDisplay.geodesic());
+      CurveSubdivision curveSubdivision = ControlMidpoints.of(geodesicDisplay.geodesicSpace());
       midpoints = curveSubdivision.string(getGeodesicControlPoints());
       Tensor mouse_dist = Tensor.of(midpoints.stream() //
           .map(geodesicDisplay::toPoint) //

@@ -3,9 +3,9 @@ package ch.alpine.ascona.avg;
 
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.win.LookAndFeels;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
 import ch.alpine.tensor.Tensor;

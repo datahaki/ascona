@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.bridge.win;
+package ch.alpine.ascona.util.win;
 
 import org.junit.jupiter.api.Test;
 

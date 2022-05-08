@@ -11,7 +11,7 @@ public class R2S1ADisplay extends R2S1AbstractDisplay {
   }
 
   @Override
-  public GeodesicSpace geodesic() {
+  public GeodesicSpace geodesicSpace() {
     return Se2inR2S.METHOD_0;
   }
 

@@ -18,7 +18,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.sophus.crv.spline.GeodesicBSplineFunction;
+import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -56,10 +56,10 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
     // ---
     RenderQuality.setQuality(graphics);
     // ---
-    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     ScalarTensorFunction scalarTensorFunction = //
-        DeBoor.of(geodesicInterface, knots, control);
-    GeodesicBSplineFunction.of(manifoldDisplay.geodesic(), degree, control);
+        DeBoor.of(geodesicSpace, knots, control);
+    GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, control);
     Scalar center = RationalScalar.of(control.length() - 1, 2);
     Tensor refined = Subdivide.of( //
         center.subtract(RationalScalar.HALF), //

@@ -10,9 +10,9 @@ import java.util.List;
 
 import javax.swing.JButton;
 
+import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.win.AbstractDemo;
-import ch.alpine.bridge.win.RenderInterface;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;

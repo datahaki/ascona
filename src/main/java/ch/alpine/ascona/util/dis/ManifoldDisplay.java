@@ -19,7 +19,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
  * but not in the library functions. */
 public interface ManifoldDisplay {
   /** @return */
-  GeodesicSpace geodesic();
+  GeodesicSpace geodesicSpace();
 
   int dimensions();
 

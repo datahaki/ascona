@@ -30,7 +30,7 @@ public class Se2CoveringDisplay extends Se2AbstractDisplay {
   }
 
   @Override // from GeodesicDisplay
-  public GeodesicSpace geodesic() {
+  public GeodesicSpace geodesicSpace() {
     return Se2CoveringGeodesic.INSTANCE;
   }
 

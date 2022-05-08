@@ -13,11 +13,11 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2CoveringDisplay;
+import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.fit.HsWeiszfeldMethod;
@@ -82,9 +82,9 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.setStroke(STROKE);
     RenderQuality.setQuality(graphics);
-    GeodesicSpace geodesic = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     for (Tensor point : sequence) {
-      Tensor curve = Subdivide.of(0, 1, 20).map(geodesic.curve(point, mean));
+      Tensor curve = Subdivide.of(0, 1, 20).map(geodesicSpace.curve(point, mean));
       Path2D path2d = geometricLayer.toPath2D(curve);
       graphics.draw(path2d);
     }

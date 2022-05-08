@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.bridge.win;
+package ch.alpine.ascona.util.win;
 
 /** measure length of intervals between invocations of methods
  * {@link #seconds()} and {@link #hertz()} */

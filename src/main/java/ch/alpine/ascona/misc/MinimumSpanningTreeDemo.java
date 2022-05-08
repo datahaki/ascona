@@ -64,7 +64,7 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     RenderQuality.setQuality(graphics);
     Tensor sequence = getGeodesicControlPoints();
     Tensor domain = Subdivide.of(0.0, 1.0, 10);
@@ -83,7 +83,7 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
       for (IntUndirectedEdge directedEdge : list.subList(0, count)) {
         Tensor p = sequence.get(directedEdge.i());
         Tensor q = sequence.get(directedEdge.j());
-        ScalarTensorFunction curve = geodesicInterface.curve(p, q);
+        ScalarTensorFunction curve = geodesicSpace.curve(p, q);
         Path2D line = geometricLayer.toPath2D(domain.map(curve));
         graphics.draw(line);
       }

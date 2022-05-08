@@ -36,7 +36,7 @@ public enum Spd2Display implements ManifoldDisplay {
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
 
   @Override // from GeodesicDisplay
-  public GeodesicSpace geodesic() {
+  public GeodesicSpace geodesicSpace() {
     return SpdGeodesic.INSTANCE;
   }
 

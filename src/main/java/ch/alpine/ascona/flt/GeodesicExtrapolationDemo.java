@@ -34,8 +34,8 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = //
-        GeodesicExtrapolation.of(manifoldDisplay.geodesic(), spinnerKernel.getValue().get());
-    refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesic(), spinnerRadius.getValue()).apply(control());
+        GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), spinnerKernel.getValue().get());
+    refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesicSpace(), spinnerRadius.getValue()).apply(control());
   }
 
   @Override // from RenderInterface

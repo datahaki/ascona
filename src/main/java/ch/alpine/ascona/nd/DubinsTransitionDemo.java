@@ -6,10 +6,10 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.win.AbstractDemo;
-import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.crv.dubins.DubinsPath;
 import ch.alpine.sophus.crv.dubins.DubinsPathGenerator;
 import ch.alpine.sophus.crv.dubins.DubinsTransition;

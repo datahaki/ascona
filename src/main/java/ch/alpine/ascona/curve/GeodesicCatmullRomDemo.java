@@ -11,6 +11,7 @@ import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -20,9 +21,8 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.win.LookAndFeels;
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.sophus.crv.spline.GeodesicCatmullRom;
+import ch.alpine.sophus.crv.GeodesicCatmullRom;
 import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RationalScalar;
@@ -78,7 +78,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
       leversRender.renderIndexP();
     }
     if (4 <= control.length()) {
-      GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+      GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       TensorUnaryOperator centripetalKnotSpacing = //
           KnotSpacing.centripetal(manifoldDisplay.parametricDistance(), exponent);
       Tensor knots = centripetalKnotSpacing.apply(control);
@@ -87,7 +87,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
       hi = DoubleScalar.of(Math.nextDown(hi.number().doubleValue()));
       Clip interval = Clips.interval(lo, hi);
       Scalar parameter = (Scalar) LinearBinaryAverage.INSTANCE.split(lo, hi, evalAt);
-      ScalarTensorFunction scalarTensorFunction = GeodesicCatmullRom.of(geodesicInterface, knots, control);
+      ScalarTensorFunction scalarTensorFunction = GeodesicCatmullRom.of(geodesicSpace, knots, control);
       Tensor refined = Subdivide.increasing(interval, Math.max(1, levels * control.length())).map(scalarTensorFunction);
       {
         Tensor selected = scalarTensorFunction.apply(parameter);

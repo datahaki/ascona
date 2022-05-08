@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.bridge.win;
+package ch.alpine.ascona.util.win;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Chop;
 class He1DisplayTest {
   @Test
   public void testSimple() {
-    assertEquals(He1Display.INSTANCE.geodesic(), HeGeodesic.INSTANCE);
+    assertEquals(He1Display.INSTANCE.geodesicSpace(), HeGeodesic.INSTANCE);
   }
 
   @Test

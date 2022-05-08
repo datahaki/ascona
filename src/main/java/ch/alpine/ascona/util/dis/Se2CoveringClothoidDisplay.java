@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import ch.alpine.sophus.clt.ClothoidBuilder;
-import ch.alpine.sophus.clt.ClothoidBuilders;
+import ch.alpine.sophus.crv.clt.ClothoidBuilder;
+import ch.alpine.sophus.crv.clt.ClothoidBuilders;
 import ch.alpine.tensor.Tensor;
 
 public final class Se2CoveringClothoidDisplay extends AbstractClothoidDisplay {
@@ -14,7 +14,7 @@ public final class Se2CoveringClothoidDisplay extends AbstractClothoidDisplay {
   }
 
   @Override // from AbstractClothoidDisplay
-  public ClothoidBuilder geodesic() {
+  public ClothoidBuilder geodesicSpace() {
     return ClothoidBuilders.SE2_COVERING.clothoidBuilder();
   }
 

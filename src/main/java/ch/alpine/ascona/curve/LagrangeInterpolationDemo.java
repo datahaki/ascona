@@ -23,7 +23,7 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.crv.spline.LagrangeInterpolation;
+import ch.alpine.sophus.crv.LagrangeInterpolation;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -77,7 +77,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     // ---
     int levels = refine.number().intValue();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Interpolation interpolation = LagrangeInterpolation.of(manifoldDisplay.geodesic(), getGeodesicControlPoints());
+    Interpolation interpolation = LagrangeInterpolation.of(manifoldDisplay.geodesicSpace(), getGeodesicControlPoints());
     Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).map(interpolation::at);
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
     Curvature2DRender.of(render, false, geometricLayer, graphics);

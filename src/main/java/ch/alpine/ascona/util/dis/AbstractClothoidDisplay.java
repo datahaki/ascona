@@ -6,7 +6,7 @@ import java.io.Serializable;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.clt.ClothoidBuilder;
+import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
@@ -25,7 +25,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   private static final Tensor ARROWHEAD = Arrowhead.of(0.2).unmodifiable();
 
   @Override
-  public abstract ClothoidBuilder geodesic();
+  public abstract ClothoidBuilder geodesicSpace();
 
   @Override // from GeodesicDisplay
   public final int dimensions() {
@@ -79,7 +79,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
 
   @Override // from GeodesicDisplay
   public final TensorMetric parametricDistance() {
-    return (p, q) -> geodesic().curve(p, q).length();
+    return (p, q) -> geodesicSpace().curve(p, q).length();
   }
 
   @Override // from GeodesicDisplay

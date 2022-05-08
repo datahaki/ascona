@@ -12,9 +12,9 @@ import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.d2.Arrowhead;
@@ -55,10 +55,10 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     LieGroup lieGroup = manifoldDisplay.lieGroup();
     Exponential exponential = Se2CoveringExponential.INSTANCE;
     // ---
-    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor beg = sequence.get(0);
     Tensor end = sequence.get(1);
-    ScalarTensorFunction curve = geodesicInterface.curve(beg, end);
+    ScalarTensorFunction curve = geodesicSpace.curve(beg, end);
     {
       Tensor tensor = Subdivide.of(-0.5, 1.5, 55).map(curve);
       Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::toPoint)));

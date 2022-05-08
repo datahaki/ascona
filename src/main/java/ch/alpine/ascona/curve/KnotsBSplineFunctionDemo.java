@@ -21,7 +21,7 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.crv.spline.GeodesicBSplineFunction;
+import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -60,7 +60,7 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     Scalar parameter = ratio.multiply(upper);
     // ---
     GeodesicBSplineFunction scalarTensorFunction = //
-        GeodesicBSplineFunction.of(manifoldDisplay.geodesic(), degree, knots, control);
+        GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, knots, control);
     {
       DeBoor deBoor = scalarTensorFunction.deBoor(parameter);
       SymLinkImage symLinkImage = SymLinkImages.deboor(deBoor.knots(), deBoor.degree() + 1, parameter);

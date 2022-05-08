@@ -9,8 +9,8 @@ import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.d2.Arrowhead;
@@ -45,11 +45,11 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HsManifold hsManifold = LieExponential.of(manifoldDisplay.lieGroup(), Se2CoveringExponential.INSTANCE);
     // ---
-    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor p = sequence.get(0);
     Tensor q = sequence.get(1);
     {
-      ScalarTensorFunction curve = geodesicInterface.curve(p, q);
+      ScalarTensorFunction curve = geodesicSpace.curve(p, q);
       Tensor tensor = Subdivide.of(-0.05, 1.05, 25).map(curve);
       Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::toPoint)));
       graphics.setColor(Color.BLUE);

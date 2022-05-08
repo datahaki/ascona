@@ -10,10 +10,10 @@ import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.win.AxesRender;
-import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.decim.LineDistances;
@@ -55,7 +55,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     if (0 == length)
       return;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     graphics.setColor(Color.LIGHT_GRAY);
     // graphics.setStroke(STROKE);
     RenderQuality.setQuality(graphics);
@@ -64,7 +64,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     {
       PathRender pathRender = new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(0));
       for (int index = 1; index < sequence.length(); ++index) {
-        Tensor tensor = domain.map(geodesicInterface.curve(sequence.get(index - 1), sequence.get(index)));
+        Tensor tensor = domain.map(geodesicSpace.curve(sequence.get(index - 1), sequence.get(index)));
         pathRender.setCurve(tensor, false);
         pathRender.render(geometricLayer, graphics);
       }
@@ -76,7 +76,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     {
       PathRender pathRender = new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(1));
       for (int index = 1; index < decimate.length(); ++index) {
-        Tensor tensor = domain.map(geodesicInterface.curve(decimate.get(index - 1), decimate.get(index)));
+        Tensor tensor = domain.map(geodesicSpace.curve(decimate.get(index - 1), decimate.get(index)));
         pathRender.setCurve(tensor, false);
         pathRender.render(geometricLayer, graphics);
       }

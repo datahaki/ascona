@@ -69,7 +69,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       points.append(Tensors.of(RealScalar.of(points.length()), tsp2OptHeuristic.cost()));
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    GeodesicSpace geodesic = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     RenderQuality.setQuality(graphics);
     Tensor sequence = getGeodesicControlPoints();
     Color color = Color.BLACK;
@@ -90,7 +90,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     for (int i = 0; i < index.length; ++i) {
       Tensor p = sequence.get(index[i]);
       Tensor q = sequence.get(index[(i + 1) % index.length]);
-      ScalarTensorFunction curve = geodesic.curve(p, q);
+      ScalarTensorFunction curve = geodesicSpace.curve(p, q);
       Path2D line = geometricLayer.toPath2D(domain.map(curve));
       graphics.draw(line);
     }

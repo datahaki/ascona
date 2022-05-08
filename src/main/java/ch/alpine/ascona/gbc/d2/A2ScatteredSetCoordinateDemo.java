@@ -11,10 +11,10 @@ import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.win.AxesRender;
-import ch.alpine.bridge.win.RenderInterface;
 import ch.alpine.tensor.Tensor;
 
 /* package */ abstract class A2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {

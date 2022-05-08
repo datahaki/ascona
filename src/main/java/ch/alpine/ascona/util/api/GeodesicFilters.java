@@ -46,8 +46,8 @@ public enum GeodesicFilters {
    * @param smoothingKernel
    * @return */
   public TensorUnaryOperator from(ManifoldDisplay manifoldDisplay, ScalarUnaryOperator smoothingKernel) {
-    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
-    return supply(geodesicInterface, smoothingKernel, biinvariantMean);
+    return supply(geodesicSpace, smoothingKernel, biinvariantMean);
   }
 }

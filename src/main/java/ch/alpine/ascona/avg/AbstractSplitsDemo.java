@@ -51,7 +51,7 @@ public abstract class AbstractSplitsDemo extends ControlPointsDemo {
     }
     Tensor origin = null;
     if (Objects.nonNull(symLink))
-      origin = symLink.getPosition(manifoldDisplay.geodesic());
+      origin = symLink.getPosition(manifoldDisplay.geodesicSpace());
     LeversRender leversRender = LeversRender.of(manifoldDisplay, control, origin, geometricLayer, graphics);
     leversRender.renderSequence();
     leversRender.renderIndexP();

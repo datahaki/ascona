@@ -11,6 +11,9 @@ import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -19,9 +22,6 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.win.AxesRender;
-import ch.alpine.bridge.win.LookAndFeels;
-import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.d2.PolygonArea;
 import ch.alpine.sophus.hs.r2.Extract2D;
@@ -105,7 +105,7 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
       }
     }
     if (param.ctrl) {
-      GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+      GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       Tensor domain = Subdivide.of(0.0, 1.0, 10);
       Set<Tensor> set = new HashSet<>();
       for (int[] array : surfaceMesh.faces()) {
@@ -114,7 +114,7 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
           int end = array[(index + 1) % array.length];
           if (set.add(Sort.of(Tensors.vector(beg, end)))) {
             ScalarTensorFunction scalarTensorFunction = //
-                geodesicInterface.curve(surfaceMesh.vrt.get(beg), surfaceMesh.vrt.get(end));
+                geodesicSpace.curve(surfaceMesh.vrt.get(beg), surfaceMesh.vrt.get(end));
             Tensor points = domain.map(scalarTensorFunction);
             new PathRender(new Color(0, 0, 255, 128), 1.5f).setCurve(points, false).render(geometricLayer, graphics);
           }

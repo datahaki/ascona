@@ -1,5 +1,5 @@
 // code by gjoel
-package ch.alpine.bridge.win;
+package ch.alpine.ascona.util.win;
 
 import java.awt.Window;
 

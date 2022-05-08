@@ -7,7 +7,6 @@ import java.awt.Color;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.bridge.win.PathRender;
 import ch.alpine.tensor.Tensors;
 
 class PathRenderTest {

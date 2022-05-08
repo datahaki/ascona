@@ -12,6 +12,7 @@ import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -22,7 +23,6 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.hs.sn.SnExponential;
@@ -88,14 +88,14 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           s2Display.createTangent(xy0, xya.Get(2)).multiply(vscale));
     }));
     POINTS_RENDER_0.show(manifoldDisplay::matrixLift, getControlPointShape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
-    GeodesicSpace geodesicInterface = s2Display.geodesic();
+    GeodesicSpace geodesicSpace = s2Display.geodesicSpace();
     { // render tangents as geodesic on sphere
       for (Tensor ctrl : control) {
         Tensor p = ctrl.get(0); // point
         Tensor v = ctrl.get(1); // vector
         if (derivatives) {
           Tensor q = new SnExponential(p).exp(v); // point on sphere
-          ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(p, q);
+          ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(p, q);
           graphics.setStroke(STROKE);
           Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(s2Display::toPoint));
           graphics.setColor(Color.LIGHT_GRAY);
@@ -128,7 +128,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           Tensor v = pv.get(1);
           {
             Tensor q = new SnExponential(p).exp(v); // point on sphere
-            ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(p, q);
+            ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(p, q);
             graphics.setStroke(STROKE);
             Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(s2Display::toPoint));
             graphics.setColor(Color.LIGHT_GRAY);

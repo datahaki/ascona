@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.bridge.win.GridRender;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.mat.HilbertMatrix;

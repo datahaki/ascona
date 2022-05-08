@@ -11,10 +11,10 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.lang.ClassDiscovery;
 import ch.alpine.bridge.lang.ClassPaths;
 import ch.alpine.bridge.lang.ClassVisitor;
-import ch.alpine.bridge.win.AbstractDemo;
 
 class AbstractDemoTest {
   @Test

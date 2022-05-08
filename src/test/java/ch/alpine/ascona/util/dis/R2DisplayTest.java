@@ -10,6 +10,6 @@ import ch.alpine.sophus.lie.rn.RnGeodesic;
 class R2DisplayTest {
   @Test
   public void testSimple() {
-    assertEquals(R2Display.INSTANCE.geodesic(), RnGeodesic.INSTANCE);
+    assertEquals(R2Display.INSTANCE.geodesicSpace(), RnGeodesic.INSTANCE);
   }
 }

@@ -34,7 +34,7 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from GeodesicDisplay
-  public final GeodesicSpace geodesic() {
+  public final GeodesicSpace geodesicSpace() {
     return SnGeodesic.INSTANCE; // TODO ASCONA ALG
   }
 

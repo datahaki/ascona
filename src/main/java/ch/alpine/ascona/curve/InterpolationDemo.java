@@ -8,11 +8,11 @@ import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.crv.spline.BSplineLimitMatrix;
+import ch.alpine.sophus.crv.BSplineLimitMatrix;
 import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.Tensor;
@@ -37,7 +37,7 @@ public class InterpolationDemo extends ControlPointsDemo {
       Tensor matrix = BSplineLimitMatrix.string(sequence.length(), 3);
       Tensor invers = Inverse.of(matrix);
       Tensor tensor = Tensor.of(invers.stream().map(weights -> biinvariantMean.mean(sequence, weights)));
-      CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(manifoldDisplay.geodesic());
+      CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(manifoldDisplay.geodesicSpace());
       Tensor refine = Nest.of(curveSubdivision::string, tensor, 5);
       new PathRender(Color.BLUE).setCurve(refine, false).render(geometricLayer, graphics);
     }

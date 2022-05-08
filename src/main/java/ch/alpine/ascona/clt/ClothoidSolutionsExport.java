@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import ch.alpine.bridge.util.DisjointSets;
-import ch.alpine.sophus.clt.ClothoidSolutions;
-import ch.alpine.sophus.clt.ClothoidSolutions.Search;
+import ch.alpine.sophus.crv.clt.ClothoidSolutions;
+import ch.alpine.sophus.crv.clt.ClothoidSolutions.Search;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;

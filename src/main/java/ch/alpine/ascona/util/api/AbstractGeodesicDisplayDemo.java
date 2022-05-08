@@ -6,10 +6,10 @@ import java.util.List;
 
 import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.bridge.win.AbstractDemo;
 
 @ReflectionMarker
 public abstract class AbstractGeodesicDisplayDemo extends AbstractDemo {

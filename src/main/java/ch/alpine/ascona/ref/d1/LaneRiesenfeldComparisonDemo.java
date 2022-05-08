@@ -19,13 +19,13 @@ import ch.alpine.ascona.util.api.CurveVisualSet;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
+import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualRow;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -147,9 +147,9 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     Tensor control = getGeodesicControlPoints();
     int levels = spinnerRefine.getValue();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    GeodesicSpace geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor refined = StaticHelper.refine(control, levels, scheme.of(manifoldDisplay), //
-        CurveSubdivisionHelper.isDual(scheme), false, geodesicInterface);
+        CurveSubdivisionHelper.isDual(scheme), false, geodesicSpace);
     // ---
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
     pathRender.setCurve(render, false);

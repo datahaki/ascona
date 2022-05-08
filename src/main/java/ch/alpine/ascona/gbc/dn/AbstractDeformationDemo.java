@@ -17,11 +17,11 @@ import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ArrayRender;
+import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.RealScalar;
@@ -113,12 +113,12 @@ import ch.alpine.tensor.sca.N;
     }
     boolean isTarget = jToggleTarget.isSelected();
     if (isTarget) { // connect origin and target pairs with lines/geodesics
-      GeodesicSpace geodesic = manifoldDisplay.geodesic();
+      GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       graphics.setColor(new Color(128, 128, 128, 255));
       graphics.setStroke(STROKE);
       for (int index = 0; index < origin.length(); ++index) {
         ScalarTensorFunction scalarTensorFunction = //
-            geodesic.curve(origin.get(index), target.get(index));
+            geodesicSpace.curve(origin.get(index), target.get(index));
         Tensor ms = Tensor.of(DOMAIN.map(scalarTensorFunction).stream() //
             .map(manifoldDisplay::toPoint));
         graphics.draw(geometricLayer.toPath2D(ms));
