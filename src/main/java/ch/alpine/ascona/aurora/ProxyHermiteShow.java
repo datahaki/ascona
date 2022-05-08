@@ -26,7 +26,7 @@ import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 
-/* package */ abstract class ProxyHermite {
+/* package */ abstract class ProxyHermiteShow {
   static final HsManifold HS_EXPONENTIAL = Se2CoveringManifold.INSTANCE;
   static final HsTransport HS_TRANSPORT = LieTransport.INSTANCE;
   // private static final BiinvariantMean BIINVARIANT_MEAN = Se2CoveringBiinvariantMean.INSTANCE;
@@ -43,7 +43,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
 
   /** @param name "20190701T163225_01"
    * @param levels 2 */
-  public ProxyHermite(String name, int levels) {
+  public ProxyHermiteShow(String name, int levels) {
     this.levels = levels;
     folder = HomeDirectory.Documents(name);
     folder.mkdir();

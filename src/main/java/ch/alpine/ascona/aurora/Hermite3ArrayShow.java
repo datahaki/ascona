@@ -15,8 +15,8 @@ import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.exp.Log;
 
-/* package */ class Hermite3Array extends HermiteArray {
-  public Hermite3Array(String name, Scalar period, int levels) {
+/* package */ class Hermite3ArrayShow extends HermiteArrayShow {
+  public Hermite3ArrayShow(String name, Scalar period, int levels) {
     super(name, period, levels);
   }
 
@@ -33,8 +33,8 @@ import ch.alpine.tensor.sca.exp.Log;
 
   public static void main(String[] args) throws IOException {
     int levels = 4;
-    HermiteArray hermiteArray = //
-        new Hermite3Array("20190701T163225_01", Quantity.of(RationalScalar.of(1, 1), "s"), levels);
+    HermiteArrayShow hermiteArray = //
+        new Hermite3ArrayShow("20190701T163225_01", Quantity.of(RationalScalar.of(1, 1), "s"), levels);
     File folder = HomeDirectory.Pictures(hermiteArray.getClass().getSimpleName(), String.format("cx_%1d", levels));
     folder.mkdirs();
     Tensor matrix = hermiteArray.getMatrix();

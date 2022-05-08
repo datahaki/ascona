@@ -19,7 +19,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.ext.HomeDirectory;
 
-public enum VariogramFunctionsDemo {
+public enum VariogramFunctionsShow {
   ;
   public static void main(String[] args) throws IOException {
     File folder = HomeDirectory.Pictures("Variograms");

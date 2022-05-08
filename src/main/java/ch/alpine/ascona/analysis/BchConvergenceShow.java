@@ -22,7 +22,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.exp.Log10;
 
-public enum BchConvergence {
+public enum BchConvergenceShow {
   ;
   private static final Tensor SE2 = Tensors.fromString( //
       "{{{0, 0, 0}, {0, 0, -1}, {0, 1, 0}}, {{0, 0, 1}, {0, 0, 0}, {-1, 0, 0}}, {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}}");
@@ -67,6 +67,6 @@ public enum BchConvergence {
     }
     JFreeChart jFreeChart = ListPlot.of(visualSet, true);
     jFreeChart.setBackgroundPaint(Color.WHITE);
-    ChartUtils.saveChartAsPNG(HomeDirectory.Pictures(BchConvergence.class.getSimpleName() + ".png"), jFreeChart, 400, 300);
+    ChartUtils.saveChartAsPNG(HomeDirectory.Pictures(BchConvergenceShow.class.getSimpleName() + ".png"), jFreeChart, 400, 300);
   }
 }

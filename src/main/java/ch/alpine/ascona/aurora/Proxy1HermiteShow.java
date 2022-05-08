@@ -15,8 +15,8 @@ import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.exp.Log;
 
-/* package */ class Proxy1Hermite extends ProxyHermite {
-  public Proxy1Hermite(String name, int levels) {
+/* package */ class Proxy1HermiteShow extends ProxyHermiteShow {
+  public Proxy1HermiteShow(String name, int levels) {
     super(name, levels);
   }
 
@@ -37,11 +37,11 @@ import ch.alpine.tensor.sca.exp.Log;
     // name = "20190701T170957_03";
     // name = "20190701T174152_03";
     int levels = 3;
-    ProxyHermite proxyHermite = new Proxy1Hermite(name, levels);
+    ProxyHermiteShow proxyHermite = new Proxy1HermiteShow(name, levels);
     File folder = HomeDirectory.Pictures(proxyHermite.getClass().getSimpleName(), String.format("p_%1d", levels));
     folder.mkdirs();
     Tensor matrix = proxyHermite.getMatrix();
-    HermiteArray.export(new File(folder, "id"), matrix);
-    HermiteArray.export(new File(folder, "ln"), matrix.map(RealScalar.ONE::add).map(Log.FUNCTION));
+    HermiteArrayShow.export(new File(folder, "id"), matrix);
+    HermiteArrayShow.export(new File(folder, "ln"), matrix.map(RealScalar.ONE::add).map(Log.FUNCTION));
   }
 }

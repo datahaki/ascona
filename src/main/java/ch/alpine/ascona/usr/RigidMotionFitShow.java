@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.tri.ArcTan;
 
-/* package */ class RigidMotionFitImage {
+/* package */ class RigidMotionFitShow {
   private static Tensor shufflePoints(int n) {
     Distribution distribution = NormalDistribution.standard();
     Tensor random = RandomVariate.of(distribution, n, 2);

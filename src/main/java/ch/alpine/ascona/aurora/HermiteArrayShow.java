@@ -27,7 +27,7 @@ import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.nrm.Vector1Norm;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 
-/* package */ abstract class HermiteArray {
+/* package */ abstract class HermiteArrayShow {
   static final HsManifold HS_EXPONENTIAL = Se2CoveringManifold.INSTANCE;
   static final HsTransport HS_TRANSPORT = LieTransport.INSTANCE;
   // private static final BiinvariantMean BIINVARIANT_MEAN = Se2CoveringBiinvariantMean.INSTANCE;
@@ -44,7 +44,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   /** @param name "20190701T163225_01"
    * @param period 1/2[s]
    * @param levels 4 */
-  public HermiteArray(String name, Scalar period, int levels) {
+  public HermiteArrayShow(String name, Scalar period, int levels) {
     this.levels = Integers.requirePositive(levels);
     folder = HomeDirectory.Documents(name);
     folder.mkdir();

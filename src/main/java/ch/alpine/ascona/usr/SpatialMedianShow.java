@@ -31,7 +31,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-/* package */ enum SpatialMedianImage {
+/* package */ enum SpatialMedianShow {
   ;
   private static class Pixel2Coord {
     private static final Tensor INVERSE = Inverse.of(StaticHelper.SE2);
@@ -91,14 +91,14 @@ import ch.alpine.tensor.sca.Chop;
   }
 
   public static void main(String[] args) throws IOException {
-    File folder = HomeDirectory.Pictures(SpatialMedianImage.class.getSimpleName());
+    File folder = HomeDirectory.Pictures(SpatialMedianShow.class.getSimpleName());
     folder.mkdir();
     for (int seed = 30; seed < 40; ++seed) {
       Tensor image = image(seed);
       Export.of(new File(folder, String.format("%03d.png", seed)), image);
     }
     {
-      Export.of(HomeDirectory.Pictures(SpatialMedianImage.class.getSimpleName() + ".png"), image(35));
+      Export.of(HomeDirectory.Pictures(SpatialMedianShow.class.getSimpleName() + ".png"), image(35));
     }
   }
 }

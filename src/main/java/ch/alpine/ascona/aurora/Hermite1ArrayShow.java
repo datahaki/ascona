@@ -16,8 +16,8 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.exp.Log;
 
-/* package */ class Hermite1Array extends HermiteArray {
-  public Hermite1Array(String name, Scalar period, int levels) {
+/* package */ class Hermite1ArrayShow extends HermiteArrayShow {
+  public Hermite1ArrayShow(String name, Scalar period, int levels) {
     super(name, period, levels);
   }
 
@@ -38,12 +38,12 @@ import ch.alpine.tensor.sca.exp.Log;
     name = "20190701T170957_03";
     // name = "20190701T174152_03";
     int levels = 4;
-    HermiteArray hermiteArray = //
-        new Hermite1Array(name, Quantity.of(RationalScalar.of(1, 1), "s"), levels);
+    HermiteArrayShow hermiteArray = //
+        new Hermite1ArrayShow(name, Quantity.of(RationalScalar.of(1, 1), "s"), levels);
     File folder = HomeDirectory.Pictures(hermiteArray.getClass().getSimpleName(), String.format("xtb3_%1d", levels));
     folder.mkdirs();
     Tensor matrix = hermiteArray.getMatrix();
-    HermiteArray.export(new File(folder, "id"), matrix);
-    HermiteArray.export(new File(folder, "ln"), matrix.map(RealScalar.ONE::add).map(Log.FUNCTION));
+    HermiteArrayShow.export(new File(folder, "id"), matrix);
+    HermiteArrayShow.export(new File(folder, "ln"), matrix.map(RealScalar.ONE::add).map(Log.FUNCTION));
   }
 }

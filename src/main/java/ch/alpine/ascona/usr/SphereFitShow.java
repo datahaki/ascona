@@ -24,7 +24,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 // 4 _41_
-/* package */ enum SphereFitImage {
+/* package */ enum SphereFitShow {
   ;
   private static Tensor image(int seed) {
     Random random = new Random(seed);
@@ -55,14 +55,14 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
   }
 
   public static void main(String[] args) throws IOException {
-    File folder = HomeDirectory.Pictures(SphereFitImage.class.getSimpleName());
+    File folder = HomeDirectory.Pictures(SphereFitShow.class.getSimpleName());
     folder.mkdir();
     for (int seed = 0; seed < 50; ++seed) {
       Tensor image = image(seed);
       Export.of(new File(folder, String.format("%03d.png", seed)), image);
     }
     {
-      Export.of(HomeDirectory.Pictures(SphereFitImage.class.getSimpleName() + ".png"), image(41));
+      Export.of(HomeDirectory.Pictures(SphereFitShow.class.getSimpleName() + ".png"), image(41));
     }
   }
 }

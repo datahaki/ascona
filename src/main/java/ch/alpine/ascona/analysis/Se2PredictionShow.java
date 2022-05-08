@@ -25,7 +25,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Abs;
 
-/* package */ enum Se2Prediction {
+/* package */ enum Se2PredictionShow {
   ;
   public static void main(String[] args) throws IOException {
     GokartPoseData gokartPoseData = GokartPoseDataV2.INSTANCE;
@@ -77,12 +77,12 @@ import ch.alpine.tensor.sca.Abs;
     {
       Tensor image = Raster.of(err_xy, ColorDataGradients.CLASSIC);
       Export.of(HomeDirectory.file("err_xy.csv"), err_xy);
-      Export.of(HomeDirectory.Pictures(Se2Prediction.class.getSimpleName() + "_xy.png"), image);
+      Export.of(HomeDirectory.Pictures(Se2PredictionShow.class.getSimpleName() + "_xy.png"), image);
     }
     {
       Tensor image = Raster.of(err_hd, ColorDataGradients.CLASSIC);
       Export.of(HomeDirectory.file("err_hd.csv"), err_hd);
-      Export.of(HomeDirectory.Pictures(Se2Prediction.class.getSimpleName() + "_hd.png"), image);
+      Export.of(HomeDirectory.Pictures(Se2PredictionShow.class.getSimpleName() + "_hd.png"), image);
     }
   }
 }

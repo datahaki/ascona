@@ -19,10 +19,10 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.red.Nest;
 
-/* package */ class MendelbretDemo implements TensorUnaryOperator {
+/* package */ class MendelbretShow implements TensorUnaryOperator {
   private final Tensor c;
 
-  public MendelbretDemo(Tensor c) {
+  public MendelbretShow(Tensor c) {
     this.c = c;
   }
 
@@ -40,7 +40,7 @@ import ch.alpine.tensor.red.Nest;
     for (int x = 0; x < _x.length(); ++x) {
       for (int y = 0; y < _y.length(); ++y) {
         Tensor c = Tensors.of(_x.Get(x), RealScalar.ZERO, _y.get(y));
-        MendelbretDemo mendelbretDemo = new MendelbretDemo(c);
+        MendelbretShow mendelbretDemo = new MendelbretShow(c);
         Tensor tensor = Nest.of(mendelbretDemo, c, 1);
         // if (Scalars.lessThan(Norm._2.ofVector(tensor.extract(0, 2)), RealScalar.of(2)))
         // image.set(RealScalar.ONE, x, y);
@@ -48,6 +48,6 @@ import ch.alpine.tensor.red.Nest;
       }
     }
     Tensor tensor = Raster.of(image, ColorDataGradients.CLASSIC);
-    Export.of(HomeDirectory.Pictures(MendelbretDemo.class.getSimpleName() + ".png"), tensor);
+    Export.of(HomeDirectory.Pictures(MendelbretShow.class.getSimpleName() + ".png"), tensor);
   }
 }
