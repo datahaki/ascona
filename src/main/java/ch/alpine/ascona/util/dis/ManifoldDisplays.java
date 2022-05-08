@@ -17,7 +17,6 @@ public enum ManifoldDisplays {
       Se2Display.INSTANCE, //
       Spd2Display.INSTANCE, //
       R2Display.INSTANCE, //
-      R3Display.INSTANCE, //
       S1Display.INSTANCE, //
       S2Display.INSTANCE, //
       H1Display.INSTANCE, //
@@ -32,7 +31,6 @@ public enum ManifoldDisplays {
       Se2Display.INSTANCE, //
       Spd2Display.INSTANCE, //
       R2Display.INSTANCE, //
-      R3Display.INSTANCE, //
       S1Display.INSTANCE, //
       S2Display.INSTANCE, //
       H1Display.INSTANCE, //
@@ -44,7 +42,6 @@ public enum ManifoldDisplays {
       Se2Display.INSTANCE, //
       Spd2Display.INSTANCE, //
       R2Display.INSTANCE, //
-      R3Display.INSTANCE, //
       S1Display.INSTANCE, //
       S2Display.INSTANCE, //
       H1Display.INSTANCE, //
@@ -61,7 +58,6 @@ public enum ManifoldDisplays {
       Se2Display.INSTANCE, //
       Spd2Display.INSTANCE, //
       R2Display.INSTANCE, //
-      R3Display.INSTANCE, //
       He1Display.INSTANCE, //
       Dt1Display.INSTANCE);
   // ---
@@ -113,8 +109,7 @@ public enum ManifoldDisplays {
       Se2Display.INSTANCE, //
       Spd2Display.INSTANCE, //
       S2Display.INSTANCE, //
-      R2Display.INSTANCE, //
-      R3Display.INSTANCE);
+      R2Display.INSTANCE);
   // ---
   public static final List<ManifoldDisplay> SE2C_SE2 = Arrays.asList( //
       Se2CoveringDisplay.INSTANCE, //

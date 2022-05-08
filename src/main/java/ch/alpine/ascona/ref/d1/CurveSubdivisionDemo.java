@@ -18,7 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.curve.AbstractCurvatureDemo;
+import ch.alpine.ascona.crv.AbstractCurvatureDemo;
 import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
