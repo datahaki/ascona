@@ -7,6 +7,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
@@ -67,11 +68,10 @@ public class SeriesHermiteSubdivisionDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RenderQuality.setQuality(graphics);
     AxesRender.INSTANCE.render(geometricLayer, graphics);
-    renderControlPoints(geometricLayer, graphics);
     if (1 < _control.length()) {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
       HermiteSubdivision hermiteSubdivision = //
           scheme.supply( //
               manifoldDisplay.hsManifold(), //
@@ -93,6 +93,10 @@ public class SeriesHermiteSubdivisionDemo extends ControlPointsDemo {
           jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
         }
       }
+    }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
     }
   }
 

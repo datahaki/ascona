@@ -10,6 +10,7 @@ import javax.swing.JToggleButton;
 
 import org.jfree.chart.JFreeChart;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -53,7 +54,10 @@ import ch.alpine.tensor.chq.FiniteScalarQ;
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
+    }
   }
 
   abstract void protected_render(GeometricLayer geometricLayer, Graphics2D graphics);

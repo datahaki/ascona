@@ -4,6 +4,7 @@ package ch.alpine.ascona.gbc.d1;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -69,7 +70,11 @@ public class S1InterpolationDemo extends LogWeightingDemo {
         // ---
       }
     }
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     // POINTS_RENDER_0.show(geodesicDisplay()::matrixLift, shape, getGeodesicControlPoints()).render(geometricLayer, graphics);
   }
 

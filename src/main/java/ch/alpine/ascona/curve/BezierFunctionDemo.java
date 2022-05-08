@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.Se2Display;
@@ -42,7 +43,7 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     addButtonDubins();
     {
-      Tensor tensor = Tensors.fromString("{{1, 0, 0}, {0, 1, 0}}");
+      Tensor tensor = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}}");
       setControlPointsSe2(tensor);
     }
     setGeodesicDisplay(Se2Display.INSTANCE);
@@ -53,9 +54,13 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     // ---
     Tensor sequence = getGeodesicControlPoints();
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     int n = sequence.length();
     if (0 == n)
       return Tensors.empty();

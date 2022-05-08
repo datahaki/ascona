@@ -137,9 +137,10 @@ import ch.alpine.tensor.sca.Round;
       ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
     }
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
+    // renderControlPoints(geometricLayer, graphics);
     LeversRender leversRender = //
         LeversRender.of(geodesicDisplay, sequence, values, geometricLayer, graphics);
+    leversRender.renderSequence();
     leversRender.renderWeights(values);
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);

@@ -5,7 +5,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -43,18 +45,23 @@ public class R2ParametricResampleDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
+    AxesRender.INSTANCE.render(geometricLayer, graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
     graphics.setColor(COLOR_DATA_INDEXED.getColor(0));
     graphics.setStroke(new BasicStroke(2f));
     graphics.draw(geometricLayer.toPath2D(control));
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     // ---
     ParametricResample parametricResample = new ParametricResample(threshold, ds);
     ResampleResult resampleResult = parametricResample.apply(control);
     for (Tensor points : resampleResult.getPoints())
-      POINTS_RENDER.show(manifoldDisplay()::matrixLift, manifoldDisplay().shape(), points) //
+      POINTS_RENDER.show(manifoldDisplay()::matrixLift, manifoldDisplay.shape(), points) //
           .render(geometricLayer, graphics);
   }
 

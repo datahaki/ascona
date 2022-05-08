@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
@@ -68,8 +69,9 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     AxesRender.INSTANCE.render(geometricLayer, graphics);
+    Tensor sequence = getGeodesicControlPoints();
     {
-      Tensor target = Tensor.of(getGeodesicControlPoints().stream().map(R2Display.INSTANCE::project));
+      Tensor target = Tensor.of(sequence.stream().map(R2Display.INSTANCE::project));
       Tensor solve = Se2RigidMotionFit.of(points, target);
       POINTS_RENDER_RESULT //
           .show(Se2Display.INSTANCE::matrixLift, Se2Display.INSTANCE.shape(), Tensors.of(solve)) //
@@ -89,7 +91,10 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
       for (int index = 0; index < points.length(); ++index)
         graphics.draw(geometricLayer.toLine2D(points.get(index), target.get(index)));
     }
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+    }
     POINTS_RENDER_POINTS //
         .show(R2Display.INSTANCE::matrixLift, ORIGIN, points) //
         .render(geometricLayer, graphics);

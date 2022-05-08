@@ -71,10 +71,10 @@ public class HilbertBenchmarkDemo extends ControlPointsDemo {
     final Tensor sequence = getGeodesicControlPoints();
     LeversRender leversRender = //
         LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
-    if (jToggleButton.isSelected())
-      renderControlPoints(geometricLayer, graphics);
-    // leversRender.renderIndexX();
-    // leversRender.renderIndexP();
+    if (jToggleButton.isSelected()) {
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     leversRender.renderSurfaceP();
     int magnification = 4;
     if (Objects.isNull(bufferedImage))

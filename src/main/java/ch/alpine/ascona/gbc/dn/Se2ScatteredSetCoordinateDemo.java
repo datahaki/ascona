@@ -1,16 +1,13 @@
 // code by jph
 package ch.alpine.ascona.gbc.dn;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.gbc.d2.AbstractExportWeightingDemo;
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ImageReshape;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -30,8 +27,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.num.Pi;
 
+// TODO ASCONA enhance demo by showing the coordinate box from which functions are sampled
 public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
-  private static final Font FONT = new Font(Font.DIALOG, Font.BOLD, 14);
   private static final double RANGE = 3;
   // ---
   private final JToggleButton jToggleAxes = new JToggleButton("axes");
@@ -54,27 +51,15 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     // if (jToggleAxes.isSelected())
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     ColorDataGradient colorDataGradient = colorDataGradient();
-    renderControlPoints(geometricLayer, graphics);
-    final Tensor controlPoints = getGeodesicControlPoints();
-    int index = 0;
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor shape = manifoldDisplay.shape();
-    graphics.setFont(FONT);
-    FontMetrics fontMetrics = graphics.getFontMetrics();
-    int fheight = fontMetrics.getAscent();
-    graphics.setColor(Color.BLACK);
-    for (Tensor q : controlPoints) {
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(q));
-      Rectangle rectangle = geometricLayer.toPath2D(shape, true).getBounds();
-      graphics.drawString(" " + (index + 1), //
-          rectangle.x + rectangle.width, //
-          rectangle.y + rectangle.height + (-rectangle.height + fheight) / 2);
-      geometricLayer.popMatrix();
-      ++index;
+    Tensor controlPoints = getGeodesicControlPoints();
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
-    // ---
     if (manifoldDisplay.dimensions() < controlPoints.length()) { // render basis functions
       Tensor origin = getGeodesicControlPoints();
       TensorUnaryOperator tensorUnaryOperator = operator(origin);

@@ -48,8 +48,8 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Optional<Tensor> optional = getOrigin();
-    if (optional.isPresent()) {
-      Tensor sequence = getSequence();
+    Tensor sequence = getSequence();
+    if (optional.isPresent() && 2 < sequence.length()) {
       Tensor origin = optional.get();
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
@@ -72,7 +72,9 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
         System.err.println(exception.getMessage());
       }
     } else {
-      renderControlPoints(geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
   }
 

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -29,6 +30,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
+// TODO ASCONA DEMO init properly, draw better, offer configuration of parameters
 public class BulkDecimationDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final Stroke STROKE = //
@@ -55,10 +57,14 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Geodesic geodesicInterface = manifoldDisplay.geodesic();
     graphics.setColor(Color.LIGHT_GRAY);
-    graphics.setStroke(STROKE);
+    // graphics.setStroke(STROKE);
     RenderQuality.setQuality(graphics);
-    graphics.setStroke(new BasicStroke(1));
-    renderControlPoints(geometricLayer, graphics);
+    // graphics.setStroke(new BasicStroke(1));
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     Tensor domain = Subdivide.of(0, 1, 10);
     {
       PathRender pathRender = new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(0));

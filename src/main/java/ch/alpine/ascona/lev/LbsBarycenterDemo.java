@@ -42,8 +42,8 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Optional<Tensor> optional = getOrigin();
-    if (optional.isPresent()) {
-      Tensor sequence = getSequence();
+    Tensor sequence = getSequence();
+    if (optional.isPresent() && 0 < sequence.length()) {
       Tensor origin = optional.get();
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
@@ -70,7 +70,10 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
       // ---
       geometricLayer.popMatrix();
     } else {
-      renderControlPoints(geometricLayer, graphics);
+      {
+        LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
+        leversRender.renderSequence();
+      }
     }
   }
 

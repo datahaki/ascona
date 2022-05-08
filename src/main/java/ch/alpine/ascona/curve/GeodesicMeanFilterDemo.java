@@ -3,6 +3,7 @@ package ch.alpine.ascona.curve;
 
 import java.awt.Graphics2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
@@ -42,17 +43,22 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RenderQuality.setQuality(graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
     int _radius = radius.number().intValue();
-    renderControlPoints(geometricLayer, graphics);
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorUnaryOperator geodesicMeanFilter = GeodesicMeanFilter.of(manifoldDisplay.geodesic(), _radius);
     Tensor refined = geodesicMeanFilter.apply(control);
     Tensor curve = Nest.of(BSpline4CurveSubdivision.split2lo(manifoldDisplay.geodesic())::string, refined, 7);
     Tensor render = Tensor.of(curve.stream().map(manifoldDisplay::toPoint));
+    // ---
+    RenderQuality.setQuality(graphics);
     Curvature2DRender.of(render, false, geometricLayer, graphics);
     renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   public static void main(String[] args) {

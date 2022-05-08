@@ -42,8 +42,11 @@ public class PolygonClipDemo extends AbstractPlaceDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     new PathRender(COLOR_DATA_INDEXED.getColor(3), 1.5f).setCurve(CIRCLE, true).render(geometricLayer, graphics);
-    renderControlPoints(geometricLayer, graphics);
     Tensor sequence = getGeodesicControlPoints();
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+    }
     new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f).setCurve(sequence, true).render(geometricLayer, graphics);
     PolyclipResult polyclipResult = POLYGON_CLIP.apply(sequence);
     graphics.setColor(new Color(128, 255, 128, 128));

@@ -8,6 +8,7 @@ import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.util.Optional;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -77,7 +78,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     Tensor weights = ConstantArray.of(RationalScalar.of(1, length), length);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
-    Tensor mean = biinvariantMean.mean(sequence, weights);
+    final Tensor mean = biinvariantMean.mean(sequence, weights);
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.setStroke(STROKE);
     RenderQuality.setQuality(graphics);
@@ -88,17 +89,6 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       graphics.draw(path2d);
     }
     graphics.setStroke(new BasicStroke(1));
-    renderControlPoints(geometricLayer, graphics);
-    {
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
-      Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape());
-      path2d.closePath();
-      graphics.setColor(COLOR_DATA_INDEXED_FILL.getColor(0));
-      graphics.fill(path2d);
-      graphics.setColor(COLOR_DATA_INDEXED_DRAW.getColor(0));
-      graphics.draw(path2d);
-      geometricLayer.popMatrix();
-    }
     if (median) {
       Biinvariant biinvariant = biinvariants;
       TensorUnaryOperator weightingInterface = //
@@ -106,8 +96,8 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(biinvariantMean, weightingInterface, Chop._05);
       Optional<Tensor> optional = spatialMedian.uniform(sequence);
       if (optional.isPresent()) {
-        mean = optional.orElseThrow();
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
+        Tensor median = optional.orElseThrow();
+        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(median));
         Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape().multiply(RealScalar.of(0.7)));
         path2d.closePath();
         graphics.setColor(COLOR_DATA_INDEXED_FILL.getColor(1));
@@ -116,6 +106,13 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
         graphics.draw(path2d);
         geometricLayer.popMatrix();
       }
+    }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, mean, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderOrigin();
+      leversRender.renderIndexP();
+      leversRender.renderIndexX();
     }
   }
 

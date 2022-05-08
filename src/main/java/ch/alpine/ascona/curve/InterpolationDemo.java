@@ -4,9 +4,11 @@ package ch.alpine.ascona.curve;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -27,10 +29,10 @@ public class InterpolationDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    renderControlPoints(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
     Tensor sequence = getGeodesicControlPoints();
+    RenderQuality.setQuality(graphics);
     if (0 < sequence.length()) {
       Tensor matrix = BSplineLimitMatrix.string(sequence.length(), 3);
       Tensor invers = Inverse.of(matrix);
@@ -38,6 +40,11 @@ public class InterpolationDemo extends ControlPointsDemo {
       CurveSubdivision curveSubdivision = new BSpline3CurveSubdivision(manifoldDisplay.geodesic());
       Tensor refine = Nest.of(curveSubdivision::string, tensor, 5);
       new PathRender(Color.BLUE).setCurve(refine, false).render(geometricLayer, graphics);
+    }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
   }
 

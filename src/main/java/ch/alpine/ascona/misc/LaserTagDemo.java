@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -51,7 +52,10 @@ public class LaserTagDemo extends ControlPointsDemo {
     graphics.setColor(COLOR_DATA_INDEXED.getColor(0));
     if (show) {
       graphics.draw(geometricLayer.toPath2D(control));
-      renderControlPoints(geometricLayer, graphics);
+      {
+        LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
+        leversRender.renderSequence();
+      }
     } else {
       graphics.draw(geometricLayer.toPath2D(control.extract(0, 3)));
     }

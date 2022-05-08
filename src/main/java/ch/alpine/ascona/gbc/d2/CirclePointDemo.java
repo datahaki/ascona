@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.lev.LeversHud;
 import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -33,13 +34,18 @@ public class CirclePointDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    renderControlPoints(geometricLayer, graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     // ---
     Tensor sequence = getGeodesicControlPoints();
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     Tensor levers = Tensor.of(sequence.stream().map(Vector2Norm.NORMALIZE));
     {
       LeversRender leversRender = LeversRender.of( //
-          manifoldDisplay(), sequence, Array.zeros(2), geometricLayer, graphics);
+          manifoldDisplay, sequence, Array.zeros(2), geometricLayer, graphics);
       leversRender.renderSurfaceP();
     }
     {

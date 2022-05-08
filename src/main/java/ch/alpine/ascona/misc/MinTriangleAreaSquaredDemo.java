@@ -43,7 +43,7 @@ public class MinTriangleAreaSquaredDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    final ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     pathRender.setCurve(sequence, true);
     if (0 < sequence.length()) {
@@ -53,6 +53,8 @@ public class MinTriangleAreaSquaredDemo extends ControlPointsDemo {
         Tensor origin = weights.dot(polygon).extract(0, 2);
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
+        leversRender.renderSequence();
+        leversRender.renderIndexP();
         leversRender.renderWeights(weights);
         leversRender.renderOrigin();
         leversRender.renderLevers(weights);
@@ -64,7 +66,6 @@ public class MinTriangleAreaSquaredDemo extends ControlPointsDemo {
         leversRender.renderOrigin();
       }
     }
-    renderControlPoints(geometricLayer, graphics);
   }
 
   public static void main(String[] args) {

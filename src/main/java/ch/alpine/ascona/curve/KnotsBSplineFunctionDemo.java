@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
@@ -67,7 +68,6 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     }
     // ---
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics); // control points
     Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << levels))).map(scalarTensorFunction);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
@@ -81,6 +81,11 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     Curvature2DRender.of(render, false, geometricLayer, graphics);
     if (levels < 5)
       renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     return refined;
   }
 

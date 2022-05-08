@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
@@ -29,7 +30,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.red.Times;
 
-// TODO ASCONA ALG demo does not seem correct
+// FIXME ASCONA ALG demo does not seem correct
 @ReflectionMarker
 public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
@@ -47,15 +48,14 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
 
   @Override // from RenderInterface
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     final int upper = control.length() - 1;
     final Scalar parameter = ratio.multiply(RealScalar.of(upper));
     Tensor knots = Range.of(0, 2 * upper);
     bufferedImage = SymLinkImages.deboor(knots, control.length(), parameter).bufferedImage();
     // ---
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics); // control points
     // ---
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Geodesic geodesicInterface = manifoldDisplay.geodesic();
     ScalarTensorFunction scalarTensorFunction = //
         DeBoor.of(geodesicInterface, knots, control);
@@ -77,6 +77,11 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
     Curvature2DRender.of(render, false, geometricLayer, graphics);
     if (levels < 5)
       renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     return refined;
   }
 

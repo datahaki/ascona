@@ -50,15 +50,13 @@ public class GrassmannDemo extends LogWeightingDemo implements SpinnerListener<M
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Optional<Tensor> optional = getOrigin();
+    Tensor sequence = getSequence();
     if (optional.isPresent()) {
-      Tensor sequence = getSequence();
       Tensor origin = optional.get();
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       ColorDataGradient colorDataGradient = spinnerColorData.getValue().deriveWithOpacity(RealScalar.of(0.5));
       LeversHud.render(bitype(), leversRender, colorDataGradient);
-    } else {
-      renderControlPoints(geometricLayer, graphics);
     }
   }
 

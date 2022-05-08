@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.ref.d1h;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -13,6 +14,7 @@ import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
@@ -41,6 +43,9 @@ import ch.alpine.tensor.red.Mean;
 
 @ReflectionMarker
 public class HermiteSubdivisionDemo extends ControlPointsDemo {
+  // TODO ASCONA redundant
+  private static final PointsRender POINTS_RENDER_0 = //
+      new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
   // ---

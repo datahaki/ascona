@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -32,9 +33,8 @@ import ch.alpine.tensor.img.ColorDataLists;
 
   @Override // from RenderInterface
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
+    RenderQuality.setQuality(graphics);
     if (1 < control.length()) {
       Tensor support = control.get(Tensor.ALL, 0);
       Tensor funceva = control.get(Tensor.ALL, 1);
@@ -55,6 +55,11 @@ import ch.alpine.tensor.img.ColorDataLists;
         Color color = colorDataIndexed.getColor(index);
         Tensor curve = Transpose.of(Tensors.of(domain, basis.get(Tensor.ALL, index)));
         new PathRender(color, 1f).setCurve(curve, false).render(geometricLayer, graphics);
+      }
+      {
+        LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
+        leversRender.renderSequence();
+        leversRender.renderIndexP();
       }
     }
   }

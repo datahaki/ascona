@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 
 import org.jfree.chart.JFreeChart;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -112,8 +113,11 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
         }
       }
     }
-    // ---
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   public static void main(String[] args) {

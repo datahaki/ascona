@@ -12,6 +12,7 @@ import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -37,6 +38,9 @@ import ch.alpine.tensor.red.Times;
 
 @ReflectionMarker
 public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
+  // TODO ASCONA redundant
+  private static final PointsRender POINTS_RENDER_0 = //
+      new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
   @FieldSlider
   @FieldPreferredWidth(100)

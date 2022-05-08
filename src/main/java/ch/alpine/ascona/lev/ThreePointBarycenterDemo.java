@@ -21,6 +21,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
+// TODO ASCONA demo becomes unstable when control points are removed
 public class ThreePointBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
@@ -66,7 +67,10 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
         System.err.println(e);
       }
     } else {
-      renderControlPoints(geometricLayer, graphics);
+      LeversRender leversRender = //
+          LeversRender.of(manifoldDisplay, getSequence(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
   }
 

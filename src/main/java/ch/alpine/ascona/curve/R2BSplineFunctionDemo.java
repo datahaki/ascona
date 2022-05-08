@@ -4,6 +4,7 @@ package ch.alpine.ascona.curve;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -38,9 +39,6 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
 
   @Override
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics); // control points
-    RenderQuality.setDefault(graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor refined = Tensors.empty();
     if (0 < control.length()) {
@@ -51,6 +49,12 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
       refined = Subdivide.of(0, cyclic ? control.length() : control.length() - 1, 100) //
           .map(scalarTensorFunction);
       new PathRender(Color.BLUE).setCurve(refined, cyclic).render(geometricLayer, graphics);
+    }
+    RenderQuality.setQuality(graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
     return refined;
   }

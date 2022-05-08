@@ -7,6 +7,7 @@ import java.awt.geom.Path2D;
 import java.util.HashSet;
 import java.util.Set;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -116,7 +117,10 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
           }
         }
       }
-      renderControlPoints(geometricLayer, graphics);
+      {
+        LeversRender leversRender = LeversRender.of(manifoldDisplay(), surfaceMesh.vrt, null, geometricLayer, graphics);
+        leversRender.renderSequence();
+      }
     }
   }
 

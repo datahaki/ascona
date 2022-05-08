@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 import javax.swing.JToggleButton;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -67,7 +68,6 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     // ---
     Tensor control = Sort.of(getGeodesicControlPoints());
     if (1 < control.length()) {
@@ -97,6 +97,11 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.get(Tensor.ALL, index)));
         new PathRender(color, 1f).setCurve(curve, false).render(geometricLayer, graphics);
       }
+    }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
   }
 

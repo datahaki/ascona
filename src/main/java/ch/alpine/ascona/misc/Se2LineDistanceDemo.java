@@ -8,6 +8,7 @@ import java.awt.geom.Path2D;
 
 import javax.swing.JToggleButton;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -49,7 +50,6 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     if (axes.isSelected())
       AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LieGroup lieGroup = manifoldDisplay.lieGroup();
@@ -129,6 +129,11 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
       graphics.setColor(COLOR_DATA_INDEXED_DRAW.getColor(0));
       graphics.draw(path2d);
       geometricLayer.popMatrix();
+    }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
   }
 

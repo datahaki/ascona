@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.SnLineDistances;
 import ch.alpine.ascona.util.arp.S2ArrayHelper;
@@ -101,7 +102,10 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
     graphics.draw(geometricLayer.toPath2D(ms));
     graphics.setStroke(new BasicStroke());
     // ---
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, cp, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+    }
   }
 
   public static void main(String[] args) {

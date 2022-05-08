@@ -38,12 +38,10 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 /** class is used in other projects outside of owl */
 @ReflectionMarker
 // TODO ASCONA possibly create TABs for each Manifold Display (in order to leave ctrl points)
+// TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
 public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
   /** mouse snaps 20 pixel to control points */
   private static final Scalar PIXEL_THRESHOLD = RealScalar.of(20.0);
-  /** control points */
-  protected static final PointsRender POINTS_RENDER_0 = //
-      new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   /** refined points */
   protected static final PointsRender POINTS_RENDER_1 = //
       new PointsRender(new Color(160, 160, 160, 128 + 64), Color.BLACK);
@@ -268,14 +266,6 @@ public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
         .map(N.DOUBLE::of));
   }
 
-  // TODO ASCONA make obsolete
-  @Deprecated
-  protected final void renderControlPoints(GeometricLayer geometricLayer, Graphics2D graphics) {
-    POINTS_RENDER_0.show(manifoldDisplay()::matrixLift, getControlPointShape(), getGeodesicControlPoints()).render(geometricLayer, graphics);
-  }
-
-  // TODO ASCONA make obsolete
-  @Deprecated
   protected final void renderPoints( //
       ManifoldDisplay geodesicDisplay, Tensor points, //
       GeometricLayer geometricLayer, Graphics2D graphics) {

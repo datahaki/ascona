@@ -19,6 +19,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.curve.AbstractCurvatureDemo;
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -179,8 +180,12 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     final boolean cyclic = jToggleCyclic.isSelected() || !scheme.isStringSupported();
     Tensor control = getGeodesicControlPoints();
     int levels = spinnerRefine.getValue();
-    renderControlPoints(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     Geodesic geodesicInterface = manifoldDisplay.geodesic();
     Tensor refined = StaticHelper.refine( //
         control, levels, spinnerLabel.getValue().of(manifoldDisplay), //

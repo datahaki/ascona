@@ -9,6 +9,7 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.lev.AbstractPlaceDemo;
 import ch.alpine.ascona.lev.LeversRender;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -48,6 +49,7 @@ public class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     boolean isMoving = jToggleButton.isSelected();
     setPositioningEnabled(!isMoving);
     RenderQuality.setQuality(graphics);
@@ -109,8 +111,9 @@ public class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
     } else {
       Tensor sequence = getGeodesicControlPoints();
       new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f).setCurve(sequence, true).render(geometricLayer, graphics);
-      renderControlPoints(geometricLayer, graphics);
-      LeversRender leversRender = LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSurfaceP();
+      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     // RenderQuality.setDefault(graphics);

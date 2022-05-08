@@ -15,6 +15,7 @@ import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ImageReshape;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
@@ -76,6 +77,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
     setGeodesicDisplay(S2Display.INSTANCE);
     setGeodesicDisplay(R2Display.INSTANCE);
     setControlPointsSe2(Tensors.fromString("{{0, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}}"));
+    setMidpointIndicated(true);
   }
 
   @Override
@@ -84,7 +86,11 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::toPoint));

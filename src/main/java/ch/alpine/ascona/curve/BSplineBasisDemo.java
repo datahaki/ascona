@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -89,7 +90,11 @@ public class BSplineBasisDemo extends ControlPointsDemo {
     GeodesicBSplineFunction bSplineFunction = //
         GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, _degree, effective);
     Tensor refined = Subdivide.of(0, effective.length() - 1, 4 << _levels).map(bSplineFunction);
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     Curvature2DRender.of(refined, false, geometricLayer, graphics);
   }
 

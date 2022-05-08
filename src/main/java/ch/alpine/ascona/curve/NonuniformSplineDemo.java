@@ -4,8 +4,10 @@ package ch.alpine.ascona.curve;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -49,6 +51,7 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RenderQuality.setQuality(graphics);
     int _degree = degree.number().intValue();
     int _levels = refine.number().intValue();
@@ -64,8 +67,12 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
     Clip clip = Clips.interval(x.Get(0), Last.of(x));
     Tensor domain = Subdivide.increasing(clip, 4 << _levels);
     Tensor values = domain.map(scalarTensorFunction);
-    renderControlPoints(geometricLayer, graphics);
     Curvature2DRender.of(Transpose.of(Tensors.of(domain, values)), false, geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   public static void main(String[] args) {

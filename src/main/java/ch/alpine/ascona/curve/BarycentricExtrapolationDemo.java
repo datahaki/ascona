@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -60,7 +61,11 @@ public class BarycentricExtrapolationDemo extends LogWeightingDemo {
           .setCurve(curve, false) //
           .render(geometricLayer, graphics);
     }
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   public static void main(String[] args) {

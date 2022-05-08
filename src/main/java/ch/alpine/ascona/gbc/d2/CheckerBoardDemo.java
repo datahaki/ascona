@@ -135,7 +135,11 @@ public class CheckerBoardDemo extends LogWeightingBase //
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     // ---
     if (jToggleButton.isSelected()) {
       LeversRender leversRender = LeversRender.of( //

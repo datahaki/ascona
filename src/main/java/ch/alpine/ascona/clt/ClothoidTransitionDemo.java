@@ -9,6 +9,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
@@ -99,8 +100,11 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       JFreeChart jFreeChart = ListPlot.of(visualSet, true);
       jFreeChart.draw(graphics, new Rectangle2D.Double(0, 0, 400, 300));
     }
-    if (ctrl)
-      renderControlPoints(geometricLayer, graphics);
+    if (ctrl) {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   public static void main(String[] args) {

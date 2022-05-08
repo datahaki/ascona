@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
@@ -44,10 +45,14 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
     final Scalar parameter = ratio.multiply(RealScalar.of(upper));
     bufferedImage = SymLinkImages.symLinkImageGBSF(degree, upper + 1, parameter).bufferedImage();
     // ---
-    RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics); // control points
-    // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    RenderQuality.setQuality(graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
+    // ---
     Tensor effective = control;
     ScalarTensorFunction scalarTensorFunction = //
         GeodesicBSplineFunction.of(manifoldDisplay.geodesic(), degree, effective);

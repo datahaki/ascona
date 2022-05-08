@@ -7,6 +7,7 @@ import java.awt.geom.Path2D;
 
 import javax.swing.JToggleButton;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -46,15 +47,13 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    RenderQuality.setQuality(graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     if (axes.isSelected())
       AxesRender.INSTANCE.render(geometricLayer, graphics);
-    RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     if (sequence.length() == 4)
       try {
-        ManifoldDisplay manifoldDisplay = manifoldDisplay();
-        // ---
         Geodesic geodesicInterface = manifoldDisplay.geodesic();
         final ScalarTensorFunction curve = geodesicInterface.curve(sequence.get(0), sequence.get(1));
         {
@@ -117,6 +116,11 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
       } catch (Exception exception) {
         exception.printStackTrace();
       }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   public static void main(String[] args) {

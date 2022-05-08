@@ -45,11 +45,10 @@ import ch.alpine.tensor.Tensor;
     if (jToggleAxes.isSelected())
       AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     {
-      final Tensor sequence = getGeodesicControlPoints();
       LeversRender leversRender = //
-          LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
+          LeversRender.of(manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
       leversRender.renderIndexX();
       leversRender.renderIndexP();
     }

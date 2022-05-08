@@ -65,8 +65,6 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
         Path2D path2d = geometricLayer.toPath2D(polygon);
         graphics.draw(path2d);
       }
-    } else {
-      renderControlPoints(geometricLayer, graphics);
     }
   }
 

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -67,12 +68,16 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
 
   @Override // from RenderInterface
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     final int levels = refine.number().intValue();
     final Tensor control = getGeodesicControlPoints();
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     if (4 <= control.length()) {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
       Geodesic geodesicInterface = manifoldDisplay.geodesic();
       TensorUnaryOperator centripetalKnotSpacing = //
           KnotSpacing.centripetal(manifoldDisplay.parametricDistance(), exponent);

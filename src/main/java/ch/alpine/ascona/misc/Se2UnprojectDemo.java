@@ -5,10 +5,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.win.AxesRender;
 import ch.alpine.sophus.api.Exponential;
@@ -41,8 +41,6 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
-    RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HsManifold hsManifold = LieExponential.of(manifoldDisplay.lieGroup(), Se2CoveringExponential.INSTANCE);
@@ -77,6 +75,11 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
           graphics.draw(path2d);
           geometricLayer.popMatrix();
         }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   public static void main(String[] args) {

@@ -13,6 +13,7 @@ import javax.swing.JToggleButton;
 
 import org.jfree.chart.JFreeChart;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.CurveVisualSet;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -145,15 +146,19 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     // ---
     Tensor control = getGeodesicControlPoints();
     int levels = spinnerRefine.getValue();
-    renderControlPoints(geometricLayer, graphics);
-    ManifoldDisplay geodesicDisplay = manifoldDisplay();
-    Geodesic geodesicInterface = geodesicDisplay.geodesic();
-    Tensor refined = StaticHelper.refine(control, levels, scheme.of(geodesicDisplay), //
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    Tensor refined = StaticHelper.refine(control, levels, scheme.of(manifoldDisplay), //
         CurveSubdivisionHelper.isDual(scheme), false, geodesicInterface);
     // ---
-    Tensor render = Tensor.of(refined.stream().map(geodesicDisplay::toPoint));
+    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
     pathRender.setCurve(render, false);
     pathRender.render(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     return refined;
   }
 

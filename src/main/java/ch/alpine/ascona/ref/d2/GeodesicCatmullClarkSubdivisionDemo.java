@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -45,10 +46,8 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
-    Tensor control = getGeodesicControlPoints();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Tensor control = getGeodesicControlPoints();
     Geodesic geodesicInterface = manifoldDisplay.geodesic();
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = //
         new GeodesicCatmullClarkSubdivision(geodesicInterface);
@@ -56,6 +55,7 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         catmullClarkSubdivision::refine, //
         ArrayReshape.of(control, 2, 3, 3), //
         refine.number().intValue());
+    RenderQuality.setQuality(graphics);
     for (Tensor points : refined)
       for (Tensor point : points) {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
@@ -68,6 +68,10 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         graphics.setColor(Color.BLACK);
         graphics.draw(path2d);
       }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+    }
   }
 
   public static void main(String[] args) {

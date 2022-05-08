@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.GeodesicFilters;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -26,6 +27,7 @@ import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.lie.TensorProduct;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
+// TODO ASCONA DEMO visualization can be improved much
 public class GeodesicFiltersDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DRAW = ColorDataLists._001.strict();
   private static final ColorDataIndexed COLOR_FILL = COLOR_DRAW.deriveWithAlpha(64);
@@ -46,11 +48,15 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     if (!Integers.isEven(control.length())) {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
       ScalarUnaryOperator smoothingKernel = spinnerKernel.getValue().get();
       for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
         int ordinal = geodesicFilters.ordinal();
