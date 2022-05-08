@@ -43,7 +43,6 @@ public class ColoredNoiseDemo extends AbstractGeodesicDisplayDemo {
   private JFreeChart jFreeChart;
   private JFreeChart spectrogra;
 
-  // private final Tensor vector;
   public ColoredNoiseDemo() {
     super(Arrays.asList(R2Display.INSTANCE));
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar).addUniversalListener(this::compute);
