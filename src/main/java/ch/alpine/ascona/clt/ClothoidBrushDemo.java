@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Objects;
 
+import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -122,7 +123,11 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
         graphics.setStroke(new BasicStroke(1));
       }
     }
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   private static Tensor sample(Tensor be) {

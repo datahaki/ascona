@@ -10,11 +10,9 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.bridge.win.AbstractDemo;
-import ch.alpine.bridge.win.BaseFrame;
-import ch.alpine.bridge.win.DemoInterface;
 
 @ReflectionMarker
-public abstract class AbstractGeodesicDisplayDemo extends AbstractDemo implements DemoInterface {
+public abstract class AbstractGeodesicDisplayDemo extends AbstractDemo {
   private final SpinnerLabel<ManifoldDisplay> manifoldDisplaySpinner = new SpinnerLabel<>();
   private final List<ManifoldDisplay> list;
 
@@ -52,10 +50,5 @@ public abstract class AbstractGeodesicDisplayDemo extends AbstractDemo implement
   /** @return */
   public List<ManifoldDisplay> getManifoldDisplays() {
     return list;
-  }
-
-  @Override // from DemoInterface
-  public final BaseFrame start() {
-    return timerFrame;
   }
 }

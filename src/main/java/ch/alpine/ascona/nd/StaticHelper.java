@@ -16,6 +16,9 @@ import ch.alpine.tensor.sca.Clip;
 
 /* package */ enum StaticHelper {
   ;
+  /** @param coordinateBoundingBox
+   * @return polygon defined by the corners of the first two dimensions of given
+   * coordinateBoundingBox */
   public static Tensor polygon(CoordinateBoundingBox coordinateBoundingBox) {
     Clip clip0 = coordinateBoundingBox.getClip(0);
     Clip clip1 = coordinateBoundingBox.getClip(1);

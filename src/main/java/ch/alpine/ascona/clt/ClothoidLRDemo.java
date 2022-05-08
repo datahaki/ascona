@@ -11,8 +11,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.win.AbstractDemo;
 import ch.alpine.bridge.win.AxesRender;
-import ch.alpine.bridge.win.BaseFrame;
-import ch.alpine.bridge.win.DemoInterface;
 import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.clt.Clothoid;
 import ch.alpine.sophus.clt.ClothoidBuilder;
@@ -33,7 +31,7 @@ import ch.alpine.tensor.red.Nest;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
-public class ClothoidLRDemo extends AbstractDemo implements DemoInterface {
+public class ClothoidLRDemo extends AbstractDemo {
   private static final Tensor START = Array.zeros(3).unmodifiable();
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 100);
   private static final Tensor ARROWS = Subdivide.of(0.0, 1.0, 8);
@@ -80,11 +78,6 @@ public class ClothoidLRDemo extends AbstractDemo implements DemoInterface {
       POINTS_RENDER_S.show(Se2ClothoidDisplay.ANALYTIC::matrixLift, Arrowhead.of(0.3), points) //
           .render(geometricLayer, graphics);
     }
-  }
-
-  @Override // from DemoInterface
-  public BaseFrame start() {
-    return timerFrame;
   }
 
   public static void main(String[] args) {

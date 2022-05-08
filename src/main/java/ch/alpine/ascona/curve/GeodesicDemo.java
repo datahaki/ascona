@@ -17,8 +17,6 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.win.AbstractDemo;
-import ch.alpine.bridge.win.BaseFrame;
-import ch.alpine.bridge.win.DemoInterface;
 import ch.alpine.bridge.win.PathRender;
 import ch.alpine.sophus.api.Geodesic;
 import ch.alpine.tensor.RealScalar;
@@ -28,7 +26,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 @ReflectionMarker
-public class GeodesicDemo extends AbstractDemo implements DemoInterface {
+public class GeodesicDemo extends AbstractDemo {
   private static final Color COLOR = new Color(128, 128, 128, 128);
   private static final int SPLITS = 20;
   // ---
@@ -92,11 +90,6 @@ public class GeodesicDemo extends AbstractDemo implements DemoInterface {
       }
     }
     RenderQuality.setDefault(graphics);
-  }
-
-  @Override // from DemoInterface
-  public BaseFrame start() {
-    return timerFrame;
   }
 
   public static void main(String[] args) {

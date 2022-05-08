@@ -23,7 +23,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 
 // FIXME ASCONA ALG pressing shuffle button crashes app
-// FIXME does not pass the offscreen test
+// FIXME ASCONA does not pass the offscreen test
 /* package */ class OrderingHoverDemo extends AbstractHoverDemo {
   private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
   private final SpinnerLabel<ColorDataGradient> spinnerColorData = SpinnerLabel.of(ColorDataGradients.values());

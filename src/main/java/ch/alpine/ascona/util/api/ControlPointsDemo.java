@@ -268,10 +268,14 @@ public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
         .map(N.DOUBLE::of));
   }
 
+  // TODO ASCONA make obsolete
+  @Deprecated
   protected final void renderControlPoints(GeometricLayer geometricLayer, Graphics2D graphics) {
     POINTS_RENDER_0.show(manifoldDisplay()::matrixLift, getControlPointShape(), getGeodesicControlPoints()).render(geometricLayer, graphics);
   }
 
+  // TODO ASCONA make obsolete
+  @Deprecated
   protected final void renderPoints( //
       ManifoldDisplay geodesicDisplay, Tensor points, //
       GeometricLayer geometricLayer, Graphics2D graphics) {
