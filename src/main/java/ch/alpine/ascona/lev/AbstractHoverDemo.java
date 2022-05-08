@@ -13,6 +13,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -20,7 +21,7 @@ import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 
-/* package */ abstract class AbstractHoverDemo extends LogWeightingDemo {
+public abstract class AbstractHoverDemo extends LogWeightingDemo {
   private final JToggleButton jToggleAxes = new JToggleButton("axes");
   final SpinnerLabel<Integer> spinnerCount = new SpinnerLabel<>();
   private final JButton jButtonShuffle = new JButton("shuffle");
@@ -48,7 +49,7 @@ import ch.alpine.tensor.Tensor;
     timerFrame.jToolBar.addSeparator();
   }
 
-  void shuffle(int n) {
+  protected void shuffle(int n) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
     setControlPointsSe2(RandomSample.of(randomSampleInterface, n));
@@ -72,5 +73,5 @@ import ch.alpine.tensor.Tensor;
    * @param graphics
    * @param leversRender
    * @param weights */
-  abstract void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender);
+  protected abstract void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender);
 }

@@ -8,10 +8,10 @@ import java.awt.Graphics2D;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.lev.AbstractPlaceDemo;
-import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;

@@ -1,11 +1,10 @@
 // code by jph
-package ch.alpine.ascona.util;
+package ch.alpine.ascona.util.win;
 
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.AbstractGeodesicDisplayDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 
 public enum AbstractDemoHelper {

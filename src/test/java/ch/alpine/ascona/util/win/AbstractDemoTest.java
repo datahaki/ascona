@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.util;
+package ch.alpine.ascona.util.win;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -11,7 +11,6 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.lang.ClassDiscovery;
 import ch.alpine.bridge.lang.ClassPaths;
 import ch.alpine.bridge.lang.ClassVisitor;

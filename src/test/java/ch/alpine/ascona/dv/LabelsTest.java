@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.lev;
+package ch.alpine.ascona.dv;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

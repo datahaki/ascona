@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.lev;
+package ch.alpine.ascona.dv;
 
 import java.util.function.Function;
 
@@ -8,7 +8,7 @@ import ch.alpine.ascona.util.cls.Classifier;
 import ch.alpine.ascona.util.cls.KNearestClassifier;
 import ch.alpine.tensor.Tensor;
 
-/* package */ enum Labels implements Function<Tensor, Classification> {
+public enum Labels implements Function<Tensor, Classification> {
   ARG_MIN(Classifier::argMin), //
   NEAREST1(l -> new KNearestClassifier(l, 1)), //
   NEAREST3(l -> new KNearestClassifier(l, 3)), //

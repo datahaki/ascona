@@ -78,8 +78,8 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
     timerFrame.jToolBar.addSeparator();
   }
 
-  protected final void setBitype(Bitype biinvariant) {
-    spinnerBiinvariant.setValue(biinvariant);
+  protected final void setBitype(Bitype bitype) {
+    spinnerBiinvariant.setValue(bitype);
   }
 
   protected final Biinvariant biinvariant() {

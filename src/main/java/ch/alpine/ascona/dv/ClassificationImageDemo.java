@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.lev;
+package ch.alpine.ascona.dv;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -17,6 +17,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
+import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.HsArrayPlot;

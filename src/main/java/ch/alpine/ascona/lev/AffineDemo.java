@@ -13,6 +13,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
+import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -40,6 +41,7 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
     jToggleNeutral.setSelected(true);
+    setMidpointIndicated(true);
   }
 
   @Override // from RenderInterface
@@ -53,7 +55,9 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       leversRender.renderSequence();
+      leversRender.renderIndexP();
       leversRender.renderOrigin();
+      leversRender.renderIndexX();
       // Tensor weights = AffineCoordinate.of(vectorLogManifold).weights(sequence, origin);
       // leversRender.renderWeights(weights);
       Tensor doma = Subdivide.of(0.0, 1.0, 11);

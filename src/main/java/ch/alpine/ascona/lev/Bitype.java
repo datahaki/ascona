@@ -7,7 +7,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 
-/* package */ enum Bitype {
+public enum Bitype {
   METRIC1, //
   METRIC2, //
   LEVERAGES1, //

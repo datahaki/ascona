@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.lev;
+package ch.alpine.ascona.dv;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -7,10 +7,12 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
+import ch.alpine.ascona.lev.AbstractHoverDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -52,14 +54,14 @@ public class ClassificationDemo extends AbstractHoverDemo {
   }
 
   @Override
-  void shuffle(int n) {
+  protected void shuffle(int n) {
     super.shuffle(n);
     // assignment of random labels to points
     vector = RandomVariate.of(DiscreteUniformDistribution.of(0, 3), n);
   }
 
   @Override // from RenderInterface
-  public void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
+  protected void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     // GeodesicInterface geodesicInterface = geodesicDisplay.geodesicInterface();
     Tensor controlPoints = leversRender.getSequence();

@@ -22,14 +22,14 @@ public abstract class AbstractPlaceDemo extends ControlPointsDemo {
     timerFrame.jToolBar.add(jButtonPrint);
   }
 
-  final Optional<Tensor> getOrigin() {
+  protected final Optional<Tensor> getOrigin() {
     Tensor geodesicControlPoints = getGeodesicControlPoints(0, 1);
     return 0 < geodesicControlPoints.length() //
         ? Optional.of(geodesicControlPoints.get(0))
         : Optional.empty();
   }
 
-  final Tensor getSequence() {
+  protected final Tensor getSequence() {
     return getGeodesicControlPoints(1, Integer.MAX_VALUE);
   }
 }

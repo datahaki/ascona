@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ImageRender;
+import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;

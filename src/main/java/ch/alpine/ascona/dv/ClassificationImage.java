@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.lev;
+package ch.alpine.ascona.dv;
 
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.cls.ClassificationResult;

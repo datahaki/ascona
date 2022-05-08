@@ -1,9 +1,11 @@
 // code by jph
-package ch.alpine.ascona.lev;
+package ch.alpine.ascona.dv;
 
 import java.awt.Graphics2D;
 
+import ch.alpine.ascona.lev.AbstractHoverDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 

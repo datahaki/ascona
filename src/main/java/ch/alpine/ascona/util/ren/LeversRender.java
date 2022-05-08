@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.lev;
+package ch.alpine.ascona.util.ren;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -17,8 +17,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
-import ch.alpine.ascona.util.ren.MatrixRender;
-import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.GeodesicSpace;

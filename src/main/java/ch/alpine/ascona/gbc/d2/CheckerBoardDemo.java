@@ -13,7 +13,6 @@ import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.lev.LeversRender;
 import ch.alpine.ascona.lev.LogWeightingBase;
 import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.LogWeighting;
@@ -27,6 +26,7 @@ import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.ImageRender;
+import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
