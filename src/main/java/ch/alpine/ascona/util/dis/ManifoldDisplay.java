@@ -15,7 +15,7 @@ import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-/** Hint: the interface GeodesicDisplay is intended for use in the demo layer
+/** Hint: the interface is intended for use in the demo layer
  * but not in the library functions. */
 public interface ManifoldDisplay {
   /** @return */
@@ -68,13 +68,9 @@ public interface ManifoldDisplay {
   /** @param resolution
    * @param tensorScalarFunction
    * @return array of scalar values clipped to interval [0, 1] or DoubleScalar.INDETERMINATE */
-  default HsArrayPlot geodesicArrayPlot() {
-    throw new UnsupportedOperationException();
-  }
+  HsArrayPlot geodesicArrayPlot();
 
-  default RandomSampleInterface randomSampleInterface() {
-    throw new UnsupportedOperationException();
-  }
+  RandomSampleInterface randomSampleInterface();
 
   @Override // from Object
   String toString();

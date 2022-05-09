@@ -13,12 +13,12 @@ public class H2Display extends HnDisplay {
     super(2);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor p) {
     return p.extract(0, 2);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public HsArrayPlot geodesicArrayPlot() {
     return new H2ArrayPlot(RADIUS);
   }

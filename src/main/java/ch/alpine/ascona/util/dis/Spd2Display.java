@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
@@ -18,6 +19,7 @@ import ch.alpine.sophus.hs.spd.SpdMetric;
 import ch.alpine.sophus.hs.spd.SpdTransport;
 import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -35,22 +37,22 @@ public enum Spd2Display implements ManifoldDisplay {
   private static final Tensor CIRCLE_POINTS = CirclePoints.of(43).multiply(SCALE).unmodifiable();
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public GeodesicSpace geodesicSpace() {
     return SpdGeodesic.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public int dimensions() {
     return 3;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public TensorUnaryOperator tangentProjection(Tensor p) {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor shape() {
     return CIRCLE_POINTS;
   }
@@ -67,66 +69,76 @@ public enum Spd2Display implements ManifoldDisplay {
     return Diagonal.of(sim).append(sim.get(0, 1)).divide(SCALE);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor project(Tensor xya) {
     Tensor sim = xya2sim(xya);
     return Spd0Exponential.INSTANCE.exp(sim);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor sym) {
     Tensor sim = Spd0Exponential.INSTANCE.log(sym);
     return sim2xya(sim).extract(0, 2);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor sym) {
     Tensor matrix = PAD_RIGHT.apply(sym); // log is possible
     matrix.set(RealScalar.ONE, 2, 2);
     return GfxMatrix.translation(toPoint(sym)).dot(matrix);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public LieExponential lieExponential() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return SpdManifold.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public HsTransport hsTransport() {
     return SpdTransport.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public TensorMetric parametricDistance() {
     return SpdMetric.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Biinvariant metricBiinvariant() {
     return MetricBiinvariant.VECTORIZE0;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public BiinvariantMean biinvariantMean() {
     return SpdBiinvariantMean.INSTANCE;
   }
 
-  @Override
-  public final LineDistance lineDistance() {
+  @Override // from ManifoldDisplay
+  public LineDistance lineDistance() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
+  public HsArrayPlot geodesicArrayPlot() {
+    return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public RandomSampleInterface randomSampleInterface() {
+    return null;
+  }
+
+  @Override // from Object
   public String toString() {
     return "Spd2";
   }

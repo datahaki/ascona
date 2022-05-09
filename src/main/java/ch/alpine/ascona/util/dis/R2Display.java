@@ -24,22 +24,22 @@ public class R2Display extends RnDisplay {
     super(2);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor p) {
     return VectorQ.requireLength(p, 2);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor p) {
     return GfxMatrix.translation(p);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public HsArrayPlot geodesicArrayPlot() {
     return new R2ArrayPlot(RADIUS);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
     Distribution distribution = UniformDistribution.of(RADIUS.negate(), RADIUS);
     return new RandomSampleInterface() {

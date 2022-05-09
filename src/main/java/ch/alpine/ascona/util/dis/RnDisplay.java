@@ -36,67 +36,67 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     this.dimensions = dimensions;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
     return RnGeodesic.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final int dimensions() {
     return dimensions;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor shape() {
     return CIRCLE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Tensor project(Tensor xya) {
     return xya.extract(0, dimensions);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor p) {
     return PAD;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final LieGroup lieGroup() {
     return RnGroup.INSTANCE;
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final LieExponential lieExponential() {
     return RnManifold.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return RnManifold.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final HsTransport hsTransport() {
     return LieTransport.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final TensorMetric parametricDistance() {
     return RnMetric.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Biinvariant metricBiinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final BiinvariantMean biinvariantMean() {
     return RnBiinvariantMean.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
     return RnLineDistance.INSTANCE;
   }

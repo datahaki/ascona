@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
@@ -17,6 +18,7 @@ import ch.alpine.sophus.lie.dt.DtExponential;
 import ch.alpine.sophus.lie.dt.DtGeodesic;
 import ch.alpine.sophus.lie.dt.DtGroup;
 import ch.alpine.sophus.lie.dt.DtManifold;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
@@ -32,44 +34,44 @@ public enum Dt1Display implements ManifoldDisplay {
   // Fehlerhaft, aber zurzeit Probleme mit Ausnahme bei lambda = 0
   private static final ScalarUnaryOperator MAX_X = Max.function(RealScalar.of(0.001));
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public GeodesicSpace geodesicSpace() {
     return DtGeodesic.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public int dimensions() {
     return 2;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public TensorUnaryOperator tangentProjection(Tensor p) {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor shape() {
     return PENTAGON;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor project(Tensor xya) {
     Tensor point = xya.extract(0, 2);
     point.set(MAX_X, 0);
     return point;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor p) {
     return VectorQ.requireLength(p, 2);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor p) {
     return GfxMatrix.translation(p);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
     return DtGroup.INSTANCE;
   }
@@ -79,33 +81,43 @@ public enum Dt1Display implements ManifoldDisplay {
     return LieExponential.of(DtGroup.INSTANCE, DtExponential.INSTANCE);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return DtManifold.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final HsTransport hsTransport() {
     return LieTransport.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public TensorMetric parametricDistance() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Biinvariant metricBiinvariant() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public BiinvariantMean biinvariantMean() {
     return DtBiinvariantMean.INSTANCE;
   }
 
-  @Override
-  public final LineDistance lineDistance() {
+  @Override // from ManifoldDisplay
+  public LineDistance lineDistance() {
+    return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public HsArrayPlot geodesicArrayPlot() {
+    return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public RandomSampleInterface randomSampleInterface() {
     return null;
   }
 

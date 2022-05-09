@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -40,5 +41,10 @@ public class S1Display extends SnDisplay {
   @Override // from GeodesicDisplay
   public Tensor matrixLift(Tensor xy) {
     return GfxMatrix.translation(toPoint(xy));
+  }
+
+  @Override
+  public HsArrayPlot geodesicArrayPlot() {
+    return null;
   }
 }

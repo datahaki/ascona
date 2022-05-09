@@ -43,7 +43,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
     this.dimensions = dimensions;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
     return HnGeodesic.INSTANCE;
   }
@@ -53,67 +53,67 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
     return dimensions;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Tensor project(Tensor xya) {
     return HnWeierstrassCoordinate.toPoint(xya.extract(0, dimensions));
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor xyz) {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Tensor matrixLift(Tensor p) {
     return GfxMatrix.translation(p);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Tensor shape() {
     return STAR_POINTS;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final LieGroup lieGroup() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final LieExponential lieExponential() {
     return null;
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return HnManifold.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final HsTransport hsTransport() {
     return HnTransport.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final TensorMetric parametricDistance() {
     return HnMetric.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Biinvariant metricBiinvariant() {
     return HnMetricBiinvariant.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final BiinvariantMean biinvariantMean() {
     return HnBiinvariantMean.of(Chop._08);
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
     Distribution distribution = UniformDistribution.of(RADIUS.negate(), RADIUS);
     return new RandomSampleInterface() {

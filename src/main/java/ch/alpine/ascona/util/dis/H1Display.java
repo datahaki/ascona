@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.tensor.Tensor;
 
 public class H1Display extends HnDisplay {
@@ -11,8 +12,13 @@ public class H1Display extends HnDisplay {
     super(1);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor p) {
     return p.copy();
+  }
+
+  @Override // from ManifoldDisplay
+  public HsArrayPlot geodesicArrayPlot() {
+    return null;
   }
 }

@@ -10,12 +10,12 @@ public class R2S1BDisplay extends R2S1AbstractDisplay {
   private R2S1BDisplay() {
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public GeodesicSpace geodesicSpace() {
     return Se2inR2S.METHOD_1;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public String toString() {
     return "R2S1 B";
   }

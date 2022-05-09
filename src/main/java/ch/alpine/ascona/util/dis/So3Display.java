@@ -3,6 +3,7 @@ package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
 
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
@@ -21,6 +22,7 @@ import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Geodesic;
 import ch.alpine.sophus.lie.so3.So3Manifold;
 import ch.alpine.sophus.lie.so3.So3Metric;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -119,6 +121,16 @@ public class So3Display implements ManifoldDisplay, Serializable {
   @Override
   public final LineDistance lineDistance() {
     return null; // TODO ASCONA ALG line distance should be similar to s^3
+  }
+
+  @Override
+  public HsArrayPlot geodesicArrayPlot() {
+    return null;
+  }
+
+  @Override
+  public RandomSampleInterface randomSampleInterface() {
+    return null;
   }
 
   @Override // from Object

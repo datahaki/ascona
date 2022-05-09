@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.spiral;
+package ch.alpine.ascona.crv.se2c;
 
 import ch.alpine.sophus.crv.se2c.EulerSpiral;
 

@@ -3,6 +3,7 @@ package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
 
+import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -14,6 +15,7 @@ import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
@@ -27,68 +29,78 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   @Override
   public abstract ClothoidBuilder geodesicSpace();
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final int dimensions() {
     return 3;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Tensor shape() {
     return SPEARHEAD;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor p) {
     return v -> v.extract(0, 2);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Tensor toPoint(Tensor p) {
     return p.extract(0, 2);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Tensor matrixLift(Tensor p) {
     return GfxMatrix.of(p);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final LieGroup lieGroup() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final LieExponential lieExponential() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final HsTransport hsTransport() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final BiinvariantMean biinvariantMean() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final TensorMetric parametricDistance() {
     return (p, q) -> geodesicSpace().curve(p, q).length();
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Biinvariant metricBiinvariant() {
     return null;
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
+    return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public final HsArrayPlot geodesicArrayPlot() {
+    return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public final RandomSampleInterface randomSampleInterface() {
     return null;
   }
 

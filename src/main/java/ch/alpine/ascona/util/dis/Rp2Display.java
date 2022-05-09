@@ -43,7 +43,7 @@ public class Rp2Display extends RpnDisplay {
     return Orthogonalize.of(Join.of(Tensors.of(xyz), ID3)).extract(1, 3);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor project(Tensor xya) {
     Tensor xyz = xya.copy();
     Optional<Tensor> optional = optionalZ(xyz);
@@ -54,7 +54,7 @@ public class Rp2Display extends RpnDisplay {
     return Vector2Norm.NORMALIZE.apply(xyz);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor xyz) {
     return null;
   }
@@ -78,14 +78,14 @@ public class Rp2Display extends RpnDisplay {
     return Optional.empty();
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor xyz) {
     return xyz.extract(0, 2);
   }
 
   private static final Clip CLIP_Z = Clips.interval(-2.5, 1);
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor xyz) {
     Tensor frame = tangentSpace(xyz);
     Tensor skew = PAD_RIGHT.apply(Transpose.of(Tensors.of( //
@@ -97,7 +97,7 @@ public class Rp2Display extends RpnDisplay {
     return GfxMatrix.translation(toPoint(xyz)).dot(skew);
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public HsArrayPlot geodesicArrayPlot() {
     return S2ArrayPlot.INSTANCE;
   }

@@ -33,68 +33,68 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
     this.dimensions = dimensions;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
     return SnGeodesic.INSTANCE; // TODO ASCONA ALG
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final int dimensions() {
     return dimensions;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Tensor shape() {
     return CIRCLE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final LieGroup lieGroup() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public LieExponential lieExponential() {
     return null;
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return RpnManifold.INSTANCE;
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final HsTransport hsTransport() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final TensorMetric parametricDistance() {
     return RpnMetric.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Biinvariant metricBiinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final BiinvariantMean biinvariantMean() {
     return SnFastMean.INSTANCE; // TODO ASCONA ALG
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
     return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public final RandomSampleInterface randomSampleInterface() {
+    return RpnRandomSample.of(dimensions());
   }
 
   @Override
   public final String toString() {
     return "RP" + dimensions();
-  }
-
-  @Override
-  public final RandomSampleInterface randomSampleInterface() {
-    return RpnRandomSample.of(dimensions());
   }
 }
