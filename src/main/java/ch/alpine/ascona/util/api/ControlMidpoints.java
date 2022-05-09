@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 
-import ch.alpine.sophus.api.MidpointInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -15,17 +15,17 @@ import ch.alpine.tensor.alg.Last;
  * 
  * {1, 2, 3} -> {1, 3/2, 5/2, 3} */
 /* package */ class ControlMidpoints implements CurveSubdivision, Serializable {
-  /** @param midpointInterface
+  /** @param geodesicSpace
    * @return */
-  public static CurveSubdivision of(MidpointInterface midpointInterface) {
-    return new ControlMidpoints(Objects.requireNonNull(midpointInterface));
+  public static CurveSubdivision of(GeodesicSpace geodesicSpace) {
+    return new ControlMidpoints(Objects.requireNonNull(geodesicSpace));
   }
 
   // ---
-  private final MidpointInterface midpointInterface;
+  private final GeodesicSpace geodesicSpace;
 
-  private ControlMidpoints(MidpointInterface midpointInterface) {
-    this.midpointInterface = midpointInterface;
+  private ControlMidpoints(GeodesicSpace midpointInterface) {
+    this.geodesicSpace = midpointInterface;
   }
 
   @Override // from CurveSubdivision
@@ -42,7 +42,7 @@ import ch.alpine.tensor.alg.Last;
     Tensor prev = iterator.next();
     result.append(prev);
     while (iterator.hasNext())
-      result.append(midpointInterface.midpoint(prev, prev = iterator.next()));
+      result.append(geodesicSpace.midpoint(prev, prev = iterator.next()));
     result.append(Last.of(tensor));
     return result;
   }

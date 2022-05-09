@@ -47,7 +47,6 @@ class AbstractDemoTest {
             }
           } else
             System.err.println("abstract demo non public: " + cls.getSimpleName());
-          //
         }
       }
     });

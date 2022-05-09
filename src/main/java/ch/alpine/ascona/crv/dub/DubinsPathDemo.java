@@ -15,6 +15,7 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
@@ -40,6 +41,7 @@ import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Clips;
 
+@ReflectionMarker
 public class DubinsPathDemo extends AbstractDemo {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
   private static final Tensor START = Array.zeros(3).unmodifiable();
