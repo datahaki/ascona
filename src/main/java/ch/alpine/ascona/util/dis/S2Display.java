@@ -35,7 +35,7 @@ public class S2Display extends SnDisplay {
     super(2);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor project(Tensor xya) {
     Tensor xyz = xya.copy();
     Optional<Tensor> optional = optionalZ(xyz);
@@ -52,7 +52,7 @@ public class S2Display extends SnDisplay {
     return TSnProjection.of(xyz);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public TensorUnaryOperator tangentProjection(Tensor xyz) {
     return tangentSpace(xyz)::dot;
   }
@@ -76,14 +76,14 @@ public class S2Display extends SnDisplay {
     return Optional.empty();
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor xyz) {
     return xyz.extract(0, 2);
   }
 
   private static final Clip CLIP_Z = Clips.interval(-2.5, 1);
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor xyz) {
     Tensor frame = tangentSpace(xyz);
     Tensor skew = PAD_RIGHT.apply(Transpose.of(Tensors.of( //
@@ -95,7 +95,7 @@ public class S2Display extends SnDisplay {
     return GfxMatrix.translation(toPoint(xyz)).dot(skew);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public HsArrayPlot geodesicArrayPlot() {
     return S2ArrayPlot.INSTANCE;
   }

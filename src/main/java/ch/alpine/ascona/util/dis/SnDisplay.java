@@ -37,62 +37,62 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
     this.dimensions = dimensions;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
     return SnGeodesic.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final int dimensions() {
     return dimensions;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Tensor shape() {
     return CIRCLE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final LieGroup lieGroup() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final LieExponential lieExponential() {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return SnManifold.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final HsTransport hsTransport() {
     return SnTransport.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final TensorMetric parametricDistance() {
     return SnMetric.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Biinvariant metricBiinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final BiinvariantMean biinvariantMean() {
     return SnFastMean.INSTANCE; // SnBiinvariantMean.of(Chop._05); // SnFastMean.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
     return SnLineDistance.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
     RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimensions);
     return new RandomSampleInterface() {

@@ -18,7 +18,7 @@ public final class Se2CoveringClothoidDisplay extends AbstractClothoidDisplay {
     return ClothoidBuilders.SE2_COVERING.clothoidBuilder();
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final Tensor project(Tensor xya) {
     return xya;
   }

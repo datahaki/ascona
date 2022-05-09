@@ -76,7 +76,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public synchronized final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    ManifoldDisplay geodesicDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     VisualSet visualSet1 = new VisualSet();
     visualSet1.setPlotLabel("Curvature");
     visualSet1.getAxisX().setLabel("length");
@@ -89,7 +89,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i) {
       Tensor refined = curve(geometricLayer, graphics, i);
       if (jToggleCurvature.isSelected() && 1 < refined.length()) {
-        Tensor tensor = Tensor.of(refined.stream().map(geodesicDisplay::toPoint));
+        Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
         VisualSet visualSet = new VisualSet(ColorDataLists._097.cyclic().deriveWithAlpha(192));
         CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
         VisualRow visualRow = curveVisualSet.addCurvature(visualSet);

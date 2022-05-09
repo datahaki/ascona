@@ -24,8 +24,8 @@ import ch.alpine.tensor.alg.Last;
   // ---
   private final GeodesicSpace geodesicSpace;
 
-  private ControlMidpoints(GeodesicSpace midpointInterface) {
-    this.geodesicSpace = midpointInterface;
+  private ControlMidpoints(GeodesicSpace geodesicSpace) {
+    this.geodesicSpace = geodesicSpace;
   }
 
   @Override // from CurveSubdivision

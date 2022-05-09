@@ -3,6 +3,7 @@ package ch.alpine.ascona.crv.clt;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,15 +46,25 @@ public class ClothoidEmitDemo extends AbstractDemo {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     // ---
+    List<Clothoid> list = Arrays.asList();
     ClothoidContext clothoidContext = new ClothoidContext(START, mouse);
-    Search search = CLOTHOID_SOLUTIONS.new Search(clothoidContext.s1(), clothoidContext.s2());
-    List<Clothoid> list = ClothoidEmit.stream(clothoidContext, search.lambdas()).collect(Collectors.toList());
-    int index = 0;
-    for (Clothoid clothoid : list) {
-      ClothoidTransition clothoidTransition = ClothoidTransition.of(START, mouse, clothoid);
-      Tensor points = clothoidTransition.linearized(minResolution);
-      new PathRender(COLOR_DATA_INDEXED.getColor(index++), 1.5f) //
-          .setCurve(points, false).render(geometricLayer, graphics);
+    try {
+      Search search = CLOTHOID_SOLUTIONS.new Search(clothoidContext.s1(), clothoidContext.s2());
+      list = ClothoidEmit.stream(clothoidContext, search.lambdas()).collect(Collectors.toList());
+      int index = 0;
+      for (Clothoid clothoid : list) {
+        ClothoidTransition clothoidTransition = ClothoidTransition.of(START, mouse, clothoid);
+        Tensor points = clothoidTransition.linearized(minResolution);
+        new PathRender(COLOR_DATA_INDEXED.getColor(index++), 1.5f) //
+            .setCurve(points, false).render(geometricLayer, graphics);
+      }
+    } catch (Exception exception) {
+      System.out.println("---");
+      System.out.println("start=" + START);
+      System.out.println("mouse=" + mouse);
+      System.out.println("s1=" + clothoidContext.s1());
+      System.out.println("s2=" + clothoidContext.s2());
+      exception.printStackTrace();
     }
     // ---
     Optional<Clothoid> optional = list.stream().min(ClothoidComparators.CURVATURE_HEAD);

@@ -44,22 +44,22 @@ public class So3Display implements ManifoldDisplay, Serializable {
     this.radius = radius;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public int dimensions() {
     return 3;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public GeodesicSpace geodesicSpace() {
     return So3Geodesic.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor shape() {
     return TRIANGLE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor project(Tensor xya) {
     Tensor axis = xya.divide(radius);
     Scalar norm = Vector2Norm.of(axis);
@@ -68,22 +68,22 @@ public class So3Display implements ManifoldDisplay, Serializable {
     return Rodrigues.vectorExp(axis);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor xyz) {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor xyz) {
     return Rodrigues.INSTANCE.vectorLog(xyz).extract(0, 2).multiply(radius);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor xyz) {
     return GfxMatrix.translation(toPoint(xyz));
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
     return SoGroup.INSTANCE;
   }
@@ -93,27 +93,27 @@ public class So3Display implements ManifoldDisplay, Serializable {
     return So3Manifold.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return So3Manifold.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public HsTransport hsTransport() {
     return SoTransport.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public TensorMetric parametricDistance() {
     return So3Metric.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Biinvariant metricBiinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public BiinvariantMean biinvariantMean() {
     return So3BiinvariantMean.INSTANCE;
   }

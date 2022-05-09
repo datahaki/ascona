@@ -127,19 +127,19 @@ import ch.alpine.tensor.sca.Round;
     RenderQuality.setQuality(graphics);
     prepare();
     // ---
-    ManifoldDisplay geodesicDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
     BufferedImage bufferedImage = cache.apply(Unprotect.byRef(sequence, values));
     if (Objects.nonNull(bufferedImage)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      Tensor pixel2model = geodesicDisplay.geodesicArrayPlot().pixel2model(new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
+      Tensor pixel2model = manifoldDisplay.geodesicArrayPlot().pixel2model(new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
       ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
     }
     RenderQuality.setQuality(graphics);
     // renderControlPoints(geometricLayer, graphics);
     LeversRender leversRender = //
-        LeversRender.of(geodesicDisplay, sequence, values, geometricLayer, graphics);
+        LeversRender.of(manifoldDisplay, sequence, values, geometricLayer, graphics);
     leversRender.renderSequence();
     leversRender.renderWeights(values);
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));

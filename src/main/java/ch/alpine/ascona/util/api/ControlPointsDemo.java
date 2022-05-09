@@ -58,15 +58,15 @@ public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
   private final static Color GREEN = new Color(0, 255, 0, 192);
 
   private class Midpoints {
-    private final ManifoldDisplay geodesicDisplay = manifoldDisplay();
+    private final ManifoldDisplay manifoldDisplay = manifoldDisplay();
     private final Tensor midpoints;
     private final int index;
 
     public Midpoints() {
-      CurveSubdivision curveSubdivision = ControlMidpoints.of(geodesicDisplay.geodesicSpace());
+      CurveSubdivision curveSubdivision = ControlMidpoints.of(manifoldDisplay.geodesicSpace());
       midpoints = curveSubdivision.string(getGeodesicControlPoints());
       Tensor mouse_dist = Tensor.of(midpoints.stream() //
-          .map(geodesicDisplay::toPoint) //
+          .map(manifoldDisplay::toPoint) //
           .map(mouse.extract(0, 2)::subtract) //
           .map(Vector2Norm::of));
       ArgMinValue argMinValue = ArgMinValue.of(mouse_dist);
@@ -74,7 +74,7 @@ public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
     }
 
     Tensor closestXY() {
-      return geodesicDisplay.toPoint(midpoints.get(index));
+      return manifoldDisplay.toPoint(midpoints.get(index));
     }
   }
 
@@ -88,7 +88,7 @@ public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
       if (isPositioningOngoing())
         control.set(mouse, min_index);
       else {
-        ManifoldDisplay geodesicDisplay = manifoldDisplay();
+        ManifoldDisplay manifoldDisplay = manifoldDisplay();
         final boolean hold;
         {
           Tensor mouse_dist = Tensor.of(control.stream() //
@@ -108,7 +108,7 @@ public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
             posit.set(closest.get(0), 0);
             posit.set(closest.get(1), 1);
           }
-          geometricLayer.pushMatrix(geodesicDisplay.matrixLift(geodesicDisplay.project(posit)));
+          geometricLayer.pushMatrix(manifoldDisplay.matrixLift(manifoldDisplay.project(posit)));
           graphics.fill(geometricLayer.toPath2D(getControlPointShape()));
           geometricLayer.popMatrix();
         }
@@ -267,9 +267,8 @@ public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
   }
 
   protected final void renderPoints( //
-      ManifoldDisplay geodesicDisplay, Tensor points, //
-      GeometricLayer geometricLayer, Graphics2D graphics) {
-    POINTS_RENDER_1.show(geodesicDisplay::matrixLift, getControlPointShape(), points).render(geometricLayer, graphics);
+      ManifoldDisplay manifoldDisplay, Tensor points, GeometricLayer geometricLayer, Graphics2D graphics) {
+    POINTS_RENDER_1.show(manifoldDisplay::matrixLift, getControlPointShape(), points).render(geometricLayer, graphics);
   }
 
   /** function exists so that shape can be altered, for instance magnified

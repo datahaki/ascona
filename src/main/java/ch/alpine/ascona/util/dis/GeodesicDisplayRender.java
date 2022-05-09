@@ -37,13 +37,13 @@ public abstract class GeodesicDisplayRender implements RenderInterface {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay geodesicDisplay = getGeodesicDisplay();
-    if (geodesicDisplay instanceof S1Display) {
+    ManifoldDisplay manifoldDisplay = getGeodesicDisplay();
+    if (manifoldDisplay instanceof S1Display) {
       graphics.setColor(BORDER);
       graphics.draw(geometricLayer.toPath2D(CIRCLE, true));
     } else
-      if (geodesicDisplay instanceof S2Display || //
-          geodesicDisplay instanceof Rp2Display) {
+      if (manifoldDisplay instanceof S2Display || //
+          manifoldDisplay instanceof Rp2Display) {
         render_s2(geometricLayer, graphics);
       } else //
         // if (geodesicDisplay instanceof HP2GeodesicDisplay) {
@@ -54,14 +54,14 @@ public abstract class GeodesicDisplayRender implements RenderInterface {
         // Tensor box = Tensors.fromString("{{-20, 0}, {+20, 0}, {+20, 5}, {-20, 5}}");
         // graphics.fill(geometricLayer.toPath2D(box));
         // } else //
-        if (geodesicDisplay instanceof H1Display) {
+        if (manifoldDisplay instanceof H1Display) {
           Tensor points = //
               Tensor.of(H1_DOMAIN.map(Tensors::of).stream().map(HnWeierstrassCoordinate::toPoint));
           // ---
           graphics.setColor(BORDER);
           graphics.draw(geometricLayer.toPath2D(points));
         } else //
-          if (geodesicDisplay instanceof H2Display) {
+          if (manifoldDisplay instanceof H2Display) {
             Scalar modelWidth = RealScalar.of(5);
             Point2D center = geometricLayer.toPoint2D(0, 0);
             float fradius = geometricLayer.model2pixelWidth(modelWidth);
@@ -74,7 +74,7 @@ public abstract class GeodesicDisplayRender implements RenderInterface {
             // graphics.setColor(BORDER);
             // graphics.draw(geometricLayer.toPath2D(CIRCLE, true));
           } else //
-            if (geodesicDisplay instanceof Spd2Display) {
+            if (manifoldDisplay instanceof Spd2Display) {
               Point2D point2d = geometricLayer.toPoint2D(0, 0);
               graphics.setColor(Color.DARK_GRAY);
               graphics.fill(new Rectangle( //

@@ -30,44 +30,44 @@ public class Se2Display extends Se2AbstractDisplay {
     // ---
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public GeodesicSpace geodesicSpace() {
     return Se2Geodesic.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor project(Tensor xya) {
     Tensor xym = xya.copy();
     xym.set(So2.MOD, 2);
     return xym;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
     return Se2Group.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public LieExponential lieExponential() {
     return Se2Manifold.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return Se2Manifold.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public TensorMetric parametricDistance() {
     return Se2Parametric.INSTANCE;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public BiinvariantMean biinvariantMean() {
     return Se2BiinvariantMeans.FILTER;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
     double lim = 3;
     Distribution distribution = UniformDistribution.of(-lim, lim);

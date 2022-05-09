@@ -41,13 +41,13 @@ import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Clips;
 
-@ReflectionMarker
 public class DubinsPathDemo extends AbstractDemo {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
   private static final Tensor START = Array.zeros(3).unmodifiable();
   private static final int POINTS = 200;
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
 
+  @ReflectionMarker
   public static class Param {
     public Boolean allDubins = true;
     public Boolean relax = true;

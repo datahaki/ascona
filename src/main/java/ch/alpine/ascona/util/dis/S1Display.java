@@ -19,7 +19,7 @@ public class S1Display extends SnDisplay {
     super(1);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor project(Tensor xya) {
     Tensor xy = xya.extract(0, 2);
     Scalar norm = Vector2Norm.of(xy);
@@ -28,17 +28,17 @@ public class S1Display extends SnDisplay {
         : xy.divide(norm);
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public TensorUnaryOperator tangentProjection(Tensor p) {
     return null;
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor xy) {
     return xy.copy();
   }
 
-  @Override // from GeodesicDisplay
+  @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor xy) {
     return GfxMatrix.translation(toPoint(xy));
   }
