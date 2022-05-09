@@ -34,7 +34,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.StandardMenu;
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.api.MidpointInterface;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -186,12 +186,12 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+    MidpointInterface midpointInterface = manifoldDisplay.geodesicSpace();
     Tensor refined = StaticHelper.refine( //
         control, levels, spinnerLabel.getValue().of(manifoldDisplay), //
-        CurveSubdivisionHelper.isDual(scheme), cyclic, geodesicSpace);
+        CurveSubdivisionHelper.isDual(scheme), cyclic, midpointInterface);
     if (jToggleLine.isSelected()) {
-      TensorUnaryOperator tensorUnaryOperator = StaticHelper.create(new BSpline1CurveSubdivision(manifoldDisplay.geodesicSpace()), cyclic);
+      TensorUnaryOperator tensorUnaryOperator = StaticHelper.create(new BSpline1CurveSubdivision(midpointInterface), cyclic);
       pathRender.setCurve(Nest.of(tensorUnaryOperator, control, 8), cyclic).render(geometricLayer, graphics);
     }
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));

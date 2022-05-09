@@ -18,9 +18,6 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 /** Hint: the interface is intended for use in the demo layer
  * but not in the library functions. */
 public interface ManifoldDisplay {
-  /** @return */
-  GeodesicSpace geodesicSpace();
-
   int dimensions();
 
   /** @return polygon to visualize the control point */
@@ -34,13 +31,12 @@ public interface ManifoldDisplay {
    * @return vector of length 2 with grid coordinates {x, y} */
   Tensor toPoint(Tensor p);
 
-  /** @param p
-   * @return operator that maps arbitrary dimension tangent vectors to 2d for display */
-  TensorUnaryOperator tangentProjection(Tensor p);
-
   /** @param p control point
    * @return matrix with dimensions 3 x 3 */
   Tensor matrixLift(Tensor p);
+
+  /** @return */
+  GeodesicSpace geodesicSpace();
 
   /** @return lie group if the space is a lie group, or null if function is not applicable */
   LieGroup lieGroup();
@@ -48,6 +44,10 @@ public interface ManifoldDisplay {
   LieExponential lieExponential();
 
   HsManifold hsManifold();
+
+  /** @param p
+   * @return operator that maps arbitrary dimension tangent vectors to 2d for display */
+  TensorUnaryOperator tangentProjection(Tensor p);
 
   HsTransport hsTransport();
 

@@ -58,6 +58,7 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
   private final Param param = new Param();
   private final SurfaceMesh surfaceMesh = SurfaceMeshExamples.mixed11();
 
+  // TODO ASCONA DEMO needs BM
   public SurfaceMeshDemo() {
     super(false, ManifoldDisplays.SE2C_R2);
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);

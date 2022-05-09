@@ -6,7 +6,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
-import ch.alpine.sophus.api.SplitInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.BSpline4CurveSubdivision;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.sophus.ref.d1.FourPointCurveSubdivision;
@@ -41,13 +41,13 @@ import ch.alpine.tensor.Scalar;
   // TODO ASCONA bad design
   static Scalar MAGIC_C = RationalScalar.of(1, 6);
 
-  static CurveSubdivision of(SplitInterface splitInterface) {
-    return BSpline4CurveSubdivision.split3(splitInterface, MAGIC_C);
+  static CurveSubdivision of(GeodesicSpace geodesicSpace) {
+    return BSpline4CurveSubdivision.split3(geodesicSpace, MAGIC_C);
   }
 
   static Scalar OMEGA = RationalScalar.of(1, 16);
 
-  static CurveSubdivision fps(SplitInterface splitInterface) {
-    return new FourPointCurveSubdivision(splitInterface, OMEGA);
+  static CurveSubdivision fps(GeodesicSpace geodesicSpace) {
+    return new FourPointCurveSubdivision(geodesicSpace, OMEGA);
   }
 }

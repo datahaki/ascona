@@ -2,10 +2,12 @@
 package ch.alpine.ascona.util.dis;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
@@ -47,5 +49,20 @@ class ManifoldDisplaysTest {
         exception.printStackTrace();
         fail();
       }
+  }
+
+  @Test
+  public void testAll() {
+    for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.ALL) {
+      assertNotNull(manifoldDisplay.geodesicSpace());
+    }
+  }
+
+  @Test
+  public void testImplications() {
+    for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.ALL) {
+      if (Objects.nonNull(manifoldDisplay.biinvariantMean()))
+        assertNotNull(manifoldDisplay.geodesicSpace());
+    }
   }
 }
