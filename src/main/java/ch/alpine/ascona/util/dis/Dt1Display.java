@@ -10,11 +10,9 @@ import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.dt.DtBiinvariantMean;
-import ch.alpine.sophus.lie.dt.DtExponential;
 import ch.alpine.sophus.lie.dt.DtGeodesic;
 import ch.alpine.sophus.lie.dt.DtGroup;
 import ch.alpine.sophus.lie.dt.DtManifold;
@@ -76,11 +74,6 @@ public enum Dt1Display implements ManifoldDisplay {
     return DtGroup.INSTANCE;
   }
 
-  @Override
-  public LieExponential lieExponential() {
-    return LieExponential.of(DtGroup.INSTANCE, DtExponential.INSTANCE);
-  }
-
   @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return DtManifold.INSTANCE;
@@ -97,7 +90,7 @@ public enum Dt1Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Biinvariant metricBiinvariant() {
+  public Biinvariant biinvariant() {
     return null;
   }
 

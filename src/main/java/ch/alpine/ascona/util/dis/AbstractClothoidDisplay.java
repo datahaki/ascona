@@ -13,7 +13,6 @@ import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -60,11 +59,6 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   }
 
   @Override // from ManifoldDisplay
-  public final LieExponential lieExponential() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return null;
   }
@@ -85,7 +79,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   }
 
   @Override // from ManifoldDisplay
-  public final Biinvariant metricBiinvariant() {
+  public final Biinvariant biinvariant() {
     return null;
   }
 

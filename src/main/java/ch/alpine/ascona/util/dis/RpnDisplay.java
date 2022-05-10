@@ -16,7 +16,6 @@ import ch.alpine.sophus.hs.rpn.RpnMetric;
 import ch.alpine.sophus.hs.rpn.RpnRandomSample;
 import ch.alpine.sophus.hs.sn.SnFastMean;
 import ch.alpine.sophus.hs.sn.SnGeodesic;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -54,11 +53,6 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public LieExponential lieExponential() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return RpnManifold.INSTANCE;
   }
@@ -74,7 +68,7 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final Biinvariant metricBiinvariant() {
+  public final Biinvariant biinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
 

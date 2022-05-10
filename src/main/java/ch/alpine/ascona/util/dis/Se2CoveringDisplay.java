@@ -8,7 +8,6 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.r2.Se2CoveringParametric;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
@@ -42,11 +41,6 @@ public class Se2CoveringDisplay extends Se2AbstractDisplay {
   @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
     return Se2CoveringGroup.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public LieExponential lieExponential() {
-    return Se2CoveringManifold.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

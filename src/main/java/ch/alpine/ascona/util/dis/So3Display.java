@@ -13,13 +13,12 @@ import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.so.SoGroup;
 import ch.alpine.sophus.lie.so.SoTransport;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Geodesic;
+import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.sophus.lie.so3.So3Manifold;
 import ch.alpine.sophus.lie.so3.So3Metric;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -85,12 +84,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
-    return SoGroup.INSTANCE;
-  }
-
-  @Override
-  public LieExponential lieExponential() {
-    return So3Manifold.INSTANCE;
+    return So3Group.INSTANCE;
   }
 
   @Override // from ManifoldDisplay
@@ -109,7 +103,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public Biinvariant metricBiinvariant() {
+  public Biinvariant biinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
 

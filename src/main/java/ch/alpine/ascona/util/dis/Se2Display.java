@@ -8,7 +8,6 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.r2.Se2Parametric;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
@@ -45,11 +44,6 @@ public class Se2Display extends Se2AbstractDisplay {
   @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
     return Se2Group.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public LieExponential lieExponential() {
-    return Se2Manifold.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

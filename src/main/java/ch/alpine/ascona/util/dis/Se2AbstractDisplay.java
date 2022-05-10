@@ -47,7 +47,7 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
   }
 
   @Override // from ManifoldDisplay
-  public final Biinvariant metricBiinvariant() {
+  public final Biinvariant biinvariant() {
     return null;
   }
 

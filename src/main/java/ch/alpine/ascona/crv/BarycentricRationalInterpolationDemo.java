@@ -43,7 +43,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   public static class Param {
-    @FieldPreferredWidth(50)
+    @FieldPreferredWidth(100)
     @FieldSelectionArray(value = { "0", "1/4", "1/2", "3/4", "1" })
     public Scalar beta = RealScalar.ZERO;
     @FieldPreferredWidth(100)

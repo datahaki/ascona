@@ -12,7 +12,6 @@ import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.r2s.R2SGeodesic;
@@ -71,11 +70,6 @@ public enum R2SDisplay implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public LieExponential lieExponential() {
-    return R2SManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return R2SManifold.INSTANCE;
   }
@@ -91,7 +85,7 @@ public enum R2SDisplay implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Biinvariant metricBiinvariant() {
+  public Biinvariant biinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
 

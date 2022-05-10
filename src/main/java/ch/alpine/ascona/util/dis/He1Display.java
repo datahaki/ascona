@@ -10,7 +10,6 @@ import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.he.HeBiinvariantMean;
@@ -73,11 +72,6 @@ public enum He1Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public LieExponential lieExponential() {
-    return HeManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return HeManifold.INSTANCE;
   }
@@ -93,7 +87,7 @@ public enum He1Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Biinvariant metricBiinvariant() {
+  public Biinvariant biinvariant() {
     return null;
   }
 

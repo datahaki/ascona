@@ -11,7 +11,6 @@ import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
@@ -67,11 +66,6 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final LieExponential lieExponential() {
-    return RnManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return RnManifold.INSTANCE;
   }
@@ -87,7 +81,7 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final Biinvariant metricBiinvariant() {
+  public final Biinvariant biinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
 

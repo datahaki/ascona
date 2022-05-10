@@ -20,7 +20,6 @@ import ch.alpine.sophus.hs.hn.HnMetric;
 import ch.alpine.sophus.hs.hn.HnMetricBiinvariant;
 import ch.alpine.sophus.hs.hn.HnTransport;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -79,11 +78,6 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final LieExponential lieExponential() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return HnManifold.INSTANCE;
   }
@@ -99,7 +93,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final Biinvariant metricBiinvariant() {
+  public final Biinvariant biinvariant() {
     return HnMetricBiinvariant.INSTANCE;
   }
 

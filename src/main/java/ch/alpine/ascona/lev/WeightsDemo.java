@@ -65,7 +65,7 @@ public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<Man
       leversRender.renderIndexP();
       // ---
       if (manifoldDisplay.dimensions() < sequence.length()) {
-        Biinvariant metric = manifoldDisplay.metricBiinvariant();
+        Biinvariant metric = manifoldDisplay.biinvariant();
         Biinvariant[] biinvariants = Objects.isNull(metric) //
             ? new Biinvariant[] { Biinvariants.LEVERAGES, Biinvariants.HARBOR, Biinvariants.GARDEN }
             : new Biinvariant[] { Biinvariants.LEVERAGES, Biinvariants.HARBOR, Biinvariants.GARDEN, metric };

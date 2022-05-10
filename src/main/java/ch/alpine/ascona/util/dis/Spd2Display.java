@@ -17,7 +17,6 @@ import ch.alpine.sophus.hs.spd.SpdGeodesic;
 import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.SpdMetric;
 import ch.alpine.sophus.hs.spd.SpdTransport;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -94,11 +93,6 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public LieExponential lieExponential() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return SpdManifold.INSTANCE;
   }
@@ -114,7 +108,7 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Biinvariant metricBiinvariant() {
+  public Biinvariant biinvariant() {
     return MetricBiinvariant.VECTORIZE0;
   }
 
