@@ -82,7 +82,7 @@ class HermiteSubdivisionsTest {
     Tensor control = Tensors.empty();
     for (int count = 0; count < 10; ++count) {
       control.append(Tensors.of(pg, pv));
-      pg = Se2Group.INSTANCE.element(pg).combine(Se2CoveringGroup.INSTANCE.exponential().exp(pv));
+      pg = Se2Group.INSTANCE.element(pg).combine(Se2CoveringGroup.INSTANCE.exp(pv));
     }
     control = control.unmodifiable();
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {

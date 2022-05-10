@@ -7,7 +7,7 @@ import java.io.IOException;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.lie.se3.Se3Differences;
-import ch.alpine.sophus.lie.se3.Se3Geodesic;
+import ch.alpine.sophus.lie.se3.Se3Group;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -32,7 +32,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     System.out.println("smooth");
     {
       TensorUnaryOperator tensorUnaryOperator = //
-          new CenterFilter(GeodesicCenter.of(Se3Geodesic.INSTANCE, WindowFunctions.GAUSSIAN.get()), 4 * 3 * 2);
+          new CenterFilter(GeodesicCenter.of(Se3Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), 4 * 3 * 2);
       Tensor smooth = tensorUnaryOperator.apply(poses);
       System.out.println("store");
       Put.of(HomeDirectory.file("MH_04_difficult_poses_smooth.file"), smooth);

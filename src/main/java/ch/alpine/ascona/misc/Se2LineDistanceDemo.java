@@ -53,7 +53,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LieGroup lieGroup = manifoldDisplay.lieGroup();
-    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential();
+    Exponential exponential = Se2CoveringGroup.INSTANCE; // TODO check
     // ---
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor beg = sequence.get(0);

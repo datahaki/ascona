@@ -43,7 +43,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     Distribution dA = NormalDistribution.of(1, .5);
     Tensor tensor = Tensor.of(Array.of(l -> Tensors.of( //
         RandomVariate.of(dX), RandomVariate.of(dY), RandomVariate.of(dA)), 4).stream() //
-        .map(Se2CoveringGroup.INSTANCE.exponential()::exp));
+        .map(Se2CoveringGroup.INSTANCE::exp));
     setControlPointsSe2(tensor);
   }
 
