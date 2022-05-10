@@ -3,7 +3,6 @@ package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
@@ -12,7 +11,6 @@ import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
 import ch.alpine.sophus.hs.spd.SpdBiinvariantMean;
-import ch.alpine.sophus.hs.spd.SpdGeodesic;
 import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.SpdMetric;
 import ch.alpine.sophus.lie.LieGroup;
@@ -33,11 +31,6 @@ public enum Spd2Display implements ManifoldDisplay {
   private static final Scalar SCALE = RealScalar.of(0.2);
   private static final Tensor CIRCLE_POINTS = CirclePoints.of(43).multiply(SCALE).unmodifiable();
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
-
-  @Override // from ManifoldDisplay
-  public GeodesicSpace geodesicSpace() {
-    return SpdGeodesic.INSTANCE;
-  }
 
   @Override // from ManifoldDisplay
   public int dimensions() {

@@ -35,7 +35,9 @@ public interface ManifoldDisplay {
   Tensor matrixLift(Tensor p);
 
   /** @return never null */
-  GeodesicSpace geodesicSpace();
+  default GeodesicSpace geodesicSpace() {
+    return hsManifold();
+  }
 
   // ---
   /** TODO ASCONA API define guarantees, at the moment null for:

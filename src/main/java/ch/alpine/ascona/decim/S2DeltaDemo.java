@@ -21,7 +21,7 @@ import ch.alpine.bridge.ref.util.PanelFieldsEditor;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.hs.sn.S2Loxodrome;
-import ch.alpine.sophus.hs.sn.SnGeodesic;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnMetric;
 import ch.alpine.sophus.hs.sn.SnPerturbation;
 import ch.alpine.sophus.hs.sn.SnRotationMatrix;
@@ -80,7 +80,7 @@ public class S2DeltaDemo extends AbstractGeodesicDisplayDemo {
   private void compute() {
     ScalarTensorFunction stf = S2Loxodrome.of(param.angle);
     Tensor domain = Subdivide.of(0, 20, 200);
-    CurveSubdivision curveSubdivision = UniformResample.of(SnMetric.INSTANCE, SnGeodesic.INSTANCE, param.delta);
+    CurveSubdivision curveSubdivision = UniformResample.of(SnMetric.INSTANCE, SnManifold.INSTANCE, param.delta);
     Tensor sequence = Tensor.of(domain.stream().map(Scalar.class::cast).map(stf));
     sequence = curveSubdivision.string(sequence);
     TensorUnaryOperator tuo = SnPerturbation.of(NormalDistribution.of(RealScalar.ZERO, param.noise));
@@ -88,7 +88,7 @@ public class S2DeltaDemo extends AbstractGeodesicDisplayDemo {
     ScalarUnaryOperator s_window = param.s_window.get();
     snDeltaRaw = new SnDeltaContainer(sequence, s_window);
     TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
-        GeodesicCenter.of(SnGeodesic.INSTANCE, param.f_window.get()), param.getWidth());
+        GeodesicCenter.of(SnManifold.INSTANCE, param.f_window.get()), param.getWidth());
     snDeltaFil = new SnDeltaContainer(tensorUnaryOperator.apply(sequence), s_window);
   }
 

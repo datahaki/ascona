@@ -14,7 +14,7 @@ import ch.alpine.sophus.hs.rpn.RpnManifold;
 import ch.alpine.sophus.hs.rpn.RpnMetric;
 import ch.alpine.sophus.hs.rpn.RpnRandomSample;
 import ch.alpine.sophus.hs.sn.SnFastMean;
-import ch.alpine.sophus.hs.sn.SnGeodesic;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -33,7 +33,7 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
-    return SnGeodesic.INSTANCE; // TODO ASCONA ALG
+    return SnManifold.INSTANCE; // TODO ASCONA ALG
   }
 
   @Override // from ManifoldDisplay
