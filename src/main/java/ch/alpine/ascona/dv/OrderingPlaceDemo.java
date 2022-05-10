@@ -68,7 +68,7 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
     if (optional.isPresent()) {
       Tensor sequence = getSequence();
       Tensor origin = optional.get();
-      VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
+      VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
       TensorUnaryOperator tensorUnaryOperator = //
           logWeighting().operator(biinvariant(), vectorLogManifold, variogram(), sequence);
       Tensor weights = tensorUnaryOperator.apply(origin);

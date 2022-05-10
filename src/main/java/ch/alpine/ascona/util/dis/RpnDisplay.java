@@ -32,11 +32,6 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final GeodesicSpace geodesicSpace() {
-    return SnManifold.INSTANCE; // TODO ASCONA ALG
-  }
-
-  @Override // from ManifoldDisplay
   public final int dimensions() {
     return dimensions;
   }
@@ -47,13 +42,18 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final LieGroup lieGroup() {
-    return null;
+  public final GeodesicSpace geodesicSpace() {
+    return SnManifold.INSTANCE; // TODO ASCONA ALG
   }
 
   @Override // from ManifoldDisplay
-  public final HomogeneousSpace hsManifold() {
+  public final HomogeneousSpace homogeneousSpace() {
     return RpnManifold.INSTANCE;
+  }
+
+  @Override // from ManifoldDisplay
+  public final LieGroup lieGroup() {
+    return null;
   }
 
   @Override // from ManifoldDisplay

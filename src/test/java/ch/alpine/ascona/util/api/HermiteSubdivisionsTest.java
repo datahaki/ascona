@@ -8,7 +8,7 @@ import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
 import ch.alpine.tensor.RealScalar;
@@ -82,7 +82,7 @@ class HermiteSubdivisionsTest {
     Tensor control = Tensors.empty();
     for (int count = 0; count < 10; ++count) {
       control.append(Tensors.of(pg, pv));
-      pg = Se2Group.INSTANCE.element(pg).combine(Se2CoveringExponential.INSTANCE.exp(pv));
+      pg = Se2Group.INSTANCE.element(pg).combine(Se2CoveringGroup.INSTANCE.exponential().exp(pv));
     }
     control = control.unmodifiable();
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {

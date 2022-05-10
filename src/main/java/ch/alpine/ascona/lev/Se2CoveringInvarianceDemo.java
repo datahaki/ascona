@@ -56,7 +56,7 @@ public class Se2CoveringInvarianceDemo extends LogWeightingDemo {
     Tensor controlPointsAll = getGeodesicControlPoints();
     LieGroupOps lieGroupOps = new LieGroupOps(lieGroup);
     if (0 < controlPointsAll.length()) {
-      VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
+      VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
       {
         Tensor sequence = controlPointsAll.extract(1, controlPointsAll.length());
         Tensor origin = controlPointsAll.get(0);

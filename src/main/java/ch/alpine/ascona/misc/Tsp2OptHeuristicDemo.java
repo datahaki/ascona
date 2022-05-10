@@ -102,7 +102,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
 
   public Tensor distanceMatrix(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorUnaryOperator tuo = manifoldDisplay.biinvariant().distances(manifoldDisplay.hsManifold(), sequence);
+    TensorUnaryOperator tuo = manifoldDisplay.biinvariant().distances(manifoldDisplay.homogeneousSpace(), sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix

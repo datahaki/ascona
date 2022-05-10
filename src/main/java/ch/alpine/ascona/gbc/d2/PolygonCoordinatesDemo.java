@@ -89,7 +89,7 @@ public class PolygonCoordinatesDemo extends A2ScatteredSetCoordinateDemo //
       }
       for (LogWeighting logWeighting : array) {
         TensorUnaryOperator tensorUnaryOperator = logWeighting.operator( //
-            null, manifoldDisplay.hsManifold(), null, sequence);
+            null, manifoldDisplay.homogeneousSpace(), null, sequence);
         System.out.print("computing " + logWeighting);
         // GeodesicArrayPlot geodesicArrayPlot = geodesicDisplay.geodesicArrayPlot();
         int refinement = resolution();

@@ -28,7 +28,7 @@ import ch.alpine.sophus.decim.DecimationResult;
 import ch.alpine.sophus.decim.LineDistances;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -91,7 +91,7 @@ public class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
     int limit = spinnerLabelLimit.getValue();
     String name = spinnerLabelString.getValue();
     TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
-        GeodesicCenter.of(Se2Geodesic.INSTANCE, WindowFunctions.GAUSSIAN.get()), param.width.number().intValue());
+        GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), param.width.number().intValue());
     _control = tensorUnaryOperator.apply(gokartPoseData.getPose(name, limit));
   }
 
@@ -117,7 +117,7 @@ public class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
     Scalar epsilon = Power.of(RationalScalar.HALF, param.level.number().intValue());
     // epsilon = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum() * 3);
     CurveDecimation curveDecimation = CurveDecimation.of( //
-        param.type.supply(manifoldDisplay.hsManifold()), epsilon);
+        param.type.supply(manifoldDisplay.homogeneousSpace()), epsilon);
     Tensor control = Tensor.of(_control.stream().map(manifoldDisplay::project));
     DecimationResult result = curveDecimation.evaluate(control);
     Tensor simplified = result.result();

@@ -99,7 +99,7 @@ public class SphereFitDemo extends ControlPointsDemo {
     {
       Biinvariant biinvariant = MetricBiinvariant.EUCLIDEAN;
       TensorUnaryOperator weightingInterface = //
-          biinvariant.weighting(manifoldDisplay.hsManifold(), InversePowerVariogram.of(1), control);
+          biinvariant.weighting(manifoldDisplay.homogeneousSpace(), InversePowerVariogram.of(1), control);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(manifoldDisplay.biinvariantMean(), weightingInterface, Chop._06);
       Optional<Tensor> optional = spatialMedian.uniform(control);
       if (optional.isPresent()) {

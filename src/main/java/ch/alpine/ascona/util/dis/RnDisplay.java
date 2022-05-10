@@ -3,16 +3,13 @@ package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.rn.RnLineDistance;
 import ch.alpine.sophus.lie.rn.RnMetric;
@@ -30,11 +27,6 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
 
   /* package */ RnDisplay(int dimensions) {
     this.dimensions = dimensions;
-  }
-
-  @Override // from ManifoldDisplay
-  public final GeodesicSpace geodesicSpace() {
-    return RnGeodesic.INSTANCE;
   }
 
   @Override // from ManifoldDisplay
@@ -59,11 +51,6 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final LieGroup lieGroup() {
-    return RnGroup.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final HomogeneousSpace hsManifold() {
     return RnGroup.INSTANCE;
   }
 

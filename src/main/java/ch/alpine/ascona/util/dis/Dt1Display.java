@@ -3,15 +3,12 @@ package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.dt.DtBiinvariantMean;
-import ch.alpine.sophus.lie.dt.DtGeodesic;
 import ch.alpine.sophus.lie.dt.DtGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -28,11 +25,6 @@ public enum Dt1Display implements ManifoldDisplay {
   private static final Tensor PENTAGON = CirclePoints.of(5).multiply(RealScalar.of(0.2)).unmodifiable();
   // Fehlerhaft, aber zurzeit Probleme mit Ausnahme bei lambda = 0
   private static final ScalarUnaryOperator MAX_X = Max.function(RealScalar.of(0.001));
-
-  @Override // from ManifoldDisplay
-  public GeodesicSpace geodesicSpace() {
-    return DtGeodesic.INSTANCE;
-  }
 
   @Override // from ManifoldDisplay
   public int dimensions() {
@@ -68,11 +60,6 @@ public enum Dt1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
-    return DtGroup.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public HomogeneousSpace hsManifold() {
     return DtGroup.INSTANCE;
   }
 

@@ -48,7 +48,7 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final HomogeneousSpace hsManifold() {
+  public final HomogeneousSpace homogeneousSpace() {
     return SnManifold.INSTANCE;
   }
 

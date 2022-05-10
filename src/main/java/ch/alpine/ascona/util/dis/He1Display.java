@@ -3,15 +3,12 @@ package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.he.HeBiinvariantMean;
-import ch.alpine.sophus.lie.he.HeGeodesic;
 import ch.alpine.sophus.lie.he.HeGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -25,11 +22,6 @@ public enum He1Display implements ManifoldDisplay {
   INSTANCE;
 
   private static final Tensor SQUARE = CirclePoints.of(4).multiply(RealScalar.of(0.2)).unmodifiable();
-
-  @Override // from ManifoldDisplay
-  public GeodesicSpace geodesicSpace() {
-    return HeGeodesic.INSTANCE;
-  }
 
   @Override // from ManifoldDisplay
   public int dimensions() {
@@ -65,11 +57,6 @@ public enum He1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
-    return HeGroup.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public HomogeneousSpace hsManifold() {
     return HeGroup.INSTANCE;
   }
 

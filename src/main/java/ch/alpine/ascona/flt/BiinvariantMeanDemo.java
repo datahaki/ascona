@@ -24,7 +24,7 @@ import ch.alpine.sophus.fit.HsWeiszfeldMethod;
 import ch.alpine.sophus.fit.SpatialMedian;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -62,7 +62,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     Distribution dA = NormalDistribution.of(1, .5);
     Tensor tensor = Tensor.of(Array.of(l -> Tensors.of( //
         RandomVariate.of(dX), RandomVariate.of(dY), RandomVariate.of(dA)), 10).stream() //
-        .map(Se2CoveringExponential.INSTANCE::exp));
+        .map(Se2CoveringGroup.INSTANCE.exponential()::exp));
     setControlPointsSe2(tensor);
     setGeodesicDisplay(Se2CoveringDisplay.INSTANCE);
   }
@@ -92,7 +92,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     if (median) {
       Biinvariant biinvariant = biinvariants;
       TensorUnaryOperator weightingInterface = //
-          biinvariant.weighting(manifoldDisplay.hsManifold(), InversePowerVariogram.of(1), sequence);
+          biinvariant.weighting(manifoldDisplay.homogeneousSpace(), InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(biinvariantMean, weightingInterface, Chop._05);
       Optional<Tensor> optional = spatialMedian.uniform(sequence);
       if (optional.isPresent()) {

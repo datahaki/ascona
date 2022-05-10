@@ -15,7 +15,7 @@ import ch.alpine.tensor.img.ColorDataGradient;
 /* package */ enum HilbertLevelImage {
   ;
   public static BufferedImage of(ManifoldDisplay manifoldDisplay, Tensor sequence, int res, ColorDataGradient colorDataGradient, int max) {
-    TensorUnaryOperator tuo = IterativeGenesis.counts(manifoldDisplay.hsManifold(), sequence, max);
+    TensorUnaryOperator tuo = IterativeGenesis.counts(manifoldDisplay.homogeneousSpace(), sequence, max);
     int sequence_length = IterativeGenesis.values().length;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence_length);
     HsArrayPlot geodesicArrayPlot = manifoldDisplay.geodesicArrayPlot();

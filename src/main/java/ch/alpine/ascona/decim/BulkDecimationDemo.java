@@ -17,7 +17,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.decim.LineDistances;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -43,7 +43,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     Distribution dA = NormalDistribution.of(1, .5);
     Tensor tensor = Tensor.of(Array.of(l -> Tensors.of( //
         RandomVariate.of(dX), RandomVariate.of(dY), RandomVariate.of(dA)), 4).stream() //
-        .map(Se2CoveringExponential.INSTANCE::exp));
+        .map(Se2CoveringGroup.INSTANCE.exponential()::exp));
     setControlPointsSe2(tensor);
   }
 
@@ -70,7 +70,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
       }
     }
     CurveDecimation curveDecimation = CurveDecimation.of( //
-        LineDistances.STANDARD.supply(manifoldDisplay.hsManifold()), //
+        LineDistances.STANDARD.supply(manifoldDisplay.homogeneousSpace()), //
         RealScalar.ONE);
     Tensor decimate = curveDecimation.apply(sequence);
     {

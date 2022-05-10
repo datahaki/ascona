@@ -71,7 +71,7 @@ public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<Man
             : new Biinvariant[] { Biinvariants.LEVERAGES, Biinvariants.HARBOR, Biinvariants.GARDEN, metric };
         Tensor matrix = Tensors.empty();
         int[] minIndex = new int[biinvariants.length];
-        VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
+        VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
         for (int index = 0; index < biinvariants.length; ++index) {
           TensorUnaryOperator tensorUnaryOperator = //
               logWeighting().operator( //

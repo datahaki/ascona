@@ -28,7 +28,7 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.itp.ArcLengthParameterization;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.sophus.ref.d1.FourPointCurveSubdivision;
@@ -105,7 +105,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
         final Tensor domain = Drop.tail(Subdivide.of(0.0, 1.0, spinnerLength.getValue()), 1);
         geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(10, 0)));
         GRID_RENDER.render(geometricLayer, graphics);
-        HsDesign hsDesign = new HsDesign(manifoldDisplay.hsManifold());
+        HsDesign hsDesign = new HsDesign(manifoldDisplay.homogeneousSpace());
         Tensor planar = hsDesign.matrix(refined, origin);
         {
           RenderQuality.setQuality(graphics);
@@ -118,7 +118,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
         Tensor angles_acc = Tensor.of(planar.stream().map(ArcTan2D::of));
         Tensor distances = Tensor.of(Differences.of(angles_acc).stream().map(Scalar.class::cast).map(So2.MOD));
         try {
-          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, RnGeodesic.INSTANCE, planar);
+          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, RnGroup.INSTANCE, planar);
           Tensor border = domain.map(scalarTensorFunction);
           RenderQuality.setQuality(graphics);
           graphics.setColor(Color.BLUE);

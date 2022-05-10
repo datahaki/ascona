@@ -20,7 +20,7 @@ import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
 import ch.alpine.sophus.flt.ga.GeodesicFIRnFilter;
 import ch.alpine.sophus.flt.ga.GeodesicIIRnFilter;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -53,7 +53,7 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
     if (0 < radius) {
       ScalarUnaryOperator windowFunctions = spinnerKernel.getValue().get();
       Se2BiinvariantMeans se2BiinvariantMean = Se2BiinvariantMeans.FILTER;
-      GeodesicSpace geodesicSpace = Se2Geodesic.INSTANCE;
+      GeodesicSpace geodesicSpace = Se2Group.INSTANCE;
       TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicSpace, windowFunctions);
       // ---
       GeodesicCausalFilters geodesicCausalFilters = spinnerCausalFilter.getValue();
@@ -64,9 +64,9 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
       case GEODESIC_FIR -> GeodesicFIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
       case GEODESIC_IIR -> GeodesicIIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
       case BIINVARIANT_MEAN_FIR -> BiinvariantMeanFIRnFilter.of( //
-          se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), Se2Geodesic.INSTANCE, radius, alpha());
+          se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), Se2Group.INSTANCE, radius, alpha());
       case BIINVARIANT_MEAN_IIR -> BiinvariantMeanIIRnFilter.of( //
-          se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), Se2Geodesic.INSTANCE, radius, alpha());
+          se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), Se2Group.INSTANCE, radius, alpha());
       };
       return tensorUnaryOperator.apply(control());
     }

@@ -58,7 +58,7 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   }
 
   @Override // from ManifoldDisplay
-  public final HomogeneousSpace hsManifold() {
+  public final HomogeneousSpace homogeneousSpace() {
     return null;
   }
 

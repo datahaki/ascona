@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
@@ -15,7 +14,6 @@ import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
-import ch.alpine.sophus.lie.so3.So3Geodesic;
 import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.sophus.lie.so3.So3Metric;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -43,11 +41,6 @@ public class So3Display implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public int dimensions() {
     return 3;
-  }
-
-  @Override // from ManifoldDisplay
-  public GeodesicSpace geodesicSpace() {
-    return So3Geodesic.INSTANCE;
   }
 
   @Override // from ManifoldDisplay
@@ -85,7 +78,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public HomogeneousSpace hsManifold() {
+  public HomogeneousSpace homogeneousSpace() {
     return So3Group.INSTANCE;
   }
 

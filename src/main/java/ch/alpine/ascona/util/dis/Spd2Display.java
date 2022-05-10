@@ -84,7 +84,7 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HomogeneousSpace hsManifold() {
+  public HomogeneousSpace homogeneousSpace() {
     return SpdManifold.INSTANCE;
   }
 

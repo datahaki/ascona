@@ -56,7 +56,7 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       leversRender.renderSurfaceP();
       LeversHud.render(bitype(), leversRender, null);
-      VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
+      VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
       HsDesign hsDesign = new HsDesign(vectorLogManifold);
       try {
         Tensor matrix = new IterativeCoordinateMatrix(spinnerTotal.getValue()).origin(hsDesign.matrix(sequence, origin));

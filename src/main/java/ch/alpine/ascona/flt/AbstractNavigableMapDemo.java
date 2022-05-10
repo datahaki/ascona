@@ -119,7 +119,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   protected void differences_render(Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor refined, boolean spectrogram) {
     LieGroup lieGroup = manifoldDisplay.lieGroup();
     if (Objects.nonNull(lieGroup)) {
-      // LieExponential lieExponential = LieExponential.of(manifoldDisplay.lieGroup());
       LieDifferences lieDifferences = new LieDifferences(lieGroup);
       LieDifferences lieDifferencesTime = new LieDifferences(RnGroup.INSTANCE);
       Tensor timeDifference = lieDifferencesTime.apply(Tensor.of(navigableMapStateTime().keySet().stream())).map(x -> x.reciprocal());

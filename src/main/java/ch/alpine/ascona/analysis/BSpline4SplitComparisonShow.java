@@ -3,9 +3,8 @@ package ch.alpine.ascona.analysis;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.ref.d1.BSpline4CurveSubdivision;
 import ch.alpine.sophus.ref.d1.Dual3PointCurveSubdivision;
@@ -27,7 +26,7 @@ import ch.alpine.tensor.sca.Round;
   ;
   public static void main(String[] args) {
     Dual3PointCurveSubdivision d0 = //
-        (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split3(RnGeodesic.INSTANCE);
+        (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split3(RnGroup.INSTANCE);
     Tensor weights_lo = Join.of( //
         d0.lo(Tensors.vector(1), Tensors.vector(0), Tensors.vector(0)), //
         d0.lo(Tensors.vector(0), Tensors.vector(1), Tensors.vector(0)), //
@@ -39,11 +38,11 @@ import ch.alpine.tensor.sca.Round;
     // System.out.println(weights_lo);
     // System.out.println(hi);
     Dual3PointCurveSubdivision d1 = //
-        (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split2lo(Se2CoveringGeodesic.INSTANCE);
+        (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split2lo(Se2CoveringGroup.INSTANCE);
     Dual3PointCurveSubdivision d2 = //
-        (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split3(Se2CoveringGeodesic.INSTANCE);
+        (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split3(Se2CoveringGroup.INSTANCE);
     Dual3PointCurveSubdivision d3 = //
-        (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split2hi(Se2CoveringGeodesic.INSTANCE);
+        (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split2hi(Se2CoveringGroup.INSTANCE);
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     Distribution distribution = UniformDistribution.of(-Math.PI / 2, Math.PI / 2);
     int[] wint = new int[3];

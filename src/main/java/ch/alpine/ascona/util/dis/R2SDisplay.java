@@ -3,16 +3,13 @@ package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.r2s.R2SGeodesic;
 import ch.alpine.sophus.lie.r2s.R2SGroup;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -23,11 +20,6 @@ public enum R2SDisplay implements ManifoldDisplay {
   INSTANCE;
 
   private static final Tensor ARROWHEAD = Arrowhead.of(0.2).unmodifiable();
-
-  @Override // from ManifoldDisplay
-  public GeodesicSpace geodesicSpace() {
-    return R2SGeodesic.INSTANCE;
-  }
 
   @Override // from ManifoldDisplay
   public int dimensions() {
@@ -63,11 +55,6 @@ public enum R2SDisplay implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
-    return R2SGroup.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public HomogeneousSpace hsManifold() {
     return R2SGroup.INSTANCE;
   }
 

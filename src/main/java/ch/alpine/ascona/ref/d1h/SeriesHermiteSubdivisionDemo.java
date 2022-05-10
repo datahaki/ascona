@@ -74,7 +74,7 @@ public class SeriesHermiteSubdivisionDemo extends ControlPointsDemo {
     if (1 < _control.length()) {
       HermiteSubdivision hermiteSubdivision = //
           scheme.supply( //
-              manifoldDisplay.hsManifold(), //
+              manifoldDisplay.homogeneousSpace(), //
               manifoldDisplay.biinvariantMean());
       Tensor control = N.DOUBLE.of(_control);
       Scalar delta = RealScalar.ONE;

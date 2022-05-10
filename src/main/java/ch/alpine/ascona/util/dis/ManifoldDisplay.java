@@ -36,10 +36,21 @@ public interface ManifoldDisplay {
 
   /** @return never null */
   default GeodesicSpace geodesicSpace() {
-    return hsManifold();
+    return homogeneousSpace();
   }
 
-  // ---
+  /** TODO ASCONA API define guarantees, at the moment null for:
+   * ClA
+   * Cl3
+   * ClC
+   * R2S1 A
+   * R2S1 B
+   * 
+   * @return */
+  default HomogeneousSpace homogeneousSpace() {
+    return lieGroup();
+  }
+
   /** TODO ASCONA API define guarantees, at the moment null for:
    * ClA
    * Cl3
@@ -56,16 +67,6 @@ public interface ManifoldDisplay {
    * 
    * @return lie group if the space is a lie group, or null if function is not applicable */
   LieGroup lieGroup();
-
-  /** TODO ASCONA API define guarantees, at the moment null for:
-   * ClA
-   * Cl3
-   * ClC
-   * R2S1 A
-   * R2S1 B
-   * 
-   * @return */
-  HomogeneousSpace hsManifold();
 
   /** @param p
    * @return operator that maps arbitrary dimension tangent vectors to 2d for display */

@@ -26,7 +26,7 @@ import ch.alpine.sophus.crv.dub.DubinsPathGenerator;
 import ch.alpine.sophus.crv.dub.DubinsRadius;
 import ch.alpine.sophus.crv.dub.DubinsType;
 import ch.alpine.sophus.crv.dub.FixedRadiusDubins;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -106,7 +106,7 @@ public class DubinsPathDemo extends AbstractDemo {
         leversRender.renderIndexP();
       }
       BSpline3CurveSubdivision bSpline3CurveSubdivision = //
-          new BSpline3CurveSubdivision(Se2CoveringGeodesic.INSTANCE);
+          new BSpline3CurveSubdivision(Se2CoveringGroup.INSTANCE);
       Tensor points = Nest.of(bSpline3CurveSubdivision::string, map, 5);
       // graphics.setStroke(new BasicStroke(2f));
       pathRender.setCurve(points, false).render(geometricLayer, graphics);

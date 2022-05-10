@@ -56,7 +56,7 @@ import ch.alpine.tensor.sca.Clips;
     Tensor sequence = RandomVariate.of(distribution, spinnerLength.getValue(), 3);
     setControlPointsSe2(sequence);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
+    VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
     tensorUnaryOperator = //
         logWeighting().operator(biinvariant(), vectorLogManifold, variogram(), getGeodesicControlPoints());
   }

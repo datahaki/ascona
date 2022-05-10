@@ -102,7 +102,7 @@ public class KNearestDemo extends LogWeightingDemo {
 
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, Tensor sequence, Tensor origin, String p) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
+    VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
     TensorUnaryOperator tensorUnaryOperator = //
         logWeighting().operator(biinvariant(), vectorLogManifold, variogram(), sequence);
     Tensor weights = tensorUnaryOperator.apply(origin);

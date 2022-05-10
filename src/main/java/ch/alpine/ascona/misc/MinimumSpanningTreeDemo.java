@@ -99,7 +99,7 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
 
   public Tensor distanceMatrix(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorUnaryOperator tuo = biinvariant().distances(manifoldDisplay.hsManifold(), sequence);
+    TensorUnaryOperator tuo = biinvariant().distances(manifoldDisplay.homogeneousSpace(), sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix

@@ -17,7 +17,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -63,7 +63,7 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
     Tensor x = Tensor.of(Arrays.stream(array).mapToObj(i -> _effective.get(i, 0)));
     Tensor y = Tensor.of(Arrays.stream(array).mapToObj(i -> _effective.get(i, 1)));
     ScalarTensorFunction scalarTensorFunction = //
-        GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, _degree, x, y);
+        GeodesicBSplineFunction.of(RnGroup.INSTANCE, _degree, x, y);
     Clip clip = Clips.interval(x.Get(0), Last.of(x));
     Tensor domain = Subdivide.increasing(clip, 4 << _levels);
     Tensor values = domain.map(scalarTensorFunction);

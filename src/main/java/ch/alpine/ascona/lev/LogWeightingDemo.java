@@ -107,7 +107,7 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
   protected final TensorScalarFunction function(Tensor sequence, Tensor values) {
     return logWeighting().function( //
         biinvariant(), //
-        manifoldDisplay().hsManifold(), //
+        manifoldDisplay().homogeneousSpace(), //
         variogram(), //
         sequence, values);
   }

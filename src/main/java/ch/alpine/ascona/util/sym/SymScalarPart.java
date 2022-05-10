@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
 
@@ -34,7 +34,7 @@ import ch.alpine.tensor.Tensors;
 
   @Override
   protected Scalar evaluate() {
-    return (Scalar) RnGeodesic.INSTANCE.split( //
+    return (Scalar) RnGroup.INSTANCE.split( //
         getP().evaluate(), //
         getQ().evaluate(), //
         ratio());

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.sym;
 
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -36,7 +36,7 @@ public class SymLinkPart extends SymLink {
     Tensor posP = lP.getPosition();
     Tensor posQ = lQ.getPosition();
     return Tensors.of( //
-        RnGeodesic.INSTANCE.split(posP.Get(0), posQ.Get(0), lambda), //
+        RnGroup.INSTANCE.split(posP.Get(0), posQ.Get(0), lambda), //
         Min.of(posP.Get(1), posQ.Get(1)).subtract(SHIFT_Y));
   }
 

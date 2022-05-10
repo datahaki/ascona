@@ -204,7 +204,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
       Tensor sequence = getGeodesicControlPoints();
       TensorUnaryOperator operator = logWeighting.operator( //
           biinvariant, //
-          manifoldDisplay.hsManifold(), //
+          manifoldDisplay.homogeneousSpace(), //
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);

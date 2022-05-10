@@ -97,7 +97,7 @@ class ManifoldDisplaysTest {
   @MethodSource("parameters")
   public void testHsManifold(ManifoldDisplay manifoldDisplay) {
     if (manifoldDisplay.lieGroup() != null)
-      assertNotNull(manifoldDisplay.hsManifold());
+      assertNotNull(manifoldDisplay.homogeneousSpace());
   }
 
   @ParameterizedTest

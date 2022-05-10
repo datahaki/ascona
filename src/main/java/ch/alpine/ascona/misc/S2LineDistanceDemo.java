@@ -88,7 +88,7 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RenderQuality.setDefault(graphics);
-    BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue(), manifoldDisplay.hsManifold());
+    BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue(), manifoldDisplay.homogeneousSpace());
     ImageRender.of(bufferedImage, S2ArrayHelper.pixel2model(bufferedImage, rad())) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);

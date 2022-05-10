@@ -14,7 +14,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -61,7 +61,7 @@ public class DeBoorCustomDemo extends AbstractDemo {
           }
           for (int k_th = 0; k_th < length; ++k_th) {
             graphics.setColor(COLOR_DATA_INDEXED.getColor(k_th));
-            DeBoor deBoor = DeBoor.of(RnGeodesic.INSTANCE, _knots, UnitVector.of(length, k_th));
+            DeBoor deBoor = DeBoor.of(RnGroup.INSTANCE, _knots, UnitVector.of(length, k_th));
             {
               graphics.setStroke(new BasicStroke(1.25f));
               Tensor values = domain.map(deBoor);

@@ -17,7 +17,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -68,7 +68,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
           geometricLayer.pushMatrix(string);
           for (int k_th = 0; k_th < length; ++k_th) {
             GeodesicBSplineFunction bSplineFunction = //
-                GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, _degree, UnitVector.of(length, k_th));
+                GeodesicBSplineFunction.of(RnGroup.INSTANCE, _degree, UnitVector.of(length, k_th));
             Tensor domain = Subdivide.of(0, length - 1, 100);
             Tensor values = domain.map(bSplineFunction);
             Tensor tensor = Transpose.of(Tensors.of(domain, values));
@@ -88,7 +88,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
         ? BSplineInterpolation.solve(_degree, control)
         : control;
     GeodesicBSplineFunction bSplineFunction = //
-        GeodesicBSplineFunction.of(RnGeodesic.INSTANCE, _degree, effective);
+        GeodesicBSplineFunction.of(RnGroup.INSTANCE, _degree, effective);
     Tensor refined = Subdivide.of(0, effective.length() - 1, 4 << _levels).map(bSplineFunction);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);

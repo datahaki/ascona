@@ -41,7 +41,7 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace hsManifold = manifoldDisplay.hsManifold();
+    HomogeneousSpace hsManifold = manifoldDisplay.homogeneousSpace();
     // ---
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor p = sequence.get(0);

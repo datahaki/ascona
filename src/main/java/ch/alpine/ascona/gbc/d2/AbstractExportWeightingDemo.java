@@ -52,7 +52,7 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
       Tensor sequence = getGeodesicControlPoints();
       TensorUnaryOperator tensorUnaryOperator = logWeighting.operator( //
           biinvariant, //
-          manifoldDisplay.hsManifold(), //
+          manifoldDisplay.homogeneousSpace(), //
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);

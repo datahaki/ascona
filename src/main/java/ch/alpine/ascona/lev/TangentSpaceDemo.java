@@ -64,7 +64,7 @@ public class TangentSpaceDemo extends AbstractPlaceDemo {
     Optional<Tensor> optional = getOrigin();
     if (optional.isPresent()) {
       Tensor origin = optional.get();
-      VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
+      VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
       final Tensor sequence = getSequence();
       HsDesign hsDesign = new HsDesign(vectorLogManifold);
       final Tensor levers2 = hsDesign.matrix(sequence, origin);

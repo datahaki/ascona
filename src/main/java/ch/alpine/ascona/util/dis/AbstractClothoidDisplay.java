@@ -58,7 +58,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   }
 
   @Override // from ManifoldDisplay
-  public final HomogeneousSpace hsManifold() {
+  public final HomogeneousSpace homogeneousSpace() {
     return null;
   }
 

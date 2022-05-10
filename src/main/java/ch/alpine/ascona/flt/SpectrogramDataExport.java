@@ -11,7 +11,7 @@ import ch.alpine.ascona.util.dat.GokartPoseDataV1;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.lie.se2.Se2Differences;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -38,7 +38,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
         ScalarUnaryOperator smoothingKernel = windowFunctions.get();
         // iterate over radius
         // Create Geod. Center instance
-        TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(Se2Geodesic.INSTANCE, smoothingKernel);
+        TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(Se2Group.INSTANCE, smoothingKernel);
         for (int radius = 0; radius < 15; radius++) {
           // Create new Geod. Center
           Tensor refined = new CenterFilter(tensorUnaryOperator, radius).apply(control);

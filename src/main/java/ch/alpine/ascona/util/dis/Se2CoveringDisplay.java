@@ -3,14 +3,11 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.Random;
 
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.r2.Se2CoveringParametric;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -28,22 +25,12 @@ public class Se2CoveringDisplay extends Se2AbstractDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public GeodesicSpace geodesicSpace() {
-    return Se2CoveringGeodesic.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
   public Tensor project(Tensor xya) {
     return xya.copy();
   }
 
   @Override // from ManifoldDisplay
   public LieGroup lieGroup() {
-    return Se2CoveringGroup.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public HomogeneousSpace hsManifold() {
     return Se2CoveringGroup.INSTANCE;
   }
 

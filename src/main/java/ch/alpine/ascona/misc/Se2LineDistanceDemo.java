@@ -22,7 +22,7 @@ import ch.alpine.sophus.decim.HsLineDistance;
 import ch.alpine.sophus.decim.HsLineDistance.NormImpl;
 import ch.alpine.sophus.decim.HsLineProjection;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -53,7 +53,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LieGroup lieGroup = manifoldDisplay.lieGroup();
-    Exponential exponential = Se2CoveringExponential.INSTANCE;
+    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential();
     // ---
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor beg = sequence.get(0);
@@ -67,7 +67,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     }
     final Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     {
-      HsLineDistance hsLineDistance = new HsLineDistance(manifoldDisplay.hsManifold());
+      HsLineDistance hsLineDistance = new HsLineDistance(manifoldDisplay.homogeneousSpace());
       NormImpl normImpl = hsLineDistance.tensorNorm(beg, end);
       {
         Tensor project = normImpl.project(mouse);
@@ -106,7 +106,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
       }
     }
     {
-      HsLineProjection hsLineProjection = new HsLineProjection(manifoldDisplay.hsManifold());
+      HsLineProjection hsLineProjection = new HsLineProjection(manifoldDisplay.homogeneousSpace());
       Tensor onto = hsLineProjection.onto(beg, end, mouse);
       {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(onto));

@@ -71,7 +71,7 @@ public abstract class LogWeightingBase extends AbstractPlaceDemo {
   protected abstract TensorUnaryOperator operator(VectorLogManifold vectorLogManifold, Tensor sequence);
 
   protected final TensorUnaryOperator operator(Tensor sequence) {
-    return operator(manifoldDisplay().hsManifold(), sequence);
+    return operator(manifoldDisplay().homogeneousSpace(), sequence);
   }
 
   protected abstract TensorScalarFunction function(Tensor sequence, Tensor values);

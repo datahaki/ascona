@@ -6,7 +6,7 @@ import java.io.IOException;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.lie.se2.Se2Differences;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -35,7 +35,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     }
     {
       TensorUnaryOperator tensorUnaryOperator = //
-          new CenterFilter(GeodesicCenter.of(Se2Geodesic.INSTANCE, WindowFunctions.GAUSSIAN.get()), 6);
+          new CenterFilter(GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), 6);
       Tensor smooth = tensorUnaryOperator.apply(poses);
       Put.of(HomeDirectory.file("gokart_poses_gauss.file"), smooth);
       Tensor delta = Se2Differences.INSTANCE.apply(smooth);
@@ -43,7 +43,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     }
     {
       TensorUnaryOperator tensorUnaryOperator = //
-          new CenterFilter(GeodesicCenter.of(Se2Geodesic.INSTANCE, WindowFunctions.HAMMING.get()), 6);
+          new CenterFilter(GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.HAMMING.get()), 6);
       Tensor smooth = tensorUnaryOperator.apply(poses);
       Put.of(HomeDirectory.file("gokart_poses_hammi.file"), smooth);
       Tensor delta = Se2Differences.INSTANCE.apply(smooth);
