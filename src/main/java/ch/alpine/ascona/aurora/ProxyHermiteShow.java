@@ -7,11 +7,9 @@ import java.util.function.Function;
 
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.r2.Se2Parametric;
-import ch.alpine.sophus.lie.LieTransport;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
@@ -27,8 +25,7 @@ import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 
 /* package */ abstract class ProxyHermiteShow {
-  static final HsManifold HS_EXPONENTIAL = Se2CoveringManifold.INSTANCE;
-  static final HsTransport HS_TRANSPORT = LieTransport.INSTANCE;
+  static final HomogeneousSpace HS_EXPONENTIAL = Se2CoveringGroup.INSTANCE;
   // private static final BiinvariantMean BIINVARIANT_MEAN = Se2CoveringBiinvariantMean.INSTANCE;
   static final Function<Scalar, ? extends Tensor> FUNCTION = ColorDataGradients.JET;
   private static final int ROWS = 135 * 1;

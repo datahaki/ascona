@@ -14,8 +14,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.d2.Arrowhead;
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.lie.LieExponential;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -42,7 +41,7 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsManifold hsManifold = LieExponential.of(manifoldDisplay.lieGroup());
+    HomogeneousSpace hsManifold = manifoldDisplay.hsManifold();
     // ---
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor p = sequence.get(0);

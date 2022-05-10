@@ -22,8 +22,8 @@ import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.HsManifold;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -277,7 +277,7 @@ public class LeversRender {
   private static final Tensor CIRCLE = CirclePoints.of(41).unmodifiable();
 
   public void renderTangentsPtoX(boolean tangentPlane) {
-    HsManifold hsManifold = manifoldDisplay.hsManifold();
+    HomogeneousSpace hsManifold = manifoldDisplay.hsManifold();
     graphics.setStroke(STROKE_TANGENT);
     for (Tensor p : sequence) { // draw tangent at p
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(p));
@@ -300,7 +300,7 @@ public class LeversRender {
   }
 
   public void renderTangentsXtoP(boolean tangentPlane) {
-    HsManifold hsManifold = manifoldDisplay.hsManifold();
+    HomogeneousSpace hsManifold = manifoldDisplay.hsManifold();
     Tensor vs = Tensor.of(sequence.stream().map(hsManifold.exponential(origin)::log));
     geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
     graphics.setStroke(STROKE_TANGENT);
@@ -321,7 +321,7 @@ public class LeversRender {
   }
 
   public void renderPolygonXtoP() {
-    HsManifold hsManifold = manifoldDisplay.hsManifold();
+    HomogeneousSpace hsManifold = manifoldDisplay.hsManifold();
     Tensor vs = Tensor.of(sequence.stream().map(hsManifold.exponential(origin)::log));
     geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
     graphics.setStroke(STROKE_TANGENT);

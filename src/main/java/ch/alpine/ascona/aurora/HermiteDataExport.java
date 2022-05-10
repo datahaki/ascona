@@ -9,12 +9,10 @@ import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Curvature2D;
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.lie.LieTransport;
+import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
@@ -85,8 +83,7 @@ import ch.alpine.tensor.red.Nest;
   }
 
   private void processAll() throws IOException {
-    HsManifold hsManifold = Se2CoveringManifold.INSTANCE;
-    HsTransport hsTransport = LieTransport.INSTANCE;
+    LieGroup hsManifold = Se2CoveringGroup.INSTANCE;
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     {
       HermiteSubdivision hermiteSubdivision = //

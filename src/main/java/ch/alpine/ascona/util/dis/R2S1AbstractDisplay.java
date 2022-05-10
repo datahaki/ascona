@@ -10,7 +10,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -58,7 +58,7 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   }
 
   @Override // from ManifoldDisplay
-  public final HsManifold hsManifold() {
+  public final HomogeneousSpace hsManifold() {
     return null;
   }
 

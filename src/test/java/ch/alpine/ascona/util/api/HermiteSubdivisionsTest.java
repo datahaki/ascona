@@ -5,10 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.lie.se2.Se2Manifold;
 import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
@@ -30,7 +29,7 @@ class HermiteSubdivisionsTest {
     cp2.set(Tensor::negate, Tensor.ALL, 1);
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
-          RnManifold.INSTANCE, //
+          RnGroup.INSTANCE, //
           RnBiinvariantMean.INSTANCE);
       TensorIteration ti1 = hermiteSubdivision.string(RealScalar.ONE, cp1);
       TensorIteration ti2 = hermiteSubdivision.string(RealScalar.ONE, Reverse.of(cp2));
@@ -50,7 +49,7 @@ class HermiteSubdivisionsTest {
     cp2.set(Tensor::negate, Tensor.ALL, 1);
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
-          Se2Manifold.INSTANCE, //
+          Se2Group.INSTANCE, //
           Se2BiinvariantMeans.LINEAR);
       TensorIteration ti1 = hermiteSubdivision.string(RealScalar.ONE, cp1);
       TensorIteration ti2 = hermiteSubdivision.string(RealScalar.ONE, Reverse.of(cp2));
@@ -68,7 +67,7 @@ class HermiteSubdivisionsTest {
     Tensor control = ConstantArray.of(Tensors.fromString("{{2, 3, 1}, {0, 0, 0}}"), 10);
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
-          Se2Manifold.INSTANCE, //
+          Se2Group.INSTANCE, //
           Se2BiinvariantMeans.LINEAR);
       TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);
       Tensor iterate = Do.of(tensorIteration::iterate, 2);
@@ -89,7 +88,7 @@ class HermiteSubdivisionsTest {
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       // System.out.println(hermiteSubdivisions);
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
-          Se2Manifold.INSTANCE, //
+          Se2Group.INSTANCE, //
           Se2BiinvariantMeans.LINEAR);
       TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);
       Tensor iterate = Do.of(tensorIteration::iterate, 2);

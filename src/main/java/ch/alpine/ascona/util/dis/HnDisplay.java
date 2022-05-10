@@ -10,7 +10,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.StarPoints;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.hn.HnBiinvariantMean;
 import ch.alpine.sophus.hs.hn.HnManifold;
 import ch.alpine.sophus.hs.hn.HnMetric;
@@ -69,7 +69,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final HsManifold hsManifold() {
+  public final HomogeneousSpace hsManifold() {
     return HnManifold.INSTANCE;
   }
 

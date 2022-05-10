@@ -7,7 +7,7 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
 import ch.alpine.sophus.hs.spd.SpdBiinvariantMean;
@@ -84,7 +84,7 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsManifold hsManifold() {
+  public HomogeneousSpace hsManifold() {
     return SpdManifold.INSTANCE;
   }
 

@@ -21,7 +21,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RationalScalar;
@@ -100,7 +100,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::toPoint));
       RenderQuality.setQuality(graphics);
       // ---
-      TensorUnaryOperator tensorUnaryOperator = operator(RnManifold.INSTANCE, domain);
+      TensorUnaryOperator tensorUnaryOperator = operator(RnGroup.INSTANCE, domain);
       Tensor min = Entrywise.min().of(domain).map(RealScalar.of(0.01)::add);
       Tensor max = Entrywise.max().of(domain).map(RealScalar.of(0.01)::subtract).negate();
       min = Tensors.vector(-RANGE, -RANGE);

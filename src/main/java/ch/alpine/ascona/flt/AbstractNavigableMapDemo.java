@@ -23,9 +23,8 @@ import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.lie.LieDifferences;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.rn.RnManifold;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -120,9 +119,9 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   protected void differences_render(Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor refined, boolean spectrogram) {
     LieGroup lieGroup = manifoldDisplay.lieGroup();
     if (Objects.nonNull(lieGroup)) {
-      LieExponential lieExponential = LieExponential.of(manifoldDisplay.lieGroup());
-      LieDifferences lieDifferences = new LieDifferences(lieExponential);
-      LieDifferences lieDifferencesTime = new LieDifferences(RnManifold.INSTANCE);
+      // LieExponential lieExponential = LieExponential.of(manifoldDisplay.lieGroup());
+      LieDifferences lieDifferences = new LieDifferences(lieGroup);
+      LieDifferences lieDifferencesTime = new LieDifferences(RnGroup.INSTANCE);
       Tensor timeDifference = lieDifferencesTime.apply(Tensor.of(navigableMapStateTime().keySet().stream())).map(x -> x.reciprocal());
       Tensor speeds = Times.of(timeDifference, lieDifferences.apply(refined));
       if (0 < speeds.length()) {

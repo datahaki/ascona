@@ -26,7 +26,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.hs.sn.SnBiinvariantMean;
 import ch.alpine.sophus.hs.sn.SnExponential;
@@ -171,7 +171,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
 
   public final Tensor iterationPath(Tensor sequence, Tensor weights, Tensor shifted, int iter) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsManifold hsManifold = manifoldDisplay.hsManifold();
+    HomogeneousSpace hsManifold = manifoldDisplay.hsManifold();
     Tensor tensor = Tensors.empty();
     for (int count = 0; count < iter; ++count) {
       MeanDefect meanDefect = new MeanDefect(sequence, weights, hsManifold.exponential(shifted));

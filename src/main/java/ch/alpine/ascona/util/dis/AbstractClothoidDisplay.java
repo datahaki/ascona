@@ -11,7 +11,7 @@ import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -58,7 +58,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   }
 
   @Override // from ManifoldDisplay
-  public final HsManifold hsManifold() {
+  public final HomogeneousSpace hsManifold() {
     return null;
   }
 

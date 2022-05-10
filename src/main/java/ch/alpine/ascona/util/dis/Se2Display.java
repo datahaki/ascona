@@ -6,13 +6,12 @@ import java.util.Random;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.r2.Se2Parametric;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Geodesic;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.lie.se2.Se2Manifold;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -47,8 +46,8 @@ public class Se2Display extends Se2AbstractDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsManifold hsManifold() {
-    return Se2Manifold.INSTANCE;
+  public HomogeneousSpace hsManifold() {
+    return Se2Group.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

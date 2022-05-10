@@ -6,7 +6,7 @@ import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGeodesic;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.ref.d1.BSpline4CurveSubdivision;
 import ch.alpine.sophus.ref.d1.Dual3PointCurveSubdivision;
 import ch.alpine.tensor.Tensor;
@@ -62,9 +62,9 @@ import ch.alpine.tensor.sca.Round;
         Tensor m3 = d3.lo(p, q, r);
         // ---
         {
-          Tensor v1 = new MeanDefect(sequence, weights_lo, Se2CoveringManifold.INSTANCE.exponential(m1)).tangent();
-          Tensor v2 = new MeanDefect(sequence, weights_lo, Se2CoveringManifold.INSTANCE.exponential(m2)).tangent();
-          Tensor v3 = new MeanDefect(sequence, weights_lo, Se2CoveringManifold.INSTANCE.exponential(m3)).tangent();
+          Tensor v1 = new MeanDefect(sequence, weights_lo, Se2CoveringGroup.INSTANCE.exponential(m1)).tangent();
+          Tensor v2 = new MeanDefect(sequence, weights_lo, Se2CoveringGroup.INSTANCE.exponential(m2)).tangent();
+          Tensor v3 = new MeanDefect(sequence, weights_lo, Se2CoveringGroup.INSTANCE.exponential(m3)).tangent();
           Tensor err = Tensors.of( //
               Vector2Norm.of(v1), //
               Vector2Norm.of(v2), //

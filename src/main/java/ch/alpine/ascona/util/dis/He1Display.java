@@ -8,12 +8,11 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.he.HeBiinvariantMean;
 import ch.alpine.sophus.lie.he.HeGeodesic;
 import ch.alpine.sophus.lie.he.HeGroup;
-import ch.alpine.sophus.lie.he.HeManifold;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -70,8 +69,8 @@ public enum He1Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsManifold hsManifold() {
-    return HeManifold.INSTANCE;
+  public HomogeneousSpace hsManifold() {
+    return HeGroup.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

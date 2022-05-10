@@ -9,12 +9,11 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.r2s.R2SGeodesic;
 import ch.alpine.sophus.lie.r2s.R2SGroup;
-import ch.alpine.sophus.lie.r2s.R2SManifold;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -68,8 +67,8 @@ public enum R2SDisplay implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsManifold hsManifold() {
-    return R2SManifold.INSTANCE;
+  public HomogeneousSpace hsManifold() {
+    return R2SGroup.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

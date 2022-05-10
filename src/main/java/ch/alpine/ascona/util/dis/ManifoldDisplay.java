@@ -7,7 +7,7 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -65,7 +65,7 @@ public interface ManifoldDisplay {
    * R2S1 B
    * 
    * @return */
-  HsManifold hsManifold();
+  HomogeneousSpace hsManifold();
 
   /** @param p
    * @return operator that maps arbitrary dimension tangent vectors to 2d for display */

@@ -10,14 +10,13 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HsManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Geodesic;
 import ch.alpine.sophus.lie.so3.So3Group;
-import ch.alpine.sophus.lie.so3.So3Manifold;
 import ch.alpine.sophus.lie.so3.So3Metric;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -86,8 +85,8 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public HsManifold hsManifold() {
-    return So3Manifold.INSTANCE;
+  public HomogeneousSpace hsManifold() {
+    return So3Group.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

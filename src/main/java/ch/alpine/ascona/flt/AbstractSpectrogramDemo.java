@@ -21,7 +21,6 @@ import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.lie.LieDifferences;
-import ch.alpine.sophus.lie.LieExponential;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -98,8 +97,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     LieGroup lieGroup = manifoldDisplay.lieGroup();
     if (Objects.nonNull(lieGroup)) {
-      LieExponential lieExponential = LieExponential.of(manifoldDisplay.lieGroup());
-      LieDifferences lieDifferences = new LieDifferences(lieExponential);
+      LieDifferences lieDifferences = new LieDifferences(lieGroup);
       Scalar sampleRate = MAGNITUDE_PER_SECONDS.apply(gokartPoseData.getSampleRate());
       Tensor speeds = lieDifferences.apply(refined).multiply(sampleRate);
       if (0 < speeds.length()) {
