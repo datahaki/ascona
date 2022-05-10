@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.exp.Log;
   }
 
   private Scalar h1(Scalar lambda, Scalar mu) {
-    return process(Hermite1Subdivisions.of(HS_EXPONENTIAL, HS_TRANSPORT, lambda, mu));
+    return process(Hermite1Subdivisions.of(HS_EXPONENTIAL, lambda, mu));
   }
 
   @Override // from HermiteArray

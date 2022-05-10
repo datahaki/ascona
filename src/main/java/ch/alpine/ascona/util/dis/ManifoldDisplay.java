@@ -8,7 +8,6 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -51,16 +50,24 @@ public interface ManifoldDisplay {
    * H1
    * H2
    * 
+   * a lie group guarantees that hsManifold is available
+   * 
    * @return lie group if the space is a lie group, or null if function is not applicable */
   LieGroup lieGroup();
 
+  /** TODO ASCONA API define guarantees, at the moment null for:
+   * ClA
+   * Cl3
+   * ClC
+   * R2S1 A
+   * R2S1 B
+   * 
+   * @return */
   HsManifold hsManifold();
 
   /** @param p
    * @return operator that maps arbitrary dimension tangent vectors to 2d for display */
   TensorUnaryOperator tangentProjection(Tensor p);
-
-  HsTransport hsTransport();
 
   /** FIXME ASCONA API define guarantees, at the moment null for:
    * R2S1 A

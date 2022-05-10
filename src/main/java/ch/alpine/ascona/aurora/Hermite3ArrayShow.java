@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.exp.Log;
   }
 
   private Scalar h3(Scalar theta, Scalar omega) {
-    return process(Hermite3Subdivisions.of(HS_EXPONENTIAL, HS_TRANSPORT, theta, omega));
+    return process(Hermite3Subdivisions.of(HS_EXPONENTIAL, theta, omega));
   }
 
   @Override // from HermiteArray

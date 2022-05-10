@@ -11,10 +11,8 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.so.SoTransport;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Geodesic;
@@ -90,11 +88,6 @@ public class So3Display implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return So3Manifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public HsTransport hsTransport() {
-    return SoTransport.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

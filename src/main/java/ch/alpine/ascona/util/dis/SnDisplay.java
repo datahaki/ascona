@@ -10,7 +10,6 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.sn.SnFastMean;
 import ch.alpine.sophus.hs.sn.SnGeodesic;
@@ -18,7 +17,6 @@ import ch.alpine.sophus.hs.sn.SnLineDistance;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnMetric;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
-import ch.alpine.sophus.hs.sn.SnTransport;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -59,11 +57,6 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return SnManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final HsTransport hsTransport() {
-    return SnTransport.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

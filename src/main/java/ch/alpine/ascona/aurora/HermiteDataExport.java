@@ -90,37 +90,37 @@ import ch.alpine.tensor.red.Nest;
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H1STANDARD.supply(hsManifold, hsTransport, biinvariantMean);
+          HermiteSubdivisions.H1STANDARD.supply(hsManifold, biinvariantMean);
       CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGeodesic.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h1standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H2STANDARD.supply(hsManifold, hsTransport, biinvariantMean);
+          HermiteSubdivisions.H2STANDARD.supply(hsManifold, biinvariantMean);
       CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(RnGeodesic.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h2standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H2MANIFOLD.supply(hsManifold, hsTransport, biinvariantMean);
+          HermiteSubdivisions.H2MANIFOLD.supply(hsManifold, biinvariantMean);
       CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(RnGeodesic.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h2manifold");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H3STANDARD.supply(hsManifold, hsTransport, biinvariantMean);
+          HermiteSubdivisions.H3STANDARD.supply(hsManifold, biinvariantMean);
       CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGeodesic.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H3A1.supply(hsManifold, hsTransport, biinvariantMean);
+          HermiteSubdivisions.H3A1.supply(hsManifold, biinvariantMean);
       CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGeodesic.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3a1");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H3A2.supply(hsManifold, hsTransport, biinvariantMean);
+          HermiteSubdivisions.H3A2.supply(hsManifold, biinvariantMean);
       CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGeodesic.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3a2");
     }

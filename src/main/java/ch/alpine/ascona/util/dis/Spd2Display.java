@@ -9,14 +9,12 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
 import ch.alpine.sophus.hs.spd.SpdBiinvariantMean;
 import ch.alpine.sophus.hs.spd.SpdGeodesic;
 import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.SpdMetric;
-import ch.alpine.sophus.hs.spd.SpdTransport;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -95,11 +93,6 @@ public enum Spd2Display implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return SpdManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public HsTransport hsTransport() {
-    return SpdTransport.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

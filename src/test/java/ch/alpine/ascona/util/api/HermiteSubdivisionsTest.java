@@ -4,7 +4,6 @@ package ch.alpine.ascona.util.api;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnManifold;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
@@ -32,7 +31,6 @@ class HermiteSubdivisionsTest {
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
           RnManifold.INSTANCE, //
-          LieTransport.INSTANCE, //
           RnBiinvariantMean.INSTANCE);
       TensorIteration ti1 = hermiteSubdivision.string(RealScalar.ONE, cp1);
       TensorIteration ti2 = hermiteSubdivision.string(RealScalar.ONE, Reverse.of(cp2));
@@ -53,7 +51,6 @@ class HermiteSubdivisionsTest {
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
           Se2Manifold.INSTANCE, //
-          LieTransport.INSTANCE, //
           Se2BiinvariantMeans.LINEAR);
       TensorIteration ti1 = hermiteSubdivision.string(RealScalar.ONE, cp1);
       TensorIteration ti2 = hermiteSubdivision.string(RealScalar.ONE, Reverse.of(cp2));
@@ -72,7 +69,6 @@ class HermiteSubdivisionsTest {
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
           Se2Manifold.INSTANCE, //
-          LieTransport.INSTANCE, //
           Se2BiinvariantMeans.LINEAR);
       TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);
       Tensor iterate = Do.of(tensorIteration::iterate, 2);
@@ -94,7 +90,6 @@ class HermiteSubdivisionsTest {
       // System.out.println(hermiteSubdivisions);
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
           Se2Manifold.INSTANCE, //
-          LieTransport.INSTANCE, //
           Se2BiinvariantMeans.LINEAR);
       TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);
       Tensor iterate = Do.of(tensorIteration::iterate, 2);

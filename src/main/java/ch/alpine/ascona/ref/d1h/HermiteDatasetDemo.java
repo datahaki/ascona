@@ -181,7 +181,6 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
     Scalar delta = RationalScalar.of(skips.number().intValue(), 50);
     HermiteSubdivision hermiteSubdivision = scheme.supply( //
         manifoldDisplay.hsManifold(), //
-        manifoldDisplay.hsTransport(), //
         manifoldDisplay.biinvariantMean());
     TensorIteration tensorIteration = hermiteSubdivision.string(delta, _control);
     int levels = level.number().intValue();

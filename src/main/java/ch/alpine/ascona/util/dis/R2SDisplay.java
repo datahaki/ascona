@@ -10,10 +10,8 @@ import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.r2s.R2SGeodesic;
 import ch.alpine.sophus.lie.r2s.R2SGroup;
 import ch.alpine.sophus.lie.r2s.R2SManifold;
@@ -72,11 +70,6 @@ public enum R2SDisplay implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public HsManifold hsManifold() {
     return R2SManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public HsTransport hsTransport() {
-    return LieTransport.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

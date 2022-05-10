@@ -9,10 +9,8 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGeodesic;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -68,11 +66,6 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return RnManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final HsTransport hsTransport() {
-    return LieTransport.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

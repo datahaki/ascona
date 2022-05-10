@@ -89,16 +89,30 @@ class ManifoldDisplaysTest {
 
   @ParameterizedTest
   @MethodSource("parameters")
-  public void testLieExponential(ManifoldDisplay manifoldDisplay) {
+  public void testLieGroup(ManifoldDisplay manifoldDisplay) {
     manifoldDisplay.lieGroup();
   }
 
   @ParameterizedTest
   @MethodSource("parameters")
-  public void testParametricDistance(ManifoldDisplay manifoldDisplay) {
+  public void testHsManifold(ManifoldDisplay manifoldDisplay) {
+    if (manifoldDisplay.lieGroup() != null)
+      assertNotNull(manifoldDisplay.hsManifold());
+  }
+
+  @ParameterizedTest
+  @MethodSource("parameters")
+  public void testHsTransport(ManifoldDisplay manifoldDisplay) {
+    // if (manifoldDisplay.hsManifold() != null)
+    // assertNotNull(manifoldDisplay.hsTransport());
+  }
+
+  @ParameterizedTest
+  @MethodSource("parameters")
+  public void testSome(ManifoldDisplay manifoldDisplay) {
     // TODO
-    if (manifoldDisplay.lieGroup() == null)
-      System.out.println(manifoldDisplay);
+    // if (manifoldDisplay.hsTransport() == null)
+    // System.out.println(manifoldDisplay);
   }
 
   @Test

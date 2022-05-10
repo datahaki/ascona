@@ -112,7 +112,6 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
     }
     HermiteSubdivision hermiteSubdivision = scheme.supply( //
         s2Display.hsManifold(), //
-        s2Display.hsTransport(), //
         s2Display.biinvariantMean());
     if (1 < control.length()) {
       TensorIteration tensorIteration = cyclic //

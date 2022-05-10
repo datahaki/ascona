@@ -12,13 +12,11 @@ import ch.alpine.sophus.crv.d2.StarPoints;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.hn.HnBiinvariantMean;
 import ch.alpine.sophus.hs.hn.HnGeodesic;
 import ch.alpine.sophus.hs.hn.HnManifold;
 import ch.alpine.sophus.hs.hn.HnMetric;
 import ch.alpine.sophus.hs.hn.HnMetricBiinvariant;
-import ch.alpine.sophus.hs.hn.HnTransport;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -80,11 +78,6 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return HnManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final HsTransport hsTransport() {
-    return HnTransport.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

@@ -9,7 +9,6 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.rpn.RpnManifold;
 import ch.alpine.sophus.hs.rpn.RpnMetric;
@@ -55,11 +54,6 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final HsManifold hsManifold() {
     return RpnManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final HsTransport hsTransport() {
-    return null;
   }
 
   @Override // from ManifoldDisplay

@@ -9,8 +9,6 @@ import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.crv.d2.Curvature2D;
 import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.lie.LieTransport;
 import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
@@ -28,8 +26,8 @@ import ch.alpine.tensor.nrm.Vector1Norm;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 
 /* package */ abstract class HermiteArrayShow {
+  // TODO rename
   static final HsManifold HS_EXPONENTIAL = Se2CoveringManifold.INSTANCE;
-  static final HsTransport HS_TRANSPORT = LieTransport.INSTANCE;
   // private static final BiinvariantMean BIINVARIANT_MEAN = Se2CoveringBiinvariantMean.INSTANCE;
   static final Function<Scalar, ? extends Tensor> FUNCTION = ColorDataGradients.JET;
   private static final int ROWS = 135 * 8;
