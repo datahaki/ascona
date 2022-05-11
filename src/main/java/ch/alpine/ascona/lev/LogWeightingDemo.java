@@ -12,7 +12,7 @@ import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.math.var.VariogramFunctions;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -92,7 +92,7 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
   }
 
   @Override
-  protected final TensorUnaryOperator operator(VectorLogManifold vectorLogManifold, Tensor sequence) {
+  protected final TensorUnaryOperator operator(Manifold vectorLogManifold, Tensor sequence) {
     return logWeighting().operator( //
         biinvariant(), //
         vectorLogManifold, //

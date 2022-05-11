@@ -49,6 +49,7 @@ public interface ManifoldDisplay {
    * @param q control point
    * @return (pseudo-) distance between given control points p and q
    * or if functionality is not supported */
+  // TODO API unacceptable
   TensorMetric parametricDistance();
 
   /** FIXME ASCONA API define guarantees, at the moment null for:
@@ -63,6 +64,7 @@ public interface ManifoldDisplay {
    * Dt1
    * 
    * @return metric biinvariant or null if metric is not biinvariant */
+  // TODO API unacceptable
   Biinvariant biinvariant();
 
   /** FIXME ASCONA API define guarantees, at the moment null for:

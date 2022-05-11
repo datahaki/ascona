@@ -22,7 +22,7 @@ import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -73,7 +73,7 @@ public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<Man
         Tensor matrix = Tensors.empty();
         int[] minIndex = new int[biinvariants.length];
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-        VectorLogManifold vectorLogManifold = homogeneousSpace;
+        Manifold vectorLogManifold = homogeneousSpace;
         for (int index = 0; index < biinvariants.length; ++index) {
           TensorUnaryOperator tensorUnaryOperator = //
               logWeighting().operator( //

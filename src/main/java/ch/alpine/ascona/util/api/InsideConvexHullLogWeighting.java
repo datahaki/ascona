@@ -7,7 +7,7 @@ import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.d2.InsideConvexHullCoordinate;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsGenesis;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -24,7 +24,7 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
   @Override // from LogWeighting
   public TensorUnaryOperator operator( //
       Biinvariant biinvariant, // <- ignored
-      VectorLogManifold vectorLogManifold, // with 2 dimensional tangent space
+      Manifold vectorLogManifold, // with 2 dimensional tangent space
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
     return HsGenesis.wrap( //
@@ -36,7 +36,7 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
   @Override // from LogWeighting
   public TensorScalarFunction function( //
       Biinvariant biinvariant, // <- ignored
-      VectorLogManifold vectorLogManifold, // with 2 dimensional tangent space
+      Manifold vectorLogManifold, // with 2 dimensional tangent space
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence, Tensor values) {
     TensorUnaryOperator tensorUnaryOperator = operator(biinvariant, vectorLogManifold, variogram, sequence);

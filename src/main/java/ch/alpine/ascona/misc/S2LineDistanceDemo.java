@@ -24,7 +24,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -75,7 +75,7 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
         : t -> RealScalar.ZERO;
   }
 
-  private BufferedImage bufferedImage(int resolution, VectorLogManifold vectorLogManifold) {
+  private BufferedImage bufferedImage(int resolution, Manifold vectorLogManifold) {
     Tensor matrix = Tensors.matrix(S2ArrayHelper.of(resolution, rad(), tensorNorm()::norm));
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }

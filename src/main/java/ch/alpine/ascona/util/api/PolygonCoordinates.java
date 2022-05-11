@@ -23,7 +23,7 @@ import ch.alpine.sophus.gbc.it.IterativeAffineCoordinate;
 import ch.alpine.sophus.gbc.it.IterativeTargetCoordinate;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HsGenesis;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
@@ -75,7 +75,7 @@ public enum PolygonCoordinates implements LogWeighting {
   @Override // from LogWeighting
   public TensorUnaryOperator operator( //
       Biinvariant biinvariant, // <- ignored
-      VectorLogManifold vectorLogManifold, // with 2 dimensional tangent space
+      Manifold vectorLogManifold, // with 2 dimensional tangent space
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
     return HsGenesis.wrap( //
@@ -89,7 +89,7 @@ public enum PolygonCoordinates implements LogWeighting {
   @Override // from LogWeighting
   public TensorScalarFunction function( //
       Biinvariant biinvariant, // <- ignored
-      VectorLogManifold vectorLogManifold, // with 2 dimensional tangent space
+      Manifold vectorLogManifold, // with 2 dimensional tangent space
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence, Tensor values) {
     TensorUnaryOperator tensorUnaryOperator = operator(biinvariant, vectorLogManifold, variogram, sequence);

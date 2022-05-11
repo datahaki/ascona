@@ -29,7 +29,7 @@ import ch.alpine.sophus.gbc.it.Evaluation;
 import ch.alpine.sophus.gbc.it.GenesisDeque;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -39,12 +39,12 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.lie.r2.ConvexHull;
 import ch.alpine.tensor.red.Times;
 
-public class TangentSpaceDemo extends AbstractPlaceDemo {
+public class ExponentialDemo extends AbstractPlaceDemo {
   private static final int WIDTH = 300;
   // ---
   private final GenesisDequeProperties iterativeAffineProperties = new GenesisDequeProperties();
 
-  public TangentSpaceDemo() {
+  public ExponentialDemo() {
     super(true, ManifoldDisplays.R2_ONLY);
     // ---
     Container container = timerFrame.jFrame.getContentPane();
@@ -66,7 +66,7 @@ public class TangentSpaceDemo extends AbstractPlaceDemo {
     if (optional.isPresent()) {
       Tensor origin = optional.get();
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      VectorLogManifold vectorLogManifold = homogeneousSpace;
+      Manifold vectorLogManifold = homogeneousSpace;
       final Tensor sequence = getSequence();
       HsDesign hsDesign = new HsDesign(vectorLogManifold);
       final Tensor levers2 = hsDesign.matrix(sequence, origin);
@@ -135,6 +135,6 @@ public class TangentSpaceDemo extends AbstractPlaceDemo {
   }
 
   public static void main(String[] args) {
-    new TangentSpaceDemo().setVisible(1300, 900);
+    new ExponentialDemo().setVisible(1300, 900);
   }
 }

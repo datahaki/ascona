@@ -11,7 +11,7 @@ import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -69,7 +69,7 @@ public abstract class LogWeightingBase extends AbstractPlaceDemo {
     spinnerLogWeighting.reportToAll();
   }
 
-  protected abstract TensorUnaryOperator operator(VectorLogManifold vectorLogManifold, Tensor sequence);
+  protected abstract TensorUnaryOperator operator(Manifold vectorLogManifold, Tensor sequence);
 
   protected final TensorUnaryOperator operator(Tensor sequence) {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();

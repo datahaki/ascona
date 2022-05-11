@@ -9,7 +9,7 @@ import ch.alpine.sophus.gbc.d2.Barycenter;
 import ch.alpine.sophus.gbc.d2.IterativeCoordinateLevel;
 import ch.alpine.sophus.gbc.d2.ThreePointWeighting;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -30,8 +30,8 @@ import ch.alpine.tensor.sca.Chop;
     return new IterativeCoordinateLevel(genesis, Chop._08, max);
   }
 
-  public static TensorUnaryOperator counts(VectorLogManifold vectorLogManifold, Tensor sequence, int max) {
-    HsDesign hsDesign = new HsDesign(vectorLogManifold);
+  public static TensorUnaryOperator counts(Manifold manifold, Tensor sequence, int max) {
+    HsDesign hsDesign = new HsDesign(manifold);
     TensorScalarFunction[] array = Stream.of(values()).map(ig -> ig.with(max)).toArray(TensorScalarFunction[]::new);
     return point -> {
       Tensor matrix = hsDesign.matrix(sequence, point);

@@ -14,7 +14,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
@@ -58,9 +58,9 @@ import ch.alpine.tensor.sca.Clips;
     setControlPointsSe2(sequence);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    VectorLogManifold vectorLogManifold = homogeneousSpace;
+    Manifold manifold = homogeneousSpace;
     tensorUnaryOperator = //
-        logWeighting().operator(biinvariant(), vectorLogManifold, variogram(), getGeodesicControlPoints());
+        logWeighting().operator(biinvariant(), manifold, variogram(), getGeodesicControlPoints());
   }
 
   @Override // from AbstractHoverDemo

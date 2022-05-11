@@ -27,7 +27,7 @@ import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.sn.SnBiinvariantMean;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.tensor.DoubleScalar;
@@ -101,7 +101,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     }
   }
 
-  private BufferedImage bufferedImage(int resolution, VectorLogManifold vectorLogManifold) {
+  private BufferedImage bufferedImage(int resolution, Manifold vectorLogManifold) {
     Tensor matrix = Tensors.matrix(S2ArrayHelper.of(resolution, rad(), new TSF()));
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }

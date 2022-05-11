@@ -31,7 +31,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -184,9 +184,9 @@ public class CheckerBoardDemo extends LogWeightingBase //
   }
 
   @Override
-  protected TensorUnaryOperator operator(VectorLogManifold vectorLogManifold, Tensor sequence) {
+  protected TensorUnaryOperator operator(Manifold manifold, Tensor sequence) {
     // biinvariant and variogram are not necessary
-    return logWeighting().operator(null, vectorLogManifold, null, sequence);
+    return logWeighting().operator(null, manifold, null, sequence);
   }
 
   @Override

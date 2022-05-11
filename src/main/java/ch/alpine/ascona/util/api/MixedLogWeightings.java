@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.itp.RadialBasisFunctionInterpolation;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -18,7 +18,7 @@ public enum MixedLogWeightings implements LogWeighting {
   RADIAL_BASIS {
     @Override
     public TensorUnaryOperator operator( //
-        Biinvariant biinvariant, VectorLogManifold vectorLogManifold, //
+        Biinvariant biinvariant, Manifold vectorLogManifold, //
         ScalarUnaryOperator variogram, Tensor sequence) {
       return RadialBasisFunctionInterpolation.of( //
           biinvariant.var_dist(vectorLogManifold, variogram, sequence), //
@@ -27,7 +27,7 @@ public enum MixedLogWeightings implements LogWeighting {
 
     @Override
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, VectorLogManifold vectorLogManifold, //
+        Biinvariant biinvariant, Manifold vectorLogManifold, //
         ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.of( //
           biinvariant.var_dist(vectorLogManifold, variogram, sequence), //
