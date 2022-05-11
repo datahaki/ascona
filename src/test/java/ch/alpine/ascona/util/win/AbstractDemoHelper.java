@@ -48,7 +48,7 @@ public enum AbstractDemoHelper {
       AbstractGeodesicDisplayDemo geodesicDisplayDemo = (AbstractGeodesicDisplayDemo) abstractDemo;
       for (ManifoldDisplay manifoldDisplay : geodesicDisplayDemo.getManifoldDisplays())
         try {
-          geodesicDisplayDemo.setGeodesicDisplay(manifoldDisplay);
+          geodesicDisplayDemo.setManifoldDisplay(manifoldDisplay);
           geodesicDisplayDemo.render(geometricLayer, bufferedImage.createGraphics());
         } catch (Exception exception) {
           System.err.println(manifoldDisplay);

@@ -33,7 +33,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
   public HeadTailGeodesicDemo() {
     super(false, ManifoldDisplays.ALL);
     // ---
-    setGeodesicDisplay(S2Display.INSTANCE);
+    setManifoldDisplay(S2Display.INSTANCE);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 0, 0}}"));

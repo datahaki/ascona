@@ -40,7 +40,7 @@ public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<Man
     }
     setControlPointsSe2(Tensors.fromString("{{-1, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}}"));
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     setLogWeighting(LogWeightings.DISTANCES);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);

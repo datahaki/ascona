@@ -42,7 +42,7 @@ import ch.alpine.tensor.sca.Clips;
       spinnerColorData.setValueSafe(ColorDataGradients.THERMOMETER);
       spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color");
     }
-    setGeodesicDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(Se2Display.INSTANCE);
     setLogWeighting(LogWeightings.DISTANCES);
     addSpinnerListener(v -> recompute());
     recompute();

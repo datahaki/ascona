@@ -37,7 +37,7 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
     jToggleNeutral.setSelected(true);

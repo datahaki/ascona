@@ -53,7 +53,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
 
   public LaneRiesenfeldComparisonDemo(List<ManifoldDisplay> list) {
     super(true, list);
-    setGeodesicDisplay(Se2ClothoidDisplay.LEGENDRE);
+    setManifoldDisplay(Se2ClothoidDisplay.LEGENDRE);
     // ---
     jToggleCurvature.setSelected(true);
     jToggleCurvature.setToolTipText("curvature plot");

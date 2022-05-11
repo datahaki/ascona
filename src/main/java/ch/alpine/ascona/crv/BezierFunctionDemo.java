@@ -48,7 +48,7 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
       Tensor tensor = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}}");
       setControlPointsSe2(tensor);
     }
-    setGeodesicDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(Se2Display.INSTANCE);
     timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }
 

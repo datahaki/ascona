@@ -48,7 +48,7 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
       spinnerColorData.setValueSafe(ColorDataGradients.THERMOMETER);
       spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color");
     }
-    setGeodesicDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(Se2Display.INSTANCE);
     setLogWeighting(LogWeightings.DISTANCES);
     shuffleSnap();
   }

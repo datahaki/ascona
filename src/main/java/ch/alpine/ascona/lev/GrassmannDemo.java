@@ -39,7 +39,7 @@ public class GrassmannDemo extends LogWeightingDemo implements SpinnerListener<M
     // ---
     ManifoldDisplay manifoldDisplay = Se2CoveringDisplay.INSTANCE;
     manifoldDisplay = S2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     setBitype(Bitype.LEVERAGES1);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);

@@ -65,7 +65,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
         RandomVariate.of(dX), RandomVariate.of(dY), RandomVariate.of(dA)), 10).stream() //
         .map(Se2CoveringGroup.INSTANCE::exp));
     setControlPointsSe2(tensor);
-    setGeodesicDisplay(Se2CoveringDisplay.INSTANCE);
+    setManifoldDisplay(Se2CoveringDisplay.INSTANCE);
   }
 
   @Override

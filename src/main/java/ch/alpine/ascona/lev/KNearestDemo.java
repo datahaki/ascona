@@ -56,7 +56,7 @@ public class KNearestDemo extends LogWeightingDemo {
       jTextField.setPreferredSize(new Dimension(100, 28));
       timerFrame.jToolBar.add(jTextField);
     }
-    setGeodesicDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(Se2Display.INSTANCE);
     setLogWeighting(LogWeightings.DISTANCES);
     shuffleSnap();
   }

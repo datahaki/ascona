@@ -77,8 +77,8 @@ import ch.alpine.tensor.sca.Sign;
     {
       timerFrame.jToolBar.add(jToggleEntire);
     }
-    setGeodesicDisplay(S2Display.INSTANCE);
-    setGeodesicDisplay(R2Display.INSTANCE);
+    setManifoldDisplay(S2Display.INSTANCE);
+    setManifoldDisplay(R2Display.INSTANCE);
     setControlPointsSe2(Tensors.fromString("{{0, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}}"));
     setMidpointIndicated(true);
   }

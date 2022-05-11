@@ -38,7 +38,7 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
     spinnerTotal.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "total");
     // ---
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     setBitype(Bitype.LEVERAGES1);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);

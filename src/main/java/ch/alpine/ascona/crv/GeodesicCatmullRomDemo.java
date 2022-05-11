@@ -9,7 +9,7 @@ import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -54,11 +54,11 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   public Scalar exponent = RealScalar.ONE;
 
   public GeodesicCatmullRomDemo() {
-    super(ManifoldDisplays.SE2C_SE2_R2);
+    super(ManifoldDisplays.METRIC);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     addButtonDubins();
     // ---
-    setGeodesicDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(R2Display.INSTANCE);
     {
       Tensor dubins = Tensors.fromString("{{1, 1, 0}, {1, 2, -1}, {2, 1, 0.5}}");
       setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 0), //

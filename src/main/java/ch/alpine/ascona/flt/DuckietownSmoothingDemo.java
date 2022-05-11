@@ -31,7 +31,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.itp.DeBoor;
 
-public class DuckietownSmoothingDemo extends AbstractDatasetKernelDemo implements BufferedImageSupplier {
+/* package */ class DuckietownSmoothingDemo extends AbstractDatasetKernelDemo implements BufferedImageSupplier {
   private static final List<Integer> DEGREES = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
   public static final List<String> LIST = Arrays.asList( //
       "duckie20180713-175124.csv", //

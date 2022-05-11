@@ -55,7 +55,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     // ---
     jSlider.setPreferredSize(new Dimension(500, 28));
     timerFrame.jToolBar.add(jSlider);
-    setGeodesicDisplay(R2Display.INSTANCE);
+    setManifoldDisplay(R2Display.INSTANCE);
   }
 
   @Override // from RenderInterface

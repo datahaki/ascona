@@ -19,7 +19,8 @@ import ch.alpine.tensor.itp.Interpolation;
 import ch.alpine.tensor.itp.LinearInterpolation;
 import ch.alpine.tensor.sca.Chop;
 
-public class ConnectorsDemo extends AbstractHoverDemo {
+// TODO ASCONA cannot always compute the biinvariant mean (for S2)
+/* package */ class ConnectorsDemo extends AbstractHoverDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
     Tensor weights = operator(leversRender.getSequence()).apply(leversRender.getOrigin());

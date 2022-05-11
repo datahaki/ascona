@@ -38,7 +38,7 @@ public class Se2CoveringInvarianceDemo extends LogWeightingDemo {
       jTextField.setPreferredSize(new Dimension(100, 28));
       timerFrame.jToolBar.add(jTextField);
     }
-    setGeodesicDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(Se2Display.INSTANCE);
     setControlPointsSe2(Tensors.fromString( //
         "{{0, 0, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}, {-3, 0, 0}}"));
     setControlPointsSe2(Tensors.fromString( //

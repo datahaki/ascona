@@ -11,6 +11,7 @@ import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymLinkImages;
@@ -41,8 +42,9 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 
   public KnotsBSplineFunctionDemo() {
-    super(ManifoldDisplays.CL_SE2_R2);
+    super(ManifoldDisplays.METRIC);
     // ---
+    setManifoldDisplay(R2Display.INSTANCE);
     refine = RealScalar.of(5);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---

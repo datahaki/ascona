@@ -39,7 +39,7 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
     addButtonDubins();
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
-    setGeodesicDisplay(Se2CoveringDisplay.INSTANCE);
+    setManifoldDisplay(Se2CoveringDisplay.INSTANCE);
     // ---
     Tensor dubins = Tensors.fromString("{{1, 0, 0}, {2, 0, 2.5708}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 0), //

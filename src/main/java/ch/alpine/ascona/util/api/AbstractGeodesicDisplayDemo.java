@@ -39,7 +39,7 @@ public abstract class AbstractGeodesicDisplayDemo extends AbstractDemo {
     return manifoldDisplaySpinner.getValue();
   }
 
-  public synchronized final void setGeodesicDisplay(ManifoldDisplay manifoldDisplay) {
+  public synchronized final void setManifoldDisplay(ManifoldDisplay manifoldDisplay) {
     manifoldDisplaySpinner.setValue(manifoldDisplay);
   }
 

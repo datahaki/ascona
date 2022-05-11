@@ -94,7 +94,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
                 Tensor center = Mean.of(tensor);
                 center.set(RealScalar.ZERO, 2);
                 tensor = Tensor.of(tensor.stream().map(row -> row.subtract(center)));
-                setGeodesicDisplay(Se2Display.INSTANCE);
+                setManifoldDisplay(Se2Display.INSTANCE);
                 jToggleCyclic.setSelected(true);
                 setControlPointsSe2(tensor);
               }
@@ -157,7 +157,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     // CurveSubdivisionHelper.MAGIC_C = RationalScalar.of(jSlider.getValue(), 1000));
     // timerFrame.jToolBar.add(jSlider);
     // }
-    setGeodesicDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(Se2Display.INSTANCE);
     timerFrame.geometricComponent.setOffset(100, 600);
   }
 
@@ -166,7 +166,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     final CurveSubdivisionSchemes scheme = spinnerLabel.getValue();
     //
     if (scheme.equals(CurveSubdivisionSchemes.DODGSON_SABIN))
-      setGeodesicDisplay(R2Display.INSTANCE);
+      setManifoldDisplay(R2Display.INSTANCE);
     // ---
     if (jToggleSymi.isSelected()) {
       Optional<SymMaskImages> optional = SymMaskImages.get(scheme.name());

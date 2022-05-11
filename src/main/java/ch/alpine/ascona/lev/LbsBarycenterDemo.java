@@ -32,7 +32,7 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---
     ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
     jToggleNeutral.setSelected(true);

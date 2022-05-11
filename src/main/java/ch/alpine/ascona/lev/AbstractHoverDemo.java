@@ -45,7 +45,7 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
       timerFrame.jToolBar.add(jButtonShuffle);
     }
     shuffle(spinnerCount.getValue());
-    setGeodesicDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(Se2Display.INSTANCE);
     timerFrame.jToolBar.addSeparator();
   }
 

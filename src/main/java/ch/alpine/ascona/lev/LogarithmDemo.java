@@ -58,7 +58,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
     timerFrame.jToolBar.add(jToggleCtrl);
     // ---
     ManifoldDisplay manifoldDisplay = H2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
   }

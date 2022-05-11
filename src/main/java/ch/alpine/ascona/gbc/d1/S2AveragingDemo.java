@@ -17,7 +17,7 @@ public class S2AveragingDemo extends A2AveragingDemo {
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     // ---
     timerFrame.geometricComponent.setOffset(400, 400);
-    setGeodesicDisplay(S2Display.INSTANCE);
+    setManifoldDisplay(S2Display.INSTANCE);
     setControlPointsSe2(Tensors.fromString( //
         "{{59/150, 1/2, 0.7853981633974483}, {-47/75, 13/300, 1.0471975511965976}, {37/300, 11/15, 0}, {-13/75, 119/300, 0}}"));
     setControlPointsSe2(Tensors.fromString( //

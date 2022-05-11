@@ -34,7 +34,7 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---
     ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
     jToggleNeutral.setSelected(true);
