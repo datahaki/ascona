@@ -21,7 +21,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -69,7 +69,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       points.append(Tensors.of(RealScalar.of(points.length()), tsp2OptHeuristic.cost()));
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     RenderQuality.setQuality(graphics);
     Tensor sequence = getGeodesicControlPoints();
     Color color = Color.BLACK;
@@ -90,7 +90,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     for (int i = 0; i < index.length; ++i) {
       Tensor p = sequence.get(index[i]);
       Tensor q = sequence.get(index[(i + 1) % index.length]);
-      ScalarTensorFunction curve = geodesicSpace.curve(p, q);
+      ScalarTensorFunction curve = homogeneousSpace.curve(p, q);
       Path2D line = geometricLayer.toPath2D(domain.map(curve));
       graphics.draw(line);
     }
@@ -102,7 +102,8 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
 
   public Tensor distanceMatrix(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorUnaryOperator tuo = manifoldDisplay.biinvariant().distances(manifoldDisplay.homogeneousSpace(), sequence);
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    TensorUnaryOperator tuo = manifoldDisplay.biinvariant().distances(homogeneousSpace, sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix

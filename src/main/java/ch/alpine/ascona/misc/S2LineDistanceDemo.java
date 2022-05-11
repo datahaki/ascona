@@ -22,8 +22,8 @@ import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorNorm;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -87,15 +87,15 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     RenderQuality.setDefault(graphics);
-    BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue(), manifoldDisplay.homogeneousSpace());
+    BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue(), homogeneousSpace);
     ImageRender.of(bufferedImage, S2ArrayHelper.pixel2model(bufferedImage, rad())) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     // ---
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor cp = getGeodesicControlPoints();
-    ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(cp.get(0), cp.get(1));
+    ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(cp.get(0), cp.get(1));
     graphics.setStroke(STROKE);
     Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
     graphics.setColor(new Color(192, 192, 192));

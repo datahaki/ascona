@@ -19,6 +19,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
@@ -48,11 +49,12 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
         manifoldDisplay.toString(), //
         logWeighting.toString());
     root.mkdirs();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     for (Biinvariant biinvariant : distinct()) {
       Tensor sequence = getGeodesicControlPoints();
       TensorUnaryOperator tensorUnaryOperator = logWeighting.operator( //
           biinvariant, //
-          manifoldDisplay.homogeneousSpace(), //
+          homogeneousSpace, //
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);

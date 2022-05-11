@@ -11,6 +11,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.math.var.VariogramFunctions;
 import ch.alpine.tensor.RationalScalar;
@@ -105,9 +106,10 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
 
   @Override
   protected final TensorScalarFunction function(Tensor sequence, Tensor values) {
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
     return logWeighting().function( //
         biinvariant(), //
-        manifoldDisplay().homogeneousSpace(), //
+        homogeneousSpace, //
         variogram(), //
         sequence, values);
   }

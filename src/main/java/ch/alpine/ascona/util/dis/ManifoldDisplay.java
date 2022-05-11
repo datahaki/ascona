@@ -7,8 +7,6 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -35,38 +33,7 @@ public interface ManifoldDisplay {
   Tensor matrixLift(Tensor p);
 
   /** @return never null */
-  default GeodesicSpace geodesicSpace() {
-    return homogeneousSpace();
-  }
-
-  /** TODO ASCONA API define guarantees, at the moment null for:
-   * ClA
-   * Cl3
-   * ClC
-   * R2S1 A
-   * R2S1 B
-   * 
-   * @return */
-  default HomogeneousSpace homogeneousSpace() {
-    return lieGroup();
-  }
-
-  /** TODO ASCONA API define guarantees, at the moment null for:
-   * ClA
-   * Cl3
-   * ClC
-   * R2S1 A
-   * R2S1 B
-   * Spd2
-   * S1
-   * S2
-   * H1
-   * H2
-   * 
-   * a lie group guarantees that hsManifold is available
-   * 
-   * @return lie group if the space is a lie group, or null if function is not applicable */
-  LieGroup lieGroup();
+  GeodesicSpace geodesicSpace();
 
   /** @param p
    * @return operator that maps arbitrary dimension tangent vectors to 2d for display */

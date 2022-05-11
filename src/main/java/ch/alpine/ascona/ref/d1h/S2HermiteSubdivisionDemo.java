@@ -23,8 +23,8 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorIteration;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
@@ -88,14 +88,15 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           s2Display.createTangent(xy0, xya.Get(2)).multiply(vscale));
     }));
     POINTS_RENDER_0.show(manifoldDisplay::matrixLift, getControlPointShape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
-    GeodesicSpace geodesicSpace = s2Display.geodesicSpace();
+    // GeodesicSpace geodesicSpace = s2Display.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     { // render tangents as geodesic on sphere
       for (Tensor ctrl : control) {
         Tensor p = ctrl.get(0); // point
         Tensor v = ctrl.get(1); // vector
         if (derivatives) {
           Tensor q = new SnExponential(p).exp(v); // point on sphere
-          ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(p, q);
+          ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(p, q);
           graphics.setStroke(STROKE);
           Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(s2Display::toPoint));
           graphics.setColor(Color.LIGHT_GRAY);
@@ -111,7 +112,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
       }
     }
     HermiteSubdivision hermiteSubdivision = scheme.supply( //
-        s2Display.homogeneousSpace(), //
+        homogeneousSpace, //
         s2Display.biinvariantMean());
     if (1 < control.length()) {
       TensorIteration tensorIteration = cyclic //
@@ -127,7 +128,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           Tensor v = pv.get(1);
           {
             Tensor q = new SnExponential(p).exp(v); // point on sphere
-            ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(p, q);
+            ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(p, q);
             graphics.setStroke(STROKE);
             Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(s2Display::toPoint));
             graphics.setColor(Color.LIGHT_GRAY);

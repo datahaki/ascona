@@ -117,7 +117,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
   @Override
   protected void differences_render(Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor refined, boolean spectrogram) {
-    LieGroup lieGroup = manifoldDisplay.lieGroup();
+    LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
     if (Objects.nonNull(lieGroup)) {
       LieDifferences lieDifferences = new LieDifferences(lieGroup);
       LieDifferences lieDifferencesTime = new LieDifferences(RnGroup.INSTANCE);

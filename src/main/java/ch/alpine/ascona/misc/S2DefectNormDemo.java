@@ -115,7 +115,8 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RenderQuality.setDefault(graphics);
     int res = param.resolution.number().intValue();
-    BufferedImage bufferedImage = bufferedImage(res, manifoldDisplay.homogeneousSpace());
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    BufferedImage bufferedImage = bufferedImage(res, homogeneousSpace);
     ImageRender.of(bufferedImage, S2ArrayHelper.pixel2model(bufferedImage, rad())) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
@@ -171,10 +172,10 @@ public class S2DefectNormDemo extends ControlPointsDemo {
 
   public final Tensor iterationPath(Tensor sequence, Tensor weights, Tensor shifted, int iter) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace hsManifold = manifoldDisplay.homogeneousSpace();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Tensor tensor = Tensors.empty();
     for (int count = 0; count < iter; ++count) {
-      MeanDefect meanDefect = new MeanDefect(sequence, weights, hsManifold.exponential(shifted));
+      MeanDefect meanDefect = new MeanDefect(sequence, weights, homogeneousSpace.exponential(shifted));
       shifted = meanDefect.shifted();
       tensor.append(shifted);
     }

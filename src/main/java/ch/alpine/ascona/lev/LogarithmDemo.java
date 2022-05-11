@@ -24,7 +24,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.itp.ArcLengthParameterization;
@@ -67,7 +67,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Optional<Tensor> optional = getOrigin();
     if (optional.isPresent()) {
       Tensor sequence = getSequence();
@@ -85,7 +85,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
       }
       // ---
       CurveSubdivision curveSubdivision = //
-          new FourPointCurveSubdivision(geodesicSpace);
+          new FourPointCurveSubdivision(homogeneousSpace);
       if (2 < sequence.length()) {
         Tensor refined = sequence;
         while (refined.length() < 100)
@@ -105,7 +105,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
         final Tensor domain = Drop.tail(Subdivide.of(0.0, 1.0, spinnerLength.getValue()), 1);
         geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(10, 0)));
         GRID_RENDER.render(geometricLayer, graphics);
-        HsDesign hsDesign = new HsDesign(manifoldDisplay.homogeneousSpace());
+        HsDesign hsDesign = new HsDesign(homogeneousSpace);
         Tensor planar = hsDesign.matrix(refined, origin);
         {
           RenderQuality.setQuality(graphics);
@@ -131,7 +131,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
         }
         geometricLayer.popMatrix();
         try {
-          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, geodesicSpace, refined);
+          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, homogeneousSpace, refined);
           Tensor border = domain.map(scalarTensorFunction);
           LeversRender leversRender = LeversRender.of( //
               manifoldDisplay, //

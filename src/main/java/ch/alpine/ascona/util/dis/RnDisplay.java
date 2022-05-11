@@ -3,12 +3,12 @@ package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.rn.RnLineDistance;
@@ -49,8 +49,8 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     return PAD;
   }
 
-  @Override // from ManifoldDisplay
-  public final LieGroup lieGroup() {
+  @Override
+  public GeodesicSpace geodesicSpace() {
     return RnGroup.INSTANCE;
   }
 

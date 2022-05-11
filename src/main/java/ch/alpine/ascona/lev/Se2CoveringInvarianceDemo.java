@@ -18,7 +18,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.tensor.Tensor;
@@ -52,15 +51,14 @@ public class Se2CoveringInvarianceDemo extends LogWeightingDemo {
       AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    LieGroup lieGroup = manifoldDisplay.lieGroup();
+    LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
     Tensor controlPointsAll = getGeodesicControlPoints();
     LieGroupOps lieGroupOps = new LieGroupOps(lieGroup);
     if (0 < controlPointsAll.length()) {
-      VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
       {
         Tensor sequence = controlPointsAll.extract(1, controlPointsAll.length());
         Tensor origin = controlPointsAll.get(0);
-        Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, origin);
+        Tensor matrix = new HsDesign(lieGroup).matrix(sequence, origin);
         Tensor weights = InfluenceMatrix.of(matrix).leverages_sqrt();
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
@@ -80,7 +78,7 @@ public class Se2CoveringInvarianceDemo extends LogWeightingDemo {
         Tensor result = lieGroupOp.slash(allR);
         Tensor sequence = result.extract(1, result.length());
         Tensor origin = result.get(0);
-        Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, origin);
+        Tensor matrix = new HsDesign(lieGroup).matrix(sequence, origin);
         Tensor weights = InfluenceMatrix.of(matrix).leverages_sqrt();
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);

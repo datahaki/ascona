@@ -30,6 +30,7 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorIteration;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
@@ -179,8 +180,9 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
     }
     graphics.setColor(Color.DARK_GRAY);
     Scalar delta = RationalScalar.of(skips.number().intValue(), 50);
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     HermiteSubdivision hermiteSubdivision = scheme.supply( //
-        manifoldDisplay.homogeneousSpace(), //
+        homogeneousSpace, //
         manifoldDisplay.biinvariantMean());
     TensorIteration tensorIteration = hermiteSubdivision.string(delta, _control);
     int levels = level.number().intValue();

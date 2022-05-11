@@ -28,6 +28,7 @@ import ch.alpine.sophus.decim.DecimationResult;
 import ch.alpine.sophus.decim.LineDistances;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.tensor.RationalScalar;
@@ -116,8 +117,9 @@ public class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
     }
     Scalar epsilon = Power.of(RationalScalar.HALF, param.level.number().intValue());
     // epsilon = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum() * 3);
+    HomogeneousSpace geodesicSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     CurveDecimation curveDecimation = CurveDecimation.of( //
-        param.type.supply(manifoldDisplay.homogeneousSpace()), epsilon);
+        param.type.supply(geodesicSpace), epsilon);
     Tensor control = Tensor.of(_control.stream().map(manifoldDisplay::project));
     DecimationResult result = curveDecimation.evaluate(control);
     Tensor simplified = result.result();

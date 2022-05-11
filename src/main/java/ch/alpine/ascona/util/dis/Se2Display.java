@@ -3,10 +3,10 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.Random;
 
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.r2.Se2Parametric;
-import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.so2.So2;
@@ -32,8 +32,8 @@ public class Se2Display extends Se2AbstractDisplay {
     return xym;
   }
 
-  @Override // from ManifoldDisplay
-  public LieGroup lieGroup() {
+  @Override
+  public GeodesicSpace geodesicSpace() {
     return Se2Group.INSTANCE;
   }
 

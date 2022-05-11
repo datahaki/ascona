@@ -8,14 +8,11 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.hs.rpn.RpnManifold;
 import ch.alpine.sophus.hs.rpn.RpnMetric;
 import ch.alpine.sophus.hs.rpn.RpnRandomSample;
 import ch.alpine.sophus.hs.sn.SnFastMean;
 import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -45,16 +42,11 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   public final GeodesicSpace geodesicSpace() {
     return SnManifold.INSTANCE; // TODO ASCONA ALG
   }
-
-  @Override // from ManifoldDisplay
-  public final HomogeneousSpace homogeneousSpace() {
-    return RpnManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final LieGroup lieGroup() {
-    return null;
-  }
+  // FIXME ASCONA -> SOPHUS
+  // @Override // from ManifoldDisplay
+  // public final HomogeneousSpace homogeneousSpace() {
+  // return RpnManifold.INSTANCE;
+  // }
 
   @Override // from ManifoldDisplay
   public final TensorMetric parametricDistance() {

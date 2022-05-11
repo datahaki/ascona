@@ -23,6 +23,7 @@ import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.util.DisjointSets;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.fit.MinimumSpanningTree;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.IntUndirectedEdge;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -99,7 +100,8 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
 
   public Tensor distanceMatrix(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorUnaryOperator tuo = biinvariant().distances(manifoldDisplay.homogeneousSpace(), sequence);
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    TensorUnaryOperator tuo = biinvariant().distances(homogeneousSpace, sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix

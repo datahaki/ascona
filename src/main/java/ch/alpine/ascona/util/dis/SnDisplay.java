@@ -4,18 +4,17 @@ package ch.alpine.ascona.util.dis;
 import java.io.Serializable;
 import java.util.Random;
 
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.sn.SnFastMean;
 import ch.alpine.sophus.hs.sn.SnLineDistance;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnMetric;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
-import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -42,13 +41,8 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
     return CIRCLE;
   }
 
-  @Override // from ManifoldDisplay
-  public final LieGroup lieGroup() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
-  public final HomogeneousSpace homogeneousSpace() {
+  @Override
+  public final GeodesicSpace geodesicSpace() {
     return SnManifold.INSTANCE;
   }
 

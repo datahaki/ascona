@@ -13,6 +13,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -56,7 +57,8 @@ import ch.alpine.tensor.sca.Clips;
     Tensor sequence = RandomVariate.of(distribution, spinnerLength.getValue(), 3);
     setControlPointsSe2(sequence);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    VectorLogManifold vectorLogManifold = homogeneousSpace;
     tensorUnaryOperator = //
         logWeighting().operator(biinvariant(), vectorLogManifold, variogram(), getGeodesicControlPoints());
   }

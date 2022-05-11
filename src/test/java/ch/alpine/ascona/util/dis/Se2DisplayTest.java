@@ -13,7 +13,7 @@ import ch.alpine.tensor.mat.Tolerance;
 class Se2DisplayTest {
   @Test
   public void testSimple() {
-    assertEquals(Se2Display.INSTANCE.lieGroup(), Se2Group.INSTANCE);
+    assertEquals(Se2Display.INSTANCE.geodesicSpace(), Se2Group.INSTANCE);
   }
 
   @Test

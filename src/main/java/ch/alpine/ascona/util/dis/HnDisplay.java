@@ -5,18 +5,17 @@ import java.io.Serializable;
 import java.util.Random;
 
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.StarPoints;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.hn.HnBiinvariantMean;
 import ch.alpine.sophus.hs.hn.HnManifold;
 import ch.alpine.sophus.hs.hn.HnMetric;
 import ch.alpine.sophus.hs.hn.HnMetricBiinvariant;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
-import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -63,13 +62,8 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
     return STAR_POINTS;
   }
 
-  @Override // from ManifoldDisplay
-  public final LieGroup lieGroup() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
-  public final HomogeneousSpace homogeneousSpace() {
+  @Override
+  public final GeodesicSpace geodesicSpace() {
     return HnManifold.INSTANCE;
   }
 

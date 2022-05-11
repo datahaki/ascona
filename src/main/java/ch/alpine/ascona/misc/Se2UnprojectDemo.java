@@ -41,7 +41,7 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace hsManifold = manifoldDisplay.homogeneousSpace();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     // ---
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor p = sequence.get(0);
@@ -53,7 +53,7 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
       graphics.setColor(Color.BLUE);
       graphics.draw(path2d);
     }
-    Exponential exponential = hsManifold.exponential(p);
+    Exponential exponential = homogeneousSpace.exponential(p);
     Tensor log = exponential.log(q);
     Tensor matrix = Join.of(Tensors.of(log), IdentityMatrix.of(3));
     Tensor tensor = Orthogonalize.of(matrix).extract(0, 3);

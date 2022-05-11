@@ -31,6 +31,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -200,11 +201,12 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
         getClass().getSimpleName(), //
         manifoldDisplay.toString());
     root.mkdirs();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     for (Biinvariant biinvariant : distinct()) {
       Tensor sequence = getGeodesicControlPoints();
       TensorUnaryOperator operator = logWeighting.operator( //
           biinvariant, //
-          manifoldDisplay.homogeneousSpace(), //
+          homogeneousSpace, //
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);

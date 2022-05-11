@@ -3,11 +3,11 @@ package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.he.HeBiinvariantMean;
 import ch.alpine.sophus.lie.he.HeGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -55,8 +55,8 @@ public enum He1Display implements ManifoldDisplay {
     return GfxMatrix.translation(toPoint(p));
   }
 
-  @Override // from ManifoldDisplay
-  public LieGroup lieGroup() {
+  @Override
+  public GeodesicSpace geodesicSpace() {
     return HeGroup.INSTANCE;
   }
 

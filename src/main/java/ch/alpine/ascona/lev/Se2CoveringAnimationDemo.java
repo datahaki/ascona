@@ -40,7 +40,7 @@ public class Se2CoveringAnimationDemo extends LogWeightingDemo {
           Tensor sequence = getGeodesicControlPoints();
           if (0 < sequence.length()) {
             Tensor origin = sequence.get(0);
-            LieGroup lieGroup = manifoldDisplay().lieGroup();
+            LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
             Tensor shift = lieGroup.element(origin).inverse().toCoordinate();
             snapshot = new LieGroupOps(lieGroup).actionL(shift).slash(sequence);
           }
@@ -65,7 +65,7 @@ public class Se2CoveringAnimationDemo extends LogWeightingDemo {
     if (jToggleAxes.isSelected())
       AxesRender.INSTANCE.render(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    LieGroup lieGroup = manifoldDisplay.lieGroup();
+    LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
     LieGroupOps lieGroupOps = new LieGroupOps(lieGroup);
     Optional<Tensor> optional = getOrigin();
     if (optional.isPresent()) {

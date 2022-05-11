@@ -19,6 +19,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.gbc.d2.IterativeCoordinateMatrix;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.tensor.Tensor;
@@ -56,7 +57,8 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       leversRender.renderSurfaceP();
       LeversHud.render(bitype(), leversRender, null);
-      VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      VectorLogManifold vectorLogManifold = homogeneousSpace;
       HsDesign hsDesign = new HsDesign(vectorLogManifold);
       try {
         Tensor matrix = new IterativeCoordinateMatrix(spinnerTotal.getValue()).origin(hsDesign.matrix(sequence, origin));

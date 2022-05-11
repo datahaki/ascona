@@ -24,6 +24,7 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorIteration;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.r2.Extract2D;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
@@ -72,9 +73,10 @@ public class SeriesHermiteSubdivisionDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     if (1 < _control.length()) {
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       HermiteSubdivision hermiteSubdivision = //
           scheme.supply( //
-              manifoldDisplay.homogeneousSpace(), //
+              homogeneousSpace, //
               manifoldDisplay.biinvariantMean());
       Tensor control = N.DOUBLE.of(_control);
       Scalar delta = RealScalar.ONE;

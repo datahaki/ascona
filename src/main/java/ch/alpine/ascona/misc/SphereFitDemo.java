@@ -21,6 +21,7 @@ import ch.alpine.sophus.fit.SpatialMedian;
 import ch.alpine.sophus.fit.SphereFit;
 import ch.alpine.sophus.fit.WeiszfeldMethod;
 import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
@@ -98,8 +99,9 @@ public class SphereFitDemo extends ControlPointsDemo {
     }
     {
       Biinvariant biinvariant = MetricBiinvariant.EUCLIDEAN;
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       TensorUnaryOperator weightingInterface = //
-          biinvariant.weighting(manifoldDisplay.homogeneousSpace(), InversePowerVariogram.of(1), control);
+          biinvariant.weighting(homogeneousSpace, InversePowerVariogram.of(1), control);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(manifoldDisplay.biinvariantMean(), weightingInterface, Chop._06);
       Optional<Tensor> optional = spatialMedian.uniform(control);
       if (optional.isPresent()) {

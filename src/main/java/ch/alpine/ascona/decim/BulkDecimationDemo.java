@@ -14,9 +14,9 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.decim.LineDistances;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -55,7 +55,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     if (0 == length)
       return;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+    HomogeneousSpace geodesicSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     graphics.setColor(Color.LIGHT_GRAY);
     // graphics.setStroke(STROKE);
     RenderQuality.setQuality(graphics);
@@ -70,7 +70,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
       }
     }
     CurveDecimation curveDecimation = CurveDecimation.of( //
-        LineDistances.STANDARD.supply(manifoldDisplay.homogeneousSpace()), //
+        LineDistances.STANDARD.supply(geodesicSpace), //
         RealScalar.ONE);
     Tensor decimate = curveDecimation.apply(sequence);
     {

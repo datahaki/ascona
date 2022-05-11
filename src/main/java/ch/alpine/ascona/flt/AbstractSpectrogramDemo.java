@@ -7,7 +7,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import org.jfree.chart.JFreeChart;
 
@@ -20,6 +19,7 @@ import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.RealScalar;
@@ -95,8 +95,8 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   protected void differences_render( //
       Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor refined, boolean spectrogram) {
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    LieGroup lieGroup = manifoldDisplay.lieGroup();
-    if (Objects.nonNull(lieGroup)) {
+    GeodesicSpace geodesicSpace = manifoldDisplay().geodesicSpace();
+    if (geodesicSpace instanceof LieGroup lieGroup) {
       LieDifferences lieDifferences = new LieDifferences(lieGroup);
       Scalar sampleRate = MAGNITUDE_PER_SECONDS.apply(gokartPoseData.getSampleRate());
       Tensor speeds = lieDifferences.apply(refined).multiply(sampleRate);

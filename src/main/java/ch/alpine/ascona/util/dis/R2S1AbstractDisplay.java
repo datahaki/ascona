@@ -10,8 +10,6 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -50,16 +48,6 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   @Override // from ManifoldDisplay
   public final Tensor matrixLift(Tensor p) {
     return GfxMatrix.of(p);
-  }
-
-  @Override // from ManifoldDisplay
-  public final LieGroup lieGroup() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
-  public final HomogeneousSpace homogeneousSpace() {
-    return null;
   }
 
   @Override // from ManifoldDisplay

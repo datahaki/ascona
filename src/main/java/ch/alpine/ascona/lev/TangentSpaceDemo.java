@@ -27,6 +27,7 @@ import ch.alpine.bridge.ref.util.PanelFieldsEditor;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.gbc.it.Evaluation;
 import ch.alpine.sophus.gbc.it.GenesisDeque;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.tensor.RealScalar;
@@ -64,7 +65,8 @@ public class TangentSpaceDemo extends AbstractPlaceDemo {
     Optional<Tensor> optional = getOrigin();
     if (optional.isPresent()) {
       Tensor origin = optional.get();
-      VectorLogManifold vectorLogManifold = manifoldDisplay.homogeneousSpace();
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      VectorLogManifold vectorLogManifold = homogeneousSpace;
       final Tensor sequence = getSequence();
       HsDesign hsDesign = new HsDesign(vectorLogManifold);
       final Tensor levers2 = hsDesign.matrix(sequence, origin);

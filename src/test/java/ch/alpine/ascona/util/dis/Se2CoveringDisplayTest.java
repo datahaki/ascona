@@ -10,6 +10,6 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 class Se2CoveringDisplayTest {
   @Test
   public void testSimple() {
-    assertEquals(Se2CoveringDisplay.INSTANCE.lieGroup(), Se2CoveringGroup.INSTANCE);
+    assertEquals(Se2CoveringDisplay.INSTANCE.geodesicSpace(), Se2CoveringGroup.INSTANCE);
   }
 }

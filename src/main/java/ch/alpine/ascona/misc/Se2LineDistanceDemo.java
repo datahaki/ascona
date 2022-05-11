@@ -52,7 +52,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    LieGroup lieGroup = manifoldDisplay.lieGroup();
+    LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
     Exponential exponential = Se2CoveringGroup.INSTANCE; // TODO check
     // ---
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
@@ -67,7 +67,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     }
     final Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     {
-      HsLineDistance hsLineDistance = new HsLineDistance(manifoldDisplay.homogeneousSpace());
+      HsLineDistance hsLineDistance = new HsLineDistance(lieGroup);
       NormImpl normImpl = hsLineDistance.tensorNorm(beg, end);
       {
         Tensor project = normImpl.project(mouse);
@@ -106,7 +106,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
       }
     }
     {
-      HsLineProjection hsLineProjection = new HsLineProjection(manifoldDisplay.homogeneousSpace());
+      HsLineProjection hsLineProjection = new HsLineProjection(lieGroup);
       Tensor onto = hsLineProjection.onto(beg, end, mouse);
       {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(onto));
