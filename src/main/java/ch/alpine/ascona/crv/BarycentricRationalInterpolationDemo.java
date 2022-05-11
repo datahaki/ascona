@@ -72,11 +72,11 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     TensorUnaryOperator tensorUnaryOperator = //
-        KnotSpacing.centripetal(manifoldDisplay.parametricDistance(), param.beta);
+        KnotSpacing.centripetal(manifoldDisplay.biinvariantMetric(), param.beta);
     Tensor knots = tensorUnaryOperator.apply(control);
     if (1 < control.length()) {
       Tensor domain = Subdivide.of(knots.get(0), Last.of(knots), 25 * control.length());
-      BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+      BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._03);
       Tensor basis2 = domain.map(param.lagra //
           ? BarycentricMetricInterpolation.la(knots, InversePowerVariogram.of(2))
           : BarycentricMetricInterpolation.of(knots, InversePowerVariogram.of(2)));

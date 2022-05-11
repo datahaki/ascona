@@ -72,8 +72,8 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
         : Subdivide.of(0.0, extrap //
             ? n / (double) (n - 1)
             : 1.0, 1 << levels);
-    {
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+    if (geodesicSpace instanceof HomogeneousSpace homogeneousSpace) {
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
       if (Objects.nonNull(biinvariantMean)) {
         Tensor refined = domain.map(BezierFunction.of(biinvariantMean, sequence));
@@ -81,7 +81,6 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
         new PathRender(Color.RED, 1.25f).setCurve(render, false).render(geometricLayer, graphics);
       }
     }
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor refined = domain.map(BezierFunction.of(geodesicSpace, sequence));
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
     Curvature2DRender.of(render, false, geometricLayer, graphics);

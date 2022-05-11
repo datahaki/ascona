@@ -42,7 +42,7 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final TensorMetric parametricDistance() {
+  public final TensorMetric biinvariantMetric() {
     return RpnMetric.INSTANCE;
   }
 

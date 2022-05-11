@@ -56,7 +56,8 @@ import ch.alpine.tensor.red.VectorAngle;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
-public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDemo {
+// TODO ASCONA cannot always compute the biinvariant mean (for S2)
+/* package */ class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
 

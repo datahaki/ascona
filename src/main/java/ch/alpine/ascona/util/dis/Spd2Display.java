@@ -81,7 +81,7 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public TensorMetric parametricDistance() {
+  public TensorMetric biinvariantMetric() {
     return SpdMetric.INSTANCE;
   }
 

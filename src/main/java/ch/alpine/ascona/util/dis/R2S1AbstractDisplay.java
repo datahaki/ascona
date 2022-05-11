@@ -50,7 +50,7 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   }
 
   @Override // from ManifoldDisplay
-  public final TensorMetric parametricDistance() {
+  public final TensorMetric biinvariantMetric() {
     return null;
   }
 

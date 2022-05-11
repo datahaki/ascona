@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -36,6 +37,7 @@ import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.StandardMenu;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
+import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -186,19 +188,28 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    Tensor refined = StaticHelper.refine( //
-        control, levels, spinnerLabel.getValue().of(manifoldDisplay), //
-        CurveSubdivisionHelper.isDual(scheme), cyclic, geodesicSpace);
-    if (jToggleLine.isSelected()) {
-      TensorUnaryOperator tensorUnaryOperator = StaticHelper.create(new BSpline1CurveSubdivision(geodesicSpace), cyclic);
-      pathRender.setCurve(Nest.of(tensorUnaryOperator, control, 8), cyclic).render(geometricLayer, graphics);
+    CurveSubdivision curveSubdivision = null;
+    try {
+      curveSubdivision = spinnerLabel.getValue().of(manifoldDisplay);
+    } catch (Exception exception) {
+      // ---
     }
-    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
-    Curvature2DRender.of(render, cyclic, jToggleComb.isSelected(), geometricLayer, graphics);
-    if (levels < 5)
-      renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
-    return refined;
+    if (Objects.nonNull(curveSubdivision)) {
+      GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+      Tensor refined = StaticHelper.refine( //
+          control, levels, curveSubdivision, //
+          CurveSubdivisionHelper.isDual(scheme), cyclic, geodesicSpace);
+      if (jToggleLine.isSelected()) {
+        TensorUnaryOperator tensorUnaryOperator = StaticHelper.create(new BSpline1CurveSubdivision(geodesicSpace), cyclic);
+        pathRender.setCurve(Nest.of(tensorUnaryOperator, control, 8), cyclic).render(geometricLayer, graphics);
+      }
+      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
+      Curvature2DRender.of(render, cyclic, jToggleComb.isSelected(), geometricLayer, graphics);
+      if (levels < 5)
+        renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+      return refined;
+    }
+    return Tensors.empty();
   }
 
   public static void main(String[] args) {

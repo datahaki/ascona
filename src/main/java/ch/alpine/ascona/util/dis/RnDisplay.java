@@ -53,7 +53,7 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final TensorMetric parametricDistance() {
+  public final TensorMetric biinvariantMetric() {
     return RnMetric.INSTANCE;
   }
 

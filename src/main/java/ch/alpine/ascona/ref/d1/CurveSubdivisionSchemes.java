@@ -54,7 +54,7 @@ import ch.alpine.tensor.sca.Chop;
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       // BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
-      return new MSpline3CurveSubdivision(homogeneousSpace.biinvariantMean(Chop._08));
+      return new MSpline3CurveSubdivision(homogeneousSpace.biinvariantMean(Chop._06));
     }
   },
   /** Dyn/Sharon 2014 that uses 2 binary averages */
@@ -83,7 +83,7 @@ import ch.alpine.tensor.sca.Chop;
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      return MSpline4CurveSubdivision.of(homogeneousSpace.biinvariantMean(Chop._08));
+      return MSpline4CurveSubdivision.of(homogeneousSpace.biinvariantMean(Chop._06));
     }
   },
   BSPLINE5 {

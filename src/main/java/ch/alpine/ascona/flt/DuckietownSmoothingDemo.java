@@ -78,7 +78,7 @@ public class DuckietownSmoothingDemo extends AbstractDatasetKernelDemo implement
     final Tensor control = control();
     Tensor effective = control;
     TensorUnaryOperator centripedalKnotSpacing = //
-        KnotSpacing.centripetal(manifoldDisplay.parametricDistance(), 0.5);
+        KnotSpacing.centripetal(manifoldDisplay.biinvariantMetric(), 0.5);
     Tensor knots = centripedalKnotSpacing.apply(control);
     final Scalar upper = Last.of(knots);
     final Scalar parameter = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum()).multiply(upper);
@@ -110,7 +110,7 @@ public class DuckietownSmoothingDemo extends AbstractDatasetKernelDemo implement
     final Tensor control = control();
     Tensor effective = control;
     TensorUnaryOperator centripedalKnotSpacing = //
-        KnotSpacing.centripetal(manifoldDisplay().parametricDistance(), 0.5);
+        KnotSpacing.centripetal(manifoldDisplay().biinvariantMetric(), 0.5);
     Tensor knots = centripedalKnotSpacing.apply(control);
     final Scalar upper = Last.of(knots);
     final Scalar parameter = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum()).multiply(upper);

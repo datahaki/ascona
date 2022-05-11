@@ -58,7 +58,7 @@ public enum R2SDisplay implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public TensorMetric parametricDistance() {
+  public TensorMetric biinvariantMetric() {
     return null;
   }
 

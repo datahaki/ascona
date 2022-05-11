@@ -195,7 +195,7 @@ public class LeversRender {
   }
 
   public void renderLeverLength() {
-    TensorMetric tensorMetric = manifoldDisplay.parametricDistance();
+    TensorMetric tensorMetric = manifoldDisplay.biinvariantMetric();
     if (Objects.nonNull(tensorMetric)) {
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       graphics.setFont(FONT_MATRIX);
@@ -220,7 +220,7 @@ public class LeversRender {
 
   // ---
   public void renderWeightsLength() {
-    TensorMetric tensorMetric = manifoldDisplay.parametricDistance();
+    TensorMetric tensorMetric = manifoldDisplay.biinvariantMetric();
     if (Objects.nonNull(tensorMetric)) {
       Tensor weights = Tensor.of(sequence.stream().map(point -> tensorMetric.distance(origin, point)));
       renderWeights(weights);

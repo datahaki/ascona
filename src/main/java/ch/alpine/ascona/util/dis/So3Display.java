@@ -75,7 +75,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public TensorMetric parametricDistance() {
+  public TensorMetric biinvariantMetric() {
     return So3Metric.INSTANCE;
   }
 

@@ -59,7 +59,7 @@ public enum He1Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public TensorMetric parametricDistance() {
+  public TensorMetric biinvariantMetric() {
     return null;
   }
 

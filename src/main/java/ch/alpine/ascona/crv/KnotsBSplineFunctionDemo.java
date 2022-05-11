@@ -55,7 +55,7 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor knots = KnotSpacing.centripetal(manifoldDisplay.parametricDistance(), exponent).apply(control);
+    Tensor knots = KnotSpacing.centripetal(manifoldDisplay.biinvariantMetric(), exponent).apply(control);
     Scalar upper = Last.of(knots);
     Scalar parameter = ratio.multiply(upper);
     // ---

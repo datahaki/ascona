@@ -80,7 +80,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
     if (4 <= control.length()) {
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       TensorUnaryOperator centripetalKnotSpacing = //
-          KnotSpacing.centripetal(manifoldDisplay.parametricDistance(), exponent);
+          KnotSpacing.centripetal(manifoldDisplay.biinvariantMetric(), exponent);
       Tensor knots = centripetalKnotSpacing.apply(control);
       Scalar lo = knots.Get(1);
       Scalar hi = knots.Get(knots.length() - 2);

@@ -57,7 +57,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
     graphics.setColor(new Color(128, 255, 0));
     graphics.draw(geometricLayer.toPath2D(xys, false));
     try {
-      Scalar pseudoDistance = manifoldDisplay.parametricDistance().distance(p, q);
+      Scalar pseudoDistance = manifoldDisplay.biinvariantMetric().distance(p, q);
       {
         graphics.setColor(Color.DARK_GRAY);
         graphics.drawString("" + pseudoDistance.map(Round._4), 10, 20);

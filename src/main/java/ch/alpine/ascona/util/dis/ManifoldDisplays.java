@@ -27,8 +27,6 @@ public enum ManifoldDisplays {
   // ---
   /** requires biinvariant mean */
   public static final List<ManifoldDisplay> METRIC = Arrays.asList( //
-      Se2CoveringDisplay.INSTANCE, //
-      Se2Display.INSTANCE, //
       Spd2Display.INSTANCE, //
       R2Display.INSTANCE, //
       S1Display.INSTANCE, //

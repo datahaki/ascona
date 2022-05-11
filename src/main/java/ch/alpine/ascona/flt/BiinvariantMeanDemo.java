@@ -79,7 +79,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     Tensor weights = ConstantArray.of(RationalScalar.of(1, length), length);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._03);
     final Tensor mean = biinvariantMean.mean(sequence, weights);
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.setStroke(STROKE);

@@ -103,8 +103,8 @@ class ManifoldDisplaysTest {
   @MethodSource("parameters")
   public void testSome(ManifoldDisplay manifoldDisplay) {
     // TODO
-    // if (manifoldDisplay.hsTransport() == null)
-    // System.out.println(manifoldDisplay);
+    if (manifoldDisplay.geodesicArrayPlot() != null)
+      System.out.println(manifoldDisplay);
   }
 
   @Test
