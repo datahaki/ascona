@@ -24,6 +24,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.d2.PolygonArea;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.r2.Extract2D;
 import ch.alpine.sophus.ref.d2.SurfaceMeshRefinement;
 import ch.alpine.sophus.srf.SurfaceMesh;
@@ -36,6 +37,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
 public class SurfaceMeshDemo extends ControlPointsDemo {
@@ -75,7 +77,8 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
     surfaceMesh.vrt = getControlPointsSe2();
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    SurfaceMeshRefinement surfaceMeshRefinement = param.ref.operator(manifoldDisplay.biinvariantMean());
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    SurfaceMeshRefinement surfaceMeshRefinement = param.ref.operator(homogeneousSpace.biinvariantMean(Chop._08));
     SurfaceMesh refine = surfaceMesh;
     for (int count = 0; count < param.refine.number().intValue(); ++count)
       refine = surfaceMeshRefinement.refine(refine);

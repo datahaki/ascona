@@ -181,9 +181,7 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
     graphics.setColor(Color.DARK_GRAY);
     Scalar delta = RationalScalar.of(skips.number().intValue(), 50);
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    HermiteSubdivision hermiteSubdivision = scheme.supply( //
-        homogeneousSpace, //
-        manifoldDisplay.biinvariantMean());
+    HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);
     TensorIteration tensorIteration = hermiteSubdivision.string(delta, _control);
     int levels = level.number().intValue();
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);

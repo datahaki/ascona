@@ -7,8 +7,10 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.flt.bm.BiinvariantMeanCenter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.flt.ga.GeodesicCenterMidSeeded;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.sca.Chop;
 
 /** in the current implementation all filters have the same performance for an arbitrary radius */
 public enum GeodesicFilters {
@@ -45,8 +47,8 @@ public enum GeodesicFilters {
    * @param smoothingKernel
    * @return */
   public TensorUnaryOperator from(ManifoldDisplay manifoldDisplay, ScalarUnaryOperator smoothingKernel) {
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
-    return supply(geodesicSpace, smoothingKernel, biinvariantMean);
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+    return supply(homogeneousSpace, smoothingKernel, biinvariantMean);
   }
 }

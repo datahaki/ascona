@@ -13,11 +13,13 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.BSplineLimitMatrix;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.red.Nest;
+import ch.alpine.tensor.sca.Chop;
 
 // TODO ASCONA ALG functionality/purpose is not clear
 public class InterpolationDemo extends ControlPointsDemo {
@@ -30,7 +32,8 @@ public class InterpolationDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     Tensor sequence = getGeodesicControlPoints();
     RenderQuality.setQuality(graphics);
     if (0 < sequence.length()) {

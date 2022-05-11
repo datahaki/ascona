@@ -28,8 +28,8 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.sn.SnBiinvariantMean;
 import ch.alpine.sophus.hs.sn.SnExponential;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -45,6 +45,7 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.red.Times;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
@@ -131,7 +132,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke());
     // ---
     TSF tsf = new TSF();
-    Tensor mean = SnBiinvariantMean.INSTANCE.mean(tsf.sequence, tsf.weights);
+    Tensor mean = SnManifold.INSTANCE.biinvariantMean(Chop._14).mean(tsf.sequence, tsf.weights);
     if (param.vector) {
       double rad = 1;
       Tensor dx = Subdivide.of(-rad, +rad, res);

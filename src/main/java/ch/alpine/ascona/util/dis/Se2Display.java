@@ -5,9 +5,7 @@ import java.util.Random;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.r2.Se2Parametric;
-import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -41,11 +39,10 @@ public class Se2Display extends Se2AbstractDisplay {
   public TensorMetric parametricDistance() {
     return Se2Parametric.INSTANCE;
   }
-
-  @Override // from ManifoldDisplay
-  public BiinvariantMean biinvariantMean() {
-    return Se2BiinvariantMeans.FILTER;
-  }
+  // @Override // from ManifoldDisplay
+  // public BiinvariantMean biinvariantMean() {
+  // return Se2BiinvariantMeans.FILTER;
+  // }
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {

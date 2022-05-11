@@ -13,6 +13,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -23,6 +24,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Chop;
 
 /** moving least squares */
 public class R2DeformationDemo extends AbstractDeformationDemo {
@@ -85,7 +87,8 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
 
   @Override
   BiinvariantMean biinvariantMean() {
-    return manifoldDisplay().biinvariantMean();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
+    return homogeneousSpace.biinvariantMean(Chop._08);
   }
 
   public static void main(String[] args) {

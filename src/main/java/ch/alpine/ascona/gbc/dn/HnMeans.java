@@ -4,14 +4,14 @@ package ch.alpine.ascona.gbc.dn;
 import java.util.function.Supplier;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.hn.HnBiinvariantMean;
 import ch.alpine.sophus.hs.hn.HnFastMean;
+import ch.alpine.sophus.hs.hn.HnManifold;
 import ch.alpine.sophus.hs.hn.HnPhongMean;
 import ch.alpine.tensor.sca.Chop;
 
 /** RMF(p,t,w)[x] == w.t for w = IDC(p,x) */
 /* package */ enum HnMeans implements Supplier<BiinvariantMean> {
-  EXACT(HnBiinvariantMean.of(Chop._05)), //
+  EXACT(HnManifold.INSTANCE.biinvariantMean(Chop._05)), //
   FAST(HnFastMean.INSTANCE), //
   PHONG(HnPhongMean.INSTANCE), //
   ;

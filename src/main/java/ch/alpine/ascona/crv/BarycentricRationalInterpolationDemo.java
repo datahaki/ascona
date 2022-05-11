@@ -24,6 +24,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.itp.BarycentricMetricInterpolation;
 import ch.alpine.sophus.itp.BarycentricRationalInterpolation;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -36,6 +37,7 @@ import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.sca.Chop;
 
 public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   private static final int WIDTH = 400;
@@ -68,12 +70,13 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     TensorUnaryOperator tensorUnaryOperator = //
         KnotSpacing.centripetal(manifoldDisplay.parametricDistance(), param.beta);
     Tensor knots = tensorUnaryOperator.apply(control);
     if (1 < control.length()) {
       Tensor domain = Subdivide.of(knots.get(0), Last.of(knots), 25 * control.length());
-      BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+      BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
       Tensor basis2 = domain.map(param.lagra //
           ? BarycentricMetricInterpolation.la(knots, InversePowerVariogram.of(2))
           : BarycentricMetricInterpolation.of(knots, InversePowerVariogram.of(2)));

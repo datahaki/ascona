@@ -5,11 +5,9 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.rn.RnLineDistance;
 import ch.alpine.sophus.lie.rn.RnMetric;
@@ -62,11 +60,6 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final Biinvariant biinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
-  }
-
-  @Override // from ManifoldDisplay
-  public final BiinvariantMean biinvariantMean() {
-    return RnBiinvariantMean.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

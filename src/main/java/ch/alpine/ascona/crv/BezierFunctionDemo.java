@@ -23,11 +23,13 @@ import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.BezierFunction;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
+import ch.alpine.tensor.sca.Chop;
 
 /** Bezier function with extrapolation */
 @ReflectionMarker
@@ -71,7 +73,8 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
             ? n / (double) (n - 1)
             : 1.0, 1 << levels);
     {
-      BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
       if (Objects.nonNull(biinvariantMean)) {
         Tensor refined = domain.map(BezierFunction.of(biinvariantMean, sequence));
         Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));

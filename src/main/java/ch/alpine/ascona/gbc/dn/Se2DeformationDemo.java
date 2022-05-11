@@ -6,6 +6,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -14,6 +15,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Chop;
 
 // TODO ASCONA ALG jToggleArrows does not have effect
 public class Se2DeformationDemo extends AbstractDeformationDemo {
@@ -51,7 +53,8 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
 
   @Override
   BiinvariantMean biinvariantMean() {
-    return manifoldDisplay().biinvariantMean();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
+    return homogeneousSpace.biinvariantMean(Chop._08);
   }
 
   public static void main(String[] args) {

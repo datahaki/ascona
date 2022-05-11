@@ -74,10 +74,7 @@ public class SeriesHermiteSubdivisionDemo extends ControlPointsDemo {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     if (1 < _control.length()) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      HermiteSubdivision hermiteSubdivision = //
-          scheme.supply( //
-              homogeneousSpace, //
-              manifoldDisplay.biinvariantMean());
+      HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);
       Tensor control = N.DOUBLE.of(_control);
       Scalar delta = RealScalar.ONE;
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);

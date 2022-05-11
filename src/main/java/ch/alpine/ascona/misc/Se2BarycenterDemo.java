@@ -15,9 +15,9 @@ import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -29,6 +29,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.red.Total;
+import ch.alpine.tensor.sca.Chop;
 
 public class Se2BarycenterDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
@@ -54,8 +55,8 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
     Tensor sequence = getControlPointsSe2();
     if (sequence.length() == 4)
       try {
-        GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-        final ScalarTensorFunction curve = geodesicSpace.curve(sequence.get(0), sequence.get(1));
+        HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+        final ScalarTensorFunction curve = homogeneousSpace.curve(sequence.get(0), sequence.get(1));
         {
           Tensor tensor = Subdivide.of(-0.5, 1.5, 55).map(curve);
           Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::toPoint)));
@@ -63,7 +64,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
           graphics.draw(path2d);
         }
         // ---
-        BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+        BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
         Tensor tX = Subdivide.of(-1, 1, 20);
         Tensor tY = Subdivide.of(-1, 1, 8);
         int n = tY.length();

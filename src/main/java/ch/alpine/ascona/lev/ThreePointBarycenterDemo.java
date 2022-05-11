@@ -18,9 +18,11 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.sca.Chop;
 
 // TODO ASCONA demo becomes unstable when control points are removed
 public class ThreePointBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
@@ -59,7 +61,8 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
         TensorUnaryOperator tensorUnaryOperator = operator(sequence);
         Tensor weights = tensorUnaryOperator.apply(origin);
         leversRender.renderWeights(weights);
-        BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+        HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+        BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
         Tensor mean = biinvariantMean.mean(sequence, weights);
         LeversRender.ORIGIN_RENDER_0 //
             .show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)) //

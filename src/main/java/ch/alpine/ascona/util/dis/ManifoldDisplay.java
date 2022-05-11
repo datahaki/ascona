@@ -4,7 +4,6 @@ package ch.alpine.ascona.util.dis;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -66,16 +65,6 @@ public interface ManifoldDisplay {
    * @return metric biinvariant or null if metric is not biinvariant */
   // TODO API unacceptable
   Biinvariant biinvariant();
-
-  /** FIXME ASCONA API define guarantees, at the moment null for:
-   * ClA
-   * Cl3
-   * ClC
-   * R2S1 A
-   * R2S1 B
-   * 
-   * @return biinvariantMean, or null, if geodesic space does not support the computation of an biinvariant mean */
-  BiinvariantMean biinvariantMean();
 
   LineDistance lineDistance();
 

@@ -6,11 +6,9 @@ import java.util.Random;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.MetricBiinvariant;
-import ch.alpine.sophus.hs.sn.SnFastMean;
 import ch.alpine.sophus.hs.sn.SnLineDistance;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnMetric;
@@ -55,11 +53,10 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
   public final Biinvariant biinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
-
-  @Override // from ManifoldDisplay
-  public final BiinvariantMean biinvariantMean() {
-    return SnFastMean.INSTANCE; // SnBiinvariantMean.of(Chop._05); // SnFastMean.INSTANCE;
-  }
+  // @Override // from ManifoldDisplay
+  // public final BiinvariantMean biinvariantMean() {
+  // return SnFastMean.INSTANCE; // SnBiinvariantMean.of(Chop._05); // SnFastMean.INSTANCE;
+  // }
 
   @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {

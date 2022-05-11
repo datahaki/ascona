@@ -108,9 +108,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
       }
       Scalar delta = RealScalar.ONE;
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      HermiteSubdivision hermiteSubdivision = scheme.supply( //
-          homogeneousSpace, //
-          manifoldDisplay.biinvariantMean());
+      HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
       int levels = refine.number().intValue();
       Tensor iterate = Do.of(control, tensorIteration::iterate, levels);

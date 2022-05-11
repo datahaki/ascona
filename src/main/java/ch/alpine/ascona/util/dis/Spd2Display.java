@@ -5,12 +5,10 @@ import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
-import ch.alpine.sophus.hs.spd.SpdBiinvariantMean;
 import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.SpdMetric;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -90,11 +88,6 @@ public enum Spd2Display implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public Biinvariant biinvariant() {
     return MetricBiinvariant.VECTORIZE0;
-  }
-
-  @Override // from ManifoldDisplay
-  public BiinvariantMean biinvariantMean() {
-    return SpdBiinvariantMean.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

@@ -7,12 +7,10 @@ import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.so3.Rodrigues;
-import ch.alpine.sophus.lie.so3.So3BiinvariantMean;
 import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.sophus.lie.so3.So3Metric;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -84,11 +82,6 @@ public class So3Display implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public Biinvariant biinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
-  }
-
-  @Override // from ManifoldDisplay
-  public BiinvariantMean biinvariantMean() {
-    return So3BiinvariantMean.INSTANCE;
   }
 
   @Override

@@ -16,6 +16,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -23,6 +25,7 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.MatrixQ;
+import ch.alpine.tensor.sca.Chop;
 
 class ManifoldDisplaysTest {
   private static Collection<Arguments> parameters() {
@@ -89,9 +92,11 @@ class ManifoldDisplaysTest {
 
   @ParameterizedTest
   @MethodSource("parameters")
-  public void testHsTransport(ManifoldDisplay manifoldDisplay) {
-    // if (manifoldDisplay.hsManifold() != null)
-    // assertNotNull(manifoldDisplay.hsTransport());
+  public void testBiinvariantMean(ManifoldDisplay manifoldDisplay) {
+    if (manifoldDisplay.geodesicSpace() instanceof HomogeneousSpace homogeneousSpace) {
+      BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._04);
+      assertNotNull(biinvariantMean);
+    }
   }
 
   @ParameterizedTest

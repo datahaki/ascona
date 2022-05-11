@@ -5,10 +5,8 @@ import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.lie.dt.DtBiinvariantMean;
 import ch.alpine.sophus.lie.dt.DtGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -71,11 +69,6 @@ public enum Dt1Display implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public Biinvariant biinvariant() {
     return null;
-  }
-
-  @Override // from ManifoldDisplay
-  public BiinvariantMean biinvariantMean() {
-    return DtBiinvariantMean.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

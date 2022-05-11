@@ -6,7 +6,6 @@ import java.io.Serializable;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
@@ -57,11 +56,6 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
 
   @Override // from ManifoldDisplay
   public final Biinvariant biinvariant() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
-  public final BiinvariantMean biinvariantMean() {
     return null;
   }
 

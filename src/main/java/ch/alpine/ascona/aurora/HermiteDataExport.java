@@ -87,37 +87,37 @@ import ch.alpine.tensor.red.Nest;
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H1STANDARD.supply(lieGroup, biinvariantMean);
+          HermiteSubdivisions.H1STANDARD.supply(lieGroup);
       CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h1standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H2STANDARD.supply(lieGroup, biinvariantMean);
+          HermiteSubdivisions.H2STANDARD.supply(lieGroup);
       CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h2standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H2MANIFOLD.supply(lieGroup, biinvariantMean);
+          HermiteSubdivisions.H2MANIFOLD.supply(lieGroup);
       CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h2manifold");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H3STANDARD.supply(lieGroup, biinvariantMean);
+          HermiteSubdivisions.H3STANDARD.supply(lieGroup);
       CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H3A1.supply(lieGroup, biinvariantMean);
+          HermiteSubdivisions.H3A1.supply(lieGroup);
       CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3a1");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H3A2.supply(lieGroup, biinvariantMean);
+          HermiteSubdivisions.H3A2.supply(lieGroup);
       CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3a2");
     }

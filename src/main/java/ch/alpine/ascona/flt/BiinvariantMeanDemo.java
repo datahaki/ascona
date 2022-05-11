@@ -78,7 +78,8 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       return;
     Tensor weights = ConstantArray.of(RationalScalar.of(1, length), length);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     final Tensor mean = biinvariantMean.mean(sequence, weights);
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.setStroke(STROKE);
@@ -92,7 +93,6 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke(1));
     if (median) {
       Biinvariant biinvariant = biinvariants;
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       TensorUnaryOperator weightingInterface = //
           biinvariant.weighting(homogeneousSpace, InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(biinvariantMean, weightingInterface, Chop._05);

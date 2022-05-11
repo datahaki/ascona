@@ -21,7 +21,7 @@ class GokartPoseDataTest {
 
   @Test
   public void testResourceTensor() {
-    Tensor tensor = ResourceData.of("/colorscheme/aurora.csv"); // resource in tensor
+    Tensor tensor = ResourceData.of("/ch/alpine/tensor/img/colorscheme/aurora.csv"); // resource in tensor
     Objects.requireNonNull(tensor);
     assertTrue(ArrayQ.of(tensor));
   }

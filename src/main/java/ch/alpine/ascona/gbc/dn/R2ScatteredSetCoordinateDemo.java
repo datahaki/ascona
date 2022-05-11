@@ -21,6 +21,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.DoubleScalar;
@@ -34,6 +35,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.red.Entrywise;
+import ch.alpine.tensor.sca.Chop;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
@@ -95,7 +97,8 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
-    BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::toPoint));
       RenderQuality.setQuality(graphics);

@@ -17,6 +17,7 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -24,6 +25,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.sca.Chop;
 
 public class BarycentricExtrapolationDemo extends LogWeightingDemo {
   private static final Stroke STROKE = //
@@ -38,6 +40,7 @@ public class BarycentricExtrapolationDemo extends LogWeightingDemo {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Tensor sequence = getGeodesicControlPoints();
     int length = sequence.length();
     Tensor domain = Range.of(-sequence.length(), 0).map(Tensors::of).unmodifiable();
@@ -52,7 +55,7 @@ public class BarycentricExtrapolationDemo extends LogWeightingDemo {
     graphics.setStroke(new BasicStroke());
     if (1 < length) {
       Tensor samples = Subdivide.of(-length, 0, 127).map(Tensors::of);
-      BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+      BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
       TensorUnaryOperator tensorUnaryOperator = operator(RnGroup.INSTANCE, domain);
       Tensor curve = Tensor.of(samples.stream() //
           .map(tensorUnaryOperator) //

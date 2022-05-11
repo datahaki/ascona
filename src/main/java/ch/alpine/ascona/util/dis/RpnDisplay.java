@@ -5,14 +5,12 @@ import java.io.Serializable;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.rpn.RpnManifold;
 import ch.alpine.sophus.hs.rpn.RpnMetric;
 import ch.alpine.sophus.hs.rpn.RpnRandomSample;
-import ch.alpine.sophus.hs.sn.SnFastMean;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -52,11 +50,10 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   public final Biinvariant biinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
-
-  @Override // from ManifoldDisplay
-  public final BiinvariantMean biinvariantMean() {
-    return SnFastMean.INSTANCE; // TODO ASCONA ALG
-  }
+  // @Override // from ManifoldDisplay
+  // public final BiinvariantMean biinvariantMean() {
+  // return SnFastMean.INSTANCE; // TODO ASCONA ALG
+  // }
 
   @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
