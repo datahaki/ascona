@@ -26,7 +26,7 @@ import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 
 public class GrassmannDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
-  private final SpinnerLabel<ColorDataGradient> spinnerColorData = SpinnerLabel.of(ColorDataGradients.values());
+  private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public GrassmannDemo() {

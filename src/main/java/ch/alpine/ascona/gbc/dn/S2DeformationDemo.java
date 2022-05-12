@@ -26,7 +26,7 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.05));
   private static final Scalar ZHEIGHT = RealScalar.of(1.0); // 1.8 for initial pics
   // ---
-  private final SpinnerLabel<SnMeans> spinnerSnMeans = SpinnerLabel.of(SnMeans.values());
+  private final SpinnerLabel<SnMeans> spinnerSnMeans = SpinnerLabel.of(SnMeans.class);
 
   public S2DeformationDemo() {
     super(ManifoldDisplays.S2_ONLY, LogWeightings.coordinates());

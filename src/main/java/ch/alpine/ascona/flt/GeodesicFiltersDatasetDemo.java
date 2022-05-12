@@ -4,7 +4,6 @@ package ch.alpine.ascona.flt;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.api.GeodesicFilters;
@@ -21,20 +20,16 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Nest;
 
 public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implements BufferedImageSupplier {
-  private final SpinnerLabel<GeodesicFilters> spinnerFilters = new SpinnerLabel<>();
-  private final SpinnerLabel<Integer> spinnerConvolution = new SpinnerLabel<>();
+  private final SpinnerLabel<GeodesicFilters> spinnerFilters = SpinnerLabel.of(GeodesicFilters.class);
+  private final SpinnerLabel<Integer> spinnerConvolution = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8);
 
   public GeodesicFiltersDatasetDemo() {
     super(ManifoldDisplays.SE2_R2, GokartPoseDataV1.INSTANCE);
     {
-      spinnerFilters.setArray(GeodesicFilters.values());
-      spinnerFilters.setIndex(0);
       spinnerFilters.addToComponentReduced(timerFrame.jToolBar, new Dimension(170, 28), "filter type");
       spinnerFilters.addSpinnerListener(type -> updateState());
     }
     {
-      spinnerConvolution.setList(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
-      spinnerConvolution.setIndex(0);
       spinnerConvolution.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "convolution");
       spinnerConvolution.addSpinnerListener(type -> updateState());
     }

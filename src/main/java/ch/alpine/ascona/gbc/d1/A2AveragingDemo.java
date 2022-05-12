@@ -41,8 +41,8 @@ import ch.alpine.tensor.sca.Round;
 /* package */ abstract class A2AveragingDemo extends AnAveragingDemo {
   private final SpinnerLabel<Scalar> spinnerCvar = new SpinnerLabel<>();
   private final SpinnerLabel<Integer> spinnerMagnif = new SpinnerLabel<>();
-  private final SpinnerLabel<ColorDataGradient> spinnerColorData = SpinnerLabel.of(ColorDataGradients.values());
-  private final SpinnerLabel<Integer> spinnerRes = new SpinnerLabel<>();
+  private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
+  private final SpinnerLabel<Integer> spinnerRes = SpinnerLabel.of(20, 30, 40, 50, 75, 100, 150, 200, 250);
   private final JToggleButton jToggleVarian = new JToggleButton("est/var");
   private final JToggleButton jToggleThresh = new JToggleButton("thresh");
 
@@ -65,7 +65,7 @@ import ch.alpine.tensor.sca.Round;
       spinnerColorData.addSpinnerListener(v -> recompute());
     }
     {
-      spinnerRes.setArray(20, 30, 40, 50, 75, 100, 150, 200, 250);
+      // spinnerRes.setArray();
       spinnerRes.setValue(30);
       spinnerRes.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "resolution");
       spinnerRes.addSpinnerListener(v -> recompute());

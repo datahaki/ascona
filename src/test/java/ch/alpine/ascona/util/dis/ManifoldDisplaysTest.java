@@ -3,6 +3,7 @@ package ch.alpine.ascona.util.dis;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,7 +17,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -97,6 +100,17 @@ class ManifoldDisplaysTest {
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._04);
       assertNotNull(biinvariantMean);
     }
+  }
+
+  @ParameterizedTest
+  @MethodSource("parameters")
+  public void testPointDistance(ManifoldDisplay manifoldDisplay) {
+    TensorMetric tensorMetric = manifoldDisplay.biinvariantMetric();
+    Biinvariant biinvariant = manifoldDisplay.biinvariant();
+    if (tensorMetric == null)
+      assertNull(biinvariant);
+    else
+      assertNotNull(biinvariant);
   }
 
   @ParameterizedTest

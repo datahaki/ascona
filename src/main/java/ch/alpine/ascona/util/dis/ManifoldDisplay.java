@@ -48,6 +48,11 @@ public interface ManifoldDisplay {
    * or null if functionality is not supported */
   TensorMetric biinvariantMetric();
 
+  /** @return */
+  default TensorMetric pathLength() {
+    return biinvariantMetric();
+  }
+
   /** FIXME ASCONA API define guarantees, at the moment null for:
    * ClA
    * Cl3

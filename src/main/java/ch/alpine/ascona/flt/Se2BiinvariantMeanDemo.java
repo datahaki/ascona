@@ -27,14 +27,12 @@ import ch.alpine.tensor.red.Nest;
  * {@link So2FilterBiinvariantMean}
  * {@link So2PhongBiinvariantMean} */
 public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
-  private final SpinnerLabel<Se2BiinvariantMeans> spinnerFilters = new SpinnerLabel<>();
+  private final SpinnerLabel<Se2BiinvariantMeans> spinnerFilters = SpinnerLabel.of(Se2BiinvariantMeans.class);
   private final SpinnerLabel<Integer> spinnerConvolution = new SpinnerLabel<>();
 
   public Se2BiinvariantMeanDemo() {
     super(ManifoldDisplays.SE2_ONLY, GokartPoseDataV2.INSTANCE);
     {
-      spinnerFilters.setArray(Se2BiinvariantMeans.values());
-      spinnerFilters.setIndex(0);
       spinnerFilters.addToComponentReduced(timerFrame.jToolBar, new Dimension(90, 28), "se2 biinvariant mean");
       spinnerFilters.addSpinnerListener(type -> updateState());
     }

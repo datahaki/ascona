@@ -36,7 +36,7 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
     }
     {
       spinnerCount.setList(Arrays.asList(5, 10, 15, 20, 25, 30, 40));
-      spinnerCount.setValue(15);
+      spinnerCount.setValue(25);
       spinnerCount.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
       spinnerCount.addSpinnerListener(this::shuffle);
     }

@@ -30,7 +30,7 @@ public class ClassificationDemo extends AbstractHoverDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_O = ColorDataLists._097.cyclic();
   private static final ColorDataIndexed COLOR_DATA_INDEXED_T = COLOR_DATA_INDEXED_O.deriveWithAlpha(128);
   // ---
-  private final SpinnerLabel<Labels> spinnerLabels = SpinnerLabel.of(Labels.values());
+  private final SpinnerLabel<Labels> spinnerLabels = SpinnerLabel.of(Labels.class);
   private Tensor vector;
 
   public ClassificationDemo() {

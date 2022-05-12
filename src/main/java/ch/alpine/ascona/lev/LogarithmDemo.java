@@ -52,7 +52,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
     super(true, ManifoldDisplays.R2_H2_S2);
     {
       spinnerLength.setList(Arrays.asList(5, 9, 10, 11, 12, 15, 20));
-      spinnerLength.setValueSafe(11);
+      spinnerLength.setValue(11);
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
     }
     timerFrame.jToolBar.add(jToggleCtrl);

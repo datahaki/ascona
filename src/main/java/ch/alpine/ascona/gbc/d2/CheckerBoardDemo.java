@@ -47,7 +47,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
     implements SpinnerListener<ManifoldDisplay> {
   public static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._000.strict();
   // ---
-  final SpinnerLabel<ParameterizationPattern> spinnerPattern = SpinnerLabel.of(ParameterizationPattern.values());
+  final SpinnerLabel<ParameterizationPattern> spinnerPattern = SpinnerLabel.of(ParameterizationPattern.class);
   final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
   final SpinnerLabel<Integer> spinnerFactor = new SpinnerLabel<>();
   private final JToggleButton jToggleButton = new JToggleButton("freeze");

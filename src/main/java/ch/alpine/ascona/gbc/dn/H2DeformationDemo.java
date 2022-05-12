@@ -20,7 +20,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 public class H2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.05));
   // ---
-  private final SpinnerLabel<HnMeans> spinnerMeans = SpinnerLabel.of(HnMeans.values());
+  private final SpinnerLabel<HnMeans> spinnerMeans = SpinnerLabel.of(HnMeans.class);
 
   public H2DeformationDemo() {
     super(ManifoldDisplays.H2_ONLY, LogWeightings.coordinates());

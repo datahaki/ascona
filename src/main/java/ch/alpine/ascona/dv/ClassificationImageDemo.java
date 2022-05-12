@@ -60,13 +60,13 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   }
 
   // ---
-  private final SpinnerLabel<ColorDataLists> spinnerColor = SpinnerLabel.of(ColorDataLists.values());
-  private final SpinnerLabel<Integer> spinnerLabel = new SpinnerLabel<>();
-  private final SpinnerLabel<Integer> spinnerCount = new SpinnerLabel<>();
-  private final SpinnerLabel<Integer> spinnerRes = new SpinnerLabel<>();
+  private final SpinnerLabel<ColorDataLists> spinnerColor = SpinnerLabel.of(ColorDataLists.class);
+  private final SpinnerLabel<Integer> spinnerLabel = SpinnerLabel.of(2, 3, 4, 5);
+  private final SpinnerLabel<Integer> spinnerCount = SpinnerLabel.of(5, 10, 15, 20, 25, 30, 40);
+  private final SpinnerLabel<Integer> spinnerRes = SpinnerLabel.of(25, 40, 50, 75, 100, 150, 200, 250);
   private final JButton jButtonShuffle = new JButton("shuffle");
-  private final SpinnerLabel<Labels> spinnerLabels = SpinnerLabel.of(Labels.values());
-  private final SpinnerLabel<ClassificationImage> spinnerImage = SpinnerLabel.of(ClassificationImage.values());
+  private final SpinnerLabel<Labels> spinnerLabels = SpinnerLabel.of(Labels.class);
+  private final SpinnerLabel<ClassificationImage> spinnerImage = SpinnerLabel.of(ClassificationImage.class);
   private final JButton jButtonExport = new JButton("export");
   // ---
   protected Tensor vector;
@@ -92,19 +92,17 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
       spinnerColor.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "color data lists");
     }
     {
-      spinnerLabel.setList(Arrays.asList(2, 3, 4, 5));
+      // spinnerLabel.setList(Arrays.asList());
       spinnerLabel.setValue(3);
       spinnerLabel.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "label count");
       spinnerLabel.addSpinnerListener(v -> shuffle(spinnerCount.getValue()));
     }
     {
-      spinnerCount.setList(Arrays.asList(5, 10, 15, 20, 25, 30, 40));
       spinnerCount.setValue(20);
       spinnerCount.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "landmark count");
       spinnerCount.addSpinnerListener(this::shuffle);
     }
     {
-      spinnerRes.setArray(25, 40, 50, 75, 100, 150, 200, 250);
       spinnerRes.setValue(50);
       spinnerRes.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "resolution");
       spinnerRes.addSpinnerListener(v -> recompute());

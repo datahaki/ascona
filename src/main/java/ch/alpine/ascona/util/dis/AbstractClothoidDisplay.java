@@ -51,6 +51,11 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
 
   @Override // from ManifoldDisplay
   public final TensorMetric biinvariantMetric() {
+    return null;
+  }
+
+  @Override
+  public TensorMetric pathLength() {
     return (p, q) -> geodesicSpace().curve(p, q).length();
   }
 

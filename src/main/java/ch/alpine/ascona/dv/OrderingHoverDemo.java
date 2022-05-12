@@ -17,7 +17,6 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
@@ -29,7 +28,7 @@ import ch.alpine.tensor.sca.Clips;
 // FIXME ASCONA does not pass the offscreen test
 /* package */ class OrderingHoverDemo extends AbstractHoverDemo {
   private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
-  private final SpinnerLabel<ColorDataGradient> spinnerColorData = SpinnerLabel.of(ColorDataGradients.values());
+  private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
 
   public OrderingHoverDemo() {
     {
@@ -39,7 +38,7 @@ import ch.alpine.tensor.sca.Clips;
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
     }
     {
-      spinnerColorData.setValueSafe(ColorDataGradients.THERMOMETER);
+      spinnerColorData.setValue(ColorDataGradients.THERMOMETER);
       spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color");
     }
     setManifoldDisplay(Se2Display.INSTANCE);

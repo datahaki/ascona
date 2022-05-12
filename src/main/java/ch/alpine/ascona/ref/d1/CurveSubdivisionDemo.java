@@ -53,7 +53,7 @@ import ch.alpine.tensor.red.Times;
 @ReflectionMarker
 public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
   private final PathRender pathRender = new PathRender(new Color(0, 255, 0, 128));
-  final SpinnerLabel<CurveSubdivisionSchemes> spinnerLabel = new SpinnerLabel<>();
+  final SpinnerLabel<CurveSubdivisionSchemes> spinnerLabel = SpinnerLabel.of(CurveSubdivisionSchemes.class);
   final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
   final SpinnerLabel<Scalar> spinnerMagicC = new SpinnerLabel<>();
   final JToggleButton jToggleLine = new JToggleButton("line");
@@ -128,8 +128,6 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     timerFrame.jToolBar.addSeparator();
     timerFrame.jToolBar.add(jToggleHelp);
     // ---
-    spinnerLabel.setArray(CurveSubdivisionSchemes.values());
-    spinnerLabel.setIndex(0);
     spinnerLabel.addToComponentReduced(timerFrame.jToolBar, new Dimension(150, 28), "scheme");
     // ---
     spinnerRefine.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));

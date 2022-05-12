@@ -21,7 +21,6 @@ import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
@@ -32,7 +31,7 @@ import ch.alpine.tensor.sca.Clips;
 public class OrderingPlaceDemo extends LogWeightingDemo {
   private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
   private final JButton jButton = new JButton("shuffle");
-  private final SpinnerLabel<ColorDataGradient> spinnerColorData = SpinnerLabel.of(ColorDataGradients.values());
+  private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
 
   public OrderingPlaceDemo() {
     super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
@@ -45,7 +44,7 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
     jButton.addActionListener(l -> shuffleSnap());
     timerFrame.jToolBar.add(jButton);
     {
-      spinnerColorData.setValueSafe(ColorDataGradients.THERMOMETER);
+      spinnerColorData.setValue(ColorDataGradients.THERMOMETER);
       spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color");
     }
     setManifoldDisplay(Se2Display.INSTANCE);

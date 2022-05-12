@@ -27,8 +27,8 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
   private static final Tensor BETAS = Tensors.fromString("{0, 1/2, 1, 3/2, 7/4, 2, 5/2, 3}");
   // ---
   // TODO ASCONA DEMO manage by reflection
-  private final SpinnerLabel<Bitype> spinnerBiinvariant = new SpinnerLabel<>();
-  private final SpinnerLabel<VariogramFunctions> spinnerVariogram = SpinnerLabel.of(VariogramFunctions.values());
+  private final SpinnerLabel<Bitype> spinnerBiinvariant = SpinnerLabel.of(Bitype.class);
+  private final SpinnerLabel<VariogramFunctions> spinnerVariogram = SpinnerLabel.of(VariogramFunctions.class);
   private final SpinnerLabel<Scalar> spinnerBeta = new SpinnerLabel<>();
   private final SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
     @Override
@@ -40,21 +40,21 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
       }
       if (logWeighting.equals(LogWeightings.DISTANCES)) {
         spinnerVariogram.setValue(VariogramFunctions.POWER);
-        spinnerBeta.setValueSafe(RealScalar.of(1));
+        spinnerBeta.setValue(RealScalar.of(1));
       }
       if ( //
       logWeighting.equals(LogWeightings.WEIGHTING) || //
           logWeighting.equals(LogWeightings.COORDINATE) || //
           logWeighting.equals(LogWeightings.LAGRAINATE)) {
         spinnerVariogram.setValue(VariogramFunctions.INVERSE_POWER);
-        spinnerBeta.setValueSafe(RealScalar.of(2));
+        spinnerBeta.setValue(RealScalar.of(2));
       }
       if ( //
       logWeighting.equals(LogWeightings.KRIGING) || //
           logWeighting.equals(LogWeightings.KRIGING_COORDINATE)) {
         spinnerVariogram.setValue(VariogramFunctions.POWER);
         setBitype(Bitype.HARBOR);
-        spinnerBeta.setValueSafe(RationalScalar.of(3, 2));
+        spinnerBeta.setValue(RationalScalar.of(3, 2));
       }
     }
   };
@@ -63,7 +63,6 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
     super(addRemoveControlPoints, list, array);
     spinnerLogWeighting.addSpinnerListener(spinnerListener);
     {
-      spinnerBiinvariant.setArray(Bitype.values());
       spinnerBiinvariant.setValue(Bitype.LEVERAGES1);
       spinnerBiinvariant.addToComponentReduced(timerFrame.jToolBar, new Dimension(100, 28), "distance");
       spinnerBiinvariant.addSpinnerListener(v -> recompute());
