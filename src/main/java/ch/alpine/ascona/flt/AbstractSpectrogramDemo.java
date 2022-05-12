@@ -40,7 +40,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   private final GokartPoseData gokartPoseData;
   protected final SpinnerLabel<String> spinnerLabelString = new SpinnerLabel<>();
   protected final SpinnerLabel<Integer> spinnerLabelLimit = new SpinnerLabel<>();
-  protected final SpinnerLabel<WindowFunctions> spinnerKernel = new SpinnerLabel<>();
+  protected final SpinnerLabel<WindowFunctions> spinnerKernel = SpinnerLabel.of(WindowFunctions.class);
   // TODO ASCONA ALG refactor
   protected Tensor _control = null;
   // protected final SpinnerLabel<ColorDataGradients> spinnerLabelCDG = new SpinnerLabel<>();
@@ -66,7 +66,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
       spinnerLabelLimit.addSpinnerListener(type -> updateState());
     }
     {
-      spinnerKernel.setList(Arrays.asList(WindowFunctions.values()));
       spinnerKernel.setValue(WindowFunctions.GAUSSIAN);
       spinnerKernel.addToComponentReduced(timerFrame.jToolBar, new Dimension(180, 28), "smoothing kernel");
       spinnerKernel.addSpinnerListener(value -> updateState());

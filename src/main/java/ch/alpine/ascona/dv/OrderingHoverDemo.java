@@ -3,7 +3,6 @@ package ch.alpine.ascona.dv;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.Arrays;
 
 import ch.alpine.ascona.lev.AbstractHoverDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
@@ -27,13 +26,12 @@ import ch.alpine.tensor.sca.Clips;
 // FIXME ASCONA ALG pressing shuffle button crashes app
 // FIXME ASCONA does not pass the offscreen test
 /* package */ class OrderingHoverDemo extends AbstractHoverDemo {
-  private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerLength = SpinnerLabel.of(50, 75, 100, 200, 300, 400, 500, 800);
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
 
   public OrderingHoverDemo() {
     {
       spinnerLength.addSpinnerListener(v -> recompute());
-      spinnerLength.setList(Arrays.asList(50, 75, 100, 200, 300, 400, 500, 800));
       spinnerLength.setValue(200);
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
     }

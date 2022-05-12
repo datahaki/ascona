@@ -43,7 +43,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   protected Tensor _quality = null;
   protected final SpinnerLabel<String> spinnerLabelString = new SpinnerLabel<>();
   protected final SpinnerLabel<Integer> spinnerLabelLimit = new SpinnerLabel<>();
-  protected final SpinnerLabel<WindowFunctions> spinnerKernel = new SpinnerLabel<>();
+  protected final SpinnerLabel<WindowFunctions> spinnerKernel = SpinnerLabel.of(WindowFunctions.class);
   protected final SpinnerLabel<Integer> spinnerRadius = new SpinnerLabel<>();
 
   protected void updateStateTime() {
@@ -84,7 +84,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     }
     timerFrame.jToolBar.addSeparator();
     {
-      spinnerKernel.setList(Arrays.asList(WindowFunctions.values()));
       spinnerKernel.setValue(WindowFunctions.GAUSSIAN);
       spinnerKernel.addToComponentReduced(timerFrame.jToolBar, new Dimension(180, 28), "filter");
       spinnerKernel.addSpinnerListener(value -> updateStateTime());

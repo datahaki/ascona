@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
@@ -39,13 +38,13 @@ public class ApproximationDemo extends AbstractGeodesicDisplayDemo {
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final Scalar MARKER_SCALE = RealScalar.of(0.1);
   private static final GridRender GRID_RENDER = new GridRender(Subdivide.of(0, 100, 10));
-  private static final List<CurveSubdivisionSchemes> SCHEMES = Arrays.asList( //
+  private static final CurveSubdivisionSchemes[] SCHEMES = { //
       CurveSubdivisionSchemes.BSPLINE1, //
       CurveSubdivisionSchemes.BSPLINE2, //
       CurveSubdivisionSchemes.BSPLINE3, //
       CurveSubdivisionSchemes.BSPLINE4_S2LO, //
       CurveSubdivisionSchemes.FOURPOINT, //
-      CurveSubdivisionSchemes.SIXPOINT);
+      CurveSubdivisionSchemes.SIXPOINT };
 
   private static class Container {
     private final ManifoldDisplay manifoldDisplay;
@@ -68,7 +67,7 @@ public class ApproximationDemo extends AbstractGeodesicDisplayDemo {
   private final SpinnerLabel<String> spinnerLabelString = new SpinnerLabel<>();
   private final SpinnerLabel<Integer> spinnerLabelLimit = new SpinnerLabel<>();
   private final SpinnerLabel<Integer> spinnerLabelWidth = new SpinnerLabel<>();
-  private final SpinnerLabel<CurveSubdivisionSchemes> spinnerLabelScheme = new SpinnerLabel<>();
+  private final SpinnerLabel<CurveSubdivisionSchemes> spinnerLabelScheme = SpinnerLabel.of(SCHEMES);
   private final SpinnerLabel<Integer> spinnerLabelLevel = new SpinnerLabel<>();
   // ---
   private Container _container = null;
@@ -103,7 +102,6 @@ public class ApproximationDemo extends AbstractGeodesicDisplayDemo {
       spinnerLabelWidth.addSpinnerListener(type -> updateState());
     }
     {
-      spinnerLabelScheme.setList(SCHEMES);
       spinnerLabelScheme.setValue(CurveSubdivisionSchemes.BSPLINE1);
       spinnerLabelScheme.addToComponentReduced(timerFrame.jToolBar, new Dimension(160, 28), "scheme");
       spinnerLabelScheme.addSpinnerListener(type -> updateState());

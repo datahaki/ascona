@@ -2,29 +2,31 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.util.Arrays;
 import java.util.Optional;
 
 import javax.swing.JButton;
-import javax.swing.JTextField;
 
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2.Se2Group;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -37,25 +39,22 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 
 public class KNearestDemo extends LogWeightingDemo {
-  private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
+  @ReflectionMarker
+  public static class Param {
+    @FieldInteger
+    @FieldClip(min = "9", max = "75")
+    public Scalar length = RealScalar.of(9);
+    public Tensor tensor = Tensors.vector(.3, 0, .6);
+  }
+
+  private final Param param = new Param();
   private final JButton jButton = new JButton("shuffle");
-  private final JTextField jTextField = new JTextField();
 
   public KNearestDemo() {
     super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
-    {
-      spinnerLength.addSpinnerListener(v -> shuffleSnap());
-      spinnerLength.setList(Arrays.asList(9, 15, 20, 25, 50, 75));
-      spinnerLength.setValue(9);
-      spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
-    }
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     jButton.addActionListener(l -> shuffleSnap());
     timerFrame.jToolBar.add(jButton);
-    {
-      jTextField.setText("{.3, 0, .6}");
-      jTextField.setPreferredSize(new Dimension(100, 28));
-      timerFrame.jToolBar.add(jTextField);
-    }
     setManifoldDisplay(Se2Display.INSTANCE);
     setLogWeighting(LogWeightings.DISTANCES);
     shuffleSnap();
@@ -64,7 +63,7 @@ public class KNearestDemo extends LogWeightingDemo {
   private void shuffleSnap() {
     // Distribution distributionP = NormalDistribution.standard();
     Distribution distributionA = UniformDistribution.of(Clips.absolute(Pi.VALUE));
-    Tensor sequence = RandomVariate.of(distributionA, spinnerLength.getValue(), 3);
+    Tensor sequence = RandomVariate.of(distributionA, param.length.number().intValue(), 3);
     // sequence.set(s -> RandomVariate.of(distributionA), Tensor.ALL, 2);
     sequence.set(Scalar::zero, 0, Tensor.ALL);
     setControlPointsSe2(sequence);
@@ -81,7 +80,7 @@ public class KNearestDemo extends LogWeightingDemo {
       render(geometricLayer, graphics, sequence, origin, "");
       LieGroupOps lieGroupOps = new LieGroupOps(Se2Group.INSTANCE);
       try {
-        Tensor shift = Tensors.fromString(jTextField.getText());
+        Tensor shift = param.tensor;
         {
           geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(8, 0)));
           TensorMapping lieGroupOp = lieGroupOps.conjugation(shift);
@@ -137,6 +136,7 @@ public class KNearestDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new KNearestDemo().setVisible(1200, 600);
   }
 }

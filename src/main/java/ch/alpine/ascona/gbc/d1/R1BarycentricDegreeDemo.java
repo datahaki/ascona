@@ -3,12 +3,8 @@ package ch.alpine.ascona.gbc.d1;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-import java.util.Arrays;
-
-import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -16,9 +12,13 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.itp.BarycentricRationalInterpolation;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -38,20 +38,21 @@ import ch.alpine.tensor.sca.N;
 public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
-  private final JToggleButton jToggleButton = new JToggleButton("lagrange");
-  private final SpinnerLabel<Integer> spinnerDegree = new SpinnerLabel<>();
+
+  @ReflectionMarker
+  public static class Param {
+    public Boolean lagrange = true;
+    @FieldInteger
+    @FieldClip(min = "0", max = "4")
+    public Scalar degree = RealScalar.ONE;
+  }
+
+  private final Param param = new Param();
 
   public R1BarycentricDegreeDemo() {
     super(true, ManifoldDisplays.R2_ONLY);
-    {
-      spinnerDegree.setList(Arrays.asList(0, 1, 2, 3, 4));
-      spinnerDegree.setValue(1);
-      spinnerDegree.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
-    }
-    {
-      jToggleButton.setSelected(true);
-      timerFrame.jToolBar.add(jToggleButton);
-    }
+    // ---
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 2, 0}}"));
     // ---
@@ -77,7 +78,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
       Tensor funceva = control.get(Tensor.ALL, 1);
       // ---
       Tensor domain = domain(support);
-      if (jToggleButton.isSelected()) {
+      if (param.lagrange) {
         ScalarTensorFunction geodesicNeville = InterpolatingPolynomial.of(manifoldDisplay.geodesicSpace(), support).scalarTensorFunction(funceva);
         Tensor basis = domain.map(geodesicNeville);
         {
@@ -87,7 +88,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
       }
       // ---
       ScalarTensorFunction scalarTensorFunction = //
-          BarycentricRationalInterpolation.of(support, spinnerDegree.getValue());
+          BarycentricRationalInterpolation.of(support, param.degree.number().intValue());
       Tensor basis = domain.map(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));
@@ -108,6 +109,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new R1BarycentricDegreeDemo().setVisible(1000, 800);
   }
 }

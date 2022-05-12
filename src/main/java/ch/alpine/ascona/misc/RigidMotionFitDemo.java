@@ -4,7 +4,6 @@ package ch.alpine.ascona.misc;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.Arrays;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -40,7 +39,7 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
   private static final PointsRender POINTS_RENDER_POINTS = //
       new PointsRender(new Color(64, 255, 64, 64), new Color(64, 255, 64, 255));
   // ---
-  private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerLength = SpinnerLabel.of(3, 4, 5, 6, 7, 8, 9, 10);
   private Tensor points;
 
   public RigidMotionFitDemo() {
@@ -48,7 +47,6 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
     setMidpointIndicated(false);
     // ---
     spinnerLength.addSpinnerListener(this::shufflePoints);
-    spinnerLength.setList(Arrays.asList(3, 4, 5, 6, 7, 8, 9, 10));
     spinnerLength.setValue(5);
     spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
     // ---

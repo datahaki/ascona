@@ -7,11 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Arrays;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
-import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.lev.LogWeightingBase;
 import ch.alpine.ascona.util.api.Box2D;
@@ -27,12 +25,19 @@ import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.FieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.DoubleScalar;
+import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorScalarFunction;
@@ -40,40 +45,40 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.sca.N;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 public class CheckerBoardDemo extends LogWeightingBase //
     implements SpinnerListener<ManifoldDisplay> {
   public static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._000.strict();
+
   // ---
-  final SpinnerLabel<ParameterizationPattern> spinnerPattern = SpinnerLabel.of(ParameterizationPattern.class);
-  final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
-  final SpinnerLabel<Integer> spinnerFactor = new SpinnerLabel<>();
-  private final JToggleButton jToggleButton = new JToggleButton("freeze");
+  @ReflectionMarker
+  public static class Param {
+    public ParameterizationPattern pattern = ParameterizationPattern.CHECKER_BOARD;
+    @FieldInteger
+    @FieldClip(min = "50", max = "360")
+    public Scalar refine = RealScalar.of(50);
+    @FieldInteger
+    @FieldClip(min = "2", max = "20")
+    public Scalar factor = RealScalar.of(5);
+    public Boolean freeze = false;
+
+    public Scalar factor() {
+      return N.DOUBLE.apply(factor);
+    }
+  }
+
+  private final Param param = new Param();
   private Tensor reference;
 
   public CheckerBoardDemo() {
     super(true, ManifoldDisplays.R2_H2_S2, PolygonCoordinates.list());
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
-    {
-      spinnerPattern.addSpinnerListener(v -> recompute());
-      spinnerPattern.addToComponentReduced(timerFrame.jToolBar, new Dimension(160, 28), "pattern");
-    }
-    {
-      spinnerFactor.setList(Arrays.asList(2, 3, 5, 8, 10, 15, 20));
-      spinnerFactor.setValue(5);
-      spinnerFactor.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "refinement");
-      spinnerFactor.addSpinnerListener(v -> recompute());
-    }
-    {
-      spinnerRefine.setList(Arrays.asList(50, 80, 120, 160, 240, 360));
-      spinnerRefine.setValue(50);
-      spinnerRefine.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "refinement");
-      spinnerRefine.addSpinnerListener(v -> recompute());
-    }
-    // ---
-    timerFrame.jToolBar.add(jToggleButton);
+    setMidpointIndicated(true);
+    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    fieldsEditor.addUniversalListener(this::recompute);
     // ---
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
     actionPerformed(manifoldDisplay);
@@ -87,7 +92,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
 
   public void actionPerformed(ActionEvent actionEvent) {
     System.out.println("export");
-    if (jToggleButton.isSelected()) {
+    if (param.freeze) {
       Tensor sequence = getGeodesicControlPoints();
       // LeversRender leversRender = LeversRender.of( //
       // geodesicDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
@@ -97,7 +102,8 @@ public class CheckerBoardDemo extends LogWeightingBase //
       for (LogWeighting logWeighting : PolygonCoordinates.list())
         try {
           System.out.println(logWeighting);
-          TensorScalarFunction tensorUnaryOperator = function(sequence, reference.multiply(DoubleScalar.of(spinnerFactor.getValue())));
+          TensorScalarFunction tensorUnaryOperator = function(sequence, reference.multiply( //
+              param.factor()));
           HsArrayPlot geodesicArrayPlot = manifoldDisplay().geodesicArrayPlot();
           // TODO ASCONA ALG redundant
           Tensor matrix = geodesicArrayPlot.raster(512, tensorUnaryOperator, DoubleScalar.INDETERMINATE);
@@ -116,13 +122,13 @@ public class CheckerBoardDemo extends LogWeightingBase //
 
   @Override
   protected void recompute() {
-    if (jToggleButton.isSelected()) {
+    if (param.freeze) {
       System.out.println("compute");
       Tensor sequence = getGeodesicControlPoints();
       HsArrayPlot geodesicArrayPlot = manifoldDisplay().geodesicArrayPlot();
       Tensor matrix = geodesicArrayPlot.raster( //
-          spinnerRefine.getValue(), //
-          function(sequence, reference.multiply(DoubleScalar.of(spinnerFactor.getValue()))), //
+          param.refine.number().intValue(), //
+          function(sequence, reference.multiply(param.factor())), //
           DoubleScalar.INDETERMINATE);
       bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1).export();
     } else {
@@ -142,7 +148,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
       leversRender.renderIndexP();
     }
     // ---
-    if (jToggleButton.isSelected()) {
+    if (param.freeze) {
       LeversRender leversRender = LeversRender.of( //
           manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
       leversRender.renderSurfaceP();
@@ -193,10 +199,11 @@ public class CheckerBoardDemo extends LogWeightingBase //
   protected TensorScalarFunction function(Tensor sequence, Tensor values) {
     TensorUnaryOperator operator = operator(sequence);
     TensorUnaryOperator dot_prod = point -> operator.apply(point).dot(values);
-    return spinnerPattern.getValue().apply(dot_prod);
+    return param.pattern.apply(dot_prod);
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new CheckerBoardDemo().setVisible(1300, 900);
   }
 }

@@ -40,22 +40,27 @@ import ch.alpine.tensor.sca.Clips;
 
 @ReflectionMarker
 public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
-  @FieldInteger
-  @FieldPreferredWidth(100)
-  @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
-  public Scalar refine = RealScalar.of(5);
-  @FieldSlider
-  @FieldPreferredWidth(300)
-  @FieldClip(min = "0", max = "1")
-  public Scalar evalAt = RationalScalar.HALF;
-  @FieldSlider
-  @FieldPreferredWidth(200)
-  @FieldClip(min = "0", max = "2")
-  public Scalar exponent = RealScalar.ONE;
+  public static class Param {
+    @FieldInteger
+    @FieldPreferredWidth(100)
+    @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
+    public Scalar refine = RealScalar.of(5);
+    @FieldSlider
+    @FieldPreferredWidth(300)
+    @FieldClip(min = "0", max = "1")
+    public Scalar evalAt = RationalScalar.HALF;
+    @FieldSlider
+    @FieldPreferredWidth(200)
+    @FieldClip(min = "0", max = "2")
+    public Scalar exponent = RealScalar.ONE;
+  }
+
+  private final Param param = new Param();
 
   public GeodesicCatmullRomDemo() {
     super(ManifoldDisplays.METRIC);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     addButtonDubins();
     // ---
     setManifoldDisplay(R2Display.INSTANCE);
@@ -69,7 +74,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   @Override // from RenderInterface
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    final int levels = refine.number().intValue();
+    final int levels = param.refine.number().intValue();
     final Tensor control = getGeodesicControlPoints();
     RenderQuality.setQuality(graphics);
     {
@@ -80,13 +85,13 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
     if (4 <= control.length()) {
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       TensorUnaryOperator centripetalKnotSpacing = //
-          KnotSpacing.centripetal(manifoldDisplay.biinvariantMetric(), exponent);
+          KnotSpacing.centripetal(manifoldDisplay.biinvariantMetric(), param.exponent);
       Tensor knots = centripetalKnotSpacing.apply(control);
       Scalar lo = knots.Get(1);
       Scalar hi = knots.Get(knots.length() - 2);
       hi = DoubleScalar.of(Math.nextDown(hi.number().doubleValue()));
       Clip interval = Clips.interval(lo, hi);
-      Scalar parameter = (Scalar) LinearBinaryAverage.INSTANCE.split(lo, hi, evalAt);
+      Scalar parameter = (Scalar) LinearBinaryAverage.INSTANCE.split(lo, hi, param.evalAt);
       ScalarTensorFunction scalarTensorFunction = GeodesicCatmullRom.of(geodesicSpace, knots, control);
       Tensor refined = Subdivide.increasing(interval, Math.max(1, levels * control.length())).map(scalarTensorFunction);
       {
@@ -105,7 +110,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.DEFAULT.updateUI();
+    LookAndFeels.LIGHT.updateUI();
     new GeodesicCatmullRomDemo().setVisible(1200, 600);
   }
 }

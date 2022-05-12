@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
-import java.util.Arrays;
 import java.util.Optional;
 
 import javax.swing.JToggleButton;
@@ -45,13 +44,12 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
   private static final Color DOMAIN_F = new Color(192, 192, 64, 64);
   private static final Color DOMAIN_D = new Color(192, 192, 64, 192);
   // ---
-  private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerLength = SpinnerLabel.of(5, 9, 10, 11, 12, 15, 20);
   private final JToggleButton jToggleCtrl = new JToggleButton("show ctrl");
 
   public LogarithmDemo() {
     super(true, ManifoldDisplays.R2_H2_S2);
     {
-      spinnerLength.setList(Arrays.asList(5, 9, 10, 11, 12, 15, 20));
       spinnerLength.setValue(11);
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
     }

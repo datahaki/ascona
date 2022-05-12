@@ -3,7 +3,6 @@ package ch.alpine.ascona.dv;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.Arrays;
 import java.util.Optional;
 
 import javax.swing.JButton;
@@ -29,7 +28,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 
 public class OrderingPlaceDemo extends LogWeightingDemo {
-  private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerLength = SpinnerLabel.of(50, 75, 100, 200, 300, 400, 500);
   private final JButton jButton = new JButton("shuffle");
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
 
@@ -37,7 +36,6 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
     super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
     {
       spinnerLength.addSpinnerListener(v -> shuffleSnap());
-      spinnerLength.setList(Arrays.asList(50, 75, 100, 200, 300, 400, 500));
       spinnerLength.setValue(200);
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
     }

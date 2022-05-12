@@ -2,23 +2,24 @@
 package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.Objects;
-
-import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.crv.d2.HilbertPolygon;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.img.ColorDataGradients;
@@ -28,33 +29,30 @@ import ch.alpine.tensor.sca.pow.Power;
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
 public class HilbertBenchmarkDemo extends ControlPointsDemo {
-  final SpinnerLabel<Integer> spinnerLevels = new SpinnerLabel<>();
-  final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
-  JToggleButton jToggleButton = new JToggleButton("ctrl points");
+  @ReflectionMarker
+  public static class Param {
+    @FieldInteger
+    @FieldClip(min = "1", max = "4")
+    public Scalar levels = RealScalar.of(2);
+    @FieldInteger
+    @FieldClip(min = "20", max = "100")
+    public Scalar resolution = RealScalar.of(20);
+    public Boolean ctrl = false;
+  }
+
+  private final Param param = new Param();
 
   public HilbertBenchmarkDemo() {
     super(false, ManifoldDisplays.R2_ONLY);
     setPositioningEnabled(false);
     // ---
-    timerFrame.jToolBar.add(jToggleButton);
-    {
-      spinnerLevels.setList(Arrays.asList(1, 2, 3, 4));
-      spinnerLevels.setValue(2);
-      spinnerLevels.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "refinement");
-      spinnerLevels.addSpinnerListener(v -> updateCtrl());
-    }
-    {
-      spinnerRefine.setList(Arrays.asList(10, 20, 30, 40, 50, 60, 80, 100));
-      spinnerRefine.setValue(20);
-      spinnerRefine.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "refinement");
-      spinnerRefine.addSpinnerListener(v -> bufferedImage = null);
-    }
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::updateCtrl);
     // ---
     updateCtrl();
   }
 
   void updateCtrl() {
-    Tensor polygon = unit(spinnerLevels.getValue());
+    Tensor polygon = unit(param.levels.number().intValue());
     polygon = PadRight.zeros(polygon.length(), 3).apply(polygon);
     setControlPointsSe2(polygon);
     bufferedImage = null;
@@ -71,7 +69,7 @@ public class HilbertBenchmarkDemo extends ControlPointsDemo {
     final Tensor sequence = getGeodesicControlPoints();
     LeversRender leversRender = //
         LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
-    if (jToggleButton.isSelected()) {
+    if (param.ctrl) {
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }
@@ -84,7 +82,7 @@ public class HilbertBenchmarkDemo extends ControlPointsDemo {
   }
 
   public void compute() {
-    bufferedImage = HilbertLevelImage.of(manifoldDisplay(), getGeodesicControlPoints(), spinnerRefine.getValue(), ColorDataGradients.CLASSIC, 32);
+    bufferedImage = HilbertLevelImage.of(manifoldDisplay(), getGeodesicControlPoints(), param.resolution.number().intValue(), ColorDataGradients.CLASSIC, 32);
   }
 
   /** @param n positive
@@ -95,6 +93,7 @@ public class HilbertBenchmarkDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new HilbertBenchmarkDemo().setVisible(1300, 900);
   }
 }
