@@ -8,12 +8,12 @@ import java.awt.Stroke;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
-import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -57,12 +57,6 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
     super(true, ManifoldDisplays.S2_ONLY);
     // ---
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
-    timerFrame.geometricComponent.addRenderInterfaceBackground(new GeodesicDisplayRender() {
-      @Override
-      public ManifoldDisplay getGeodesicDisplay() {
-        return manifoldDisplay();
-      }
-    });
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     timerFrame.geometricComponent.setOffset(400, 400);
@@ -146,6 +140,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new S2HermiteSubdivisionDemo().setVisible(1000, 800);
   }
 }

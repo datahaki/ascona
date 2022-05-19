@@ -59,14 +59,6 @@ public enum ManifoldDisplays {
       He1Display.INSTANCE, //
       Dt1Display.INSTANCE);
   // ---
-  /** lie groups */
-  public static final List<ManifoldDisplay> LIE_GROUPS = Arrays.asList( //
-      Se2CoveringDisplay.INSTANCE, //
-      Se2Display.INSTANCE, //
-      R2Display.INSTANCE, //
-      He1Display.INSTANCE, //
-      Dt1Display.INSTANCE);
-  // ---
   public static final List<ManifoldDisplay> R2_ONLY = Arrays.asList( //
       R2Display.INSTANCE);
   // ---

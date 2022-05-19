@@ -8,7 +8,6 @@ import java.util.Optional;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.PolygonCoordinates;
-import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.S2Display;
@@ -58,7 +57,7 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
       leversRender.renderIndexP();
       // ---
       geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(3, 0)));
-      GeodesicDisplayRender.render_s2(geometricLayer, graphics);
+      manifoldDisplay().background().render(geometricLayer, graphics);
       // ---
       leversRender.renderSurfaceP();
       leversRender.renderSequence();

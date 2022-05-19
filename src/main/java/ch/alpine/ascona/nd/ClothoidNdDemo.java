@@ -12,7 +12,6 @@ import javax.swing.JScrollPane;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -80,8 +79,6 @@ public class ClothoidNdDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
-    // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), mouse, geometricLayer, graphics);

@@ -12,7 +12,6 @@ import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -71,7 +70,6 @@ public class SeriesHermiteSubdivisionDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RenderQuality.setQuality(graphics);
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
     if (1 < _control.length()) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);

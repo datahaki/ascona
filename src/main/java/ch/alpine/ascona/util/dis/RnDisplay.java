@@ -3,6 +3,8 @@ package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
 
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
@@ -65,6 +67,11 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
     return RnLineDistance.INSTANCE;
+  }
+
+  @Override
+  public final RenderInterface background() {
+    return AxesRender.INSTANCE;
   }
 
   @Override // from Object

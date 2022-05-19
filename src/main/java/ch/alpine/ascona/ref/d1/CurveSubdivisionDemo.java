@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.crv.AbstractCurvatureDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
@@ -31,6 +30,8 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -52,21 +53,29 @@ import ch.alpine.tensor.red.Times;
 /** split interface and biinvariant mean based curve subdivision */
 @ReflectionMarker
 public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
-  private final PathRender pathRender = new PathRender(new Color(0, 255, 0, 128));
-  final SpinnerLabel<CurveSubdivisionSchemes> spinnerLabel = SpinnerLabel.of(CurveSubdivisionSchemes.class);
-  final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
+  private static final PathRender pathRender = new PathRender(new Color(0, 255, 0, 128));
+
+  @ReflectionMarker
+  public static class Param {
+    public CurveSubdivisionSchemes scheme = CurveSubdivisionSchemes.BSPLINE1;
+    @FieldInteger
+    @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
+    public Scalar refine = RealScalar.of(6);
+    public Boolean line = false;
+    public Boolean cyclic = false;
+    public Boolean symi = true;
+    public Boolean comb = true;
+  }
+
+  private final Param param = new Param();
   final SpinnerLabel<Scalar> spinnerMagicC = new SpinnerLabel<>();
-  final JToggleButton jToggleLine = new JToggleButton("line");
-  final JToggleButton jToggleCyclic = new JToggleButton("cyclic");
-  final JToggleButton jToggleSymi = new JToggleButton("graph");
-  final JToggleButton jToggleComb = new JToggleButton("comb");
-  private final JToggleButton jToggleHelp = new JToggleButton("help");
   private static final Tensor OMEGA = Tensors.fromString("{-1/16, -1/36, 0, 1/72, 1/42, 1/36, 1/18, 1/16}");
   private final SpinnerLabel<Scalar> spinnerBeta = new SpinnerLabel<>();
 
   public CurveSubdivisionDemo() {
     super(ManifoldDisplays.ALL);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     Tensor control = null;
     {
       Tensor move = Tensors.fromString( //
@@ -77,7 +86,6 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       control = Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {3, 1, 0}, {4, 1, 0}, {5, 0, 0}, {6, 0, 0}, {7, 0, 0}}").multiply(RealScalar.of(2));
     }
     setControlPointsSe2(control);
-    timerFrame.jToolBar.addSeparator();
     {
       JButton jButton = new JButton("load");
       List<String> list = Arrays.asList("ducttape/20180514.csv", "tires/20190116.csv", "tires/20190117.csv");
@@ -95,7 +103,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
                 center.set(RealScalar.ZERO, 2);
                 tensor = Tensor.of(tensor.stream().map(row -> row.subtract(center)));
                 setManifoldDisplay(Se2Display.INSTANCE);
-                jToggleCyclic.setSelected(true);
+                param.cyclic = true;
                 setControlPointsSe2(tensor);
               }
             });
@@ -107,32 +115,11 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       timerFrame.jToolBar.add(jButton);
     }
     // ---
-    jToggleLine.setSelected(false);
-    timerFrame.jToolBar.add(jToggleLine);
-    // ---
     timerFrame.jToolBar.addSeparator();
     addButtonDubins();
     // ---
-    // jToggleCyclic.setSelected(true);
-    timerFrame.jToolBar.add(jToggleCyclic);
+    setMidpointIndicated(true);
     // ---
-    jToggleSymi.setSelected(true);
-    timerFrame.jToolBar.add(jToggleSymi);
-    // ---
-    jToggleComb.setSelected(true);
-    timerFrame.jToolBar.add(jToggleComb);
-    // ---
-    jToggleHelp.setToolTipText("indicate closest midpoint");
-    jToggleHelp.setSelected(true);
-    jToggleHelp.addActionListener(l -> setMidpointIndicated(jToggleHelp.isSelected()));
-    timerFrame.jToolBar.addSeparator();
-    timerFrame.jToolBar.add(jToggleHelp);
-    // ---
-    spinnerLabel.addToComponentReduced(timerFrame.jToolBar, new Dimension(150, 28), "scheme");
-    // ---
-    spinnerRefine.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
-    spinnerRefine.setValue(6);
-    spinnerRefine.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
     // ---
     spinnerMagicC.addSpinnerListener(value -> CurveSubdivisionHelper.MAGIC_C = value);
     spinnerMagicC.setList( //
@@ -161,12 +148,12 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
 
   @Override
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    final CurveSubdivisionSchemes scheme = spinnerLabel.getValue();
+    final CurveSubdivisionSchemes scheme = param.scheme;
     //
     if (scheme.equals(CurveSubdivisionSchemes.DODGSON_SABIN))
       setManifoldDisplay(R2Display.INSTANCE);
     // ---
-    if (jToggleSymi.isSelected()) {
+    if (param.symi) {
       Optional<SymMaskImages> optional = SymMaskImages.get(scheme.name());
       if (optional.isPresent()) {
         BufferedImage image0 = optional.get().image0();
@@ -177,9 +164,9 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     }
     RenderQuality.setQuality(graphics);
     // ---
-    final boolean cyclic = jToggleCyclic.isSelected() || !scheme.isStringSupported();
+    final boolean cyclic = param.cyclic || !scheme.isStringSupported();
     Tensor control = getGeodesicControlPoints();
-    int levels = spinnerRefine.getValue();
+    int levels = param.refine.number().intValue();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
@@ -188,7 +175,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     }
     CurveSubdivision curveSubdivision = null;
     try {
-      curveSubdivision = spinnerLabel.getValue().of(manifoldDisplay);
+      curveSubdivision = param.scheme.of(manifoldDisplay);
     } catch (Exception exception) {
       // ---
     }
@@ -197,12 +184,12 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       Tensor refined = StaticHelper.refine( //
           control, levels, curveSubdivision, //
           CurveSubdivisionHelper.isDual(scheme), cyclic, geodesicSpace);
-      if (jToggleLine.isSelected()) {
+      if (param.line) {
         TensorUnaryOperator tensorUnaryOperator = StaticHelper.create(new BSpline1CurveSubdivision(geodesicSpace), cyclic);
         pathRender.setCurve(Nest.of(tensorUnaryOperator, control, 8), cyclic).render(geometricLayer, graphics);
       }
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
-      Curvature2DRender.of(render, cyclic, jToggleComb.isSelected(), geometricLayer, graphics);
+      Curvature2DRender.of(render, cyclic, param.comb, geometricLayer, graphics);
       if (levels < 5)
         renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
       return refined;

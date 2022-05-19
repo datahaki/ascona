@@ -4,6 +4,8 @@ package ch.alpine.ascona.util.dis;
 import java.io.Serializable;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.ren.EmptyRender;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.crv.d2.Arrowhead;
@@ -58,6 +60,11 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
   @Override // from ManifoldDisplay
   public final HsArrayPlot geodesicArrayPlot() {
     return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public final RenderInterface background() {
+    return EmptyRender.INSTANCE;
   }
 
   @Override // from Object

@@ -18,8 +18,8 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.io.HtmlUtf8;
 import ch.alpine.bridge.swing.SpinnerListener;
@@ -50,7 +50,6 @@ public class PolygonCoordinatesDemo extends A2ScatteredSetCoordinateDemo //
     addSpinnerListener(this);
     addSpinnerListener(l -> recompute());
     recompute();
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }
 
   @Override
@@ -133,6 +132,7 @@ public class PolygonCoordinatesDemo extends A2ScatteredSetCoordinateDemo //
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new PolygonCoordinatesDemo().setVisible(1300, 900);
   }
 }

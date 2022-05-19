@@ -9,7 +9,6 @@ import java.util.function.Function;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -48,8 +47,6 @@ public class HilbertPolygonDemo extends ControlPointsDemo {
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     setPositioningEnabled(false);
     setMidpointIndicated(false);
-    // ---
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }
 
   @Override

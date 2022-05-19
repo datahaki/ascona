@@ -2,6 +2,7 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
@@ -81,6 +82,8 @@ public interface ManifoldDisplay {
   HsArrayPlot geodesicArrayPlot();
 
   RandomSampleInterface randomSampleInterface();
+
+  RenderInterface background();
 
   @Override // from Object
   String toString();

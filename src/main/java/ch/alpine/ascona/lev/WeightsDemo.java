@@ -6,15 +6,12 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.swing.JToggleButton;
-
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.dis.Spd2Display;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -31,13 +28,9 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 
 public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
-  private final JToggleButton jToggleAxes = new JToggleButton("axes");
-
   public WeightsDemo() {
     super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
-    {
-      timerFrame.jToolBar.add(jToggleAxes);
-    }
+    // ---
     setControlPointsSe2(Tensors.fromString("{{-1, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}}"));
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
     setManifoldDisplay(manifoldDisplay);
@@ -48,8 +41,6 @@ public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<Man
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (jToggleAxes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Optional<Tensor> optional = getOrigin();

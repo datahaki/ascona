@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
@@ -60,6 +61,7 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new R2BSplineFunctionDemo().setVisible(1200, 600);
   }
 }

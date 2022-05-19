@@ -9,7 +9,6 @@ import java.awt.Stroke;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -55,8 +54,6 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 2, 0}}"));
-    // ---
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }
 
   private static final Scalar MARGIN = RealScalar.of(2);

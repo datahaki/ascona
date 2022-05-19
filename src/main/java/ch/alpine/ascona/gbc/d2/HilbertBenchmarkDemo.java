@@ -52,6 +52,7 @@ public class HilbertBenchmarkDemo extends ControlPointsDemo {
   }
 
   void updateCtrl() {
+    System.out.println("update");
     Tensor polygon = unit(param.levels.number().intValue());
     polygon = PadRight.zeros(polygon.length(), 3).apply(polygon);
     setControlPointsSe2(polygon);

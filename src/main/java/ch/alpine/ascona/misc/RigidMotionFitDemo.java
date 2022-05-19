@@ -9,7 +9,6 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.Se2Display;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -65,7 +64,6 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor sequence = getGeodesicControlPoints();
     {
       Tensor target = Tensor.of(sequence.stream().map(R2Display.INSTANCE::project));

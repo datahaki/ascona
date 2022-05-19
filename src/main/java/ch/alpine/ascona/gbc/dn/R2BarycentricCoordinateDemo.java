@@ -25,7 +25,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -86,7 +85,6 @@ import ch.alpine.tensor.sca.Sign;
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ColorDataGradient colorDataGradient = colorDataGradient();
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
     {

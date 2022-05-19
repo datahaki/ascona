@@ -3,7 +3,7 @@ package ch.alpine.ascona.util.win;
 
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.api.AbstractGeodesicDisplayDemo;
+import ch.alpine.ascona.util.api.AbstractManifoldDisplayDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.gfx.GeometricLayer;
 
@@ -44,8 +44,8 @@ public enum AbstractDemoHelper {
     BufferedImage bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
     abstractDemo.render(geometricLayer, bufferedImage.createGraphics());
     boolean success = true;
-    if (abstractDemo instanceof AbstractGeodesicDisplayDemo) {
-      AbstractGeodesicDisplayDemo geodesicDisplayDemo = (AbstractGeodesicDisplayDemo) abstractDemo;
+    if (abstractDemo instanceof AbstractManifoldDisplayDemo) {
+      AbstractManifoldDisplayDemo geodesicDisplayDemo = (AbstractManifoldDisplayDemo) abstractDemo;
       for (ManifoldDisplay manifoldDisplay : geodesicDisplayDemo.getManifoldDisplays())
         try {
           geodesicDisplayDemo.setManifoldDisplay(manifoldDisplay);

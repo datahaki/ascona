@@ -16,7 +16,6 @@ import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ArrayRender;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -42,7 +41,6 @@ import ch.alpine.tensor.sca.N;
   private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
   private final JButton jButton = new JButton("snap");
   private final JToggleButton jToggleTarget = new JToggleButton("target");
-  private final JToggleButton jToggleAxes = new JToggleButton("axes");
   // ---
   /** in coordinate specific to geodesic display */
   private Tensor movingOrigin;
@@ -61,7 +59,6 @@ import ch.alpine.tensor.sca.N;
       spinnerLength.setValue(6);
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
     }
-    timerFrame.jToolBar.add(jToggleAxes);
     jToggleTarget.setSelected(true);
     jToggleTarget.setToolTipText("display target");
     timerFrame.jToolBar.add(jToggleTarget);
@@ -100,8 +97,6 @@ import ch.alpine.tensor.sca.N;
   @Override // from RenderInterface
   public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    if (jToggleAxes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor origin = movingDomain2D.origin();
     Tensor target = getGeodesicControlPoints();

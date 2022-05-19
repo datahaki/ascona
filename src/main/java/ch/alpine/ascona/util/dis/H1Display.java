@@ -2,6 +2,7 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.tensor.Tensor;
 
 public class H1Display extends HnDisplay {
@@ -20,5 +21,10 @@ public class H1Display extends HnDisplay {
   @Override // from ManifoldDisplay
   public HsArrayPlot geodesicArrayPlot() {
     return null;
+  }
+
+  @Override
+  public RenderInterface background() {
+    return H1Background.INSTANCE;
   }
 }

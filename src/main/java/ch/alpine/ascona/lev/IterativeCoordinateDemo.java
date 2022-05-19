@@ -12,7 +12,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -42,7 +41,6 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
     setBitype(Bitype.LEVERAGES1);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }
 
   @Override // from RenderInterface

@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.api.AbstractGeodesicDisplayDemo;
+import ch.alpine.ascona.util.api.AbstractManifoldDisplayDemo;
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.GridRender;
@@ -23,7 +23,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 
 @ReflectionMarker
-/* package */ abstract class AbstractDatasetFilterDemo extends AbstractGeodesicDisplayDemo {
+/* package */ abstract class AbstractDatasetFilterDemo extends AbstractManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final GridRender GRID_RENDER = new GridRender(Subdivide.of(0, 100, 10));

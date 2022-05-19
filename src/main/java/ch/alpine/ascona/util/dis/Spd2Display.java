@@ -2,6 +2,8 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.ren.EmptyRender;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
@@ -103,6 +105,11 @@ public enum Spd2Display implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
     return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public RenderInterface background() {
+    return EmptyRender.INSTANCE;
   }
 
   @Override // from Object

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.crv;
+package ch.alpine.ascona.misc;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -9,6 +9,7 @@ import org.jfree.chart.JFreeChart;
 import ch.alpine.ascona.util.api.RnLineTrim;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -57,6 +58,7 @@ public class CirclesDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new CirclesDemo().setVisible(1000, 800);
   }
 }

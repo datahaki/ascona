@@ -20,6 +20,7 @@ import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -198,6 +199,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new CustomClothoidDemo().setVisible(1200, 900);
   }
 }

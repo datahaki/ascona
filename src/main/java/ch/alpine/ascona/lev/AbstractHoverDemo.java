@@ -6,13 +6,11 @@ import java.awt.Graphics2D;
 import java.util.Arrays;
 
 import javax.swing.JButton;
-import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -22,7 +20,6 @@ import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 
 public abstract class AbstractHoverDemo extends LogWeightingDemo {
-  private final JToggleButton jToggleAxes = new JToggleButton("axes");
   final SpinnerLabel<Integer> spinnerCount = new SpinnerLabel<>();
   private final JButton jButtonShuffle = new JButton("shuffle");
 
@@ -31,9 +28,6 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
     setMidpointIndicated(false);
     setPositioningEnabled(false);
     addSpinnerListener(v -> shuffle(spinnerCount.getValue()));
-    {
-      timerFrame.jToolBar.add(jToggleAxes);
-    }
     {
       spinnerCount.setList(Arrays.asList(5, 10, 15, 20, 25, 30, 40));
       spinnerCount.setValue(25);
@@ -58,8 +52,6 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
   @Override // from RenderInterface
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
-    if (jToggleAxes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();

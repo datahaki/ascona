@@ -2,22 +2,22 @@
 package ch.alpine.ascona.decim;
 
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.api.AbstractGeodesicDisplayDemo;
+import ch.alpine.ascona.util.api.AbstractManifoldDisplayDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.PanelFieldsEditor;
+import ch.alpine.bridge.ref.util.FieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.hs.sn.S2Loxodrome;
@@ -39,7 +39,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class S2DeltaDemo extends AbstractGeodesicDisplayDemo {
+public class S2DeltaDemo extends AbstractManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 128 + 64);
   private static final Color COLOR_SHAPE = new Color(128, 255, 128, 128 + 64);
   private static final int WIDTH = 360;
@@ -70,10 +70,9 @@ public class S2DeltaDemo extends AbstractGeodesicDisplayDemo {
 
   public S2DeltaDemo() {
     super(ManifoldDisplays.S2_ONLY);
-    Container container = timerFrame.jFrame.getContentPane();
-    PanelFieldsEditor fieldsPanel = new PanelFieldsEditor(param);
-    fieldsPanel.addUniversalListener(this::compute);
-    container.add(BorderLayout.WEST, fieldsPanel.createJScrollPane());
+    // ---
+    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    fieldsEditor.addUniversalListener(this::compute);
     compute();
   }
 
@@ -142,6 +141,7 @@ public class S2DeltaDemo extends AbstractGeodesicDisplayDemo {
   }
 
   public static void main(String[] args) {
-    new S2DeltaDemo().setVisible(1000, 800);
+    LookAndFeels.LIGHT.updateUI();
+    new S2DeltaDemo().setVisible(1200, 800);
   }
 }

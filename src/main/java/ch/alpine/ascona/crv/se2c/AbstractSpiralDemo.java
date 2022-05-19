@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.RenderInterface;
@@ -36,7 +35,6 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
     renderInterface.render(geometricLayer, graphics);
     Tensor points = SEPARATORS.map(scalarTensorFunction);
     POINTS_RENDER.show(Se2ClothoidDisplay.ANALYTIC::matrixLift, Arrowhead.of(0.03), points) //

@@ -10,7 +10,6 @@ import java.util.Set;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -47,7 +46,6 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
   // ---
   @ReflectionMarker
   public static class Param {
-    public Boolean axes = true;
     public Boolean ctrl = true;
     public SurfaceMeshRefinements ref = SurfaceMeshRefinements.LINEAR;
     @FieldSlider
@@ -72,8 +70,6 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (param.axes)
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     surfaceMesh.vrt = getControlPointsSe2();
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

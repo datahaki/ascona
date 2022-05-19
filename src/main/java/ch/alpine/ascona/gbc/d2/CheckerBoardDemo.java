@@ -22,7 +22,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -85,7 +84,6 @@ public class CheckerBoardDemo extends LogWeightingBase //
     addSpinnerListener(this);
     addSpinnerListener(l -> recompute());
     recompute();
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
     // ---
     addMouseRecomputation();
   }

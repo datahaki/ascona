@@ -7,7 +7,6 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -32,7 +31,6 @@ public class MinTriangleAreaSquaredDemo extends ControlPointsDemo {
   public MinTriangleAreaSquaredDemo() {
     super(true, ManifoldDisplays.R2_ONLY);
     // ---
-    timerFrame.geometricComponent.addRenderInterface(AxesRender.INSTANCE);
     timerFrame.geometricComponent.addRenderInterface(pathRender);
     // ---
     Tensor blub = Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {2, 0, 2.5708}, {1, 0, 2.1}}");

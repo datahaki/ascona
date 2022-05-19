@@ -12,7 +12,7 @@ import ch.alpine.bridge.swing.SpinnerLabel;
 
 // TODO ASCONA the contents of this package need to be restructured
 @ReflectionMarker
-public abstract class AbstractGeodesicDatasetDemo extends AbstractGeodesicDisplayDemo {
+public abstract class AbstractGeodesicDatasetDemo extends AbstractManifoldDisplayDemo {
   protected final GokartPoseData gokartPoseData;
   protected final SpinnerLabel<String> spinnerLabelString = new SpinnerLabel<>();
   protected final SpinnerLabel<Integer> spinnerLabelLimit = new SpinnerLabel<>();

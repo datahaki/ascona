@@ -12,7 +12,6 @@ import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -52,7 +51,6 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     // if (jToggleAxes.isSelected())
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
     ColorDataGradient colorDataGradient = colorDataGradient();
     Tensor controlPoints = getGeodesicControlPoints();
     {

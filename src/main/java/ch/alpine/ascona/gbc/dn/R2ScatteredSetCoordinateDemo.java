@@ -16,7 +16,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ArrayRender;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -43,7 +42,6 @@ import ch.alpine.tensor.sca.Chop;
 public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final double RANGE = 5;
   // ---
-  private final JToggleButton jToggleButtonAxes = new JToggleButton("axes");
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();
   // ---
@@ -51,10 +49,6 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
 
   public R2ScatteredSetCoordinateDemo() {
     super(true, ManifoldDisplays.SE2C_SE2, LogWeightings.list());
-    {
-      jToggleButtonAxes.setSelected(true);
-      timerFrame.jToolBar.add(jToggleButtonAxes);
-    }
     {
       jToggleAnimate.addActionListener(new ActionListener() {
         @Override
@@ -70,7 +64,6 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     setControlPointsSe2(Tensors.fromString("{{2, -3, 1.5}, {3, 5, 1}, {-4, -3, 1}, {-5, 3, 2}}"));
     setControlPointsSe2(Tensors.fromString( //
         "{{-1.217, -2.050, 1.309}, {1.783, 1.917, 0.262}, {-3.583, 0.300, -0.262}, {2.200, -0.283, 0.262}, {-4.000, -3.000, 1.000}, {-1.900, 2.117, 1.309}}"));
-    jToggleButtonAxes.setSelected(false);
     timerFrame.geometricComponent.setOffset(500, 500);
   }
 
@@ -84,8 +77,6 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ColorDataGradient colorDataGradient = colorDataGradient();
-    if (jToggleButtonAxes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     if (jToggleAnimate.isSelected()) {
       double toc = timing.seconds() * 0.3;
       int n = snapshot.length();

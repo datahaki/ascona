@@ -9,7 +9,6 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -22,7 +21,6 @@ import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 
 public class R2AnimationDemo extends LogWeightingDemo {
-  private final JToggleButton jToggleAxes = new JToggleButton("axes");
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();
   // ---
@@ -31,10 +29,6 @@ public class R2AnimationDemo extends LogWeightingDemo {
 
   public R2AnimationDemo() {
     super(true, ManifoldDisplays.R2_ONLY, LogWeightings.list());
-    {
-      timerFrame.jToolBar.add(jToggleAxes);
-      jToggleAxes.setSelected(true);
-    }
     {
       jToggleAnimate.addActionListener(e -> {
         if (jToggleAnimate.isSelected()) {
@@ -61,8 +55,6 @@ public class R2AnimationDemo extends LogWeightingDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (jToggleAxes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Optional<Tensor> optional = getOrigin();
     if (optional.isPresent()) {

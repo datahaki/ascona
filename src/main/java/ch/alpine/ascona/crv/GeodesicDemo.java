@@ -3,22 +3,19 @@ package ch.alpine.ascona.crv;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.List;
 
+import ch.alpine.ascona.util.api.AbstractManifoldDisplayDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -26,33 +23,31 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-@ReflectionMarker
-public class GeodesicDemo extends AbstractDemo {
+public class GeodesicDemo extends AbstractManifoldDisplayDemo {
   private static final Color COLOR = new Color(128, 128, 128, 128);
   private static final int SPLITS = 20;
   // ---
   private final PathRender pathRender = new PathRender(new Color(128, 128, 255), //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0));
-  private final SpinnerLabel<ManifoldDisplay> geodesicDisplaySpinner = new SpinnerLabel<>();
-  public Boolean comb = true;
-  public Boolean extra = false;
+
+  @ReflectionMarker
+  public static class Param {
+    public Boolean comb = true;
+    public Boolean extra = false;
+  }
+
+  private final Param param = new Param();
 
   public GeodesicDemo() {
-    List<ManifoldDisplay> list = ManifoldDisplays.ALL;
-    geodesicDisplaySpinner.setList(list);
-    geodesicDisplaySpinner.setValue(Se2Display.INSTANCE);
-    if (1 < list.size()) {
-      geodesicDisplaySpinner.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "geodesic type");
-      timerFrame.jToolBar.addSeparator();
-    }
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    super(ManifoldDisplays.ALL);
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     // AxesRender.INSTANCE.render(geometricLayer, graphics);
-    ManifoldDisplay manifoldDisplay = geodesicDisplaySpinner.getValue();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor xya = timerFrame.geometricComponent.getMouseSe2CState();
     graphics.setColor(COLOR);
@@ -70,12 +65,12 @@ public class GeodesicDemo extends AbstractDemo {
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }
-    if (comb) {
+    if (param.comb) {
       Tensor refined = Subdivide.of(0, 1, SPLITS * 6).map(scalarTensorFunction);
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
       Curvature2DRender.of(render, false, geometricLayer, graphics);
     }
-    if (extra) {
+    if (param.extra) {
       {
         Tensor refined = Subdivide.of(1, 1.5, SPLITS * 3).map(scalarTensorFunction);
         Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
@@ -94,6 +89,7 @@ public class GeodesicDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new GeodesicDemo().setVisible(600, 600);
   }
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.arp.S2ArrayPlot;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.hs.sn.TSnProjection;
 import ch.alpine.tensor.RealScalar;
@@ -98,5 +99,10 @@ public class S2Display extends SnDisplay {
   @Override // from ManifoldDisplay
   public HsArrayPlot geodesicArrayPlot() {
     return S2ArrayPlot.INSTANCE;
+  }
+
+  @Override
+  public RenderInterface background() {
+    return S2Background.INSTANCE;
   }
 }

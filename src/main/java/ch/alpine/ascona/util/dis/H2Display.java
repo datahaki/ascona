@@ -3,6 +3,7 @@ package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.H2ArrayPlot;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.tensor.Tensor;
 
 public class H2Display extends HnDisplay {
@@ -21,5 +22,10 @@ public class H2Display extends HnDisplay {
   @Override // from ManifoldDisplay
   public HsArrayPlot geodesicArrayPlot() {
     return new H2ArrayPlot(RADIUS);
+  }
+
+  @Override
+  public RenderInterface background() {
+    return H2Background.INSTANCE;
   }
 }

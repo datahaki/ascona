@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -27,8 +26,6 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
 
   @Override
   public void protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
-    // ---
     RenderQuality.setQuality(graphics);
     Tensor control = Sort.of(getControlPointsSe2());
     if (1 < control.length()) {

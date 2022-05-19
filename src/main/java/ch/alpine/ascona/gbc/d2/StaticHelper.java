@@ -7,9 +7,7 @@ import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.ImageReshape;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -28,13 +26,11 @@ import ch.alpine.tensor.sca.Clip;
     BufferedImage foreground = arrayPlotRender.export();
     BufferedImage background = new BufferedImage(foreground.getWidth(), foreground.getHeight(), BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = background.createGraphics();
-    if (manifoldDisplay instanceof S2Display) {
-      Tensor matrix = geodesicArrayPlot.pixel2model(new Dimension(refinement, refinement));
-      GeometricLayer geometricLayer = new GeometricLayer(Inverse.of(matrix));
-      for (int count = 0; count < sequence_length; ++count) {
-        GeodesicDisplayRender.render_s2(geometricLayer, graphics);
-        geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(2, 0)));
-      }
+    Tensor matrix = geodesicArrayPlot.pixel2model(new Dimension(refinement, refinement));
+    GeometricLayer geometricLayer = new GeometricLayer(Inverse.of(matrix));
+    for (int count = 0; count < sequence_length; ++count) {
+      manifoldDisplay.background().render(geometricLayer, graphics);
+      geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(2, 0)));
     }
     graphics.drawImage(foreground, 0, 0, null);
     return background;

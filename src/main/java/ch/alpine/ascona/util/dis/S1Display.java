@@ -2,6 +2,7 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -46,5 +47,10 @@ public class S1Display extends SnDisplay {
   @Override
   public HsArrayPlot geodesicArrayPlot() {
     return null;
+  }
+
+  @Override
+  public RenderInterface background() {
+    return S1Background.INSTANCE;
   }
 }

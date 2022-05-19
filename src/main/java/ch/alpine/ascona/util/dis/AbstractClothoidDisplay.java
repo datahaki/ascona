@@ -4,6 +4,8 @@ package ch.alpine.ascona.util.dis;
 import java.io.Serializable;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.ren.EmptyRender;
+import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
@@ -77,6 +79,11 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
     return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public final RenderInterface background() {
+    return EmptyRender.INSTANCE;
   }
 
   @Override // from Object

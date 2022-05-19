@@ -8,8 +8,8 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
@@ -45,8 +45,6 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 0, 0}}"));
-    // ---
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }
 
   @Override // from RenderInterface
@@ -56,26 +54,26 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
     int _degree = degree.number().intValue();
     int _levels = refine.number().intValue();
     Tensor control = getGeodesicControlPoints();
-    // ---
-    Tensor _effective = control;
-    // ---
-    int[] array = Ordering.INCREASING.of(_effective.get(Tensor.ALL, 0));
-    Tensor x = Tensor.of(Arrays.stream(array).mapToObj(i -> _effective.get(i, 0)));
-    Tensor y = Tensor.of(Arrays.stream(array).mapToObj(i -> _effective.get(i, 1)));
-    ScalarTensorFunction scalarTensorFunction = //
-        GeodesicBSplineFunction.of(RnGroup.INSTANCE, _degree, x, y);
-    Clip clip = Clips.interval(x.Get(0), Last.of(x));
-    Tensor domain = Subdivide.increasing(clip, 4 << _levels);
-    Tensor values = domain.map(scalarTensorFunction);
-    Curvature2DRender.of(Transpose.of(Tensors.of(domain, values)), false, geometricLayer, graphics);
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
-      leversRender.renderIndexP();
+    if (1 < control.length()) {
+      Tensor _effective = control;
+      // ---
+      int[] array = Ordering.INCREASING.of(_effective.get(Tensor.ALL, 0));
+      Tensor x = Tensor.of(Arrays.stream(array).mapToObj(i -> _effective.get(i, 0)));
+      Tensor y = Tensor.of(Arrays.stream(array).mapToObj(i -> _effective.get(i, 1)));
+      ScalarTensorFunction scalarTensorFunction = //
+          GeodesicBSplineFunction.of(RnGroup.INSTANCE, _degree, x, y);
+      Clip clip = Clips.interval(x.Get(0), Last.of(x));
+      Tensor domain = Subdivide.increasing(clip, 4 << _levels);
+      Tensor values = domain.map(scalarTensorFunction);
+      Curvature2DRender.of(Transpose.of(Tensors.of(domain, values)), false, geometricLayer, graphics);
     }
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+    leversRender.renderSequence();
+    leversRender.renderIndexP();
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new NonuniformSplineDemo().setVisible(1000, 800);
   }
 }

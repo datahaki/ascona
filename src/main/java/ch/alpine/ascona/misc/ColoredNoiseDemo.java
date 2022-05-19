@@ -3,12 +3,10 @@ package ch.alpine.ascona.misc;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.Arrays;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.util.api.AbstractGeodesicDisplayDemo;
-import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.fig.VisualSet;
@@ -28,32 +26,38 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.sca.Clips;
 
+// TODO separate standalone demos (like this one) from geometric/manifold demos
 @ReflectionMarker
-public class ColoredNoiseDemo extends AbstractGeodesicDisplayDemo {
-  @FieldSlider
-  @FieldClip(min = "0", max = "2")
-  @FieldPreferredWidth(250)
-  public Scalar alpha = RealScalar.of(2);
-  @FieldPreferredWidth(150)
-  @FieldInteger
-  public Scalar length = RealScalar.of(300);
-  @FieldFuse(value = "generate")
-  public Boolean generate = true;
+public class ColoredNoiseDemo extends AbstractDemo {
+  @ReflectionMarker
+  public static class Param {
+    @FieldSlider
+    @FieldClip(min = "0", max = "2")
+    @FieldPreferredWidth(250)
+    public Scalar alpha = RealScalar.of(2);
+    @FieldPreferredWidth(150)
+    @FieldInteger
+    public Scalar length = RealScalar.of(300);
+    @FieldFuse(value = "generate")
+    public transient Boolean generate = true;
+  }
+
+  private final Param param = new Param();
   // ---
   private JFreeChart jFreeChart;
   private JFreeChart spectrogra;
 
   public ColoredNoiseDemo() {
-    super(Arrays.asList(R2Display.INSTANCE));
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar).addUniversalListener(this::compute);
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::compute);
     // ---
     timerFrame.geometricComponent.setRotatable(false);
     compute();
   }
 
   private void compute() {
-    ColoredNoise coloredNoise = new ColoredNoise(alpha.number().doubleValue());
-    Tensor values = RandomVariate.of(coloredNoise, length.number().intValue());
+    ColoredNoise coloredNoise = new ColoredNoise(param.alpha.number().doubleValue());
+    Tensor values = RandomVariate.of(coloredNoise, param.length.number().intValue());
     Tensor domain = Range.of(0, values.length());
     {
       VisualSet visualSet = new VisualSet();

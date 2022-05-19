@@ -4,8 +4,6 @@ package ch.alpine.ascona.misc;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
-import ch.alpine.ascona.util.dis.GeodesicDisplayRender;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -18,12 +16,6 @@ public class S2LogDemo extends ControlPointsDemo {
   public S2LogDemo() {
     super(true, ManifoldDisplays.S2_ONLY);
     // ---
-    timerFrame.geometricComponent.addRenderInterfaceBackground(new GeodesicDisplayRender() {
-      @Override
-      public ManifoldDisplay getGeodesicDisplay() {
-        return manifoldDisplay();
-      }
-    });
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     timerFrame.geometricComponent.setOffset(400, 400);

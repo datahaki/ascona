@@ -14,7 +14,6 @@ import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -68,7 +67,6 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     GRID_RENDER.render(geometricLayer, graphics);
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
     final Tensor tensor = getControlPointsSe2();
     POINTS_RENDER_0.show(Se2Display.INSTANCE::matrixLift, //
         Se2Display.INSTANCE.shape(), //

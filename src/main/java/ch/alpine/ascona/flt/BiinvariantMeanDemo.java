@@ -12,7 +12,6 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2CoveringDisplay;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -51,7 +50,6 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   // ---
   public Biinvariants biinvariants = Biinvariants.LEVERAGES;
-  public Boolean axes = false;
   public Boolean median = true;
 
   public BiinvariantMeanDemo() {
@@ -70,8 +68,6 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (axes)
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor sequence = getGeodesicControlPoints();
     int length = sequence.length();
     if (0 == length)

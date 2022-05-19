@@ -39,7 +39,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 @ReflectionMarker
 // TODO ASCONA possibly create TABs for each Manifold Display (in order to leave ctrl points)
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
-public abstract class ControlPointsDemo extends AbstractGeodesicDisplayDemo {
+public abstract class ControlPointsDemo extends AbstractManifoldDisplayDemo {
   /** mouse snaps 20 pixel to control points */
   private static final Scalar PIXEL_THRESHOLD = RealScalar.of(20.0);
   /** refined points */

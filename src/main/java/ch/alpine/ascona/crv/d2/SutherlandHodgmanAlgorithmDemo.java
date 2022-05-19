@@ -10,7 +10,6 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.lev.AbstractPlaceDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -53,7 +52,6 @@ public class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
     boolean isMoving = jToggleButton.isSelected();
     setPositioningEnabled(!isMoving);
     RenderQuality.setQuality(graphics);
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
     if (isMoving) {
       Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
       Se2Bijection se2Bijection = new Se2Bijection(Times.of(mouse, Tensors.vector(1, 1, 0.3)));

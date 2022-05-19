@@ -8,7 +8,6 @@ import java.util.Objects;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.Se2Display;
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -49,7 +48,6 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
       setControlPointsSe2(tensor);
     }
     setManifoldDisplay(Se2Display.INSTANCE);
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }
 
   @Override // from RenderInterface
@@ -90,7 +88,7 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.DARK.updateUI();
-    new BezierFunctionDemo().setVisible(1000, 600);
+    LookAndFeels.LIGHT.updateUI();
+    new BezierFunctionDemo().setVisible(1200, 600);
   }
 }

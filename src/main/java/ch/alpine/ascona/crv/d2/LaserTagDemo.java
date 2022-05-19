@@ -11,6 +11,7 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -27,17 +28,23 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-@ReflectionMarker
 public class LaserTagDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict().deriveWithAlpha(128);
   // ---
   private static final String TEXT = "WILLKOMMEN IN"; // "NIEDERSACHSEN";
   private final PathRender pathRenderHull = new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5f);
-  public Boolean show = true;
+
+  @ReflectionMarker
+  public static class Param {
+    public Boolean show = true;
+  }
+
+  private final Param param = new Param();
 
   public LaserTagDemo() {
     super(false, ManifoldDisplays.R2_ONLY);
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    // ---
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
     timerFrame.geometricComponent.addRenderInterface(pathRenderHull);
     // ---
@@ -50,7 +57,7 @@ public class LaserTagDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     graphics.setColor(COLOR_DATA_INDEXED.getColor(0));
-    if (show) {
+    if (param.show) {
       graphics.draw(geometricLayer.toPath2D(control));
       {
         LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
@@ -83,6 +90,7 @@ public class LaserTagDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new LaserTagDemo().setVisible(1000, 600);
   }
 }

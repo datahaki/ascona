@@ -1,10 +1,7 @@
 // code by jph
 package ch.alpine.ascona.nd;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.HashMap;
@@ -12,16 +9,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.IntStream;
 
-import javax.swing.JScrollPane;
-
 import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.PanelFieldsEditor;
+import ch.alpine.bridge.ref.util.FieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -47,27 +44,23 @@ public class DbscanDemo extends AbstractDemo {
     @FieldClip(min = "1", max = "1000")
     public Scalar count = RealScalar.of(200);
     @FieldInteger
-    public Scalar dep = RealScalar.of(5);
+    public Scalar minPts = RealScalar.of(5);
     public CenterNorms centerNorms = CenterNorms._2;
     @FieldFuse
-    public Boolean shuffle = false;
+    public transient Boolean shuffle = false;
   }
 
   private final Param param = new Param();
   private Tensor pointsAll;
 
   public DbscanDemo() {
-    Container container = timerFrame.jFrame.getContentPane();
-    PanelFieldsEditor panelFieldsEditor = new PanelFieldsEditor(param);
-    panelFieldsEditor.addUniversalListener(() -> {
+    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    fieldsEditor.addUniversalListener(() -> {
       if (param.shuffle) {
         param.shuffle = false;
         pointsAll = recomp();
       }
     });
-    JScrollPane jScrollPane = panelFieldsEditor.createJScrollPane();
-    jScrollPane.setPreferredSize(new Dimension(200, 200));
-    container.add(BorderLayout.WEST, jScrollPane);
     timerFrame.geometricComponent.setOffset(100, 600);
     // System.out.println(pointsAll.length());
     pointsAll = recomp();
@@ -93,7 +86,7 @@ public class DbscanDemo extends AbstractDemo {
     Scalar radius = Abs.FUNCTION.apply(xya.Get(2)).multiply(RealScalar.of(0.2));
     Timing timing = Timing.started();
     CenterNorms centerNorms = param.centerNorms;
-    Integer[] labels = Dbscan.of(points, centerNorms::ndCenterInterface, radius, param.dep.number().intValue());
+    Integer[] labels = Dbscan.of(points, centerNorms::ndCenterInterface, radius, param.minPts.number().intValue());
     double seconds = timing.seconds();
     graphics.drawString(String.format("%6.4f", seconds), 0, 40);
     {
@@ -128,6 +121,7 @@ public class DbscanDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new DbscanDemo().setVisible(1000, 800);
   }
 }
