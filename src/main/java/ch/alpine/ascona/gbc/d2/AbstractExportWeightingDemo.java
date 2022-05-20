@@ -11,7 +11,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-import ch.alpine.ascona.gbc.dn.AbstractScatteredSetWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
@@ -27,7 +26,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 
-public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWeightingDemo implements ActionListener {
+/* package */ abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWeightingDemo implements ActionListener {
   private static final int REFINEMENT = 120; // presentation 60
   private final JButton jButtonExport = new JButton("export");
 

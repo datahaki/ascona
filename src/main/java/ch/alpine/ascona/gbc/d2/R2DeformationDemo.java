@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.dn;
+package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -10,6 +10,7 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.MixedLogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -92,6 +93,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new R2DeformationDemo().setVisible(1300, 800);
   }
 }

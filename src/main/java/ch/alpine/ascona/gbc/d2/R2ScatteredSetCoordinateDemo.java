@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.dn;
+package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -17,6 +17,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ArrayRender;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -151,6 +152,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new R2ScatteredSetCoordinateDemo().setVisible(1200, 900);
   }
 }

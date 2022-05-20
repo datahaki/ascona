@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.dn;
+package ch.alpine.ascona.gbc.d2;
 
 import java.io.IOException;
 import java.util.Random;

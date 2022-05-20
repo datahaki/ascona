@@ -12,12 +12,16 @@ import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.mat.re.Inverse;
+import ch.alpine.tensor.red.Max;
+import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 
 /* package */ enum StaticHelper {
   ;
@@ -42,8 +46,17 @@ import ch.alpine.tensor.sca.Clip;
     return new ArrayPlotRender( //
         rescale.result(), //
         coverZero //
-            ? ClipPointCover.of(clip, RealScalar.ZERO)
+            ? StaticHelper.cover(clip, RealScalar.ZERO)
             : clip, //
         colorDataGradient, magnification);
+  }
+
+  /** @param clip
+   * @param scalar
+   * @return */
+  public static Clip cover(Clip clip, Scalar scalar) {
+    return Clips.interval( //
+        Min.of(clip.min(), scalar), //
+        Max.of(clip.max(), scalar));
   }
 }

@@ -14,8 +14,8 @@ import ch.alpine.tensor.opt.nd.CoordinateBounds;
 public class NdTreeMapDemo extends AbstractTreeMapDemo {
   @Override
   Tensor pointsAll(int length) {
-    CoordinateBoundingBox box = CoordinateBounds.of(Tensors.vector(0, 0), Tensors.vector(10, 8));
-    return RandomSample.of(BoxRandomSample.of(box), length);
+    CoordinateBoundingBox coordinateBoundingBox = CoordinateBounds.of(Tensors.vector(0, 0), Tensors.vector(10, 8));
+    return RandomSample.of(BoxRandomSample.of(coordinateBoundingBox), length);
   }
 
   @Override

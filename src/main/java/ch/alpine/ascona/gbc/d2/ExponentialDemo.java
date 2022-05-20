@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.lev;
+package ch.alpine.ascona.gbc.d2;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.gbc.d2.GenesisDequeProperties;
+import ch.alpine.ascona.lev.AbstractPlaceDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
@@ -41,13 +41,13 @@ import ch.alpine.tensor.red.Times;
 public class ExponentialDemo extends AbstractPlaceDemo {
   private static final int WIDTH = 300;
   // ---
-  private final GenesisDequeProperties iterativeAffineProperties = new GenesisDequeProperties();
+  private final GenesisDequeProperties genesisDequeProperties = new GenesisDequeProperties();
 
   public ExponentialDemo() {
     super(true, ManifoldDisplays.R2_ONLY);
     // ---
     Container container = timerFrame.jFrame.getContentPane();
-    PanelFieldsEditor fieldsPanel = new PanelFieldsEditor(iterativeAffineProperties);
+    PanelFieldsEditor fieldsPanel = new PanelFieldsEditor(genesisDequeProperties);
     container.add(BorderLayout.WEST, fieldsPanel.createJScrollPane());
     Tensor sequence = Tensor.of(CirclePoints.of(15).multiply(RealScalar.of(2)).stream().skip(5).map(PadRight.zeros(3)));
     sequence.set(Scalar::zero, 0, Tensor.ALL);
@@ -75,7 +75,7 @@ public class ExponentialDemo extends AbstractPlaceDemo {
         pathRender.render(geometricLayer, graphics);
       }
       if (OriginEnclosureQ.INSTANCE.test(levers2)) {
-        GenesisDeque dequeGenesis = (GenesisDeque) iterativeAffineProperties.genesis();
+        GenesisDeque dequeGenesis = (GenesisDeque) genesisDequeProperties.genesis();
         Deque<Evaluation> deque = dequeGenesis.deque(levers2);
         {
           Tensor leversVirtual = Times.of(deque.peekLast().factors(), levers2);

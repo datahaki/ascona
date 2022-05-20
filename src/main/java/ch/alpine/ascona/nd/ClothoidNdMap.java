@@ -8,7 +8,6 @@ import java.util.function.Function;
 import ch.alpine.bridge.util.BoundedPriorityQueue;
 import ch.alpine.sophus.crv.clt.Clothoid;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
-import ch.alpine.sophus.crv.clt.ClothoidBuilders;
 import ch.alpine.sophus.crv.clt.ClothoidComparators;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
@@ -19,14 +18,14 @@ import ch.alpine.tensor.opt.nd.NdMap;
 import ch.alpine.tensor.opt.nd.NdMatch;
 import ch.alpine.tensor.opt.nd.NdTreeMap;
 
-public class Se2NdMap<T> {
+public class ClothoidNdMap<T> {
   private final int FACTOR = 3;
   private final NdMap<T> ndMap;
   private final Function<T, Tensor> se2Projection;
 
-  public Se2NdMap(CoordinateBoundingBox box, Function<T, Tensor> se2Projection) {
-    Integers.requireEquals(box.dimensions(), 2);
-    ndMap = NdTreeMap.of(box);
+  public ClothoidNdMap(CoordinateBoundingBox coordinateBoundingBox, Function<T, Tensor> se2Projection) {
+    Integers.requireEquals(coordinateBoundingBox.dimensions(), 2);
+    ndMap = NdTreeMap.of(coordinateBoundingBox);
     this.se2Projection = se2Projection;
   }
 
@@ -34,22 +33,20 @@ public class Se2NdMap<T> {
     ndMap.insert(se2Projection.apply(value).extract(0, 2), value);
   }
 
-  public Collection<Clothoid> cl_nearFrom(T value, int limit) {
+  public Collection<Clothoid> cl_nearFrom(ClothoidBuilder clothoidBuilder, T value, int limit) {
     Tensor origin = se2Projection.apply(value);
     Collection<NdMatch<T>> collection = //
         NdCollectNearest.of(ndMap, NdCenters.VECTOR_2_NORM.apply(origin.extract(0, 2)), limit * FACTOR);
-    ClothoidBuilder clothoidBuilder = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
     Queue<Clothoid> queue = BoundedPriorityQueue.min(limit, ClothoidComparators.LENGTH);
     for (NdMatch<T> ndMatch : collection)
       queue.add(clothoidBuilder.curve(origin, se2Projection.apply(ndMatch.value())));
     return queue;
   }
 
-  public Collection<Clothoid> cl_nearTo(T value, int limit) {
+  public Collection<Clothoid> cl_nearTo(ClothoidBuilder clothoidBuilder, T value, int limit) {
     Tensor target = se2Projection.apply(value);
     Collection<NdMatch<T>> collection = //
         NdCollectNearest.of(ndMap, NdCenters.VECTOR_2_NORM.apply(target.extract(0, 2)), limit * FACTOR);
-    ClothoidBuilder clothoidBuilder = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
     Queue<Clothoid> queue = BoundedPriorityQueue.min(limit, ClothoidComparators.LENGTH);
     for (NdMatch<T> ndMatch : collection)
       queue.add(clothoidBuilder.curve(se2Projection.apply(ndMatch.value()), target));

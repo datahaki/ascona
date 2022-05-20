@@ -1,24 +1,18 @@
 // code by jph
-package ch.alpine.ascona.gbc.d2;
-
-import java.io.IOException;
+package ch.alpine.ascona.util.ren;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorFormat;
 import ch.alpine.tensor.img.Hue;
-import ch.alpine.tensor.img.ImageResize;
 import ch.alpine.tensor.img.StrictColorDataIndexed;
-import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.sca.Mod;
 
-/* package */ enum HueColorData {
+public enum HueColorData {
   ;
   private static final Mod MOD = Mod.function(1);
 
@@ -33,12 +27,5 @@ import ch.alpine.tensor.sca.Mod;
       offset = MOD.apply(offset.add(goldenAngle));
     }
     return StrictColorDataIndexed.of(tensor);
-  }
-
-  public static void main(String[] args) throws IOException {
-    ColorDataIndexed colorDataIndexed = of(10, 5);
-    Tensor tensor = Range.of(0, colorDataIndexed.length()).map(Tensors::of).map(colorDataIndexed);
-    tensor = ImageResize.nearest(tensor, 10);
-    Export.of(HomeDirectory.Pictures("huecolordata.png"), tensor);
   }
 }

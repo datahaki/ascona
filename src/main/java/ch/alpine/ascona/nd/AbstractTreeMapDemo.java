@@ -57,7 +57,8 @@ import ch.alpine.tensor.sca.Abs;
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    manifoldDisplay().background().render(geometricLayer, graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    manifoldDisplay.background().render(geometricLayer, graphics);
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     Tensor xyz = center(mouse);
     // normal rendering quality
@@ -105,9 +106,17 @@ import ch.alpine.tensor.sca.Abs;
     }
     {
       graphics.setColor(Color.BLUE);
+      // if (centerNorms.equals(CenterNorms._2)) {
+      // HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      // // manifoldDisplay.
+      // // createTangent
+      // // Exponential exponential = homogeneousSpace.exponential(p);
+      // // exponential.exp(p)
+      // } else {
       geometricLayer.pushMatrix(GfxMatrix.translation(xyz));
       graphics.draw(geometricLayer.toPath2D(centerNorms.shape().multiply(radius), true));
       geometricLayer.popMatrix();
+      // }
     }
     graphics.setColor(new Color(0, 128, 0, 255));
     for (NdMatch<Void> ndMatch : collection) {

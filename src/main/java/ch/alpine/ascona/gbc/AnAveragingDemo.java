@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.dn;
+package ch.alpine.ascona.gbc;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;

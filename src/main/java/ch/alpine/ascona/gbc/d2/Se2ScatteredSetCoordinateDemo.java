@@ -1,18 +1,18 @@
 // code by jph
-package ch.alpine.ascona.gbc.dn;
+package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Graphics2D;
 import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.gbc.d2.AbstractExportWeightingDemo;
 import ch.alpine.ascona.util.api.ImageReshape;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.DoubleScalar;
@@ -91,6 +91,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new Se2ScatteredSetCoordinateDemo().setVisible(1200, 900);
   }
 }

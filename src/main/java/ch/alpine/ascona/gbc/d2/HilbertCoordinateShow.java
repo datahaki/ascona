@@ -11,7 +11,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataGradients;
 
-/* package */ enum HilbertCoordinateExport {
+/* package */ enum HilbertCoordinateShow {
   ;
   public static void main(String[] args) throws IOException {
     for (int n = 2; n < 5; ++n) {

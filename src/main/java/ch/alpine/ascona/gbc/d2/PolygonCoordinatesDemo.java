@@ -18,6 +18,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
+import ch.alpine.ascona.util.ren.HueColorData;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;

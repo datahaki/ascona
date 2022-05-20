@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.gbc.dn.AnAveragingDemo;
+import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
