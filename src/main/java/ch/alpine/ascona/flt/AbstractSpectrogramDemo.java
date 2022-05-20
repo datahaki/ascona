@@ -13,7 +13,6 @@ import org.jfree.chart.JFreeChart;
 import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.fig.VisualSet;
@@ -44,10 +43,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   // TODO ASCONA ALG refactor
   protected Tensor _control = null;
   // protected final SpinnerLabel<ColorDataGradients> spinnerLabelCDG = new SpinnerLabel<>();
-
-  protected AbstractSpectrogramDemo(GokartPoseData gokartPoseData) {
-    this(ManifoldDisplays.CL_SE2_R2, gokartPoseData);
-  }
 
   protected AbstractSpectrogramDemo(List<ManifoldDisplay> list, GokartPoseData gokartPoseData) {
     super(list);

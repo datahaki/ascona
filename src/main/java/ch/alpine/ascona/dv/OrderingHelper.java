@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -18,11 +19,12 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Ordering;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorFormat;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.sca.Clips;
 
 /* package */ enum OrderingHelper {
   ;
@@ -53,9 +55,12 @@ import ch.alpine.tensor.num.Pi;
       BufferedImage bufferedImage = BarLegend.of(colorDataGradientD, 130, "far", "near");
       Scalar dy = Pi.VALUE;
       dy = FACTOR.multiply(Pi.VALUE);
+      Scalar px = Pi.VALUE.add(RealScalar.of(0.4));
+      Scalar py = dy.negate();
+      CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox
+          .of(Stream.of(Clips.interval(px, px.add(dy.add(dy))), Clips.interval(py, py.add(dy.add(dy)))));
       Tensor pixel2model = HsArrayPlot.pixel2model( //
-          Tensors.of(Pi.VALUE.add(RealScalar.of(0.4)), dy.negate()), //
-          Tensors.of(dy.add(dy), dy.add(dy)), //
+          coordinateBoundingBox, //
           new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
       ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
     }

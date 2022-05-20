@@ -72,7 +72,7 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
   }
 
   protected final ArrayPlotRender arrayPlotRender(Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator, int magnification) {
-    HsArrayPlot geodesicArrayPlot = manifoldDisplay().geodesicArrayPlot();
+    HsArrayPlot geodesicArrayPlot = manifoldDisplay().arrayPlot();
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
     Tensor wgs = geodesicArrayPlot.raster(refinement, tensorUnaryOperator, fallback);
     return StaticHelper.arrayPlotFromTensor(wgs, magnification, logWeighting().equals(LogWeightings.DISTANCES), colorDataGradient());

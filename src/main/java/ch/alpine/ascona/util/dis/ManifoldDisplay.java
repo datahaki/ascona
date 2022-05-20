@@ -79,7 +79,7 @@ public interface ManifoldDisplay {
    * @param resolution
    * @param tensorScalarFunction
    * @return array of scalar values clipped to interval [0, 1] or DoubleScalar.INDETERMINATE */
-  HsArrayPlot geodesicArrayPlot();
+  HsArrayPlot arrayPlot();
 
   RandomSampleInterface randomSampleInterface();
 

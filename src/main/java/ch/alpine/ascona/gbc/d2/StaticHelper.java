@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Clip;
 /* package */ enum StaticHelper {
   ;
   public static BufferedImage fuseImages(ManifoldDisplay manifoldDisplay, ArrayPlotRender arrayPlotRender, int refinement, int sequence_length) {
-    HsArrayPlot geodesicArrayPlot = manifoldDisplay.geodesicArrayPlot();
+    HsArrayPlot geodesicArrayPlot = manifoldDisplay.arrayPlot();
     BufferedImage foreground = arrayPlotRender.export();
     BufferedImage background = new BufferedImage(foreground.getWidth(), foreground.getHeight(), BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = background.createGraphics();

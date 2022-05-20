@@ -45,7 +45,7 @@ public class S1Display extends SnDisplay {
   }
 
   @Override
-  public HsArrayPlot geodesicArrayPlot() {
+  public HsArrayPlot arrayPlot() {
     return null;
   }
 

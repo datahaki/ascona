@@ -20,7 +20,7 @@ public class H2Display extends HnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsArrayPlot geodesicArrayPlot() {
+  public HsArrayPlot arrayPlot() {
     return new H2ArrayPlot(RADIUS);
   }
 

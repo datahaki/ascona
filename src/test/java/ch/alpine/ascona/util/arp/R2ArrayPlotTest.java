@@ -11,6 +11,6 @@ import ch.alpine.tensor.ext.Serialization;
 class R2ArrayPlotTest {
   @Test
   public void testSerialization() throws ClassNotFoundException, IOException {
-    Serialization.copy(new R2ArrayPlot(RealScalar.of(3)));
+    Serialization.copy(R2ArrayPlot.of(RealScalar.of(3)));
   }
 }

@@ -117,7 +117,7 @@ class ManifoldDisplaysTest {
   @MethodSource("parameters")
   public void testSome(ManifoldDisplay manifoldDisplay) {
     // TODO
-    if (manifoldDisplay.geodesicArrayPlot() != null)
+    if (manifoldDisplay.arrayPlot() != null)
       System.out.println(manifoldDisplay);
   }
 

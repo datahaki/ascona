@@ -76,7 +76,7 @@ public enum He1Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsArrayPlot geodesicArrayPlot() {
+  public HsArrayPlot arrayPlot() {
     return null;
   }
 

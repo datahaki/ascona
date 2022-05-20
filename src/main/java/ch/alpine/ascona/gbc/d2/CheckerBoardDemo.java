@@ -102,7 +102,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
           System.out.println(logWeighting);
           TensorScalarFunction tensorUnaryOperator = function(sequence, reference.multiply( //
               param.factor()));
-          HsArrayPlot geodesicArrayPlot = manifoldDisplay().geodesicArrayPlot();
+          HsArrayPlot geodesicArrayPlot = manifoldDisplay().arrayPlot();
           // TODO ASCONA ALG redundant
           Tensor matrix = geodesicArrayPlot.raster(512, tensorUnaryOperator, DoubleScalar.INDETERMINATE);
           BufferedImage bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1).export();
@@ -123,7 +123,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
     if (param.freeze) {
       System.out.println("compute");
       Tensor sequence = getGeodesicControlPoints();
-      HsArrayPlot geodesicArrayPlot = manifoldDisplay().geodesicArrayPlot();
+      HsArrayPlot geodesicArrayPlot = manifoldDisplay().arrayPlot();
       Tensor matrix = geodesicArrayPlot.raster( //
           param.refine.number().intValue(), //
           function(sequence, reference.multiply(param.factor())), //
@@ -154,7 +154,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
         recompute();
       if (Objects.nonNull(bufferedImage)) {
         RenderQuality.setDefault(graphics); // default so that raster becomes visible
-        HsArrayPlot geodesicArrayPlot = manifoldDisplay.geodesicArrayPlot();
+        HsArrayPlot geodesicArrayPlot = manifoldDisplay.arrayPlot();
         Tensor pixel2model = geodesicArrayPlot.pixel2model(new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
         ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
       }

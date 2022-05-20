@@ -153,7 +153,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   public void recompute() {
     System.out.println("recomp");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot geodesicArrayPlot = manifoldDisplay.geodesicArrayPlot();
+    HsArrayPlot geodesicArrayPlot = manifoldDisplay.arrayPlot();
     Labels labels = Objects.requireNonNull(spinnerLabels.getValue());
     Objects.requireNonNull(vector);
     Classification classification = labels.apply(vector);
@@ -169,7 +169,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     if (Objects.nonNull(bufferedImage)) {
-      Tensor pixel2model = manifoldDisplay.geodesicArrayPlot().pixel2model(new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
+      Tensor pixel2model = manifoldDisplay.arrayPlot().pixel2model(new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
       ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
     }
     // ---
@@ -208,7 +208,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);
-      HsArrayPlot geodesicArrayPlot = manifoldDisplay.geodesicArrayPlot();
+      HsArrayPlot geodesicArrayPlot = manifoldDisplay.arrayPlot();
       Classification classification = spinnerLabels.getValue().apply(vector);
       ColorDataLists colorDataLists = spinnerColor.getValue();
       ColorDataIndexed colorDataIndexed = colorDataLists.strict();

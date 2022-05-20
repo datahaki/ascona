@@ -99,7 +99,7 @@ public class Rp2Display extends RpnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsArrayPlot geodesicArrayPlot() {
+  public HsArrayPlot arrayPlot() {
     return S2ArrayPlot.INSTANCE;
   }
 

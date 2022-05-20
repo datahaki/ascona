@@ -98,7 +98,7 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsArrayPlot geodesicArrayPlot() {
+  public HsArrayPlot arrayPlot() {
     return null;
   }
 

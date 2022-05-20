@@ -35,8 +35,8 @@ public class R2Display extends RnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsArrayPlot geodesicArrayPlot() {
-    return new R2ArrayPlot(RADIUS);
+  public HsArrayPlot arrayPlot() {
+    return R2ArrayPlot.of(RADIUS);
   }
 
   @Override // from ManifoldDisplay

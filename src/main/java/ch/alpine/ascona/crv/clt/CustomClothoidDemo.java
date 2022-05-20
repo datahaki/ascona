@@ -59,7 +59,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   private ClothoidDefectContainer clothoidDefectContainer = null;
 
   public CustomClothoidDemo() {
-    super(false, ManifoldDisplays.SE2C_ONLY);
+    super(false, ManifoldDisplays.CL_ONLY);
     {
       jTextField.setPreferredSize(new Dimension(100, 28));
       timerFrame.jToolBar.add(jTextField);

@@ -105,24 +105,25 @@ public class D2AveragingDemo extends AnAveragingDemo {
     Tensor sequence = tensor.get(0).map(N.DOUBLE);
     Tensor values = tensor.get(1).map(N.DOUBLE);
     int resolution = spinnerRes.getValue();
-    try {
-      TensorScalarFunction tensorScalarFunction = function(sequence, values);
-      HsArrayPlot geodesicArrayPlot = manifoldDisplay().geodesicArrayPlot();
-      ScalarUnaryOperator suo = Round.toMultipleOf(RationalScalar.of(2, 10));
-      TensorScalarFunction tsf = t -> suo.apply(tensorScalarFunction.apply(t));
-      Timing timing = Timing.started();
-      Tensor matrix = geodesicArrayPlot.raster(resolution, tsf, DoubleScalar.INDETERMINATE);
-      computeTime = timing.seconds();
-      // ---
-      if (jToggleThresh.isSelected())
-        matrix = matrix.map(Round.FUNCTION); // effectively maps to 0 or 1
-      // ---
-      ColorDataGradient colorDataGradient = spinnerColorData.getValue();
-      return ArrayPlotRender.rescale(matrix, colorDataGradient, spinnerMagnif.getValue()).export();
-    } catch (Exception exception) {
-      System.out.println(exception);
-      exception.printStackTrace();
-    }
+    if (2 < values.length())
+      try {
+        TensorScalarFunction tensorScalarFunction = function(sequence, values);
+        HsArrayPlot geodesicArrayPlot = manifoldDisplay().arrayPlot();
+        ScalarUnaryOperator suo = Round.toMultipleOf(RationalScalar.of(2, 10));
+        TensorScalarFunction tsf = t -> suo.apply(tensorScalarFunction.apply(t));
+        Timing timing = Timing.started();
+        Tensor matrix = geodesicArrayPlot.raster(resolution, tsf, DoubleScalar.INDETERMINATE);
+        computeTime = timing.seconds();
+        // ---
+        if (jToggleThresh.isSelected())
+          matrix = matrix.map(Round.FUNCTION); // effectively maps to 0 or 1
+        // ---
+        ColorDataGradient colorDataGradient = spinnerColorData.getValue();
+        return ArrayPlotRender.rescale(matrix, colorDataGradient, spinnerMagnif.getValue()).export();
+      } catch (Exception exception) {
+        System.out.println(exception);
+        exception.printStackTrace();
+      }
     return null;
   }
 
@@ -137,7 +138,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
     BufferedImage bufferedImage = cache.apply(Unprotect.byRef(sequence, values));
     if (Objects.nonNull(bufferedImage)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      Tensor pixel2model = manifoldDisplay.geodesicArrayPlot().pixel2model(new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
+      Tensor pixel2model = manifoldDisplay.arrayPlot().pixel2model(new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
       ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
     }
     RenderQuality.setQuality(graphics);

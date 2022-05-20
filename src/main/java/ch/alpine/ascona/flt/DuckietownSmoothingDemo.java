@@ -15,6 +15,7 @@ import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dat.PolyDuckietownData;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -45,7 +46,7 @@ import ch.alpine.tensor.itp.DeBoor;
   private final JSlider jSlider = new JSlider(0, 1000, 500);
 
   public DuckietownSmoothingDemo() {
-    super(GokartPoseDataV2.INSTANCE);
+    super(ManifoldDisplays.R2_ONLY, GokartPoseDataV2.INSTANCE);
     // ---
     spinnerDegree.setList(DEGREES);
     spinnerDegree.setValue(2);

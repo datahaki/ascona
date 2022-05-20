@@ -20,7 +20,7 @@ import ch.alpine.tensor.img.ColorDataGradient;
     TensorUnaryOperator tuo = IterativeGenesis.counts(homogeneousSpace, sequence, max);
     int sequence_length = IterativeGenesis.values().length;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence_length);
-    HsArrayPlot geodesicArrayPlot = manifoldDisplay.geodesicArrayPlot();
+    HsArrayPlot geodesicArrayPlot = manifoldDisplay.arrayPlot();
     Tensor wgs = geodesicArrayPlot.raster(res, tuo, fallback);
     ArrayPlotRender arrayPlotRender = StaticHelper.arrayPlotFromTensor(wgs, 1, false, colorDataGradient);
     return StaticHelper.fuseImages(manifoldDisplay, arrayPlotRender, res, sequence_length);

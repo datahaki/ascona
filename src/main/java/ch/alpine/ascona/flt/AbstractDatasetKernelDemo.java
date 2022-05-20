@@ -8,7 +8,6 @@ import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
@@ -23,10 +22,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
       spinnerRadius.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
       spinnerRadius.addSpinnerListener(value -> updateState());
     }
-  }
-
-  protected AbstractDatasetKernelDemo(GokartPoseData gokartPoseData) {
-    this(ManifoldDisplays.CL_SE2_R2, gokartPoseData);
   }
 
   @Override // from DatasetFilterDemo
