@@ -49,7 +49,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   private final Tensor points = Tensors.empty();
 
   public Tsp2OptHeuristicDemo() {
-    super(false, ManifoldDisplays.R2_H2_S2);
+    super(false, ManifoldDisplays.METRIC);
     setPositioningEnabled(false);
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
@@ -91,7 +91,8 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       Tensor p = sequence.get(index[i]);
       Tensor q = sequence.get(index[(i + 1) % index.length]);
       ScalarTensorFunction curve = homogeneousSpace.curve(p, q);
-      Path2D line = geometricLayer.toPath2D(domain.map(curve));
+      Tensor tensor = Tensor.of(domain.stream().map(Scalar.class::cast).map(curve).map(manifoldDisplay::toPoint));
+      Path2D line = geometricLayer.toPath2D(tensor);
       graphics.draw(line);
     }
     VisualSet visualSet = new VisualSet();

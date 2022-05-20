@@ -30,7 +30,7 @@ public class GrassmannDemo extends LogWeightingDemo implements SpinnerListener<M
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public GrassmannDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2_S2_H2_R2, LogWeightings.list());
+    super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
     // ---
     spinnerColorData.setValue(ColorDataGradients.TEMPERATURE);
     spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color scheme");

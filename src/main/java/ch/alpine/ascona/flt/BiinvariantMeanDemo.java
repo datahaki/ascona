@@ -53,7 +53,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   public Boolean median = true;
 
   public BiinvariantMeanDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2_S2_H2_R2);
+    super(true, ManifoldDisplays.MANIFOLDS);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
     Distribution dX = UniformDistribution.of(-3, 3);
@@ -83,7 +83,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     for (Tensor point : sequence) {
       Tensor curve = Subdivide.of(0, 1, 20).map(geodesicSpace.curve(point, mean));
-      Path2D path2d = geometricLayer.toPath2D(curve);
+      Path2D path2d = geometricLayer.toPath2D(Tensor.of(curve.stream().map(manifoldDisplay::toPoint)));
       graphics.draw(path2d);
     }
     graphics.setStroke(new BasicStroke(1));

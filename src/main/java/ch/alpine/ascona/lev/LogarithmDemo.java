@@ -48,7 +48,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
   private final JToggleButton jToggleCtrl = new JToggleButton("show ctrl");
 
   public LogarithmDemo() {
-    super(true, ManifoldDisplays.R2_H2_S2);
+    super(true, ManifoldDisplays.R2_H2_S2_RP2);
     {
       spinnerLength.setValue(11);
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");

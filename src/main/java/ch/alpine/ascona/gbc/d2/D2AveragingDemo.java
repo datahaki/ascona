@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.d1;
+package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,15 +7,16 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
+import ch.alpine.ascona.gbc.d1.AnAveragingDemo;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
@@ -38,7 +39,7 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
 
-/* package */ abstract class A2AveragingDemo extends AnAveragingDemo {
+public class D2AveragingDemo extends AnAveragingDemo {
   private final SpinnerLabel<Scalar> spinnerCvar = new SpinnerLabel<>();
   private final SpinnerLabel<Integer> spinnerMagnif = new SpinnerLabel<>();
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
@@ -46,8 +47,8 @@ import ch.alpine.tensor.sca.Round;
   private final JToggleButton jToggleVarian = new JToggleButton("est/var");
   private final JToggleButton jToggleThresh = new JToggleButton("thresh");
 
-  public A2AveragingDemo(List<ManifoldDisplay> geodesicDisplays) {
-    super(geodesicDisplays);
+  public D2AveragingDemo() {
+    super(ManifoldDisplays.R2_H2_S2_RP2);
     {
       spinnerCvar.setList(Tensors.fromString("{0, 0.01, 0.1, 0.5, 1}").stream().map(Scalar.class::cast).collect(Collectors.toList()));
       spinnerCvar.setIndex(0);
@@ -85,6 +86,9 @@ import ch.alpine.tensor.sca.Round;
     }
     timerFrame.jToolBar.addSeparator();
     addSpinnerListener(v -> recompute());
+    timerFrame.geometricComponent.setOffset(400, 400);
+    // ---
+    setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
   }
 
   private static final int CACHE_SIZE = 1;
@@ -149,5 +153,9 @@ import ch.alpine.tensor.sca.Round;
 
   void prepare() {
     // ---
+  }
+
+  public static void main(String[] args) {
+    new D2AveragingDemo().setVisible(1300, 800);
   }
 }

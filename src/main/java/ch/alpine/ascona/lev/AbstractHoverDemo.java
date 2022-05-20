@@ -24,7 +24,7 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
   private final JButton jButtonShuffle = new JButton("shuffle");
 
   public AbstractHoverDemo() {
-    super(false, ManifoldDisplays.SE2C_SE2_S2_R2, LogWeightings.list());
+    super(false, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
     setMidpointIndicated(false);
     setPositioningEnabled(false);
     addSpinnerListener(v -> shuffle(spinnerCount.getValue()));

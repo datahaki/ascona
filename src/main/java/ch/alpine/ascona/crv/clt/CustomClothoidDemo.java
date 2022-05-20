@@ -99,14 +99,14 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
 
   private boolean validateContainer() {
     {
-      Tensor control = getControlPointsSe2().copy();
+      Tensor control = getGeodesicControlPoints();
       control.set(CONFIG.get(Tensor.ALL, 0), Tensor.ALL, 0);
       control.set(CONFIG.get(Tensor.ALL, 1), Tensor.ALL, 1);
       setControlPointsSe2(control);
     }
     // ---
-    Tensor p = getControlPointsSe2().get(0);
-    Tensor q = getControlPointsSe2().get(1);
+    Tensor p = getGeodesicControlPoints().get(0);
+    Tensor q = getGeodesicControlPoints().get(1);
     ClothoidContext clothoidContext = new ClothoidContext(p, q);
     if (Objects.isNull(clothoidDefectContainer) || !clothoidDefectContainer.encodes(clothoidContext)) {
       clothoidDefectContainer = new ClothoidDefectContainer(clothoidContext);

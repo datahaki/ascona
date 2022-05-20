@@ -122,6 +122,12 @@ class ManifoldDisplaysTest {
   }
 
   @Test
+  public void testHs() {
+    for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.MANIFOLDS)
+      assertTrue(manifoldDisplay.geodesicSpace() instanceof HomogeneousSpace);
+  }
+
+  @Test
   public void testToString() {
     long count = ManifoldDisplays.ALL.stream().map(Object::toString).distinct().count();
     assertEquals(count, ManifoldDisplays.ALL.size());

@@ -23,7 +23,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.chq.FiniteScalarQ;
 
-/* package */ abstract class AnAveragingDemo extends LogWeightingDemo {
+public abstract class AnAveragingDemo extends LogWeightingDemo {
   private static final int WIDTH = 480;
   private static final int HEIGHT = 360;
   // ---
@@ -60,5 +60,5 @@ import ch.alpine.tensor.chq.FiniteScalarQ;
     }
   }
 
-  abstract void protected_render(GeometricLayer geometricLayer, Graphics2D graphics);
+  public abstract void protected_render(GeometricLayer geometricLayer, Graphics2D graphics);
 }

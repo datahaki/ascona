@@ -18,7 +18,7 @@ import ch.alpine.tensor.Tensor;
   private RenderInterface renderInterface;
 
   public A2ScatteredSetCoordinateDemo(List<LogWeighting> array) {
-    super(true, ManifoldDisplays.R2_H2_S2, array);
+    super(true, ManifoldDisplays.R2_H2_S2_RP2, array);
     // ---
     jToggleHeatmap.setVisible(false);
     jToggleArrows.setVisible(false);

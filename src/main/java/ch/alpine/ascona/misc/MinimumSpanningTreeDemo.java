@@ -25,6 +25,7 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.fit.MinimumSpanningTree;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.IntUndirectedEdge;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -52,7 +53,7 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
 
   public MinimumSpanningTreeDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2_S2_H2_R2, Arrays.asList(LogWeightings.DISTANCES));
+    super(true, ManifoldDisplays.MANIFOLDS, Arrays.asList(LogWeightings.DISTANCES));
     // ---
     spinnerRefine.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     spinnerRefine.setValue(2);
@@ -85,7 +86,8 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
         Tensor p = sequence.get(directedEdge.i());
         Tensor q = sequence.get(directedEdge.j());
         ScalarTensorFunction curve = geodesicSpace.curve(p, q);
-        Path2D line = geometricLayer.toPath2D(domain.map(curve));
+        Tensor tensor = Tensor.of(domain.stream().map(Scalar.class::cast).map(curve).map(manifoldDisplay::toPoint));
+        Path2D line = geometricLayer.toPath2D(tensor);
         graphics.draw(line);
       }
     }

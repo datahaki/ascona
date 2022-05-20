@@ -24,7 +24,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
-/** symmetric positive definite 2 x 2 matrices */
+/** orthogonal 3 x 3 matrices */
 public class So3Display implements ManifoldDisplay, Serializable {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.4)).unmodifiable();
   private static final Scalar RADIUS = RealScalar.of(7);

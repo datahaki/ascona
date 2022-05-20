@@ -48,7 +48,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   private final List<PathRender> pathRenders = new ArrayList<>();
 
   public LaneRiesenfeldComparisonDemo() {
-    this(ManifoldDisplays.WITHOUT_Sn_SO3);
+    this(ManifoldDisplays.WITHOUT_Sn);
   }
 
   public LaneRiesenfeldComparisonDemo(List<ManifoldDisplay> list) {
