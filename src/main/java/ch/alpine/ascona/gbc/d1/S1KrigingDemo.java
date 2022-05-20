@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Arrays;
 
+import ch.alpine.ascona.gbc.dn.AnAveragingDemo;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;

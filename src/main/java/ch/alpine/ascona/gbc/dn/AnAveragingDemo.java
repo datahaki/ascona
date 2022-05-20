@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.d1;
+package ch.alpine.ascona.gbc.dn;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -38,7 +38,7 @@ public abstract class AnAveragingDemo extends LogWeightingDemo {
     timerFrame.jToolBar.add(jToggleButton);
   }
 
-  final boolean isDeterminate() {
+  protected final boolean isDeterminate() {
     return FiniteScalarQ.of(variogram().apply(RealScalar.ZERO));
   }
 

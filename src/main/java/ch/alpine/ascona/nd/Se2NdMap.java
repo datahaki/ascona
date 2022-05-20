@@ -59,15 +59,4 @@ public class Se2NdMap<T> {
   public int size() {
     return ndMap.size();
   }
-
-  public Collection<T> nearFrom(T value, int limit) {
-    Tensor origin = se2Projection.apply(value);
-    Collection<NdMatch<T>> collection = //
-        NdCollectNearest.of(ndMap, NdCenters.VECTOR_2_NORM.apply(origin.extract(0, 2)), limit * FACTOR);
-    // ClothoidBuilder clothoidBuilder = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
-    Queue<T> queue = BoundedPriorityQueue.min(limit, null); // ClothoidComparators.LENGTH
-    // for (NdMatch<T> ndMatch : collection)
-    // queue.add(clothoidBuilder.curve(origin, se2Projection.apply(ndMatch.value())));
-    return queue;
-  }
 }

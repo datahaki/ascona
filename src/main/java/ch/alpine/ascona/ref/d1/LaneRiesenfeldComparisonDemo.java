@@ -48,14 +48,14 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   private final List<PathRender> pathRenders = new ArrayList<>();
 
   public LaneRiesenfeldComparisonDemo() {
-    this(ManifoldDisplays.WITHOUT_Sn);
+    this(ManifoldDisplays.ALL);
   }
 
   public LaneRiesenfeldComparisonDemo(List<ManifoldDisplay> list) {
     super(true, list);
     setManifoldDisplay(Se2ClothoidDisplay.LEGENDRE);
     // ---
-    jToggleCurvature.setSelected(true);
+    jToggleCurvature.setSelected(false);
     jToggleCurvature.setToolTipText("curvature plot");
     timerFrame.jToolBar.add(jToggleCurvature);
     // ---

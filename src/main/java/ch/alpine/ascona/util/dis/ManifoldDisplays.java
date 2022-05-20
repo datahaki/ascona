@@ -56,17 +56,6 @@ public enum ManifoldDisplays {
       S2Display.INSTANCE, //
       Rp2Display.INSTANCE);
   // ---
-  public static final List<ManifoldDisplay> WITHOUT_Sn = Arrays.asList( //
-      Se2ClothoidDisplay.ANALYTIC, //
-      Se2ClothoidDisplay.LEGENDRE, //
-      Se2CoveringClothoidDisplay.INSTANCE, //
-      Se2CoveringDisplay.INSTANCE, //
-      Se2Display.INSTANCE, //
-      Spd2Display.INSTANCE, //
-      R2Display.INSTANCE, //
-      He1Display.INSTANCE, //
-      Dt1Display.INSTANCE);
-  // ---
   public static final List<ManifoldDisplay> R2_ONLY = Arrays.asList( //
       R2Display.INSTANCE);
   // ---
