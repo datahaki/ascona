@@ -13,6 +13,7 @@ import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializable {
   private static final Tensor ARROWHEAD = Arrowhead.of(0.2).unmodifiable();
@@ -61,6 +62,11 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
 
   @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
+    return null;
+  }
+
+  @Override
+  public final CoordinateBoundingBox coordinateBoundingBox() {
     return null;
   }
 

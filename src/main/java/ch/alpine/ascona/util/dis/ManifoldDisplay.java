@@ -12,6 +12,7 @@ import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /** Hint: the interface is intended for use in the demo layer
  * but not in the library functions. */
@@ -65,7 +66,8 @@ public interface ManifoldDisplay {
   Biinvariant biinvariant();
 
   LineDistance lineDistance();
-  // CoordinateBoundingBox coordinateBoundingBox();
+
+  CoordinateBoundingBox coordinateBoundingBox();
 
   /** available for
    * R2

@@ -17,6 +17,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 public enum He1Display implements ManifoldDisplay {
   INSTANCE;
@@ -72,6 +73,11 @@ public enum He1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public LineDistance lineDistance() {
+    return null;
+  }
+
+  @Override
+  public CoordinateBoundingBox coordinateBoundingBox() {
     return null;
   }
 

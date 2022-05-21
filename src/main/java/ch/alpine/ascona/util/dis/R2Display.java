@@ -12,6 +12,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -36,9 +37,14 @@ public class R2Display extends RnDisplay {
     return GfxMatrix.translation(p);
   }
 
+  @Override
+  public CoordinateBoundingBox coordinateBoundingBox() {
+    return Box2D.xy(Clips.absolute(RADIUS));
+  }
+
   @Override // from ManifoldDisplay
   public HsArrayPlot arrayPlot() {
-    return new R2ArrayPlot(Box2D.xy(Clips.absolute(RADIUS)));
+    return new R2ArrayPlot(coordinateBoundingBox());
   }
 
   @Override // from ManifoldDisplay

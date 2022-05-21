@@ -19,6 +19,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.AngleVector;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.CopySign;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Clip;
@@ -94,6 +95,11 @@ public class S2Display extends SnDisplay {
     Scalar r = CLIP_Z.rescale(xyz.Get(2));
     skew = Times.of(Tensors.of(r, r, RealScalar.ONE), skew);
     return GfxMatrix.translation(toPoint(xyz)).dot(skew);
+  }
+
+  @Override
+  public final CoordinateBoundingBox coordinateBoundingBox() {
+    return S2ArrayPlot.COORDINATE_BOUNDING_BOX;
   }
 
   @Override // from ManifoldDisplay

@@ -21,6 +21,7 @@ import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.DiagonalMatrix;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Diagonal;
 
 /** symmetric positive definite 2 x 2 matrices */
@@ -94,6 +95,11 @@ public enum Spd2Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public LineDistance lineDistance() {
+    return null;
+  }
+
+  @Override
+  public CoordinateBoundingBox coordinateBoundingBox() {
     return null;
   }
 

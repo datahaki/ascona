@@ -6,6 +6,7 @@ import ch.alpine.ascona.util.arp.H2ArrayPlot;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Clips;
 
 public class H2Display extends HnDisplay {
@@ -21,9 +22,14 @@ public class H2Display extends HnDisplay {
     return p.extract(0, 2);
   }
 
+  @Override
+  public CoordinateBoundingBox coordinateBoundingBox() {
+    return Box2D.xy(Clips.absolute(RADIUS));
+  }
+
   @Override // from ManifoldDisplay
   public HsArrayPlot arrayPlot() {
-    return new H2ArrayPlot(Box2D.xy(Clips.absolute(RADIUS)));
+    return new H2ArrayPlot(coordinateBoundingBox());
   }
 
   @Override

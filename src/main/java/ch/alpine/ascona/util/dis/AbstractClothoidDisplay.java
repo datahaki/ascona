@@ -15,6 +15,7 @@ import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 // TODO ASCONA ALG probably obsolete: instead use Se2 and Se2Covering with different clothoid builders
 public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serializable {
@@ -63,6 +64,11 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
 
   @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
+    return null;
+  }
+
+  @Override
+  public final CoordinateBoundingBox coordinateBoundingBox() {
     return null;
   }
 

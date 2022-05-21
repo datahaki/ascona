@@ -21,6 +21,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.pd.Orthogonalize;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
@@ -96,6 +97,11 @@ public class Rp2Display extends RpnDisplay {
     Scalar r = CLIP_Z.rescale(xyz.Get(2));
     skew = Times.of(Tensors.of(r, r, RealScalar.ONE), skew);
     return GfxMatrix.translation(toPoint(xyz)).dot(skew);
+  }
+
+  @Override
+  public CoordinateBoundingBox coordinateBoundingBox() {
+    return S2ArrayPlot.COORDINATE_BOUNDING_BOX;
   }
 
   @Override // from ManifoldDisplay

@@ -21,6 +21,7 @@ import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -169,7 +170,9 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     if (Objects.nonNull(bufferedImage)) {
-      Tensor pixel2model = manifoldDisplay.arrayPlot().pixel2model(new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
+      Tensor pixel2model = HsArrayPlots.pixel2model( //
+          manifoldDisplay.coordinateBoundingBox(), //
+          new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
       ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
     }
     // ---
@@ -218,7 +221,9 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
       BufferedImage bufferedImage = //
           ImageFormat.of(hsArrayPlot.raster(resolution, tensorUnaryOperator, Array.zeros(4)));
       {
-        Tensor matrix = hsArrayPlot.pixel2model(new Dimension(resolution, resolution));
+        Tensor matrix = HsArrayPlots.pixel2model( //
+            manifoldDisplay.coordinateBoundingBox(), //
+            new Dimension(resolution, resolution));
         GeometricLayer geometricLayer = new GeometricLayer(Inverse.of(matrix));
         Graphics2D graphics = bufferedImage.createGraphics();
         RenderQuality.setQuality(graphics);

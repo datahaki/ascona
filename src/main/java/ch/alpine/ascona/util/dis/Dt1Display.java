@@ -17,6 +17,7 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Max;
 
 public enum Dt1Display implements ManifoldDisplay {
@@ -75,6 +76,11 @@ public enum Dt1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public LineDistance lineDistance() {
+    return null;
+  }
+
+  @Override
+  public CoordinateBoundingBox coordinateBoundingBox() {
     return null;
   }
 

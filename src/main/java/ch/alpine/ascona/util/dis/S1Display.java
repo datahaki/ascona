@@ -10,6 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /** symmetric positive definite 2 x 2 matrices */
 public class S1Display extends SnDisplay {
@@ -42,6 +43,11 @@ public class S1Display extends SnDisplay {
   @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor xy) {
     return GfxMatrix.translation(toPoint(xy));
+  }
+
+  @Override
+  public final CoordinateBoundingBox coordinateBoundingBox() {
+    return null;
   }
 
   @Override

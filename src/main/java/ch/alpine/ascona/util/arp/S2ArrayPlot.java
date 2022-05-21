@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 public enum S2ArrayPlot implements HsArrayPlot {
   INSTANCE;
 
-  private static final CoordinateBoundingBox COORDINATE_BOUNDING_BOX = Box2D.xy(Clips.absolute(1.0));
+  public static final CoordinateBoundingBox COORDINATE_BOUNDING_BOX = Box2D.xy(Clips.absolute(1.0));
 
   @Override // from GeodesicArrayPlot
   public Tensor raster(int resolution, Function<Tensor, ? extends Tensor> function, Tensor fallback) {
@@ -31,10 +31,5 @@ public enum S2ArrayPlot implements HsArrayPlot {
               Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
               return Sign.isPositive(z2) ? function.apply(point.append(Sqrt.FUNCTION.apply(z2))) : fallback;
             }))));
-  }
-
-  @Override
-  public CoordinateBoundingBox coordinateBoundingBox() {
-    return COORDINATE_BOUNDING_BOX;
   }
 }
