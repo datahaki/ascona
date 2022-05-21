@@ -2,22 +2,20 @@
 package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
-import java.util.Random;
 
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.hs.rpn.RpnRandomSample;
 import ch.alpine.sophus.hs.sn.SnLineDistance;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnMetric;
-import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.r2.CirclePoints;
-import ch.alpine.tensor.sca.Abs;
 
 /** symmetric positive definite 2 x 2 matrices */
 public abstract class SnDisplay implements ManifoldDisplay, Serializable {
@@ -65,15 +63,7 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
-    RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimensions);
-    return new RandomSampleInterface() {
-      @Override
-      public Tensor randomSample(Random random) {
-        Tensor xyz = randomSampleInterface.randomSample(random);
-        xyz.set(Abs.FUNCTION, dimensions);
-        return xyz;
-      }
-    };
+    return RpnRandomSample.of(dimensions());
   }
 
   @Override

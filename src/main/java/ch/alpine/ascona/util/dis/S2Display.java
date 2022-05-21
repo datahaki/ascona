@@ -108,6 +108,11 @@ public class S2Display extends SnDisplay {
   }
 
   @Override
+  public Tensor lift(Tensor p) {
+    return p.copy();
+  }
+
+  @Override
   public RenderInterface background() {
     return S2Background.INSTANCE;
   }

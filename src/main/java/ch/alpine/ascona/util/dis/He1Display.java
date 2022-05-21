@@ -13,6 +13,7 @@ import ch.alpine.sophus.lie.he.HeGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -89,6 +90,11 @@ public enum He1Display implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
     return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public Tensor lift(Tensor p) {
+    throw TensorRuntimeException.of(p);
   }
 
   @Override // from ManifoldDisplay

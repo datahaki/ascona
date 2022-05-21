@@ -16,7 +16,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 
 public abstract class AbstractHoverDemo extends LogWeightingDemo {
@@ -45,8 +44,9 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
 
   protected void shuffle(int n) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
-    setControlPointsSe2(RandomSample.of(randomSampleInterface, n));
+    Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
+        .map(manifoldDisplay::lift));
+    setControlPointsSe2(tensor);
   }
 
   @Override // from RenderInterface

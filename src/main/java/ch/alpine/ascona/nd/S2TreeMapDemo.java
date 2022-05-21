@@ -6,15 +6,14 @@ import java.util.Optional;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.win.LookAndFeels;
-import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Abs;
 
 public class S2TreeMapDemo extends AbstractTreeMapDemo {
   @Override
-  Tensor pointsAll(int length) {
-    return RandomSample.of(S2Display.INSTANCE.randomSampleInterface(), length);
+  ManifoldDisplay manifoldDisplay() {
+    return S2Display.INSTANCE;
   }
 
   @Override
@@ -23,11 +22,6 @@ public class S2TreeMapDemo extends AbstractTreeMapDemo {
     Tensor xyz = optionalZ.orElse(xya.extract(0, 2).append(RealScalar.ZERO));
     xyz.set(Abs.FUNCTION, 2);
     return xyz;
-  }
-
-  @Override
-  ManifoldDisplay manifoldDisplay() {
-    return S2Display.INSTANCE;
   }
 
   public static void main(String[] args) {

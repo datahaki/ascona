@@ -4,6 +4,7 @@ package ch.alpine.ascona.util.dis;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -53,6 +54,11 @@ public class S1Display extends SnDisplay {
   @Override
   public HsArrayPlot arrayPlot() {
     return null;
+  }
+
+  @Override
+  public Tensor lift(Tensor p) {
+    return p.copy().append(RealScalar.ZERO);
   }
 
   @Override

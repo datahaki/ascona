@@ -10,16 +10,19 @@ import java.util.Random;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Timing;
+import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.opt.nd.NdCenterInterface;
@@ -52,7 +55,8 @@ import ch.alpine.tensor.sca.Abs;
   public AbstractTreeMapDemo() {
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     pointsAll = pointsAll(5000);
-    timerFrame.geometricComponent.setOffset(100, 600);
+    timerFrame.geometricComponent.setModel2Pixel(DiagonalMatrix.of(200, -200, 1));
+    timerFrame.geometricComponent.setOffset(300, 300);
   }
 
   @Override
@@ -95,6 +99,8 @@ import ch.alpine.tensor.sca.Abs;
       collection = graphicSpherical.list();
     }
     double seconds = timing.seconds();
+    RenderQuality.setQuality(graphics);
+    graphics.setColor(Color.GRAY);
     graphics.drawString(String.format("%d %d %6.4f", ndMap.size(), collection.size(), seconds), 0, 40);
     graphics.setColor(new Color(255, 0, 0, 128));
     if (param.nearest) {
@@ -132,7 +138,10 @@ import ch.alpine.tensor.sca.Abs;
     }
   }
 
-  abstract Tensor pointsAll(int length);
+  final Tensor pointsAll(int length) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    return RandomSample.of(manifoldDisplay.randomSampleInterface(), length);
+  }
 
   abstract Tensor center(Tensor xya);
 

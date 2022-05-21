@@ -82,6 +82,11 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
     return null;
   }
 
+  @Override
+  public final Tensor lift(Tensor p) {
+    return p.copy();
+  }
+
   @Override // from ManifoldDisplay
   public final RenderInterface background() {
     return EmptyRender.INSTANCE;

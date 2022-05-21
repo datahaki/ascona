@@ -18,6 +18,7 @@ import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -27,6 +28,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   private static final Tensor STAR_POINTS = StarPoints.of(6, 0.12, 0.04).unmodifiable();
   protected static final Scalar RADIUS = RealScalar.of(2.5);
+  private static final TensorUnaryOperator LIFT = PadRight.zeros(3);
   // ---
   private final int dimensions;
 
@@ -89,6 +91,11 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
         return HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, dimensions));
       }
     };
+  }
+
+  @Override
+  public final Tensor lift(Tensor p) {
+    return LIFT.apply(p.extract(0, dimensions));
   }
 
   @Override

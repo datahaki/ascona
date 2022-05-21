@@ -79,7 +79,13 @@ public interface ManifoldDisplay {
    * @return array of scalar values clipped to interval [0, 1] or DoubleScalar.INDETERMINATE */
   HsArrayPlot arrayPlot();
 
+  /** @return points in manifold that have to be {@link #lift(Tensor)}ed
+   * in order to become control points in the form xya */
   RandomSampleInterface randomSampleInterface();
+
+  /** @param p
+   * @return xya */
+  Tensor lift(Tensor p);
 
   RenderInterface background();
 

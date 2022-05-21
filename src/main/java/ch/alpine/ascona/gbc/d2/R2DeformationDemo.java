@@ -3,13 +3,14 @@ package ch.alpine.ascona.gbc.d2;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.MixedLogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -18,16 +19,10 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Clips;
 
 /** moving least squares */
 public class R2DeformationDemo extends AbstractDeformationDemo {
-  private static final double EXTENT = 5.0;
-  private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.positive(EXTENT));
   private static final Tensor ORIGIN = CirclePoints.of(3).multiply(RealScalar.of(0.1));
   // ---
   private final JToggleButton jToggleRigidMotionFit = new JToggleButton("MLS");
@@ -35,14 +30,15 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   public R2DeformationDemo() {
     super(ManifoldDisplays.R2_ONLY, MixedLogWeightings.scattered());
     // ---
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     {
       jToggleRigidMotionFit.addActionListener(l -> recompute());
       timerFrame.jToolBar.add(jToggleRigidMotionFit);
     }
     timerFrame.geometricComponent.setOffset(300, 500);
-    timerFrame.geometricComponent.addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
-    setControlPointsSe2(Tensors.fromString( //
-        "{{0.650, 4.183, 0.000}, {3.517, 4.650, 0.000}, {2.233, 2.733, 0.000}, {4.217, 2.917, 0.000}, {1.767, 1.150, 0.000}, {0.600, 0.317, 0.000}, {4.450, 0.550, 0.000}}"));
+    timerFrame.geometricComponent.addRenderInterfaceBackground( //
+        new BoundingBoxRender(manifoldDisplay.coordinateBoundingBox()));
+    setControlPointsSe2(shufflePointsSe2(7));
     // deformed to:
     // "{{1.400, 4.067, 0.000}, {2.867, 4.167, 0.000}, {1.667, 2.283, 0.000}, {3.983, 2.283, 0.000}, {2.617, 1.200, 0.000}, {0.600, 0.350, 0.000}, {3.917,
     // 1.183, 0.000}}"
@@ -51,18 +47,20 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
 
   @Override
   synchronized Tensor shufflePointsSe2(int n) {
-    Distribution distribution = UniformDistribution.of(0, EXTENT);
-    return Tensor.of(RandomVariate.of(distribution, n, 2).stream() //
-        .map(Tensor::copy) //
-        .map(row -> row.append(RealScalar.ZERO)));
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
+        .map(manifoldDisplay::lift));
+    return tensor;
   }
 
   @Override
   MovingDomain2D updateMovingDomain2D(Tensor movingOrigin) {
     int res = refinement();
     // TODO ASCONA ALG meshgrid functionality is already(?)/should be generalized
-    Tensor dx = Subdivide.of(0.0, EXTENT, res - 1);
-    Tensor dy = Subdivide.of(0.0, EXTENT, res - 3);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    CoordinateBoundingBox coordinateBoundingBox = manifoldDisplay.coordinateBoundingBox();
+    Tensor dx = Subdivide.increasing(coordinateBoundingBox.getClip(0), res - 1);
+    Tensor dy = Subdivide.increasing(coordinateBoundingBox.getClip(1), res - 3);
     Tensor domain = Outer.of(Tensors::of, dx, dy);
     TensorUnaryOperator tensorUnaryOperator = operator(movingOrigin);
     return jToggleRigidMotionFit.isSelected() //

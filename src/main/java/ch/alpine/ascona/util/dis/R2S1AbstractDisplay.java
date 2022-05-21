@@ -79,4 +79,9 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   public final RandomSampleInterface randomSampleInterface() {
     return null;
   }
+
+  @Override
+  public final Tensor lift(Tensor p) {
+    return p.copy();
+  }
 }

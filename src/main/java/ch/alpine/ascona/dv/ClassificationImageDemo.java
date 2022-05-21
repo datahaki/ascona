@@ -35,7 +35,6 @@ import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -143,8 +142,10 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
 
   final void shuffle(int n) {
     System.out.println("shuffle");
-    RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
-    setControlPointsSe2(RandomSample.of(randomSampleInterface, n));
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
+        .map(manifoldDisplay::lift));
+    setControlPointsSe2(tensor);
     // assignment of random labels to points
     vector = RandomVariate.of(DiscreteUniformDistribution.of(0, spinnerLabel.getValue()), RANDOM, n);
     recompute();

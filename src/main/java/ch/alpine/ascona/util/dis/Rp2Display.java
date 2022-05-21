@@ -105,6 +105,11 @@ public class Rp2Display extends RpnDisplay {
   }
 
   @Override // from ManifoldDisplay
+  public Tensor lift(Tensor p) {
+    return p.copy();
+  }
+
+  @Override // from ManifoldDisplay
   public HsArrayPlot arrayPlot() {
     return S2ArrayPlot.INSTANCE;
   }

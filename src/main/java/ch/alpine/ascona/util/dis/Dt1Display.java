@@ -94,6 +94,11 @@ public enum Dt1Display implements ManifoldDisplay {
     return null;
   }
 
+  @Override
+  public Tensor lift(Tensor p) {
+    return p.copy().append(RealScalar.ZERO);
+  }
+
   @Override // from ManifoldDisplay
   public RenderInterface background() {
     return EmptyRender.INSTANCE;

@@ -20,6 +20,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -105,6 +106,11 @@ public class So3Display implements ManifoldDisplay, Serializable {
   @Override
   public RandomSampleInterface randomSampleInterface() {
     return null;
+  }
+
+  @Override // from ManifoldDisplay
+  public Tensor lift(Tensor p) {
+    throw TensorRuntimeException.of(p);
   }
 
   @Override // from ManifoldDisplay

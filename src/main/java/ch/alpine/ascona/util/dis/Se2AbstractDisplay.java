@@ -73,6 +73,11 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
     return EmptyRender.INSTANCE;
   }
 
+  @Override
+  public final Tensor lift(Tensor p) {
+    return p.copy();
+  }
+
   @Override // from Object
   public abstract String toString();
 }
