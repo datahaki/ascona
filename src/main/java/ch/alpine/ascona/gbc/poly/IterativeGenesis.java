@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.d2;
+package ch.alpine.ascona.gbc.poly;
 
 import java.util.stream.Stream;
 
@@ -15,7 +15,7 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.Chop;
 
-/* package */ enum IterativeGenesis {
+public enum IterativeGenesis {
   MEAN_VALUE(new ThreePointWeighting(Barycenter.MEAN_VALUE)), //
   INVERSE_DISTANCE(AffineCoordinate.INSTANCE), //
   ;

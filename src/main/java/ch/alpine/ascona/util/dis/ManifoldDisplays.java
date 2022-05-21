@@ -50,7 +50,7 @@ public enum ManifoldDisplays {
       Dt1Display.INSTANCE);
   // ---
   /** have array */
-  public static final List<ManifoldDisplay> R2_H2_S2_RP2 = Arrays.asList( //
+  public static final List<ManifoldDisplay> ARRAYS = Arrays.asList( //
       R2Display.INSTANCE, //
       H2Display.INSTANCE, //
       S2Display.INSTANCE, //

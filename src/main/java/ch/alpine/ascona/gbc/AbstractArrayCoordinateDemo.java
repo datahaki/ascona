@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.d2;
+package ch.alpine.ascona.gbc;
 
 import java.awt.Graphics2D;
 import java.util.List;
@@ -14,11 +14,11 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 
-/* package */ abstract class A2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
+public abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightingDemo {
   private RenderInterface renderInterface;
 
-  public A2ScatteredSetCoordinateDemo(List<LogWeighting> array) {
-    super(true, ManifoldDisplays.R2_H2_S2_RP2, array);
+  public AbstractArrayCoordinateDemo(List<LogWeighting> array) {
+    super(true, ManifoldDisplays.ARRAYS, array);
     // ---
     jToggleHeatmap.setVisible(false);
     jToggleArrows.setVisible(false);

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.d2;
+package ch.alpine.ascona.gbc.poly;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -73,7 +73,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
   private Tensor reference;
 
   public CheckerBoardDemo() {
-    super(true, ManifoldDisplays.R2_H2_S2_RP2, PolygonCoordinates.list());
+    super(true, ManifoldDisplays.ARRAYS, PolygonCoordinates.list());
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
     setMidpointIndicated(true);
     FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);

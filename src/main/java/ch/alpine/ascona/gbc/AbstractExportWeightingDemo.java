@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.d2;
+package ch.alpine.ascona.gbc;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,9 +11,11 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
+import ch.alpine.ascona.gbc.d2.AbstractScatteredSetWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.sophus.hs.Biinvariant;
@@ -26,7 +28,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 
-/* package */ abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWeightingDemo implements ActionListener {
+public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWeightingDemo implements ActionListener {
   private static final int REFINEMENT = 120; // presentation 60
   private final JButton jButtonExport = new JButton("export");
 
@@ -74,7 +76,7 @@ import ch.alpine.tensor.ext.HomeDirectory;
     HsArrayPlot geodesicArrayPlot = manifoldDisplay().arrayPlot();
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
     Tensor wgs = geodesicArrayPlot.raster(refinement, tensorUnaryOperator, fallback);
-    return StaticHelper.arrayPlotFromTensor(wgs, magnification, logWeighting().equals(LogWeightings.DISTANCES), colorDataGradient());
+    return HsArrayPlots.arrayPlotFromTensor(wgs, magnification, logWeighting().equals(LogWeightings.DISTANCES), colorDataGradient());
   }
 
   private static List<Biinvariant> distinct() {

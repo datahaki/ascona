@@ -20,6 +20,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -48,7 +49,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
   private final JToggleButton jToggleThresh = new JToggleButton("thresh");
 
   public D2AveragingDemo() {
-    super(ManifoldDisplays.R2_H2_S2_RP2);
+    super(ManifoldDisplays.ARRAYS);
     {
       spinnerCvar.setList(Tensors.fromString("{0, 0.01, 0.1, 0.5, 1}").stream().map(Scalar.class::cast).collect(Collectors.toList()));
       spinnerCvar.setIndex(0);
@@ -157,6 +158,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new D2AveragingDemo().setVisible(1300, 800);
   }
 }

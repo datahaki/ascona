@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.d2;
+package ch.alpine.ascona.gbc.poly;
 
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -11,8 +11,10 @@ import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
+import ch.alpine.ascona.gbc.AbstractArrayCoordinateDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.PolygonCoordinates;
+import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
@@ -33,7 +35,7 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
-public class PolygonCoordinatesDemo extends A2ScatteredSetCoordinateDemo //
+public class PolygonCoordinatesDemo extends AbstractArrayCoordinateDemo //
     implements SpinnerListener<ManifoldDisplay> {
   public static final ColorDataIndexed COLOR_DATA_INDEXED = HueColorData.of(6, 3);
   private final List<LogWeighting> array;
@@ -97,7 +99,7 @@ public class PolygonCoordinatesDemo extends A2ScatteredSetCoordinateDemo //
         int refinement = resolution();
         try {
           ArrayPlotRender arrayPlotRender = arrayPlotRender(sequence, refinement, tensorUnaryOperator, 1);
-          BufferedImage bufferedImage = StaticHelper.fuseImages(manifoldDisplay, arrayPlotRender, refinement, sequence.length());
+          BufferedImage bufferedImage = HsArrayPlots.fuseImages(manifoldDisplay, arrayPlotRender, refinement, sequence.length());
           File file = new File(root, logWeighting.toString() + ".png");
           ImageIO.write(bufferedImage, "png", file);
           htmlUtf8.appendln(logWeighting.toString() + "<br/>");

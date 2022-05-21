@@ -1,9 +1,7 @@
 // code by jph
-package ch.alpine.ascona.gbc.d2;
+package ch.alpine.ascona.gbc.it;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -12,20 +10,22 @@ import java.util.Optional;
 
 import org.jfree.chart.JFreeChart;
 
+import ch.alpine.ascona.gbc.d2.GenesisDequeProperties;
 import ch.alpine.ascona.lev.AbstractPlaceDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.ref.util.PanelFieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
-import ch.alpine.sophus.gbc.it.Evaluation;
 import ch.alpine.sophus.gbc.it.GenesisDeque;
+import ch.alpine.sophus.gbc.it.WeightsFactors;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
@@ -46,9 +46,8 @@ public class ExponentialDemo extends AbstractPlaceDemo {
   public ExponentialDemo() {
     super(true, ManifoldDisplays.R2_ONLY);
     // ---
-    Container container = timerFrame.jFrame.getContentPane();
-    PanelFieldsEditor fieldsPanel = new PanelFieldsEditor(genesisDequeProperties);
-    container.add(BorderLayout.WEST, fieldsPanel.createJScrollPane());
+    ToolbarFieldsEditor.add(genesisDequeProperties, timerFrame.jToolBar);
+    // ---
     Tensor sequence = Tensor.of(CirclePoints.of(15).multiply(RealScalar.of(2)).stream().skip(5).map(PadRight.zeros(3)));
     sequence.set(Scalar::zero, 0, Tensor.ALL);
     setControlPointsSe2(sequence);
@@ -76,7 +75,7 @@ public class ExponentialDemo extends AbstractPlaceDemo {
       }
       if (OriginEnclosureQ.INSTANCE.test(levers2)) {
         GenesisDeque dequeGenesis = (GenesisDeque) genesisDequeProperties.genesis();
-        Deque<Evaluation> deque = dequeGenesis.deque(levers2);
+        Deque<WeightsFactors> deque = dequeGenesis.deque(levers2);
         {
           Tensor leversVirtual = Times.of(deque.peekLast().factors(), levers2);
           geometricLayer.pushMatrix(GfxMatrix.translation(origin));
@@ -102,7 +101,7 @@ public class ExponentialDemo extends AbstractPlaceDemo {
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;
               visualSet.add(domain, Tensor.of(deque.stream() //
-                  .map(Evaluation::weights) //
+                  .map(WeightsFactors::weights) //
                   .map(tensor -> tensor.Get(fi))));
             }
             JFreeChart jFreeChart = ListPlot.of(visualSet);
@@ -115,7 +114,7 @@ public class ExponentialDemo extends AbstractPlaceDemo {
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;
               visualSet.add(domain, Tensor.of(deque.stream() //
-                  .map(Evaluation::factors) //
+                  .map(WeightsFactors::factors) //
                   .map(tensor -> tensor.Get(fi))));
             }
             JFreeChart jFreeChart = ListPlot.of(visualSet);
@@ -133,6 +132,7 @@ public class ExponentialDemo extends AbstractPlaceDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new ExponentialDemo().setVisible(1300, 900);
   }
 }
