@@ -22,9 +22,13 @@ public interface HsArrayPlot {
    * @return */
   Tensor raster(int resolution, Function<Tensor, ? extends Tensor> function, Tensor fallback);
 
+  CoordinateBoundingBox coordinateBoundingBox();
+
   /** @param dimension
    * @return */
-  Tensor pixel2model(Dimension dimension);
+  default Tensor pixel2model(Dimension dimension) {
+    return pixel2model(coordinateBoundingBox(), dimension);
+  }
 
   /** @param xy lower left corner
    * @param range of image in model space

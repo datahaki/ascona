@@ -208,7 +208,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);
-      HsArrayPlot geodesicArrayPlot = manifoldDisplay.arrayPlot();
+      HsArrayPlot hsArrayPlot = manifoldDisplay.arrayPlot();
       Classification classification = spinnerLabels.getValue().apply(vector);
       ColorDataLists colorDataLists = spinnerColor.getValue();
       ColorDataIndexed colorDataIndexed = colorDataLists.strict();
@@ -216,9 +216,9 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
           spinnerImage.getValue().operator(classification, operator, colorDataIndexed);
       int resolution = REFINEMENT;
       BufferedImage bufferedImage = //
-          ImageFormat.of(geodesicArrayPlot.raster(resolution, tensorUnaryOperator, Array.zeros(4)));
+          ImageFormat.of(hsArrayPlot.raster(resolution, tensorUnaryOperator, Array.zeros(4)));
       {
-        Tensor matrix = geodesicArrayPlot.pixel2model(new Dimension(resolution, resolution));
+        Tensor matrix = hsArrayPlot.pixel2model(new Dimension(resolution, resolution));
         GeometricLayer geometricLayer = new GeometricLayer(Inverse.of(matrix));
         Graphics2D graphics = bufferedImage.createGraphics();
         RenderQuality.setQuality(graphics);

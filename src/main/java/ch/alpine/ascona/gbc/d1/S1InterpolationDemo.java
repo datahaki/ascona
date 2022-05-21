@@ -3,9 +3,9 @@ package ch.alpine.ascona.gbc.d1;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.stream.Stream;
 
 import ch.alpine.ascona.lev.LogWeightingDemo;
+import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -32,7 +32,7 @@ import ch.alpine.tensor.sca.Clips;
 
 public class S1InterpolationDemo extends LogWeightingDemo {
   private static final double RANGE = 2;
-  private final CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of(Stream.generate(() -> Clips.absolute(RANGE)).limit(2));
+  private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
 
   public S1InterpolationDemo() {
     super(true, ManifoldDisplays.R2_ONLY, LogWeightings.list());

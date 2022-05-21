@@ -5,12 +5,13 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.RealScalar;
+import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.tensor.ext.Serialization;
+import ch.alpine.tensor.sca.Clips;
 
 class R2ArrayPlotTest {
   @Test
   public void testSerialization() throws ClassNotFoundException, IOException {
-    Serialization.copy(R2ArrayPlot.of(RealScalar.of(3)));
+    Serialization.copy(new R2ArrayPlot(Box2D.xy(Clips.unit())));
   }
 }

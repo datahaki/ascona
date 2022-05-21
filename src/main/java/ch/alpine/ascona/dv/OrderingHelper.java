@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.R2ArrayPlot;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.BarLegend;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -59,9 +59,11 @@ import ch.alpine.tensor.sca.Clips;
       Scalar py = dy.negate();
       CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox
           .of(Stream.of(Clips.interval(px, px.add(dy.add(dy))), Clips.interval(py, py.add(dy.add(dy)))));
-      Tensor pixel2model = HsArrayPlot.pixel2model( //
-          coordinateBoundingBox, //
+      Tensor pixel2model = new R2ArrayPlot(coordinateBoundingBox).pixel2model( //
           new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
+      // HsArrayPlot.pixel2model( //
+      // coordinateBoundingBox, //
+      // );
       ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
     }
     {

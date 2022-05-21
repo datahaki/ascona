@@ -6,10 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import javax.swing.JToggleButton;
 
+import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.ImageReshape;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -44,7 +44,7 @@ import ch.alpine.tensor.sca.Clips;
 // TODO ASCONA ALG possibly only recompute when points have changed
 public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final double RANGE = 5;
-  private final CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of(Stream.generate(() -> Clips.absolute(RANGE)).limit(2));
+  private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
   // ---
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();

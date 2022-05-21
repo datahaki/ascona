@@ -65,6 +65,7 @@ public interface ManifoldDisplay {
   Biinvariant biinvariant();
 
   LineDistance lineDistance();
+  // CoordinateBoundingBox coordinateBoundingBox();
 
   /** available for
    * R2

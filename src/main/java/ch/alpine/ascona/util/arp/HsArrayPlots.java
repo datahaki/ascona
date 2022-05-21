@@ -25,11 +25,11 @@ import ch.alpine.tensor.sca.Clips;
 public enum HsArrayPlots {
   ;
   public static BufferedImage fuseImages(ManifoldDisplay manifoldDisplay, ArrayPlotRender arrayPlotRender, int refinement, int sequence_length) {
-    HsArrayPlot haArrayPlot = manifoldDisplay.arrayPlot();
+    HsArrayPlot hsArrayPlot = manifoldDisplay.arrayPlot();
     BufferedImage foreground = arrayPlotRender.export();
     BufferedImage background = new BufferedImage(foreground.getWidth(), foreground.getHeight(), BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = background.createGraphics();
-    Tensor matrix = haArrayPlot.pixel2model(new Dimension(refinement, refinement));
+    Tensor matrix = hsArrayPlot.pixel2model(new Dimension(refinement, refinement));
     GeometricLayer geometricLayer = new GeometricLayer(Inverse.of(matrix));
     for (int count = 0; count < sequence_length; ++count) {
       manifoldDisplay.background().render(geometricLayer, graphics);

@@ -154,8 +154,8 @@ public class CheckerBoardDemo extends LogWeightingBase //
         recompute();
       if (Objects.nonNull(bufferedImage)) {
         RenderQuality.setDefault(graphics); // default so that raster becomes visible
-        HsArrayPlot geodesicArrayPlot = manifoldDisplay.arrayPlot();
-        Tensor pixel2model = geodesicArrayPlot.pixel2model(new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
+        HsArrayPlot hsArrayPlot = manifoldDisplay.arrayPlot();
+        Tensor pixel2model = hsArrayPlot.pixel2model(new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
         ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
       }
     } else {

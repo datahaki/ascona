@@ -3,6 +3,7 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.Random;
 
+import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.arp.R2ArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -14,6 +15,7 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Clips;
 
 public class R2Display extends RnDisplay {
   private static final Scalar RADIUS = RealScalar.of(1.0);
@@ -36,7 +38,7 @@ public class R2Display extends RnDisplay {
 
   @Override // from ManifoldDisplay
   public HsArrayPlot arrayPlot() {
-    return R2ArrayPlot.of(RADIUS);
+    return new R2ArrayPlot(Box2D.xy(Clips.absolute(RADIUS)));
   }
 
   @Override // from ManifoldDisplay

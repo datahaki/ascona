@@ -1,10 +1,9 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import java.util.stream.Stream;
-
 import javax.swing.JToggleButton;
 
+import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.MixedLogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
@@ -28,7 +27,7 @@ import ch.alpine.tensor.sca.Clips;
 /** moving least squares */
 public class R2DeformationDemo extends AbstractDeformationDemo {
   private static final double EXTENT = 5.0;
-  private final CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of(Stream.generate(() -> Clips.positive(EXTENT)).limit(2));
+  private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.positive(EXTENT));
   private static final Tensor ORIGIN = CirclePoints.of(3).multiply(RealScalar.of(0.1));
   // ---
   private final JToggleButton jToggleRigidMotionFit = new JToggleButton("MLS");

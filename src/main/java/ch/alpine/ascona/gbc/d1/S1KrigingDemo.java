@@ -5,9 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
+import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.PathRender;
@@ -40,7 +40,7 @@ import ch.alpine.tensor.sca.N;
 // FIXME ASCONA DEMO what does this demo do: there is no curve shown
 public class S1KrigingDemo extends AnAveragingDemo {
   private static final double RANGE = 2;
-  private final CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of(Stream.generate(() -> Clips.absolute(RANGE)).limit(2));
+  private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
   private static final Tensor DOMAIN = Drop.tail(CirclePoints.of(161).map(N.DOUBLE), 80);
 
   public S1KrigingDemo() {

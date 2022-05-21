@@ -113,14 +113,6 @@ class ManifoldDisplaysTest {
       assertNotNull(biinvariant);
   }
 
-  @ParameterizedTest
-  @MethodSource("parameters")
-  public void testSome(ManifoldDisplay manifoldDisplay) {
-    // TODO
-    if (manifoldDisplay.arrayPlot() != null)
-      System.out.println(manifoldDisplay);
-  }
-
   @Test
   public void testHs() {
     for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.MANIFOLDS)
