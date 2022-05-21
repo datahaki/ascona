@@ -60,7 +60,7 @@ import ch.alpine.tensor.sca.Clips;
       CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox
           .of(Stream.of(Clips.interval(px, px.add(dy.add(dy))), Clips.interval(py, py.add(dy.add(dy)))));
       Tensor pixel2model = HsArrayPlots.pixel2model( //
-          manifoldDisplay.coordinateBoundingBox(), //
+          coordinateBoundingBox, //
           new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
       // HsArrayPlot.pixel2model( //
       // coordinateBoundingBox, //

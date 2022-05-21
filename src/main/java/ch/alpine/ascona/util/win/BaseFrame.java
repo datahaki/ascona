@@ -36,17 +36,14 @@ public class BaseFrame {
     {
       JButton jButton = new JButton("save2png");
       try {
-        ImageIcon imageIcon = new ImageIcon(ResourceData.bufferedImage("/icon/camera.gif"));
-        jButton = new JButton(imageIcon);
-        // jButton = new JButton(UIManagerIcon.html_pendingImage.get());
-        // jButton.setPreferredSize(new Dimension(28,28));
+        jButton = new JButton(new ImageIcon(ResourceData.bufferedImage("/ch/alpine/ascona/icon/camera.gif")));
       } catch (Exception exception) {
         System.err.println(exception);
       }
       jButton.setToolTipText("snapshot is stored in ~/Pictures/...");
       jButton.addActionListener(actionEvent -> {
         try {
-          File file = HomeDirectory.Pictures(String.format("owl_%d.%s", System.currentTimeMillis(), IMAGE_FORMAT));
+          File file = HomeDirectory.Pictures(String.format("ascona_%d.%s", System.currentTimeMillis(), IMAGE_FORMAT));
           ImageIO.write(offscreen(), IMAGE_FORMAT, file);
         } catch (Exception exception) {
           exception.printStackTrace();
@@ -54,7 +51,6 @@ public class BaseFrame {
       });
       jToolBar.add(jButton);
     }
-    jToolBar.addSeparator();
     jPanel.add(jToolBar, BorderLayout.NORTH);
     jPanel.add(geometricComponent.jComponent, BorderLayout.CENTER);
     jPanel.add(jStatusLabel, BorderLayout.SOUTH);
