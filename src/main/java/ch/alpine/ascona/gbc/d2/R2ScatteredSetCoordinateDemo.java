@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Path2D;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import javax.swing.JToggleButton;
 
@@ -16,6 +16,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ArrayRender;
+import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -34,14 +35,16 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
-import ch.alpine.tensor.red.Entrywise;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Clips;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 // TODO ASCONA ALG possibly only recompute when points have changed
 public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final double RANGE = 5;
+  private final CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of(Stream.generate(() -> Clips.absolute(RANGE)).limit(2));
   // ---
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();
@@ -65,6 +68,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     setControlPointsSe2(Tensors.fromString("{{2, -3, 1.5}, {3, 5, 1}, {-4, -3, 1}, {-5, 3, 2}}"));
     setControlPointsSe2(Tensors.fromString( //
         "{{-1.217, -2.050, 1.309}, {1.783, 1.917, 0.262}, {-3.583, 0.300, -0.262}, {2.200, -0.283, 0.262}, {-4.000, -3.000, 1.000}, {-1.900, 2.117, 1.309}}"));
+    timerFrame.geometricComponent.addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
     timerFrame.geometricComponent.setOffset(500, 500);
   }
 
@@ -87,6 +91,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       }
       setControlPointsSe2(control);
     }
+    // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
@@ -96,18 +101,8 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       RenderQuality.setQuality(graphics);
       // ---
       TensorUnaryOperator tensorUnaryOperator = operator(RnGroup.INSTANCE, domain);
-      Tensor min = Entrywise.min().of(domain).map(RealScalar.of(0.01)::add);
-      Tensor max = Entrywise.max().of(domain).map(RealScalar.of(0.01)::subtract).negate();
-      min = Tensors.vector(-RANGE, -RANGE);
-      max = Tensors.vector(+RANGE, +RANGE);
-      {
-        Tensor sq = Tensors.matrixDouble(new double[][] { { -RANGE, -RANGE }, { RANGE, -RANGE }, { RANGE, RANGE }, { -RANGE, RANGE } });
-        Path2D path2d = geometricLayer.toPath2D(sq, true);
-        graphics.setColor(Color.GRAY);
-        graphics.draw(path2d);
-      }
-      Tensor sX = Subdivide.of(min.Get(0), max.Get(0), refinement());
-      Tensor sY = Subdivide.of(max.Get(1), min.Get(1), refinement());
+      Tensor sX = Subdivide.increasing(coordinateBoundingBox.getClip(0), refinement());
+      Tensor sY = Subdivide.decreasing(coordinateBoundingBox.getClip(1), refinement());
       int n = sX.length();
       Tensor[][] array = new Tensor[n][n];
       Tensor[][] point = new Tensor[n][n];

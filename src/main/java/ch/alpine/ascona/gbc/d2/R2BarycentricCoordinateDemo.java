@@ -88,9 +88,11 @@ import ch.alpine.tensor.sca.Sign;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
     {
+      RenderQuality.setQuality(graphics);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
       leversRender.renderSequence();
       leversRender.renderIndexP();
+      RenderQuality.setDefault(graphics);
     }
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);

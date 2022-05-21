@@ -10,7 +10,6 @@ import java.util.Optional;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.gbc.d2.GenesisDequeProperties;
 import ch.alpine.ascona.lev.AbstractPlaceDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;

@@ -5,11 +5,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
@@ -28,19 +31,24 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Abs;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.N;
 
 // FIXME ASCONA DEMO what does this demo do: there is no curve shown
 public class S1KrigingDemo extends AnAveragingDemo {
+  private static final double RANGE = 2;
+  private final CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of(Stream.generate(() -> Clips.absolute(RANGE)).limit(2));
   private static final Tensor DOMAIN = Drop.tail(CirclePoints.of(161).map(N.DOUBLE), 80);
 
   public S1KrigingDemo() {
     super(Arrays.asList(R2Display.INSTANCE));
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-1, 1, 0}}"));
-    timerFrame.geometricComponent.setOffset(500, 500);
+    timerFrame.geometricComponent.addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
     timerFrame.geometricComponent.addRenderInterfaceBackground(S1FrameRender.INSTANCE);
+    timerFrame.geometricComponent.setOffset(500, 500);
   }
 
   @Override // from RenderInterface
@@ -91,6 +99,7 @@ public class S1KrigingDemo extends AnAveragingDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new S1KrigingDemo().setVisible(1000, 800);
   }
 }

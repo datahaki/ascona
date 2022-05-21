@@ -1,18 +1,14 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
+import java.util.stream.Stream;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.MixedLogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
-import ch.alpine.ascona.util.win.RenderInterface;
-import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
@@ -22,26 +18,20 @@ import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Clips;
 
 /** moving least squares */
 public class R2DeformationDemo extends AbstractDeformationDemo {
   private static final double EXTENT = 5.0;
+  private final CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of(Stream.generate(() -> Clips.positive(EXTENT)).limit(2));
   private static final Tensor ORIGIN = CirclePoints.of(3).multiply(RealScalar.of(0.1));
   // ---
   private final JToggleButton jToggleRigidMotionFit = new JToggleButton("MLS");
-  private final RenderInterface renderInterface = new RenderInterface() {
-    @Override
-    public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-      Tensor box = Box2D.SQUARE.multiply(RealScalar.of(EXTENT));
-      Path2D path2d = geometricLayer.toPath2D(box, true);
-      graphics.setColor(Color.LIGHT_GRAY);
-      graphics.draw(path2d);
-    }
-  };
 
   public R2DeformationDemo() {
     super(ManifoldDisplays.R2_ONLY, MixedLogWeightings.scattered());
@@ -51,7 +41,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
       timerFrame.jToolBar.add(jToggleRigidMotionFit);
     }
     timerFrame.geometricComponent.setOffset(300, 500);
-    timerFrame.geometricComponent.addRenderInterfaceBackground(renderInterface);
+    timerFrame.geometricComponent.addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
     setControlPointsSe2(Tensors.fromString( //
         "{{0.650, 4.183, 0.000}, {3.517, 4.650, 0.000}, {2.233, 2.733, 0.000}, {4.217, 2.917, 0.000}, {1.767, 1.150, 0.000}, {0.600, 0.317, 0.000}, {4.450, 0.550, 0.000}}"));
     // deformed to:

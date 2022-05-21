@@ -3,14 +3,17 @@ package ch.alpine.ascona.gbc.d1;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.stream.Stream;
 
 import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Scalar;
@@ -23,15 +26,21 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.AngleVector;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Times;
+import ch.alpine.tensor.sca.Clips;
 
 public class S1InterpolationDemo extends LogWeightingDemo {
+  private static final double RANGE = 2;
+  private final CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of(Stream.generate(() -> Clips.absolute(RANGE)).limit(2));
+
   public S1InterpolationDemo() {
     super(true, ManifoldDisplays.R2_ONLY, LogWeightings.list());
     setMidpointIndicated(false);
     // ---
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-1, 0, 0}}"));
     timerFrame.geometricComponent.setOffset(500, 500);
+    timerFrame.geometricComponent.addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
     timerFrame.geometricComponent.addRenderInterfaceBackground(S1FrameRender.INSTANCE);
   }
 
@@ -81,6 +90,7 @@ public class S1InterpolationDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new S1InterpolationDemo().setVisible(1000, 800);
   }
 }

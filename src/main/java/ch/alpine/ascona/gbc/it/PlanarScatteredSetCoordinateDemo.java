@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.d2;
+package ch.alpine.ascona.gbc.it;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,7 +28,7 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractArrayCoordinateDem
 
   // FIXME TODO the class structure is not correct, since log weighting is empty and not visible
   public PlanarScatteredSetCoordinateDemo() {
-    super(Arrays.asList(LogWeightings.WEIGHTING)); // 
+    super(Arrays.asList(LogWeightings.WEIGHTING)); //
     spinnerLogWeighting.setVisible(false);
     Container container = timerFrame.jFrame.getContentPane();
     PanelFieldsEditor fieldsPanel = new PanelFieldsEditor(dequeGenesisProperties);

@@ -7,6 +7,7 @@ import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.itp.Kriging;
@@ -74,6 +75,7 @@ public class R1KrigingDemo extends A1AveragingDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new R1KrigingDemo().setVisible(1000, 800);
   }
 }
