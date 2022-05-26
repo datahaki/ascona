@@ -68,6 +68,7 @@ public enum HsArrayPlots {
    * @param range of image in model space
    * @param dimension of image
    * @return */
+  @Deprecated
   public static Tensor pixel2model(CoordinateBoundingBox coordinateBoundingBox, Dimension dimension) {
     // pixel 2 model
     Tensor xy = Tensors.of(coordinateBoundingBox.getClip(0).min(), coordinateBoundingBox.getClip(1).min());

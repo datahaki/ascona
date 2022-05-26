@@ -8,8 +8,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.red.VectorAngle;
 import ch.alpine.tensor.sca.Clips;
 
 /* package */ enum QuadShading {

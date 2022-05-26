@@ -22,6 +22,7 @@ import ch.alpine.tensor.sca.N;
 /** Hint:
  * On ubuntu, we have observed for grayscale images that the initial rendering
  * configuration influences the rendering when rotating the image. */
+@Deprecated // TODO ASCONA use ImageRenderNew instead
 public class ImageRender implements RenderInterface {
   private static final Color COLOR = new Color(0, 0, 255, 32);
   public static boolean DRAW_BOX = false;
@@ -29,13 +30,14 @@ public class ImageRender implements RenderInterface {
   /** @param bufferedImage
    * @param pixel2model with dimensions 3 x 3
    * @return */
+  // TODO ASCONA currently used when distortion is required
   public static ImageRender of(BufferedImage bufferedImage, Tensor pixel2model) {
     return new ImageRender(bufferedImage, pixel2model);
   }
 
   /** @param bufferedImage
    * @param range vector of length 2, i.e. the extensions of the image in model coordinates */
-  public static ImageRender range(BufferedImage bufferedImage, Tensor range) {
+  private static ImageRender range(BufferedImage bufferedImage, Tensor range) {
     Tensor scale = Times.of(Tensors.vector(bufferedImage.getWidth(), bufferedImage.getHeight()) //
         , range.map(Scalar::reciprocal));
     return scale(bufferedImage, scale);

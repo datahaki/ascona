@@ -6,14 +6,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Objects;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -30,14 +28,11 @@ import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroupElement;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.ext.Cache;
-import ch.alpine.tensor.io.ImageFormat;
-import ch.alpine.tensor.io.ResourceData;
 
 @ReflectionMarker
 public class ClothoidBrushDemo extends ControlPointsDemo {
@@ -74,13 +69,13 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
     }
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
-    Tensor image = ResourceData.of("/letter/cal2/hi/a.png");
-    if (Objects.nonNull(image)) {
-      image = image.map(s -> Scalars.isZero(s) ? RealScalar.of(192) : s);
-      BufferedImage bufferedImage = ImageFormat.of(image);
-      ImageRender imageRender = ImageRender.range(bufferedImage, Tensors.vector(10, 10));
-      // timerFrame.geometricComponent.addRenderInterfaceBackground(imageRender);
-    }
+    // Tensor image = ResourceData.of("/letter/cal2/hi/a.png");
+    // if (Objects.nonNull(image)) {
+    // image = image.map(s -> Scalars.isZero(s) ? RealScalar.of(192) : s);
+    // BufferedImage bufferedImage = ImageFormat.of(image);
+    // ImageRender imageRender = ImageRender.range(bufferedImage, Tensors.vector(10, 10));
+    // // timerFrame.geometricComponent.addRenderInterfaceBackground(imageRender);
+    // }
     timerFrame.geometricComponent.setOffset(100, 700);
     timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }

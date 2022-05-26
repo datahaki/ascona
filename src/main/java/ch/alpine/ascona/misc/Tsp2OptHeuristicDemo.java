@@ -37,6 +37,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
+// TODO ASCONA idea: start from minimum spanning tree
 public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param {

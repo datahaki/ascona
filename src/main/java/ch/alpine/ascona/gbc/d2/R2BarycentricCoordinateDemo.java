@@ -48,10 +48,10 @@ import ch.alpine.tensor.img.ColorFormat;
 import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.lie.r2.ConvexHull;
+import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.num.Boole;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Entrywise;
-import ch.alpine.tensor.red.VectorAngle;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 

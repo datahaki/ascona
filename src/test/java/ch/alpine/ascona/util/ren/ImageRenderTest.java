@@ -11,11 +11,6 @@ import ch.alpine.tensor.Tensors;
 
 class ImageRenderTest {
   @Test
-  public void testRangeFail1() {
-    assertThrows(Exception.class, () -> ImageRender.range(new BufferedImage(50, 20, BufferedImage.TYPE_BYTE_GRAY), Tensors.vector(1, 2, 3)));
-  }
-
-  @Test
   public void testRangeFail2() {
     assertThrows(Exception.class, () -> ImageRender.scale(new BufferedImage(50, 20, BufferedImage.TYPE_BYTE_GRAY), Tensors.vector(1, 2, 3)));
   }

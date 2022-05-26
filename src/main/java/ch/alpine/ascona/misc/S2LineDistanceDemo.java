@@ -12,7 +12,7 @@ import ch.alpine.ascona.util.api.SnLineDistances;
 import ch.alpine.ascona.util.arp.S2ArrayHelper;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.ImageRender;
+import ch.alpine.ascona.util.ren.ImageRenderNew;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -24,7 +24,6 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorNorm;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -75,7 +74,7 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
         : t -> RealScalar.ZERO;
   }
 
-  private BufferedImage bufferedImage(int resolution, Manifold vectorLogManifold) {
+  private BufferedImage bufferedImage(int resolution) {
     Tensor matrix = Tensors.matrix(S2ArrayHelper.of(resolution, rad(), tensorNorm()::norm));
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }
@@ -89,8 +88,8 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     RenderQuality.setDefault(graphics);
-    BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue(), homogeneousSpace);
-    ImageRender.of(bufferedImage, S2ArrayHelper.pixel2model(bufferedImage, rad())) //
+    BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue());
+    new ImageRenderNew(bufferedImage, manifoldDisplay.coordinateBoundingBox()) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     // ---
@@ -109,7 +108,7 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.DARK.updateUI();
+    LookAndFeels.LIGHT.updateUI();
     new S2LineDistanceDemo().setVisible(1200, 600);
   }
 }

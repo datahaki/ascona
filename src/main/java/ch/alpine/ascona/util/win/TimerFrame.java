@@ -34,7 +34,7 @@ public class TimerFrame extends BaseFrame {
     {
       JToggleButton _jToggleButton = new JToggleButton("save2gif");
       try {
-        _jToggleButton = new JToggleButton(new ImageIcon(ResourceData.bufferedImage("/ch/alpine/ascona/icon/camera.gif")));
+        _jToggleButton = new JToggleButton(new ImageIcon(ResourceData.bufferedImage("/ch/alpine/ascona/icon/video.png")));
       } catch (Exception exception) {
         System.err.println(exception);
       }

@@ -22,12 +22,12 @@ public enum Box2D {
    * @return polygon defined by the corners of the first two dimensions of given
    * coordinateBoundingBox */
   public static Tensor polygon(CoordinateBoundingBox coordinateBoundingBox) {
-    Clip clip0 = coordinateBoundingBox.getClip(0);
-    Clip clip1 = coordinateBoundingBox.getClip(1);
-    Tensor c00 = Tensors.of(clip0.min(), clip1.min());
-    Tensor c01 = Tensors.of(clip0.min(), clip1.max());
-    Tensor c11 = Tensors.of(clip0.max(), clip1.max());
-    Tensor c10 = Tensors.of(clip0.max(), clip1.min());
+    Clip clipX = coordinateBoundingBox.getClip(0); // x
+    Clip clipY = coordinateBoundingBox.getClip(1); // y
+    Tensor c00 = Tensors.of(clipX.min(), clipY.min());
+    Tensor c01 = Tensors.of(clipX.min(), clipY.max());
+    Tensor c11 = Tensors.of(clipX.max(), clipY.max());
+    Tensor c10 = Tensors.of(clipX.max(), clipY.min());
     return Unprotect.byRef( //
         c00, //
         c01, //
