@@ -15,6 +15,7 @@ import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymLinkImages;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -73,9 +74,9 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << levels))).map(scalarTensorFunction);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
+      graphics.setColor(Color.DARK_GRAY);
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(selected));
       Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape());
-      graphics.setColor(Color.DARK_GRAY);
       graphics.fill(path2d);
       geometricLayer.popMatrix();
     }
@@ -97,6 +98,7 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new KnotsBSplineFunctionDemo().setVisible(1200, 600);
   }
 }

@@ -7,15 +7,21 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.util.Optional;
+import java.util.stream.Stream;
 
+import ch.alpine.ascona.misc.VehicleStatic;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2CoveringDisplay;
+import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.ren.ImageRenderNew;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -24,23 +30,20 @@ import ch.alpine.sophus.fit.SpatialMedian;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
-import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.NormalDistribution;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Clips;
 
 @ReflectionMarker
 public class BiinvariantMeanDemo extends ControlPointsDemo {
@@ -48,22 +51,34 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
+  private static final CoordinateBoundingBox BOX = CoordinateBoundingBox.of(Stream.of( //
+      Clips.interval(-0.22, 0.53), //
+      Clips.interval(-0.22, 0.22)));
   // ---
   public Biinvariants biinvariants = Biinvariants.LEVERAGES;
-  public Boolean median = true;
+  public Boolean median = false;
+  @FieldFuse("shuffle")
+  public transient Boolean shuffle = false;
+  public Boolean vehicle = false;
 
   public BiinvariantMeanDemo() {
     super(true, ManifoldDisplays.MANIFOLDS);
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    setManifoldDisplay(Se2Display.INSTANCE);
+    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
-    Distribution dX = UniformDistribution.of(-3, 3);
-    Distribution dY = NormalDistribution.of(0, .3);
-    Distribution dA = NormalDistribution.of(1, .5);
-    Tensor tensor = Tensor.of(Array.of(l -> Tensors.of( //
-        RandomVariate.of(dX), RandomVariate.of(dY), RandomVariate.of(dA)), 10).stream() //
-        .map(Se2CoveringGroup.INSTANCE::exp));
+    fieldsEditor.addUniversalListener(() -> {
+      if (shuffle) {
+        shuffle = false;
+        shuffle();
+      }
+    });
+    shuffle();
+  }
+
+  public void shuffle() {
+    RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
+    Tensor tensor = RandomSample.of(randomSampleInterface, 7);
     setControlPointsSe2(tensor);
-    setManifoldDisplay(Se2CoveringDisplay.INSTANCE);
   }
 
   @Override
@@ -96,8 +111,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       if (optional.isPresent()) {
         Tensor median = optional.orElseThrow();
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(median));
-        Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape().multiply(RealScalar.of(0.7)));
-        path2d.closePath();
+        Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape().multiply(RealScalar.of(0.7)), true);
         graphics.setColor(COLOR_DATA_INDEXED_FILL.getColor(1));
         graphics.fill(path2d);
         graphics.setColor(COLOR_DATA_INDEXED_DRAW.getColor(1));
@@ -105,7 +119,18 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
         geometricLayer.popMatrix();
       }
     }
-    {
+    if (vehicle) {
+      for (Tensor point : sequence) {
+        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
+        new ImageRenderNew(VehicleStatic.INSTANCE.bufferedImage_o(), BOX).render(geometricLayer, graphics);
+        geometricLayer.popMatrix();
+      }
+      {
+        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
+        new ImageRenderNew(VehicleStatic.INSTANCE.bufferedImage_g(), BOX).render(geometricLayer, graphics);
+        geometricLayer.popMatrix();
+      }
+    } else {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, mean, geometricLayer, graphics);
       leversRender.renderSequence();
       leversRender.renderOrigin();
@@ -115,6 +140,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new BiinvariantMeanDemo().setVisible(1200, 600);
   }
 }

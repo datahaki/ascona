@@ -26,6 +26,7 @@ import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -198,6 +199,7 @@ import ch.alpine.tensor.sca.Sign;
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new R2BarycentricCoordinateDemo().setVisible(1200, 600);
   }
 }

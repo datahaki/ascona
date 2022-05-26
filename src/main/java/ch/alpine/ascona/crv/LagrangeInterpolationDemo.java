@@ -83,9 +83,9 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     Curvature2DRender.of(render, false, geometricLayer, graphics);
     {
       Tensor selected = interpolation.at(parameter);
+      graphics.setColor(Color.DARK_GRAY);
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(selected));
       Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape());
-      graphics.setColor(Color.DARK_GRAY);
       graphics.fill(path2d);
       geometricLayer.popMatrix();
     }

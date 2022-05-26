@@ -21,6 +21,7 @@ import ch.alpine.tensor.sca.Clip;
 
 /** coordinate bounding box is area of image in model space */
 public class ImageRenderNew implements RenderInterface {
+  public static boolean DRAW_BOX = false;
   private final BufferedImage bufferedImage;
   private final CoordinateBoundingBox coordinateBoundingBox;
   private final Tensor pixel2model;
@@ -44,7 +45,7 @@ public class ImageRenderNew implements RenderInterface {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (true) {
+    if (DRAW_BOX) {
       graphics.setColor(Color.LIGHT_GRAY);
       graphics.draw(geometricLayer.toPath2D(Box2D.polygon(coordinateBoundingBox), true));
     }
