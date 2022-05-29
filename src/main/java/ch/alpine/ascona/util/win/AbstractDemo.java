@@ -15,7 +15,16 @@ public abstract class AbstractDemo implements RenderInterface {
   /** @param width
    * @param height */
   public final void setVisible(int width, int height) {
-    timerFrame.jFrame.setBounds(100, 100, width, height);
+    setVisible(100, 100, width, height);
+  }
+
+  public final void setVisible(int x, int y, int width, int height) {
+    timerFrame.jFrame.setBounds(x, y, width, height);
     timerFrame.jFrame.setVisible(true);
+  }
+
+  public final void dispose() {
+    timerFrame.jFrame.setVisible(false);
+    timerFrame.jFrame.dispose();
   }
 }

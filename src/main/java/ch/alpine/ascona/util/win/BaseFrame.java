@@ -43,7 +43,10 @@ public class BaseFrame {
       jButton.setToolTipText("snapshot is stored in ~/Pictures/...");
       jButton.addActionListener(actionEvent -> {
         try {
-          File file = HomeDirectory.Pictures(String.format("ascona_%d.%s", System.currentTimeMillis(), IMAGE_FORMAT));
+          File file = HomeDirectory.Pictures(String.format("ascona_%d_%s.%s", //
+              System.currentTimeMillis(), //
+              jFrame.getTitle(), //
+              IMAGE_FORMAT));
           ImageIO.write(offscreen(), IMAGE_FORMAT, file);
         } catch (Exception exception) {
           exception.printStackTrace();

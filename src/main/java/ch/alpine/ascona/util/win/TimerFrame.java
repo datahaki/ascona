@@ -4,7 +4,6 @@ package ch.alpine.ascona.util.win;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,9 +42,17 @@ public class TimerFrame extends BaseFrame {
       jToggleButton.addActionListener(actionEvent -> {
         if (jToggleButton.isSelected() && _animationWriter == null) {
           try {
-            File file = HomeDirectory.Videos(String.format("ascona_%d.%s", System.currentTimeMillis(), VIDEO_FORMAT));
+            File file = HomeDirectory.Videos(String.format("ascona_%d_%s.%s", //
+                System.currentTimeMillis(), //
+                jFrame.getTitle(), //
+                VIDEO_FORMAT));
             _animationWriter = new GifAnimationWriter(file, 100, TimeUnit.MILLISECONDS);
-          } catch (IOException e) {
+            // Dimension dimension = geometricComponent.jComponent.getSize();
+            // _animationWriter = //
+            // new BGR3AnimationWriter( //
+            // new Mp4AnimationWriter( //
+            // HomeDirectory.file("animation.mp4").toString(), dimension, 10));
+          } catch (Exception e) {
             e.printStackTrace();
             jToggleButton.setSelected(false);
           }

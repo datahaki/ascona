@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Clips;
 
 @ReflectionMarker
 public class VehicleDemo extends ControlPointsDemo {
-  public VehicleDemo() throws IOException {
+  public VehicleDemo() {
     super(true, ManifoldDisplays.SE2_ONLY);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
   }

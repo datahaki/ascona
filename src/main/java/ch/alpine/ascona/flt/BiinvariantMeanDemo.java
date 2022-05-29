@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -23,7 +24,6 @@ import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.fit.HsWeiszfeldMethod;
 import ch.alpine.sophus.fit.SpatialMedian;
@@ -35,6 +35,7 @@ import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Subdivide;
@@ -73,11 +74,13 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       }
     });
     shuffle();
+    setMidpointIndicated(false);
   }
 
   public void shuffle() {
     RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
-    Tensor tensor = RandomSample.of(randomSampleInterface, 7);
+    Tensor tensor = RandomSample.of(randomSampleInterface, 6);
+    tensor.set(Scalar::zero, Tensor.ALL, 2);
     setControlPointsSe2(tensor);
   }
 
@@ -91,16 +94,21 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._03);
-    final Tensor mean = biinvariantMean.mean(sequence, weights);
+    Tensor mean = null;
+    try {
+      mean = biinvariantMean.mean(sequence, weights);
+    } catch (Exception e) {
+      System.err.println("mean does not exist");
+    }
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.setStroke(STROKE);
     RenderQuality.setQuality(graphics);
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    for (Tensor point : sequence) {
-      Tensor curve = Subdivide.of(0, 1, 20).map(geodesicSpace.curve(point, mean));
-      Path2D path2d = geometricLayer.toPath2D(Tensor.of(curve.stream().map(manifoldDisplay::toPoint)));
-      graphics.draw(path2d);
-    }
+    if (Objects.nonNull(mean))
+      for (Tensor point : sequence) {
+        Tensor curve = Subdivide.of(0, 1, 20).map(homogeneousSpace.curve(point, mean));
+        Path2D path2d = geometricLayer.toPath2D(Tensor.of(curve.stream().map(manifoldDisplay::toPoint)));
+        graphics.draw(path2d);
+      }
     graphics.setStroke(new BasicStroke(1));
     if (median) {
       Biinvariant biinvariant = biinvariants;
@@ -125,7 +133,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
         new ImageRenderNew(VehicleStatic.INSTANCE.bufferedImage_o(), BOX).render(geometricLayer, graphics);
         geometricLayer.popMatrix();
       }
-      {
+      if (Objects.nonNull(mean)) {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
         new ImageRenderNew(VehicleStatic.INSTANCE.bufferedImage_g(), BOX).render(geometricLayer, graphics);
         geometricLayer.popMatrix();

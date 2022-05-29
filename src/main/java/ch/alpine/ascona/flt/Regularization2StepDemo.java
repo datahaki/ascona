@@ -11,6 +11,7 @@ import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.ascona.util.sym.SymSequence;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -61,6 +62,7 @@ public final class Regularization2StepDemo extends AbstractSpectrogramDemo imple
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new Regularization2StepDemo().setVisible(1200, 600);
   }
 }

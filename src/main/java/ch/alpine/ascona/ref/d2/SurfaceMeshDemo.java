@@ -47,12 +47,12 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param {
     public Boolean ctrl = true;
-    public SurfaceMeshRefinements ref = SurfaceMeshRefinements.LINEAR;
+    public SurfaceMeshRefinements ref = SurfaceMeshRefinements.CATMULL_CLARK;
     @FieldSlider
     @FieldPreferredWidth(100)
     @FieldInteger
     @FieldClip(min = "0", max = "4")
-    public Scalar refine = RealScalar.of(0);
+    public Scalar refine = RealScalar.of(2);
   }
 
   private final Param param = new Param();
