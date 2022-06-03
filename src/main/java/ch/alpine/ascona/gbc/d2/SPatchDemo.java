@@ -11,6 +11,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.d2.Barycenter;
@@ -41,7 +42,7 @@ public class SPatchDemo extends ControlPointsDemo {
     Tensor embed = sPatch.getEmbed();
     setControlPointsSe2(Tensor.of(embed.stream() //
         .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
-    int res = 25;
+    int res = 35;
     Tensor dx = Subdivide.of(-1, 1, res - 1).map(N.DOUBLE);
     Tensor dy = Subdivide.of(-1, 1, res - 1).map(N.DOUBLE);
     Tensor domain = Outer.of(Tensors::of, dx, dy);
@@ -50,29 +51,38 @@ public class SPatchDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getControlPointsSe2();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     {
-
       {
         Tensor[][] forward = movingDomain2D.forward(sequence, homogeneousSpace.biinvariantMean(Chop._04));
         new ArrayRender(forward, ColorDataGradients.CLASSIC.deriveWithOpacity(RationalScalar.HALF)) //
             .render(geometricLayer, graphics);
-        Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
-        for (Tensor[] row : forward)
-          for (Tensor xya : row) {
-            geometricLayer.pushMatrix(manifoldDisplay.matrixLift(xya));
-            Path2D path2d = geometricLayer.toPath2D(shape);
-            graphics.setColor(new Color(128, 128, 128, 64));
-            graphics.fill(path2d);
-            geometricLayer.popMatrix();
+        Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
+        int x = 0;
+        for (Tensor[] row : forward) {
+          if (x % 2 == 0) {
+            int y = 0;
+            for (Tensor xya : row) {
+              if (y % 2 == 0) {
+                geometricLayer.pushMatrix(manifoldDisplay.matrixLift(xya));
+                Path2D path2d = geometricLayer.toPath2D(shape);
+                graphics.setColor(new Color(128, 128, 128, 64));
+                graphics.fill(path2d);
+                geometricLayer.popMatrix();
+              }
+              ++y;
+            }
           }
+          x++;
+        }
       }
     }
     {
       int n = 5;
-      Tensor domain = Subdivide.of(0.0, 1.0, 10);
+      Tensor domain = Subdivide.of(0.0, 1.0, 15);
       graphics.setColor(new Color(0, 0, 0, 128));
       for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
@@ -82,7 +92,7 @@ public class SPatchDemo extends ControlPointsDemo {
           int i1 = sPatch.basis(r1);
           ScalarTensorFunction stf = homogeneousSpace.curve(sequence.get(i0), sequence.get(i1));
           Tensor points = Tensor.of(domain.map(stf).stream().map(manifoldDisplay::toPoint));
-          Path2D path2d =           geometricLayer.toPath2D(points);
+          Path2D path2d = geometricLayer.toPath2D(points);
           graphics.draw(path2d);
         }
       }

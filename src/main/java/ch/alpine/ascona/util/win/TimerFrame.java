@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.util.win;
 
-import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -13,8 +12,6 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.io.BGR3AnimationWriter;
-import ch.alpine.ascona.util.io.Mp4AnimationWriter;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.AnimationWriter;
 import ch.alpine.tensor.io.GifAnimationWriter;
@@ -50,11 +47,11 @@ public class TimerFrame extends BaseFrame {
                 jFrame.getTitle(), //
                 VIDEO_FORMAT));
             _animationWriter = new GifAnimationWriter(file, 100, TimeUnit.MILLISECONDS);
-//            Dimension dimension = geometricComponent.jComponent.getSize();
-//            _animationWriter = //
-//                new BGR3AnimationWriter( //
-//                    new Mp4AnimationWriter( //
-//                        HomeDirectory.file("animation.mp4").toString(), dimension, 10));
+            // Dimension dimension = geometricComponent.jComponent.getSize();
+            // _animationWriter = //
+            // new BGR3AnimationWriter( //
+            // new Mp4AnimationWriter( //
+            // HomeDirectory.file("animation.mp4").toString(), dimension, 10));
           } catch (Exception e) {
             e.printStackTrace();
             jToggleButton.setSelected(false);

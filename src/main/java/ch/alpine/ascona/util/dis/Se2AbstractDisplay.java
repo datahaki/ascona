@@ -16,7 +16,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializable {
-  private static final Tensor ARROWHEAD = Arrowhead.of(0.4).unmodifiable();
+  private static final Tensor ARROWHEAD = Arrowhead.of(0.3).unmodifiable();
 
   @Override // from ManifoldDisplay
   public final int dimensions() {

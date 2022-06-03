@@ -21,8 +21,8 @@ public enum LogWeightings implements LogWeighting {
   DISTANCES {
     @Override // from LogWeighting
     public TensorUnaryOperator operator( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return biinvariant.distances(vectorLogManifold, sequence);
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return biinvariant.distances(manifold, sequence);
     }
 
     @Override // from LogWeighting
@@ -36,8 +36,8 @@ public enum LogWeightings implements LogWeighting {
   WEIGHTING {
     @Override // from LogWeighting
     public TensorUnaryOperator operator( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return biinvariant.weighting(vectorLogManifold, variogram, sequence);
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return biinvariant.weighting(manifold, variogram, sequence);
     }
 
     @Override // from LogWeighting
@@ -54,16 +54,16 @@ public enum LogWeightings implements LogWeighting {
   COORDINATE {
     @Override // from LogWeighting
     public TensorUnaryOperator operator( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return biinvariant.coordinate(vectorLogManifold, variogram, sequence);
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return biinvariant.coordinate(manifold, variogram, sequence);
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, //
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, //
         Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = new CrossAveraging( //
-          operator(biinvariant, vectorLogManifold, variogram, sequence), //
+          operator(biinvariant, manifold, variogram, sequence), //
           RnBiinvariantMean.INSTANCE, values);
       return point -> (Scalar) tensorUnaryOperator.apply(point);
     }
@@ -72,16 +72,16 @@ public enum LogWeightings implements LogWeighting {
   LAGRAINATE {
     @Override // from LogWeighting
     public TensorUnaryOperator operator( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      return biinvariant.lagrainate(vectorLogManifold, variogram, sequence);
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      return biinvariant.lagrainate(manifold, variogram, sequence);
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, //
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, //
         Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = new CrossAveraging( //
-          operator(biinvariant, vectorLogManifold, variogram, sequence), //
+          operator(biinvariant, manifold, variogram, sequence), //
           RnBiinvariantMean.INSTANCE, values);
       return point -> (Scalar) tensorUnaryOperator.apply(point);
     }
@@ -92,17 +92,17 @@ public enum LogWeightings implements LogWeighting {
   KRIGING {
     @Override // from LogWeighting
     public TensorUnaryOperator operator( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      TensorUnaryOperator tensorUnaryOperator = biinvariant.var_dist(vectorLogManifold, variogram, sequence);
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      TensorUnaryOperator tensorUnaryOperator = biinvariant.var_dist(manifold, variogram, sequence);
       return Kriging.barycentric(tensorUnaryOperator, sequence)::estimate;
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, //
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, //
         Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = //
-          biinvariant.var_dist(vectorLogManifold, variogram, sequence);
+          biinvariant.var_dist(manifold, variogram, sequence);
       Kriging kriging = Kriging.interpolation(tensorUnaryOperator, sequence, values);
       return point -> (Scalar) kriging.estimate(point);
     }
@@ -111,17 +111,17 @@ public enum LogWeightings implements LogWeighting {
   KRIGING_COORDINATE {
     @Override // from LogWeighting
     public TensorUnaryOperator operator( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      TensorUnaryOperator tensorUnaryOperator = biinvariant.var_dist(vectorLogManifold, variogram, sequence);
-      return KrigingCoordinate.of(tensorUnaryOperator, vectorLogManifold, sequence);
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      TensorUnaryOperator tensorUnaryOperator = biinvariant.var_dist(manifold, variogram, sequence);
+      return KrigingCoordinate.of(tensorUnaryOperator, manifold, sequence);
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, //
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, //
         Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = new CrossAveraging( //
-          operator(biinvariant, vectorLogManifold, variogram, sequence), //
+          operator(biinvariant, manifold, variogram, sequence), //
           RnBiinvariantMean.INSTANCE, values);
       return point -> (Scalar) tensorUnaryOperator.apply(point);
     }
@@ -129,17 +129,17 @@ public enum LogWeightings implements LogWeighting {
   INVERSE_COORDINATE {
     @Override // from LogWeighting
     public TensorUnaryOperator operator( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
-      TensorUnaryOperator tensorUnaryOperator = biinvariant.var_dist(vectorLogManifold, variogram, sequence);
-      return InverseCoordinate.of(tensorUnaryOperator, vectorLogManifold, sequence);
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+      TensorUnaryOperator tensorUnaryOperator = biinvariant.var_dist(manifold, variogram, sequence);
+      return InverseCoordinate.of(tensorUnaryOperator, manifold, sequence);
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, //
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, //
         Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = new CrossAveraging( //
-          operator(biinvariant, vectorLogManifold, variogram, sequence), //
+          operator(biinvariant, manifold, variogram, sequence), //
           RnBiinvariantMean.INSTANCE, values);
       return point -> (Scalar) tensorUnaryOperator.apply(point);
     }

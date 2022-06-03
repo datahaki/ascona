@@ -4,7 +4,6 @@ package ch.alpine.ascona.util.dis;
 import java.io.Serializable;
 import java.util.stream.Stream;
 
-import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.sophus.api.GeodesicSpace;
@@ -81,7 +80,7 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   @Override
   public final RenderInterface background() {
     return EmptyRender.INSTANCE;
-//    return AxesRender.INSTANCE;
+    // return AxesRender.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

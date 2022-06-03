@@ -6,9 +6,7 @@ import java.util.stream.IntStream;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.FiniteTensorQ;
@@ -37,7 +35,7 @@ import ch.alpine.tensor.chq.FiniteTensorQ;
     IntStream.range(0, rows).parallel().forEach(cx -> {
       for (int cy = 0; cy < cols; ++cy) {
         if (FiniteTensorQ.of(weights[cx][cy])) {
-        array[cx][cy] = biinvariantMean.mean(target, weights[cx][cy]);
+          array[cx][cy] = biinvariantMean.mean(target, weights[cx][cy]);
         } else {
           array[cx][cy] = ConstantArray.of(DoubleScalar.INDETERMINATE, 3);
         }
