@@ -14,6 +14,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerListener;
@@ -95,6 +96,7 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new ThreePointBarycenterDemo().setVisible(1200, 900);
   }
 }

@@ -25,6 +25,7 @@ import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -230,9 +231,11 @@ public class LeversRender {
   public void renderWeightsLeveragesSqrt() {
     if (Tensors.nonEmpty(sequence)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      Manifold vectorLogManifold = homogeneousSpace;
-      Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, origin);
-      renderWeights(new Mahalanobis(matrix).leverages_sqrt());
+      TensorUnaryOperator coordinate = Biinvariants.LEVERAGES.coordinate(homogeneousSpace, InversePowerVariogram.of(2), sequence);
+      Tensor weights = coordinate.apply(origin);
+      // Tensor matrix = new HsDesign(homogeneousSpace).matrix(sequence, origin);
+      // weights = new Mahalanobis(matrix).leverages_sqrt();
+      renderWeights(weights);
     }
   }
 

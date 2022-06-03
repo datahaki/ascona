@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.stream.Stream;
 
 import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
@@ -27,7 +28,7 @@ import ch.alpine.tensor.sca.Clips;
 
 public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   private static final Scalar RADIUS = RealScalar.of(1.0);
-  private static final Tensor CIRCLE = CirclePoints.of(15).multiply(RealScalar.of(0.04)).unmodifiable();
+  private static final Tensor CIRCLE = CirclePoints.of(15).multiply(RealScalar.of(0.06)).unmodifiable();
   private static final TensorUnaryOperator PAD = PadRight.zeros(2);
   private static final TensorUnaryOperator LIFT = PadRight.zeros(3);
   // ---
@@ -79,7 +80,8 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
 
   @Override
   public final RenderInterface background() {
-    return AxesRender.INSTANCE;
+    return EmptyRender.INSTANCE;
+//    return AxesRender.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

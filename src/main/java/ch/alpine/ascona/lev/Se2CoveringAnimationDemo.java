@@ -74,6 +74,7 @@ public class Se2CoveringAnimationDemo extends LogWeightingDemo {
       RenderQuality.setQuality(graphics);
       Tensor sequence = getSequence();
       Tensor origin = optional.get();
+      // TODO ASCONA
       LeversHud.render( //
           Bitype.METRIC1, //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics));

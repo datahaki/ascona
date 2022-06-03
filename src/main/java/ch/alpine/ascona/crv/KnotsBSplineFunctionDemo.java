@@ -40,6 +40,7 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
   @FieldPreferredWidth(200)
   @FieldClip(min = "0", max = "1")
   public Scalar exponent = RealScalar.ONE;
+  // TODO ASCONA REDUNDANT to GeodesicBSplineFunctionDemo
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 
   public KnotsBSplineFunctionDemo() {
