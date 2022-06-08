@@ -6,36 +6,30 @@ import java.awt.Graphics2D;
 import java.util.Arrays;
 
 import javax.swing.JButton;
-import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.Se2Display;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.AxesRender;
-import ch.alpine.javax.swing.SpinnerLabel;
+import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 
-/* package */ abstract class AbstractHoverDemo extends LogWeightingDemo {
-  private final JToggleButton jToggleAxes = new JToggleButton("axes");
+public abstract class AbstractHoverDemo extends LogWeightingDemo {
   final SpinnerLabel<Integer> spinnerCount = new SpinnerLabel<>();
   private final JButton jButtonShuffle = new JButton("shuffle");
 
   public AbstractHoverDemo() {
-    super(false, ManifoldDisplays.SE2C_SE2_S2_R2, LogWeightings.list());
+    super(false, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
     setMidpointIndicated(false);
     setPositioningEnabled(false);
     addSpinnerListener(v -> shuffle(spinnerCount.getValue()));
     {
-      timerFrame.jToolBar.add(jToggleAxes);
-    }
-    {
       spinnerCount.setList(Arrays.asList(5, 10, 15, 20, 25, 30, 40));
-      spinnerCount.setValue(15);
+      spinnerCount.setValue(25);
       spinnerCount.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
       spinnerCount.addSpinnerListener(this::shuffle);
     }
@@ -44,21 +38,20 @@ import ch.alpine.tensor.Tensor;
       timerFrame.jToolBar.add(jButtonShuffle);
     }
     shuffle(spinnerCount.getValue());
-    setGeodesicDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(Se2Display.INSTANCE);
     timerFrame.jToolBar.addSeparator();
   }
 
-  void shuffle(int n) {
+  protected void shuffle(int n) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
-    setControlPointsSe2(RandomSample.of(randomSampleInterface, n));
+    Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
+        .map(manifoldDisplay::lift));
+    setControlPointsSe2(tensor);
   }
 
   @Override // from RenderInterface
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
-    if (jToggleAxes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
@@ -72,5 +65,5 @@ import ch.alpine.tensor.Tensor;
    * @param graphics
    * @param leversRender
    * @param weights */
-  abstract void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender);
+  protected abstract void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender);
 }

@@ -3,13 +3,12 @@ package ch.alpine.ascona.misc;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.dis.GeodesicDisplayRender;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.lev.LeversRender;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.Exponential;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.TSnProjection;
@@ -20,16 +19,10 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.red.Times;
 
-/* package */ class S2ExpDemo extends ControlPointsDemo {
+public class S2ExpDemo extends ControlPointsDemo {
   public S2ExpDemo() {
     super(true, ManifoldDisplays.S2_ONLY);
     // ---
-    timerFrame.geometricComponent.addRenderInterfaceBackground(new GeodesicDisplayRender() {
-      @Override
-      public ManifoldDisplay getGeodesicDisplay() {
-        return manifoldDisplay();
-      }
-    });
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     timerFrame.geometricComponent.setOffset(400, 400);

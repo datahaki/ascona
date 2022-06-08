@@ -6,28 +6,28 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
-import java.util.Arrays;
 import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.dis.H2Display;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.ascona.dis.Se2AbstractDisplay;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
-import ch.alpine.java.ren.GridRender;
-import ch.alpine.javax.swing.SpinnerLabel;
-import ch.alpine.javax.swing.SpinnerListener;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.ascona.util.dis.H2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
+import ch.alpine.ascona.util.ren.GridRender;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.SpinnerListener;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.itp.ArcLengthParameterization;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.sophus.ref.d1.FourPointCurveSubdivision;
@@ -39,25 +39,24 @@ import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-/* package */ class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<ManifoldDisplay> {
+public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<ManifoldDisplay> {
   private static final GridRender GRID_RENDER = new GridRender(Tensors.vector(-1, 0, 1), Color.LIGHT_GRAY);
   private static final Color DOMAIN_F = new Color(192, 192, 64, 64);
   private static final Color DOMAIN_D = new Color(192, 192, 64, 192);
   // ---
-  private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerLength = SpinnerLabel.of(5, 9, 10, 11, 12, 15, 20);
   private final JToggleButton jToggleCtrl = new JToggleButton("show ctrl");
 
   public LogarithmDemo() {
-    super(true, ManifoldDisplays.R2_H2_S2);
+    super(true, ManifoldDisplays.ARRAYS);
     {
-      spinnerLength.setList(Arrays.asList(5, 9, 10, 11, 12, 15, 20));
-      spinnerLength.setValueSafe(11);
+      spinnerLength.setValue(11);
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
     }
     timerFrame.jToolBar.add(jToggleCtrl);
     // ---
     ManifoldDisplay manifoldDisplay = H2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
   }
@@ -66,7 +65,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Optional<Tensor> optional = getOrigin();
     if (optional.isPresent()) {
       Tensor sequence = getSequence();
@@ -84,7 +83,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
       }
       // ---
       CurveSubdivision curveSubdivision = //
-          new FourPointCurveSubdivision(geodesicInterface);
+          new FourPointCurveSubdivision(homogeneousSpace);
       if (2 < sequence.length()) {
         Tensor refined = sequence;
         while (refined.length() < 100)
@@ -104,7 +103,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
         final Tensor domain = Drop.tail(Subdivide.of(0.0, 1.0, spinnerLength.getValue()), 1);
         geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(10, 0)));
         GRID_RENDER.render(geometricLayer, graphics);
-        HsDesign hsDesign = new HsDesign(manifoldDisplay.hsManifold());
+        HsDesign hsDesign = new HsDesign(homogeneousSpace);
         Tensor planar = hsDesign.matrix(refined, origin);
         {
           RenderQuality.setQuality(graphics);
@@ -117,7 +116,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
         Tensor angles_acc = Tensor.of(planar.stream().map(ArcTan2D::of));
         Tensor distances = Tensor.of(Differences.of(angles_acc).stream().map(Scalar.class::cast).map(So2.MOD));
         try {
-          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, RnGeodesic.INSTANCE, planar);
+          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, RnGroup.INSTANCE, planar);
           Tensor border = domain.map(scalarTensorFunction);
           RenderQuality.setQuality(graphics);
           graphics.setColor(Color.BLUE);
@@ -130,7 +129,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
         }
         geometricLayer.popMatrix();
         try {
-          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, geodesicInterface, refined);
+          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, homogeneousSpace, refined);
           Tensor border = domain.map(scalarTensorFunction);
           LeversRender leversRender = LeversRender.of( //
               manifoldDisplay, //

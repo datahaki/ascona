@@ -7,24 +7,24 @@ import java.awt.Graphics2D;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.Se2Display;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
-import ch.alpine.java.ren.AxesRender;
+import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 
-/* package */ class Se2CoveringInvarianceDemo extends LogWeightingDemo {
+public class Se2CoveringInvarianceDemo extends LogWeightingDemo {
   private final JToggleButton jToggleAxes = new JToggleButton("axes");
   private final JTextField jTextField = new JTextField();
 
@@ -38,7 +38,7 @@ import ch.alpine.tensor.mat.gr.InfluenceMatrix;
       jTextField.setPreferredSize(new Dimension(100, 28));
       timerFrame.jToolBar.add(jTextField);
     }
-    setGeodesicDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(Se2Display.INSTANCE);
     setControlPointsSe2(Tensors.fromString( //
         "{{0, 0, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}, {-3, 0, 0}}"));
     setControlPointsSe2(Tensors.fromString( //
@@ -51,15 +51,14 @@ import ch.alpine.tensor.mat.gr.InfluenceMatrix;
       AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    LieGroup lieGroup = manifoldDisplay.lieGroup();
+    LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
     Tensor controlPointsAll = getGeodesicControlPoints();
     LieGroupOps lieGroupOps = new LieGroupOps(lieGroup);
     if (0 < controlPointsAll.length()) {
-      VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
       {
         Tensor sequence = controlPointsAll.extract(1, controlPointsAll.length());
         Tensor origin = controlPointsAll.get(0);
-        Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, origin);
+        Tensor matrix = new HsDesign(lieGroup).matrix(sequence, origin);
         Tensor weights = InfluenceMatrix.of(matrix).leverages_sqrt();
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
@@ -79,7 +78,7 @@ import ch.alpine.tensor.mat.gr.InfluenceMatrix;
         Tensor result = lieGroupOp.slash(allR);
         Tensor sequence = result.extract(1, result.length());
         Tensor origin = result.get(0);
-        Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, origin);
+        Tensor matrix = new HsDesign(lieGroup).matrix(sequence, origin);
         Tensor weights = InfluenceMatrix.of(matrix).leverages_sqrt();
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);

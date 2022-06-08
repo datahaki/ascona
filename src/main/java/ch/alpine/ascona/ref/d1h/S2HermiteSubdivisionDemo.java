@@ -6,23 +6,25 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.HermiteSubdivisions;
-import ch.alpine.ascona.dis.GeodesicDisplayRender;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldClip;
-import ch.alpine.java.ref.ann.FieldInteger;
-import ch.alpine.java.ref.ann.FieldPreferredWidth;
-import ch.alpine.java.ref.ann.FieldSelectionArray;
-import ch.alpine.java.ref.ann.FieldSlider;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
-import ch.alpine.java.ren.PathRender;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.HermiteSubdivisions;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorIteration;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
@@ -34,7 +36,11 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.red.Times;
 
+@ReflectionMarker
 public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
+  // TODO ASCONA redundant
+  private static final PointsRender POINTS_RENDER_0 = //
+      new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
   @FieldSlider
   @FieldPreferredWidth(100)
@@ -51,12 +57,6 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
     super(true, ManifoldDisplays.S2_ONLY);
     // ---
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
-    timerFrame.geometricComponent.addRenderInterfaceBackground(new GeodesicDisplayRender() {
-      @Override
-      public ManifoldDisplay getGeodesicDisplay() {
-        return manifoldDisplay();
-      }
-    });
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     timerFrame.geometricComponent.setOffset(400, 400);
@@ -71,6 +71,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     S2Display s2Display = (S2Display) manifoldDisplay();
     Scalar vscale = beta;
     Tensor control = Tensor.of(getControlPointsSe2().stream().map(xya -> {
@@ -80,15 +81,16 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           s2Display.project(xy0), //
           s2Display.createTangent(xy0, xya.Get(2)).multiply(vscale));
     }));
-    POINTS_RENDER_0.show(manifoldDisplay()::matrixLift, getControlPointShape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
-    Geodesic geodesicInterface = s2Display.geodesic();
+    POINTS_RENDER_0.show(manifoldDisplay::matrixLift, getControlPointShape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
+    // GeodesicSpace geodesicSpace = s2Display.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     { // render tangents as geodesic on sphere
       for (Tensor ctrl : control) {
         Tensor p = ctrl.get(0); // point
         Tensor v = ctrl.get(1); // vector
         if (derivatives) {
           Tensor q = new SnExponential(p).exp(v); // point on sphere
-          ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(p, q);
+          ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(p, q);
           graphics.setStroke(STROKE);
           Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(s2Display::toPoint));
           graphics.setColor(Color.LIGHT_GRAY);
@@ -103,10 +105,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
         }
       }
     }
-    HermiteSubdivision hermiteSubdivision = scheme.supply( //
-        s2Display.hsManifold(), //
-        s2Display.hsTransport(), //
-        s2Display.biinvariantMean());
+    HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);
     if (1 < control.length()) {
       TensorIteration tensorIteration = cyclic //
           ? hermiteSubdivision.cyclic(RealScalar.ONE, control)
@@ -121,7 +120,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           Tensor v = pv.get(1);
           {
             Tensor q = new SnExponential(p).exp(v); // point on sphere
-            ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(p, q);
+            ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(p, q);
             graphics.setStroke(STROKE);
             Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(s2Display::toPoint));
             graphics.setColor(Color.LIGHT_GRAY);
@@ -141,6 +140,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new S2HermiteSubdivisionDemo().setVisible(1000, 800);
   }
 }

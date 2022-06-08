@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.ref.d1;
 
-import ch.alpine.sophus.api.MidpointInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -23,11 +23,11 @@ import ch.alpine.tensor.ext.Integers;
    * @param curveSubdivision
    * @param isDual
    * @param cyclic
-   * @param midpointInterface
+   * @param geodesicSpace
    * @return */
   public static Tensor refine( //
       Tensor control, int levels, CurveSubdivision curveSubdivision, //
-      boolean isDual, boolean cyclic, MidpointInterface midpointInterface) {
+      boolean isDual, boolean cyclic, GeodesicSpace geodesicSpace) {
     TensorUnaryOperator tensorUnaryOperator = create(curveSubdivision, cyclic);
     Tensor refined = control;
     for (int level = 0; level < levels; ++level) {
@@ -38,9 +38,9 @@ import ch.alpine.tensor.ext.Integers;
           !cyclic && //
           1 < control.length())
         refined = Join.of( //
-            Tensors.of(midpointInterface.midpoint(control.get(0), prev.get(0))), //
+            Tensors.of(geodesicSpace.midpoint(control.get(0), prev.get(0))), //
             refined, //
-            Tensors.of(midpointInterface.midpoint(Last.of(prev), Last.of(control))));
+            Tensors.of(geodesicSpace.midpoint(Last.of(prev), Last.of(control))));
     }
     return refined;
   }

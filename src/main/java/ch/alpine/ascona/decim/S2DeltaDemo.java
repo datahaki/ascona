@@ -2,26 +2,26 @@
 package ch.alpine.ascona.decim;
 
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.api.AbstractGeodesicDisplayDemo;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldInteger;
-import ch.alpine.java.ref.ann.ReflectionMarker;
-import ch.alpine.java.ref.util.PanelFieldsEditor;
-import ch.alpine.java.ren.PathRender;
+import ch.alpine.ascona.util.api.AbstractManifoldDisplayDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.FieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.hs.sn.S2Loxodrome;
-import ch.alpine.sophus.hs.sn.SnGeodesic;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.SnMetric;
 import ch.alpine.sophus.hs.sn.SnPerturbation;
 import ch.alpine.sophus.hs.sn.SnRotationMatrix;
@@ -39,7 +39,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-/* package */ class S2DeltaDemo extends AbstractGeodesicDisplayDemo {
+public class S2DeltaDemo extends AbstractManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 128 + 64);
   private static final Color COLOR_SHAPE = new Color(128, 255, 128, 128 + 64);
   private static final int WIDTH = 360;
@@ -70,17 +70,16 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
   public S2DeltaDemo() {
     super(ManifoldDisplays.S2_ONLY);
-    Container container = timerFrame.jFrame.getContentPane();
-    PanelFieldsEditor fieldsPanel = new PanelFieldsEditor(param);
-    fieldsPanel.addUniversalListener(this::compute);
-    container.add(BorderLayout.WEST, fieldsPanel.createJScrollPane());
+    // ---
+    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    fieldsEditor.addUniversalListener(this::compute);
     compute();
   }
 
   private void compute() {
     ScalarTensorFunction stf = S2Loxodrome.of(param.angle);
     Tensor domain = Subdivide.of(0, 20, 200);
-    CurveSubdivision curveSubdivision = UniformResample.of(SnMetric.INSTANCE, SnGeodesic.INSTANCE, param.delta);
+    CurveSubdivision curveSubdivision = UniformResample.of(SnMetric.INSTANCE, SnManifold.INSTANCE, param.delta);
     Tensor sequence = Tensor.of(domain.stream().map(Scalar.class::cast).map(stf));
     sequence = curveSubdivision.string(sequence);
     TensorUnaryOperator tuo = SnPerturbation.of(NormalDistribution.of(RealScalar.ZERO, param.noise));
@@ -88,7 +87,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     ScalarUnaryOperator s_window = param.s_window.get();
     snDeltaRaw = new SnDeltaContainer(sequence, s_window);
     TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
-        GeodesicCenter.of(SnGeodesic.INSTANCE, param.f_window.get()), param.getWidth());
+        GeodesicCenter.of(SnManifold.INSTANCE, param.f_window.get()), param.getWidth());
     snDeltaFil = new SnDeltaContainer(tensorUnaryOperator.apply(sequence), s_window);
   }
 
@@ -142,6 +141,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   public static void main(String[] args) {
-    new S2DeltaDemo().setVisible(1000, 800);
+    LookAndFeels.LIGHT.updateUI();
+    new S2DeltaDemo().setVisible(1200, 800);
   }
 }

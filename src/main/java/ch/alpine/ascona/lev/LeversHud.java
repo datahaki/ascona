@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.lev;
 
+import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
@@ -10,17 +11,17 @@ public enum LeversHud {
   public static final ColorDataGradient COLOR_DATA_GRADIENT = //
       ColorDataGradients.TEMPERATURE.deriveWithOpacity(RealScalar.of(0.5));
 
-  public static void render(Bitype biinvariant, LeversRender leversRender) {
-    render(biinvariant, leversRender, COLOR_DATA_GRADIENT);
+  public static void render(Bitype bitype, LeversRender leversRender) {
+    render(bitype, leversRender, COLOR_DATA_GRADIENT);
   }
 
   public static void render( //
-      Bitype biinvariant, LeversRender leversRender, ColorDataGradient colorDataGradient) {
+      Bitype bitype, LeversRender leversRender, ColorDataGradient colorDataGradient) {
     leversRender.renderSequence();
     leversRender.renderOrigin();
     leversRender.renderLevers();
     // ---
-    switch (biinvariant) {
+    switch (bitype) {
     case METRIC1:
       leversRender.renderTangentsXtoP(false); // boolean: no tangent plane
       leversRender.renderEllipseIdentity();

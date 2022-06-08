@@ -7,29 +7,30 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.ascona.dis.Se2AbstractDisplay;
-import ch.alpine.ascona.dis.Se2CoveringDisplay;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.javax.swing.SpinnerLabel;
-import ch.alpine.javax.swing.SpinnerListener;
+import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
+import ch.alpine.ascona.util.dis.Se2CoveringDisplay;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 
-/* package */ class GrassmannDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
-  private final SpinnerLabel<ColorDataGradient> spinnerColorData = SpinnerLabel.of(ColorDataGradients.values());
+public class GrassmannDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+  private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public GrassmannDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2_S2_H2_R2, LogWeightings.list());
+    super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
     // ---
     spinnerColorData.setValue(ColorDataGradients.TEMPERATURE);
     spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color scheme");
@@ -38,7 +39,7 @@ import ch.alpine.tensor.img.ColorDataGradients;
     // ---
     ManifoldDisplay manifoldDisplay = Se2CoveringDisplay.INSTANCE;
     manifoldDisplay = S2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     setBitype(Bitype.LEVERAGES1);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
@@ -50,15 +51,13 @@ import ch.alpine.tensor.img.ColorDataGradients;
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Optional<Tensor> optional = getOrigin();
+    Tensor sequence = getSequence();
     if (optional.isPresent()) {
-      Tensor sequence = getSequence();
       Tensor origin = optional.get();
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       ColorDataGradient colorDataGradient = spinnerColorData.getValue().deriveWithOpacity(RealScalar.of(0.5));
       LeversHud.render(bitype(), leversRender, colorDataGradient);
-    } else {
-      renderControlPoints(geometricLayer, graphics);
     }
   }
 

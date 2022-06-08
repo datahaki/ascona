@@ -4,17 +4,15 @@ package ch.alpine.ascona.aurora;
 import java.io.File;
 import java.io.IOException;
 
-import ch.alpine.ascona.api.HermiteSubdivisions;
-import ch.alpine.ascona.io.GokartPoseDataV2;
+import ch.alpine.ascona.util.api.HermiteSubdivisions;
+import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Curvature2D;
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.HsTransport;
-import ch.alpine.sophus.lie.LieTransport;
-import ch.alpine.sophus.lie.rn.RnGeodesic;
+import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
-import ch.alpine.sophus.lie.se2c.Se2CoveringManifold;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
@@ -85,43 +83,42 @@ import ch.alpine.tensor.red.Nest;
   }
 
   private void processAll() throws IOException {
-    HsManifold hsManifold = Se2CoveringManifold.INSTANCE;
-    HsTransport hsTransport = LieTransport.INSTANCE;
+    LieGroup lieGroup = Se2CoveringGroup.INSTANCE;
     BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H1STANDARD.supply(hsManifold, hsTransport, biinvariantMean);
-      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGeodesic.INSTANCE);
+          HermiteSubdivisions.H1STANDARD.supply(lieGroup);
+      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h1standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H2STANDARD.supply(hsManifold, hsTransport, biinvariantMean);
-      CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(RnGeodesic.INSTANCE);
+          HermiteSubdivisions.H2STANDARD.supply(lieGroup);
+      CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h2standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H2MANIFOLD.supply(hsManifold, hsTransport, biinvariantMean);
-      CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(RnGeodesic.INSTANCE);
+          HermiteSubdivisions.H2MANIFOLD.supply(lieGroup);
+      CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h2manifold");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H3STANDARD.supply(hsManifold, hsTransport, biinvariantMean);
-      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGeodesic.INSTANCE);
+          HermiteSubdivisions.H3STANDARD.supply(lieGroup);
+      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H3A1.supply(hsManifold, hsTransport, biinvariantMean);
-      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGeodesic.INSTANCE);
+          HermiteSubdivisions.H3A1.supply(lieGroup);
+      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3a1");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
-          HermiteSubdivisions.H3A2.supply(hsManifold, hsTransport, biinvariantMean);
-      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGeodesic.INSTANCE);
+          HermiteSubdivisions.H3A2.supply(lieGroup);
+      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RnGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3a2");
     }
   }

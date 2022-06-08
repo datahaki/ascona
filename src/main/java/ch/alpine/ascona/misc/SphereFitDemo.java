@@ -6,20 +6,23 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Optional;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.DubinsGenerator;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
-import ch.alpine.java.ren.PathRender;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.DubinsGenerator;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.crv.d2.StarPoints;
 import ch.alpine.sophus.fit.HsWeiszfeldMethod;
 import ch.alpine.sophus.fit.SpatialMedian;
 import ch.alpine.sophus.fit.SphereFit;
 import ch.alpine.sophus.fit.WeiszfeldMethod;
 import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
@@ -37,7 +40,7 @@ import ch.alpine.tensor.opt.hun.BipartiteMatching;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 
-/* package */ class SphereFitDemo extends ControlPointsDemo {
+public class SphereFitDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
   private static final Tensor CIRCLE = CirclePoints.of(10).multiply(RealScalar.of(3));
   // ---
@@ -58,7 +61,7 @@ import ch.alpine.tensor.sca.Chop;
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    final ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
     {
       Optional<SphereFit> optional = SphereFit.of(control);
@@ -97,9 +100,10 @@ import ch.alpine.tensor.sca.Chop;
     }
     {
       Biinvariant biinvariant = MetricBiinvariant.EUCLIDEAN;
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       TensorUnaryOperator weightingInterface = //
-          biinvariant.weighting(manifoldDisplay.hsManifold(), InversePowerVariogram.of(1), control);
-      SpatialMedian spatialMedian = new HsWeiszfeldMethod(manifoldDisplay.biinvariantMean(), weightingInterface, Chop._06);
+          biinvariant.weighting(homogeneousSpace, InversePowerVariogram.of(1), control);
+      SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(Chop._08), weightingInterface, Chop._06);
       Optional<Tensor> optional = spatialMedian.uniform(control);
       if (optional.isPresent()) {
         Tensor weiszfeld = optional.get();
@@ -113,10 +117,15 @@ import ch.alpine.tensor.sca.Chop;
         geometricLayer.popMatrix();
       }
     }
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new SphereFitDemo().setVisible(1000, 600);
   }
 }

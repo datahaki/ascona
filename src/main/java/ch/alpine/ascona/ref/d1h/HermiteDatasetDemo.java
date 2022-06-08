@@ -13,23 +13,24 @@ import javax.swing.JTextField;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.AbstractGeodesicDatasetDemo;
-import ch.alpine.ascona.api.HermiteSubdivisions;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.io.GokartPoseDataV2;
-import ch.alpine.ascona.io.GokartPoseDatas;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldClip;
-import ch.alpine.java.ref.ann.FieldInteger;
-import ch.alpine.java.ref.ann.FieldPreferredWidth;
-import ch.alpine.java.ref.ann.FieldSelectionArray;
-import ch.alpine.java.ref.ann.FieldSlider;
-import ch.alpine.java.ref.ann.ReflectionMarker;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
-import ch.alpine.java.ren.PathRender;
+import ch.alpine.ascona.util.api.AbstractGeodesicDatasetDemo;
+import ch.alpine.ascona.util.api.HermiteSubdivisions;
+import ch.alpine.ascona.util.dat.GokartPoseDataV2;
+import ch.alpine.ascona.util.dat.GokartPoseDatas;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorIteration;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
@@ -66,6 +67,10 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
   public Scalar level = RealScalar.of(3);
   public Boolean diff = true;
   protected Tensor _control = Tensors.empty();
+
+  public HermiteDatasetDemo() {
+    this(GokartPoseDataV2.RACING_DAY);
+  }
 
   public HermiteDatasetDemo(GokartPoseDataV2 gokartPoseData) {
     super(ManifoldDisplays.SE2C_SE2, gokartPoseData);
@@ -175,10 +180,8 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
     }
     graphics.setColor(Color.DARK_GRAY);
     Scalar delta = RationalScalar.of(skips.number().intValue(), 50);
-    HermiteSubdivision hermiteSubdivision = scheme.supply( //
-        manifoldDisplay.hsManifold(), //
-        manifoldDisplay.hsTransport(), //
-        manifoldDisplay.biinvariantMean());
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);
     TensorIteration tensorIteration = hermiteSubdivision.string(delta, _control);
     int levels = level.number().intValue();
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);

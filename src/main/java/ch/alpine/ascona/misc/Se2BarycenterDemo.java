@@ -7,16 +7,18 @@ import java.awt.geom.Path2D;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.DubinsGenerator;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.AxesRender;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.DubinsGenerator;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -28,8 +30,9 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.red.Total;
+import ch.alpine.tensor.sca.Chop;
 
-/* package */ class Se2BarycenterDemo extends ControlPointsDemo {
+public class Se2BarycenterDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
   // ---
@@ -46,17 +49,15 @@ import ch.alpine.tensor.red.Total;
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    RenderQuality.setQuality(graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     if (axes.isSelected())
       AxesRender.INSTANCE.render(geometricLayer, graphics);
-    RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     if (sequence.length() == 4)
       try {
-        ManifoldDisplay manifoldDisplay = manifoldDisplay();
-        // ---
-        Geodesic geodesicInterface = manifoldDisplay.geodesic();
-        final ScalarTensorFunction curve = geodesicInterface.curve(sequence.get(0), sequence.get(1));
+        HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+        final ScalarTensorFunction curve = homogeneousSpace.curve(sequence.get(0), sequence.get(1));
         {
           Tensor tensor = Subdivide.of(-0.5, 1.5, 55).map(curve);
           Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::toPoint)));
@@ -64,7 +65,7 @@ import ch.alpine.tensor.red.Total;
           graphics.draw(path2d);
         }
         // ---
-        BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+        BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
         Tensor tX = Subdivide.of(-1, 1, 20);
         Tensor tY = Subdivide.of(-1, 1, 8);
         int n = tY.length();
@@ -117,9 +118,15 @@ import ch.alpine.tensor.red.Total;
       } catch (Exception exception) {
         exception.printStackTrace();
       }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new Se2BarycenterDemo().setVisible(1200, 600);
   }
 }

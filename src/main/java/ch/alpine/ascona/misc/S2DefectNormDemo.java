@@ -9,27 +9,27 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.SnLineDistances;
-import ch.alpine.ascona.arp.S2ArrayHelper;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.lev.LeversRender;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldInteger;
-import ch.alpine.java.ref.ann.FieldLabel;
-import ch.alpine.java.ref.ann.FieldSelectionArray;
-import ch.alpine.java.ref.ann.ReflectionMarker;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
-import ch.alpine.java.ren.ImageRender;
-import ch.alpine.java.win.LookAndFeels;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.SnLineDistances;
+import ch.alpine.ascona.util.arp.S2ArrayHelper;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.ImageRenderNew;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldLabel;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.hs.VectorLogManifold;
-import ch.alpine.sophus.hs.sn.SnBiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.sn.SnExponential;
+import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -45,6 +45,7 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.red.Times;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
@@ -101,7 +102,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     }
   }
 
-  private BufferedImage bufferedImage(int resolution, VectorLogManifold vectorLogManifold) {
+  private BufferedImage bufferedImage(int resolution, Manifold manifold) {
     Tensor matrix = Tensors.matrix(S2ArrayHelper.of(resolution, rad(), new TSF()));
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }
@@ -115,14 +116,15 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RenderQuality.setDefault(graphics);
     int res = param.resolution.number().intValue();
-    BufferedImage bufferedImage = bufferedImage(res, manifoldDisplay.hsManifold());
-    ImageRender.of(bufferedImage, S2ArrayHelper.pixel2model(bufferedImage, rad())) //
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    BufferedImage bufferedImage = bufferedImage(res, homogeneousSpace);
+    new ImageRenderNew(bufferedImage, manifoldDisplay.coordinateBoundingBox()) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     // ---
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor cp = getGeodesicControlPoints();
-    ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(cp.get(0), cp.get(1));
+    ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(cp.get(0), cp.get(1));
     graphics.setStroke(STROKE);
     // Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
     graphics.setColor(new Color(192, 192, 192));
@@ -130,7 +132,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke());
     // ---
     TSF tsf = new TSF();
-    Tensor mean = SnBiinvariantMean.INSTANCE.mean(tsf.sequence, tsf.weights);
+    Tensor mean = SnManifold.INSTANCE.biinvariantMean(Chop._14).mean(tsf.sequence, tsf.weights);
     if (param.vector) {
       double rad = 1;
       Tensor dx = Subdivide.of(-rad, +rad, res);
@@ -171,10 +173,10 @@ public class S2DefectNormDemo extends ControlPointsDemo {
 
   public final Tensor iterationPath(Tensor sequence, Tensor weights, Tensor shifted, int iter) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsManifold hsManifold = manifoldDisplay.hsManifold();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Tensor tensor = Tensors.empty();
     for (int count = 0; count < iter; ++count) {
-      MeanDefect meanDefect = new MeanDefect(sequence, weights, hsManifold.exponential(shifted));
+      MeanDefect meanDefect = new MeanDefect(sequence, weights, homogeneousSpace.exponential(shifted));
       shifted = meanDefect.shifted();
       tensor.append(shifted);
     }
@@ -182,7 +184,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.DARK.updateUI();
+    LookAndFeels.LIGHT.updateUI();
     new S2DefectNormDemo().setVisible(1200, 800);
   }
 }

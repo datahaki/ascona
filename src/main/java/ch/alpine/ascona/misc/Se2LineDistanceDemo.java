@@ -8,20 +8,21 @@ import java.awt.geom.Path2D;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.AxesRender;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.HsLineDistance;
 import ch.alpine.sophus.decim.HsLineDistance.NormImpl;
 import ch.alpine.sophus.decim.HsLineProjection;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -31,7 +32,7 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.sca.Round;
 
-/* package */ class Se2LineDistanceDemo extends ControlPointsDemo {
+public class Se2LineDistanceDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
   // ---
@@ -49,16 +50,15 @@ import ch.alpine.tensor.sca.Round;
     if (axes.isSelected())
       AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    LieGroup lieGroup = manifoldDisplay.lieGroup();
-    Exponential exponential = Se2CoveringExponential.INSTANCE;
+    LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
+    Exponential exponential = Se2CoveringGroup.INSTANCE; // TODO check
     // ---
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor beg = sequence.get(0);
     Tensor end = sequence.get(1);
-    ScalarTensorFunction curve = geodesicInterface.curve(beg, end);
+    ScalarTensorFunction curve = geodesicSpace.curve(beg, end);
     {
       Tensor tensor = Subdivide.of(-0.5, 1.5, 55).map(curve);
       Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::toPoint)));
@@ -67,7 +67,7 @@ import ch.alpine.tensor.sca.Round;
     }
     final Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     {
-      HsLineDistance hsLineDistance = new HsLineDistance(manifoldDisplay.hsManifold());
+      HsLineDistance hsLineDistance = new HsLineDistance(lieGroup);
       NormImpl normImpl = hsLineDistance.tensorNorm(beg, end);
       {
         Tensor project = normImpl.project(mouse);
@@ -106,7 +106,7 @@ import ch.alpine.tensor.sca.Round;
       }
     }
     {
-      HsLineProjection hsLineProjection = new HsLineProjection(manifoldDisplay.hsManifold());
+      HsLineProjection hsLineProjection = new HsLineProjection(lieGroup);
       Tensor onto = hsLineProjection.onto(beg, end, mouse);
       {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(onto));
@@ -129,6 +129,11 @@ import ch.alpine.tensor.sca.Round;
       graphics.setColor(COLOR_DATA_INDEXED_DRAW.getColor(0));
       graphics.draw(path2d);
       geometricLayer.popMatrix();
+    }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
   }
 

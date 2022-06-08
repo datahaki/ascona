@@ -7,22 +7,22 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.PolygonCoordinates;
-import ch.alpine.ascona.dis.GeodesicDisplayRender;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
-import ch.alpine.javax.swing.SpinnerListener;
+import ch.alpine.ascona.util.api.PolygonCoordinates;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
 /** Visualization of
  * "Spherical Barycentric Coordinates"
  * by Torsten Langer, Alexander Belyaev, Hans-Peter Seidel, 2005 */
-/* package */ class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public LbsBarycenterDemo() {
@@ -31,7 +31,7 @@ import ch.alpine.tensor.Tensors;
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---
     ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
     jToggleNeutral.setSelected(true);
@@ -42,8 +42,8 @@ import ch.alpine.tensor.Tensors;
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Optional<Tensor> optional = getOrigin();
-    if (optional.isPresent()) {
-      Tensor sequence = getSequence();
+    Tensor sequence = getSequence();
+    if (optional.isPresent() && 0 < sequence.length()) {
       Tensor origin = optional.get();
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
@@ -57,7 +57,7 @@ import ch.alpine.tensor.Tensors;
       leversRender.renderIndexP();
       // ---
       geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(3, 0)));
-      GeodesicDisplayRender.render_s2(geometricLayer, graphics);
+      manifoldDisplay().background().render(geometricLayer, graphics);
       // ---
       leversRender.renderSurfaceP();
       leversRender.renderSequence();
@@ -70,7 +70,10 @@ import ch.alpine.tensor.Tensors;
       // ---
       geometricLayer.popMatrix();
     } else {
-      renderControlPoints(geometricLayer, graphics);
+      {
+        LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
+        leversRender.renderSequence();
+      }
     }
   }
 

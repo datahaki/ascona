@@ -5,18 +5,17 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.AxesRender;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.Exponential;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.d2.Arrowhead;
-import ch.alpine.sophus.hs.HsManifold;
-import ch.alpine.sophus.lie.LieExponential;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -29,7 +28,7 @@ import ch.alpine.tensor.mat.pd.Orthogonalize;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-/* package */ class Se2UnprojectDemo extends ControlPointsDemo {
+public class Se2UnprojectDemo extends ControlPointsDemo {
   private static final Tensor ARROWHEAD = Arrowhead.of(0.5);
 
   public Se2UnprojectDemo() {
@@ -41,23 +40,21 @@ import ch.alpine.tensor.sca.pow.Sqrt;
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
-    RenderQuality.setQuality(graphics);
-    renderControlPoints(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsManifold hsManifold = LieExponential.of(manifoldDisplay.lieGroup(), Se2CoveringExponential.INSTANCE);
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     // ---
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor p = sequence.get(0);
     Tensor q = sequence.get(1);
     {
-      ScalarTensorFunction curve = geodesicInterface.curve(p, q);
+      ScalarTensorFunction curve = geodesicSpace.curve(p, q);
       Tensor tensor = Subdivide.of(-0.05, 1.05, 25).map(curve);
       Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::toPoint)));
       graphics.setColor(Color.BLUE);
       graphics.draw(path2d);
     }
-    Exponential exponential = hsManifold.exponential(p);
+    Exponential exponential = homogeneousSpace.exponential(p);
     Tensor log = exponential.log(q);
     Tensor matrix = Join.of(Tensors.of(log), IdentityMatrix.of(3));
     Tensor tensor = Orthogonalize.of(matrix).extract(0, 3);
@@ -77,9 +74,15 @@ import ch.alpine.tensor.sca.pow.Sqrt;
           graphics.draw(path2d);
           geometricLayer.popMatrix();
         }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new Se2UnprojectDemo().setVisible(1200, 600);
   }
 }

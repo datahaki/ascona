@@ -6,13 +6,14 @@ import java.util.Optional;
 
 import javax.swing.JCheckBox;
 
-import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 
-/* package */ class CoordinatesPlaceDemo extends LogWeightingDemo {
+public class CoordinatesPlaceDemo extends LogWeightingDemo {
   private final JCheckBox jCheckBoxL = new JCheckBox("levers");
   private final JCheckBox jCheckBoxW = new JCheckBox("weights");
 

@@ -4,12 +4,11 @@ package ch.alpine.ascona.ref.d1;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.IntStream;
 
-import ch.alpine.ascona.sym.SymGeodesic;
-import ch.alpine.ascona.sym.SymLinkImage;
-import ch.alpine.ascona.sym.SymScalar;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.ascona.util.sym.SymGeodesic;
+import ch.alpine.ascona.util.sym.SymLinkImage;
+import ch.alpine.ascona.util.sym.SymSequence;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;
 import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
@@ -43,12 +42,12 @@ import ch.alpine.tensor.Tensor;
   C2CUBIC(DualC2FourPointCurveSubdivision::cubic, 6, 2, 3), //
   SIXPOINT(SixPointCurveSubdivision::new, 6, 0, 5);
 
-  private final Function<Geodesic, CurveSubdivision> function;
+  private final Function<GeodesicSpace, CurveSubdivision> function;
   private final int support;
   private final int index0;
   private final int index1;
 
-  private SymMaskImages(Function<Geodesic, CurveSubdivision> function, int support, int index0, int index1) {
+  private SymMaskImages(Function<GeodesicSpace, CurveSubdivision> function, int support, int index0, int index1) {
     this.function = function;
     this.support = support;
     this.index0 = index0;
@@ -57,9 +56,9 @@ import ch.alpine.tensor.Tensor;
 
   private BufferedImage bufferedImage(int index) {
     CurveSubdivision curveSubdivision = function.apply(SymGeodesic.INSTANCE);
-    Tensor vector = Tensor.of(IntStream.range(0, support).mapToObj(SymScalar::leaf));
+    Tensor vector = SymSequence.of(support);
     Tensor tensor = curveSubdivision.cyclic(vector);
-    return new SymLinkImage((SymScalar) tensor.Get(index)).bufferedImage();
+    return new SymLinkImage(tensor.Get(index)).bufferedImage();
   }
 
   public BufferedImage image0() {

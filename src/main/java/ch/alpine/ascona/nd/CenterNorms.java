@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.ascona.nd;
 
-import ch.alpine.ascona.api.Box2D;
+import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.opt.nd.NdCenterInterface;
 import ch.alpine.tensor.opt.nd.NdCenters;
 
-public enum CenterNorms {
+/* package */ enum CenterNorms {
   _1 {
     @Override
     public NdCenterInterface ndCenterInterface(Tensor center) {

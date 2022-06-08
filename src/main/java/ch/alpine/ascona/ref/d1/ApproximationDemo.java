@@ -6,21 +6,20 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.api.AbstractGeodesicDisplayDemo;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.io.GokartPoseData;
-import ch.alpine.ascona.io.GokartPoseDataV2;
-import ch.alpine.ascona.io.GokartPoseDatas;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.GridRender;
-import ch.alpine.java.ren.PathRender;
-import ch.alpine.javax.swing.SpinnerLabel;
+import ch.alpine.ascona.util.api.AbstractManifoldDisplayDemo;
+import ch.alpine.ascona.util.dat.GokartPoseData;
+import ch.alpine.ascona.util.dat.GokartPoseDataV2;
+import ch.alpine.ascona.util.dat.GokartPoseDatas;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.GridRender;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
@@ -34,18 +33,18 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 
-/* package */ class ApproximationDemo extends AbstractGeodesicDisplayDemo {
+public class ApproximationDemo extends AbstractManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final Scalar MARKER_SCALE = RealScalar.of(0.1);
   private static final GridRender GRID_RENDER = new GridRender(Subdivide.of(0, 100, 10));
-  private static final List<CurveSubdivisionSchemes> SCHEMES = Arrays.asList( //
+  private static final CurveSubdivisionSchemes[] SCHEMES = { //
       CurveSubdivisionSchemes.BSPLINE1, //
       CurveSubdivisionSchemes.BSPLINE2, //
       CurveSubdivisionSchemes.BSPLINE3, //
       CurveSubdivisionSchemes.BSPLINE4_S2LO, //
       CurveSubdivisionSchemes.FOURPOINT, //
-      CurveSubdivisionSchemes.SIXPOINT);
+      CurveSubdivisionSchemes.SIXPOINT };
 
   private static class Container {
     private final ManifoldDisplay manifoldDisplay;
@@ -68,10 +67,14 @@ import ch.alpine.tensor.sca.win.GaussianWindow;
   private final SpinnerLabel<String> spinnerLabelString = new SpinnerLabel<>();
   private final SpinnerLabel<Integer> spinnerLabelLimit = new SpinnerLabel<>();
   private final SpinnerLabel<Integer> spinnerLabelWidth = new SpinnerLabel<>();
-  private final SpinnerLabel<CurveSubdivisionSchemes> spinnerLabelScheme = new SpinnerLabel<>();
+  private final SpinnerLabel<CurveSubdivisionSchemes> spinnerLabelScheme = SpinnerLabel.of(SCHEMES);
   private final SpinnerLabel<Integer> spinnerLabelLevel = new SpinnerLabel<>();
   // ---
   private Container _container = null;
+
+  public ApproximationDemo() {
+    this(GokartPoseDataV2.RACING_DAY);
+  }
 
   public ApproximationDemo(GokartPoseData gokartPoseData) {
     super(ManifoldDisplays.SE2_R2);
@@ -99,7 +102,6 @@ import ch.alpine.tensor.sca.win.GaussianWindow;
       spinnerLabelWidth.addSpinnerListener(type -> updateState());
     }
     {
-      spinnerLabelScheme.setList(SCHEMES);
       spinnerLabelScheme.setValue(CurveSubdivisionSchemes.BSPLINE1);
       spinnerLabelScheme.addToComponentReduced(timerFrame.jToolBar, new Dimension(160, 28), "scheme");
       spinnerLabelScheme.addSpinnerListener(type -> updateState());
@@ -116,7 +118,7 @@ import ch.alpine.tensor.sca.win.GaussianWindow;
   private void updateState() {
     Tensor rawdata = gokartPoseData.getPose(spinnerLabelString.getValue(), spinnerLabelLimit.getValue());
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(manifoldDisplay.geodesic(), GaussianWindow.FUNCTION);
+    TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(manifoldDisplay.geodesicSpace(), GaussianWindow.FUNCTION);
     TensorUnaryOperator centerFilter = new CenterFilter(tensorUnaryOperator, spinnerLabelWidth.getValue());
     Tensor tracked = centerFilter.apply(rawdata);
     int level = spinnerLabelLevel.getIndex();

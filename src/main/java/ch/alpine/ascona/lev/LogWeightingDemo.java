@@ -5,13 +5,14 @@ import java.awt.Dimension;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.alpine.ascona.api.LogWeighting;
-import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.javax.swing.SpinnerLabel;
-import ch.alpine.javax.swing.SpinnerListener;
+import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.math.var.VariogramFunctions;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -25,9 +26,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 public abstract class LogWeightingDemo extends LogWeightingBase {
   private static final Tensor BETAS = Tensors.fromString("{0, 1/2, 1, 3/2, 7/4, 2, 5/2, 3}");
   // ---
-  // TODO SOPHUS DEMO manage by reflection
-  private final SpinnerLabel<Bitype> spinnerBiinvariant = new SpinnerLabel<>();
-  private final SpinnerLabel<VariogramFunctions> spinnerVariogram = SpinnerLabel.of(VariogramFunctions.values());
+  // TODO ASCONA DEMO manage by reflection and simplify class structure
+  private final SpinnerLabel<Bitype> spinnerBiinvariant = SpinnerLabel.of(Bitype.class);
+  private final SpinnerLabel<VariogramFunctions> spinnerVariogram = SpinnerLabel.of(VariogramFunctions.class);
   private final SpinnerLabel<Scalar> spinnerBeta = new SpinnerLabel<>();
   private final SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
     @Override
@@ -39,21 +40,21 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
       }
       if (logWeighting.equals(LogWeightings.DISTANCES)) {
         spinnerVariogram.setValue(VariogramFunctions.POWER);
-        spinnerBeta.setValueSafe(RealScalar.of(1));
+        spinnerBeta.setValue(RealScalar.of(1));
       }
       if ( //
       logWeighting.equals(LogWeightings.WEIGHTING) || //
           logWeighting.equals(LogWeightings.COORDINATE) || //
           logWeighting.equals(LogWeightings.LAGRAINATE)) {
         spinnerVariogram.setValue(VariogramFunctions.INVERSE_POWER);
-        spinnerBeta.setValueSafe(RealScalar.of(2));
+        spinnerBeta.setValue(RealScalar.of(2));
       }
       if ( //
       logWeighting.equals(LogWeightings.KRIGING) || //
           logWeighting.equals(LogWeightings.KRIGING_COORDINATE)) {
         spinnerVariogram.setValue(VariogramFunctions.POWER);
         setBitype(Bitype.HARBOR);
-        spinnerBeta.setValueSafe(RationalScalar.of(3, 2));
+        spinnerBeta.setValue(RationalScalar.of(3, 2));
       }
     }
   };
@@ -62,7 +63,6 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
     super(addRemoveControlPoints, list, array);
     spinnerLogWeighting.addSpinnerListener(spinnerListener);
     {
-      spinnerBiinvariant.setArray(Bitype.values());
       spinnerBiinvariant.setValue(Bitype.LEVERAGES1);
       spinnerBiinvariant.addToComponentReduced(timerFrame.jToolBar, new Dimension(100, 28), "distance");
       spinnerBiinvariant.addSpinnerListener(v -> recompute());
@@ -78,8 +78,8 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
     timerFrame.jToolBar.addSeparator();
   }
 
-  protected final void setBitype(Bitype biinvariant) {
-    spinnerBiinvariant.setValue(biinvariant);
+  protected final void setBitype(Bitype bitype) {
+    spinnerBiinvariant.setValue(bitype);
   }
 
   protected final Biinvariant biinvariant() {
@@ -91,10 +91,10 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
   }
 
   @Override
-  protected final TensorUnaryOperator operator(VectorLogManifold vectorLogManifold, Tensor sequence) {
+  protected final TensorUnaryOperator operator(Manifold manifold, Tensor sequence) {
     return logWeighting().operator( //
         biinvariant(), //
-        vectorLogManifold, //
+        manifold, //
         variogram(), //
         sequence);
   }
@@ -105,9 +105,10 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
 
   @Override
   protected final TensorScalarFunction function(Tensor sequence, Tensor values) {
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
     return logWeighting().function( //
         biinvariant(), //
-        manifoldDisplay().hsManifold(), //
+        homogeneousSpace, //
         variogram(), //
         sequence, values);
   }

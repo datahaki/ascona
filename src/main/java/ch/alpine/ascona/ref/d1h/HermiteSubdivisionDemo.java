@@ -1,28 +1,31 @@
 // code by jph
 package ch.alpine.ascona.ref.d1h;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.Curvature2DRender;
-import ch.alpine.ascona.api.HermiteSubdivisions;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.Se2Display;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldClip;
-import ch.alpine.java.ref.ann.FieldInteger;
-import ch.alpine.java.ref.ann.FieldPreferredWidth;
-import ch.alpine.java.ref.ann.FieldSlider;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
-import ch.alpine.java.ren.AxesRender;
-import ch.alpine.java.ren.GridRender;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.Curvature2DRender;
+import ch.alpine.ascona.util.api.HermiteSubdivisions;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.ren.GridRender;
+import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
+import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.clt.ClothoidDistance;
+import ch.alpine.sophus.crv.clt.ClothoidDistance;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.r2.Extract2D;
 import ch.alpine.sophus.math.AdjacentDistances;
 import ch.alpine.sophus.math.Do;
@@ -38,7 +41,11 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.r2.AngleVector;
 import ch.alpine.tensor.red.Mean;
 
+@ReflectionMarker
 public class HermiteSubdivisionDemo extends ControlPointsDemo {
+  // TODO ASCONA redundant
+  private static final PointsRender POINTS_RENDER_0 = //
+      new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
   // ---
@@ -60,7 +67,6 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     GRID_RENDER.render(geometricLayer, graphics);
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
     final Tensor tensor = getControlPointsSe2();
     POINTS_RENDER_0.show(Se2Display.INSTANCE::matrixLift, //
         Se2Display.INSTANCE.shape(), //
@@ -72,11 +78,11 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
       switch (manifoldDisplay.toString()) {
       case "SE2C":
       case "SE2":
-        // TODO OWL ALG use various options: unit vector, scaled by parametric distance, ...
+        // TODO ASCONA ALG use various options: unit vector, scaled by parametric distance, ...
         control = Tensor.of(tensor.stream().map(xya -> Tensors.of(xya, UnitVector.of(3, 0))));
         break;
       case "R2":
-        // TODO OWL ALG use various options: unit vector, scaled by parametric distance, ...
+        // TODO ASCONA ALG use various options: unit vector, scaled by parametric distance, ...
         control = Tensor.of(tensor.stream().map(xya -> Tensors.of(xya.extract(0, 2), AngleVector.of(xya.Get(2)))));
         break;
       default:
@@ -99,10 +105,8 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
         }
       }
       Scalar delta = RealScalar.ONE;
-      HermiteSubdivision hermiteSubdivision = scheme.supply( //
-          manifoldDisplay.hsManifold(), //
-          manifoldDisplay.hsTransport(), //
-          manifoldDisplay.biinvariantMean());
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
       int levels = refine.number().intValue();
       Tensor iterate = Do.of(control, tensorIteration::iterate, levels);

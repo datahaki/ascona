@@ -6,28 +6,17 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.gfx.GfxMatrix;
+import ch.alpine.ascona.util.api.Box2D;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
-enum StaticHelper {
+/* package */ enum StaticHelper {
   ;
   public static void draw(CoordinateBoundingBox coordinateBoundingBox, GeometricLayer geometricLayer, Graphics2D graphics) {
-    // TODO OWL refactor once CoordinateBoundingBox -> polygon is available
-    Tensor lc = coordinateBoundingBox.min();
-    Tensor rc = coordinateBoundingBox.max();
-    Tensor l1 = lc.copy();
-    l1.set(rc.Get(1), 1);
-    Tensor r1 = rc.copy();
-    r1.set(lc.Get(1), 1);
-    Tensor tensor = Tensors.of( //
-        lc, //
-        l1, //
-        rc, //
-        r1);
-    Path2D path2d = geometricLayer.toPath2D(tensor, true);
+    Path2D path2d = geometricLayer.toPath2D(Box2D.polygon(coordinateBoundingBox), true);
     graphics.setColor(new Color(0, 128, 0, 16));
     graphics.fill(path2d);
     graphics.setColor(new Color(128, 128, 128, 64));

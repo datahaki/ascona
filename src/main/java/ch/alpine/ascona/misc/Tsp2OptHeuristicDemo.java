@@ -10,18 +10,19 @@ import java.util.Random;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.fig.ListPlot;
-import ch.alpine.java.fig.VisualSet;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldInteger;
-import ch.alpine.java.ref.ann.ReflectionMarker;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -36,8 +37,9 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-@ReflectionMarker
+// TODO ASCONA idea: start from minimum spanning tree
 public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
+  @ReflectionMarker
   public static class Param {
     @FieldInteger
     public Scalar attempts = RealScalar.of(20);
@@ -49,14 +51,14 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   private final Tensor points = Tensors.empty();
 
   public Tsp2OptHeuristicDemo() {
-    super(false, ManifoldDisplays.R2_H2_S2);
+    super(false, ManifoldDisplays.METRIC);
     setPositioningEnabled(false);
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
     Distribution distribution = UniformDistribution.of(-4, 4);
     setControlPointsSe2(RandomVariate.of(distribution, 200, 3));
-    // TODO OWL random sample
-    // TODO refresh when manifold selection changes
+    // TODO ASCONA random sample
+    // TODO ASCONA refresh when manifold selection changes
     Tensor matrix = distanceMatrix(getGeodesicControlPoints());
     tsp2OptHeuristic = new Tsp2OptHeuristic(matrix, new Random());
   }
@@ -69,7 +71,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       points.append(Tensors.of(RealScalar.of(points.length()), tsp2OptHeuristic.cost()));
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Geodesic geodesic = manifoldDisplay.geodesic();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     RenderQuality.setQuality(graphics);
     Tensor sequence = getGeodesicControlPoints();
     Color color = Color.BLACK;
@@ -83,15 +85,16 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     // pointsRender.show(manifoldDisplay()::matrixLift, getControlPointShape(), Tensors.of(sequence.get(index))).render(geometricLayer, graphics);
     // }
     int[] index = tsp2OptHeuristic.index();
-    // TODO OWL is there a smart way to select how to draw lines
+    // TODO ASCONA is there a smart way to select how to draw lines
     int res = manifoldDisplay.equals(R2Display.INSTANCE) ? 1 : 10;
     Tensor domain = Subdivide.of(0.0, 1.0, res);
     graphics.setColor(Color.CYAN);
     for (int i = 0; i < index.length; ++i) {
       Tensor p = sequence.get(index[i]);
       Tensor q = sequence.get(index[(i + 1) % index.length]);
-      ScalarTensorFunction curve = geodesic.curve(p, q);
-      Path2D line = geometricLayer.toPath2D(domain.map(curve));
+      ScalarTensorFunction curve = homogeneousSpace.curve(p, q);
+      Tensor tensor = Tensor.of(domain.stream().map(Scalar.class::cast).map(curve).map(manifoldDisplay::toPoint));
+      Path2D line = geometricLayer.toPath2D(tensor);
       graphics.draw(line);
     }
     VisualSet visualSet = new VisualSet();
@@ -102,7 +105,8 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
 
   public Tensor distanceMatrix(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorUnaryOperator tuo = manifoldDisplay.metricBiinvariant().distances(manifoldDisplay.hsManifold(), sequence);
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    TensorUnaryOperator tuo = manifoldDisplay.biinvariant().distances(homogeneousSpace, sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix
@@ -110,6 +114,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new Tsp2OptHeuristicDemo().setVisible(1000, 600);
   }
 }

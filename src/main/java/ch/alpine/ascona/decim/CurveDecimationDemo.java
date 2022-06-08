@@ -9,25 +9,27 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.AbstractGeodesicDatasetDemo;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.io.GokartPoseData;
-import ch.alpine.ascona.io.GokartPoseDataV2;
-import ch.alpine.ascona.io.GokartPoseDatas;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.fig.ListPlot;
-import ch.alpine.java.fig.VisualSet;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldSelectionArray;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
-import ch.alpine.java.ren.PathRender;
+import ch.alpine.ascona.util.api.AbstractGeodesicDatasetDemo;
+import ch.alpine.ascona.util.dat.GokartPoseData;
+import ch.alpine.ascona.util.dat.GokartPoseDataV2;
+import ch.alpine.ascona.util.dat.GokartPoseDatas;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.decim.DecimationResult;
 import ch.alpine.sophus.decim.LineDistances;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.lie.se2.Se2Geodesic;
+import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -41,7 +43,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.pow.Power;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-/* package */ class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
+public class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 160);
   private static final Color COLOR_RECON = new Color(128, 128, 128, 255);
@@ -52,6 +54,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
 
   // ---
+  @ReflectionMarker
   public static class Param {
     @FieldSelectionArray(value = { "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })
     public Scalar width = RealScalar.of(0);
@@ -72,6 +75,10 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   protected Tensor _control = Tensors.empty();
   private final Param param = new Param();
 
+  public CurveDecimationDemo() {
+    this(GokartPoseDataV2.RACING_DAY);
+  }
+
   public CurveDecimationDemo(GokartPoseData gokartPoseData) {
     super(ManifoldDisplays.SE2_R2, gokartPoseData);
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::updateState);
@@ -85,7 +92,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     int limit = spinnerLabelLimit.getValue();
     String name = spinnerLabelString.getValue();
     TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
-        GeodesicCenter.of(Se2Geodesic.INSTANCE, WindowFunctions.GAUSSIAN.get()), param.width.number().intValue());
+        GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), param.width.number().intValue());
     _control = tensorUnaryOperator.apply(gokartPoseData.getPose(name, limit));
   }
 
@@ -110,8 +117,9 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     }
     Scalar epsilon = Power.of(RationalScalar.HALF, param.level.number().intValue());
     // epsilon = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum() * 3);
+    HomogeneousSpace geodesicSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     CurveDecimation curveDecimation = CurveDecimation.of( //
-        param.type.supply(manifoldDisplay.hsManifold()), epsilon);
+        param.type.supply(geodesicSpace), epsilon);
     Tensor control = Tensor.of(_control.stream().map(manifoldDisplay::project));
     DecimationResult result = curveDecimation.evaluate(control);
     Tensor simplified = result.result();
@@ -119,7 +127,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     // graphics.drawString("SIMPL=" + control.length(), 0, 20);
     // graphics.drawString("SIMPL=" + , 0, 30);
     Tensor refined = Nest.of( //
-        LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesic(), param.degre.number().intValue())::string, //
+        LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesicSpace(), param.degre.number().intValue())::string, //
         simplified, 5);
     pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
     {

@@ -3,23 +3,21 @@ package ch.alpine.ascona.misc;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.Arrays;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.AbstractGeodesicDisplayDemo;
-import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.java.fig.ListPlot;
-import ch.alpine.java.fig.Spectrogram;
-import ch.alpine.java.fig.VisualSet;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldClip;
-import ch.alpine.java.ref.ann.FieldFuse;
-import ch.alpine.java.ref.ann.FieldInteger;
-import ch.alpine.java.ref.ann.FieldPreferredWidth;
-import ch.alpine.java.ref.ann.FieldSlider;
-import ch.alpine.java.ref.ann.ReflectionMarker;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
+import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.Spectrogram;
+import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldFuse;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
+import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.math.noise.ColoredNoise;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -28,33 +26,38 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.sca.Clips;
 
+// TODO separate standalone demos (like this one) from geometric/manifold demos
 @ReflectionMarker
-public class ColoredNoiseDemo extends AbstractGeodesicDisplayDemo {
-  @FieldSlider
-  @FieldClip(min = "0", max = "2")
-  @FieldPreferredWidth(250)
-  public Scalar alpha = RealScalar.of(2);
-  @FieldPreferredWidth(150)
-  @FieldInteger
-  public Scalar length = RealScalar.of(300);
-  @FieldFuse(value = "generate")
-  public Boolean generate = true;
+public class ColoredNoiseDemo extends AbstractDemo {
+  @ReflectionMarker
+  public static class Param {
+    @FieldSlider
+    @FieldClip(min = "0", max = "2")
+    @FieldPreferredWidth(250)
+    public Scalar alpha = RealScalar.of(2);
+    @FieldPreferredWidth(150)
+    @FieldInteger
+    public Scalar length = RealScalar.of(300);
+    @FieldFuse(value = "generate")
+    public transient Boolean generate = true;
+  }
+
+  private final Param param = new Param();
   // ---
   private JFreeChart jFreeChart;
   private JFreeChart spectrogra;
 
-  // private final Tensor vector;
   public ColoredNoiseDemo() {
-    super(Arrays.asList(R2Display.INSTANCE));
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar).addUniversalListener(this::compute);
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::compute);
     // ---
     timerFrame.geometricComponent.setRotatable(false);
     compute();
   }
 
   private void compute() {
-    ColoredNoise coloredNoise = new ColoredNoise(alpha.number().doubleValue());
-    Tensor values = RandomVariate.of(coloredNoise, length.number().intValue());
+    ColoredNoise coloredNoise = new ColoredNoise(param.alpha.number().doubleValue());
+    Tensor values = RandomVariate.of(coloredNoise, param.length.number().intValue());
     Tensor domain = Range.of(0, values.length());
     {
       VisualSet visualSet = new VisualSet();

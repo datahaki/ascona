@@ -6,21 +6,20 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.swing.JToggleButton;
-
-import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.ascona.dis.Se2Display;
-import ch.alpine.ascona.dis.Spd2Display;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.AxesRender;
-import ch.alpine.javax.swing.SpinnerListener;
+import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.dis.Spd2Display;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -28,17 +27,13 @@ import ch.alpine.tensor.ext.ArgMin;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 
-/* package */ class WeightsDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
-  private final JToggleButton jToggleAxes = new JToggleButton("axes");
-
+public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   public WeightsDemo() {
     super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
-    {
-      timerFrame.jToolBar.add(jToggleAxes);
-    }
+    // ---
     setControlPointsSe2(Tensors.fromString("{{-1, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}}"));
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     setLogWeighting(LogWeightings.DISTANCES);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
@@ -46,8 +41,6 @@ import ch.alpine.tensor.img.ColorDataLists;
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (jToggleAxes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Optional<Tensor> optional = getOrigin();
@@ -64,18 +57,19 @@ import ch.alpine.tensor.img.ColorDataLists;
       leversRender.renderIndexP();
       // ---
       if (manifoldDisplay.dimensions() < sequence.length()) {
-        Biinvariant metric = manifoldDisplay.metricBiinvariant();
+        Biinvariant metric = manifoldDisplay.biinvariant();
         Biinvariant[] biinvariants = Objects.isNull(metric) //
             ? new Biinvariant[] { Biinvariants.LEVERAGES, Biinvariants.HARBOR, Biinvariants.GARDEN }
             : new Biinvariant[] { Biinvariants.LEVERAGES, Biinvariants.HARBOR, Biinvariants.GARDEN, metric };
         Tensor matrix = Tensors.empty();
         int[] minIndex = new int[biinvariants.length];
-        VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
+        HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+        Manifold manifold = homogeneousSpace;
         for (int index = 0; index < biinvariants.length; ++index) {
           TensorUnaryOperator tensorUnaryOperator = //
               logWeighting().operator( //
                   biinvariants[index], //
-                  vectorLogManifold, //
+                  manifold, //
                   variogram(), //
                   sequence);
           Tensor weights = tensorUnaryOperator.apply(origin);

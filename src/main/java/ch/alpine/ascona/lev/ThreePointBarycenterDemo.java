@@ -7,30 +7,35 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.PolygonCoordinates;
-import ch.alpine.ascona.dis.H2Display;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.javax.swing.SpinnerListener;
+import ch.alpine.ascona.util.api.PolygonCoordinates;
+import ch.alpine.ascona.util.dis.H2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.sca.Chop;
 
-/* package */ class ThreePointBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+// TODO ASCONA demo becomes unstable when control points are removed
+public class ThreePointBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public ThreePointBarycenterDemo() {
-    super(true, ManifoldDisplays.R2_H2_S2, Arrays.asList(PolygonCoordinates.values()));
+    super(true, ManifoldDisplays.ARRAYS, Arrays.asList(PolygonCoordinates.values()));
     // ---
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---
     ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
     jToggleNeutral.setSelected(true);
@@ -57,7 +62,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
         TensorUnaryOperator tensorUnaryOperator = operator(sequence);
         Tensor weights = tensorUnaryOperator.apply(origin);
         leversRender.renderWeights(weights);
-        BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+        HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+        BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
         Tensor mean = biinvariantMean.mean(sequence, weights);
         LeversRender.ORIGIN_RENDER_0 //
             .show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)) //
@@ -66,7 +72,10 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
         System.err.println(e);
       }
     } else {
-      renderControlPoints(geometricLayer, graphics);
+      LeversRender leversRender = //
+          LeversRender.of(manifoldDisplay, getSequence(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
   }
 
@@ -87,6 +96,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new ThreePointBarycenterDemo().setVisible(1200, 900);
   }
 }

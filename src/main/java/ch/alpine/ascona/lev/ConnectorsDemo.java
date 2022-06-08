@@ -5,9 +5,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -15,7 +17,9 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.itp.Interpolation;
 import ch.alpine.tensor.itp.LinearInterpolation;
+import ch.alpine.tensor.sca.Chop;
 
+// TODO ASCONA cannot always compute the biinvariant mean for S2/SE(2) ...
 /* package */ class ConnectorsDemo extends AbstractHoverDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
@@ -29,7 +33,8 @@ import ch.alpine.tensor.itp.LinearInterpolation;
     Tensor controlPoints = leversRender.getSequence();
     int length = controlPoints.length();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     graphics.setColor(Color.RED);
     for (int index = 0; index < length; ++index) {
       Tensor blend = UnitVector.of(length, index);

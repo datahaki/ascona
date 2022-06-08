@@ -4,21 +4,23 @@ package ch.alpine.ascona.avg;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
 import ch.alpine.ascona.avg.GeometricSymLinkRender.Link;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.sym.SymLink;
-import ch.alpine.ascona.sym.SymLinkBuilder;
-import ch.alpine.ascona.sym.SymLinkImage;
-import ch.alpine.ascona.sym.SymScalar;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.sym.SymLink;
+import ch.alpine.ascona.util.sym.SymLinkBuilder;
+import ch.alpine.ascona.util.sym.SymLinkImage;
+import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.ascona.util.sym.SymSequence;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 
+@ReflectionMarker
 public abstract class AbstractSplitsDemo extends ControlPointsDemo {
   private static final Font FONT = new Font(Font.DIALOG, Font.PLAIN, 13);
   public Boolean closest = true;
@@ -29,10 +31,11 @@ public abstract class AbstractSplitsDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public synchronized final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     // ---
     setMidpointIndicated(closest);
-    SymScalar symScalar = symScalar(Tensor.of(IntStream.range(0, control.length()).mapToObj(SymScalar::leaf)));
+    SymScalar symScalar = symScalar(SymSequence.of(control.length()));
     SymLink symLink = null;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     if (Objects.nonNull(symScalar)) {
@@ -40,20 +43,20 @@ public abstract class AbstractSplitsDemo extends ControlPointsDemo {
       // ---
       symLink = SymLinkBuilder.of(control, symScalar);
       // ---
-      RenderQuality.setQuality(graphics);
       GeometricSymLinkRender geometricSymLinkRender = new GeometricSymLinkRender(manifoldDisplay);
       geometricSymLinkRender.steps = 1;
       Link link = geometricSymLinkRender.new Link(symLink);
       // link.steps=1;
       link.render(geometricLayer, graphics);
-      RenderQuality.setDefault(graphics);
     }
-    renderControlPoints(geometricLayer, graphics);
-    // ---
-    if (Objects.nonNull(symLink)) {
-      Tensor xya = symLink.getPosition(manifoldDisplay.geodesic());
-      renderPoints(manifoldDisplay, Tensors.of(xya), geometricLayer, graphics);
-    }
+    Tensor origin = null;
+    if (Objects.nonNull(symLink))
+      origin = symLink.getPosition(manifoldDisplay.geodesicSpace());
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, control, origin, geometricLayer, graphics);
+    leversRender.renderSequence();
+    leversRender.renderIndexP();
+    leversRender.renderOrigin();
+    leversRender.renderIndexX();
   }
 
   /** evaluates geodesic average on symbolic leaf sequence

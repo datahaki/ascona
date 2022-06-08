@@ -7,23 +7,23 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.SnLineDistances;
-import ch.alpine.ascona.arp.S2ArrayHelper;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ref.ann.FieldInteger;
-import ch.alpine.java.ref.ann.FieldLabel;
-import ch.alpine.java.ref.ann.FieldSelectionArray;
-import ch.alpine.java.ref.ann.ReflectionMarker;
-import ch.alpine.java.ref.util.ToolbarFieldsEditor;
-import ch.alpine.java.ren.ImageRender;
-import ch.alpine.java.win.LookAndFeels;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.SnLineDistances;
+import ch.alpine.ascona.util.arp.S2ArrayHelper;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.ImageRenderNew;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldLabel;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorNorm;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -74,7 +74,7 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
         : t -> RealScalar.ZERO;
   }
 
-  private BufferedImage bufferedImage(int resolution, VectorLogManifold vectorLogManifold) {
+  private BufferedImage bufferedImage(int resolution) {
     Tensor matrix = Tensors.matrix(S2ArrayHelper.of(resolution, rad(), tensorNorm()::norm));
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }
@@ -86,26 +86,29 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     RenderQuality.setDefault(graphics);
-    BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue(), manifoldDisplay.hsManifold());
-    ImageRender.of(bufferedImage, S2ArrayHelper.pixel2model(bufferedImage, rad())) //
+    BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue());
+    new ImageRenderNew(bufferedImage, manifoldDisplay.coordinateBoundingBox()) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     // ---
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
     Tensor cp = getGeodesicControlPoints();
-    ScalarTensorFunction scalarTensorFunction = geodesicInterface.curve(cp.get(0), cp.get(1));
+    ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(cp.get(0), cp.get(1));
     graphics.setStroke(STROKE);
     Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
     graphics.setColor(new Color(192, 192, 192));
     graphics.draw(geometricLayer.toPath2D(ms));
     graphics.setStroke(new BasicStroke());
     // ---
-    renderControlPoints(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, cp, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+    }
   }
 
   public static void main(String[] args) {
-    LookAndFeels.DARK.updateUI();
+    LookAndFeels.LIGHT.updateUI();
     new S2LineDistanceDemo().setVisible(1200, 600);
   }
 }

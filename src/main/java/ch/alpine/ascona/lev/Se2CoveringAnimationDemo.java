@@ -6,12 +6,13 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.AxesRender;
+import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupOps;
@@ -20,8 +21,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Timing;
 
-// TODO OWL ALG refactor with S2AnimationDemo
-/* package */ class Se2CoveringAnimationDemo extends LogWeightingDemo {
+// TODO ASCONA ALG refactor with S2AnimationDemo
+public class Se2CoveringAnimationDemo extends LogWeightingDemo {
   private final JToggleButton jToggleAxes = new JToggleButton("axes");
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();
@@ -39,7 +40,7 @@ import ch.alpine.tensor.ext.Timing;
           Tensor sequence = getGeodesicControlPoints();
           if (0 < sequence.length()) {
             Tensor origin = sequence.get(0);
-            LieGroup lieGroup = manifoldDisplay().lieGroup();
+            LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
             Tensor shift = lieGroup.element(origin).inverse().toCoordinate();
             snapshot = new LieGroupOps(lieGroup).actionL(shift).slash(sequence);
           }
@@ -64,7 +65,7 @@ import ch.alpine.tensor.ext.Timing;
     if (jToggleAxes.isSelected())
       AxesRender.INSTANCE.render(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    LieGroup lieGroup = manifoldDisplay.lieGroup();
+    LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
     LieGroupOps lieGroupOps = new LieGroupOps(lieGroup);
     Optional<Tensor> optional = getOrigin();
     if (optional.isPresent()) {

@@ -13,19 +13,20 @@ import javax.swing.JToggleButton;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.api.CurveVisualSet;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.Se2ClothoidDisplay;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.fig.ListPlot;
-import ch.alpine.java.fig.VisualRow;
-import ch.alpine.java.fig.VisualSet;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.PathRender;
-import ch.alpine.javax.swing.SpinnerLabel;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.CurveVisualSet;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.VisualRow;
+import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -37,7 +38,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.red.Mean;
 
 /** compare different levels of smoothing in the LaneRiesenfeldCurveSubdivision */
-/* package */ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
+public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLORS = ColorDataLists._097.cyclic();
   private static final List<CurveSubdivisionSchemes> CURVE_SUBDIVISION_SCHEMES = //
       CurveSubdivisionHelper.LANE_RIESENFELD;
@@ -47,14 +48,14 @@ import ch.alpine.tensor.red.Mean;
   private final List<PathRender> pathRenders = new ArrayList<>();
 
   public LaneRiesenfeldComparisonDemo() {
-    this(ManifoldDisplays.WITHOUT_Sn_SO3);
+    this(ManifoldDisplays.ALL);
   }
 
   public LaneRiesenfeldComparisonDemo(List<ManifoldDisplay> list) {
     super(true, list);
-    setGeodesicDisplay(Se2ClothoidDisplay.LEGENDRE);
+    setManifoldDisplay(Se2ClothoidDisplay.LEGENDRE);
     // ---
-    jToggleCurvature.setSelected(true);
+    jToggleCurvature.setSelected(false);
     jToggleCurvature.setToolTipText("curvature plot");
     timerFrame.jToolBar.add(jToggleCurvature);
     // ---
@@ -75,7 +76,7 @@ import ch.alpine.tensor.red.Mean;
   @Override // from RenderInterface
   public synchronized final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    ManifoldDisplay geodesicDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     VisualSet visualSet1 = new VisualSet();
     visualSet1.setPlotLabel("Curvature");
     visualSet1.getAxisX().setLabel("length");
@@ -88,7 +89,7 @@ import ch.alpine.tensor.red.Mean;
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i) {
       Tensor refined = curve(geometricLayer, graphics, i);
       if (jToggleCurvature.isSelected() && 1 < refined.length()) {
-        Tensor tensor = Tensor.of(refined.stream().map(geodesicDisplay::toPoint));
+        Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
         VisualSet visualSet = new VisualSet(ColorDataLists._097.cyclic().deriveWithAlpha(192));
         CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
         VisualRow visualRow = curveVisualSet.addCurvature(visualSet);
@@ -122,7 +123,7 @@ import ch.alpine.tensor.red.Mean;
             .map(points -> points.get(Tensor.ALL, 1)) //
             .map(CoordinateBounds::of) //
             .map(CoordinateBoundingBox::min));
-        // TODO OWL DEMO code below is broken
+        // TODO ASCONA DEMO code below is broken
         // double min = Quantile.of(tensorMin).apply(RationalScalar.of(1, CURVE_SUBDIVISION_SCHEMES.size() - 1)).number().doubleValue();
         // Tensor tensorMax = Tensor.of(visualSet2.visualRows().stream() //
         // .map(VisualRow::points) //
@@ -145,15 +146,19 @@ import ch.alpine.tensor.red.Mean;
     // ---
     Tensor control = getGeodesicControlPoints();
     int levels = spinnerRefine.getValue();
-    renderControlPoints(geometricLayer, graphics);
-    ManifoldDisplay geodesicDisplay = manifoldDisplay();
-    Geodesic geodesicInterface = geodesicDisplay.geodesic();
-    Tensor refined = StaticHelper.refine(control, levels, scheme.of(geodesicDisplay), //
-        CurveSubdivisionHelper.isDual(scheme), false, geodesicInterface);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+    Tensor refined = StaticHelper.refine(control, levels, scheme.of(manifoldDisplay), //
+        CurveSubdivisionHelper.isDual(scheme), false, geodesicSpace);
     // ---
-    Tensor render = Tensor.of(refined.stream().map(geodesicDisplay::toPoint));
+    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
     pathRender.setCurve(render, false);
     pathRender.render(geometricLayer, graphics);
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
+    }
     return refined;
   }
 

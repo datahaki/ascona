@@ -8,23 +8,23 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.ascona.dis.Se2AbstractDisplay;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.javax.swing.SpinnerLabel;
-import ch.alpine.javax.swing.SpinnerListener;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 
-/* package */ class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<ManifoldDisplay> {
-  private final SpinnerLabel<ColorDataGradient> spinnerColorData = SpinnerLabel.of(ColorDataGradients.values());
+public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<ManifoldDisplay> {
+  private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public AffineDemo() {
@@ -36,10 +36,11 @@ import ch.alpine.tensor.img.ColorDataGradients;
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
     jToggleNeutral.setSelected(true);
+    setMidpointIndicated(true);
   }
 
   @Override // from RenderInterface
@@ -53,20 +54,20 @@ import ch.alpine.tensor.img.ColorDataGradients;
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       leversRender.renderSequence();
+      leversRender.renderIndexP();
       leversRender.renderOrigin();
+      leversRender.renderIndexX();
       // Tensor weights = AffineCoordinate.of(vectorLogManifold).weights(sequence, origin);
       // leversRender.renderWeights(weights);
       Tensor doma = Subdivide.of(0.0, 1.0, 11);
       for (int index = 0; index < sequence.length(); ++index) {
         Tensor prev = sequence.get(Math.floorMod(index - 1, sequence.length()));
         Tensor next = sequence.get(index);
-        Tensor curve = doma.map(manifoldDisplay.geodesic().curve(prev, next));
+        Tensor curve = doma.map(manifoldDisplay.geodesicSpace().curve(prev, next));
         Tensor polygon = Tensor.of(curve.stream().map(manifoldDisplay::toPoint));
         Path2D path2d = geometricLayer.toPath2D(polygon);
         graphics.draw(path2d);
       }
-    } else {
-      renderControlPoints(geometricLayer, graphics);
     }
   }
 

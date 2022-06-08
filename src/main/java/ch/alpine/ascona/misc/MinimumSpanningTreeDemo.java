@@ -12,18 +12,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
 import ch.alpine.ascona.lev.LogWeightingDemo;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.PointsRender;
-import ch.alpine.java.util.DisjointSets;
-import ch.alpine.javax.swing.SpinnerLabel;
-import ch.alpine.sophus.api.Geodesic;
+import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.util.DisjointSets;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.fit.MinimumSpanningTree;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.IntUndirectedEdge;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -37,7 +39,7 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-/* package */ class MinimumSpanningTreeDemo extends LogWeightingDemo {
+public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   private static record EdgeComparator(Tensor matrix) implements Comparator<IntUndirectedEdge> {
     @Override
     public int compare(IntUndirectedEdge edge1, IntUndirectedEdge edge2) {
@@ -47,11 +49,11 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
     }
   }
 
-  // TODO SOPHUS DEMO manage by reflection
+  // TODO ASCONA DEMO manage by reflection
   final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
 
   public MinimumSpanningTreeDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2_S2_H2_R2, Arrays.asList(LogWeightings.DISTANCES));
+    super(true, ManifoldDisplays.MANIFOLDS, Arrays.asList(LogWeightings.DISTANCES));
     // ---
     spinnerRefine.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     spinnerRefine.setValue(2);
@@ -64,7 +66,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Geodesic geodesicInterface = manifoldDisplay.geodesic();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     RenderQuality.setQuality(graphics);
     Tensor sequence = getGeodesicControlPoints();
     Tensor domain = Subdivide.of(0.0, 1.0, 10);
@@ -83,8 +85,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
       for (IntUndirectedEdge directedEdge : list.subList(0, count)) {
         Tensor p = sequence.get(directedEdge.i());
         Tensor q = sequence.get(directedEdge.j());
-        ScalarTensorFunction curve = geodesicInterface.curve(p, q);
-        Path2D line = geometricLayer.toPath2D(domain.map(curve));
+        ScalarTensorFunction curve = geodesicSpace.curve(p, q);
+        Tensor tensor = Tensor.of(domain.stream().map(Scalar.class::cast).map(curve).map(manifoldDisplay::toPoint));
+        Path2D line = geometricLayer.toPath2D(tensor);
         graphics.draw(line);
       }
     }
@@ -93,13 +96,14 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
       int unique = map.get(disjointSets.key(index));
       Color color = ColorDataLists._097.cyclic().getColor(unique);
       PointsRender pointsRender = new PointsRender(color, color);
-      pointsRender.show(manifoldDisplay()::matrixLift, getControlPointShape(), Tensors.of(sequence.get(index))).render(geometricLayer, graphics);
+      pointsRender.show(manifoldDisplay::matrixLift, getControlPointShape(), Tensors.of(sequence.get(index))).render(geometricLayer, graphics);
     }
   }
 
   public Tensor distanceMatrix(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorUnaryOperator tuo = biinvariant().distances(manifoldDisplay.hsManifold(), sequence);
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    TensorUnaryOperator tuo = biinvariant().distances(homogeneousSpace, sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix

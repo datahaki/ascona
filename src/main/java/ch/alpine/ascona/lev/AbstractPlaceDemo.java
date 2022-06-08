@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import javax.swing.JButton;
 
-import ch.alpine.ascona.api.ControlPointsDemo;
-import ch.alpine.ascona.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Round;
 
@@ -22,14 +22,14 @@ public abstract class AbstractPlaceDemo extends ControlPointsDemo {
     timerFrame.jToolBar.add(jButtonPrint);
   }
 
-  final Optional<Tensor> getOrigin() {
+  protected final Optional<Tensor> getOrigin() {
     Tensor geodesicControlPoints = getGeodesicControlPoints(0, 1);
     return 0 < geodesicControlPoints.length() //
         ? Optional.of(geodesicControlPoints.get(0))
         : Optional.empty();
   }
 
-  final Tensor getSequence() {
+  protected final Tensor getSequence() {
     return getGeodesicControlPoints(1, Integer.MAX_VALUE);
   }
 }

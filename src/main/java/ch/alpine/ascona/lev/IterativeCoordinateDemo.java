@@ -6,24 +6,25 @@ import java.awt.Graphics2D;
 import java.util.Arrays;
 import java.util.Optional;
 
-import ch.alpine.ascona.api.LogWeightings;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.dis.R2Display;
-import ch.alpine.ascona.dis.S2Display;
-import ch.alpine.ascona.dis.Se2AbstractDisplay;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.AxesRender;
-import ch.alpine.javax.swing.SpinnerLabel;
-import ch.alpine.javax.swing.SpinnerListener;
+import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.gbc.d2.IterativeCoordinateMatrix;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.VectorLogManifold;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-/* package */ class IterativeCoordinateDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class IterativeCoordinateDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   private final SpinnerLabel<Integer> spinnerTotal = new SpinnerLabel<>();
   // private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
@@ -36,11 +37,10 @@ import ch.alpine.tensor.Tensors;
     spinnerTotal.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "total");
     // ---
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
-    setGeodesicDisplay(manifoldDisplay);
+    setManifoldDisplay(manifoldDisplay);
     setBitype(Bitype.LEVERAGES1);
     actionPerformed(manifoldDisplay);
     addSpinnerListener(this);
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }
 
   @Override // from RenderInterface
@@ -48,15 +48,16 @@ import ch.alpine.tensor.Tensors;
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Optional<Tensor> optional = getOrigin();
-    if (optional.isPresent()) {
-      Tensor sequence = getSequence();
+    Tensor sequence = getSequence();
+    if (optional.isPresent() && 2 < sequence.length()) {
       Tensor origin = optional.get();
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       leversRender.renderSurfaceP();
       LeversHud.render(bitype(), leversRender, null);
-      VectorLogManifold vectorLogManifold = manifoldDisplay.hsManifold();
-      HsDesign hsDesign = new HsDesign(vectorLogManifold);
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      Manifold manifold = homogeneousSpace;
+      HsDesign hsDesign = new HsDesign(manifold);
       try {
         Tensor matrix = new IterativeCoordinateMatrix(spinnerTotal.getValue()).origin(hsDesign.matrix(sequence, origin));
         Tensor circum = matrix.dot(sequence);
@@ -72,7 +73,9 @@ import ch.alpine.tensor.Tensors;
         System.err.println(exception.getMessage());
       }
     } else {
-      renderControlPoints(geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
   }
 

@@ -12,19 +12,18 @@ import javax.swing.JToggleButton;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.api.AbstractGeodesicDatasetDemo;
-import ch.alpine.ascona.dis.ManifoldDisplay;
-import ch.alpine.ascona.dis.ManifoldDisplays;
-import ch.alpine.ascona.io.GokartPoseDataV2;
-import ch.alpine.ascona.io.GokartPoseDatas;
-import ch.alpine.java.awt.RenderQuality;
-import ch.alpine.java.gfx.GeometricLayer;
-import ch.alpine.java.ren.PathRender;
-import ch.alpine.javax.swing.SpinnerLabel;
+import ch.alpine.ascona.util.api.AbstractGeodesicDatasetDemo;
+import ch.alpine.ascona.util.dat.GokartPoseDataV2;
+import ch.alpine.ascona.util.dat.GokartPoseDatas;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.lie.se2c.Se2CoveringExponential;
 import ch.alpine.sophus.math.Do;
 import ch.alpine.sophus.ref.d1h.Hermite3Filter;
 import ch.alpine.tensor.RationalScalar;
@@ -33,7 +32,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-/* package */ class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
+public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
@@ -48,6 +47,10 @@ import ch.alpine.tensor.Tensors;
   private final JToggleButton jToggleAdjoint = new JToggleButton("ad");
   private final JToggleButton jToggleButton = new JToggleButton("derivatives");
   protected Tensor _control = Tensors.empty();
+
+  public HermiteDatasetFilterDemo() {
+    this(GokartPoseDataV2.RACING_DAY);
+  }
 
   public HermiteDatasetFilterDemo(GokartPoseDataV2 gokartPoseData) {
     super(ManifoldDisplays.SE2_ONLY, gokartPoseData);
@@ -113,7 +116,7 @@ import ch.alpine.tensor.Tensors;
     Scalar delta = RationalScalar.of(spinnerLabelSkips.getValue(), 50);
     TensorIteration tensorIteration = //
         // new Hermite1Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE).string(delta, _control);
-        new Hermite3Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE, Se2BiinvariantMeans.FILTER) //
+        new Hermite3Filter(Se2Group.INSTANCE, Se2BiinvariantMeans.FILTER) //
             .string(delta, _control);
     int levels = 2 * spinnerLabelLevel.getValue();
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);
