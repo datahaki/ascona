@@ -38,7 +38,7 @@ public class SPatchDemo extends ControlPointsDemo {
   public SPatchDemo() {
     super(false, ManifoldDisplays.SE2C_R2);
     Genesis genesis = new InsidePolygonCoordinate(ThreePointCoordinate.of(Barycenter.MEAN_VALUE));
-    sPatch = new SPatch(5, 2, genesis);
+    sPatch = SPatch.of(5, genesis, 2);
     Tensor embed = sPatch.getEmbed();
     setControlPointsSe2(Tensor.of(embed.stream() //
         .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
@@ -53,38 +53,36 @@ public class SPatchDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor sequence = getControlPointsSe2();
+    Tensor sequence = getGeodesicControlPoints();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     {
-      {
-        Tensor[][] forward = movingDomain2D.forward(sequence, homogeneousSpace.biinvariantMean(Chop._04));
-        new ArrayRender(forward, ColorDataGradients.CLASSIC.deriveWithOpacity(RationalScalar.HALF)) //
-            .render(geometricLayer, graphics);
-        Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
-        int x = 0;
-        for (Tensor[] row : forward) {
-          if (x % 2 == 0) {
-            int y = 0;
-            for (Tensor xya : row) {
-              if (y % 2 == 0) {
-                geometricLayer.pushMatrix(manifoldDisplay.matrixLift(xya));
-                Path2D path2d = geometricLayer.toPath2D(shape);
-                graphics.setColor(new Color(128, 128, 128, 64));
-                graphics.fill(path2d);
-                geometricLayer.popMatrix();
-              }
-              ++y;
+      Tensor[][] forward = movingDomain2D.forward(sequence, homogeneousSpace.biinvariantMean(Chop._04));
+      new ArrayRender(forward, ColorDataGradients.CLASSIC.deriveWithOpacity(RationalScalar.HALF)) //
+          .render(geometricLayer, graphics);
+      Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
+      int x = 0;
+      for (Tensor[] row : forward) {
+        if (x % 2 == 0) {
+          int y = 0;
+          for (Tensor xya : row) {
+            if (y % 2 == 0) {
+              geometricLayer.pushMatrix(manifoldDisplay.matrixLift(xya));
+              Path2D path2d = geometricLayer.toPath2D(shape);
+              graphics.setColor(new Color(128, 128, 128, 64));
+              graphics.fill(path2d);
+              geometricLayer.popMatrix();
             }
+            ++y;
           }
-          x++;
         }
+        ++x;
       }
     }
     {
       int n = 5;
       Tensor domain = Subdivide.of(0.0, 1.0, 15);
       graphics.setColor(new Color(0, 0, 0, 128));
-      for (int i = 0; i < n; ++i) {
+      for (int i = 0; i < n; ++i)
         for (int j = 0; j < n; ++j) {
           Tensor r0 = Tensors.vector(i, j);
           Tensor r1 = Tensors.vector(i, (j + 1) % n);
@@ -95,7 +93,6 @@ public class SPatchDemo extends ControlPointsDemo {
           Path2D path2d = geometricLayer.toPath2D(points);
           graphics.draw(path2d);
         }
-      }
     }
     LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
     leversRender.renderSequence();

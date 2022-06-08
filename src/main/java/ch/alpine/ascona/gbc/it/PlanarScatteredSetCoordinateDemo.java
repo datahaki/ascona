@@ -26,7 +26,7 @@ import ch.alpine.tensor.Tensors;
 public class PlanarScatteredSetCoordinateDemo extends AbstractArrayCoordinateDemo implements SpinnerListener<ManifoldDisplay> {
   private final GenesisDequeProperties dequeGenesisProperties = new GenesisDequeProperties();
 
-  // FIXME TODO the class structure is not correct, since log weighting is empty and not visible
+  // FIXME ASCONA the class structure is not correct, since log weighting is empty and not visible
   public PlanarScatteredSetCoordinateDemo() {
     super(Arrays.asList(LogWeightings.WEIGHTING)); //
     spinnerLogWeighting.setVisible(false);

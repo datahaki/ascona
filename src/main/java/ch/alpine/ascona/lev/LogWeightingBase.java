@@ -69,7 +69,7 @@ public abstract class LogWeightingBase extends AbstractPlaceDemo {
     spinnerLogWeighting.reportToAll();
   }
 
-  protected abstract TensorUnaryOperator operator(Manifold vectorLogManifold, Tensor sequence);
+  protected abstract TensorUnaryOperator operator(Manifold manifold, Tensor sequence);
 
   protected final TensorUnaryOperator operator(Tensor sequence) {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();

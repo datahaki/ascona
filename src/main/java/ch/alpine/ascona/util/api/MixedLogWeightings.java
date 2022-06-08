@@ -18,19 +18,19 @@ public enum MixedLogWeightings implements LogWeighting {
   RADIAL_BASIS {
     @Override
     public TensorUnaryOperator operator( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, //
+        Biinvariant biinvariant, Manifold manifold, //
         ScalarUnaryOperator variogram, Tensor sequence) {
       return RadialBasisFunctionInterpolation.of( //
-          biinvariant.var_dist(vectorLogManifold, variogram, sequence), //
+          biinvariant.var_dist(manifold, variogram, sequence), //
           sequence);
     }
 
     @Override
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, //
+        Biinvariant biinvariant, Manifold manifold, //
         ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = RadialBasisFunctionInterpolation.of( //
-          biinvariant.var_dist(vectorLogManifold, variogram, sequence), //
+          biinvariant.var_dist(manifold, variogram, sequence), //
           sequence, values);
       return tensor -> (Scalar) tensorUnaryOperator.apply(tensor);
     }

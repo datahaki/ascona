@@ -31,12 +31,12 @@ public class NdTreeWeighting implements LogWeighting, Serializable {
   }
 
   @Override
-  public TensorUnaryOperator operator(Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public TensorUnaryOperator operator(Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public TensorScalarFunction function(Biinvariant biinvariant, Manifold vectorLogManifold, //
+  public TensorScalarFunction function(Biinvariant biinvariant, Manifold manifold, //
       ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
     NdMap<Scalar> ndMap = NdTreeMap.of(CoordinateBounds.of(sequence), 2);
     for (int index = 0; index < values.length(); ++index)

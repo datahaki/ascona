@@ -242,8 +242,8 @@ public class LeversRender {
   public void renderWeightsGarden() {
     if (Tensors.nonEmpty(sequence)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      Manifold vectorLogManifold = homogeneousSpace;
-      Tensor weights = Biinvariants.GARDEN.distances(vectorLogManifold, sequence).apply(origin);
+      Manifold manifold = homogeneousSpace;
+      Tensor weights = Biinvariants.GARDEN.distances(manifold, sequence).apply(origin);
       renderWeights(weights);
     }
   }
@@ -434,8 +434,8 @@ public class LeversRender {
   public void renderEllipseMahalanobis() {
     if (Tensors.nonEmpty(sequence)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      Manifold vectorLogManifold = homogeneousSpace;
-      Mahalanobis mahalanobis = new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, origin));
+      Manifold manifold = homogeneousSpace;
+      Mahalanobis mahalanobis = new Mahalanobis(new HsDesign(manifold).matrix(sequence, origin));
       renderEllipse(origin, mahalanobis.sigma_inverse());
     }
   }
@@ -455,17 +455,17 @@ public class LeversRender {
   public void renderMahalanobisFormXEV(ColorDataGradient colorDataGradient) {
     if (Tensors.nonEmpty(sequence)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      Manifold vectorLogManifold = homogeneousSpace;
-      Mahalanobis mahalanobis = new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, origin));
+      Manifold manifold = homogeneousSpace;
+      Mahalanobis mahalanobis = new Mahalanobis(new HsDesign(manifold).matrix(sequence, origin));
       renderMahalanobisMatrix(origin, mahalanobis, colorDataGradient);
     }
   }
 
   public void renderEllipseMahalanobisP() {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    Manifold vectorLogManifold = homogeneousSpace;
+    Manifold manifold = homogeneousSpace;
     for (Tensor point : sequence) {
-      Mahalanobis mahalanobis = new Mahalanobis(new HsDesign(vectorLogManifold).matrix(sequence, point));
+      Mahalanobis mahalanobis = new Mahalanobis(new HsDesign(manifold).matrix(sequence, point));
       renderEllipse(point, mahalanobis.sigma_inverse());
     }
   }
@@ -475,8 +475,8 @@ public class LeversRender {
   public void renderInfluenceX(ColorDataGradient colorDataGradient) {
     if (Tensors.nonEmpty(sequence)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      Manifold vectorLogManifold = homogeneousSpace;
-      Tensor design = new HsDesign(vectorLogManifold).matrix(sequence, origin);
+      Manifold manifold = homogeneousSpace;
+      Tensor design = new HsDesign(manifold).matrix(sequence, origin);
       Tensor matrix = InfluenceMatrix.of(design).matrix();
       // ---
       graphics.setFont(FONT_MATRIX);
@@ -489,11 +489,11 @@ public class LeversRender {
   public void renderInfluenceP(ColorDataGradient colorDataGradient) {
     if (Tensors.nonEmpty(sequence)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      Manifold vectorLogManifold = homogeneousSpace;
+      Manifold manifold = homogeneousSpace;
       // HsProjection hsProjection = ;
       // Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, origin);
       Tensor projections = Tensor.of(sequence.stream() //
-          .map(point -> InfluenceMatrix.of(new HsDesign(vectorLogManifold).matrix(sequence, point)).matrix()));
+          .map(point -> InfluenceMatrix.of(new HsDesign(manifold).matrix(sequence, point)).matrix()));
       // ---
       graphics.setFont(FONT_MATRIX);
       int index = 0;

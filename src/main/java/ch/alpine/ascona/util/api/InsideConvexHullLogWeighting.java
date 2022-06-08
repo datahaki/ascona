@@ -24,11 +24,11 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
   @Override // from LogWeighting
   public TensorUnaryOperator operator( //
       Biinvariant biinvariant, // <- ignored
-      Manifold vectorLogManifold, // with 2 dimensional tangent space
+      Manifold manifold, // with 2 dimensional tangent space
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
     return HsGenesis.wrap( //
-        vectorLogManifold, //
+        manifold, //
         new InsideConvexHullCoordinate(genesis), //
         sequence);
   }
@@ -36,10 +36,10 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
   @Override // from LogWeighting
   public TensorScalarFunction function( //
       Biinvariant biinvariant, // <- ignored
-      Manifold vectorLogManifold, // with 2 dimensional tangent space
+      Manifold manifold, // with 2 dimensional tangent space
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence, Tensor values) {
-    TensorUnaryOperator tensorUnaryOperator = operator(biinvariant, vectorLogManifold, variogram, sequence);
+    TensorUnaryOperator tensorUnaryOperator = operator(biinvariant, manifold, variogram, sequence);
     Objects.requireNonNull(values);
     return point -> (Scalar) tensorUnaryOperator.apply(point).dot(values);
   }

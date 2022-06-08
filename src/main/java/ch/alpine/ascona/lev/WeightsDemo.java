@@ -64,12 +64,12 @@ public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<Man
         Tensor matrix = Tensors.empty();
         int[] minIndex = new int[biinvariants.length];
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-        Manifold vectorLogManifold = homogeneousSpace;
+        Manifold manifold = homogeneousSpace;
         for (int index = 0; index < biinvariants.length; ++index) {
           TensorUnaryOperator tensorUnaryOperator = //
               logWeighting().operator( //
                   biinvariants[index], //
-                  vectorLogManifold, //
+                  manifold, //
                   variogram(), //
                   sequence);
           Tensor weights = tensorUnaryOperator.apply(origin);

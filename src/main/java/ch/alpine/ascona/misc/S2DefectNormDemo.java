@@ -102,7 +102,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     }
   }
 
-  private BufferedImage bufferedImage(int resolution, Manifold vectorLogManifold) {
+  private BufferedImage bufferedImage(int resolution, Manifold manifold) {
     Tensor matrix = Tensors.matrix(S2ArrayHelper.of(resolution, rad(), new TSF()));
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }

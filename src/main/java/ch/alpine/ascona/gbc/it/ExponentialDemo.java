@@ -62,9 +62,9 @@ public class ExponentialDemo extends AbstractPlaceDemo {
     if (optional.isPresent()) {
       Tensor origin = optional.get();
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      Manifold vectorLogManifold = homogeneousSpace;
+      Manifold manifold = homogeneousSpace;
       final Tensor sequence = getSequence();
-      HsDesign hsDesign = new HsDesign(vectorLogManifold);
+      HsDesign hsDesign = new HsDesign(manifold);
       final Tensor levers2 = hsDesign.matrix(sequence, origin);
       {
         Tensor hull = ConvexHull.of(sequence);

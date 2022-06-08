@@ -91,10 +91,10 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
   }
 
   @Override
-  protected final TensorUnaryOperator operator(Manifold vectorLogManifold, Tensor sequence) {
+  protected final TensorUnaryOperator operator(Manifold manifold, Tensor sequence) {
     return logWeighting().operator( //
         biinvariant(), //
-        vectorLogManifold, //
+        manifold, //
         variogram(), //
         sequence);
   }

@@ -10,20 +10,20 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 
 public interface LogWeighting {
   /** @param biinvariant
-   * @param vectorLogManifold
+   * @param manifold
    * @param variogram
    * @param sequence
    * @return */
   TensorUnaryOperator operator( //
-      Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, Tensor sequence);
+      Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence);
 
   /** @param biinvariant
-   * @param vectorLogManifold
+   * @param manifold
    * @param variogram
    * @param sequence
    * @param values
    * @return */
   TensorScalarFunction function( //
-      Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, //
+      Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, //
       Tensor sequence, Tensor values);
 }

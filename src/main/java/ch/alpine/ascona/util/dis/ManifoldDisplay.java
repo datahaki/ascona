@@ -62,7 +62,7 @@ public interface ManifoldDisplay {
    * Dt1
    * 
    * @return metric biinvariant or null if metric is not biinvariant */
-  // TODO API unacceptable
+  // TODO ASCONA API unacceptable
   Biinvariant biinvariant();
 
   LineDistance lineDistance();

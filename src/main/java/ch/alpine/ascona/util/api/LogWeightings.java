@@ -27,7 +27,7 @@ public enum LogWeightings implements LogWeighting {
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, //
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, //
         Tensor sequence, Tensor values) {
       throw new UnsupportedOperationException();
     }
@@ -42,10 +42,10 @@ public enum LogWeightings implements LogWeighting {
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, Manifold vectorLogManifold, ScalarUnaryOperator variogram, //
+        Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, //
         Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = new CrossAveraging( //
-          operator(biinvariant, vectorLogManifold, variogram, sequence), //
+          operator(biinvariant, manifold, variogram, sequence), //
           RnBiinvariantMean.INSTANCE, values);
       return point -> (Scalar) tensorUnaryOperator.apply(point);
     }
