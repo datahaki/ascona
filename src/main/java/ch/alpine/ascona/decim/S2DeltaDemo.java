@@ -7,10 +7,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.api.AbstractManifoldDisplayDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -39,7 +39,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class S2DeltaDemo extends AbstractManifoldDisplayDemo {
+public class S2DeltaDemo extends AbstractDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 128 + 64);
   private static final Color COLOR_SHAPE = new Color(128, 255, 128, 128 + 64);
   private static final int WIDTH = 360;
@@ -69,8 +69,6 @@ public class S2DeltaDemo extends AbstractManifoldDisplayDemo {
   private SnDeltaContainer snDeltaFil;
 
   public S2DeltaDemo() {
-    super(ManifoldDisplays.S2_ONLY);
-    // ---
     FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     fieldsEditor.addUniversalListener(this::compute);
     compute();
@@ -94,7 +92,7 @@ public class S2DeltaDemo extends AbstractManifoldDisplayDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
     // Tensor planar = ;
     pathRenderCurve.setCurve(Tensor.of(snDeltaRaw.sequence.stream().map(manifoldDisplay::toPoint)), false).render(geometricLayer, graphics);
     pathRenderShape.setCurve(Tensor.of(snDeltaFil.sequence.stream().map(manifoldDisplay::toPoint)), false).render(geometricLayer, graphics);

@@ -23,6 +23,7 @@ public abstract class AbstractManifoldDisplayDemo extends AbstractDemo {
       throw new RuntimeException();
     this.list = list;
     manifoldDisplaySpinner = SpinnerLabel.of(list);
+    manifoldDisplaySpinner.setValue(list.get(0));
     if (1 < list.size()) {
       manifoldDisplaySpinner.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "geodesic type");
       timerFrame.jToolBar.addSeparator();

@@ -15,6 +15,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.alpine.sophus.api.TensorMetric;
@@ -38,6 +39,13 @@ class ManifoldDisplaysTest {
   @Test
   public void testSimple() {
     assertTrue(12 <= ManifoldDisplays.ALL.size());
+  }
+
+  @ParameterizedTest
+  @EnumSource(ManifoldDisplays.class)
+  public void testShape(ManifoldDisplays manifoldDisplays) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
+    assertNotNull(manifoldDisplay.shape());
   }
 
   @ParameterizedTest

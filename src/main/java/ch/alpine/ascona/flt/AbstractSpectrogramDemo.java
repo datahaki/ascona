@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.List;
 
 import org.jfree.chart.JFreeChart;
@@ -38,7 +37,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   // ---
   private final GokartPoseData gokartPoseData;
   protected final SpinnerLabel<String> spinnerLabelString;
-  protected final SpinnerLabel<Integer> spinnerLabelLimit ;
+  protected final SpinnerLabel<Integer> spinnerLabelLimit;
   protected final SpinnerLabel<WindowFunctions> spinnerKernel = SpinnerLabel.of(WindowFunctions.class);
   // TODO ASCONA ALG refactor
   protected Tensor _control = null;
@@ -54,7 +53,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
       spinnerLabelString.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "data");
     }
     {
-      spinnerLabelLimit= SpinnerLabel.of(10, 20, 50, 100, 250, 500, 1000, 2000, 5000);
+      spinnerLabelLimit = SpinnerLabel.of(10, 20, 50, 100, 250, 500, 1000, 2000, 5000);
       spinnerLabelLimit.setValue(250);
       spinnerLabelLimit.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "limit");
       spinnerLabelLimit.addSpinnerListener(type -> updateState());

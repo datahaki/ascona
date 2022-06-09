@@ -5,12 +5,12 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.api.AbstractManifoldDisplayDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -23,7 +23,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-public class GeodesicDemo extends AbstractManifoldDisplayDemo {
+public class GeodesicDemo extends AbstractDemo {
   private static final Color COLOR = new Color(128, 128, 128, 128);
   private static final int SPLITS = 20;
   // ---
@@ -32,6 +32,7 @@ public class GeodesicDemo extends AbstractManifoldDisplayDemo {
 
   @ReflectionMarker
   public static class Param {
+    public ManifoldDisplays manifoldDisplays = ManifoldDisplays.R2;
     public Boolean comb = true;
     public Boolean extra = false;
   }
@@ -39,7 +40,6 @@ public class GeodesicDemo extends AbstractManifoldDisplayDemo {
   private final Param param = new Param();
 
   public GeodesicDemo() {
-    super(ManifoldDisplays.ALL);
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
   }
 
@@ -47,7 +47,7 @@ public class GeodesicDemo extends AbstractManifoldDisplayDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     // AxesRender.INSTANCE.render(geometricLayer, graphics);
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor xya = timerFrame.geometricComponent.getMouseSe2CState();
     graphics.setColor(COLOR);

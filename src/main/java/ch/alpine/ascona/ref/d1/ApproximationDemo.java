@@ -2,13 +2,13 @@
 package ch.alpine.ascona.ref.d1;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.util.api.AbstractManifoldDisplayDemo;
 import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
@@ -16,9 +16,16 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.FieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
@@ -32,7 +39,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 
-public class ApproximationDemo extends AbstractManifoldDisplayDemo {
+public class ApproximationDemo extends AbstractDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final Scalar MARKER_SCALE = RealScalar.of(0.1);
@@ -62,72 +69,82 @@ public class ApproximationDemo extends AbstractManifoldDisplayDemo {
   // ---
   private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
   private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
-  private final GokartPoseData gokartPoseData;
-  private final SpinnerLabel<String> spinnerLabelString;
-  private final SpinnerLabel<Integer> spinnerLabelLimit;
-  private final SpinnerLabel<Integer> spinnerLabelWidth;
-  private final SpinnerLabel<CurveSubdivisionSchemes> spinnerLabelScheme = SpinnerLabel.of(SCHEMES);
-  private final SpinnerLabel<Integer> spinnerLabelLevel;
+
+  @ReflectionMarker
+  public static class Param {
+    private final GokartPoseData gokartPoseData;
+
+    public Param(GokartPoseData gokartPoseData) {
+      this.gokartPoseData = gokartPoseData;
+    }
+
+    @FieldSelectionCallback("manifoldDisplays")
+    public ManifoldDisplays manifoldDisplays = ManifoldDisplays.Se2;
+
+    public List<ManifoldDisplays> manifoldDisplays() {
+      return ManifoldDisplays.l_SE2_R2;
+    }
+
+    @FieldSelectionCallback("gokartPoseData")
+    public String string;
+    @FieldInteger
+    @FieldSelectionArray({ "100", "250", "500", "1000", "2000", "5000" })
+    public Scalar limit = RealScalar.of(1000);
+    @FieldInteger
+    @FieldSelectionArray({ "0", "2", "4", "6", "8", "10", "12", "14" })
+    public Scalar width = RealScalar.of(12);
+    @FieldSelectionCallback("schemes")
+    public CurveSubdivisionSchemes scheme = CurveSubdivisionSchemes.BSPLINE1;
+    @FieldInteger
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6" })
+    public Scalar level = RealScalar.of(5);
+
+    public List<String> gokartPoseData() {
+      return gokartPoseData.list();
+    }
+
+    public List<CurveSubdivisionSchemes> schemes() {
+      return Arrays.asList(SCHEMES);
+    }
+
+    public Tensor getPose() {
+      return gokartPoseData.getPose(string, limit.number().intValue());
+    }
+  }
+
   // ---
   private Container _container = null;
+  private final Param param;
 
   public ApproximationDemo() {
     this(GokartPoseDataV2.RACING_DAY);
   }
 
   public ApproximationDemo(GokartPoseData gokartPoseData) {
-    super(ManifoldDisplays.SE2_R2);
-    this.gokartPoseData = gokartPoseData;
+    param = new Param(gokartPoseData);
     timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
-    addSpinnerListener(type -> updateState());
-    {
-      spinnerLabelString = SpinnerLabel.of(gokartPoseData.list());
-      spinnerLabelString.addSpinnerListener(type -> updateState());
-      spinnerLabelString.setValue(gokartPoseData.list().get(0));
-      spinnerLabelString.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "data");
-    }
-    {
-      spinnerLabelLimit = SpinnerLabel.of(100, 250, 500, 1000, 2000, 5000);
-      spinnerLabelLimit.setValue(1000);
-      spinnerLabelLimit.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "limit");
-      spinnerLabelLimit.addSpinnerListener(type -> updateState());
-    }
-    timerFrame.jToolBar.addSeparator();
-    {
-      spinnerLabelWidth = SpinnerLabel.of(0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20);
-      spinnerLabelWidth.setValue(12);
-      spinnerLabelWidth.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "width");
-      spinnerLabelWidth.addSpinnerListener(type -> updateState());
-    }
-    {
-      spinnerLabelScheme.setValue(CurveSubdivisionSchemes.BSPLINE1);
-      spinnerLabelScheme.addToComponentReduced(timerFrame.jToolBar, new Dimension(160, 28), "scheme");
-      spinnerLabelScheme.addSpinnerListener(type -> updateState());
-    }
-    {
-      spinnerLabelLevel = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6);
-      spinnerLabelLevel.setValue(5);
-      spinnerLabelLevel.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "level");
-      spinnerLabelLevel.addSpinnerListener(type -> updateState());
-    }
+    param.string = gokartPoseData.list().get(0);
+    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    fieldsEditor.addUniversalListener(this::updateState);
     updateState();
   }
 
   private void updateState() {
-    Tensor rawdata = gokartPoseData.getPose(spinnerLabelString.getValue(), spinnerLabelLimit.getValue());
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    // Tensor rawdata =
+    Tensor rawdata = param.getPose();
+    ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(manifoldDisplay.geodesicSpace(), GaussianWindow.FUNCTION);
-    TensorUnaryOperator centerFilter = new CenterFilter(tensorUnaryOperator, spinnerLabelWidth.getValue());
+    TensorUnaryOperator centerFilter = new CenterFilter(tensorUnaryOperator, param.width.number().intValue());
     Tensor tracked = centerFilter.apply(rawdata);
-    int level = spinnerLabelLevel.getValue();
+    int level = param.level.number().intValue();
     int steps = 1 << level;
-    System.out.println(DoubleScalar.of(steps).divide(gokartPoseData.getSampleRate()).map(Round._3));
+    System.out.println(DoubleScalar.of(steps).divide(param.gokartPoseData.getSampleRate()).map(Round._3));
     Tensor control = Tensor.of(IntStream.range(0, tracked.length() / steps) //
         .map(i -> i * steps) //
         .mapToObj(tracked::get));
     CurveSubdivision curveSubdivision = //
-        spinnerLabelScheme.getValue().of(manifoldDisplay);
+        param.scheme.of(manifoldDisplay);
     Tensor refined = Nest.of(curveSubdivision::string, control, level);
     _container = new Container(manifoldDisplay, tracked, control, refined);
   }
@@ -145,7 +162,7 @@ public class ApproximationDemo extends AbstractManifoldDisplayDemo {
     }
     {
       Tensor control = container.control;
-      int level = spinnerLabelLevel.getValue();
+      int level = param.level.number().intValue();
       final Tensor shape = manifoldDisplay.shape().multiply(MARKER_SCALE.multiply(RealScalar.of(1 + level)));
       for (Tensor point : control) {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
@@ -177,6 +194,7 @@ public class ApproximationDemo extends AbstractManifoldDisplayDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new ApproximationDemo(GokartPoseDataV2.RACING_DAY).setVisible(1000, 800);
   }
 }
