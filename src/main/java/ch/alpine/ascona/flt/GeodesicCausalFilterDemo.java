@@ -49,7 +49,7 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     final int radius = spinnerRadius.getValue();
     if (0 < radius) {
-      ScalarUnaryOperator windowFunctions = gokartPoseSpec.spinnerKernel.get();
+      ScalarUnaryOperator windowFunctions = gokartPoseSpec.kernel.get();
       Se2BiinvariantMeans se2BiinvariantMean = Se2BiinvariantMeans.FILTER;
       GeodesicSpace geodesicSpace = Se2Group.INSTANCE;
       TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicSpace, windowFunctions);

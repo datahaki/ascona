@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
   @Override // from DatasetFilterDemo
   protected String plotLabel() {
-    WindowFunctions windowFunctions = gokartPoseSpec.spinnerKernel;
+    WindowFunctions windowFunctions = gokartPoseSpec.kernel;
     int radius = spinnerRadius.getValue();
     return windowFunctions + " [" + (2 * radius + 1) + "]";
   }

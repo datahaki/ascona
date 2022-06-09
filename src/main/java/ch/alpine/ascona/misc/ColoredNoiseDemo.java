@@ -26,7 +26,7 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.sca.Clips;
 
-// TODO separate standalone demos (like this one) from geometric/manifold demos
+// TODO ASCONA separate standalone demos (like this one) from geometric/manifold demos
 @ReflectionMarker
 public class ColoredNoiseDemo extends AbstractDemo {
   @ReflectionMarker

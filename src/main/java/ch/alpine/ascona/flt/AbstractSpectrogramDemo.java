@@ -51,14 +51,11 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   private static final ScalarUnaryOperator MAGNITUDE_PER_SECONDS = QuantityMagnitude.SI().in("s^-1");
   // ---
   protected final GokartPoseSpec gokartPoseSpec;
-  // TODO ASCONA ALG refactor
   protected Tensor _control = null;
-  // protected final SpinnerLabel<ColorDataGradients> spinnerLabelCDG = new SpinnerLabel<>();
 
   protected AbstractSpectrogramDemo(GokartPoseSpec gokartPoseSpec) {
     this.gokartPoseSpec = gokartPoseSpec;
-    if (this instanceof BufferedImageSupplier)
-      gokartPoseSpec.symi = true;
+    gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
     FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(gokartPoseSpec, timerFrame.jToolBar);
     fieldsEditor.addUniversalListener(this::updateState);
     timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
@@ -140,10 +137,10 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   private static final int MAGNIFY = 4;
 
   // @Override
-  protected void differences_render( //
+  protected final void differences_render( //
       Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor refined, boolean spectrogram) {
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    GeodesicSpace geodesicSpace = gokartPoseSpec.manifoldDisplays.manifoldDisplay().geodesicSpace();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     if (geodesicSpace instanceof LieGroup lieGroup) {
       LieDifferences lieDifferences = new LieDifferences(lieGroup);
       Scalar sampleRate = MAGNITUDE_PER_SECONDS.apply(gokartPoseSpec.gpd().getSampleRate());
@@ -161,7 +158,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
           visualSet.add(domain, signal);
           // ---
           if (spectrogram) {
-            ScalarUnaryOperator window = gokartPoseSpec.spinnerKernel.get();
+            ScalarUnaryOperator window = gokartPoseSpec.kernel.get();
             Tensor image = Spectrogram.of(signal, window, COLOR_DATA_GRADIENT);
             BufferedImage bufferedImage = ImageFormat.of(image);
             int wid = bufferedImage.getWidth() * MAGNIFY;

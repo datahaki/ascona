@@ -7,11 +7,9 @@ import java.io.IOException;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.sophus.api.TensorIteration;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Curvature2D;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.rn.RnGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
@@ -84,7 +82,7 @@ import ch.alpine.tensor.red.Nest;
 
   private void processAll() throws IOException {
     LieGroup lieGroup = Se2CoveringGroup.INSTANCE;
-    BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
+    // BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
     {
       HermiteSubdivision hermiteSubdivision = //
           HermiteSubdivisions.H1STANDARD.supply(lieGroup);

@@ -4,11 +4,10 @@ package ch.alpine.ascona.crv.se2c;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.api.ControlPointsDemo;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -17,7 +16,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-/* package */ abstract class AbstractSpiralDemo extends ControlPointsDemo {
+/* package */ abstract class AbstractSpiralDemo extends AbstractDemo {
   private static final PointsRender POINTS_RENDER = //
       new PointsRender(new Color(128, 128, 128, 64), new Color(128, 128, 128, 128));
   private static final Tensor SEPARATORS = Subdivide.of(-3.0, 3.0, 50);
@@ -26,7 +25,6 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
   private final RenderInterface renderInterface;
 
   public AbstractSpiralDemo(ScalarTensorFunction scalarTensorFunction) {
-    super(false, ManifoldDisplays.R2_ONLY);
     this.scalarTensorFunction = scalarTensorFunction;
     Tensor points = Subdivide.of(-10.0, 10.0, 10000).map(scalarTensorFunction);
     renderInterface = new PathRender(Color.BLUE, 1f).setCurve(points, false);

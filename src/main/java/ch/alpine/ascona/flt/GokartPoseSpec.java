@@ -12,10 +12,10 @@ public abstract class GokartPoseSpec extends GokartPoseParam {
     super(gokartPoseData);
   }
 
-  public Boolean diff = false;
-  public Boolean spec = false;
-  public Boolean data = false;
-  public Boolean conv = false;
+  public Boolean diff = true;
+  public Boolean spec = true;
+  public Boolean data = true;
+  public Boolean conv = true;
   public Boolean symi = false;
-  public WindowFunctions spinnerKernel = WindowFunctions.GAUSSIAN;
+  public WindowFunctions kernel = WindowFunctions.GAUSSIAN;
 }

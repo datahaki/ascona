@@ -58,6 +58,8 @@ public class S2DeltaDemo extends AbstractDemo {
     public Scalar width = RealScalar.of(5);
     public WindowFunctions f_window = WindowFunctions.FLAT_TOP;
     public WindowFunctions s_window = WindowFunctions.HANN;
+    public Boolean differences = false;
+    public Boolean transport = false;
 
     public int getWidth() {
       return 2 * Scalars.intValueExact(width) + 1;
@@ -93,10 +95,11 @@ public class S2DeltaDemo extends AbstractDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
+    manifoldDisplay.background().render(geometricLayer, graphics);
     // Tensor planar = ;
     pathRenderCurve.setCurve(Tensor.of(snDeltaRaw.sequence.stream().map(manifoldDisplay::toPoint)), false).render(geometricLayer, graphics);
     pathRenderShape.setCurve(Tensor.of(snDeltaFil.sequence.stream().map(manifoldDisplay::toPoint)), false).render(geometricLayer, graphics);
-    if (false)
+    if (param.differences)
       for (Tensor ctrl : snDeltaRaw.differences) {
         Tensor p = ctrl.get(0); // point
         Tensor v = ctrl.get(1); // vector
@@ -108,7 +111,7 @@ public class S2DeltaDemo extends AbstractDemo {
           geometricLayer.popMatrix();
         }
       }
-    if (false) { // moving a single tangent vector along
+    if (param.transport) { // moving a single tangent vector along
       Tensor v0 = UnitVector.of(3, 1).multiply(RealScalar.of(0.5));
       for (int index = 1; index < snDeltaRaw.sequence.length(); ++index) {
         Tensor p = snDeltaRaw.sequence.get(index - 1);

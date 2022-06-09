@@ -48,7 +48,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
-    ScalarUnaryOperator smoothingKernel = gokartPoseSpec.spinnerKernel.get();
+    ScalarUnaryOperator smoothingKernel = gokartPoseSpec.kernel.get();
     GeodesicFilters geodesicFilters = spinnerFilters.getValue();
     TensorUnaryOperator tensorUnaryOperator = geodesicFilters.from(manifoldDisplay, smoothingKernel);
     return Nest.of( //
@@ -61,7 +61,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
     GeodesicFilters geodesicFilters = spinnerFilters.getValue();
     switch (geodesicFilters) {
     case GEODESIC:
-      return SymLinkImages.ofGC(gokartPoseSpec.spinnerKernel.get(), spinnerRadius.getValue()).bufferedImage();
+      return SymLinkImages.ofGC(gokartPoseSpec.kernel.get(), spinnerRadius.getValue()).bufferedImage();
     default:
       return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     }

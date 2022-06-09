@@ -22,7 +22,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   private static final Tensor SPEARHEAD = Arrowhead.of(0.2).unmodifiable();
   // PolygonNormalize.of( //
   // Spearhead.of(Tensors.vector(-0.217, -0.183, 4.189), RealScalar.of(0.1)), RealScalar.of(0.08));
-  private static final Tensor ARROWHEAD = Arrowhead.of(0.2).unmodifiable();
+  // private static final Tensor ARROWHEAD = Arrowhead.of(0.2).unmodifiable();
 
   @Override
   public abstract ClothoidBuilder geodesicSpace();

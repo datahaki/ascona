@@ -95,7 +95,7 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
       graphics.fill(path2d);
     }
     {
-      // TODO levers render
+      // TODO ASCONA levers render
       graphics.setColor(new Color(192, 192, 192, 192));
       Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
       for (Tensor mean : refine.vrt) {

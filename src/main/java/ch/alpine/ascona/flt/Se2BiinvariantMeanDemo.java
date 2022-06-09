@@ -53,7 +53,7 @@ public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
 
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ScalarUnaryOperator smoothingKernel = gokartPoseSpec.spinnerKernel.get();
+    ScalarUnaryOperator smoothingKernel = gokartPoseSpec.kernel.get();
     Se2BiinvariantMeans se2BiinvariantMean = spinnerFilters.getValue();
     TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(se2BiinvariantMean, smoothingKernel);
     return Nest.of( //

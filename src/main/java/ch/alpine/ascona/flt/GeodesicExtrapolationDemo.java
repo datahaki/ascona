@@ -12,6 +12,7 @@ import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.ascona.util.sym.SymSequence;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolationFilter;
@@ -34,7 +35,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
     // ---
     ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = //
-        GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), gokartPoseSpec.spinnerKernel.get());
+        GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), gokartPoseSpec.kernel.get());
     refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesicSpace(), spinnerRadius.getValue()).apply(control());
   }
 
@@ -45,7 +46,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
 
   @Override // from BufferedImageSupplier
   public BufferedImage bufferedImage() {
-    ScalarUnaryOperator smoothingKernel = gokartPoseSpec.spinnerKernel.get();
+    ScalarUnaryOperator smoothingKernel = gokartPoseSpec.kernel.get();
     int radius = spinnerRadius.getValue();
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(SymGeodesic.INSTANCE, smoothingKernel);
     Tensor vector = SymSequence.of(radius + 1);
@@ -56,6 +57,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new GeodesicExtrapolationDemo().setVisible(1000, 600);
   }
 }

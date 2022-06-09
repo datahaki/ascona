@@ -6,11 +6,12 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.function.Function;
 
-import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -28,7 +29,7 @@ import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.sca.pow.Power;
 
 @ReflectionMarker
-public class HilbertPolygonDemo extends ControlPointsDemo {
+public class HilbertPolygonDemo extends AbstractDemo {
   private static final int CACHE_SIZE = 10;
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict();
 
@@ -43,10 +44,7 @@ public class HilbertPolygonDemo extends ControlPointsDemo {
   private final Function<Integer, Tensor> cache = Cache.of(HilbertPolygonDemo::curve, CACHE_SIZE);
 
   public HilbertPolygonDemo() {
-    super(false, ManifoldDisplays.R2_ONLY);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
-    setPositioningEnabled(false);
-    setMidpointIndicated(false);
   }
 
   @Override
@@ -59,7 +57,7 @@ public class HilbertPolygonDemo extends ControlPointsDemo {
     graphics.setColor(new Color(128, 128, 128, 64));
     graphics.fill(path2d);
     new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5f).setCurve(tensor, true).render(geometricLayer, graphics);
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
     if (n < 4) {
       PointsRender pointsRender = new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
       pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), tensor).render(geometricLayer, graphics);
@@ -71,6 +69,7 @@ public class HilbertPolygonDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new HilbertPolygonDemo().setVisible(1000, 600);
   }
 }

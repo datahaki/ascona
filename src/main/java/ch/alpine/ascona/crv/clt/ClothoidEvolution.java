@@ -16,7 +16,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.clt.Clothoid;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidComparators;
@@ -59,8 +58,8 @@ public class ClothoidEvolution extends AbstractPlaceDemo {
     Tensor sequence = getGeodesicControlPoints();
     graphics.setColor(Color.BLUE);
     graphics.setStroke(new BasicStroke(2));
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    ClothoidBuilder clothoidBuilder = (ClothoidBuilder) geodesicSpace;
+    // GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+    // ClothoidBuilder clothoidBuilder = (ClothoidBuilder) geodesicSpace;
     Tensor beg = sequence.get(0);
     ClothoidBuilder clothoidBuilder2 = PriorityClothoid.of(ClothoidComparators.CURVATURE_HEAD);
     double time = param.animate ? timing.seconds() * 0.2 : 0;
