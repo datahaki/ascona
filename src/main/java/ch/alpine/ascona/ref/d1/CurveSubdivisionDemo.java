@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
@@ -59,7 +58,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
   public static class Param {
     public CurveSubdivisionSchemes scheme = CurveSubdivisionSchemes.BSPLINE1;
     @FieldInteger
-    @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
     public Scalar refine = RealScalar.of(6);
     public Boolean line = false;
     public Boolean cyclic = false;
@@ -68,9 +67,9 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
   }
 
   private final Param param = new Param();
-  final SpinnerLabel<Scalar> spinnerMagicC = new SpinnerLabel<>();
+  final SpinnerLabel<Scalar> spinnerMagicC;
   private static final Tensor OMEGA = Tensors.fromString("{-1/16, -1/36, 0, 1/72, 1/42, 1/36, 1/18, 1/16}");
-  private final SpinnerLabel<Scalar> spinnerBeta = new SpinnerLabel<>();
+  private final SpinnerLabel<Scalar> spinnerBeta;
 
   public CurveSubdivisionDemo() {
     super(ManifoldDisplays.ALL);
@@ -121,15 +120,14 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     setMidpointIndicated(true);
     // ---
     // ---
+    spinnerMagicC = SpinnerLabel.of(Tensors.fromString("{1/100, 1/10, 1/8, 1/6, 1/4, 1/3, 1/2, 2/3, 9/10, 99/100}").stream() //
+        .map(Scalar.class::cast) //
+        .toList());
     spinnerMagicC.addSpinnerListener(value -> CurveSubdivisionHelper.MAGIC_C = value);
-    spinnerMagicC.setList( //
-        Tensors.fromString("{1/100, 1/10, 1/8, 1/6, 1/4, 1/3, 1/2, 2/3, 9/10, 99/100}").stream() //
-            .map(Scalar.class::cast) //
-            .collect(Collectors.toList()));
     spinnerMagicC.setValue(RationalScalar.HALF);
     spinnerMagicC.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
     {
-      spinnerBeta.setList(OMEGA.stream().map(Scalar.class::cast).collect(Collectors.toList()));
+      spinnerBeta = SpinnerLabel.of(OMEGA.stream().map(Scalar.class::cast).toList());
       spinnerBeta.setValue(RationalScalar.of(1, 16));
       spinnerBeta.addSpinnerListener(l -> CurveSubdivisionHelper.OMEGA = spinnerBeta.getValue());
       spinnerBeta.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "beta");

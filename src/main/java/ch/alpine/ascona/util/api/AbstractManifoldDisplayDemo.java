@@ -15,15 +15,14 @@ import ch.alpine.bridge.swing.SpinnerListener;
 
 @ReflectionMarker
 public abstract class AbstractManifoldDisplayDemo extends AbstractDemo {
-  private final SpinnerLabel<ManifoldDisplay> manifoldDisplaySpinner = new SpinnerLabel<>();
+  private final SpinnerLabel<ManifoldDisplay> manifoldDisplaySpinner;
   private final List<ManifoldDisplay> list;
 
   public AbstractManifoldDisplayDemo(List<ManifoldDisplay> list) {
     if (list.isEmpty())
       throw new RuntimeException();
     this.list = list;
-    manifoldDisplaySpinner.setList(list);
-    manifoldDisplaySpinner.setValue(list.get(0));
+    manifoldDisplaySpinner = SpinnerLabel.of(list);
     if (1 < list.size()) {
       manifoldDisplaySpinner.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "geodesic type");
       timerFrame.jToolBar.addSeparator();

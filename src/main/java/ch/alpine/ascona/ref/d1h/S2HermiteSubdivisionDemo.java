@@ -48,7 +48,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   @FieldClip(min = "0", max = "8")
   public Scalar refine = RealScalar.of(4);
   // ---
-  @FieldSelectionArray(value = { "1/8", "1/4", "1/2", "1", "3/2", "2" })
+  @FieldSelectionArray({ "1/8", "1/4", "1/2", "1", "3/2", "2" })
   public Scalar beta = RealScalar.ONE;
   public Boolean cyclic = false;
   public Boolean derivatives = true;

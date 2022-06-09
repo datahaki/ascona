@@ -3,7 +3,6 @@ package ch.alpine.ascona.lev;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.Arrays;
 
 import javax.swing.JButton;
 
@@ -19,17 +18,17 @@ import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Tensor;
 
 public abstract class AbstractHoverDemo extends LogWeightingDemo {
-  final SpinnerLabel<Integer> spinnerCount = new SpinnerLabel<>();
+  final SpinnerLabel<Integer> spinnerCount;
   private final JButton jButtonShuffle = new JButton("shuffle");
 
   public AbstractHoverDemo() {
     super(false, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
     setMidpointIndicated(false);
     setPositioningEnabled(false);
-    addSpinnerListener(v -> shuffle(spinnerCount.getValue()));
     {
-      spinnerCount.setList(Arrays.asList(5, 10, 15, 20, 25, 30, 40));
+      spinnerCount = SpinnerLabel.of(5, 10, 15, 20, 25, 30, 40);
       spinnerCount.setValue(25);
+      addSpinnerListener(v -> shuffle(spinnerCount.getValue()));
       spinnerCount.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
       spinnerCount.addSpinnerListener(this::shuffle);
     }

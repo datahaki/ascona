@@ -17,16 +17,16 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 public abstract class LogWeightingBase extends AbstractPlaceDemo {
-  protected final SpinnerLabel<LogWeighting> spinnerLogWeighting = new SpinnerLabel<>();
+  protected final SpinnerLabel<LogWeighting> spinnerLogWeighting;
 
   public LogWeightingBase(boolean addRemoveControlPoints, List<ManifoldDisplay> list, List<LogWeighting> array) {
     super(addRemoveControlPoints, list);
     {
-      spinnerLogWeighting.setList(array);
+      spinnerLogWeighting = SpinnerLabel.of(array);
       if (array.contains(LogWeightings.COORDINATE))
         spinnerLogWeighting.setValue(LogWeightings.COORDINATE);
       else
-        spinnerLogWeighting.setIndex(0);
+        spinnerLogWeighting.setValue(array.get(0));
       if (1 < array.size())
         spinnerLogWeighting.addToComponentReduced(timerFrame.jToolBar, new Dimension(150, 28), "weights");
     }

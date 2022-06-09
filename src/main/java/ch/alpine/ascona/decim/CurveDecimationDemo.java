@@ -56,11 +56,11 @@ public class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
   // ---
   @ReflectionMarker
   public static class Param {
-    @FieldSelectionArray(value = { "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })
+    @FieldSelectionArray({ "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })
     public Scalar width = RealScalar.of(0);
-    @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5" })
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5" })
     public Scalar level = RealScalar.of(2);
-    @FieldSelectionArray(value = { "1", "2", "3" })
+    @FieldSelectionArray({ "1", "2", "3" })
     public Scalar degre = RealScalar.of(1);
     public LineDistances type = LineDistances.STANDARD;
     public Boolean error = false;

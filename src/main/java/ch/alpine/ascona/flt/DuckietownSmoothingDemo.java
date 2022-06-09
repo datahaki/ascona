@@ -40,23 +40,23 @@ import ch.alpine.tensor.itp.DeBoor;
       "duckie20180713-175601.csv", //
       "duckie20180901-152902.csv");
   // ---
-  private final SpinnerLabel<Integer> spinnerDegree = new SpinnerLabel<>();
-  private final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
-  private final SpinnerLabel<Integer> spinnerDuckiebot = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerDegree;
+  private final SpinnerLabel<Integer> spinnerRefine;
+  private final SpinnerLabel<Integer> spinnerDuckiebot;
   private final JSlider jSlider = new JSlider(0, 1000, 500);
 
   public DuckietownSmoothingDemo() {
     super(ManifoldDisplays.R2_ONLY, GokartPoseDataV2.INSTANCE);
     // ---
-    spinnerDegree.setList(DEGREES);
+    spinnerDegree = SpinnerLabel.of(DEGREES);
     spinnerDegree.setValue(2);
     spinnerDegree.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "degree");
     // ---
-    spinnerRefine.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
+    spinnerRefine = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     spinnerRefine.setValue(2);
     spinnerRefine.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
     //
-    spinnerDuckiebot.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
+    spinnerDuckiebot = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     spinnerDuckiebot.setValue(1);
     spinnerDuckiebot.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "Duckiebot");
     //

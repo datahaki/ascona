@@ -43,7 +43,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   public static class Param {
     @FieldInteger
     @FieldPreferredWidth(100)
-    @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
     public Scalar refine = RealScalar.of(5);
     @FieldSlider
     @FieldPreferredWidth(300)

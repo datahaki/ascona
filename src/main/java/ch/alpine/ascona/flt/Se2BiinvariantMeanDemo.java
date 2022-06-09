@@ -3,7 +3,6 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.Arrays;
 
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -28,7 +27,7 @@ import ch.alpine.tensor.red.Nest;
  * {@link So2PhongBiinvariantMean} */
 public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
   private final SpinnerLabel<Se2BiinvariantMeans> spinnerFilters = SpinnerLabel.of(Se2BiinvariantMeans.class);
-  private final SpinnerLabel<Integer> spinnerConvolution = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerConvolution;
 
   public Se2BiinvariantMeanDemo() {
     super(ManifoldDisplays.SE2_ONLY, GokartPoseDataV2.INSTANCE);
@@ -37,8 +36,8 @@ public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
       spinnerFilters.addSpinnerListener(type -> updateState());
     }
     {
-      spinnerConvolution.setList(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
-      spinnerConvolution.setIndex(0);
+      spinnerConvolution = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+      spinnerConvolution.setValue(1);
       spinnerConvolution.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "convolution");
       spinnerConvolution.addSpinnerListener(type -> updateState());
     }

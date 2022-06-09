@@ -35,7 +35,7 @@ public class DeBoorDemo extends AbstractDemo {
   // ---
   @ReflectionMarker
   public static class Param {
-    @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6" })
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6" })
     public Scalar degree = RealScalar.of(1);
   }
 

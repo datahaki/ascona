@@ -4,7 +4,6 @@ package ch.alpine.ascona.flt;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.Arrays;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.GeodesicFilters;
@@ -32,14 +31,13 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DRAW = ColorDataLists._001.strict();
   private static final ColorDataIndexed COLOR_FILL = COLOR_DRAW.deriveWithAlpha(64);
   // ---
-  protected final SpinnerLabel<WindowFunctions> spinnerKernel = new SpinnerLabel<>();
+  protected final SpinnerLabel<WindowFunctions> spinnerKernel = SpinnerLabel.of(WindowFunctions.class);
 
   public GeodesicFiltersDemo() {
     super(true, ManifoldDisplays.SE2C_SE2_R2);
     // ---
     timerFrame.jToolBar.addSeparator();
     {
-      spinnerKernel.setList(Arrays.asList(WindowFunctions.values()));
       spinnerKernel.setValue(WindowFunctions.GAUSSIAN);
       spinnerKernel.addToComponentReduced(timerFrame.jToolBar, new Dimension(180, 28), "smoothing kernel");
     }

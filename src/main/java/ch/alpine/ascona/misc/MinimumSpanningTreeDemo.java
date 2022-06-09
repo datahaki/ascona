@@ -50,12 +50,12 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   }
 
   // TODO ASCONA DEMO manage by reflection
-  final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
+  final SpinnerLabel<Integer> spinnerRefine;
 
   public MinimumSpanningTreeDemo() {
     super(true, ManifoldDisplays.MANIFOLDS, Arrays.asList(LogWeightings.DISTANCES));
     // ---
-    spinnerRefine.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
+    spinnerRefine = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     spinnerRefine.setValue(2);
     spinnerRefine.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
     // ---

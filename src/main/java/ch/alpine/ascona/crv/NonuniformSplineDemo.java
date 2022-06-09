@@ -33,10 +33,10 @@ import ch.alpine.tensor.sca.Clips;
 @ReflectionMarker
 public class NonuniformSplineDemo extends ControlPointsDemo {
   @FieldInteger
-  @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
+  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
   public Scalar degree = RealScalar.of(1);
   @FieldInteger
-  @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" })
+  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" })
   public Scalar refine = RealScalar.of(4);
 
   public NonuniformSplineDemo() {

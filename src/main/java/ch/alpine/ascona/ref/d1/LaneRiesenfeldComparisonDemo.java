@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -43,7 +42,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   private static final List<CurveSubdivisionSchemes> CURVE_SUBDIVISION_SCHEMES = //
       CurveSubdivisionHelper.LANE_RIESENFELD;
   // ---
-  private final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerRefine;
   private final JToggleButton jToggleCurvature = new JToggleButton("crvt");
   private final List<PathRender> pathRenders = new ArrayList<>();
 
@@ -63,7 +62,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     setControlPointsSe2(control);
     timerFrame.jToolBar.addSeparator();
     // ---
-    spinnerRefine.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
+    spinnerRefine = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     spinnerRefine.setValue(3);
     spinnerRefine.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
     // ---

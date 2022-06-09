@@ -3,7 +3,6 @@ package ch.alpine.ascona.lev;
 
 import java.awt.Dimension;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
@@ -29,7 +28,7 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
   // TODO ASCONA DEMO manage by reflection and simplify class structure
   private final SpinnerLabel<Bitype> spinnerBiinvariant = SpinnerLabel.of(Bitype.class);
   private final SpinnerLabel<VariogramFunctions> spinnerVariogram = SpinnerLabel.of(VariogramFunctions.class);
-  private final SpinnerLabel<Scalar> spinnerBeta = new SpinnerLabel<>();
+  private final SpinnerLabel<Scalar> spinnerBeta;
   private final SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
     @Override
     public void actionPerformed(LogWeighting logWeighting) {
@@ -70,7 +69,7 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
     spinnerVariogram.addToComponentReduced(timerFrame.jToolBar, new Dimension(230, 28), "variograms");
     spinnerVariogram.addSpinnerListener(v -> recompute());
     {
-      spinnerBeta.setList(BETAS.stream().map(Scalar.class::cast).collect(Collectors.toList()));
+      spinnerBeta = SpinnerLabel.of(BETAS.stream().map(Scalar.class::cast).toList());
       spinnerBeta.setValue(RealScalar.of(2));
       spinnerBeta.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "beta");
       spinnerBeta.addSpinnerListener(v -> recompute());

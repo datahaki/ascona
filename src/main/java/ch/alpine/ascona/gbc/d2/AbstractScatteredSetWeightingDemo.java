@@ -2,7 +2,6 @@
 package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Dimension;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JToggleButton;
@@ -15,8 +14,8 @@ import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 
 public abstract class AbstractScatteredSetWeightingDemo extends LogWeightingDemo {
-  protected final SpinnerLabel<Integer> spinnerRefine = new SpinnerLabel<>();
-  private final SpinnerLabel<Integer> spinnerMagnif = new SpinnerLabel<>();
+  protected final SpinnerLabel<Integer> spinnerRefine;
+  private final SpinnerLabel<Integer> spinnerMagnif;
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
   protected final JToggleButton jToggleHeatmap = new JToggleButton("heatmap");
   protected final JToggleButton jToggleArrows = new JToggleButton("arrows");
@@ -29,13 +28,13 @@ public abstract class AbstractScatteredSetWeightingDemo extends LogWeightingDemo
     setMidpointIndicated(false);
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
     {
-      spinnerRefine.setList(Arrays.asList(3, 5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 120, 160));
+      spinnerRefine = SpinnerLabel.of(3, 5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 120, 160);
       spinnerRefine.setValue(20);
       spinnerRefine.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "refinement");
       spinnerRefine.addSpinnerListener(v -> recompute());
     }
     {
-      spinnerMagnif.setList(Arrays.asList(1, 2, 3, 4));
+      spinnerMagnif = SpinnerLabel.of(1, 2, 3, 4);
       spinnerMagnif.setValue(2);
       spinnerMagnif.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
       spinnerMagnif.addSpinnerListener(v -> recompute());

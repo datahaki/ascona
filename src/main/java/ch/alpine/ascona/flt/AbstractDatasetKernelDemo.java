@@ -3,7 +3,6 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Dimension;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.dat.GokartPoseData;
@@ -12,12 +11,12 @@ import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 /* package */ abstract class AbstractDatasetKernelDemo extends AbstractSpectrogramDemo {
-  protected final SpinnerLabel<Integer> spinnerRadius = new SpinnerLabel<>();
+  protected final SpinnerLabel<Integer> spinnerRadius;
 
   protected AbstractDatasetKernelDemo(List<ManifoldDisplay> list, GokartPoseData gokartPoseData) {
     super(list, gokartPoseData);
     {
-      spinnerRadius.setList(IntStream.range(0, 25).boxed().collect(Collectors.toList()));
+      spinnerRadius = SpinnerLabel.of(IntStream.range(0, 25).boxed().toList());
       spinnerRadius.setValue(1);
       spinnerRadius.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
       spinnerRadius.addSpinnerListener(value -> updateState());

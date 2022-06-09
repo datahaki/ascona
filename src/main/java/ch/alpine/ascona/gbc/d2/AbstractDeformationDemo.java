@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -38,7 +37,7 @@ import ch.alpine.tensor.sca.N;
   /** for parameterization of geodesic */
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 10);
   // ---
-  private final SpinnerLabel<Integer> spinnerLength = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerLength;
   private final JButton jButton = new JButton("snap");
   private final JToggleButton jToggleTarget = new JToggleButton("target");
   // ---
@@ -54,9 +53,9 @@ import ch.alpine.tensor.sca.N;
     spinnerRefine.addSpinnerListener(v -> recompute());
     // ---
     {
-      spinnerLength.addSpinnerListener(v -> shuffleSnap());
-      spinnerLength.setList(Arrays.asList(3, 4, 5, 6, 7, 8, 9, 10));
+      spinnerLength = SpinnerLabel.of(3, 4, 5, 6, 7, 8, 9, 10);
       spinnerLength.setValue(6);
+      spinnerLength.addSpinnerListener(v -> shuffleSnap());
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
     }
     jToggleTarget.setSelected(true);

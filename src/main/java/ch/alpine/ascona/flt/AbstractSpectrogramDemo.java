@@ -37,8 +37,8 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   private static final ScalarUnaryOperator MAGNITUDE_PER_SECONDS = QuantityMagnitude.SI().in("s^-1");
   // ---
   private final GokartPoseData gokartPoseData;
-  protected final SpinnerLabel<String> spinnerLabelString = new SpinnerLabel<>();
-  protected final SpinnerLabel<Integer> spinnerLabelLimit = new SpinnerLabel<>();
+  protected final SpinnerLabel<String> spinnerLabelString;
+  protected final SpinnerLabel<Integer> spinnerLabelLimit ;
   protected final SpinnerLabel<WindowFunctions> spinnerKernel = SpinnerLabel.of(WindowFunctions.class);
   // TODO ASCONA ALG refactor
   protected Tensor _control = null;
@@ -49,14 +49,13 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     this.gokartPoseData = gokartPoseData;
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     {
-      spinnerLabelString.setList(gokartPoseData.list());
+      spinnerLabelString = SpinnerLabel.of(gokartPoseData.list());
       spinnerLabelString.addSpinnerListener(type -> updateState());
-      spinnerLabelString.setIndex(0);
       spinnerLabelString.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "data");
     }
     {
-      spinnerLabelLimit.setList(Arrays.asList(10, 20, 50, 100, 250, 500, 1000, 2000, 5000));
-      spinnerLabelLimit.setIndex(4);
+      spinnerLabelLimit= SpinnerLabel.of(10, 20, 50, 100, 250, 500, 1000, 2000, 5000);
+      spinnerLabelLimit.setValue(250);
       spinnerLabelLimit.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "limit");
       spinnerLabelLimit.addSpinnerListener(type -> updateState());
     }

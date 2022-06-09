@@ -22,10 +22,10 @@ import ch.alpine.tensor.Tensors;
 @ReflectionMarker
 public abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
   @FieldInteger
-  @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
+  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
   public Scalar degree = RealScalar.of(3);
   @FieldInteger
-  @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
+  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
   public Scalar refine = RealScalar.of(4);
   @FieldSlider
   @FieldPreferredWidth(300)

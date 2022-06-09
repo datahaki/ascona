@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Arrays;
 
 import javax.swing.JToggleButton;
 
@@ -42,8 +41,8 @@ public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
   // ---
   private final GokartPoseDataV2 gokartPoseDataV2;
-  private final SpinnerLabel<Integer> spinnerLabelSkips = new SpinnerLabel<>();
-  private final SpinnerLabel<Integer> spinnerLabelLevel = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerLabelSkips;
+  private final SpinnerLabel<Integer> spinnerLabelLevel;
   private final JToggleButton jToggleAdjoint = new JToggleButton("ad");
   private final JToggleButton jToggleButton = new JToggleButton("derivatives");
   protected Tensor _control = Tensors.empty();
@@ -57,14 +56,14 @@ public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
     this.gokartPoseDataV2 = gokartPoseData;
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     {
-      spinnerLabelSkips.setList(Arrays.asList(1, 2, 5, 10, 25, 50));
+      spinnerLabelSkips = SpinnerLabel.of(1, 2, 5, 10, 25, 50);
       spinnerLabelSkips.setValue(5);
       spinnerLabelSkips.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "skips");
       spinnerLabelSkips.addSpinnerListener(type -> updateState());
     }
     timerFrame.jToolBar.addSeparator();
     {
-      spinnerLabelLevel.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6));
+      spinnerLabelLevel = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6);
       spinnerLabelLevel.setValue(1);
       spinnerLabelLevel.addToComponentReduced(timerFrame.jToolBar, new Dimension(40, 28), "level");
     }

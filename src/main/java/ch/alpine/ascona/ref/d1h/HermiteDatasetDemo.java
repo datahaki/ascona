@@ -55,9 +55,9 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
   // ---
   private final GokartPoseDataV2 gokartPoseDataV2;
-  @FieldSelectionArray(value = { "1", "2", "5", "10", "25", "50", "100", "250", "500" })
+  @FieldSelectionArray({ "1", "2", "5", "10", "25", "50", "100", "250", "500" })
   public Scalar skips = RealScalar.of(50);
-  @FieldSelectionArray(value = { "0", "2", "4", "6", "8", "10", "15", "20" })
+  @FieldSelectionArray({ "0", "2", "4", "6", "8", "10", "15", "20" })
   public Scalar shift = RealScalar.of(0);
   public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
   @FieldSlider

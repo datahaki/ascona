@@ -28,7 +28,7 @@ import ch.alpine.tensor.red.Times;
 @ReflectionMarker
 public class GeodesicMeanFilterDemo extends ControlPointsDemo {
   @FieldInteger
-  @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
+  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
   public Scalar radius = RealScalar.of(9);
 
   public GeodesicMeanFilterDemo() {

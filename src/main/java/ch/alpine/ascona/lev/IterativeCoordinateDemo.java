@@ -3,7 +3,6 @@ package ch.alpine.ascona.lev;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.Arrays;
 import java.util.Optional;
 
 import ch.alpine.ascona.util.api.LogWeightings;
@@ -25,13 +24,13 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
 public class IterativeCoordinateDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
-  private final SpinnerLabel<Integer> spinnerTotal = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerTotal;
   // private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public IterativeCoordinateDemo() {
     super(true, ManifoldDisplays.R2_ONLY, LogWeightings.list());
     // ---
-    spinnerTotal.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 50, 100));
+    spinnerTotal = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 50, 100);
     spinnerTotal.setValue(2);
     // spinnerTotal.addSpinnerListener(this::config);
     spinnerTotal.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "total");

@@ -3,7 +3,6 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.Arrays;
 
 import javax.swing.JSlider;
 
@@ -28,14 +27,13 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
-  protected final SpinnerLabel<GeodesicCausalFilters> spinnerCausalFilter = new SpinnerLabel<>();
+  protected final SpinnerLabel<GeodesicCausalFilters> spinnerCausalFilter = SpinnerLabel.of(GeodesicCausalFilters.class);
   /** parameter to blend extrapolation with measurement */
   private final JSlider jSlider = new JSlider(1, 999, 500);
 
   public GeodesicCausalFilterDemo() {
     super(ManifoldDisplays.SE2_ONLY, GokartPoseDataV2.INSTANCE);
     {
-      spinnerCausalFilter.setList(Arrays.asList(GeodesicCausalFilters.values()));
       spinnerCausalFilter.setValue(GeodesicCausalFilters.BIINVARIANT_MEAN_IIR);
       spinnerCausalFilter.addToComponentReduced(timerFrame.jToolBar, new Dimension(180, 28), "smoothing kernel");
       spinnerCausalFilter.addSpinnerListener(value -> updateState());

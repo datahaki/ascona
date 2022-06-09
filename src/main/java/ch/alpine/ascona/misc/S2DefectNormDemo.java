@@ -61,7 +61,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     @FieldLabel("S^n line distance method")
     public SnLineDistances snLineDistances = SnLineDistances.DEFAULT;
     @FieldInteger
-    @FieldSelectionArray(value = { "20", "30", "50", "75", "100", "150", "200", "250" })
+    @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })
     public Scalar resolution = RealScalar.of(20);
     @FieldLabel("color data gradient")
     public ColorDataGradients colorDataGradients = ColorDataGradients.PARULA;

@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
@@ -64,11 +63,11 @@ public class ApproximationDemo extends AbstractManifoldDisplayDemo {
   private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
   private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
   private final GokartPoseData gokartPoseData;
-  private final SpinnerLabel<String> spinnerLabelString = new SpinnerLabel<>();
-  private final SpinnerLabel<Integer> spinnerLabelLimit = new SpinnerLabel<>();
-  private final SpinnerLabel<Integer> spinnerLabelWidth = new SpinnerLabel<>();
+  private final SpinnerLabel<String> spinnerLabelString;
+  private final SpinnerLabel<Integer> spinnerLabelLimit;
+  private final SpinnerLabel<Integer> spinnerLabelWidth;
   private final SpinnerLabel<CurveSubdivisionSchemes> spinnerLabelScheme = SpinnerLabel.of(SCHEMES);
-  private final SpinnerLabel<Integer> spinnerLabelLevel = new SpinnerLabel<>();
+  private final SpinnerLabel<Integer> spinnerLabelLevel;
   // ---
   private Container _container = null;
 
@@ -83,21 +82,21 @@ public class ApproximationDemo extends AbstractManifoldDisplayDemo {
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     addSpinnerListener(type -> updateState());
     {
-      spinnerLabelString.setList(gokartPoseData.list());
+      spinnerLabelString = SpinnerLabel.of(gokartPoseData.list());
       spinnerLabelString.addSpinnerListener(type -> updateState());
-      spinnerLabelString.setIndex(0);
+      spinnerLabelString.setValue(gokartPoseData.list().get(0));
       spinnerLabelString.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "data");
     }
     {
-      spinnerLabelLimit.setList(Arrays.asList(100, 250, 500, 1000, 2000, 5000));
-      spinnerLabelLimit.setIndex(3);
+      spinnerLabelLimit = SpinnerLabel.of(100, 250, 500, 1000, 2000, 5000);
+      spinnerLabelLimit.setValue(1000);
       spinnerLabelLimit.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "limit");
       spinnerLabelLimit.addSpinnerListener(type -> updateState());
     }
     timerFrame.jToolBar.addSeparator();
     {
-      spinnerLabelWidth.setList(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20));
-      spinnerLabelWidth.setIndex(6);
+      spinnerLabelWidth = SpinnerLabel.of(0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20);
+      spinnerLabelWidth.setValue(12);
       spinnerLabelWidth.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "width");
       spinnerLabelWidth.addSpinnerListener(type -> updateState());
     }
@@ -107,8 +106,8 @@ public class ApproximationDemo extends AbstractManifoldDisplayDemo {
       spinnerLabelScheme.addSpinnerListener(type -> updateState());
     }
     {
-      spinnerLabelLevel.setList(Arrays.asList(0, 1, 2, 3, 4, 5, 6));
-      spinnerLabelLevel.setIndex(5);
+      spinnerLabelLevel = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6);
+      spinnerLabelLevel.setValue(5);
       spinnerLabelLevel.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "level");
       spinnerLabelLevel.addSpinnerListener(type -> updateState());
     }
@@ -121,7 +120,7 @@ public class ApproximationDemo extends AbstractManifoldDisplayDemo {
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(manifoldDisplay.geodesicSpace(), GaussianWindow.FUNCTION);
     TensorUnaryOperator centerFilter = new CenterFilter(tensorUnaryOperator, spinnerLabelWidth.getValue());
     Tensor tracked = centerFilter.apply(rawdata);
-    int level = spinnerLabelLevel.getIndex();
+    int level = spinnerLabelLevel.getValue();
     int steps = 1 << level;
     System.out.println(DoubleScalar.of(steps).divide(gokartPoseData.getSampleRate()).map(Round._3));
     Tensor control = Tensor.of(IntStream.range(0, tracked.length() / steps) //
@@ -146,7 +145,7 @@ public class ApproximationDemo extends AbstractManifoldDisplayDemo {
     }
     {
       Tensor control = container.control;
-      int level = spinnerLabelLevel.getIndex();
+      int level = spinnerLabelLevel.getValue();
       final Tensor shape = manifoldDisplay.shape().multiply(MARKER_SCALE.multiply(RealScalar.of(1 + level)));
       for (Tensor point : control) {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));

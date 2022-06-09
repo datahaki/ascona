@@ -6,9 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
@@ -42,8 +40,8 @@ import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
 
 public class D2AveragingDemo extends AnAveragingDemo {
-  private final SpinnerLabel<Scalar> spinnerCvar = new SpinnerLabel<>();
-  private final SpinnerLabel<Integer> spinnerMagnif = new SpinnerLabel<>();
+  private final SpinnerLabel<Scalar> spinnerCvar;
+  private final SpinnerLabel<Integer> spinnerMagnif;
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
   private final SpinnerLabel<Integer> spinnerRes = SpinnerLabel.of(20, 30, 40, 50, 75, 100, 150, 200, 250);
   private final JToggleButton jToggleVarian = new JToggleButton("est/var");
@@ -52,12 +50,12 @@ public class D2AveragingDemo extends AnAveragingDemo {
   public D2AveragingDemo() {
     super(ManifoldDisplays.ARRAYS);
     {
-      spinnerCvar.setList(Tensors.fromString("{0, 0.01, 0.1, 0.5, 1}").stream().map(Scalar.class::cast).collect(Collectors.toList()));
-      spinnerCvar.setIndex(0);
+      spinnerCvar = SpinnerLabel.of(Tensors.fromString("{0, 0.01, 0.1, 0.5, 1}").stream().map(Scalar.class::cast).toList());
+      spinnerCvar.setValue(RealScalar.ZERO);
       spinnerCvar.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "error");
     }
     {
-      spinnerMagnif.setList(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
+      spinnerMagnif = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8);
       spinnerMagnif.setValue(6);
       spinnerMagnif.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
       spinnerMagnif.addSpinnerListener(v -> recompute());

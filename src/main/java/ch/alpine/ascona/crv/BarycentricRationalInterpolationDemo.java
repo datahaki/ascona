@@ -46,11 +46,11 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param {
     @FieldPreferredWidth(100)
-    @FieldSelectionArray(value = { "0", "1/4", "1/2", "3/4", "1" })
+    @FieldSelectionArray({ "0", "1/4", "1/2", "3/4", "1" })
     public Scalar beta = RealScalar.ZERO;
     @FieldPreferredWidth(100)
     @FieldInteger
-    @FieldSelectionArray(value = { "0", "1", "2", "3", "4", "5", "6", "7" })
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7" })
     public Scalar degree = RealScalar.ONE;
     public Boolean lagra = false;
     public Boolean basis = true;
