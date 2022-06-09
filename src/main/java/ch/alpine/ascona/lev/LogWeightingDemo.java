@@ -66,6 +66,7 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
       spinnerBiinvariant.addToComponentReduced(timerFrame.jToolBar, new Dimension(100, 28), "distance");
       spinnerBiinvariant.addSpinnerListener(v -> recompute());
     }
+    spinnerVariogram.setValue(VariogramFunctions.INVERSE_POWER);
     spinnerVariogram.addToComponentReduced(timerFrame.jToolBar, new Dimension(230, 28), "variograms");
     spinnerVariogram.addSpinnerListener(v -> recompute());
     {

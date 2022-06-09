@@ -32,6 +32,7 @@ public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
   public Se2BiinvariantMeanDemo() {
     super(ManifoldDisplays.SE2_ONLY, GokartPoseDataV2.INSTANCE);
     {
+      spinnerFilters.setValue(Se2BiinvariantMeans.LINEAR);
       spinnerFilters.addToComponentReduced(timerFrame.jToolBar, new Dimension(90, 28), "se2 biinvariant mean");
       spinnerFilters.addSpinnerListener(type -> updateState());
     }

@@ -49,6 +49,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     {
       spinnerLabelString = SpinnerLabel.of(gokartPoseData.list());
+      spinnerLabelString.setValue(gokartPoseData.list().get(0));
       spinnerLabelString.addSpinnerListener(type -> updateState());
       spinnerLabelString.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "data");
     }
