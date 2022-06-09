@@ -3,6 +3,7 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
@@ -32,7 +33,12 @@ public final class Regularization2StepDemo extends AbstractSpectrogramDemo imple
   public Scalar ratio = RealScalar.of(0.6);
 
   public Regularization2StepDemo() {
-    super(ManifoldDisplays.SE2_R2, GokartPoseDataV2.INSTANCE);
+    super(new GokartPoseSpec(GokartPoseDataV2.INSTANCE) {
+      @Override
+      public List<ManifoldDisplays> manifoldDisplays() {
+        return ManifoldDisplays.l_SE2_R2;
+      }
+    });
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
     updateState();
@@ -41,7 +47,7 @@ public final class Regularization2StepDemo extends AbstractSpectrogramDemo imple
   @Override // from AbstractDatasetFilterDemo
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     return Regularization2Step.string( //
-        manifoldDisplay().geodesicSpace(), //
+        gokartPoseSpec.manifoldDisplays.manifoldDisplay().geodesicSpace(), //
         N.DOUBLE.apply(ratio)).apply(control());
   }
 

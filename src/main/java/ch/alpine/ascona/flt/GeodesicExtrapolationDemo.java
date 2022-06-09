@@ -24,7 +24,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
   private Tensor refined = Tensors.empty();
 
   public GeodesicExtrapolationDemo() {
-    super(ManifoldDisplays.SE2_R2, GokartPoseDataV2.INSTANCE);
+    super(ManifoldDisplays.l_SE2_R2, GokartPoseDataV2.INSTANCE);
     updateState();
   }
 
@@ -32,9 +32,9 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
   protected void updateState() {
     super.updateState();
     // ---
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = //
-        GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), spinnerKernel.getValue().get());
+        GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), gokartPoseSpec.spinnerKernel.get());
     refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesicSpace(), spinnerRadius.getValue()).apply(control());
   }
 
@@ -45,7 +45,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
 
   @Override // from BufferedImageSupplier
   public BufferedImage bufferedImage() {
-    ScalarUnaryOperator smoothingKernel = spinnerKernel.getValue().get();
+    ScalarUnaryOperator smoothingKernel = gokartPoseSpec.spinnerKernel.get();
     int radius = spinnerRadius.getValue();
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(SymGeodesic.INSTANCE, smoothingKernel);
     Tensor vector = SymSequence.of(radius + 1);

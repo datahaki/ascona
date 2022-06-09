@@ -46,7 +46,7 @@ import ch.alpine.tensor.itp.DeBoor;
   private final JSlider jSlider = new JSlider(0, 1000, 500);
 
   public DuckietownSmoothingDemo() {
-    super(ManifoldDisplays.R2_ONLY, GokartPoseDataV2.INSTANCE);
+    super(ManifoldDisplays.l_R2_ONLY, GokartPoseDataV2.INSTANCE);
     // ---
     spinnerDegree = SpinnerLabel.of(DEGREES);
     spinnerDegree.setValue(2);
@@ -73,7 +73,7 @@ import ch.alpine.tensor.itp.DeBoor;
 
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
     final int degree = spinnerDegree.getValue();
     final int levels = spinnerRefine.getValue();
     final Tensor control = control();
@@ -111,11 +111,11 @@ import ch.alpine.tensor.itp.DeBoor;
     final Tensor control = control();
     Tensor effective = control;
     TensorUnaryOperator centripedalKnotSpacing = //
-        KnotSpacing.centripetal(manifoldDisplay().biinvariantMetric(), 0.5);
+        KnotSpacing.centripetal(gokartPoseSpec.manifoldDisplays.manifoldDisplay().biinvariantMetric(), 0.5);
     Tensor knots = centripedalKnotSpacing.apply(control);
     final Scalar upper = Last.of(knots);
     final Scalar parameter = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum()).multiply(upper);
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
     GeodesicBSplineFunction scalarTensorFunction = //
         GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, knots, effective);
     DeBoor deBoor = scalarTensorFunction.deBoor(parameter);

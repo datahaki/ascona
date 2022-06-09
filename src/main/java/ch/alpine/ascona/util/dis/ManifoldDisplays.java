@@ -84,6 +84,8 @@ public enum ManifoldDisplays {
   // ---
   public static final List<ManifoldDisplay> R2_ONLY = Arrays.asList( //
       R2Display.INSTANCE);
+  public static final List<ManifoldDisplays> l_R2_ONLY = Arrays.asList( //
+      R2);
   // ---
   public static final List<ManifoldDisplay> SE2C_R2 = Arrays.asList( //
       Se2CoveringDisplay.INSTANCE, //

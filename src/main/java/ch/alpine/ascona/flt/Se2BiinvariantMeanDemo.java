@@ -30,7 +30,7 @@ public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
   private final SpinnerLabel<Integer> spinnerConvolution;
 
   public Se2BiinvariantMeanDemo() {
-    super(ManifoldDisplays.SE2_ONLY, GokartPoseDataV2.INSTANCE);
+    super(ManifoldDisplays.l_SE2_ONLY, GokartPoseDataV2.INSTANCE);
     {
       spinnerFilters.setValue(Se2BiinvariantMeans.LINEAR);
       spinnerFilters.addToComponentReduced(timerFrame.jToolBar, new Dimension(90, 28), "se2 biinvariant mean");
@@ -53,7 +53,7 @@ public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
 
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ScalarUnaryOperator smoothingKernel = spinnerKernel.getValue().get();
+    ScalarUnaryOperator smoothingKernel = gokartPoseSpec.spinnerKernel.get();
     Se2BiinvariantMeans se2BiinvariantMean = spinnerFilters.getValue();
     TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(se2BiinvariantMean, smoothingKernel);
     return Nest.of( //

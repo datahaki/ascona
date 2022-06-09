@@ -32,7 +32,7 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
   private final JSlider jSlider = new JSlider(1, 999, 500);
 
   public GeodesicCausalFilterDemo() {
-    super(ManifoldDisplays.SE2_ONLY, GokartPoseDataV2.INSTANCE);
+    super(ManifoldDisplays.l_SE2_ONLY, GokartPoseDataV2.INSTANCE);
     {
       spinnerCausalFilter.setValue(GeodesicCausalFilters.BIINVARIANT_MEAN_IIR);
       spinnerCausalFilter.addToComponentReduced(timerFrame.jToolBar, new Dimension(180, 28), "smoothing kernel");
@@ -49,7 +49,7 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     final int radius = spinnerRadius.getValue();
     if (0 < radius) {
-      ScalarUnaryOperator windowFunctions = spinnerKernel.getValue().get();
+      ScalarUnaryOperator windowFunctions = gokartPoseSpec.spinnerKernel.get();
       Se2BiinvariantMeans se2BiinvariantMean = Se2BiinvariantMeans.FILTER;
       GeodesicSpace geodesicSpace = Se2Group.INSTANCE;
       TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicSpace, windowFunctions);
@@ -57,7 +57,8 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
       GeodesicCausalFilters geodesicCausalFilters = spinnerCausalFilter.getValue();
       // System.out.println(geodesicCausalFilters);
       // TODO ASCONA ALG should be able to do with geodesicCausalFilters.supply, but doesn't
-      TensorUnaryOperator tensorUnaryOperator = geodesicCausalFilters.supply(manifoldDisplay(), windowFunctions, radius, alpha());
+      TensorUnaryOperator tensorUnaryOperator = geodesicCausalFilters.supply(gokartPoseSpec.manifoldDisplays.manifoldDisplay(), windowFunctions, radius,
+          alpha());
       tensorUnaryOperator = switch (geodesicCausalFilters) {
       case GEODESIC_FIR -> GeodesicFIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
       case GEODESIC_IIR -> GeodesicIIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());

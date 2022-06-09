@@ -25,7 +25,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
   private final SpinnerLabel<Integer> spinnerConvolution = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8);
 
   public GeodesicFiltersDatasetDemo() {
-    super(ManifoldDisplays.SE2_R2, GokartPoseDataV1.INSTANCE);
+    super(ManifoldDisplays.l_SE2_R2, GokartPoseDataV1.INSTANCE);
     {
       spinnerFilters.setValue(GeodesicFilters.GEODESIC);
       spinnerFilters.addToComponentReduced(timerFrame.jToolBar, new Dimension(170, 28), "filter type");
@@ -47,8 +47,8 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
 
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    ScalarUnaryOperator smoothingKernel = spinnerKernel.getValue().get();
+    ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
+    ScalarUnaryOperator smoothingKernel = gokartPoseSpec.spinnerKernel.get();
     GeodesicFilters geodesicFilters = spinnerFilters.getValue();
     TensorUnaryOperator tensorUnaryOperator = geodesicFilters.from(manifoldDisplay, smoothingKernel);
     return Nest.of( //
@@ -61,7 +61,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
     GeodesicFilters geodesicFilters = spinnerFilters.getValue();
     switch (geodesicFilters) {
     case GEODESIC:
-      return SymLinkImages.ofGC(spinnerKernel.getValue().get(), spinnerRadius.getValue()).bufferedImage();
+      return SymLinkImages.ofGC(gokartPoseSpec.spinnerKernel.get(), spinnerRadius.getValue()).bufferedImage();
     default:
       return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     }

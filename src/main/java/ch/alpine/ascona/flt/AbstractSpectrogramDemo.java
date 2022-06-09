@@ -1,22 +1,30 @@
 // code by ob, jph
 package ch.alpine.ascona.flt;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.util.dat.GokartPoseData;
+import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.ren.GridRender;
+import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.util.FieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.LieGroup;
@@ -24,57 +32,104 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
+import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.qty.QuantityMagnitude;
-import ch.alpine.tensor.sca.win.WindowFunctions;
 
 @ReflectionMarker
-/* package */ abstract class AbstractSpectrogramDemo extends AbstractDatasetFilterDemo {
+/* package */ abstract class AbstractSpectrogramDemo extends AbstractDemo {
+  private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
+  private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
+  private static final GridRender GRID_RENDER = new GridRender(Subdivide.of(0, 100, 10));
+  // ---
+  private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
+  private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
+  // ---
   private static final ScalarUnaryOperator MAGNITUDE_PER_SECONDS = QuantityMagnitude.SI().in("s^-1");
   // ---
-  private final GokartPoseData gokartPoseData;
-  protected final SpinnerLabel<String> spinnerLabelString;
-  protected final SpinnerLabel<Integer> spinnerLabelLimit;
-  protected final SpinnerLabel<WindowFunctions> spinnerKernel = SpinnerLabel.of(WindowFunctions.class);
+  protected final GokartPoseSpec gokartPoseSpec;
   // TODO ASCONA ALG refactor
   protected Tensor _control = null;
   // protected final SpinnerLabel<ColorDataGradients> spinnerLabelCDG = new SpinnerLabel<>();
 
-  protected AbstractSpectrogramDemo(List<ManifoldDisplay> list, GokartPoseData gokartPoseData) {
-    super(list);
-    this.gokartPoseData = gokartPoseData;
+  protected AbstractSpectrogramDemo(GokartPoseSpec gokartPoseSpec) {
+    this.gokartPoseSpec = gokartPoseSpec;
+    if (this instanceof BufferedImageSupplier)
+      gokartPoseSpec.symi = true;
+    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(gokartPoseSpec, timerFrame.jToolBar);
+    fieldsEditor.addUniversalListener(this::updateState);
+    timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
+    // ---
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
-    {
-      spinnerLabelString = SpinnerLabel.of(gokartPoseData.list());
-      spinnerLabelString.setValue(gokartPoseData.list().get(0));
-      spinnerLabelString.addSpinnerListener(type -> updateState());
-      spinnerLabelString.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "data");
-    }
-    {
-      spinnerLabelLimit = SpinnerLabel.of(10, 20, 50, 100, 250, 500, 1000, 2000, 5000);
-      spinnerLabelLimit.setValue(250);
-      spinnerLabelLimit.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "limit");
-      spinnerLabelLimit.addSpinnerListener(type -> updateState());
-    }
-    {
-      spinnerKernel.setValue(WindowFunctions.GAUSSIAN);
-      spinnerKernel.addToComponentReduced(timerFrame.jToolBar, new Dimension(180, 28), "smoothing kernel");
-      spinnerKernel.addSpinnerListener(value -> updateState());
-    }
-  }
-
-  protected void updateState() {
-    int limit = spinnerLabelLimit.getValue();
-    String name = spinnerLabelString.getValue();
-    _control = gokartPoseData.getPose(name, limit);
   }
 
   @Override
+  public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    Tensor control = control();
+    RenderQuality.setQuality(graphics);
+    ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
+    final Tensor shape = manifoldDisplay.shape().multiply(markerScale());
+    boolean conv = gokartPoseSpec.conv;
+    if (gokartPoseSpec.data) {
+      pathRenderCurve.setCurve(control, false).render(geometricLayer, graphics);
+      Color fill = conv //
+          ? new Color(255, 128, 128, 32)
+          : new Color(255, 128, 128, 64);
+      Color draw = conv //
+          ? new Color(255, 128, 128, 128)
+          : new Color(255, 128, 128, 255);
+      for (Tensor point : control) {
+        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
+        Path2D path2d = geometricLayer.toPath2D(shape);
+        path2d.closePath();
+        graphics.setColor(fill);
+        graphics.fill(path2d);
+        graphics.setColor(draw);
+        graphics.draw(path2d);
+        geometricLayer.popMatrix();
+      }
+    }
+    Tensor refined = protected_render(geometricLayer, graphics);
+    // ---
+    if (this instanceof BufferedImageSupplier && //
+        gokartPoseSpec.symi) {
+      BufferedImageSupplier bufferedImageSupplier = (BufferedImageSupplier) this;
+      graphics.drawImage(bufferedImageSupplier.bufferedImage(), 0, 0, null);
+    }
+    // ---
+    graphics.setStroke(new BasicStroke(1f));
+    if (conv) {
+      pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
+      for (Tensor point : refined) {
+        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
+        Path2D path2d = geometricLayer.toPath2D(shape);
+        path2d.closePath();
+        graphics.setColor(COLOR_SHAPE);
+        graphics.fill(path2d);
+        graphics.setColor(Color.BLACK);
+        graphics.draw(path2d);
+        geometricLayer.popMatrix();
+      }
+    }
+    RenderQuality.setDefault(graphics);
+    if (gokartPoseSpec.diff)
+      differences_render(graphics, manifoldDisplay, refined, gokartPoseSpec.spec);
+  }
+
+  public Scalar markerScale() {
+    return RealScalar.of(0.2);
+  }
+
+  protected void updateState() {
+    _control = gokartPoseSpec.getPoses();
+  }
+
+  // @Override
   protected final Tensor control() {
-    return Tensor.of(_control.stream().map(manifoldDisplay()::project)).unmodifiable();
+    return Tensor.of(_control.stream().map(gokartPoseSpec.manifoldDisplays.manifoldDisplay()::project)).unmodifiable();
   }
 
   /** @return */
@@ -84,14 +139,14 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
       ColorDataGradients.VISIBLE_SPECTRUM.deriveWithOpacity(RealScalar.of(0.75));
   private static final int MAGNIFY = 4;
 
-  @Override
+  // @Override
   protected void differences_render( //
       Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor refined, boolean spectrogram) {
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    GeodesicSpace geodesicSpace = manifoldDisplay().geodesicSpace();
+    GeodesicSpace geodesicSpace = gokartPoseSpec.manifoldDisplays.manifoldDisplay().geodesicSpace();
     if (geodesicSpace instanceof LieGroup lieGroup) {
       LieDifferences lieDifferences = new LieDifferences(lieGroup);
-      Scalar sampleRate = MAGNITUDE_PER_SECONDS.apply(gokartPoseData.getSampleRate());
+      Scalar sampleRate = MAGNITUDE_PER_SECONDS.apply(gokartPoseSpec.gpd().getSampleRate());
       Tensor speeds = lieDifferences.apply(refined).multiply(sampleRate);
       if (0 < speeds.length()) {
         int dimensions = speeds.get(0).length();
@@ -106,7 +161,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
           visualSet.add(domain, signal);
           // ---
           if (spectrogram) {
-            ScalarUnaryOperator window = spinnerKernel.getValue().get();
+            ScalarUnaryOperator window = gokartPoseSpec.spinnerKernel.get();
             Tensor image = Spectrogram.of(signal, window, COLOR_DATA_GRADIENT);
             BufferedImage bufferedImage = ImageFormat.of(image);
             int wid = bufferedImage.getWidth() * MAGNIFY;
@@ -124,4 +179,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
       }
     }
   }
+
+  protected abstract Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics);
 }
