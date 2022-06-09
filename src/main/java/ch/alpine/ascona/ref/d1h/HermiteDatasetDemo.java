@@ -8,18 +8,21 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import javax.swing.JTextField;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.util.api.AbstractGeodesicDatasetDemo;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
+import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
+import ch.alpine.ascona.util.dat.GokartPoseParam;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -43,8 +46,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.FiniteScalarQ;
 import ch.alpine.tensor.io.StringScalar;
 
-@ReflectionMarker
-public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
+public class HermiteDatasetDemo extends AbstractDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
@@ -53,28 +55,42 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
   private static final Stroke STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE, STROKE);
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
-  // ---
+
+  @ReflectionMarker
+  public static class Param extends GokartPoseParam {
+    public Param(GokartPoseData gokartPoseData) {
+      super(gokartPoseData);
+    }
+
+    @Override
+    public List<ManifoldDisplays> manifoldDisplays() {
+      return ManifoldDisplays.l_SE2C_SE2;
+    }
+
+    @FieldSelectionArray({ "1", "2", "5", "10", "25", "50", "100", "250", "500" })
+    public Scalar skips = RealScalar.of(50);
+    @FieldSelectionArray({ "0", "2", "4", "6", "8", "10", "15", "20" })
+    public Scalar shift = RealScalar.of(0);
+    public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
+    @FieldSlider
+    @FieldPreferredWidth(80)
+    @FieldInteger
+    @FieldClip(min = "0", max = "8")
+    public Scalar level = RealScalar.of(3);
+    public Boolean diff = true;
+  }
+
   private final GokartPoseDataV2 gokartPoseDataV2;
-  @FieldSelectionArray({ "1", "2", "5", "10", "25", "50", "100", "250", "500" })
-  public Scalar skips = RealScalar.of(50);
-  @FieldSelectionArray({ "0", "2", "4", "6", "8", "10", "15", "20" })
-  public Scalar shift = RealScalar.of(0);
-  public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
-  @FieldSlider
-  @FieldPreferredWidth(80)
-  @FieldInteger
-  @FieldClip(min = "0", max = "8")
-  public Scalar level = RealScalar.of(3);
-  public Boolean diff = true;
   protected Tensor _control = Tensors.empty();
+  private final Param param;
 
   public HermiteDatasetDemo() {
     this(GokartPoseDataV2.RACING_DAY);
   }
 
   public HermiteDatasetDemo(GokartPoseDataV2 gokartPoseData) {
-    super(ManifoldDisplays.SE2C_SE2, gokartPoseData);
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar).addUniversalListener(this::updateState);
+    param = new Param(gokartPoseData);
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::updateState);
     this.gokartPoseDataV2 = gokartPoseData;
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     timerFrame.jToolBar.addSeparator();
@@ -142,15 +158,14 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
     updateState();
   }
 
-  @Override
   protected void updateState() {
-    int limit = spinnerLabelLimit.getValue();
-    String name = spinnerLabelString.getValue();
+    int limit = param.limit.number().intValue();
+    String name = param.string;
     Tensor control = gokartPoseDataV2.getPoseVel(name, limit);
     control.set(new So2Lift(), Tensor.ALL, 0, 2);
     Tensor result = Tensors.empty();
-    int _skips = skips.number().intValue();
-    int offset = shift.number().intValue();
+    int _skips = param.skips.number().intValue();
+    int offset = param.shift.number().intValue();
     for (int index = offset; index < control.length(); index += _skips)
       result.append(control.get(index));
     // TensorUnaryOperator centerFilter = //
@@ -162,7 +177,7 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
     {
       final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(1));
       pathRenderCurve.setCurve(_control.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
@@ -179,15 +194,15 @@ public class HermiteDatasetDemo extends AbstractGeodesicDatasetDemo {
         }
     }
     graphics.setColor(Color.DARK_GRAY);
-    Scalar delta = RationalScalar.of(skips.number().intValue(), 50);
+    Scalar delta = RationalScalar.of(param.skips.number().intValue(), 50);
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);
+    HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
     TensorIteration tensorIteration = hermiteSubdivision.string(delta, _control);
-    int levels = level.number().intValue();
+    int levels = param.level.number().intValue();
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);
     pathRenderShape.setCurve(refined.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
     new Se2HermitePlot(refined, RealScalar.of(0.3)).render(geometricLayer, graphics);
-    if (diff) {
+    if (param.diff) {
       Tensor deltas = refined.get(Tensor.ALL, 1);
       int dims = deltas.get(0).length();
       if (0 < deltas.length()) {

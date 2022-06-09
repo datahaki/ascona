@@ -9,7 +9,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerLabel;
 
-// TODO ASCONA the contents of this package need to be restructured
 @ReflectionMarker
 public abstract class AbstractGeodesicDatasetDemo extends AbstractManifoldDisplayDemo {
   protected final GokartPoseData gokartPoseData;

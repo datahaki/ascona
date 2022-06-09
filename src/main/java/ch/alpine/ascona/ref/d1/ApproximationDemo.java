@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
+import ch.alpine.ascona.util.dat.GokartPoseParam;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.GridRender;
@@ -71,25 +72,16 @@ public class ApproximationDemo extends AbstractDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
 
   @ReflectionMarker
-  public static class Param {
-    private final GokartPoseData gokartPoseData;
-
+  public static class Param extends GokartPoseParam {
     public Param(GokartPoseData gokartPoseData) {
-      this.gokartPoseData = gokartPoseData;
+      super(gokartPoseData);
     }
 
-    @FieldSelectionCallback("manifoldDisplays")
-    public ManifoldDisplays manifoldDisplays = ManifoldDisplays.Se2;
-
+    @Override
     public List<ManifoldDisplays> manifoldDisplays() {
       return ManifoldDisplays.l_SE2_R2;
     }
 
-    @FieldSelectionCallback("gokartPoseData")
-    public String string;
-    @FieldInteger
-    @FieldSelectionArray({ "100", "250", "500", "1000", "2000", "5000" })
-    public Scalar limit = RealScalar.of(1000);
     @FieldInteger
     @FieldSelectionArray({ "0", "2", "4", "6", "8", "10", "12", "14" })
     public Scalar width = RealScalar.of(12);
@@ -99,16 +91,8 @@ public class ApproximationDemo extends AbstractDemo {
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6" })
     public Scalar level = RealScalar.of(5);
 
-    public List<String> gokartPoseData() {
-      return gokartPoseData.list();
-    }
-
     public List<CurveSubdivisionSchemes> schemes() {
       return Arrays.asList(SCHEMES);
-    }
-
-    public Tensor getPose() {
-      return gokartPoseData.getPose(string, limit.number().intValue());
     }
   }
 
@@ -132,14 +116,14 @@ public class ApproximationDemo extends AbstractDemo {
 
   private void updateState() {
     // Tensor rawdata =
-    Tensor rawdata = param.getPose();
+    Tensor rawdata = param.getPoses();
     ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(manifoldDisplay.geodesicSpace(), GaussianWindow.FUNCTION);
     TensorUnaryOperator centerFilter = new CenterFilter(tensorUnaryOperator, param.width.number().intValue());
     Tensor tracked = centerFilter.apply(rawdata);
     int level = param.level.number().intValue();
     int steps = 1 << level;
-    System.out.println(DoubleScalar.of(steps).divide(param.gokartPoseData.getSampleRate()).map(Round._3));
+    System.out.println(DoubleScalar.of(steps).divide(param.gpd().getSampleRate()).map(Round._3));
     Tensor control = Tensor.of(IntStream.range(0, tracked.length() / steps) //
         .map(i -> i * steps) //
         .mapToObj(tracked::get));

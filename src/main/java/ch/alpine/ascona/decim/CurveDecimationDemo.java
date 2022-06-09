@@ -6,16 +6,18 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.util.api.AbstractGeodesicDatasetDemo;
 import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
+import ch.alpine.ascona.util.dat.GokartPoseParam;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
@@ -43,7 +45,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.pow.Power;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
+public class CurveDecimationDemo extends AbstractDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 160);
   private static final Color COLOR_RECON = new Color(128, 128, 128, 255);
@@ -53,9 +55,17 @@ public class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
   private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
 
-  // ---
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends GokartPoseParam {
+    public Param(GokartPoseData gokartPoseData) {
+      super(gokartPoseData);
+    }
+
+    @Override
+    public List<ManifoldDisplays> manifoldDisplays() {
+      return ManifoldDisplays.l_SE2_R2;
+    }
+
     @FieldSelectionArray({ "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })
     public Scalar width = RealScalar.of(0);
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5" })
@@ -66,40 +76,31 @@ public class CurveDecimationDemo extends AbstractGeodesicDatasetDemo {
     public Boolean error = false;
   }
 
-  // private final SpinnerLabel<Integer> spinnerLabelWidth = new SpinnerLabel<>();
-  // private final SpinnerLabel<Integer> spinnerLabelLevel = new SpinnerLabel<>();
-  // private final SpinnerLabel<Integer> spinnerLabelDegre = new SpinnerLabel<>();
-  // private final SpinnerLabel<LineDistances> spinnerType = new SpinnerLabel<>();
-  // // private final JSlider jSlider = new JSlider(1, 1000, 500);
-  // private final JToggleButton jToggleButton = new JToggleButton("error");
   protected Tensor _control = Tensors.empty();
-  private final Param param = new Param();
+  private final Param param;
 
   public CurveDecimationDemo() {
     this(GokartPoseDataV2.RACING_DAY);
   }
 
   public CurveDecimationDemo(GokartPoseData gokartPoseData) {
-    super(ManifoldDisplays.SE2_R2, gokartPoseData);
+    param = new Param(gokartPoseData);
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::updateState);
     // ---
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     updateState();
   }
 
-  @Override
   protected void updateState() {
-    int limit = spinnerLabelLimit.getValue();
-    String name = spinnerLabelString.getValue();
     TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
         GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), param.width.number().intValue());
-    _control = tensorUnaryOperator.apply(gokartPoseData.getPose(name, limit));
+    _control = tensorUnaryOperator.apply(param.getPoses());
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
     {
       final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
       pathRenderCurve.setCurve(_control, false).render(geometricLayer, graphics);
