@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.AffineTransforms;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -14,69 +15,42 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Append;
-import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.mat.MatrixQ;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Times;
-import ch.alpine.tensor.sca.N;
+import ch.alpine.tensor.sca.Clip;
 
-/** Hint:
- * On ubuntu, we have observed for grayscale images that the initial rendering
- * configuration influences the rendering when rotating the image. */
-@Deprecated // TODO ASCONA use ImageRenderNew instead
+/** coordinate bounding box is area of image in model space */
 public class ImageRender implements RenderInterface {
-  private static final Color COLOR = new Color(0, 0, 255, 32);
   public static boolean DRAW_BOX = false;
-
-  /** @param bufferedImage
-   * @param pixel2model with dimensions 3 x 3
-   * @return */
-  // TODO ASCONA currently used when distortion is required
-  public static ImageRender of(BufferedImage bufferedImage, Tensor pixel2model) {
-    return new ImageRender(bufferedImage, pixel2model);
-  }
-
-  /** @param bufferedImage
-   * @param range vector of length 2, i.e. the extensions of the image in model coordinates */
-  private static ImageRender range(BufferedImage bufferedImage, Tensor range) {
-    Tensor scale = Times.of(Tensors.vector(bufferedImage.getWidth(), bufferedImage.getHeight()) //
-        , range.map(Scalar::reciprocal));
-    return scale(bufferedImage, scale);
-  }
-
-  /** @param bufferedImage
-   * @param scale vector of length 2 */
-  public static ImageRender scale(BufferedImage bufferedImage, Tensor scale) {
-    VectorQ.requireLength(scale, 2);
-    return new ImageRender(bufferedImage, //
-        Times.of(Append.of(scale.map(Scalar::reciprocal), RealScalar.ONE), //
-            GfxMatrix.flipY(bufferedImage.getHeight())));
-  }
-
-  // ---
   private final BufferedImage bufferedImage;
+  private final CoordinateBoundingBox coordinateBoundingBox;
   private final Tensor pixel2model;
-  private final Tensor box;
 
-  private ImageRender(BufferedImage bufferedImage, Tensor pixel2model) {
+  public ImageRender(BufferedImage bufferedImage, CoordinateBoundingBox coordinateBoundingBox) {
     this.bufferedImage = bufferedImage;
-    this.pixel2model = MatrixQ.requireSize(pixel2model, 3, 3).copy();
-    int width = bufferedImage.getWidth();
-    int height = bufferedImage.getHeight();
-    box = N.DOUBLE.of(Tensors.of( //
-        Tensors.vector(0, 0), //
-        Tensors.vector(width, 0), //
-        Tensors.vector(width, height), //
-        Tensors.vector(0, height)));
+    this.coordinateBoundingBox = coordinateBoundingBox;
+    int w = bufferedImage.getWidth();
+    int h = bufferedImage.getHeight();
+    Clip clipX = coordinateBoundingBox.getClip(0);
+    Clip clipY = coordinateBoundingBox.getClip(1);
+    Tensor range = Tensors.of( //
+        clipX.width(), //
+        clipY.width());
+    Tensor scale = Times.of(Tensors.vector(w, h) //
+        , range.map(Scalar::reciprocal));
+    Tensor mat = GfxMatrix.translation(Tensors.of(clipX.min(), clipY.min()));
+    pixel2model = mat.dot(Times.of(Append.of(scale.map(Scalar::reciprocal), RealScalar.ONE), //
+        GfxMatrix.flipY(bufferedImage.getHeight())));
   }
 
-  @Override // from RenderInterface
+  @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    if (DRAW_BOX) {
+      graphics.setColor(Color.LIGHT_GRAY);
+      graphics.draw(geometricLayer.toPath2D(Box2D.polygon(coordinateBoundingBox), true));
+    }
     geometricLayer.pushMatrix(pixel2model);
     graphics.drawImage(bufferedImage, AffineTransforms.of(geometricLayer.getMatrix()), null);
-    if (DRAW_BOX) {
-      graphics.setColor(COLOR);
-      graphics.draw(geometricLayer.toPath2D(box, true));
-    }
     geometricLayer.popMatrix();
   }
 }

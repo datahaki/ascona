@@ -13,7 +13,6 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
@@ -92,7 +91,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
   }
 
   private static final int CACHE_SIZE = 1;
-  private final Cache<Tensor, BufferedImage> cache = Cache.of(this::computeImage, CACHE_SIZE);
+  private final Cache<Tensor, ArrayPlotRender> cache = Cache.of(this::computeImage, CACHE_SIZE);
   private double computeTime = 0;
 
   @Override
@@ -101,7 +100,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
     cache.clear();
   }
 
-  private final BufferedImage computeImage(Tensor tensor) {
+  private final ArrayPlotRender computeImage(Tensor tensor) {
     Tensor sequence = tensor.get(0).map(N.DOUBLE);
     Tensor values = tensor.get(1).map(N.DOUBLE);
     int resolution = spinnerRes.getValue();
@@ -119,7 +118,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
           matrix = matrix.map(Round.FUNCTION); // effectively maps to 0 or 1
         // ---
         ColorDataGradient colorDataGradient = spinnerColorData.getValue();
-        return ArrayPlotRender.rescale(matrix, colorDataGradient, spinnerMagnif.getValue()).export();
+        return ArrayPlotRender.rescale(matrix, colorDataGradient, spinnerMagnif.getValue());
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();
@@ -129,19 +128,20 @@ public class D2AveragingDemo extends AnAveragingDemo {
 
   @Override
   public final void protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     RenderQuality.setQuality(graphics);
     prepare();
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
-    BufferedImage bufferedImage = cache.apply(Unprotect.byRef(sequence, values));
-    if (Objects.nonNull(bufferedImage)) {
+    ArrayPlotRender arrayPlotRender = cache.apply(Unprotect.byRef(sequence, values));
+    if (Objects.nonNull(arrayPlotRender)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      Tensor pixel2model = HsArrayPlots.pixel2model( //
-          manifoldDisplay.coordinateBoundingBox(), //
-          new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
-      ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
+      ImageRender imageRenderNew = new ImageRender(arrayPlotRender.bufferedImage(), manifoldDisplay.coordinateBoundingBox());
+      imageRenderNew.render(geometricLayer, graphics);
+      BufferedImage legend = arrayPlotRender.legend();
+      graphics.drawImage(legend, dimension.width - legend.getWidth(), 0, null);
     }
     RenderQuality.setQuality(graphics);
     // renderControlPoints(geometricLayer, graphics);

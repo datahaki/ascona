@@ -25,7 +25,7 @@ import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.ImageRenderNew;
+import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -175,7 +175,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
       // manifoldDisplay.coordinateBoundingBox(), //
       // new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
       // ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
-      new ImageRenderNew(bufferedImage, manifoldDisplay.coordinateBoundingBox()).render(geometricLayer, graphics);
+      new ImageRender(bufferedImage, manifoldDisplay.coordinateBoundingBox()).render(geometricLayer, graphics);
     }
     // ---
     render(geometricLayer, graphics, manifoldDisplay, getGeodesicControlPoints(), vector, spinnerColor.getValue().cyclic());

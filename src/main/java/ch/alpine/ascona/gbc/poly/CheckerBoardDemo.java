@@ -2,7 +2,6 @@
 package ch.alpine.ascona.gbc.poly;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -16,7 +15,6 @@ import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -129,7 +127,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
           param.refine.number().intValue(), //
           function(sequence, reference.multiply(param.factor())), //
           DoubleScalar.INDETERMINATE);
-      bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1).export();
+      bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1).bufferedImage();
     } else {
       bufferedImage = null;
     }
@@ -141,11 +139,6 @@ public class CheckerBoardDemo extends LogWeightingBase //
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));
     RenderQuality.setQuality(graphics);
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
-      leversRender.renderSequence();
-      leversRender.renderIndexP();
-    }
     // ---
     if (param.freeze) {
       LeversRender leversRender = LeversRender.of( //
@@ -155,10 +148,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
         recompute();
       if (Objects.nonNull(bufferedImage)) {
         RenderQuality.setDefault(graphics); // default so that raster becomes visible
-        Tensor pixel2model = HsArrayPlots.pixel2model( //
-            manifoldDisplay.coordinateBoundingBox(), //
-            new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
-        ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
+        new ImageRender(bufferedImage, manifoldDisplay.coordinateBoundingBox()).render(geometricLayer, graphics);
       }
     } else {
       reference = getGeodesicControlPoints();
@@ -166,6 +156,11 @@ public class CheckerBoardDemo extends LogWeightingBase //
           manifoldDisplay, reference, null, geometricLayer, graphics);
       leversRender.renderSurfaceP();
       bufferedImage = null;
+    }
+    {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexP();
     }
   }
 

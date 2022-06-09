@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 import javax.swing.JButton;
@@ -14,7 +13,6 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
@@ -49,39 +47,23 @@ import ch.alpine.tensor.sca.Round;
 
 /** TODO ASCONA reference marc alexa */
 public class MaAveragingDemo extends AnAveragingDemo {
-  // private final SpinnerLabel<Scalar> spinnerCvar = new SpinnerLabel<>();
-  // private final SpinnerLabel<Integer> spinnerMagnif = new SpinnerLabel<>();
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
   private final SpinnerLabel<Integer> spinnerRes = SpinnerLabel.of(20, 30, 40, 50, 75, 100, 150, 200, 250);
-  // private final JToggleButton jToggleVarian = new JToggleButton("est/var");
   private final JToggleButton jToggleThresh = new JToggleButton("thresh");
 
   public MaAveragingDemo() {
     super(ManifoldDisplays.ARRAYS);
-    // {
-    // spinnerCvar.setList(Tensors.fromString("{0, 0.01, 0.1, 0.5, 1}").stream().map(Scalar.class::cast).collect(Collectors.toList()));
-    // spinnerCvar.setIndex(0);
-    // spinnerCvar.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "error");
-    // }
-    // {
-    // spinnerMagnif.setList(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
-    // spinnerMagnif.setValue(6);
-    // spinnerMagnif.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
-    // spinnerMagnif.addSpinnerListener(v -> recompute());
-    // }
     {
       spinnerColorData.setValue(ColorDataGradients.PARULA);
       spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color scheme");
       spinnerColorData.addSpinnerListener(v -> recompute());
     }
     {
-      // spinnerRes.setArray();
       spinnerRes.setValue(30);
       spinnerRes.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "resolution");
       spinnerRes.addSpinnerListener(v -> recompute());
     }
     {
-      // timerF1rame.jToolBar.add(jToggleVarian);
       timerFrame.jToolBar.add(jToggleThresh);
     }
     {
@@ -101,7 +83,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
   }
 
   private static final int CACHE_SIZE = 1;
-  private final Cache<Tensor, BufferedImage> cache = Cache.of(this::computeImage, CACHE_SIZE);
+  private final Cache<Tensor, ArrayPlotRender> cache = Cache.of(this::computeImage, CACHE_SIZE);
   private double computeTime = 0;
 
   @Override
@@ -110,7 +92,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
     cache.clear();
   }
 
-  private final BufferedImage computeImage(Tensor tensor) {
+  private final ArrayPlotRender computeImage(Tensor tensor) {
     Tensor sequence = tensor.map(N.DOUBLE);
     int resolution = spinnerRes.getValue();
     int n = sequence.length();
@@ -139,9 +121,8 @@ public class MaAveragingDemo extends AnAveragingDemo {
         Tensor matrix = hsArrayPlot.raster(resolution, tsf, DoubleScalar.INDETERMINATE);
         computeTime = timing.seconds();
         // ---
-        // ---
         ColorDataGradient colorDataGradient = spinnerColorData.getValue();
-        return ArrayPlotRender.rescale(matrix, colorDataGradient, 1).export();
+        return ArrayPlotRender.rescale(matrix, colorDataGradient, 1);
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();
@@ -157,13 +138,10 @@ public class MaAveragingDemo extends AnAveragingDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     // Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
-    BufferedImage bufferedImage = cache.apply(sequence);
-    if (Objects.nonNull(bufferedImage)) {
+    ArrayPlotRender arrayPlotRender = cache.apply(sequence);
+    if (Objects.nonNull(arrayPlotRender)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      Tensor pixel2model = HsArrayPlots.pixel2model( //
-          manifoldDisplay.coordinateBoundingBox(), //
-          new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
-      ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
+      new ImageRender(arrayPlotRender.bufferedImage(), manifoldDisplay.coordinateBoundingBox()).render(geometricLayer, graphics);
     }
     RenderQuality.setQuality(graphics);
     // renderControlPoints(geometricLayer, graphics);

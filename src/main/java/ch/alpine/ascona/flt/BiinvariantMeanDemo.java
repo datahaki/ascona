@@ -15,7 +15,7 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
-import ch.alpine.ascona.util.ren.ImageRenderNew;
+import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -130,12 +130,12 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     if (vehicle) {
       for (Tensor point : sequence) {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-        new ImageRenderNew(VehicleStatic.INSTANCE.bufferedImage_o(), BOX).render(geometricLayer, graphics);
+        new ImageRender(VehicleStatic.INSTANCE.bufferedImage_o(), BOX).render(geometricLayer, graphics);
         geometricLayer.popMatrix();
       }
       if (Objects.nonNull(mean)) {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
-        new ImageRenderNew(VehicleStatic.INSTANCE.bufferedImage_g(), BOX).render(geometricLayer, graphics);
+        new ImageRender(VehicleStatic.INSTANCE.bufferedImage_g(), BOX).render(geometricLayer, graphics);
         geometricLayer.popMatrix();
       }
     } else {

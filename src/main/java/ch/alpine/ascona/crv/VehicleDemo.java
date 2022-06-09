@@ -10,7 +10,7 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.ImageRenderNew;
+import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -37,7 +37,7 @@ public class VehicleDemo extends ControlPointsDemo {
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     geometricLayer.pushMatrix(GfxMatrix.of(mouse));
     {
-      new ImageRenderNew(VehicleStatic.INSTANCE.bufferedImage_c(), //
+      new ImageRender(VehicleStatic.INSTANCE.bufferedImage_c(), //
           CoordinateBoundingBox.of(Stream.of(Clips.interval(-0.4, 1), Clips.interval(-0.35, 0.35))) //
       ).render(geometricLayer, graphics);
     }

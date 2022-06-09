@@ -39,6 +39,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends LogWeightingDemo
       spinnerMagnif.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
       spinnerMagnif.addSpinnerListener(v -> recompute());
     }
+    spinnerColorData.setValue(ColorDataGradients.CLASSIC);
     spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(120, 28), "color scheme");
     spinnerColorData.addSpinnerListener(v -> recompute());
     {

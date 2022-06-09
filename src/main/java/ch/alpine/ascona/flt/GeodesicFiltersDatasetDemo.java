@@ -27,6 +27,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
   public GeodesicFiltersDatasetDemo() {
     super(ManifoldDisplays.SE2_R2, GokartPoseDataV1.INSTANCE);
     {
+      spinnerFilters.setValue(GeodesicFilters.GEODESIC);
       spinnerFilters.addToComponentReduced(timerFrame.jToolBar, new Dimension(170, 28), "filter type");
       spinnerFilters.addSpinnerListener(type -> updateState());
     }

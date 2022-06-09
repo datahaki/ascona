@@ -18,6 +18,7 @@ public class ArrayPlotRender implements RenderInterface {
    * @param colorDataGradient
    * @param magnify
    * @return */
+  // TODO ASCONA separate image and legend
   public static ArrayPlotRender rescale(Tensor tensor, ScalarTensorFunction colorDataGradient, int magnify) {
     Rescale rescale = new Rescale(tensor);
     return new ArrayPlotRender( //
@@ -41,6 +42,7 @@ public class ArrayPlotRender implements RenderInterface {
   }
 
   @Override
+  @Deprecated
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     graphics.drawImage(bufferedImage, //
         0, //
@@ -51,6 +53,14 @@ public class ArrayPlotRender implements RenderInterface {
         width + 10, //
         0, //
         null);
+  }
+
+  public BufferedImage bufferedImage() {
+    return bufferedImage;
+  }
+
+  public BufferedImage legend() {
+    return legend;
   }
 
   public int height() {

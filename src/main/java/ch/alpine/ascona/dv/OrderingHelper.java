@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.BarLegend;
-import ch.alpine.ascona.util.ren.ImageRenderNew;
+import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.RationalScalar;
@@ -63,7 +63,7 @@ import ch.alpine.tensor.sca.Clips;
       // HsArrayPlot.pixel2model( //
       // coordinateBoundingBox, //
       // );
-      new ImageRenderNew(bufferedImage, coordinateBoundingBox).render(geometricLayer, graphics);
+      new ImageRender(bufferedImage, coordinateBoundingBox).render(geometricLayer, graphics);
     }
     {
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
