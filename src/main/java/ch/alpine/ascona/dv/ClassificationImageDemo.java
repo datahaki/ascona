@@ -88,6 +88,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
       spinnerLogWeighting.addSpinnerListener(v -> recompute());
     }
     {
+      spinnerColor.setValue(ColorDataLists._097);
       spinnerColor.addSpinnerListener(v -> recompute());
       spinnerColor.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "color data lists");
     }
@@ -111,13 +112,15 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
       jButtonShuffle.addActionListener(e -> shuffle(spinnerCount.getValue()));
       timerFrame.jToolBar.add(jButtonShuffle);
     }
+    spinnerLabels.setValue(Labels.ARG_MIN);
     spinnerLabels.addSpinnerListener(v -> recompute());
-    System.out.println("here");
     spinnerLogWeighting.setValue(LogWeightings.DISTANCES);
-    shuffle(spinnerCount.getValue());
     spinnerLabels.addToComponentReduced(timerFrame.jToolBar, new Dimension(100, 28), "label");
+    spinnerImage.setValue(ClassificationImage.BLENDED);
     spinnerImage.addToComponentReduced(timerFrame.jToolBar, new Dimension(120, 28), "image");
     spinnerImage.addSpinnerListener(v -> recompute());
+    System.out.println("here");
+    shuffle(spinnerCount.getValue());
     {
       jButtonExport.addActionListener(this);
       timerFrame.jToolBar.add(jButtonExport);

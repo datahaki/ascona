@@ -125,7 +125,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       new ArrayRender(point, colorDataGradient.deriveWithOpacity(RationalScalar.HALF)).render(geometricLayer, graphics);
       // ---
       if (jToggleHeatmap.isSelected()) // render basis functions
-        ArrayPlotRender.rescale(ImageReshape.of(wgs), colorDataGradient, 3).render(geometricLayer, graphics);
+        ArrayPlotRender.rescale(ImageReshape.of(wgs), colorDataGradient, 3).render(graphics);
       // render grid lines functions
       if (jToggleArrows.isSelected()) {
         graphics.setColor(Color.LIGHT_GRAY);

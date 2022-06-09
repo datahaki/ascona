@@ -64,7 +64,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
       TensorUnaryOperator tensorUnaryOperator = operator(origin);
       Tensor wgs = compute(tensorUnaryOperator, refinement());
       RenderQuality.setQuality(graphics);
-      ArrayPlotRender.rescale(ImageReshape.of(wgs), colorDataGradient, magnification()).render(geometricLayer, graphics);
+      ArrayPlotRender.rescale(ImageReshape.of(wgs), colorDataGradient, magnification()).render(graphics);
     }
   }
 

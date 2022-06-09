@@ -40,6 +40,7 @@ import ch.alpine.tensor.sca.Clips;
 
 @ReflectionMarker
 public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
+  @ReflectionMarker
   public static class Param {
     @FieldInteger
     @FieldPreferredWidth(100)

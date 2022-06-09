@@ -32,6 +32,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
       spinnerFilters.addSpinnerListener(type -> updateState());
     }
     {
+      spinnerConvolution.setValue(3);
       spinnerConvolution.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "convolution");
       spinnerConvolution.addSpinnerListener(type -> updateState());
     }
