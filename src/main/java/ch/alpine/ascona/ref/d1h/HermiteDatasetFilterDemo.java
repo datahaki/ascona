@@ -6,20 +6,25 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-
-import javax.swing.JToggleButton;
+import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.util.api.AbstractGeodesicDatasetDemo;
+import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
+import ch.alpine.ascona.util.dat.GokartPoseParam;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
@@ -31,7 +36,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
+public class HermiteDatasetFilterDemo extends AbstractDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
@@ -41,10 +46,29 @@ public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
   // ---
   private final GokartPoseDataV2 gokartPoseDataV2;
-  private final SpinnerLabel<Integer> spinnerLabelSkips;
-  private final SpinnerLabel<Integer> spinnerLabelLevel;
-  private final JToggleButton jToggleAdjoint = new JToggleButton("ad");
-  private final JToggleButton jToggleButton = new JToggleButton("derivatives");
+
+  @ReflectionMarker
+  public static class Param extends GokartPoseParam {
+    public Param(GokartPoseData gokartPoseData) {
+      super(gokartPoseData);
+    }
+
+    @Override
+    public List<ManifoldDisplays> manifoldDisplays() {
+      return ManifoldDisplays.l_SE2_ONLY;
+    }
+
+    @FieldInteger
+    @FieldSelectionArray({ "1", "2", "5", "10", "25", "50" })
+    public Scalar skips = RealScalar.of(5);
+    @FieldInteger
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6" })
+    public Scalar level = RealScalar.of(5);
+    public Boolean adjoint = false;
+    public Boolean derivat = true;
+  }
+
+  private final Param param;
   protected Tensor _control = Tensors.empty();
 
   public HermiteDatasetFilterDemo() {
@@ -52,40 +76,19 @@ public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
   }
 
   public HermiteDatasetFilterDemo(GokartPoseDataV2 gokartPoseData) {
-    super(ManifoldDisplays.SE2_ONLY, gokartPoseData);
+    param = new Param(gokartPoseData);
     this.gokartPoseDataV2 = gokartPoseData;
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
-    {
-      spinnerLabelSkips = SpinnerLabel.of(1, 2, 5, 10, 25, 50);
-      spinnerLabelSkips.setValue(5);
-      spinnerLabelSkips.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "skips");
-      spinnerLabelSkips.addSpinnerListener(type -> updateState());
-    }
-    timerFrame.jToolBar.addSeparator();
-    {
-      spinnerLabelLevel = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6);
-      spinnerLabelLevel.setValue(1);
-      spinnerLabelLevel.addToComponentReduced(timerFrame.jToolBar, new Dimension(40, 28), "level");
-    }
-    timerFrame.jToolBar.addSeparator();
-    {
-      timerFrame.jToolBar.add(jToggleAdjoint);
-    }
-    {
-      jToggleButton.setSelected(true);
-      jToggleButton.setToolTipText("show derivatives");
-      timerFrame.jToolBar.add(jToggleButton);
-    }
     updateState();
   }
 
-  @Override
   protected void updateState() {
-    int limit = spinnerLabelLimit.getValue();
-    String name = spinnerLabelString.getValue();
+    int limit = param.limit.number().intValue();
+    String name = param.string;
     Tensor control = gokartPoseDataV2.getPoseVel(name, limit);
     Tensor result = Tensors.empty();
-    int skips = spinnerLabelSkips.getValue();
+    int skips = param.skips.number().intValue();
     for (int index = 0; index < control.length(); index += skips)
       result.append(control.get(index));
     _control = result;
@@ -95,7 +98,7 @@ public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
     {
       final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
       pathRenderCurve.setCurve(_control.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
@@ -112,12 +115,12 @@ public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
         }
     }
     graphics.setColor(Color.DARK_GRAY);
-    Scalar delta = RationalScalar.of(spinnerLabelSkips.getValue(), 50);
+    Scalar delta = RationalScalar.of(param.skips.number().intValue(), 50);
     TensorIteration tensorIteration = //
         // new Hermite1Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE).string(delta, _control);
         new Hermite3Filter(Se2Group.INSTANCE, Se2BiinvariantMeans.FILTER) //
             .string(delta, _control);
-    int levels = 2 * spinnerLabelLevel.getValue();
+    int levels = 2 * param.level.number().intValue();
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);
     {
       final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
@@ -133,7 +136,7 @@ public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
       }
     }
     pathRenderShape.setCurve(refined.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
-    if (jToggleButton.isSelected()) {
+    if (param.derivat) {
       Tensor deltas = refined.get(Tensor.ALL, 1);
       int dims = deltas.get(0).length();
       if (0 < deltas.length()) {
@@ -145,6 +148,7 @@ public class HermiteDatasetFilterDemo extends AbstractGeodesicDatasetDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new HermiteDatasetFilterDemo(GokartPoseDataV2.RACING_DAY).setVisible(1000, 800);
   }
 }

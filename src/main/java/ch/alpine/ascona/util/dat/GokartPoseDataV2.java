@@ -3,6 +3,7 @@ package ch.alpine.ascona.util.dat;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ch.alpine.tensor.Scalar;
@@ -45,8 +46,9 @@ public class GokartPoseDataV2 implements GokartPoseData {
 
   @Override // from GokartPoseData
   public Tensor getPose(String name, int limit) {
-    String string = PATH_FOLDER + "/" + name + ".csv";
-    System.out.println(string);
+    Objects.requireNonNull(name);
+    // String string = PATH_FOLDER + "/" + name + ".csv";
+    // System.out.println(string);
     return Tensor.of(ResourceData.of(PATH_FOLDER + "/" + name + ".csv").stream() //
         .limit(limit) //
         .map(row -> row.extract(1, 4)));
