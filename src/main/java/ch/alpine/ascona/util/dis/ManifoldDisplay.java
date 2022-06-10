@@ -83,7 +83,7 @@ public interface ManifoldDisplay {
    * @param resolution
    * @param tensorScalarFunction
    * @return array of scalar values clipped to interval [0, 1] or DoubleScalar.INDETERMINATE */
-  HsArrayPlot arrayPlot();
+  HsArrayPlot hsArrayPlot();
 
   /** @return points in manifold that have to be {@link #lift(Tensor)}ed
    * in order to become control points in the form xya */

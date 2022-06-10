@@ -98,7 +98,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
     int n = sequence.length();
     if (2 < n)
       try {
-        HsArrayPlot hsArrayPlot = manifoldDisplay().arrayPlot();
+        HsArrayPlot hsArrayPlot = manifoldDisplay().hsArrayPlot();
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
         TensorMetric metric = manifoldDisplay().biinvariantMetric();
         TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(metric.distance(p, q));

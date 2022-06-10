@@ -28,7 +28,7 @@ public class H2Display extends HnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsArrayPlot arrayPlot() {
+  public HsArrayPlot hsArrayPlot() {
     return new H2ArrayPlot(coordinateBoundingBox());
   }
 

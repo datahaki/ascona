@@ -25,7 +25,7 @@ public class R2Display extends RnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsArrayPlot arrayPlot() {
+  public HsArrayPlot hsArrayPlot() {
     return new R2ArrayPlot(coordinateBoundingBox());
   }
 }

@@ -21,6 +21,19 @@ import ch.alpine.tensor.sca.Clip;
 
 /** coordinate bounding box is area of image in model space */
 public class ImageRender implements RenderInterface {
+  /** @param coordinateBoundingBox
+   * @param w
+   * @param h
+   * @return */
+  public static Tensor pixel2model(CoordinateBoundingBox coordinateBoundingBox, int w, int h) {
+    Clip clipX = coordinateBoundingBox.getClip(0);
+    Clip clipY = coordinateBoundingBox.getClip(1);
+    Tensor range = Tensors.of(clipX.width(), clipY.width());
+    Tensor scale = Times.of(Tensors.vector(w, h), range.map(Scalar::reciprocal));
+    Tensor mat = GfxMatrix.translation(Tensors.of(clipX.min(), clipY.min()));
+    return mat.dot(Times.of(Append.of(scale.map(Scalar::reciprocal), RealScalar.ONE), GfxMatrix.flipY(h)));
+  }
+
   public static boolean DRAW_BOX = false;
   private final BufferedImage bufferedImage;
   private final CoordinateBoundingBox coordinateBoundingBox;
@@ -29,18 +42,7 @@ public class ImageRender implements RenderInterface {
   public ImageRender(BufferedImage bufferedImage, CoordinateBoundingBox coordinateBoundingBox) {
     this.bufferedImage = bufferedImage;
     this.coordinateBoundingBox = coordinateBoundingBox;
-    int w = bufferedImage.getWidth();
-    int h = bufferedImage.getHeight();
-    Clip clipX = coordinateBoundingBox.getClip(0);
-    Clip clipY = coordinateBoundingBox.getClip(1);
-    Tensor range = Tensors.of( //
-        clipX.width(), //
-        clipY.width());
-    Tensor scale = Times.of(Tensors.vector(w, h) //
-        , range.map(Scalar::reciprocal));
-    Tensor mat = GfxMatrix.translation(Tensors.of(clipX.min(), clipY.min()));
-    pixel2model = mat.dot(Times.of(Append.of(scale.map(Scalar::reciprocal), RealScalar.ONE), //
-        GfxMatrix.flipY(bufferedImage.getHeight())));
+    pixel2model = pixel2model(coordinateBoundingBox, bufferedImage.getWidth(), bufferedImage.getHeight());
   }
 
   @Override

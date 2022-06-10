@@ -21,12 +21,12 @@ import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -158,7 +158,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   public void recompute() {
     System.out.println("recomp");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot geodesicArrayPlot = manifoldDisplay.arrayPlot();
+    HsArrayPlot geodesicArrayPlot = manifoldDisplay.hsArrayPlot();
     Labels labels = Objects.requireNonNull(spinnerLabels.getValue());
     Objects.requireNonNull(vector);
     Classification classification = labels.apply(vector);
@@ -216,7 +216,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);
-      HsArrayPlot hsArrayPlot = manifoldDisplay.arrayPlot();
+      HsArrayPlot hsArrayPlot = manifoldDisplay.hsArrayPlot();
       Classification classification = spinnerLabels.getValue().apply(vector);
       ColorDataLists colorDataLists = spinnerColor.getValue();
       ColorDataIndexed colorDataIndexed = colorDataLists.strict();
@@ -226,9 +226,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
       BufferedImage bufferedImage = //
           ImageFormat.of(hsArrayPlot.raster(resolution, tensorUnaryOperator, Array.zeros(4)));
       {
-        Tensor matrix = HsArrayPlots.pixel2model( //
-            manifoldDisplay.coordinateBoundingBox(), //
-            new Dimension(resolution, resolution));
+        Tensor matrix = ImageRender.pixel2model(manifoldDisplay.coordinateBoundingBox(), resolution, resolution);
         GeometricLayer geometricLayer = new GeometricLayer(Inverse.of(matrix));
         Graphics2D graphics = bufferedImage.createGraphics();
         RenderQuality.setQuality(graphics);
@@ -247,6 +245,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new ClassificationImageDemo().setVisible(1300, 900);
   }
 }

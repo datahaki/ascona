@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.api.ImageReshape;
+import ch.alpine.ascona.util.api.ImageTiling;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -125,7 +125,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       new ArrayRender(point, colorDataGradient.deriveWithOpacity(RationalScalar.HALF)).render(geometricLayer, graphics);
       // ---
       if (jToggleHeatmap.isSelected()) // render basis functions
-        ArrayPlotRender.rescale(ImageReshape.of(wgs), colorDataGradient, 3).render(graphics);
+        ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, 3).render(graphics);
       // render grid lines functions
       if (jToggleArrows.isSelected()) {
         graphics.setColor(Color.LIGHT_GRAY);

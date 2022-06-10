@@ -3,7 +3,7 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.util.Objects;
 
-import ch.alpine.ascona.util.api.ImageReshape;
+import ch.alpine.ascona.util.api.ImageTiling;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -48,7 +48,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
       int rows = weights.length;
       int cols = weights[0].length;
       Tensor wgs = Tensors.matrix((i, j) -> weights[i][j], rows, cols);
-      _wgs = ImageReshape.of(wgs);
+      _wgs = ImageTiling.of(wgs);
     }
     return _wgs;
   }

@@ -103,7 +103,7 @@ public class S2Display extends SnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsArrayPlot arrayPlot() {
+  public HsArrayPlot hsArrayPlot() {
     return S2ArrayPlot.INSTANCE;
   }
 

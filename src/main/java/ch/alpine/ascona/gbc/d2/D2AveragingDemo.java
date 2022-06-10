@@ -107,11 +107,11 @@ public class D2AveragingDemo extends AnAveragingDemo {
     if (2 < values.length())
       try {
         TensorScalarFunction tensorScalarFunction = function(sequence, values);
-        HsArrayPlot geodesicArrayPlot = manifoldDisplay().arrayPlot();
+        HsArrayPlot hsArrayPlot = manifoldDisplay().hsArrayPlot();
         ScalarUnaryOperator suo = Round.toMultipleOf(RationalScalar.of(2, 10));
         TensorScalarFunction tsf = t -> suo.apply(tensorScalarFunction.apply(t));
         Timing timing = Timing.started();
-        Tensor matrix = geodesicArrayPlot.raster(resolution, tsf, DoubleScalar.INDETERMINATE);
+        Tensor matrix = hsArrayPlot.raster(resolution, tsf, DoubleScalar.INDETERMINATE);
         computeTime = timing.seconds();
         // ---
         if (jToggleThresh.isSelected())

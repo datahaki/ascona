@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.api.ImageReshape;
+import ch.alpine.ascona.util.api.ImageTiling;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.api.MixedLogWeightings;
@@ -140,7 +140,7 @@ import ch.alpine.tensor.sca.Sign;
       });
       if (jToggleHeatmap.isSelected()) { // render basis functions
         final int magnify = magnification();
-        ArrayPlotRender arrayPlotRender = ArrayPlotRender.rescale(ImageReshape.of(wgs), colorDataGradient, magnify);
+        ArrayPlotRender arrayPlotRender = ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, magnify);
         arrayPlotRender.render(graphics);
         {
           // BufferedImage bufferedImage = ImageFormat.of(ArrayPlot.of(_wgs, colorDataGradient));

@@ -64,7 +64,7 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
   }
 
   @Override // from ManifoldDisplay
-  public final HsArrayPlot arrayPlot() {
+  public final HsArrayPlot hsArrayPlot() {
     return null;
   }
 

@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.gbc.AbstractExportWeightingDemo;
-import ch.alpine.ascona.util.api.ImageReshape;
+import ch.alpine.ascona.util.api.ImageTiling;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -64,7 +64,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
       TensorUnaryOperator tensorUnaryOperator = operator(origin);
       Tensor wgs = compute(tensorUnaryOperator, refinement());
       RenderQuality.setQuality(graphics);
-      ArrayPlotRender.rescale(ImageReshape.of(wgs), colorDataGradient, magnification()).render(graphics);
+      ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, magnification()).render(graphics);
     }
   }
 

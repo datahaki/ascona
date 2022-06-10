@@ -73,7 +73,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   }
 
   @Override // from ManifoldDisplay
-  public final HsArrayPlot arrayPlot() {
+  public final HsArrayPlot hsArrayPlot() {
     return null;
   }
 

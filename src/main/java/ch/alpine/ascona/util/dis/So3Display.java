@@ -100,7 +100,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override
-  public HsArrayPlot arrayPlot() {
+  public HsArrayPlot hsArrayPlot() {
     return null;
   }
 

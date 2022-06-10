@@ -21,9 +21,9 @@ public enum HilbertLevelImage {
     TensorUnaryOperator tuo = IterativeGenesis.counts(homogeneousSpace, sequence, max);
     int sequence_length = IterativeGenesis.values().length;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence_length);
-    HsArrayPlot geodesicArrayPlot = manifoldDisplay.arrayPlot();
-    Tensor wgs = geodesicArrayPlot.raster(res, tuo, fallback);
-    ArrayPlotRender arrayPlotRender = HsArrayPlots.arrayPlotFromTensor(wgs, 1, false, colorDataGradient);
+    HsArrayPlot hsArrayPlot = manifoldDisplay.hsArrayPlot();
+    Tensor wgs = hsArrayPlot.raster(res, tuo, fallback);
+    ArrayPlotRender arrayPlotRender = HsArrayPlots.fromTensor(wgs, 1, false, colorDataGradient);
     return HsArrayPlots.fuseImages(manifoldDisplay, arrayPlotRender, res, sequence_length);
   }
 }

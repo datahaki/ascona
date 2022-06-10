@@ -25,7 +25,7 @@ public class H1Display extends HnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public HsArrayPlot arrayPlot() {
+  public HsArrayPlot hsArrayPlot() {
     return null;
   }
 

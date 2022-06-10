@@ -52,7 +52,7 @@ public class S1Display extends SnDisplay {
   }
 
   @Override
-  public HsArrayPlot arrayPlot() {
+  public HsArrayPlot hsArrayPlot() {
     return null;
   }
 

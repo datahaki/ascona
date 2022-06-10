@@ -71,7 +71,7 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   }
 
   @Override // from ManifoldDisplay
-  public final HsArrayPlot arrayPlot() {
+  public final HsArrayPlot hsArrayPlot() {
     return null;
   }
 
