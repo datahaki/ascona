@@ -141,7 +141,8 @@ public class MaAveragingDemo extends AnAveragingDemo {
     ArrayPlotRender arrayPlotRender = cache.apply(sequence);
     if (Objects.nonNull(arrayPlotRender)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      new ImageRender(arrayPlotRender.bufferedImage(), manifoldDisplay.coordinateBoundingBox()).render(geometricLayer, graphics);
+      new ImageRender(arrayPlotRender.bufferedImage(), manifoldDisplay.coordinateBoundingBox()) //
+          .render(geometricLayer, graphics);
     }
     RenderQuality.setQuality(graphics);
     // renderControlPoints(geometricLayer, graphics);

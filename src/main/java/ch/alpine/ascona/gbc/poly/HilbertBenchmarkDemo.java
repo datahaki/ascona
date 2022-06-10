@@ -7,9 +7,10 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.api.ControlPointsDemo;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -21,14 +22,13 @@ import ch.alpine.sophus.crv.d2.HilbertPolygon;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.sca.pow.Power;
 
 /** References:
  * "Iterative coordinates"
  * by Chongyang Deng, Qingjun Chang, Kai Hormann, 2020 */
-public class HilbertBenchmarkDemo extends ControlPointsDemo {
+public class HilbertBenchmarkDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     @FieldInteger
@@ -41,11 +41,9 @@ public class HilbertBenchmarkDemo extends ControlPointsDemo {
   }
 
   private final Param param = new Param();
+  private Tensor polygon;
 
   public HilbertBenchmarkDemo() {
-    super(false, ManifoldDisplays.R2_ONLY);
-    setPositioningEnabled(false);
-    // ---
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::updateCtrl);
     // ---
     updateCtrl();
@@ -53,9 +51,7 @@ public class HilbertBenchmarkDemo extends ControlPointsDemo {
 
   void updateCtrl() {
     System.out.println("update");
-    Tensor polygon = unit(param.levels.number().intValue());
-    polygon = PadRight.zeros(polygon.length(), 3).apply(polygon);
-    setControlPointsSe2(polygon);
+    polygon = unit(param.levels.number().intValue());
     bufferedImage = null;
   }
 
@@ -63,13 +59,14 @@ public class HilbertBenchmarkDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));
     // ---
     RenderQuality.setQuality(graphics);
-    final Tensor sequence = getGeodesicControlPoints();
+    final Tensor sequence = polygon;
     LeversRender leversRender = //
-        LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
+        LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
     if (param.ctrl) {
       leversRender.renderSequence();
       leversRender.renderIndexP();
@@ -83,7 +80,7 @@ public class HilbertBenchmarkDemo extends ControlPointsDemo {
   }
 
   public void compute() {
-    bufferedImage = HilbertLevelImage.of(manifoldDisplay(), getGeodesicControlPoints(), param.resolution.number().intValue(), ColorDataGradients.CLASSIC, 32);
+    bufferedImage = HilbertLevelImage.of(R2Display.INSTANCE, polygon, param.resolution.number().intValue(), ColorDataGradients.CLASSIC, 32);
   }
 
   /** @param n positive

@@ -15,12 +15,12 @@ import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.sophus.lie.so3.So3Metric;
+import ch.alpine.sophus.lie.so3.So3RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -29,6 +29,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 /** orthogonal 3 x 3 matrices */
 public class So3Display implements ManifoldDisplay, Serializable {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.4)).unmodifiable();
+  // TODO ASCONA radius == 1
   private static final Scalar RADIUS = RealScalar.of(7);
   // ---
   public static final ManifoldDisplay INSTANCE = new So3Display(RADIUS);
@@ -105,12 +106,12 @@ public class So3Display implements ManifoldDisplay, Serializable {
 
   @Override
   public RandomSampleInterface randomSampleInterface() {
-    return null;
+    return So3RandomSample.INSTANCE;
   }
 
   @Override // from ManifoldDisplay
   public Tensor lift(Tensor p) {
-    throw TensorRuntimeException.of(p);
+    return Rodrigues.INSTANCE.vectorLog(p).multiply(radius);
   }
 
   @Override // from ManifoldDisplay

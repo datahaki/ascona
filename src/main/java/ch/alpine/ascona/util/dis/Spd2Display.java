@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
+import java.util.Random;
+
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
@@ -13,22 +15,24 @@ import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
 import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.SpdMetric;
+import ch.alpine.sophus.hs.spd.TSpdRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Diagonal;
 
 /** symmetric positive definite 2 x 2 matrices */
 public enum Spd2Display implements ManifoldDisplay {
   INSTANCE;
 
+  // TODO ASCONA make as scale == 1 and zoom instead, or justify
   private static final Scalar SCALE = RealScalar.of(0.2);
   private static final Tensor CIRCLE_POINTS = CirclePoints.of(43).multiply(SCALE).unmodifiable();
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
@@ -111,12 +115,18 @@ public enum Spd2Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    return null;
+    TSpdRandomSample tSpdRandomSample = new TSpdRandomSample(2, UniformDistribution.of(-1, 1));
+    return new RandomSampleInterface() {
+      @Override
+      public Tensor randomSample(Random random) {
+        return Spd0Exponential.INSTANCE.exp(tSpdRandomSample.randomSample(random));
+      }
+    };
   }
 
   @Override // from ManifoldDisplay
   public Tensor lift(Tensor p) {
-    throw TensorRuntimeException.of(p);
+    return sim2xya(Spd0Exponential.INSTANCE.log(p));
   }
 
   @Override // from ManifoldDisplay

@@ -27,8 +27,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 
-// FIXME ASCONA fails in automatic test
-class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
@@ -66,8 +65,13 @@ class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerListener<Ma
       leversRender.renderIndexX();
       Biinvariant biinvariant = Bitype.METRIC1.from(R2Display.INSTANCE);
       TensorUnaryOperator tensorUnaryOperator = biinvariant.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(2), sequence);
-      Tensor weights = tensorUnaryOperator.apply(origin);
-      leversRender.renderWeights(weights);
+      try {
+        Tensor weights = tensorUnaryOperator.apply(origin);
+        leversRender.renderWeights(weights);
+      } catch (Exception e) {
+        // TODO ASCONA does not work for Spd2 SO3 He1
+        System.err.println("no can do: " + manifoldDisplay);
+      }
       // LeversHud.render(bitype(), leversRender, colorDataGradient);
     }
   }

@@ -7,12 +7,12 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -41,7 +41,7 @@ import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.N;
 
 @ReflectionMarker
-public class SeriesHermiteSubdivisionDemo extends ControlPointsDemo {
+public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
   // ---
@@ -57,18 +57,16 @@ public class SeriesHermiteSubdivisionDemo extends ControlPointsDemo {
   public Boolean derivatives = true;
 
   public SeriesHermiteSubdivisionDemo() {
-    super(false, ManifoldDisplays.R2_ONLY);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar).addUniversalListener(this::compute);
-    setPositioningEnabled(false);
-    setMidpointIndicated(false);
     compute();
   }
 
   Tensor _control = Tensors.empty();
+  Tensor geo_ctrl = Tensors.empty();
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
     RenderQuality.setQuality(graphics);
     if (1 < _control.length()) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
@@ -91,7 +89,7 @@ public class SeriesHermiteSubdivisionDemo extends ControlPointsDemo {
       }
     }
     {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, geo_ctrl, null, geometricLayer, graphics);
       leversRender.renderSequence();
     }
   }
@@ -109,12 +107,12 @@ public class SeriesHermiteSubdivisionDemo extends ControlPointsDemo {
       Tensor p0 = Transpose.of(Tensors.of(vx0, vd0));
       Tensor p1 = Transpose.of(Tensors.of(vx1, vd1));
       _control = Transpose.of(Tensors.of(p0, p1));
-      setControlPointsSe2(Tensor.of(p0.stream().map(Tensor::copy).map(r -> r.append(RealScalar.ZERO))));
+      geo_ctrl = Tensor.of(p0.stream().map(Tensor::copy));
     }
   }
 
   public static void main(String[] args) {
-    LookAndFeels.DARK.updateUI();
+    LookAndFeels.LIGHT.updateUI();
     new SeriesHermiteSubdivisionDemo().setVisible(1200, 600);
   }
 }

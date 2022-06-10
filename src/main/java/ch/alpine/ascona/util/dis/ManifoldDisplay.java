@@ -27,6 +27,12 @@ public interface ManifoldDisplay {
    * @return control point */
   Tensor project(Tensor xya);
 
+  /** inverse to project function
+   * 
+   * @param p
+   * @return xya */
+  Tensor lift(Tensor p);
+
   /** @param p control point
    * @return vector of length 2 with grid coordinates {x, y} */
   Tensor toPoint(Tensor p);
@@ -82,10 +88,6 @@ public interface ManifoldDisplay {
   /** @return points in manifold that have to be {@link #lift(Tensor)}ed
    * in order to become control points in the form xya */
   RandomSampleInterface randomSampleInterface();
-
-  /** @param p
-   * @return xya */
-  Tensor lift(Tensor p);
 
   RenderInterface background();
 

@@ -28,7 +28,6 @@ import ch.alpine.tensor.sca.Clips;
 public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   private static final Scalar RADIUS = RealScalar.of(1.0);
   private static final Tensor CIRCLE = CirclePoints.of(15).multiply(RealScalar.of(0.06)).unmodifiable();
-  private static final TensorUnaryOperator PAD = PadRight.zeros(2);
   private static final TensorUnaryOperator LIFT = PadRight.zeros(3);
   // ---
   private final int dimensions;
@@ -54,7 +53,8 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor p) {
-    return PAD;
+    // TODO ASCONA not clear
+    return PadRight.zeros(2);
   }
 
   @Override

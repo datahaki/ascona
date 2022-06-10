@@ -10,6 +10,7 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.lie.dt.DtGroup;
+import ch.alpine.sophus.lie.dt.DtRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -18,6 +19,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Max;
 
 public enum Dt1Display implements ManifoldDisplay {
@@ -91,7 +93,7 @@ public enum Dt1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    return null;
+    return new DtRandomSample(1, UniformDistribution.unit(), UniformDistribution.of(-1, 1));
   }
 
   @Override

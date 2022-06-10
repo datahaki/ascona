@@ -138,8 +138,8 @@ public class D2AveragingDemo extends AnAveragingDemo {
     ArrayPlotRender arrayPlotRender = cache.apply(Unprotect.byRef(sequence, values));
     if (Objects.nonNull(arrayPlotRender)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      ImageRender imageRenderNew = new ImageRender(arrayPlotRender.bufferedImage(), manifoldDisplay.coordinateBoundingBox());
-      imageRenderNew.render(geometricLayer, graphics);
+      new ImageRender(arrayPlotRender.bufferedImage(), manifoldDisplay.coordinateBoundingBox()) //
+          .render(geometricLayer, graphics);
       BufferedImage legend = arrayPlotRender.legend();
       graphics.drawImage(legend, dimension.width - legend.getWidth(), 0, null);
     }

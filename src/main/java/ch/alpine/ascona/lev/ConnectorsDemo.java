@@ -7,6 +7,7 @@ import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -36,21 +37,26 @@ import ch.alpine.tensor.sca.Chop;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     graphics.setColor(Color.RED);
+    Tensor domain = Subdivide.of(0.0, 1.0, 20);
     for (int index = 0; index < length; ++index) {
       Tensor blend = UnitVector.of(length, index);
       Interpolation interpolation = LinearInterpolation.of(Tensors.of(weights, blend));
-      Tensor map = Tensor.of(Subdivide.of(0.0, 1.0, 20).stream() //
-          .map(Scalar.class::cast) //
-          .map(interpolation::at) //
-          .map(w -> biinvariantMean.mean(controlPoints, w)) //
-          .map(manifoldDisplay::toPoint));
-      Path2D path2d = geometricLayer.toPath2D(map);
-      graphics.draw(path2d);
-      // Tensor tensor = weights.get(index);
+      try {
+        Tensor map = Tensor.of(domain.stream() //
+            .map(Scalar.class::cast) //
+            .map(interpolation::at) //
+            .map(w -> biinvariantMean.mean(controlPoints, w)) //
+            .map(manifoldDisplay::toPoint));
+        Path2D path2d = geometricLayer.toPath2D(map);
+        graphics.draw(path2d);
+      } catch (Exception e) {
+        System.err.println("no can do: " + manifoldDisplay);
+      }
     }
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new ConnectorsDemo().setVisible(1200, 900);
   }
 }

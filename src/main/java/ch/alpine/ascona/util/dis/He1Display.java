@@ -10,15 +10,16 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.lie.he.HeGroup;
+import ch.alpine.sophus.lie.he.HeRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 public enum He1Display implements ManifoldDisplay {
   INSTANCE;
@@ -89,12 +90,12 @@ public enum He1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    return null;
+    return new HeRandomSample(1, UniformDistribution.of(-1, 1));
   }
 
   @Override // from ManifoldDisplay
   public Tensor lift(Tensor p) {
-    throw TensorRuntimeException.of(p);
+    return Tensors.of(p.Get(0, 0), p.Get(1, 0), p.Get(2));
   }
 
   @Override // from ManifoldDisplay

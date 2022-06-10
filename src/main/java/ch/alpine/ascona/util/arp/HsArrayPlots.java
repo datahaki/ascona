@@ -26,6 +26,7 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
+// TODO ASCONA
 public enum HsArrayPlots {
   ;
   public static BufferedImage fuseImages(ManifoldDisplay manifoldDisplay, ArrayPlotRender arrayPlotRender, int refinement, int sequence_length) {

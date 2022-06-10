@@ -148,7 +148,8 @@ public class CheckerBoardDemo extends LogWeightingBase //
         recompute();
       if (Objects.nonNull(bufferedImage)) {
         RenderQuality.setDefault(graphics); // default so that raster becomes visible
-        new ImageRender(bufferedImage, manifoldDisplay.coordinateBoundingBox()).render(geometricLayer, graphics);
+        new ImageRender(bufferedImage, manifoldDisplay.coordinateBoundingBox()) //
+            .render(geometricLayer, graphics);
       }
     } else {
       reference = getGeodesicControlPoints();
