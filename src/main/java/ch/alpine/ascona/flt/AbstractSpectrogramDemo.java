@@ -91,11 +91,9 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
     }
     Tensor refined = protected_render(geometricLayer, graphics);
     // ---
-    if (this instanceof BufferedImageSupplier && //
-        gokartPoseSpec.symi) {
-      BufferedImageSupplier bufferedImageSupplier = (BufferedImageSupplier) this;
+    if (this instanceof BufferedImageSupplier bufferedImageSupplier && //
+        gokartPoseSpec.symi)
       graphics.drawImage(bufferedImageSupplier.bufferedImage(), 0, 0, null);
-    }
     // ---
     graphics.setStroke(new BasicStroke(1f));
     if (conv) {

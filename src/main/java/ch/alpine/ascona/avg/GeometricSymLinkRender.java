@@ -30,7 +30,6 @@ import ch.alpine.tensor.sca.Clips;
 
   public GeometricSymLinkRender(ManifoldDisplay manifoldDisplay) {
     this.manifoldDisplay = manifoldDisplay;
-    
   }
 
   public class Link implements RenderInterface {

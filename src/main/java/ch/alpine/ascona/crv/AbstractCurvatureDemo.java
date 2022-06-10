@@ -41,10 +41,8 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
   public synchronized final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor refined = protected_render(geometricLayer, graphics);
-    if (this instanceof BufferedImageSupplier && graph) {
-      BufferedImageSupplier bufferedImageSupplier = (BufferedImageSupplier) this;
+    if (graph && this instanceof BufferedImageSupplier bufferedImageSupplier)
       graphics.drawImage(bufferedImageSupplier.bufferedImage(), 0, 0, null);
-    }
     if (curvt && 1 < refined.length()) {
       Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
       VisualSet visualSet = new VisualSet(COLOR_DATA_INDEXED);
