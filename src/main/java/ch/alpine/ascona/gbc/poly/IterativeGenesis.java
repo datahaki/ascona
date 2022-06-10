@@ -3,11 +3,11 @@ package ch.alpine.ascona.gbc.poly;
 
 import java.util.stream.Stream;
 
-import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.AffineCoordinate;
 import ch.alpine.sophus.gbc.d2.Barycenter;
 import ch.alpine.sophus.gbc.d2.IterativeCoordinateLevel;
 import ch.alpine.sophus.gbc.d2.ThreePointWeighting;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;

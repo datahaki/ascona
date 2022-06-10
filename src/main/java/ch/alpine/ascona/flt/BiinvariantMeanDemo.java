@@ -46,7 +46,6 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 
-@ReflectionMarker
 public class BiinvariantMeanDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
@@ -55,26 +54,32 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   private static final CoordinateBoundingBox BOX = CoordinateBoundingBox.of(Stream.of( //
       Clips.interval(-0.22, 0.53), //
       Clips.interval(-0.22, 0.22)));
-  // ---
-  public Biinvariants biinvariants = Biinvariants.LEVERAGES;
-  public Boolean median = false;
-  @FieldFuse("shuffle")
-  public transient Boolean shuffle = false;
-  public Boolean vehicle = false;
+
+  @ReflectionMarker
+  public static class Param {
+    public Biinvariants biinvariants = Biinvariants.LEVERAGES;
+    public Boolean median = false;
+    @FieldFuse("shuffle")
+    public transient Boolean shuffle = false;
+    public Boolean vehicle = false;
+  }
+
+  private final Param param = new Param();
 
   public BiinvariantMeanDemo() {
     super(true, ManifoldDisplays.MANIFOLDS);
-    setManifoldDisplay(Se2Display.INSTANCE);
-    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    setMidpointIndicated(false);
     // ---
+    setManifoldDisplay(Se2Display.INSTANCE);
+    // ---
+    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     fieldsEditor.addUniversalListener(() -> {
-      if (shuffle) {
-        shuffle = false;
+      if (param.shuffle) {
+        param.shuffle = false;
         shuffle();
       }
     });
     shuffle();
-    setMidpointIndicated(false);
   }
 
   public void shuffle() {
@@ -110,8 +115,8 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
         graphics.draw(path2d);
       }
     graphics.setStroke(new BasicStroke(1));
-    if (median) {
-      Biinvariant biinvariant = biinvariants;
+    if (param.median) {
+      Biinvariant biinvariant = param.biinvariants;
       TensorUnaryOperator weightingInterface = //
           biinvariant.weighting(homogeneousSpace, InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(biinvariantMean, weightingInterface, Chop._05);
@@ -127,7 +132,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
         geometricLayer.popMatrix();
       }
     }
-    if (vehicle) {
+    if (param.vehicle) {
       for (Tensor point : sequence) {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
         new ImageRender(VehicleStatic.INSTANCE.bufferedImage_o(), BOX).render(geometricLayer, graphics);

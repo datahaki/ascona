@@ -12,7 +12,7 @@ import ch.alpine.ascona.util.sym.SymLink;
 import ch.alpine.ascona.util.sym.SymLinkPart;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
@@ -26,12 +26,11 @@ import ch.alpine.tensor.sca.Clips;
   private static final int RESOLUTION = 91;
   // ---
   private final ManifoldDisplay manifoldDisplay;
-  private final GeodesicSpace geodesicSpace;
   public int steps = 9;
 
   public GeometricSymLinkRender(ManifoldDisplay manifoldDisplay) {
     this.manifoldDisplay = manifoldDisplay;
-    geodesicSpace = manifoldDisplay.geodesicSpace();
+    
   }
 
   public class Link implements RenderInterface {
@@ -43,6 +42,7 @@ import ch.alpine.tensor.sca.Clips;
 
     @Override
     public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+      GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       if (symLink instanceof SymLinkPart symLinkPart) {
         new Link(symLinkPart.lP).render(geometricLayer, graphics);
         new Link(symLinkPart.lQ).render(geometricLayer, graphics);

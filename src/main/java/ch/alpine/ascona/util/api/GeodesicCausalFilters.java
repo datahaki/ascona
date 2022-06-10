@@ -2,12 +2,12 @@
 package ch.alpine.ascona.util.api;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.crv.MonomialExtrapolationMask;
 import ch.alpine.sophus.flt.bm.BiinvariantMeanExtrapolation;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
 import ch.alpine.sophus.flt.ga.GeodesicFIRn;
 import ch.alpine.sophus.flt.ga.GeodesicIIRn;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarUnaryOperator;

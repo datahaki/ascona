@@ -15,9 +15,9 @@ import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.sophus.api.GroupElement;
 import ch.alpine.sophus.hs.r2.Se2Bijection;
 import ch.alpine.sophus.hs.r2.Se2RigidMotionFit;
+import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -73,10 +73,10 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
           .render(geometricLayer, graphics);
       {
         Tensor domain = Subdivide.increasing(Clips.unit(), 10);
-        GroupElement groupElement = Se2CoveringGroup.INSTANCE.element(solve);
+        LieGroupElement lieGroupElement = Se2CoveringGroup.INSTANCE.element(solve);
         for (Tensor p : points) {
           Tensor xya_0 = Append.of(p, RealScalar.ZERO);
-          Tensor xya_1 = groupElement.combine(xya_0);
+          Tensor xya_1 = lieGroupElement.combine(xya_0);
           ScalarTensorFunction scalarTensorFunction = Se2CoveringGroup.INSTANCE.curve(xya_0, xya_1);
           Tensor tensor = domain.map(scalarTensorFunction);
           new PathRender(Color.CYAN, 1.5f).setCurve(tensor, false).render(geometricLayer, graphics);

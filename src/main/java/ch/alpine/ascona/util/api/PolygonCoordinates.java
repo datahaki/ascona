@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.AffineCoordinate;
 import ch.alpine.sophus.gbc.LagrangeCoordinate;
 import ch.alpine.sophus.gbc.LeveragesGenesis;
@@ -22,6 +21,7 @@ import ch.alpine.sophus.gbc.d2.ThreePointCoordinate;
 import ch.alpine.sophus.gbc.it.IterativeAffineCoordinate;
 import ch.alpine.sophus.gbc.it.IterativeTargetCoordinate;
 import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.HsGenesis;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;

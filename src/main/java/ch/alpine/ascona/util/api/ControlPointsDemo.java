@@ -63,7 +63,7 @@ public abstract class ControlPointsDemo extends AbstractManifoldDisplayDemo {
     private final int index;
 
     public Midpoints() {
-      CurveSubdivision curveSubdivision = ControlMidpoints.of(manifoldDisplay.geodesicSpace());
+      CurveSubdivision curveSubdivision = new ControlMidpoints(manifoldDisplay.geodesicSpace());
       midpoints = curveSubdivision.string(getGeodesicControlPoints());
       Tensor mouse_dist = Tensor.of(midpoints.stream() //
           .map(manifoldDisplay::toPoint) //
@@ -159,7 +159,7 @@ public abstract class ControlPointsDemo extends AbstractManifoldDisplayDemo {
             }
             if (!isPositioningOngoing() && addRemoveControlPoints) {
               // insert
-              if (control.length() < 2) {
+              if (control.length() < 2 || !isMidpointIndicated()) {
                 control = control.append(mouse);
                 min_index = control.length() - 1;
               } else {
@@ -203,31 +203,31 @@ public abstract class ControlPointsDemo extends AbstractManifoldDisplayDemo {
   /** when positioning is disabled, the mouse position is not indicated graphically
    * 
    * @param enabled */
-  public void setPositioningEnabled(boolean enabled) {
+  public final void setPositioningEnabled(boolean enabled) {
     if (!enabled)
       min_index = null;
     mousePositioning = enabled;
   }
 
   /** @return */
-  public boolean isPositioningEnabled() {
+  public final boolean isPositioningEnabled() {
     return mousePositioning;
   }
 
   /** @return whether user is currently dragging a control point */
-  public boolean isPositioningOngoing() {
+  public final boolean isPositioningOngoing() {
     return Objects.nonNull(min_index);
   }
 
-  public void setMidpointIndicated(boolean enabled) {
+  public final void setMidpointIndicated(boolean enabled) {
     midpointIndicated = enabled;
   }
 
-  public boolean isMidpointIndicated() {
+  public final boolean isMidpointIndicated() {
     return midpointIndicated;
   }
 
-  public Scalar getPositioningThreshold() {
+  public final Scalar getPositioningThreshold() {
     return PIXEL_THRESHOLD.divide(Sqrt.FUNCTION.apply(Abs.of(Det.of(timerFrame.geometricComponent.getModel2Pixel()))));
   }
 
@@ -274,7 +274,7 @@ public abstract class ControlPointsDemo extends AbstractManifoldDisplayDemo {
   /** function exists so that shape can be altered, for instance magnified
    * 
    * @return */
-  protected Tensor getControlPointShape() {
+  protected final Tensor getControlPointShape() {
     return manifoldDisplay().shape();
   }
 }

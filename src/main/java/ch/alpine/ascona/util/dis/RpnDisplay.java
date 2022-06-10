@@ -3,10 +3,10 @@ package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.rpn.RpnManifold;
 import ch.alpine.sophus.hs.rpn.RpnMetric;

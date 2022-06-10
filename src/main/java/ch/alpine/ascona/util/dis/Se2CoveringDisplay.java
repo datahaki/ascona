@@ -3,7 +3,7 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.Random;
 
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;

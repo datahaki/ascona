@@ -4,9 +4,9 @@ package ch.alpine.ascona.util.dat;
 import java.io.IOException;
 
 import ch.alpine.ascona.util.dis.S2Display;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.sn.S2Loxodrome;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;

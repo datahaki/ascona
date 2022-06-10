@@ -2,11 +2,11 @@
 package ch.alpine.ascona.util.api;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.flt.bm.BiinvariantMeanCenter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.flt.ga.GeodesicCenterMidSeeded;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;

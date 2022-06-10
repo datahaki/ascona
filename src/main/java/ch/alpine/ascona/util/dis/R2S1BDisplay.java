@@ -3,7 +3,7 @@ package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.rs.Se2inR2S;
 
 public class R2S1BDisplay extends R2S1AbstractDisplay {

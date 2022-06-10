@@ -3,9 +3,9 @@ package ch.alpine.ascona.util.api;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.api.Genesis;
 import ch.alpine.sophus.gbc.d2.InsideConvexHullCoordinate;
 import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.HsGenesis;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Scalar;

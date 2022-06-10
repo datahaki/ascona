@@ -5,11 +5,11 @@ import java.io.Serializable;
 import java.util.Random;
 
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.crv.d2.StarPoints;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.hn.HnManifold;
 import ch.alpine.sophus.hs.hn.HnMetric;
 import ch.alpine.sophus.hs.hn.HnMetricBiinvariant;

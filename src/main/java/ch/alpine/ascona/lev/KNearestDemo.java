@@ -78,6 +78,7 @@ public class KNearestDemo extends LogWeightingDemo {
       Tensor origin = optional.get();
       // ---
       render(geometricLayer, graphics, sequence, origin, "");
+      // FIXME ASCONA SE2 does not work on R2 for instance
       LieGroupOps lieGroupOps = new LieGroupOps(Se2Group.INSTANCE);
       try {
         Tensor shift = param.tensor;
