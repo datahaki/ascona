@@ -44,8 +44,8 @@ public class LineDistanceDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param {
     @FieldInteger
-    @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })
-    public Scalar resolution = RealScalar.of(30);
+    @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200" })
+    public Scalar resolution = RealScalar.of(50);
     @FieldLabel("color data gradient")
     public ColorDataGradients colorDataGradients = ColorDataGradients.PARULA;
   }

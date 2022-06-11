@@ -13,6 +13,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.exp.Log;
 
 /* package */ class Hermite3ArrayShow extends HermiteArrayShow {
@@ -21,7 +22,7 @@ import ch.alpine.tensor.sca.exp.Log;
   }
 
   private Scalar h3(Scalar theta, Scalar omega) {
-    return process(Hermite3Subdivisions.of(HS_EXPONENTIAL, theta, omega));
+    return process(Hermite3Subdivisions.of(HS_EXPONENTIAL, Chop._08, theta, omega));
   }
 
   @Override // from HermiteArray

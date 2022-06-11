@@ -4,18 +4,13 @@ package ch.alpine.ascona.ref.d1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import javax.swing.JButton;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
 import ch.alpine.ascona.crv.AbstractCurvatureDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
@@ -34,7 +29,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.bridge.swing.StandardMenu;
+import ch.alpine.bridge.swing.SpinnerMenu;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
@@ -88,29 +83,35 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     {
       JButton jButton = new JButton("load");
       List<String> list = Arrays.asList("ducttape/20180514.csv", "tires/20190116.csv", "tires/20190117.csv");
-      Supplier<StandardMenu> supplier = () -> new StandardMenu() {
-        @Override
-        protected void design(JPopupMenu jPopupMenu) {
-          for (String string : list) {
-            JMenuItem jMenuItem = new JMenuItem(string);
-            jMenuItem.addActionListener(new ActionListener() {
-              @Override
-              public void actionPerformed(ActionEvent actionEvent) {
-                Tensor tensor = ResourceData.of("/dubilab/controlpoints/" + string);
-                tensor = Tensor.of(tensor.stream().map(Times.operator(Tensors.vector(0.5, 0.5, 1))));
-                Tensor center = Mean.of(tensor);
-                center.set(RealScalar.ZERO, 2);
-                tensor = Tensor.of(tensor.stream().map(row -> row.subtract(center)));
-                setManifoldDisplay(Se2Display.INSTANCE);
-                param.cyclic = true;
-                setControlPointsSe2(tensor);
-              }
-            });
-            jPopupMenu.add(jMenuItem);
-          }
-        }
-      };
-      StandardMenu.bind(jButton, supplier);
+      jButton.addActionListener(e -> {
+        SpinnerMenu<String> spinnerMenu = new SpinnerMenu<String>(list, null, false);
+        spinnerMenu.addSpinnerListener(string -> {
+          Tensor tensor = ResourceData.of("/dubilab/controlpoints/" + string);
+          tensor = Tensor.of(tensor.stream().map(Times.operator(Tensors.vector(0.5, 0.5, 1))));
+          Tensor center = Mean.of(tensor);
+          center.set(RealScalar.ZERO, 2);
+          tensor = Tensor.of(tensor.stream().map(row -> row.subtract(center)));
+          setManifoldDisplay(Se2Display.INSTANCE);
+          param.cyclic = true;
+          setControlPointsSe2(tensor);
+        });
+        spinnerMenu.showSouth(jButton);
+      });
+      // Supplier<StandardMenu> supplier = () -> new StandardMenu() {
+      // @Override
+      // protected void design(JPopupMenu jPopupMenu) {
+      // for (String string : list) {
+      // JMenuItem jMenuItem = new JMenuItem(string);
+      // jMenuItem.addActionListener(new ActionListener() {
+      // @Override
+      // public void actionPerformed(ActionEvent actionEvent) {
+      // }
+      // });
+      // jPopupMenu.add(jMenuItem);
+      // }
+      // }
+      // };
+      // StandardMenu.bind(jButton, supplier);
       timerFrame.jToolBar.add(jButton);
     }
     // ---

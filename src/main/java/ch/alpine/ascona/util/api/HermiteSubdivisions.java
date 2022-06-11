@@ -47,50 +47,25 @@ public enum HermiteSubdivisions {
   HERMITE3 {
     @Override
     public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite3Subdivisions.of(homogeneousSpace, THETA, OMEGA);
+      return Hermite3Subdivisions.of(homogeneousSpace, chop, THETA, OMEGA);
     }
   },
   H3STANDARD {
     @Override
     public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite3Subdivisions.of(homogeneousSpace);
+      return Hermite3Subdivisions.of(homogeneousSpace, chop);
     }
   },
   H3A1 {
     @Override
     public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite3Subdivisions.a1(homogeneousSpace);
+      return Hermite3Subdivisions.a1(homogeneousSpace, chop);
     }
   },
   H3A2 {
     @Override
     public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite3Subdivisions.a2(homogeneousSpace);
-    }
-  },
-  // ---
-  HERMITE3_BM {
-    @Override
-    public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite3Subdivisions.of(homogeneousSpace, homogeneousSpace.biinvariantMean(chop), THETA, OMEGA);
-    }
-  },
-  H3STANDARD_BM {
-    @Override
-    public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite3Subdivisions.of(homogeneousSpace, homogeneousSpace.biinvariantMean(chop));
-    }
-  },
-  H3A1_BM {
-    @Override
-    public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite3Subdivisions.a1(homogeneousSpace, homogeneousSpace.biinvariantMean(chop));
-    }
-  },
-  H3A2_BM {
-    @Override
-    public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite3Subdivisions.a2(homogeneousSpace, homogeneousSpace.biinvariantMean(Chop._08));
+      return Hermite3Subdivisions.a2(homogeneousSpace, chop);
     }
   };
 
