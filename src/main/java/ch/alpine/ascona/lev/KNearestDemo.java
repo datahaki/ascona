@@ -23,7 +23,6 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorMapping;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RealScalar;
@@ -51,7 +50,7 @@ public class KNearestDemo extends LogWeightingDemo {
   private final JButton jButton = new JButton("shuffle");
 
   public KNearestDemo() {
-    super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
+    super(true, ManifoldDisplays.SE2_ONLY, LogWeightings.list());
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     jButton.addActionListener(l -> shuffleSnap());
     timerFrame.jToolBar.add(jButton);
@@ -78,7 +77,6 @@ public class KNearestDemo extends LogWeightingDemo {
       Tensor origin = optional.get();
       // ---
       render(geometricLayer, graphics, sequence, origin, "");
-      // FIXME ASCONA SE2 does not work on R2 for instance
       LieGroupOps lieGroupOps = new LieGroupOps(Se2Group.INSTANCE);
       try {
         Tensor shift = param.tensor;
@@ -104,9 +102,8 @@ public class KNearestDemo extends LogWeightingDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, Tensor sequence, Tensor origin, String p) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    Manifold manifold = homogeneousSpace;
     TensorUnaryOperator tensorUnaryOperator = //
-        logWeighting().operator(biinvariant(), manifold, variogram(), sequence);
+        logWeighting().operator(biinvariant(), homogeneousSpace, variogram(), sequence);
     Tensor weights = tensorUnaryOperator.apply(origin);
     // ---
     int[] integers = Ordering.INCREASING.of(weights);

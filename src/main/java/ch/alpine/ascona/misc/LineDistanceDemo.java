@@ -8,8 +8,6 @@ import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
-import ch.alpine.ascona.util.api.SnLineDistances;
-import ch.alpine.ascona.util.arp.S2ArrayHelper;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -23,28 +21,28 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorNorm;
+import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.red.Times;
 
-@ReflectionMarker
-public class S2LineDistanceDemo extends ControlPointsDemo {
+public class LineDistanceDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final Tensor GEODESIC_DOMAIN = Subdivide.of(0.0, 1.0, 11);
   private static final Tensor INITIAL = Tensors.fromString("{{-0.5, 0, 0}, {0.5, 0, 0}}").unmodifiable();
 
-  // ---
+  @ReflectionMarker
   public static class Param {
-    @FieldLabel("S^n line distance method")
-    public SnLineDistances snLineDistances = SnLineDistances.DEFAULT;
     @FieldInteger
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })
     public Scalar resolution = RealScalar.of(30);
@@ -52,11 +50,11 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
     public ColorDataGradients colorDataGradients = ColorDataGradients.PARULA;
   }
 
-  public final Param param = new Param();
+  private final Param param = new Param();
 
-  public S2LineDistanceDemo() {
-    super(false, ManifoldDisplays.S2_ONLY);
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+  public LineDistanceDemo() {
+    super(false, ManifoldDisplays.R2_S2);
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
     setControlPointsSe2(INITIAL);
     // ---
@@ -68,14 +66,17 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
   }
 
   TensorNorm tensorNorm() {
+    LineDistance lineDistance = manifoldDisplay().lineDistance();
     Tensor cp = getGeodesicControlPoints();
     return 1 < cp.length() //
-        ? param.snLineDistances.lineDistance().tensorNorm(cp.get(0), cp.get(1))
+        ? lineDistance.tensorNorm(cp.get(0), cp.get(1))
         : t -> RealScalar.ZERO;
   }
 
   private BufferedImage bufferedImage(int resolution) {
-    Tensor matrix = Tensors.matrix(S2ArrayHelper.of(resolution, rad(), tensorNorm()::norm));
+    Tensor matrix = manifoldDisplay().hsArrayPlot() //
+        .raster(resolution, tensorNorm()::norm, DoubleScalar.INDETERMINATE);
+    matrix = Rescale.of(matrix);
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }
 
@@ -109,6 +110,6 @@ public class S2LineDistanceDemo extends ControlPointsDemo {
 
   public static void main(String[] args) {
     LookAndFeels.LIGHT.updateUI();
-    new S2LineDistanceDemo().setVisible(1200, 600);
+    new LineDistanceDemo().setVisible(1200, 600);
   }
 }

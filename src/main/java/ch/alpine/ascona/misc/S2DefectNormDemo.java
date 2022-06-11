@@ -10,8 +10,6 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
-import ch.alpine.ascona.util.api.SnLineDistances;
-import ch.alpine.ascona.util.arp.S2ArrayHelper;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -27,7 +25,6 @@ import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.tensor.DoubleScalar;
@@ -35,6 +32,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorScalarFunction;
@@ -58,8 +56,6 @@ public class S2DefectNormDemo extends ControlPointsDemo {
 
   // ---
   public static class Param {
-    @FieldLabel("S^n line distance method")
-    public SnLineDistances snLineDistances = SnLineDistances.DEFAULT;
     @FieldInteger
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })
     public Scalar resolution = RealScalar.of(20);
@@ -102,8 +98,9 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     }
   }
 
-  private BufferedImage bufferedImage(int resolution, Manifold manifold) {
-    Tensor matrix = Tensors.matrix(S2ArrayHelper.of(resolution, rad(), new TSF()));
+  private BufferedImage bufferedImage(int resolution) {
+    Tensor matrix = manifoldDisplay().hsArrayPlot().raster(resolution, new TSF(), DoubleScalar.INDETERMINATE);
+    matrix = Rescale.of(matrix);
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }
 
@@ -117,7 +114,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     RenderQuality.setDefault(graphics);
     int res = param.resolution.number().intValue();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    BufferedImage bufferedImage = bufferedImage(res, homogeneousSpace);
+    BufferedImage bufferedImage = bufferedImage(res);
     new ImageRender(bufferedImage, manifoldDisplay.coordinateBoundingBox()) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);

@@ -40,7 +40,7 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   SymScalar symScalar(Tensor vector) {
     int n = vector.length();
     if (0 < n) {
-      ScalarTensorFunction scalarTensorFunction = BezierFunction.of(SymGeodesic.INSTANCE, vector);
+      ScalarTensorFunction scalarTensorFunction = new BezierFunction(SymGeodesic.INSTANCE, vector);
       Scalar parameter = n <= 1 //
           ? RealScalar.ZERO
           : RationalScalar.of(n, n - 1);

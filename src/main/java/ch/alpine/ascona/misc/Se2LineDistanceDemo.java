@@ -17,7 +17,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.HsLineDistance;
-import ch.alpine.sophus.decim.HsLineDistance.NormImpl;
+import ch.alpine.sophus.decim.HsLineDistanceLocal;
 import ch.alpine.sophus.decim.HsLineProjection;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -68,7 +68,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     final Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     {
       HsLineDistance hsLineDistance = new HsLineDistance(lieGroup);
-      NormImpl normImpl = hsLineDistance.tensorNorm(beg, end);
+      HsLineDistanceLocal normImpl = hsLineDistance.tensorNorm(beg, end);
       {
         Tensor project = normImpl.project(mouse);
         Tensor exp = exponential.exp(project);

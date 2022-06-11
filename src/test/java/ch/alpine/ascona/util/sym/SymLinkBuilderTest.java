@@ -16,7 +16,7 @@ class SymLinkBuilderTest {
   public void testSimple() {
     Tensor control = Tensors.vector(1, 2, 3);
     Tensor vector = SymSequence.of(control.length());
-    ScalarTensorFunction scalarTensorFunction = BezierFunction.of(SymGeodesic.INSTANCE, vector);
+    ScalarTensorFunction scalarTensorFunction = new BezierFunction(SymGeodesic.INSTANCE, vector);
     SymScalar symScalar = (SymScalar) scalarTensorFunction.apply(RealScalar.of(0.3));
     // ---
     SymLink symLink = SymLinkBuilder.of(control, symScalar);
