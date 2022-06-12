@@ -15,14 +15,13 @@ import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.arp.ArrayFunction;
+import ch.alpine.ascona.util.arp.ArrayPlotRender;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.S2Display;
-import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -107,8 +106,8 @@ public class CheckerBoardDemo extends LogWeightingBase //
           HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
           // TODO ASCONA ALG redundant
           ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, DoubleScalar.INDETERMINATE);
-          Tensor matrix = HsArrayPlots.raster(hsArrayPlot, 512, arrayFunction);
-          BufferedImage bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1).bufferedImage();
+          Tensor matrix = HsArrayPlot.of(hsArrayPlot, 512, arrayFunction);
+          BufferedImage bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1, false).bufferedImage();
           ImageIO.write(bufferedImage, "png", new File(folder, logWeighting.toString() + ".png"));
           // RenderQuality.setDefault(graphics); // default so that raster becomes visible
           // Tensor pixel2model = geodesicArrayPlot.pixel2model(new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
@@ -130,8 +129,8 @@ public class CheckerBoardDemo extends LogWeightingBase //
       HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
       TensorScalarFunction tsf = function(sequence, reference.multiply(param.factor()));
       ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-      Tensor matrix = HsArrayPlots.raster(hsArrayPlot, param.refine.number().intValue(), arrayFunction);
-      bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1).bufferedImage();
+      Tensor matrix = HsArrayPlot.of(hsArrayPlot, param.refine.number().intValue(), arrayFunction);
+      bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1, false).bufferedImage();
     } else {
       bufferedImage = null;
     }

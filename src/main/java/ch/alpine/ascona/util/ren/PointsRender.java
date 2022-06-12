@@ -10,19 +10,11 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public class PointsRender {
-  private final Color color_fill;
-  private final Color color_draw;
-
-  public PointsRender(Color color_fill, Color color_draw) {
-    this.color_fill = color_fill;
-    this.color_draw = color_draw;
-  }
+public record PointsRender(Color color_fill, Color color_draw) {
 
   public RenderInterface show(TensorUnaryOperator matrixLift, Tensor shape, Tensor points) {
     return new Show(matrixLift, shape, points);
   }
-
   private class Show implements RenderInterface {
     private final TensorUnaryOperator matrixLift;
     private final Tensor shape;

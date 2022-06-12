@@ -3,7 +3,6 @@ package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -15,7 +14,6 @@ import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 // TODO ASCONA ALG probably obsolete: instead use Se2 and Se2Covering with different clothoid builders
 public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serializable {

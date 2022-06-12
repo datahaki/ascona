@@ -3,7 +3,7 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.util.Objects;
 
-import ch.alpine.ascona.util.api.ImageTiling;
+import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

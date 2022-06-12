@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.ascona.analysis;
 
 import java.io.IOException;

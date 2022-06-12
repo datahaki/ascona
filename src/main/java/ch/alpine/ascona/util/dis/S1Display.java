@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.RealScalar;
@@ -11,7 +10,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /** symmetric positive definite 2 x 2 matrices */
 public class S1Display extends SnDisplay {

@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -82,7 +81,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
     HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
     TensorScalarFunction tsf = tensorNorm()::norm;
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-    Tensor matrix = HsArrayPlots.raster(hsArrayPlot, resolution, arrayFunction);
+    Tensor matrix = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
     matrix = Rescale.of(matrix);
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }

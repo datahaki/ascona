@@ -12,9 +12,9 @@ import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.arp.ArrayPlotRender;
+import ch.alpine.ascona.util.arp.MeshRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.ren.ArrayPlotRender;
-import ch.alpine.ascona.util.ren.ArrayRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -102,7 +102,7 @@ import ch.alpine.tensor.sca.N;
     // ---
     {
       ColorDataGradient colorDataGradient = colorDataGradient().deriveWithOpacity(RealScalar.of(0.5));
-      new ArrayRender(movingDomain2D.forward(target, biinvariantMean()), colorDataGradient) //
+      new MeshRender(movingDomain2D.forward(target, biinvariantMean()), colorDataGradient) //
           .render(geometricLayer, graphics);
     }
     boolean isTarget = jToggleTarget.isSelected();
@@ -129,6 +129,6 @@ import ch.alpine.tensor.sca.N;
       leversRender.renderSequence();
     leversRender.renderIndexP(isTarget ? "q" : "p");
     if (jToggleHeatmap.isSelected())
-      ArrayPlotRender.rescale(movingDomain2D.arrayReshape_weights(), colorDataGradient(), 3).render(graphics);
+      ArrayPlotRender.rescale(movingDomain2D.arrayReshape_weights(), colorDataGradient(), 3, false).render(graphics);
   }
 }

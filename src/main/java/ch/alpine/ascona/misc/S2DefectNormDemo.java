@@ -12,7 +12,6 @@ import java.util.stream.IntStream;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -105,7 +104,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(new TSF(), DoubleScalar.INDETERMINATE);
-    Tensor matrix = HsArrayPlots.raster(hsArrayPlot, resolution, arrayFunction);
+    Tensor matrix = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
     matrix = Rescale.of(matrix);
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }

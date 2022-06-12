@@ -1,10 +1,8 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 public class H1Display extends HnDisplay {
   public static final ManifoldDisplay INSTANCE = new H1Display();

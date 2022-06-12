@@ -7,8 +7,8 @@ import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.util.stream.IntStream;
 
+import ch.alpine.ascona.util.arp.BarLegend;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.ren.BarLegend;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;

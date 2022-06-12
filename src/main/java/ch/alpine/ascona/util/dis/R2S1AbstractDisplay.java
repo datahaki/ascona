@@ -3,7 +3,6 @@ package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.crv.d2.Arrowhead;
@@ -13,7 +12,6 @@ import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializable {
   private static final Tensor ARROWHEAD = Arrowhead.of(0.2).unmodifiable();

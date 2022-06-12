@@ -3,7 +3,6 @@ package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -24,7 +23,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /** orthogonal 3 x 3 matrices */
 public class So3Display implements ManifoldDisplay, Serializable {

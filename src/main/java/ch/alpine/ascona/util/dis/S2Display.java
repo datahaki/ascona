@@ -98,15 +98,15 @@ public class S2Display extends SnDisplay implements HsArrayPlot {
     return GfxMatrix.translation(toPoint(xyz)).dot(skew);
   }
 
-  @Override
-  public final CoordinateBoundingBox coordinateBoundingBox() {
-    return Box2D.xy(Clips.absolute(1.0));
-  }
-
   @Override // from GeodesicArrayPlot
   public Optional<Tensor> raster(Tensor point) {
     Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
     return Optional.ofNullable(Sign.isPositive(z2) ? point.append(Sqrt.FUNCTION.apply(z2)) : null);
+  }
+
+  @Override
+  public final CoordinateBoundingBox coordinateBoundingBox() {
+    return Box2D.xy(Clips.absolute(1));
   }
 
   @Override

@@ -9,7 +9,6 @@ import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.sca.Clips;
 
 public class H2Display extends HnDisplay implements HsArrayPlot {
   public static final ManifoldDisplay INSTANCE = new H2Display();
@@ -31,7 +30,7 @@ public class H2Display extends HnDisplay implements HsArrayPlot {
 
   @Override
   public CoordinateBoundingBox coordinateBoundingBox() {
-    return Box2D.xy(Clips.absolute(RADIUS));
+    return Box2D.xy(CLIP);
   }
 
   @Override

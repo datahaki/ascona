@@ -4,10 +4,11 @@ package ch.alpine.ascona.gbc.poly;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.arp.ArrayFunction;
+import ch.alpine.ascona.util.arp.ArrayPlotRender;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.arp.HsArrayPlots;
+import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
@@ -24,8 +25,8 @@ public enum HilbertLevelImage {
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence_length);
     HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, fallback);
-    Tensor wgs = HsArrayPlots.raster(hsArrayPlot, res, arrayFunction);
-    ArrayPlotRender arrayPlotRender = HsArrayPlots.fromTensor(wgs, 1, false, colorDataGradient);
-    return HsArrayPlots.fuseImages(manifoldDisplay, arrayPlotRender, res, sequence_length);
+    Tensor wgs = HsArrayPlot.of(hsArrayPlot, res, arrayFunction);
+    ArrayPlotRender arrayPlotRender = ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, 1, false);
+    return HsArrayPlots.fuseImages(manifoldDisplay, arrayPlotRender.export(), res, sequence_length);
   }
 }

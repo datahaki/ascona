@@ -14,10 +14,10 @@ import ch.alpine.ascona.gbc.d2.AbstractScatteredSetWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
+import ch.alpine.ascona.util.arp.ArrayPlotRender;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
+import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -77,8 +77,8 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
     HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, fallback);
-    Tensor wgs = HsArrayPlots.raster(hsArrayPlot, refinement, arrayFunction);
-    return HsArrayPlots.fromTensor(wgs, magnification, logWeighting().equals(LogWeightings.DISTANCES), colorDataGradient());
+    Tensor wgs = HsArrayPlot.of(hsArrayPlot, refinement, arrayFunction);
+    return ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient(), magnification, logWeighting().equals(LogWeightings.DISTANCES));
   }
 
   private static List<Biinvariant> distinct() {

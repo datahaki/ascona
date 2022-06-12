@@ -13,11 +13,10 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
+import ch.alpine.ascona.util.arp.ArrayPlotRender;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.ArrayPlotRender;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -122,11 +121,11 @@ public class MaAveragingDemo extends AnAveragingDemo {
         };
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-        Tensor matrix = HsArrayPlots.raster(hsArrayPlot, resolution, arrayFunction);
+        Tensor matrix = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
         ColorDataGradient colorDataGradient = spinnerColorData.getValue();
-        return ArrayPlotRender.rescale(matrix, colorDataGradient, 1);
+        return ArrayPlotRender.rescale(matrix, colorDataGradient, 1, false);
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();

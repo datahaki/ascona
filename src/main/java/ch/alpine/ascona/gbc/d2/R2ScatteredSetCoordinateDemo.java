@@ -10,12 +10,12 @@ import java.util.stream.IntStream;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.api.ImageTiling;
 import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.arp.ArrayPlotRender;
+import ch.alpine.ascona.util.arp.ImageTiling;
+import ch.alpine.ascona.util.arp.MeshRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.ArrayPlotRender;
-import ch.alpine.ascona.util.ren.ArrayRender;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -122,10 +122,10 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
         ++c0;
       });
       // ---
-      new ArrayRender(point, colorDataGradient.deriveWithOpacity(RationalScalar.HALF)).render(geometricLayer, graphics);
+      new MeshRender(point, colorDataGradient.deriveWithOpacity(RationalScalar.HALF)).render(geometricLayer, graphics);
       // ---
       if (jToggleHeatmap.isSelected()) // render basis functions
-        ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, 3).render(graphics);
+        ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, 3, false).render(graphics);
       // render grid lines functions
       if (jToggleArrows.isSelected()) {
         graphics.setColor(Color.LIGHT_GRAY);

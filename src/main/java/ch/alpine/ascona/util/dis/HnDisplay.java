@@ -15,19 +15,19 @@ import ch.alpine.sophus.hs.hn.HnMetric;
 import ch.alpine.sophus.hs.hn.HnMetricBiinvariant;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 
 /** symmetric positive definite 2 x 2 matrices */
 public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   private static final Tensor STAR_POINTS = StarPoints.of(6, 0.12, 0.04).unmodifiable();
-  protected static final Scalar RADIUS = RealScalar.of(2.5);
+  protected static final Clip CLIP = Clips.absolute(2.5);
   private static final TensorUnaryOperator LIFT = PadRight.zeros(3);
   // ---
   private final int dimensions;
@@ -83,7 +83,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
-    Distribution distribution = UniformDistribution.of(RADIUS.negate(), RADIUS);
+    Distribution distribution = UniformDistribution.of(CLIP);
     return new RandomSampleInterface() {
       @Override
       public Tensor randomSample(Random random) {

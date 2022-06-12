@@ -1,30 +1,48 @@
 // code by jph
-package ch.alpine.ascona.util.ren;
+package ch.alpine.ascona.util.arp;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.io.ImageFormat;
+import ch.alpine.tensor.red.Max;
+import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 
 public class ArrayPlotRender {
-  /** @param tensor
+  /** @param matrix
    * @param colorDataGradient
    * @param magnify
+   * @param coverZero
    * @return */
   // TODO ASCONA separate image and legend
   // TODO ASCONA param magnify obsolete
-  public static ArrayPlotRender rescale(Tensor tensor, ScalarTensorFunction colorDataGradient, int magnify) {
-    Rescale rescale = new Rescale(tensor);
+  public static ArrayPlotRender rescale( //
+      Tensor matrix, ScalarTensorFunction colorDataGradient, int magnify, boolean coverZero) {
+    Rescale rescale = new Rescale(matrix);
+    Clip clip = rescale.scalarSummaryStatistics().getClip();
     return new ArrayPlotRender( //
         rescale.result(), //
-        rescale.scalarSummaryStatistics().getClip(), //
+        coverZero //
+            ? cover(clip, clip.width().zero())
+            : clip, //
         colorDataGradient, //
         magnify);
+  }
+
+  /** @param clip
+   * @param scalar
+   * @return */
+  /* package */ static Clip cover(Clip clip, Scalar scalar) {
+    return Clips.interval( //
+        Min.of(clip.min(), scalar), //
+        Max.of(clip.max(), scalar));
   }
 
   // ---
@@ -33,8 +51,8 @@ public class ArrayPlotRender {
   private final int height;
   private final BufferedImage legend;
 
-  public ArrayPlotRender(Tensor tensor, Clip clip, ScalarTensorFunction colorDataGradient, int magnify) {
-    bufferedImage = ImageFormat.of(tensor.map(colorDataGradient));
+  private ArrayPlotRender(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient, int magnify) {
+    bufferedImage = ImageFormat.of(matrix.map(colorDataGradient));
     width = bufferedImage.getWidth() * magnify;
     height = bufferedImage.getHeight() * magnify;
     legend = BarLegend.of(colorDataGradient, height, clip);

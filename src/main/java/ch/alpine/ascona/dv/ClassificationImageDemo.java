@@ -21,7 +21,6 @@ import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -169,7 +168,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
         spinnerImage.getValue().operator(classification, operator, colorDataLists.cyclic());
     int resolution = spinnerRes.getValue();
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
-    Tensor raster = HsArrayPlots.raster(hsArrayPlot, resolution, arrayFunction);
+    Tensor raster = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
     bufferedImage = ImageFormat.of(raster);
   }
 
@@ -228,7 +227,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
           spinnerImage.getValue().operator(classification, operator, colorDataIndexed);
       int resolution = REFINEMENT;
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
-      Tensor raster = HsArrayPlots.raster(hsArrayPlot, resolution, arrayFunction);
+      Tensor raster = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
       BufferedImage bufferedImage = ImageFormat.of(raster);
       {
         Tensor matrix = ImageRender.pixel2model(hsArrayPlot.coordinateBoundingBox(), resolution, resolution);

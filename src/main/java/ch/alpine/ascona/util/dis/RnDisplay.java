@@ -17,16 +17,16 @@ import ch.alpine.sophus.lie.rn.RnMetric;
 import ch.alpine.sophus.math.sample.BoxRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 public abstract class RnDisplay implements ManifoldDisplay, Serializable {
-  private static final Scalar RADIUS = RealScalar.of(1.0);
+  private static final Clip CLIP = Clips.absolute(1);
   private static final Tensor CIRCLE = CirclePoints.of(15).multiply(RealScalar.of(0.06)).unmodifiable();
   private static final TensorUnaryOperator LIFT = PadRight.zeros(3);
   // ---
@@ -83,9 +83,8 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     // return AxesRender.INSTANCE;
   }
 
-//  @Override // from ManifoldDisplay
   public CoordinateBoundingBox coordinateBoundingBox() {
-    return CoordinateBoundingBox.of(Stream.generate(() -> Clips.absolute(RADIUS)).limit(dimensions));
+    return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(dimensions));
   }
 
   @Override // from ManifoldDisplay
