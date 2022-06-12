@@ -137,6 +137,8 @@ public abstract class ControlPointsDemo extends AbstractManifoldDisplayDemo {
       JButton jButton = new JButton("clear");
       jButton.addActionListener(actionListener);
       timerFrame.jToolBar.add(jButton);
+    } else {
+      setMidpointIndicated(false);
     }
     MouseAdapter mouseAdapter = new MouseAdapter() {
       @Override

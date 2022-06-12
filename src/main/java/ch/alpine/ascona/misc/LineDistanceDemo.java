@@ -65,7 +65,6 @@ public class LineDistanceDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     // ---
     timerFrame.geometricComponent.setOffset(400, 400);
-    setMidpointIndicated(false);
   }
 
   TensorNorm tensorNorm() {

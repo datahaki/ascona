@@ -57,7 +57,6 @@ public class ClothoidNdDemo extends ControlPointsDemo {
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
     setPositioningEnabled(false);
-    setMidpointIndicated(false);
     // ---
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(ND_BOX_SE2);
     Tensor tensor = RandomSample.of(randomSampleInterface, SIZE);

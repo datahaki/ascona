@@ -43,7 +43,6 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
 
   public RigidMotionFitDemo() {
     super(false, ManifoldDisplays.R2_ONLY);
-    setMidpointIndicated(false);
     // ---
     spinnerLength.addSpinnerListener(this::shufflePoints);
     spinnerLength.setValue(5);
