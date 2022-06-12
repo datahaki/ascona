@@ -95,16 +95,6 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override
-  public CoordinateBoundingBox coordinateBoundingBox() {
-    return null;
-  }
-
-  @Override
-  public HsArrayPlot hsArrayPlot() {
-    return null;
-  }
-
-  @Override
   public RandomSampleInterface randomSampleInterface() {
     return So3RandomSample.INSTANCE;
   }

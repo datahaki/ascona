@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
@@ -12,7 +11,6 @@ import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /** Hint: the interface is intended for use in the demo layer
  * but not in the library functions. */
@@ -72,18 +70,6 @@ public interface ManifoldDisplay {
   Biinvariant biinvariant();
 
   LineDistance lineDistance();
-
-  CoordinateBoundingBox coordinateBoundingBox();
-
-  /** available for
-   * R2
-   * S2
-   * H2
-   * 
-   * @param resolution
-   * @param tensorScalarFunction
-   * @return array of scalar values clipped to interval [0, 1] or DoubleScalar.INDETERMINATE */
-  HsArrayPlot hsArrayPlot();
 
   /** @return points in manifold that have to be {@link #lift(Tensor)}ed
    * in order to become control points in the form xya */

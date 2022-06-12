@@ -58,16 +58,6 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
     return null;
   }
 
-  @Override
-  public final CoordinateBoundingBox coordinateBoundingBox() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
-  public final HsArrayPlot hsArrayPlot() {
-    return null;
-  }
-
   @Override // from ManifoldDisplay
   public final RenderInterface background() {
     return EmptyRender.INSTANCE;

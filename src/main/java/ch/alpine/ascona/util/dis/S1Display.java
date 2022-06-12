@@ -47,16 +47,6 @@ public class S1Display extends SnDisplay {
   }
 
   @Override
-  public final CoordinateBoundingBox coordinateBoundingBox() {
-    return null;
-  }
-
-  @Override
-  public HsArrayPlot hsArrayPlot() {
-    return null;
-  }
-
-  @Override
   public Tensor lift(Tensor p) {
     return p.copy().append(RealScalar.ZERO);
   }

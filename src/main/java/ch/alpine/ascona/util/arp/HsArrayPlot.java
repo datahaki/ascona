@@ -1,17 +1,16 @@
 // code by jph
 package ch.alpine.ascona.util.arp;
 
-import java.util.function.Function;
+import java.util.Optional;
 
-import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
-/** @see ArrayPlot */
-@FunctionalInterface
 public interface HsArrayPlot {
-  /** @param resolution
-   * @param function
-   * @param fallback
+  /** @param pxy vector of the form {px, py}
    * @return */
-  Tensor raster(int resolution, Function<Tensor, ? extends Tensor> function, Tensor fallback);
+  Optional<Tensor> raster(Tensor pxy);
+
+  /** @return 2-dimensional bounding box to sample within */
+  CoordinateBoundingBox coordinateBoundingBox();
 }

@@ -3,8 +3,8 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.Optional;
 
+import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.S2ArrayPlot;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.RealScalar;
@@ -25,10 +25,11 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** symmetric positive definite 2 x 2 matrices */
-public class Rp2Display extends RpnDisplay {
+public class Rp2Display extends RpnDisplay implements HsArrayPlot {
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
   private static final Tensor ID3 = IdentityMatrix.of(3);
   // ---
@@ -99,19 +100,20 @@ public class Rp2Display extends RpnDisplay {
     return GfxMatrix.translation(toPoint(xyz)).dot(skew);
   }
 
-  @Override
-  public CoordinateBoundingBox coordinateBoundingBox() {
-    return S2ArrayPlot.COORDINATE_BOUNDING_BOX;
-  }
-
   @Override // from ManifoldDisplay
   public Tensor lift(Tensor p) {
     return p.copy();
   }
 
-  @Override // from ManifoldDisplay
-  public HsArrayPlot hsArrayPlot() {
-    return S2ArrayPlot.INSTANCE;
+  @Override
+  public CoordinateBoundingBox coordinateBoundingBox() {
+    return Box2D.xy(Clips.absolute(1));
+  }
+
+  @Override // from GeodesicArrayPlot
+  public Optional<Tensor> raster(Tensor point) {
+    Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
+    return Optional.ofNullable(Sign.isPositive(z2) ? point.append(Sqrt.FUNCTION.apply(z2)) : null);
   }
 
   @Override

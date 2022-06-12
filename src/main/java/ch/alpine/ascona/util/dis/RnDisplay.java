@@ -83,8 +83,8 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     // return AxesRender.INSTANCE;
   }
 
-  @Override // from ManifoldDisplay
-  public final CoordinateBoundingBox coordinateBoundingBox() {
+//  @Override // from ManifoldDisplay
+  public CoordinateBoundingBox coordinateBoundingBox() {
     return CoordinateBoundingBox.of(Stream.generate(() -> Clips.absolute(RADIUS)).limit(dimensions));
   }
 

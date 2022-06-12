@@ -1,13 +1,14 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
+import java.util.Optional;
+
 import ch.alpine.ascona.util.arp.HsArrayPlot;
-import ch.alpine.ascona.util.arp.R2ArrayPlot;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 
-public class R2Display extends RnDisplay {
+public class R2Display extends RnDisplay implements HsArrayPlot {
   public static final ManifoldDisplay INSTANCE = new R2Display();
 
   private R2Display() {
@@ -24,8 +25,8 @@ public class R2Display extends RnDisplay {
     return GfxMatrix.translation(p);
   }
 
-  @Override // from ManifoldDisplay
-  public HsArrayPlot hsArrayPlot() {
-    return new R2ArrayPlot(coordinateBoundingBox());
+  @Override // from GeodesicArrayPlot
+  public Optional<Tensor> raster(Tensor pxy) {
+    return Optional.of(pxy);
   }
 }

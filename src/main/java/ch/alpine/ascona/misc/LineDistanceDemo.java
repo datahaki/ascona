@@ -8,6 +8,9 @@ import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.arp.ArrayFunction;
+import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -31,6 +34,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.red.Times;
@@ -74,8 +78,11 @@ public class LineDistanceDemo extends ControlPointsDemo {
   }
 
   private BufferedImage bufferedImage(int resolution) {
-    Tensor matrix = manifoldDisplay().hsArrayPlot() //
-        .raster(resolution, tensorNorm()::norm, DoubleScalar.INDETERMINATE);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    TensorScalarFunction tsf = tensorNorm()::norm;
+    ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
+    Tensor matrix = HsArrayPlots.raster(hsArrayPlot, resolution, arrayFunction);
     matrix = Rescale.of(matrix);
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }
@@ -87,10 +94,11 @@ public class LineDistanceDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     RenderQuality.setDefault(graphics);
     BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue());
-    new ImageRender(bufferedImage, manifoldDisplay.coordinateBoundingBox()) //
+    new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     // ---

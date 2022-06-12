@@ -67,16 +67,6 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
     return null;
   }
 
-  @Override
-  public final CoordinateBoundingBox coordinateBoundingBox() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
-  public final HsArrayPlot hsArrayPlot() {
-    return null;
-  }
-
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
     return null;

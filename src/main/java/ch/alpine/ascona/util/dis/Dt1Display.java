@@ -81,16 +81,6 @@ public enum Dt1Display implements ManifoldDisplay {
     return null;
   }
 
-  @Override
-  public CoordinateBoundingBox coordinateBoundingBox() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
-  public HsArrayPlot hsArrayPlot() {
-    return null;
-  }
-
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
     return new DtRandomSample(1, UniformDistribution.unit(), UniformDistribution.of(-1, 1));

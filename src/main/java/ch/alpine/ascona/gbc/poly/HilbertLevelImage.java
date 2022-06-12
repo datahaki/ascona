@@ -3,6 +3,7 @@ package ch.alpine.ascona.gbc.poly;
 
 import java.awt.image.BufferedImage;
 
+import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -21,8 +22,9 @@ public enum HilbertLevelImage {
     TensorUnaryOperator tuo = IterativeGenesis.counts(homogeneousSpace, sequence, max);
     int sequence_length = IterativeGenesis.values().length;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence_length);
-    HsArrayPlot hsArrayPlot = manifoldDisplay.hsArrayPlot();
-    Tensor wgs = hsArrayPlot.raster(res, tuo, fallback);
+    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, fallback);
+    Tensor wgs = HsArrayPlots.raster(hsArrayPlot, res, arrayFunction);
     ArrayPlotRender arrayPlotRender = HsArrayPlots.fromTensor(wgs, 1, false, colorDataGradient);
     return HsArrayPlots.fuseImages(manifoldDisplay, arrayPlotRender, res, sequence_length);
   }

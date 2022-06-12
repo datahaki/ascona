@@ -15,20 +15,36 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Rescale;
+import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.mat.re.Inverse;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.N;
 
 public enum HsArrayPlots {
   ;
+  public static <T extends Tensor> Tensor raster(HsArrayPlot hsArrayPlot, int resolution, ArrayFunction<T> arrayFunction) {
+    CoordinateBoundingBox coordinateBoundingBox = hsArrayPlot.coordinateBoundingBox();
+    Tensor dx = Subdivide.increasing(coordinateBoundingBox.getClip(0), resolution - 1).map(N.DOUBLE);
+    Tensor dy = Subdivide.decreasing(coordinateBoundingBox.getClip(1), resolution - 1).map(N.DOUBLE);
+    T fallback = arrayFunction.fallback();
+    return Tensor.of(dy.stream().parallel() //
+        .map(py -> Tensor.of(dx.stream() //
+            .map(px -> Tensors.of(px, py)) // in R2
+            .map(hsArrayPlot::raster) //
+            .map(optional -> optional.map(arrayFunction.function()).orElse(fallback)))));
+  }
+
   public static BufferedImage fuseImages(ManifoldDisplay manifoldDisplay, ArrayPlotRender arrayPlotRender, int refinement, int sequence_length) {
     BufferedImage foreground = arrayPlotRender.export();
     BufferedImage background = new BufferedImage(foreground.getWidth(), foreground.getHeight(), BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = background.createGraphics();
-    Tensor matrix = ImageRender.pixel2model(manifoldDisplay.coordinateBoundingBox(), refinement, refinement);
+    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    Tensor matrix = ImageRender.pixel2model(hsArrayPlot.coordinateBoundingBox(), refinement, refinement);
     GeometricLayer geometricLayer = new GeometricLayer(Inverse.of(matrix));
     for (int count = 0; count < sequence_length; ++count) {
       manifoldDisplay.background().render(geometricLayer, graphics);

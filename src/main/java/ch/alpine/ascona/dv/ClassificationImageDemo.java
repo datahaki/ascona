@@ -19,7 +19,9 @@ import javax.swing.JButton;
 import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -157,7 +159,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   public void recompute() {
     System.out.println("recomp");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot geodesicArrayPlot = manifoldDisplay.hsArrayPlot();
+    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
     Labels labels = Objects.requireNonNull(spinnerLabels.getValue());
     Objects.requireNonNull(vector);
     Classification classification = labels.apply(vector);
@@ -166,18 +168,21 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
     TensorUnaryOperator tensorUnaryOperator = //
         spinnerImage.getValue().operator(classification, operator, colorDataLists.cyclic());
     int resolution = spinnerRes.getValue();
-    bufferedImage = ImageFormat.of(geodesicArrayPlot.raster(resolution, tensorUnaryOperator, Array.zeros(4)));
+    ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
+    Tensor raster = HsArrayPlots.raster(hsArrayPlot, resolution, arrayFunction);
+    bufferedImage = ImageFormat.of(raster);
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
     if (Objects.nonNull(bufferedImage)) {
       // Tensor pixel2model = HsArrayPlots.pixel2model( //
       // manifoldDisplay.coordinateBoundingBox(), //
       // new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
       // ImageRender.of(bufferedImage, pixel2model).render(geometricLayer, graphics);
-      new ImageRender(bufferedImage, manifoldDisplay.coordinateBoundingBox()).render(geometricLayer, graphics);
+      new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()).render(geometricLayer, graphics);
     }
     // ---
     render(geometricLayer, graphics, manifoldDisplay, getGeodesicControlPoints(), vector, spinnerColor.getValue().cyclic());
@@ -215,17 +220,18 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);
-      HsArrayPlot hsArrayPlot = manifoldDisplay.hsArrayPlot();
+      HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
       Classification classification = spinnerLabels.getValue().apply(vector);
       ColorDataLists colorDataLists = spinnerColor.getValue();
       ColorDataIndexed colorDataIndexed = colorDataLists.strict();
       TensorUnaryOperator tensorUnaryOperator = //
           spinnerImage.getValue().operator(classification, operator, colorDataIndexed);
       int resolution = REFINEMENT;
-      BufferedImage bufferedImage = //
-          ImageFormat.of(hsArrayPlot.raster(resolution, tensorUnaryOperator, Array.zeros(4)));
+      ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
+      Tensor raster = HsArrayPlots.raster(hsArrayPlot, resolution, arrayFunction);
+      BufferedImage bufferedImage = ImageFormat.of(raster);
       {
-        Tensor matrix = ImageRender.pixel2model(manifoldDisplay.coordinateBoundingBox(), resolution, resolution);
+        Tensor matrix = ImageRender.pixel2model(hsArrayPlot.coordinateBoundingBox(), resolution, resolution);
         GeometricLayer geometricLayer = new GeometricLayer(Inverse.of(matrix));
         Graphics2D graphics = bufferedImage.createGraphics();
         RenderQuality.setQuality(graphics);

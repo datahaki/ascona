@@ -20,16 +20,6 @@ public class H1Display extends HnDisplay {
   }
 
   @Override
-  public CoordinateBoundingBox coordinateBoundingBox() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
-  public HsArrayPlot hsArrayPlot() {
-    return null;
-  }
-
-  @Override
   public RenderInterface background() {
     return H1Background.INSTANCE;
   }

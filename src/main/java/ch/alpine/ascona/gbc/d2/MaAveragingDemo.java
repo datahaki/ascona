@@ -12,7 +12,9 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ArrayPlotRender;
@@ -98,9 +100,10 @@ public class MaAveragingDemo extends AnAveragingDemo {
     int n = sequence.length();
     if (2 < n)
       try {
-        HsArrayPlot hsArrayPlot = manifoldDisplay().hsArrayPlot();
+        ManifoldDisplay manifoldDisplay = manifoldDisplay();
+        HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
-        TensorMetric metric = manifoldDisplay().biinvariantMetric();
+        TensorMetric metric = manifoldDisplay.biinvariantMetric();
         TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(metric.distance(p, q));
         // msq = metric;
         final Tensor dist;
@@ -118,7 +121,8 @@ public class MaAveragingDemo extends AnAveragingDemo {
           return Abs.FUNCTION.apply((Scalar) dist.dot(b).dot(b));
         };
         Timing timing = Timing.started();
-        Tensor matrix = hsArrayPlot.raster(resolution, tsf, DoubleScalar.INDETERMINATE);
+        ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
+        Tensor matrix = HsArrayPlots.raster(hsArrayPlot, resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
         ColorDataGradient colorDataGradient = spinnerColorData.getValue();
@@ -141,7 +145,8 @@ public class MaAveragingDemo extends AnAveragingDemo {
     ArrayPlotRender arrayPlotRender = cache.apply(sequence);
     if (Objects.nonNull(arrayPlotRender)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      new ImageRender(arrayPlotRender.bufferedImage(), manifoldDisplay.coordinateBoundingBox()) //
+      HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+      new ImageRender(arrayPlotRender.bufferedImage(), hsArrayPlot.coordinateBoundingBox()) //
           .render(geometricLayer, graphics);
     }
     RenderQuality.setQuality(graphics);

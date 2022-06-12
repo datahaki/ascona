@@ -51,10 +51,6 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
   public final Biinvariant biinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
-  // @Override // from ManifoldDisplay
-  // public final BiinvariantMean biinvariantMean() {
-  // return SnFastMean.INSTANCE; // SnBiinvariantMean.of(Chop._05); // SnFastMean.INSTANCE;
-  // }
 
   @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {

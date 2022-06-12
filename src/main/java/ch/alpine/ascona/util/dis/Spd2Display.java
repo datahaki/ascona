@@ -3,7 +3,6 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.Random;
 
-import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -24,7 +23,6 @@ import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.DiagonalMatrix;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Diagonal;
 
@@ -100,16 +98,6 @@ public enum Spd2Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public LineDistance lineDistance() {
-    return null;
-  }
-
-  @Override
-  public CoordinateBoundingBox coordinateBoundingBox() {
-    return null;
-  }
-
-  @Override // from ManifoldDisplay
-  public HsArrayPlot hsArrayPlot() {
     return null;
   }
 

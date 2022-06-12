@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import ch.alpine.ascona.gbc.d2.AbstractScatteredSetWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.HsArrayPlot;
 import ch.alpine.ascona.util.arp.HsArrayPlots;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -72,9 +73,11 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
   }
 
   protected final ArrayPlotRender arrayPlotRender(Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator, int magnification) {
-    HsArrayPlot hsArrayPlot = manifoldDisplay().hsArrayPlot();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
-    Tensor wgs = hsArrayPlot.raster(refinement, tensorUnaryOperator, fallback);
+    ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, fallback);
+    Tensor wgs = HsArrayPlots.raster(hsArrayPlot, refinement, arrayFunction);
     return HsArrayPlots.fromTensor(wgs, magnification, logWeighting().equals(LogWeightings.DISTANCES), colorDataGradient());
   }
 
