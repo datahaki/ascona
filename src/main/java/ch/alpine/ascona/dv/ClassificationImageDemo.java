@@ -20,7 +20,7 @@ import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -147,7 +147,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
     System.out.println("shuffle");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
-        .map(manifoldDisplay::lift));
+        .map(manifoldDisplay::unproject));
     setControlPointsSe2(tensor);
     // assignment of random labels to points
     vector = RandomVariate.of(DiscreteUniformDistribution.of(0, spinnerLabel.getValue()), RANDOM, n);
@@ -158,7 +158,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   public void recompute() {
     System.out.println("recomp");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     Labels labels = Objects.requireNonNull(spinnerLabels.getValue());
     Objects.requireNonNull(vector);
     Classification classification = labels.apply(vector);
@@ -168,14 +168,14 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
         spinnerImage.getValue().operator(classification, operator, colorDataLists.cyclic());
     int resolution = spinnerRes.getValue();
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
-    Tensor raster = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
+    Tensor raster = D2Raster.of(hsArrayPlot, resolution, arrayFunction);
     bufferedImage = ImageFormat.of(raster);
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     if (Objects.nonNull(bufferedImage)) {
       // Tensor pixel2model = HsArrayPlots.pixel2model( //
       // manifoldDisplay.coordinateBoundingBox(), //
@@ -219,7 +219,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);
-      HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+      D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
       Classification classification = spinnerLabels.getValue().apply(vector);
       ColorDataLists colorDataLists = spinnerColor.getValue();
       ColorDataIndexed colorDataIndexed = colorDataLists.strict();
@@ -227,7 +227,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
           spinnerImage.getValue().operator(classification, operator, colorDataIndexed);
       int resolution = REFINEMENT;
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
-      Tensor raster = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
+      Tensor raster = D2Raster.of(hsArrayPlot, resolution, arrayFunction);
       BufferedImage bufferedImage = ImageFormat.of(raster);
       {
         Tensor matrix = ImageRender.pixel2model(hsArrayPlot.coordinateBoundingBox(), resolution, resolution);

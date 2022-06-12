@@ -14,7 +14,7 @@ import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotRender;
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -100,7 +100,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
     if (2 < n)
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
-        HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+        D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
         TensorMetric metric = manifoldDisplay.biinvariantMetric();
         TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(metric.distance(p, q));
@@ -121,7 +121,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
         };
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-        Tensor matrix = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
+        Tensor matrix = D2Raster.of(hsArrayPlot, resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
         ColorDataGradient colorDataGradient = spinnerColorData.getValue();
@@ -144,7 +144,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
     ArrayPlotRender arrayPlotRender = cache.apply(sequence);
     if (Objects.nonNull(arrayPlotRender)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+      D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
       new ImageRender(arrayPlotRender.bufferedImage(), hsArrayPlot.coordinateBoundingBox()) //
           .render(geometricLayer, graphics);
     }

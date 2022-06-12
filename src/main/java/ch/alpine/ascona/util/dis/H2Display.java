@@ -4,13 +4,13 @@ package ch.alpine.ascona.util.dis;
 import java.util.Optional;
 
 import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
-public class H2Display extends HnDisplay implements HsArrayPlot {
+public class H2Display extends HnDisplay implements D2Raster {
   public static final ManifoldDisplay INSTANCE = new H2Display();
 
   // ---
@@ -24,7 +24,7 @@ public class H2Display extends HnDisplay implements HsArrayPlot {
   }
 
   @Override // from HsArrayPlot
-  public Optional<Tensor> raster(Tensor pxy) {
+  public Optional<Tensor> d2lift(Tensor pxy) {
     return Optional.of(HnWeierstrassCoordinate.toPoint(pxy));
   }
 

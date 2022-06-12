@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -102,9 +102,9 @@ public class S2DefectNormDemo extends ControlPointsDemo {
 
   private BufferedImage bufferedImage(int resolution) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(new TSF(), DoubleScalar.INDETERMINATE);
-    Tensor matrix = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
+    Tensor matrix = D2Raster.of(hsArrayPlot, resolution, arrayFunction);
     matrix = Rescale.of(matrix);
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }
@@ -116,7 +116,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     RenderQuality.setDefault(graphics);
     int res = param.resolution.number().intValue();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();

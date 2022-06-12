@@ -4,7 +4,7 @@ package ch.alpine.ascona.util.dis;
 import java.util.Optional;
 
 import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.hs.sn.TSnProjection;
@@ -28,7 +28,7 @@ import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** symmetric positive definite 2 x 2 matrices */
-public class S2Display extends SnDisplay implements HsArrayPlot {
+public class S2Display extends SnDisplay implements D2Raster {
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
   // ---
   public static final ManifoldDisplay INSTANCE = new S2Display();
@@ -99,7 +99,7 @@ public class S2Display extends SnDisplay implements HsArrayPlot {
   }
 
   @Override // from GeodesicArrayPlot
-  public Optional<Tensor> raster(Tensor point) {
+  public Optional<Tensor> d2lift(Tensor point) {
     Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
     return Optional.ofNullable(Sign.isPositive(z2) ? point.append(Sqrt.FUNCTION.apply(z2)) : null);
   }
@@ -110,7 +110,7 @@ public class S2Display extends SnDisplay implements HsArrayPlot {
   }
 
   @Override
-  public Tensor lift(Tensor p) {
+  public Tensor unproject(Tensor p) {
     return p.copy();
   }
 

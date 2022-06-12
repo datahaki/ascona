@@ -4,7 +4,7 @@ package ch.alpine.ascona.gbc.d2;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.MixedLogWeightings;
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
@@ -32,7 +32,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
     super(ManifoldDisplays.R2_ONLY, MixedLogWeightings.scattered());
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     {
       jToggleRigidMotionFit.addActionListener(l -> recompute());
       timerFrame.jToolBar.add(jToggleRigidMotionFit);
@@ -51,7 +51,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   synchronized Tensor shufflePointsSe2(int n) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
-        .map(manifoldDisplay::lift));
+        .map(manifoldDisplay::unproject));
     return tensor;
   }
 
@@ -60,7 +60,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
     int res = refinement();
     // TODO ASCONA ALG meshgrid functionality is already(?)/should be generalized
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     CoordinateBoundingBox coordinateBoundingBox = hsArrayPlot.coordinateBoundingBox();
     Tensor dx = Subdivide.increasing(coordinateBoundingBox.getClip(0), res - 1);
     Tensor dy = Subdivide.increasing(coordinateBoundingBox.getClip(1), res - 3);

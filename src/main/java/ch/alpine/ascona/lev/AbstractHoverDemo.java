@@ -44,7 +44,7 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
   protected void shuffle(int n) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
-        .map(manifoldDisplay::lift));
+        .map(manifoldDisplay::unproject));
     setControlPointsSe2(tensor);
   }
 

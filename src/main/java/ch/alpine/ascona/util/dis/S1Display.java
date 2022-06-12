@@ -45,7 +45,7 @@ public class S1Display extends SnDisplay {
   }
 
   @Override
-  public Tensor lift(Tensor p) {
+  public Tensor unproject(Tensor p) {
     return p.copy().append(RealScalar.ZERO);
   }
 

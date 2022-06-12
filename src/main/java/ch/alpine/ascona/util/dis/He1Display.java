@@ -82,7 +82,7 @@ public enum He1Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor lift(Tensor p) {
+  public Tensor unproject(Tensor p) {
     return Tensors.of(p.Get(0, 0), p.Get(1, 0), p.Get(2));
   }
 

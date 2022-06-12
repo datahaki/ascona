@@ -134,7 +134,7 @@ class ManifoldDisplaysTest {
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
     if (Objects.nonNull(randomSampleInterface)) {
       Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor xya = manifoldDisplay.lift(p);
+      Tensor xya = manifoldDisplay.unproject(p);
       Tensor q = manifoldDisplay.project(xya);
       if (!manifoldDisplays.equals(ManifoldDisplays.So3))
         Tolerance.CHOP.requireClose(p, q);

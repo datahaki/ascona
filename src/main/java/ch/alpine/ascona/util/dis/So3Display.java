@@ -98,7 +98,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor lift(Tensor p) {
+  public Tensor unproject(Tensor p) {
     return Rodrigues.INSTANCE.vectorLog(p).multiply(radius);
   }
 

@@ -15,7 +15,7 @@ import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotRender;
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.sophus.hs.Biinvariant;
@@ -74,10 +74,10 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
 
   protected final ArrayPlotRender arrayPlotRender(Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator, int magnification) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, fallback);
-    Tensor wgs = HsArrayPlot.of(hsArrayPlot, refinement, arrayFunction);
+    Tensor wgs = D2Raster.of(hsArrayPlot, refinement, arrayFunction);
     return ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient(), magnification, logWeighting().equals(LogWeightings.DISTANCES));
   }
 

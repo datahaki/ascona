@@ -3,12 +3,12 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.Optional;
 
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.VectorQ;
 
-public class R2Display extends RnDisplay implements HsArrayPlot {
+public class R2Display extends RnDisplay implements D2Raster {
   public static final ManifoldDisplay INSTANCE = new R2Display();
 
   private R2Display() {
@@ -26,7 +26,7 @@ public class R2Display extends RnDisplay implements HsArrayPlot {
   }
 
   @Override // from GeodesicArrayPlot
-  public Optional<Tensor> raster(Tensor pxy) {
+  public Optional<Tensor> d2lift(Tensor pxy) {
     return Optional.of(pxy);
   }
 }

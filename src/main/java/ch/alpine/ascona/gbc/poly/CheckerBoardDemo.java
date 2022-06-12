@@ -16,7 +16,7 @@ import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotRender;
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -103,10 +103,10 @@ public class CheckerBoardDemo extends LogWeightingBase //
           TensorScalarFunction tensorUnaryOperator = function(sequence, reference.multiply( //
               param.factor()));
           ManifoldDisplay manifoldDisplay = manifoldDisplay();
-          HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+          D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
           // TODO ASCONA ALG redundant
           ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, DoubleScalar.INDETERMINATE);
-          Tensor matrix = HsArrayPlot.of(hsArrayPlot, 512, arrayFunction);
+          Tensor matrix = D2Raster.of(hsArrayPlot, 512, arrayFunction);
           BufferedImage bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1, false).bufferedImage();
           ImageIO.write(bufferedImage, "png", new File(folder, logWeighting.toString() + ".png"));
           // RenderQuality.setDefault(graphics); // default so that raster becomes visible
@@ -126,10 +126,10 @@ public class CheckerBoardDemo extends LogWeightingBase //
       System.out.println("compute");
       Tensor sequence = getGeodesicControlPoints();
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+      D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
       TensorScalarFunction tsf = function(sequence, reference.multiply(param.factor()));
       ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-      Tensor matrix = HsArrayPlot.of(hsArrayPlot, param.refine.number().intValue(), arrayFunction);
+      Tensor matrix = D2Raster.of(hsArrayPlot, param.refine.number().intValue(), arrayFunction);
       bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1, false).bufferedImage();
     } else {
       bufferedImage = null;
@@ -139,7 +139,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));
     RenderQuality.setQuality(graphics);

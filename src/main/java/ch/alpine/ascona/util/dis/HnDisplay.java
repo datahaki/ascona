@@ -94,7 +94,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override
-  public final Tensor lift(Tensor p) {
+  public final Tensor unproject(Tensor p) {
     return LIFT.apply(p.extract(0, dimensions));
   }
 

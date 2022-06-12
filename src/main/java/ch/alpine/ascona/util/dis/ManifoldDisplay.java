@@ -29,7 +29,7 @@ public interface ManifoldDisplay {
    * 
    * @param p
    * @return xya */
-  Tensor lift(Tensor p);
+  Tensor unproject(Tensor p);
 
   /** @param p control point
    * @return vector of length 2 with grid coordinates {x, y} */
@@ -71,7 +71,7 @@ public interface ManifoldDisplay {
 
   LineDistance lineDistance();
 
-  /** @return points in manifold that have to be {@link #lift(Tensor)}ed
+  /** @return points in manifold that have to be {@link #unproject(Tensor)}ed
    * in order to become control points in the form xya */
   RandomSampleInterface randomSampleInterface();
 

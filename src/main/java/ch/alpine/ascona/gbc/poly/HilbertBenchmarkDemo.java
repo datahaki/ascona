@@ -16,6 +16,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.crv.d2.HilbertPolygon;
@@ -36,6 +37,7 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
     public Scalar levels = RealScalar.of(2);
     @FieldInteger
     @FieldClip(min = "20", max = "100")
+    @FieldSelectionArray({ "30", "50" })
     public Scalar resolution = RealScalar.of(20);
     public Boolean ctrl = false;
   }

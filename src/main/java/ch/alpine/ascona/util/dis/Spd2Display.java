@@ -113,7 +113,7 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor lift(Tensor p) {
+  public Tensor unproject(Tensor p) {
     return sim2xya(Spd0Exponential.INSTANCE.log(p));
   }
 

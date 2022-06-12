@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -78,10 +78,10 @@ public class LineDistanceDemo extends ControlPointsDemo {
 
   private BufferedImage bufferedImage(int resolution) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     TensorScalarFunction tsf = tensorNorm()::norm;
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-    Tensor matrix = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
+    Tensor matrix = D2Raster.of(hsArrayPlot, resolution, arrayFunction);
     matrix = Rescale.of(matrix);
     return ImageFormat.of(matrix.map(param.colorDataGradients));
   }
@@ -93,7 +93,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     RenderQuality.setDefault(graphics);
     BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue());

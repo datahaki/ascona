@@ -14,7 +14,7 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotRender;
-import ch.alpine.ascona.util.arp.HsArrayPlot;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -109,12 +109,12 @@ public class D2AveragingDemo extends AnAveragingDemo {
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
         TensorScalarFunction tensorScalarFunction = function(sequence, values);
-        HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+        D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
         ScalarUnaryOperator suo = Round.toMultipleOf(RationalScalar.of(2, 10));
         TensorScalarFunction tsf = t -> suo.apply(tensorScalarFunction.apply(t));
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-        Tensor matrix = HsArrayPlot.of(hsArrayPlot, resolution, arrayFunction);
+        Tensor matrix = D2Raster.of(hsArrayPlot, resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
         if (jToggleThresh.isSelected())
@@ -136,7 +136,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
     prepare();
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HsArrayPlot hsArrayPlot = (HsArrayPlot) manifoldDisplay;
+    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     Tensor sequence = getGeodesicControlPoints();
     Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
     ArrayPlotRender arrayPlotRender = cache.apply(Unprotect.byRef(sequence, values));

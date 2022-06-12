@@ -85,7 +85,7 @@ public enum Dt1Display implements ManifoldDisplay {
   }
 
   @Override
-  public Tensor lift(Tensor p) {
+  public Tensor unproject(Tensor p) {
     return p.copy().append(RealScalar.ZERO);
   }
 

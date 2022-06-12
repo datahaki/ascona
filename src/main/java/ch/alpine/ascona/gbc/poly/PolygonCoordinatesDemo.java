@@ -15,7 +15,7 @@ import ch.alpine.ascona.gbc.AbstractArrayCoordinateDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.arp.ArrayPlotRender;
-import ch.alpine.ascona.util.arp.HsArrayPlots;
+import ch.alpine.ascona.util.arp.BackgroundOffscreen;
 import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
@@ -99,7 +99,7 @@ public class PolygonCoordinatesDemo extends AbstractArrayCoordinateDemo //
         int refinement = resolution();
         try {
           ArrayPlotRender arrayPlotRender = arrayPlotRender(sequence, refinement, tensorUnaryOperator, 1);
-          BufferedImage bufferedImage = HsArrayPlots.fuseImages(manifoldDisplay, arrayPlotRender.export(), refinement, sequence.length());
+          BufferedImage bufferedImage = BackgroundOffscreen.fuseImages(manifoldDisplay, arrayPlotRender.export(), sequence.length());
           File file = new File(root, logWeighting.toString() + ".png");
           ImageIO.write(bufferedImage, "png", file);
           htmlUtf8.appendln(logWeighting.toString() + "<br/>");

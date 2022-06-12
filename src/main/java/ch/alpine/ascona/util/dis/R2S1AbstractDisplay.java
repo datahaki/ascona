@@ -69,7 +69,7 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   }
 
   @Override
-  public final Tensor lift(Tensor p) {
+  public final Tensor unproject(Tensor p) {
     return p.copy();
   }
 }
