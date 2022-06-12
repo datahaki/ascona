@@ -67,7 +67,6 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     ClothoidBuilder clothoidBuilder = (ClothoidBuilder) manifoldDisplay.geodesicSpace();
-    ;
     VisualSet visualSet = new VisualSet();
     for (int index = 0; index < sequence.length() - 1; index += 2) {
       Tensor cr = sequence.get(index + 0);

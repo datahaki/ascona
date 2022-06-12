@@ -4,7 +4,7 @@ package ch.alpine.ascona.util.dis;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,7 @@ class S2DisplayTest {
   @Test
   public void testSimple() {
     Tensor tensor = S2Display.tangentSpace(Tensors.vector(0, 1, 0));
-    assertEquals(Dimensions.of(tensor), Arrays.asList(2, 3));
+    assertEquals(Dimensions.of(tensor), List.of(2, 3));
   }
 
   @Test
@@ -36,7 +36,7 @@ class S2DisplayTest {
   public void testTangent() {
     Tensor xyz = Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 0.3, 0.5));
     Tensor matrix = S2Display.tangentSpace(xyz);
-    assertEquals(Dimensions.of(matrix), Arrays.asList(2, 3));
+    assertEquals(Dimensions.of(matrix), List.of(2, 3));
     Tolerance.CHOP.requireAllZero(matrix.dot(xyz));
   }
 

@@ -2,7 +2,7 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Graphics2D;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import javax.swing.JToggleButton;
@@ -30,7 +30,7 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public ThreePointBarycenterDemo() {
-    super(true, ManifoldDisplays.ARRAYS, Arrays.asList(PolygonCoordinates.values()));
+    super(true, ManifoldDisplays.ARRAYS, List.of(PolygonCoordinates.values()));
     // ---
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---

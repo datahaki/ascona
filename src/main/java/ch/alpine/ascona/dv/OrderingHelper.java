@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.BarLegend;
@@ -55,8 +54,7 @@ import ch.alpine.tensor.sca.Clips;
       dy = FACTOR.multiply(Pi.VALUE);
       Scalar px = Pi.VALUE.add(RealScalar.of(0.4));
       Scalar py = dy.negate();
-      CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox
-          .of(Stream.of(Clips.interval(px, px.add(dy.add(dy))), Clips.interval(py, py.add(dy.add(dy)))));
+      CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of(Clips.interval(px, px.add(dy.add(dy))), Clips.interval(py, py.add(dy.add(dy))));
       // Tensor pixel2model = HsArrayPlots.pixel2model( //
       // coordinateBoundingBox, //
       // new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));

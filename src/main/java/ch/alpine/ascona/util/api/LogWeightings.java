@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.util.api;
 
-import java.util.Arrays;
 import java.util.List;
 
 import ch.alpine.sophus.gbc.InverseCoordinate;
@@ -147,11 +146,11 @@ public enum LogWeightings implements LogWeighting {
   ;
 
   public static List<LogWeighting> list() {
-    return Arrays.asList(values());
+    return List.of(values());
   }
 
   public static List<LogWeighting> coordinates() {
-    return Arrays.asList( //
+    return List.of( //
         COORDINATE, //
         LAGRAINATE, //
         KRIGING_COORDINATE, //
@@ -159,7 +158,7 @@ public enum LogWeightings implements LogWeighting {
   }
 
   public static List<LogWeighting> averagings() {
-    return Arrays.asList( //
+    return List.of( //
         WEIGHTING, //
         COORDINATE, //
         LAGRAINATE, //

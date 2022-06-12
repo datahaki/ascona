@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -53,7 +52,7 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   final SpinnerLabel<Integer> spinnerRefine;
 
   public MinimumSpanningTreeDemo() {
-    super(true, ManifoldDisplays.MANIFOLDS, Arrays.asList(LogWeightings.DISTANCES));
+    super(true, ManifoldDisplays.MANIFOLDS, List.of(LogWeightings.DISTANCES));
     // ---
     spinnerRefine = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     spinnerRefine.setValue(2);

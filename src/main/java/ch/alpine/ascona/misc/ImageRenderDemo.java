@@ -2,7 +2,6 @@
 package ch.alpine.ascona.misc;
 
 import java.awt.Graphics2D;
-import java.util.stream.Stream;
 
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.ImageRender;
@@ -17,7 +16,7 @@ import ch.alpine.tensor.sca.Clips;
 
 public class ImageRenderDemo extends AbstractDemo {
   private static final CoordinateBoundingBox COORDINATE_BOUNDING_BOX = //
-      CoordinateBoundingBox.of(Stream.of(Clips.interval(-0.4, 1), Clips.interval(-0.35, 0.35)));
+      CoordinateBoundingBox.of(Clips.interval(-0.4, 1), Clips.interval(-0.35, 0.35));
 
   @Override // from RenderInterface
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {

@@ -2,7 +2,7 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Graphics2D;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import javax.swing.JToggleButton;
@@ -26,7 +26,7 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public LbsBarycenterDemo() {
-    super(true, ManifoldDisplays.S2_ONLY, Arrays.asList(PolygonCoordinates.values()));
+    super(true, ManifoldDisplays.S2_ONLY, List.of(PolygonCoordinates.values()));
     // ---
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---

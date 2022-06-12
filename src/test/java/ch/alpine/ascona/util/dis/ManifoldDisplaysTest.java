@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -78,7 +77,7 @@ class ManifoldDisplaysTest {
     Tensor p = manifoldDisplay.project(xya);
     VectorQ.requireLength(manifoldDisplay.toPoint(p), 2);
     Tensor matrix = manifoldDisplay.matrixLift(p);
-    assertEquals(Dimensions.of(matrix), Arrays.asList(3, 3));
+    assertEquals(Dimensions.of(matrix), List.of(3, 3));
     assertThrows(Exception.class, () -> manifoldDisplay.toPoint(null));
   }
 

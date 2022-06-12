@@ -3,7 +3,6 @@ package ch.alpine.ascona.flt;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import ch.alpine.ascona.util.dat.GokartPoseData;
@@ -28,7 +27,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
   private void process(File ROOT) throws IOException {
     List<String> dataSource = gokartPoseData.list();
-    List<WindowFunctions> kernel = Arrays.asList(WindowFunctions.GAUSSIAN, WindowFunctions.HAMMING, WindowFunctions.BLACKMAN);
+    List<WindowFunctions> kernel = List.of(WindowFunctions.GAUSSIAN, WindowFunctions.HAMMING, WindowFunctions.BLACKMAN);
     // iterate over data
     for (String data : dataSource) {
       // iterate over Kernels

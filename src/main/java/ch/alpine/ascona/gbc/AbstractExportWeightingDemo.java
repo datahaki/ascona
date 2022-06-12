@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -80,7 +79,7 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
   }
 
   private static List<Biinvariant> distinct() {
-    return Arrays.asList( //
+    return List.of( //
         MetricBiinvariant.EUCLIDEAN, // FIXME ASCONA ALG should be retrieved from bitype
         Biinvariants.LEVERAGES, //
         Biinvariants.GARDEN, //

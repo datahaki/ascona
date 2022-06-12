@@ -3,7 +3,7 @@ package ch.alpine.ascona.gbc.d1;
 
 import java.awt.BasicStroke;
 import java.awt.Stroke;
-import java.util.Arrays;
+import java.util.List;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.N;
   private static final Scalar MARGIN = RealScalar.of(2);
 
   public A1AveragingDemo(ManifoldDisplay manifoldDisplay) {
-    super(Arrays.asList(manifoldDisplay));
+    super(List.of(manifoldDisplay));
   }
 
   final Tensor domain() {

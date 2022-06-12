@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.ref.d1;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +14,7 @@ import ch.alpine.tensor.Scalar;
 
 /* package */ enum CurveSubdivisionHelper {
   ;
-  public static final List<CurveSubdivisionSchemes> LANE_RIESENFELD = Arrays.asList( //
+  public static final List<CurveSubdivisionSchemes> LANE_RIESENFELD = List.of( //
       CurveSubdivisionSchemes.LR1, //
       CurveSubdivisionSchemes.LR2, //
       CurveSubdivisionSchemes.LR3, //

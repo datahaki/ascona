@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -82,7 +81,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     setControlPointsSe2(control);
     {
       JButton jButton = new JButton("load");
-      List<String> list = Arrays.asList("ducttape/20180514.csv", "tires/20190116.csv", "tires/20190117.csv");
+      List<String> list = List.of("ducttape/20180514.csv", "tires/20190116.csv", "tires/20190117.csv");
       jButton.addActionListener(e -> {
         SpinnerMenu<String> spinnerMenu = new SpinnerMenu<String>(list, null, false);
         spinnerMenu.addSpinnerListener(string -> {

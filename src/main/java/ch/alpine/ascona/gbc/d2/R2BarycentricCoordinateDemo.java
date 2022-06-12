@@ -8,7 +8,6 @@ import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -63,9 +62,9 @@ import ch.alpine.tensor.sca.Sign;
 
   public static List<LogWeighting> list() {
     List<LogWeighting> list = new ArrayList<>();
-    list.addAll(Arrays.asList(PolygonCoordinates.values()));
+    list.addAll(List.of(PolygonCoordinates.values()));
     list.addAll(LogWeightings.list());
-    list.addAll(Arrays.asList(MixedLogWeightings.values()));
+    list.addAll(List.of(MixedLogWeightings.values()));
     return list;
   }
 

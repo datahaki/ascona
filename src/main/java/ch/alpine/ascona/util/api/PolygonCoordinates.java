@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.util.api;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
@@ -98,7 +97,7 @@ public enum PolygonCoordinates implements LogWeighting {
   }
 
   public static List<LogWeighting> list() {
-    return Arrays.asList(values());
+    return List.of(values());
   }
 
   public Genesis genesis() {

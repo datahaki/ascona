@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascona.util.api;
 
-import java.util.stream.Stream;
-
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
@@ -15,7 +13,7 @@ public enum Box2D {
   public static final Tensor CORNERS = Tensors.fromString("{{-1, -1}, {1, -1}, {1, 1}, {-1, 1}}").unmodifiable();
 
   public static CoordinateBoundingBox xy(Clip clip) {
-    return CoordinateBoundingBox.of(Stream.of(clip, clip));
+    return CoordinateBoundingBox.of(clip, clip);
   }
 
   /** @param coordinateBoundingBox

@@ -4,7 +4,6 @@ package ch.alpine.ascona.ref.d1;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -92,7 +91,7 @@ public class ApproximationDemo extends AbstractDemo {
     public Scalar level = RealScalar.of(5);
 
     public List<CurveSubdivisionSchemes> schemes() {
-      return Arrays.asList(SCHEMES);
+      return List.of(SCHEMES);
     }
   }
 

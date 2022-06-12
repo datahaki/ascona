@@ -8,7 +8,6 @@ import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import ch.alpine.ascona.misc.VehicleStatic;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
@@ -51,9 +50,9 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
-  private static final CoordinateBoundingBox BOX = CoordinateBoundingBox.of(Stream.of( //
+  private static final CoordinateBoundingBox BOX = CoordinateBoundingBox.of( //
       Clips.interval(-0.22, 0.53), //
-      Clips.interval(-0.22, 0.22)));
+      Clips.interval(-0.22, 0.22));
 
   @ReflectionMarker
   public static class Param {

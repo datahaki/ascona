@@ -2,7 +2,6 @@
 package ch.alpine.ascona.util.api;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ch.alpine.sophus.hs.Biinvariant;
@@ -39,7 +38,7 @@ public enum MixedLogWeightings implements LogWeighting {
   public static List<LogWeighting> scattered() { //
     List<LogWeighting> list = new ArrayList<>();
     list.addAll(LogWeightings.list());
-    list.addAll(Arrays.asList(values()));
+    list.addAll(List.of(values()));
     return list;
   }
 }

@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import java.util.Arrays;
 import java.util.List;
 
 // TODO ASCONA filter candidates dynamically for properties
@@ -33,7 +32,7 @@ public enum ManifoldDisplays {
     return manifoldDisplay;
   }
 
-  public static final List<ManifoldDisplay> ALL = Arrays.asList( //
+  public static final List<ManifoldDisplay> ALL = List.of( //
       Se2ClothoidDisplay.ANALYTIC, //
       Se2ClothoidDisplay.LEGENDRE, //
       Se2CoveringClothoidDisplay.INSTANCE, //
@@ -52,7 +51,7 @@ public enum ManifoldDisplays {
       Dt1Display.INSTANCE);
   // ---
   /** requires biinvariant() */
-  public static final List<ManifoldDisplay> METRIC = Arrays.asList( //
+  public static final List<ManifoldDisplay> METRIC = List.of( //
       Spd2Display.INSTANCE, //
       R2Display.INSTANCE, //
       S1Display.INSTANCE, //
@@ -62,7 +61,7 @@ public enum ManifoldDisplays {
       So3Display.INSTANCE);
   // ---
   /** homogeneous spaces (have biinvariant mean) */
-  public static final List<ManifoldDisplay> MANIFOLDS = Arrays.asList( //
+  public static final List<ManifoldDisplay> MANIFOLDS = List.of( //
       Se2CoveringDisplay.INSTANCE, //
       Se2Display.INSTANCE, //
       Spd2Display.INSTANCE, //
@@ -76,57 +75,57 @@ public enum ManifoldDisplays {
       Dt1Display.INSTANCE);
   // ---
   /** have array */
-  public static final List<ManifoldDisplay> ARRAYS = Arrays.asList( //
+  public static final List<ManifoldDisplay> ARRAYS = List.of( //
       R2Display.INSTANCE, //
       H2Display.INSTANCE, //
       S2Display.INSTANCE, //
       Rp2Display.INSTANCE);
   // ---
-  public static final List<ManifoldDisplay> R2_ONLY = Arrays.asList( //
+  public static final List<ManifoldDisplay> R2_ONLY = List.of( //
       R2Display.INSTANCE);
-  public static final List<ManifoldDisplays> l_R2_ONLY = Arrays.asList( //
+  public static final List<ManifoldDisplays> l_R2_ONLY = List.of( //
       R2);
-  public static final List<ManifoldDisplay> R2_S2 = Arrays.asList( //
+  public static final List<ManifoldDisplay> R2_S2 = List.of( //
       R2Display.INSTANCE, //
       S2Display.INSTANCE);
   // ---
-  public static final List<ManifoldDisplay> SE2C_R2 = Arrays.asList( //
+  public static final List<ManifoldDisplay> SE2C_R2 = List.of( //
       Se2CoveringDisplay.INSTANCE, //
       R2Display.INSTANCE);
   // ---
-  public static final List<ManifoldDisplay> SE2_ONLY = Arrays.asList( //
+  public static final List<ManifoldDisplay> SE2_ONLY = List.of( //
       Se2Display.INSTANCE);
-  public static final List<ManifoldDisplays> l_SE2_ONLY = Arrays.asList( //
+  public static final List<ManifoldDisplays> l_SE2_ONLY = List.of( //
       Se2);
   // ---
-  public static final List<ManifoldDisplay> SE2_R2 = Arrays.asList( //
+  public static final List<ManifoldDisplay> SE2_R2 = List.of( //
       Se2Display.INSTANCE, //
       R2Display.INSTANCE);
-  public static final List<ManifoldDisplays> l_SE2_R2 = Arrays.asList( //
+  public static final List<ManifoldDisplays> l_SE2_R2 = List.of( //
       Se2, //
       R2);
   // ---
-  public static final List<ManifoldDisplay> SE2C_SE2_R2 = Arrays.asList( //
+  public static final List<ManifoldDisplay> SE2C_SE2_R2 = List.of( //
       Se2CoveringDisplay.INSTANCE, //
       Se2Display.INSTANCE, //
       R2Display.INSTANCE);
   // ---
-  public static final List<ManifoldDisplay> SE2C_SE2 = Arrays.asList( //
+  public static final List<ManifoldDisplay> SE2C_SE2 = List.of( //
       Se2CoveringDisplay.INSTANCE, //
       Se2Display.INSTANCE);
-  public static final List<ManifoldDisplays> l_SE2C_SE2 = Arrays.asList( //
+  public static final List<ManifoldDisplays> l_SE2C_SE2 = List.of( //
       Se2C, //
       Se2);
   // ---
-  public static final List<ManifoldDisplay> S2_ONLY = Arrays.asList( //
+  public static final List<ManifoldDisplay> S2_ONLY = List.of( //
       S2Display.INSTANCE);
-  public static final List<ManifoldDisplay> H2_ONLY = Arrays.asList( //
+  public static final List<ManifoldDisplay> H2_ONLY = List.of( //
       H2Display.INSTANCE);
-  public static final List<ManifoldDisplay> CL_ONLY = Arrays.asList( //
+  public static final List<ManifoldDisplay> CL_ONLY = List.of( //
       Se2ClothoidDisplay.ANALYTIC, //
       Se2ClothoidDisplay.LEGENDRE //
   );
-  public static final List<ManifoldDisplay> CLC_ONLY = Arrays.asList( //
+  public static final List<ManifoldDisplay> CLC_ONLY = List.of( //
       Se2CoveringClothoidDisplay.INSTANCE, //
       Se2ClothoidDisplay.ANALYTIC, //
       Se2ClothoidDisplay.LEGENDRE //
