@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.mat.Tolerance;
 
 class ClassificationTest {
   @Test
@@ -26,7 +26,7 @@ class ClassificationTest {
     Tensor weights = Tensors.vector(0.7, 0.2, 0.3, 0.8);
     ClassificationResult classificationResult = classification.result(weights);
     assertEquals(classificationResult.getLabel(), 4);
-    Chop._12.requireClose(classificationResult.getConfidence(), RealScalar.of(0.125));
+    Tolerance.CHOP.requireClose(classificationResult.getConfidence(), RealScalar.of(0.125));
   }
 
   @Test
@@ -34,6 +34,6 @@ class ClassificationTest {
     Classification classification = Classifier.accMax(Tensors.vector(3, 2, 4));
     ClassificationResult classificationResult = classification.result(Tensors.vector(0.2, 0.3, 0.8));
     assertEquals(classificationResult.getLabel(), 4);
-    Chop._12.requireClose(classificationResult.getConfidence(), RealScalar.of(0.375));
+    Tolerance.CHOP.requireClose(classificationResult.getConfidence(), RealScalar.of(0.375));
   }
 }

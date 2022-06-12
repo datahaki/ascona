@@ -11,7 +11,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 public record H2ArrayPlot(CoordinateBoundingBox coordinateBoundingBox) implements HsArrayPlot, Serializable {
-  @Override // from GeodesicArrayPlot
+  @Override // from HsArrayPlot
   public Tensor raster(int resolution, Function<Tensor, ? extends Tensor> function, Tensor fallback) {
     Tensor dx = Subdivide.increasing(coordinateBoundingBox.getClip(0), resolution - 1);
     Tensor dy = Subdivide.decreasing(coordinateBoundingBox.getClip(1), resolution - 1);

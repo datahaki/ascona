@@ -9,7 +9,7 @@ import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDataV1;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.lie.se2.Se2Differences;
+import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -51,7 +51,8 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   private Tensor speeds(Tensor refined) {
-    return Se2Differences.INSTANCE.apply(refined).multiply(gokartPoseData.getSampleRate());
+    LieDifferences INSTANCE = new LieDifferences(Se2Group.INSTANCE);
+    return INSTANCE.apply(refined).multiply(gokartPoseData.getSampleRate());
   }
 
   public static void main(String[] args) throws IOException {

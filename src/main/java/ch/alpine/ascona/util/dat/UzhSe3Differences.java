@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.lie.se3.Se3Differences;
+import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.se3.Se3Group;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
@@ -25,8 +25,9 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     System.out.println(Dimensions.of(poses));
     Put.of(HomeDirectory.file("MH_04_difficult_poses.file"), poses);
     System.out.println("differences");
+    LieDifferences lieDifferences = new LieDifferences(Se3Group.INSTANCE);
     {
-      Tensor delta = Se3Differences.INSTANCE.apply(poses);
+      Tensor delta = lieDifferences.apply(poses);
       Put.of(HomeDirectory.file("MH_04_difficult_delta.file"), delta);
     }
     System.out.println("smooth");
@@ -37,7 +38,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
       System.out.println("store");
       Put.of(HomeDirectory.file("MH_04_difficult_poses_smooth.file"), smooth);
       System.out.println("differences");
-      Tensor delta = Se3Differences.INSTANCE.apply(smooth);
+      Tensor delta = lieDifferences.apply(smooth);
       System.out.println("store");
       Put.of(HomeDirectory.file("MH_04_difficult_delta_smooth.file"), delta);
     }

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.lie.se2.Se2Differences;
+import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
@@ -29,8 +29,9 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     // }
     System.out.println(Dimensions.of(poses));
     Put.of(HomeDirectory.file("gokart_poses.file"), poses);
+    LieDifferences INSTANCE = new LieDifferences(Se2Group.INSTANCE);
     {
-      Tensor delta = Se2Differences.INSTANCE.apply(poses);
+      Tensor delta = INSTANCE.apply(poses);
       Put.of(HomeDirectory.file("gokart_delta.file"), delta);
     }
     {
@@ -38,7 +39,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
           new CenterFilter(GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), 6);
       Tensor smooth = tensorUnaryOperator.apply(poses);
       Put.of(HomeDirectory.file("gokart_poses_gauss.file"), smooth);
-      Tensor delta = Se2Differences.INSTANCE.apply(smooth);
+      Tensor delta = INSTANCE.apply(smooth);
       Put.of(HomeDirectory.file("gokart_delta_gauss.file"), delta);
     }
     {
@@ -46,7 +47,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
           new CenterFilter(GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.HAMMING.get()), 6);
       Tensor smooth = tensorUnaryOperator.apply(poses);
       Put.of(HomeDirectory.file("gokart_poses_hammi.file"), smooth);
-      Tensor delta = Se2Differences.INSTANCE.apply(smooth);
+      Tensor delta = INSTANCE.apply(smooth);
       Put.of(HomeDirectory.file("gokart_delta_hammi.file"), delta);
     }
   }

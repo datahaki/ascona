@@ -1,7 +1,8 @@
 // code by jph
 package ch.alpine.ascona.util.api;
 
-import ch.alpine.sophus.lie.se2c.Se2CoveringDifferences;
+import ch.alpine.sophus.lie.LieDifferences;
+import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringIntegrator;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -25,7 +26,8 @@ public enum DubinsGenerator {
   /** @param tensor of poses in SE(2)
    * @return */
   public static Tensor project(Tensor tensor) {
-    Tensor differences = Se2CoveringDifferences.INSTANCE.apply(tensor);
+    LieDifferences INSTANCE = new LieDifferences(Se2CoveringGroup.INSTANCE);
+    Tensor differences = INSTANCE.apply(tensor);
     differences.set(Scalar::zero, Tensor.ALL, 1); // project vy (side slip) to zero
     return of(tensor.get(0), differences);
   }

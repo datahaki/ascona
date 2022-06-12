@@ -64,7 +64,6 @@ public enum BarLegend {
     RenderQuality.setQuality(graphics);
     graphics.drawString(smax, ofx - wmax, fontMetrics.getAscent());
     graphics.drawString(smin, ofx - wmin, height);
-    RenderQuality.setDefault(graphics);
     return bufferedImage;
   }
 }
