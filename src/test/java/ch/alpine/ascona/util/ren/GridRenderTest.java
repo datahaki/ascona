@@ -11,17 +11,17 @@ import ch.alpine.tensor.mat.HilbertMatrix;
 
 class GridRenderTest {
   @Test
-  public void testFailMatrix() {
+  void testFailMatrix() {
     assertThrows(Exception.class, () -> new GridRender(HilbertMatrix.of(3), HilbertMatrix.of(4)));
   }
 
   @Test
-  public void testFailScalar() {
+  void testFailScalar() {
     assertThrows(Exception.class, () -> new GridRender(RealScalar.ONE, RealScalar.ZERO));
   }
 
   @Test
-  public void testFailColorNull() {
+  void testFailColorNull() {
     assertThrows(Exception.class, () -> new GridRender(Subdivide.of(1, 2, 3), Subdivide.of(1, 2, 3), null));
   }
 }

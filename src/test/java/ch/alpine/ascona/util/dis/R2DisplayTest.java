@@ -9,7 +9,7 @@ import ch.alpine.sophus.lie.rn.RnGroup;
 
 class R2DisplayTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertEquals(R2Display.INSTANCE.geodesicSpace(), RnGroup.INSTANCE);
   }
 }

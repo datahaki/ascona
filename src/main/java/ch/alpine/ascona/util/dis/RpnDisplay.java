@@ -50,10 +50,6 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   public final Biinvariant biinvariant() {
     return MetricBiinvariant.EUCLIDEAN;
   }
-  // @Override // from ManifoldDisplay
-  // public final BiinvariantMean biinvariantMean() {
-  // return SnFastMean.INSTANCE; // TODO ASCONA ALG
-  // }
 
   @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {

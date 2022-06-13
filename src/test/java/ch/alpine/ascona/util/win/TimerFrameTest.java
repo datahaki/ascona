@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class TimerFrameTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     long convert = TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS);
     assertEquals(convert, 1000);
   }

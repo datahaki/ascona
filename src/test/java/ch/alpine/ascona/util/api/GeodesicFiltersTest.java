@@ -50,13 +50,13 @@ class GeodesicFiltersTest {
   }
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     _check(GokartPoseDataV1.INSTANCE);
     _check(GokartPoseDataV2.INSTANCE);
   }
 
   @Test
-  public void testTiming() {
+  void testTiming() {
     String name = "20190701T170957_06";
     Tensor control = GokartPoseDataV2.RACING_DAY.getPose(name, 1_000_000);
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;

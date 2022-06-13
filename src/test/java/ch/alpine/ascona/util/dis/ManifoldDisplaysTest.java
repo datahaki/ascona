@@ -34,25 +34,25 @@ import ch.alpine.tensor.sca.Chop;
 
 class ManifoldDisplaysTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertTrue(12 <= ManifoldDisplays.values().length);
   }
 
   @ParameterizedTest
   @EnumSource(ManifoldDisplays.class)
-  public void testSerializable(ManifoldDisplays manifoldDisplays) throws ClassNotFoundException, IOException {
+  void testSerializable(ManifoldDisplays manifoldDisplays) throws ClassNotFoundException, IOException {
     Serialization.copy(manifoldDisplays);
   }
 
   @ParameterizedTest
   @EnumSource(ManifoldDisplays.class)
-  public void testDimensions(ManifoldDisplays manifoldDisplays) {
+  void testDimensions(ManifoldDisplays manifoldDisplays) {
     assertTrue(0 < manifoldDisplays.manifoldDisplay().dimensions());
   }
 
   @ParameterizedTest
   @EnumSource(ManifoldDisplays.class)
-  public void testShape(ManifoldDisplays manifoldDisplays) {
+  void testShape(ManifoldDisplays manifoldDisplays) {
     Tensor shape = manifoldDisplays.manifoldDisplay().shape();
     List<Integer> list = Dimensions.of(shape);
     assertEquals(list.get(1), 2);
@@ -61,7 +61,7 @@ class ManifoldDisplaysTest {
 
   @ParameterizedTest
   @EnumSource(ManifoldDisplays.class)
-  public void testProject(ManifoldDisplays manifoldDisplays) {
+  void testProject(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     Tensor tensor = manifoldDisplay.project(Array.zeros(3));
     assertNotNull(tensor);
@@ -71,7 +71,7 @@ class ManifoldDisplaysTest {
 
   @ParameterizedTest
   @EnumSource(ManifoldDisplays.class)
-  public void testToPoint(ManifoldDisplays manifoldDisplays) {
+  void testToPoint(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     Tensor xya = Tensors.vector(0.1, 0.2, 0.3);
     Tensor p = manifoldDisplay.project(xya);
@@ -83,21 +83,21 @@ class ManifoldDisplaysTest {
 
   @ParameterizedTest
   @EnumSource(ManifoldDisplays.class)
-  public void testMatrixLiftNull(ManifoldDisplays manifoldDisplays) {
+  void testMatrixLiftNull(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     assertThrows(Exception.class, () -> manifoldDisplay.matrixLift(null));
   }
 
   @ParameterizedTest
   @EnumSource(ManifoldDisplays.class)
-  public void testGeodesicSpace(ManifoldDisplays manifoldDisplays) {
+  void testGeodesicSpace(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     assertNotNull(manifoldDisplay.geodesicSpace());
   }
 
   @ParameterizedTest
   @EnumSource(ManifoldDisplays.class)
-  public void testBiinvariantMean(ManifoldDisplays manifoldDisplays) {
+  void testBiinvariantMean(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     if (manifoldDisplay.geodesicSpace() instanceof HomogeneousSpace homogeneousSpace) {
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._04);
@@ -107,7 +107,7 @@ class ManifoldDisplaysTest {
 
   @ParameterizedTest
   @EnumSource(ManifoldDisplays.class)
-  public void testPointDistance(ManifoldDisplays manifoldDisplays) {
+  void testPointDistance(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     TensorMetric tensorMetric = manifoldDisplay.biinvariantMetric();
     Biinvariant biinvariant = manifoldDisplay.biinvariant();
@@ -118,7 +118,7 @@ class ManifoldDisplaysTest {
   }
 
   @Test
-  public void testRandomSample() {
+  void testRandomSample() {
     for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.MANIFOLDS) {
       if (Objects.isNull(manifoldDisplay.randomSampleInterface())) {
         System.err.println(manifoldDisplay);
@@ -129,7 +129,7 @@ class ManifoldDisplaysTest {
 
   @ParameterizedTest
   @EnumSource(ManifoldDisplays.class)
-  public void testList(ManifoldDisplays manifoldDisplays) {
+  void testList(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
     if (Objects.nonNull(randomSampleInterface)) {
@@ -142,13 +142,13 @@ class ManifoldDisplaysTest {
   }
 
   @Test
-  public void testHs() {
+  void testHs() {
     for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.MANIFOLDS)
       assertTrue(manifoldDisplay.geodesicSpace() instanceof HomogeneousSpace);
   }
 
   @Test
-  public void testToString() {
+  void testToString() {
     long count = ManifoldDisplays.ALL.stream().map(Object::toString).distinct().count();
     assertEquals(count, ManifoldDisplays.ALL.size());
   }

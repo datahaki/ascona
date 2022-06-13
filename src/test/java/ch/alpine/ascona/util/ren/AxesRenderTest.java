@@ -12,7 +12,7 @@ import ch.alpine.tensor.mat.IdentityMatrix;
 
 class AxesRenderTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     BufferedImage bi = ImageFormat.of(Array.zeros(100, 100, 4));
     AxesRender.INSTANCE.render( //
         new GeometricLayer(IdentityMatrix.of(3)), bi.createGraphics());

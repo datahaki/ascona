@@ -19,7 +19,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class HnMeansTest {
   @Test
-  public void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() throws ClassNotFoundException, IOException {
     Random random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     for (HnMeans hnMeans : HnMeans.values()) {

@@ -14,13 +14,13 @@ import ch.alpine.tensor.io.ResourceData;
 
 class GokartPoseDataTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     List<String> list = GokartPoseDataV2.INSTANCE.list();
     assertTrue(50 < list.size());
   }
 
   @Test
-  public void testResourceTensor() {
+  void testResourceTensor() {
     Tensor tensor = ResourceData.of("/ch/alpine/tensor/img/colorscheme/aurora.csv"); // resource in tensor
     Objects.requireNonNull(tensor);
     assertTrue(ArrayQ.of(tensor));

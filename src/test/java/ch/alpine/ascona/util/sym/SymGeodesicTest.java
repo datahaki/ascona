@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class SymGeodesicTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Scalar s1 = SymScalarLeaf.of(1);
     Scalar s2 = SymScalarLeaf.of(2);
     SymScalar s3 = new SymScalarPart(s1, s2, RationalScalar.HALF);

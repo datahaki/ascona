@@ -11,7 +11,7 @@ import ch.alpine.tensor.sca.Sign;
 
 class SpearheadTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor polygon = Spearhead.of(Tensors.vector(-0.806, -0.250, -0.524), RealScalar.of(0.1));
     Sign.requirePositive(PolygonArea.of(polygon));
   }

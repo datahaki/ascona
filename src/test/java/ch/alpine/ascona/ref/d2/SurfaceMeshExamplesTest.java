@@ -9,7 +9,7 @@ import ch.alpine.sophus.srf.SurfaceMesh;
 
 class SurfaceMeshExamplesTest {
   @Test
-  public void testMixed7() {
+  void testMixed7() {
     for (SurfaceMeshRefinements smr : SurfaceMeshRefinements.values()) {
       SurfaceMeshRefinement refinement = smr.operator(RnBiinvariantMean.INSTANCE);
       SurfaceMesh refine = refinement.refine(SurfaceMeshExamples.mixed7());
@@ -18,7 +18,7 @@ class SurfaceMeshExamplesTest {
   }
 
   @Test
-  public void testMixed11() {
+  void testMixed11() {
     for (SurfaceMeshRefinements smr : SurfaceMeshRefinements.values()) {
       SurfaceMeshRefinement refinement = smr.operator(RnBiinvariantMean.INSTANCE);
       SurfaceMesh refine = refinement.refine(SurfaceMeshExamples.mixed11());

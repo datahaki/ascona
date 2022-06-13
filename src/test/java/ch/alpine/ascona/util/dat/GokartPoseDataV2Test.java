@@ -11,17 +11,17 @@ import ch.alpine.tensor.qty.Quantity;
 
 class GokartPoseDataV2Test {
   @Test
-  public void testSampleRate() {
+  void testSampleRate() {
     assertEquals(GokartPoseDataV2.INSTANCE.getSampleRate(), Quantity.of(50, "s^-1"));
   }
 
   @Test
-  public void testRacingLength() {
+  void testRacingLength() {
     assertTrue(18 <= GokartPoseDataV2.RACING_DAY.list().size());
   }
 
   @Test
-  public void testListUnmodifiable() {
+  void testListUnmodifiable() {
     assertThrows(Exception.class, () -> GokartPoseDataV2.INSTANCE.list().clear());
     assertThrows(Exception.class, () -> GokartPoseDataV2.RACING_DAY.list().clear());
   }

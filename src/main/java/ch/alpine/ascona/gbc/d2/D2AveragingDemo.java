@@ -5,11 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
+
+import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.arp.ArrayFunction;
@@ -21,6 +24,8 @@ import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.VisualImage;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.tensor.DoubleScalar;
@@ -36,6 +41,7 @@ import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
 
@@ -136,16 +142,20 @@ public class D2AveragingDemo extends AnAveragingDemo {
     prepare();
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
+    D2Raster d2Raster = (D2Raster) manifoldDisplay;
+    CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
     Tensor sequence = getGeodesicControlPoints();
     Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
     ArrayPlotRender arrayPlotRender = cache.apply(Unprotect.byRef(sequence, values));
     if (Objects.nonNull(arrayPlotRender)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      new ImageRender(arrayPlotRender.bufferedImage(), hsArrayPlot.coordinateBoundingBox()) //
+      new ImageRender(arrayPlotRender.bufferedImage(), coordinateBoundingBox) //
           .render(geometricLayer, graphics);
       BufferedImage legend = arrayPlotRender.legend();
       graphics.drawImage(legend, dimension.width - legend.getWidth(), 0, null);
+      VisualImage visualImage = new VisualImage(arrayPlotRender.bufferedImage(), coordinateBoundingBox);
+      JFreeChart jFreeChart = ArrayPlot.of(visualImage);
+      jFreeChart.draw(graphics, new Rectangle(0, 50, 300, 300));
     }
     RenderQuality.setQuality(graphics);
     // renderControlPoints(geometricLayer, graphics);

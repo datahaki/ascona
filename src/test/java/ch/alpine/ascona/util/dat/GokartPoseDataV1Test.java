@@ -10,12 +10,12 @@ import ch.alpine.tensor.qty.Quantity;
 
 class GokartPoseDataV1Test {
   @Test
-  public void testSampleRate() {
+  void testSampleRate() {
     assertEquals(GokartPoseDataV1.INSTANCE.getSampleRate(), Quantity.of(20, "s^-1"));
   }
 
   @Test
-  public void testListUnmodifiable() {
+  void testListUnmodifiable() {
     try {
       GokartPoseDataV1.INSTANCE.list().clear();
       fail();

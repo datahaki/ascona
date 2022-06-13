@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class SymMaskImagesTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     SymMaskImages[] values = SymMaskImages.values();
     assertTrue(5 < values.length);
   }

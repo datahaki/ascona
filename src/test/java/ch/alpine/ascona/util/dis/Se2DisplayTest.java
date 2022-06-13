@@ -12,12 +12,12 @@ import ch.alpine.tensor.mat.Tolerance;
 
 class Se2DisplayTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertEquals(Se2Display.INSTANCE.geodesicSpace(), Se2Group.INSTANCE);
   }
 
   @Test
-  public void testProject() {
+  void testProject() {
     Tensor tensor = Se2Display.INSTANCE.project(Tensors.vector(1, 2, Math.PI * 2));
     Tolerance.CHOP.requireZero(tensor.Get(2));
   }

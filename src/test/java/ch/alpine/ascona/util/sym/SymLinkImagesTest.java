@@ -14,14 +14,14 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class SymLinkImagesTest {
   @Test
-  public void testSmoothingKernel() {
+  void testSmoothingKernel() {
     for (WindowFunctions smoothingKernel : WindowFunctions.values())
       for (int radius = 0; radius < 5; ++radius)
         SymLinkImages.ofGC(smoothingKernel.get(), radius);
   }
 
   @Test
-  public void testDeBoorRational() {
+  void testDeBoorRational() {
     Scalar parameter = RationalScalar.of(9, 4);
     SymLinkImage symLinkImage = SymLinkImages.symLinkImageGBSF(4, 20, parameter);
     BufferedImage bufferedImage = symLinkImage.bufferedImage();
@@ -30,7 +30,7 @@ class SymLinkImagesTest {
   }
 
   @Test
-  public void testDeBoorDecimal() {
+  void testDeBoorDecimal() {
     Scalar parameter = RealScalar.of(5.1);
     SymLinkImage symLinkImage = SymLinkImages.symLinkImageGBSF(5, 20, parameter);
     BufferedImage bufferedImage = symLinkImage.bufferedImage();

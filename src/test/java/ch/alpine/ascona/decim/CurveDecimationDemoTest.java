@@ -9,12 +9,12 @@ import ch.alpine.ascona.util.win.AbstractDemoHelper;
 
 class CurveDecimationDemoTest {
   @Test
-  public void testSimpleV1() {
+  void testSimpleV1() {
     AbstractDemoHelper.offscreen(new CurveDecimationDemo(GokartPoseDataV1.INSTANCE));
   }
 
   @Test
-  public void testSimpleV2() {
+  void testSimpleV2() {
     AbstractDemoHelper.offscreen(new CurveDecimationDemo(GokartPoseDataV2.INSTANCE));
   }
 }

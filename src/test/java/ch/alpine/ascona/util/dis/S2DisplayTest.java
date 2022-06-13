@@ -19,13 +19,13 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 class S2DisplayTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor tensor = S2Display.tangentSpace(Tensors.vector(0, 1, 0));
     assertEquals(Dimensions.of(tensor), List.of(2, 3));
   }
 
   @Test
-  public void testInvariant() {
+  void testInvariant() {
     ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
     Tensor xyz = manifoldDisplay.project(Tensors.vector(1, 2, 0));
     Tensor xy = manifoldDisplay.toPoint(xyz);
@@ -33,7 +33,7 @@ class S2DisplayTest {
   }
 
   @Test
-  public void testTangent() {
+  void testTangent() {
     Tensor xyz = Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 0.3, 0.5));
     Tensor matrix = S2Display.tangentSpace(xyz);
     assertEquals(Dimensions.of(matrix), List.of(2, 3));
@@ -41,7 +41,7 @@ class S2DisplayTest {
   }
 
   @Test
-  public void testProjTangent() {
+  void testProjTangent() {
     S2Display s2GeodesicDisplay = (S2Display) S2Display.INSTANCE;
     for (int index = 0; index < 10; ++index) {
       Tensor xya = RandomVariate.of(NormalDistribution.standard(), 3);
@@ -52,7 +52,7 @@ class S2DisplayTest {
   }
 
   @Test
-  public void testFail() {
+  void testFail() {
     assertThrows(Exception.class, () -> S2Display.tangentSpace(Tensors.vector(1, 1, 1)));
   }
 }

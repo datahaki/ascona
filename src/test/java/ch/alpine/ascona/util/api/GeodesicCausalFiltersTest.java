@@ -15,7 +15,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class GeodesicCausalFiltersTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.ALL) {
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       if (geodesicSpace instanceof HomogeneousSpace)

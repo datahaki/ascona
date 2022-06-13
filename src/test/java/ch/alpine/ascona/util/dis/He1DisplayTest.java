@@ -17,12 +17,12 @@ import ch.alpine.tensor.sca.Chop;
 
 class He1DisplayTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     assertEquals(He1Display.INSTANCE.geodesicSpace(), HeGroup.INSTANCE);
   }
 
   @Test
-  public void testWhatever() {
+  void testWhatever() {
     Distribution distribution = NormalDistribution.standard();
     Tensor a = RandomVariate.of(distribution, 3, 3);
     Tensor v = RandomVariate.of(distribution, 3);

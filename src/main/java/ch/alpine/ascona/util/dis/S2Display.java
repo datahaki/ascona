@@ -13,6 +13,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -101,7 +102,7 @@ public class S2Display extends SnDisplay implements D2Raster {
   @Override // from GeodesicArrayPlot
   public Optional<Tensor> d2lift(Tensor point) {
     Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
-    return Optional.ofNullable(Sign.isPositive(z2) ? point.append(Sqrt.FUNCTION.apply(z2)) : null);
+    return Optional.ofNullable(Sign.isPositive(z2) ? Append.of(point, Sqrt.FUNCTION.apply(z2)) : null);
   }
 
   @Override

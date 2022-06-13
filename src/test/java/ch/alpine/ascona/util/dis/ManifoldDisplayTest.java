@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class ManifoldDisplayTest {
   @Test
-  public void testHs() {
+  void testHs() {
     for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.METRIC)
       assertNotNull(manifoldDisplay.biinvariant());
   }

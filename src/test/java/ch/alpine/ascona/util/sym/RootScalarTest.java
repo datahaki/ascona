@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
 class RootScalarTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     RootScalar r1 = new RootScalar(RealScalar.of(-7), RealScalar.of(3), RealScalar.of(2));
     RootScalar r2 = new RootScalar(RealScalar.of(+8), RealScalar.of(6), RealScalar.of(2));
     assertEquals(r1.add(r2), new RootScalar(RealScalar.of(1), RealScalar.of(9), RealScalar.of(2)));
@@ -31,19 +31,19 @@ class RootScalarTest {
   }
 
   @Test
-  public void testReciprocal() {
+  void testReciprocal() {
     RootScalar rootScalar = new RootScalar(RationalScalar.of(-7, 13), RationalScalar.of(3, -11), RealScalar.of(2));
     assertEquals(rootScalar.multiply(rootScalar.reciprocal()), RealScalar.ONE);
   }
 
   @Test
-  public void testNumber() {
+  void testNumber() {
     RootScalar rootScalar = new RootScalar(RationalScalar.of(-7, 5), RationalScalar.of(-3, 17), RealScalar.of(3));
     assertThrows(TensorRuntimeException.class, () -> rootScalar.number());
   }
 
   @Test
-  public void testReal() {
+  void testReal() {
     RootScalar rootScalar = new RootScalar(RationalScalar.of(-7, 5), RationalScalar.of(-3, 17), RealScalar.of(3));
     Number number = rootScalar.explicit().number();
     double value = -7 / 5.0 - 3 / 17.0 * Math.sqrt(3);
@@ -51,14 +51,14 @@ class RootScalarTest {
   }
 
   @Test
-  public void testZero() {
+  void testZero() {
     RootScalar rootScalar = new RootScalar(RationalScalar.of(-2, 13), RationalScalar.of(-8, 11), RealScalar.of(2));
     Scalar zero = rootScalar.zero();
     assertEquals(zero, RealScalar.ZERO);
   }
 
   @Test
-  public void testEquations() {
+  void testEquations() {
     Distribution distribution = DiscreteUniformDistribution.of(-3000, 3000);
     Scalar ba = RealScalar.of(2);
     Tensor matrix = //
@@ -70,7 +70,7 @@ class RootScalarTest {
   }
 
   @Test
-  public void testInverse() {
+  void testInverse() {
     Distribution distribution = DiscreteUniformDistribution.of(-3000, 3000);
     Scalar ba = RealScalar.of(2);
     Tensor matrix = //

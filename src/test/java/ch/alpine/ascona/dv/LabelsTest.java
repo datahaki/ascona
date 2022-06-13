@@ -14,7 +14,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class LabelsTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Distribution distribution = UniformDistribution.unit();
     for (Labels labels : Labels.values()) {
       Tensor vector = Tensors.vector(3, 1, 0, 2, 0, 1, 3);

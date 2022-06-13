@@ -17,7 +17,7 @@ import ch.alpine.tensor.io.StringScalarQ;
 
 class UzhSe3TxtFormatTest {
   @Test
-  public void testSimple() throws FileNotFoundException, IOException {
+  void testSimple() throws FileNotFoundException, IOException {
     File file = new File("/media/datahaki/media/resource/uzh/groundtruth", "outdoor_forward_5_davis.txt");
     if (file.isFile()) {
       Tensor tensor = UzhSe3TxtFormat.of(file);

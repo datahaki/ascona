@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensors;
 
 class ArgMinValueTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     ArgMinValue argMinValue = ArgMinValue.of(Tensors.vector(3, 2, 3, 4, 5, 1, 2, 3, 4));
     assertEquals(argMinValue.index(), 5);
     assertFalse(argMinValue.index(RationalScalar.HALF).isPresent());

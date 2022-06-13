@@ -25,7 +25,7 @@ class Some implements TensorUnaryOperator {
 
 class LogWeightingsTest {
   @Test
-  public void testDoubleColon() {
+  void testDoubleColon() {
     List<Integer> list = new ArrayList<>();
     TensorUnaryOperator s = new Some(list)::apply;
     s.apply(Tensors.vector(1, 2, 3));
@@ -34,7 +34,7 @@ class LogWeightingsTest {
   }
 
   @Test
-  public void testArrow() {
+  void testArrow() {
     List<Integer> list = new ArrayList<>();
     TensorUnaryOperator s = t -> new Some(list).apply(t);
     s.apply(Tensors.vector(1, 2, 3));

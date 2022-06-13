@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.Chop;
 
 class HermiteSubdivisionsTest {
   @Test
-  public void testStringReverseRn() {
+  void testStringReverseRn() {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
@@ -39,7 +39,7 @@ class HermiteSubdivisionsTest {
   }
 
   @Test
-  public void testStringReverseSe2() {
+  void testStringReverseSe2() {
     Tensor cp1 = RandomVariate.of(UniformDistribution.unit(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
@@ -61,7 +61,7 @@ class HermiteSubdivisionsTest {
   }
 
   @Test
-  public void testSe2ConstantReproduction() {
+  void testSe2ConstantReproduction() {
     Tensor control = ConstantArray.of(Tensors.fromString("{{2, 3, 1}, {0, 0, 0}}"), 10);
     for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
       HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
@@ -76,7 +76,7 @@ class HermiteSubdivisionsTest {
   }
 
   @Test
-  public void testSe2LinearReproduction() {
+  void testSe2LinearReproduction() {
     Tensor pg = Tensors.vector(1, 2, 3);
     Tensor pv = Tensors.vector(0.3, -0.2, -0.1);
     Tensor control = Tensors.empty();

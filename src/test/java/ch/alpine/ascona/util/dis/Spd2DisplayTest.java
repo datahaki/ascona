@@ -16,7 +16,7 @@ class Spd2DisplayTest {
   private static final ManifoldDisplay GEODESIC_DISPLAY = Spd2Display.INSTANCE;
 
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor tensor = GEODESIC_DISPLAY.project(Tensors.vector(1, 0.2, -1));
     assertTrue(PositiveDefiniteMatrixQ.ofHermitian(tensor));
     Tensor vector = GEODESIC_DISPLAY.toPoint(tensor);

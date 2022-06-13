@@ -8,7 +8,7 @@ import ch.alpine.ascona.util.win.AbstractDemoHelper;
 
 class HermiteDatasetDemoTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     AbstractDemoHelper.offscreen(new HermiteDatasetDemo(GokartPoseDataV2.RACING_DAY));
   }
 }

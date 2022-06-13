@@ -17,7 +17,7 @@ import ch.alpine.bridge.lang.ClassVisitor;
 
 class AbstractDemoTest {
   @Test
-  public void testDiscovery() {
+  void testDiscovery() {
     List<Class<?>> list = new LinkedList<>();
     ClassDiscovery.execute(ClassPaths.getDefault(), new ClassVisitor() {
       @Override

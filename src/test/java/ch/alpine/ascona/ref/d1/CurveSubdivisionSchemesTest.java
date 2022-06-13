@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class CurveSubdivisionSchemesTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     int count = 0;
     for (CurveSubdivisionSchemes curveSubdivisionSchemes : CurveSubdivisionSchemes.values())
       if (curveSubdivisionSchemes.isStringSupported())

@@ -13,7 +13,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 
 class SymLinkBuilderTest {
   @Test
-  public void testSimple() {
+  void testSimple() {
     Tensor control = Tensors.vector(1, 2, 3);
     Tensor vector = SymSequence.of(control.length());
     ScalarTensorFunction scalarTensorFunction = new BezierFunction(SymGeodesic.INSTANCE, vector);
