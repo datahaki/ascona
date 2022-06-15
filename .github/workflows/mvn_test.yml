@@ -1,4 +1,4 @@
-name: java
+name: mvn test with JDK 17
 on:
   push:
     paths:
@@ -19,7 +19,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           
-      - name: mvn install tensor 107
+      - name: mvn install tensor
         working-directory: .
         run: |
           cd ..
@@ -27,7 +27,6 @@ jobs:
           cd tensor
           git checkout v107
           mvn clean install -DskipTests=true
-          
       - name: mvn install sophus
         working-directory: .
         run: |
@@ -35,7 +34,6 @@ jobs:
           git clone https://github.com/datahaki/sophus.git
           cd sophus
           mvn clean install -DskipTests=true
-          
       - name: mvn install bridge 036
         working-directory: .
         run: |
@@ -44,7 +42,6 @@ jobs:
           cd bridge
           git checkout v036
           mvn clean install -DskipTests=true
-          
       - name: mvn test
         working-directory: .
         run: xvfb-run --auto-servernum mvn test -B

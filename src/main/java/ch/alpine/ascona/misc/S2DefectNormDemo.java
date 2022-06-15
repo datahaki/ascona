@@ -56,7 +56,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
       new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final Tensor INITIAL = Tensors.fromString("{{-0.5, 0, 0}, {0.5, 0, 0}, {0, 0.5, 0}, {0, -0.5, 0}}").unmodifiable();
 
-  // ---
+  @ReflectionMarker
   public static class Param {
     @FieldInteger
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })
@@ -73,6 +73,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   public S2DefectNormDemo() {
     super(true, ManifoldDisplays.S2_ONLY);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
     setControlPointsSe2(INITIAL);
     // ---

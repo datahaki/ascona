@@ -7,9 +7,11 @@ import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
+@ReflectionMarker
 /* package */ abstract class AbstractDatasetKernelDemo extends AbstractSpectrogramDemo {
   protected final SpinnerLabel<Integer> spinnerRadius;
 
