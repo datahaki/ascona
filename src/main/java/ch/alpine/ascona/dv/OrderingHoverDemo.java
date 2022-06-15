@@ -9,6 +9,7 @@ import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -24,7 +25,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 
 // FIXME ASCONA ALG pressing shuffle button crashes app
-// FIXME ASCONA does not pass the offscreen test
+// FIXME ASCONA does not pass the offscreen test: Dt1
 /* package */ class OrderingHoverDemo extends AbstractHoverDemo {
   private final SpinnerLabel<Integer> spinnerLength = SpinnerLabel.of(50, 75, 100, 200, 300, 400, 500, 800);
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
@@ -72,6 +73,7 @@ import ch.alpine.tensor.sca.Clips;
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateUI();
     new OrderingHoverDemo().setVisible(1200, 600);
   }
 }

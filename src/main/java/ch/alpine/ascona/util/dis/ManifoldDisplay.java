@@ -48,14 +48,11 @@ public interface ManifoldDisplay {
    * @return operator that maps arbitrary dimension tangent vectors to 2d for display */
   TensorUnaryOperator tangentProjection(Tensor p);
 
-  /** @param p control point
-   * @param q control point
-   * @return distance operator between given control points p and q,
-   * or null if functionality is not supported */
+  /** @return distance operator that gives distance between two points p and q
+   * that is invariant under all symmetries, or null if operator does not exist */
   TensorMetric biinvariantMetric();
 
-  /** FIXME ASCONA API define guarantees, at the moment null for:
-   * ClA
+  /** ClA
    * Cl3
    * ClC
    * SE2C
@@ -66,7 +63,7 @@ public interface ManifoldDisplay {
    * Dt1
    * 
    * @return metric biinvariant or null if metric is not biinvariant */
-  // TODO ASCONA API unacceptable
+  // FIXME ASCONA API unacceptable
   Biinvariant biinvariant();
 
   LineDistance lineDistance();
@@ -75,6 +72,7 @@ public interface ManifoldDisplay {
    * in order to become control points in the form xya */
   RandomSampleInterface randomSampleInterface();
 
+  /** @return rendering of background, for instance a shaded sphere for S^2 */
   RenderInterface background();
 
   @Override // from Object

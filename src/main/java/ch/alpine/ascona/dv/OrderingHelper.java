@@ -48,19 +48,13 @@ import ch.alpine.tensor.sca.Clips;
       geometricLayer.popMatrix();
     }
     {
-      // 100
-      BufferedImage bufferedImage = BarLegend.of(colorDataGradientD, 130, "far", "near");
+      BufferedImage bufferedImage = BarLegend.of(colorDataGradientD, 200, "far", "near");
       Scalar dy = Pi.VALUE;
       dy = FACTOR.multiply(Pi.VALUE);
       Scalar px = Pi.VALUE.add(RealScalar.of(0.4));
-      Scalar py = dy.negate();
-      CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of(Clips.interval(px, px.add(dy.add(dy))), Clips.interval(py, py.add(dy.add(dy))));
-      // Tensor pixel2model = HsArrayPlots.pixel2model( //
-      // coordinateBoundingBox, //
-      // new Dimension(bufferedImage.getHeight(), bufferedImage.getHeight()));
-      // HsArrayPlot.pixel2model( //
-      // coordinateBoundingBox, //
-      // );
+      CoordinateBoundingBox coordinateBoundingBox = CoordinateBoundingBox.of( //
+          Clips.interval(px, px.add(dy)), //
+          Clips.absolute(Pi.VALUE));
       new ImageRender(bufferedImage, coordinateBoundingBox).render(geometricLayer, graphics);
     }
     {
