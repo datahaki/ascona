@@ -33,13 +33,12 @@ jobs:
           git clone https://github.com/datahaki/sophus.git
           cd sophus
           mvn clean install -DskipTests=true
-      - name: mvn install bridge 036
+      - name: mvn install bridge
         working-directory: .
         run: |
           cd ..
           git clone https://github.com/datahaki/bridge.git
           cd bridge
-          git checkout v036
           mvn clean install -DskipTests=true
       - name: mvn test
         working-directory: .
