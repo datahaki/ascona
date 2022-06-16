@@ -31,11 +31,15 @@ public interface ManifoldDisplay {
    * @return xya */
   Tensor unproject(Tensor p);
 
-  /** @param p control point
+  /** function is for drawing paths
+   * 
+   * @param p control point
    * @return vector of length 2 with grid coordinates {x, y} */
   Tensor toPoint(Tensor p);
 
-  /** @param p control point
+  /** function is for drawing control points with proper orientation
+   * 
+   * @param p control point
    * @return matrix with dimensions 3 x 3 */
   Tensor matrixLift(Tensor p);
 

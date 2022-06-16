@@ -8,24 +8,24 @@ import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.lie.dt.DtGroup;
-import ch.alpine.sophus.lie.dt.DtRandomSample;
+import ch.alpine.sophus.lie.td.TdGroup;
+import ch.alpine.sophus.lie.td.TdRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import ch.alpine.tensor.red.Max;
+import ch.alpine.tensor.sca.exp.Exp;
+import ch.alpine.tensor.sca.exp.Log;
 
-public enum Dt1Display implements ManifoldDisplay {
+public enum T1dDisplay implements ManifoldDisplay {
   INSTANCE;
 
   private static final Tensor PENTAGON = CirclePoints.of(5).multiply(RealScalar.of(0.2)).unmodifiable();
-  // Fehlerhaft, aber zurzeit Probleme mit Ausnahme bei lambda = 0
-  private static final ScalarUnaryOperator MAX_X = Max.function(RealScalar.of(0.001));
 
   @Override // from ManifoldDisplay
   public int dimensions() {
@@ -45,23 +45,30 @@ public enum Dt1Display implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public Tensor project(Tensor xya) {
     Tensor point = xya.extract(0, 2);
-    point.set(MAX_X, 0);
+    point.set(Exp.FUNCTION, 1);
     return point;
   }
 
   @Override // from ManifoldDisplay
+  public Tensor unproject(Tensor p) {
+    return Append.of(toPoint(p), RealScalar.ZERO);
+  }
+
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor p) {
-    return VectorQ.requireLength(p, 2);
+    Tensor q = VectorQ.requireLength(p, 2).copy();
+    q.set(Log.FUNCTION, 1);
+    return q;
   }
 
   @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor p) {
-    return GfxMatrix.translation(p);
+    return GfxMatrix.translation(toPoint(p));
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public GeodesicSpace geodesicSpace() {
-    return DtGroup.INSTANCE;
+    return TdGroup.INSTANCE;
   }
 
   @Override // from ManifoldDisplay
@@ -81,12 +88,7 @@ public enum Dt1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    return new DtRandomSample(1, UniformDistribution.unit(), UniformDistribution.of(-1, 1));
-  }
-
-  @Override
-  public Tensor unproject(Tensor p) {
-    return p.copy().append(RealScalar.ZERO);
+    return new TdRandomSample(UniformDistribution.of(-1, 1), 1, ExponentialDistribution.standard());
   }
 
   @Override // from ManifoldDisplay
@@ -96,6 +98,6 @@ public enum Dt1Display implements ManifoldDisplay {
 
   @Override // from Object
   public String toString() {
-    return "Dt1";
+    return "T1d";
   }
 }

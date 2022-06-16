@@ -20,7 +20,7 @@ public enum ManifoldDisplays {
   H2(H2Display.INSTANCE), //
   So3(So3Display.INSTANCE), //
   He1(He1Display.INSTANCE), //
-  Dt1(Dt1Display.INSTANCE);
+  Dt1(T1dDisplay.INSTANCE);
 
   private final ManifoldDisplay manifoldDisplay;
 
@@ -48,7 +48,7 @@ public enum ManifoldDisplays {
       H2Display.INSTANCE, //
       So3Display.INSTANCE, //
       He1Display.INSTANCE, //
-      Dt1Display.INSTANCE);
+      T1dDisplay.INSTANCE);
   // ---
   /** requires biinvariant() */
   public static final List<ManifoldDisplay> METRIC = List.of( //
@@ -72,7 +72,7 @@ public enum ManifoldDisplays {
       H2Display.INSTANCE, //
       So3Display.INSTANCE, //
       He1Display.INSTANCE, //
-      Dt1Display.INSTANCE);
+      T1dDisplay.INSTANCE);
   // ---
   /** have array */
   public static final List<ManifoldDisplay> ARRAYS = List.of( //
