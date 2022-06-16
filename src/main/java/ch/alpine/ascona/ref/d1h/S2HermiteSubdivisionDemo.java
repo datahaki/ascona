@@ -140,7 +140,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new S2HermiteSubdivisionDemo().setVisible(1000, 800);
   }
 }

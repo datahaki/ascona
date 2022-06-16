@@ -10,7 +10,7 @@ public class EulerSpiralDemo extends AbstractSpiralDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new EulerSpiralDemo().setVisible(1000, 600);
   }
 }

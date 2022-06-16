@@ -57,7 +57,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new GeodesicExtrapolationDemo().setVisible(1000, 600);
   }
 }

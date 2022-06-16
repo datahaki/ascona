@@ -111,7 +111,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new GeodesicCatmullRomDemo().setVisible(1200, 600);
   }
 }

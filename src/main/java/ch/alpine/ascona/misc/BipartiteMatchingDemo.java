@@ -53,7 +53,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new BipartiteMatchingDemo().setVisible(1000, 600);
   }
 }

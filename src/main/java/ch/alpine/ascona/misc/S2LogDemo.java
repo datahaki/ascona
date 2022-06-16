@@ -42,7 +42,7 @@ public class S2LogDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new S2LogDemo().setVisible(1000, 800);
   }
 }

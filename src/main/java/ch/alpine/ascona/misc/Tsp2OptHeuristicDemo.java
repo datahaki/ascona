@@ -114,7 +114,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new Tsp2OptHeuristicDemo().setVisible(1000, 600);
   }
 }

@@ -147,7 +147,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new R2ScatteredSetCoordinateDemo().setVisible(1200, 900);
   }
 }

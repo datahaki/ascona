@@ -93,7 +93,7 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new GeodesicDeBoorDemo().setVisible(1200, 600);
   }
 }

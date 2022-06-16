@@ -90,7 +90,7 @@ public class LaserTagDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new LaserTagDemo().setVisible(1000, 600);
   }
 }

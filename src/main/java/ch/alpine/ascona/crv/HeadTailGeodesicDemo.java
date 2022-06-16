@@ -85,7 +85,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new HeadTailGeodesicDemo().setVisible(1000, 600);
   }
 }

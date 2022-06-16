@@ -10,7 +10,7 @@ public class LogarithmicSpiralDemo extends AbstractSpiralDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new LogarithmicSpiralDemo().setVisible(1000, 600);
   }
 }

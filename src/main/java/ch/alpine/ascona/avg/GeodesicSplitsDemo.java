@@ -36,7 +36,7 @@ public class GeodesicSplitsDemo extends AbstractSplitsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.DEFAULT.updateUI();
+    LookAndFeels.DEFAULT.tryUpdateUI();
     new GeodesicSplitsDemo().setVisible(1000, 600);
   }
 }

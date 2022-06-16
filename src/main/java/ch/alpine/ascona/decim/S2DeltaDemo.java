@@ -142,7 +142,7 @@ public class S2DeltaDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new S2DeltaDemo().setVisible(1200, 800);
   }
 }

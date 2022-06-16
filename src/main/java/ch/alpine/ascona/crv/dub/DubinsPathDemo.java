@@ -131,7 +131,7 @@ public class DubinsPathDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.INTELLI_J.updateUI();
+    LookAndFeels.INTELLI_J.tryUpdateUI();
     new DubinsPathDemo().setVisible(1000, 600);
   }
 }

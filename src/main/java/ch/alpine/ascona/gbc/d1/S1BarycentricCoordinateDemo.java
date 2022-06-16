@@ -26,7 +26,7 @@ public class S1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new S1BarycentricCoordinateDemo().setVisible(1000, 800);
   }
 }

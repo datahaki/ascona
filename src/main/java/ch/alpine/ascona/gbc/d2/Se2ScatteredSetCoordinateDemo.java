@@ -92,7 +92,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new Se2ScatteredSetCoordinateDemo().setVisible(1200, 900);
   }
 }

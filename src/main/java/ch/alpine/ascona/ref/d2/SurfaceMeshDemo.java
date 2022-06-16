@@ -128,7 +128,7 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new SurfaceMeshDemo().setVisible(1200, 800);
   }
 }

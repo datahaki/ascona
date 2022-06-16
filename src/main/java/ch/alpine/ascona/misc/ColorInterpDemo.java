@@ -90,7 +90,7 @@ public class ColorInterpDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.DARK.updateUI();
+    LookAndFeels.DARK.tryUpdateUI();
     new ColorInterpDemo().setVisible(1000, 600);
   }
 }

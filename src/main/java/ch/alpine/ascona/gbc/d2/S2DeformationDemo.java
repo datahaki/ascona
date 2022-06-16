@@ -77,7 +77,7 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new S2DeformationDemo().setVisible(1400, 800);
   }
 }

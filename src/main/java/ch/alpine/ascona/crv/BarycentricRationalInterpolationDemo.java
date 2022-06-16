@@ -124,7 +124,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.INTELLI_J.updateUI();
+    LookAndFeels.INTELLI_J.tryUpdateUI();
     new BarycentricRationalInterpolationDemo().setVisible(1200, 600);
   }
 }

@@ -99,7 +99,7 @@ public class S1KrigingDemo extends AnAveragingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new S1KrigingDemo().setVisible(1000, 800);
   }
 }

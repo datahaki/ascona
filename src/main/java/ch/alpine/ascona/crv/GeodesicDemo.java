@@ -89,7 +89,7 @@ public class GeodesicDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new GeodesicDemo().setVisible(600, 600);
   }
 }

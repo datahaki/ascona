@@ -152,7 +152,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new BiinvariantMeanDemo().setVisible(1200, 600);
   }
 }

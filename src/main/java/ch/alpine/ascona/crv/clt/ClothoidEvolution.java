@@ -79,7 +79,7 @@ public class ClothoidEvolution extends AbstractPlaceDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new ClothoidEvolution().setVisible(1000, 600);
   }
 }

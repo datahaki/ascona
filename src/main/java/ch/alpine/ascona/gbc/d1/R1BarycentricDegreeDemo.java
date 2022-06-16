@@ -106,7 +106,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new R1BarycentricDegreeDemo().setVisible(1000, 800);
   }
 }

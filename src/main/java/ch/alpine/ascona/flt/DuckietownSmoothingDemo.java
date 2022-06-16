@@ -124,7 +124,7 @@ import ch.alpine.tensor.itp.DeBoor;
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new DuckietownSmoothingDemo().setVisible(1000, 800);
   }
 }

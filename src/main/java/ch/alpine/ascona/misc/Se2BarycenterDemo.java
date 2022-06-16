@@ -126,7 +126,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new Se2BarycenterDemo().setVisible(1200, 600);
   }
 }

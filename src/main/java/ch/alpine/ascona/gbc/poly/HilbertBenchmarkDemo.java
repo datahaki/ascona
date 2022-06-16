@@ -93,7 +93,7 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new HilbertBenchmarkDemo().setVisible(1300, 900);
   }
 }

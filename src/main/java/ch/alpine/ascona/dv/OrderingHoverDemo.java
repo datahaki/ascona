@@ -73,7 +73,7 @@ import ch.alpine.tensor.sca.Clips;
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new OrderingHoverDemo().setVisible(1200, 600);
   }
 }

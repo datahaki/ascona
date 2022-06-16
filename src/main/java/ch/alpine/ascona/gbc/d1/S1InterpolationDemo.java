@@ -90,7 +90,7 @@ public class S1InterpolationDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new S1InterpolationDemo().setVisible(1000, 800);
   }
 }

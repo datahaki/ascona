@@ -188,7 +188,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new S2DefectNormDemo().setVisible(1200, 800);
   }
 }

@@ -99,7 +99,7 @@ public class SPatchDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new SPatchDemo().setVisible(1200, 600);
   }
 }

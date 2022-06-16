@@ -135,7 +135,7 @@ public class PolygonCoordinatesDemo extends AbstractArrayCoordinateDemo //
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new PolygonCoordinatesDemo().setVisible(1300, 900);
   }
 }

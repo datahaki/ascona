@@ -177,7 +177,7 @@ public class ApproximationDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new ApproximationDemo(GokartPoseDataV2.RACING_DAY).setVisible(1000, 800);
   }
 }

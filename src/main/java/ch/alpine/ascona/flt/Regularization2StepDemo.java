@@ -60,7 +60,7 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new Regularization2StepDemo().setVisible(1200, 600);
   }
 }

@@ -61,7 +61,7 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new R1RadialBasisFunctionDemo().setVisible(1000, 800);
   }
 }

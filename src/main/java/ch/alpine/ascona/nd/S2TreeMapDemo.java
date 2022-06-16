@@ -25,7 +25,7 @@ public class S2TreeMapDemo extends AbstractTreeMapDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new S2TreeMapDemo().setVisible(1000, 800);
   }
 }

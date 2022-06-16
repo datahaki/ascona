@@ -198,7 +198,7 @@ import ch.alpine.tensor.sca.Sign;
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new R2BarycentricCoordinateDemo().setVisible(1200, 600);
   }
 }

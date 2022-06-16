@@ -56,7 +56,7 @@ import ch.alpine.tensor.sca.Chop;
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new ConnectorsDemo().setVisible(1200, 900);
   }
 }

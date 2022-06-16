@@ -199,7 +199,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new CustomClothoidDemo().setVisible(1200, 900);
   }
 }

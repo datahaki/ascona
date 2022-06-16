@@ -18,7 +18,7 @@ public class NdTreeMapDemo extends AbstractTreeMapDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new NdTreeMapDemo().setVisible(1000, 800);
   }
 }

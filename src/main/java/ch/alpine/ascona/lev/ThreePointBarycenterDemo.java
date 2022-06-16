@@ -96,7 +96,7 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new ThreePointBarycenterDemo().setVisible(1200, 900);
   }
 }

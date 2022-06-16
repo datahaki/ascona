@@ -173,7 +173,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new D2AveragingDemo().setVisible(1300, 800);
   }
 }

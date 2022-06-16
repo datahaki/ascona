@@ -203,7 +203,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new CheckerBoardDemo().setVisible(1300, 900);
   }
 }

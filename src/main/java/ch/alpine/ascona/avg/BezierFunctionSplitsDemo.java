@@ -51,7 +51,7 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new BezierFunctionSplitsDemo().setVisible(1000, 600);
   }
 }

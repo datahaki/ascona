@@ -163,7 +163,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new MaAveragingDemo().setVisible(1300, 800);
   }
 }

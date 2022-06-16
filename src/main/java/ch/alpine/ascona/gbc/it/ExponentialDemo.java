@@ -131,7 +131,7 @@ public class ExponentialDemo extends AbstractPlaceDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new ExponentialDemo().setVisible(1300, 900);
   }
 }

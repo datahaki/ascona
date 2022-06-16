@@ -90,7 +90,7 @@ public class ClothoidNdDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new ClothoidNdDemo().setVisible(1200, 800);
   }
 }

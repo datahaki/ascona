@@ -85,7 +85,7 @@ public class DeBoorCustomDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new DeBoorCustomDemo().setVisible(1000, 800);
   }
 }

@@ -85,7 +85,7 @@ public class ClothoidComparisonDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new ClothoidComparisonDemo().setVisible(1000, 390);
   }
 }

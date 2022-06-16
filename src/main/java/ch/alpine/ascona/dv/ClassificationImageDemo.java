@@ -248,7 +248,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new ClassificationImageDemo().setVisible(1300, 900);
   }
 }

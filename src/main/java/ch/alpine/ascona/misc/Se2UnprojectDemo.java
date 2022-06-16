@@ -82,7 +82,7 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new Se2UnprojectDemo().setVisible(1200, 600);
   }
 }

@@ -134,7 +134,7 @@ public class KNearestDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new KNearestDemo().setVisible(1200, 600);
   }
 }

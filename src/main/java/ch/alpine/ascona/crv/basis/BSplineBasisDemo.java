@@ -99,7 +99,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.INTELLI_J.updateUI();
+    LookAndFeels.INTELLI_J.tryUpdateUI();
     new BSplineBasisDemo().setVisible(1000, 800);
   }
 }

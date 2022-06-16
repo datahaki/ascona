@@ -68,7 +68,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new GeodesicFiltersDatasetDemo().setVisible(1000, 800);
   }
 }

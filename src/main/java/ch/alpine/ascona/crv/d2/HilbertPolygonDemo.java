@@ -69,7 +69,7 @@ public class HilbertPolygonDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateUI();
+    LookAndFeels.LIGHT.tryUpdateUI();
     new HilbertPolygonDemo().setVisible(1000, 600);
   }
 }
