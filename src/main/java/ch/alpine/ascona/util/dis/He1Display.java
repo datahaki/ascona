@@ -13,8 +13,6 @@ import ch.alpine.sophus.lie.he.HeRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
@@ -36,7 +34,12 @@ public enum He1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public Tensor project(Tensor xya) {
-    return Tensors.of(xya.extract(0, 1), xya.extract(1, 2), xya.Get(2));
+    return xya.copy();
+  }
+
+  @Override // from ManifoldDisplay
+  public Tensor unproject(Tensor p) {
+    return p.copy();
   }
 
   @Override // from ManifoldDisplay
@@ -46,14 +49,12 @@ public enum He1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor p) {
-    if (VectorQ.of(p))
-      throw new RuntimeException();
-    return Tensors.of(p.Get(0, 0), p.Get(1, 0));
+    return p.extract(0, 2);
   }
 
   @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor p) {
-    return GfxMatrix.translation(toPoint(p));
+    return GfxMatrix.of(p);
   }
 
   @Override
@@ -79,11 +80,6 @@ public enum He1Display implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
     return new HeRandomSample(1, UniformDistribution.of(-1, 1));
-  }
-
-  @Override // from ManifoldDisplay
-  public Tensor unproject(Tensor p) {
-    return Tensors.of(p.Get(0, 0), p.Get(1, 0), p.Get(2));
   }
 
   @Override // from ManifoldDisplay

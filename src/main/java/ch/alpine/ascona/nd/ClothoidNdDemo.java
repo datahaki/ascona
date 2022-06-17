@@ -26,18 +26,15 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.opt.nd.CoordinateBounds;
+import ch.alpine.tensor.sca.Clips;
 
 public class ClothoidNdDemo extends ControlPointsDemo {
   private static final int SIZE = 400;
-  private static final CoordinateBoundingBox ND_BOX_R2 = CoordinateBounds.of( //
-      Tensors.vector(-5, -5), //
-      Tensors.vector(+5, +5));
-  private static final CoordinateBoundingBox ND_BOX_SE2 = CoordinateBounds.of( //
-      Tensors.vector(-5, -5, -Math.PI), //
-      Tensors.vector(+5, +5, +Math.PI));
+  private static final CoordinateBoundingBox ND_BOX_R2 = CoordinateBoundingBox.of( //
+      Clips.absolute(5), Clips.absolute(5));
+  private static final CoordinateBoundingBox ND_BOX_SE2 = CoordinateBoundingBox.of( //
+      Clips.absolute(5), Clips.absolute(5), Clips.absolute(Math.PI));
   // ---
   private final ClothoidNdMap<Tensor> clothoidNdMap = new ClothoidNdMap<>(ND_BOX_R2, t -> t);
 

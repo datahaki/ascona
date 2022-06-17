@@ -31,7 +31,7 @@ public class GokartPoseDataV2 implements GokartPoseData {
   /** 20190701 */
   public static final GokartPoseDataV2 RACING_DAY = new GokartPoseDataV2(LIST.stream() //
       .filter(string -> string.startsWith("20190701")) //
-      .collect(Collectors.toList()));
+      .toList());
   // ---
   private final List<String> list;
 
@@ -41,7 +41,7 @@ public class GokartPoseDataV2 implements GokartPoseData {
 
   @Override // from GokartPoseData
   public List<String> list() {
-    return Collections.unmodifiableList(list);
+    return list;
   }
 
   @Override // from GokartPoseData

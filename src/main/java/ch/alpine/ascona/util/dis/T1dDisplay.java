@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import ch.alpine.ascona.util.ren.EmptyRender;
+import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.api.TensorMetric;
@@ -88,12 +88,12 @@ public enum T1dDisplay implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    return new TdRandomSample(UniformDistribution.of(-1, 1), 1, ExponentialDistribution.standard());
+    return new TdRandomSample(UniformDistribution.of(-3, 3), 1, ExponentialDistribution.standard());
   }
 
   @Override // from ManifoldDisplay
   public RenderInterface background() {
-    return EmptyRender.INSTANCE;
+    return AxesRender.INSTANCE;
   }
 
   @Override // from Object
