@@ -77,7 +77,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
       timerFrame.jToolBar.add(jButton);
     }
     timerFrame.jToolBar.addSeparator();
-    addSpinnerListener(v -> recompute());
+    addManifoldListener(v -> recompute());
     timerFrame.geometricComponent.setOffset(400, 400);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));

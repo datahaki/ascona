@@ -37,7 +37,7 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
     ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
     setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
-    addSpinnerListener(this);
+    addManifoldListener(this);
     jToggleNeutral.setSelected(true);
   }
 

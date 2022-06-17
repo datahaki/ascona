@@ -42,7 +42,7 @@ public class GrassmannDemo extends LogWeightingDemo implements SpinnerListener<M
     setManifoldDisplay(manifoldDisplay);
     setBitype(Bitype.LEVERAGES1);
     actionPerformed(manifoldDisplay);
-    addSpinnerListener(this);
+    addManifoldListener(this);
     jToggleNeutral.setSelected(true);
   }
 

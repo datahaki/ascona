@@ -36,7 +36,7 @@ public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<Man
     setManifoldDisplay(manifoldDisplay);
     setLogWeighting(LogWeightings.DISTANCES);
     actionPerformed(manifoldDisplay);
-    addSpinnerListener(this);
+    addManifoldListener(this);
   }
 
   @Override // from RenderInterface

@@ -64,8 +64,8 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
       System.out.println(fonts.length);
       if (0 < fonts.length)
         font = fonts[0].deriveFont(500f);
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (Exception exception) {
+      exception.printStackTrace();
     }
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---

@@ -45,7 +45,7 @@ public abstract class AbstractManifoldDisplayDemo extends AbstractDemo {
     manifoldDisplaySpinner.setValue(manifoldDisplay);
   }
 
-  public void addSpinnerListener(SpinnerListener<ManifoldDisplay> spinnerListener) {
+  public void addManifoldListener(SpinnerListener<ManifoldDisplay> spinnerListener) {
     manifoldDisplaySpinner.addSpinnerListener(spinnerListener);
   }
 

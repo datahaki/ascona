@@ -73,7 +73,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
 
   public ClassificationImageDemo() {
     super(false, ManifoldDisplays.ARRAYS, LogWeightings.list());
-    addSpinnerListener(v -> shuffle(spinnerCount.getValue()));
+    addManifoldListener(v -> shuffle(spinnerCount.getValue()));
     {
       spinnerLogWeighting.addSpinnerListener(logWeighting -> {
         if (logWeighting.equals(LogWeightings.DISTANCES))

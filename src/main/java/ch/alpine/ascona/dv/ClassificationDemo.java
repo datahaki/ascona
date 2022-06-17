@@ -34,6 +34,7 @@ public class ClassificationDemo extends AbstractHoverDemo {
   private Tensor vector;
 
   public ClassificationDemo() {
+    super(30);
     { // code redundant with R2ClassificationDemo
       SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
         @Override
@@ -54,10 +55,10 @@ public class ClassificationDemo extends AbstractHoverDemo {
   }
 
   @Override
-  protected void shuffle(int n) {
-    super.shuffle(n);
+  protected void shuffle() {
+    super.shuffle();
     // assignment of random labels to points
-    vector = RandomVariate.of(DiscreteUniformDistribution.of(0, 3), n);
+    vector = RandomVariate.of(DiscreteUniformDistribution.of(0, 3), spinnerCount.getValue());
   }
 
   @Override // from RenderInterface

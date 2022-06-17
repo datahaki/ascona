@@ -22,6 +22,10 @@ import ch.alpine.tensor.sca.Chop;
 
 // TODO ASCONA cannot always compute the biinvariant mean for S2/SE(2) ...
 /* package */ class ConnectorsDemo extends AbstractHoverDemo {
+  public ConnectorsDemo() {
+    super(10);
+  }
+
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
     Tensor weights = operator(leversRender.getSequence()).apply(leversRender.getOrigin());

@@ -44,7 +44,7 @@ public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerList
     setManifoldDisplay(manifoldDisplay);
     setBitype(Bitype.METRIC1);
     actionPerformed(manifoldDisplay);
-    addSpinnerListener(this);
+    addManifoldListener(this);
     jToggleNeutral.setSelected(true);
   }
 

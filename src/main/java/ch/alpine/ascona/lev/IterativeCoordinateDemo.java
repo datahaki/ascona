@@ -39,7 +39,7 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
     setManifoldDisplay(manifoldDisplay);
     setBitype(Bitype.LEVERAGES1);
     actionPerformed(manifoldDisplay);
-    addSpinnerListener(this);
+    addManifoldListener(this);
   }
 
   @Override // from RenderInterface

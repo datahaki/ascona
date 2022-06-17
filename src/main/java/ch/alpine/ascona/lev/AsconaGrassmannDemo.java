@@ -42,7 +42,7 @@ public class AsconaGrassmannDemo extends LogWeightingDemo implements SpinnerList
     setManifoldDisplay(manifoldDisplay);
     setBitype(Bitype.LEVERAGES1);
     actionPerformed(manifoldDisplay);
-    addSpinnerListener(this);
+    addManifoldListener(this);
     jToggleNeutral.setSelected(true);
   }
 

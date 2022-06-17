@@ -4,7 +4,6 @@ package ch.alpine.ascona.util.dat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -24,7 +23,7 @@ import ch.alpine.tensor.qty.Quantity;
 public class GokartPoseDataV2 implements GokartPoseData {
   public static final String PATH_FOLDER = "/dubilab/app/tpqv50";
   public static final String PATH_VECTOR = PATH_FOLDER + ".vector";
-  private static final List<String> LIST = ResourceData.lines(PATH_VECTOR);
+  private static final List<String> LIST = Collections.unmodifiableList(ResourceData.lines(PATH_VECTOR));
   // ---
   /** all available */
   public static final GokartPoseDataV2 INSTANCE = new GokartPoseDataV2(LIST);

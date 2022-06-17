@@ -18,31 +18,31 @@ import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Tensor;
 
 public abstract class AbstractHoverDemo extends LogWeightingDemo {
-  final SpinnerLabel<Integer> spinnerCount;
+  public final SpinnerLabel<Integer> spinnerCount;
   private final JButton jButtonShuffle = new JButton("shuffle");
 
-  public AbstractHoverDemo() {
+  public AbstractHoverDemo(int n) {
     super(false, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
     setPositioningEnabled(false);
     {
-      spinnerCount = SpinnerLabel.of(5, 10, 15, 20, 25, 30, 40);
-      spinnerCount.setValue(25);
-      addSpinnerListener(v -> shuffle(spinnerCount.getValue()));
+      spinnerCount = SpinnerLabel.of(5, 10, 15, 20, 25, 30, 40, 100, 200);
+      spinnerCount.setValue(n);
+      addManifoldListener(v -> shuffle());
       spinnerCount.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
-      spinnerCount.addSpinnerListener(this::shuffle);
     }
     {
-      jButtonShuffle.addActionListener(e -> shuffle(spinnerCount.getValue()));
+      jButtonShuffle.addActionListener(e -> shuffle());
       timerFrame.jToolBar.add(jButtonShuffle);
     }
-    shuffle(spinnerCount.getValue());
     setManifoldDisplay(Se2Display.INSTANCE);
+    shuffle();
     timerFrame.jToolBar.addSeparator();
   }
 
-  protected void shuffle(int n) {
+  protected void shuffle() {
+    System.out.println("shuffle");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
+    Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), spinnerCount.getValue()).stream() //
         .map(manifoldDisplay::unproject));
     setControlPointsSe2(tensor);
   }

@@ -38,7 +38,7 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
     setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
-    addSpinnerListener(this);
+    addManifoldListener(this);
     jToggleNeutral.setSelected(true);
     setMidpointIndicated(true);
   }

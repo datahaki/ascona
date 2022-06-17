@@ -58,7 +58,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
     ManifoldDisplay manifoldDisplay = H2Display.INSTANCE;
     setManifoldDisplay(manifoldDisplay);
     actionPerformed(manifoldDisplay);
-    addSpinnerListener(this);
+    addManifoldListener(this);
   }
 
   @Override

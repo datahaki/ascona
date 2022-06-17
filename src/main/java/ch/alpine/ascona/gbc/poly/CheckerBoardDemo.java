@@ -81,8 +81,8 @@ public class CheckerBoardDemo extends LogWeightingBase //
     // ---
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
     actionPerformed(manifoldDisplay);
-    addSpinnerListener(this);
-    addSpinnerListener(l -> recompute());
+    addManifoldListener(this);
+    addManifoldListener(l -> recompute());
     recompute();
     // ---
     addMouseRecomputation();
