@@ -4,9 +4,7 @@ package ch.alpine.ascona.util.dis;
 import java.io.Serializable;
 
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.rpn.RpnManifold;
 import ch.alpine.sophus.hs.rpn.RpnRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -37,11 +35,6 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
     return RpnManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final Biinvariant biinvariant() {
-    return MetricBiinvariant.EUCLIDEAN;
   }
 
   @Override // from ManifoldDisplay

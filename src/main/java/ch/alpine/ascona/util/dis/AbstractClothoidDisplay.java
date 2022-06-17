@@ -9,7 +9,6 @@ import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -47,11 +46,6 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   @Override // from ManifoldDisplay
   public final Tensor matrixLift(Tensor p) {
     return GfxMatrix.of(p);
-  }
-
-  @Override // from ManifoldDisplay
-  public final Biinvariant biinvariant() {
-    return null;
   }
 
   @Override // from ManifoldDisplay

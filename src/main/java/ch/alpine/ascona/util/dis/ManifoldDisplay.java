@@ -3,7 +3,6 @@ package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
@@ -50,23 +49,6 @@ public interface ManifoldDisplay {
   /** @param p
    * @return operator that maps arbitrary dimension tangent vectors to 2d for display */
   TensorUnaryOperator tangentProjection(Tensor p);
-  /** @return distance operator that gives distance between two points p and q
-   * that is invariant under all symmetries, or null if operator does not exist */
-  // TensorMetric biinvariantMetric();
-
-  /** ClA
-   * Cl3
-   * ClC
-   * SE2C
-   * R2S1 A
-   * R2S1 B
-   * SE2
-   * He1
-   * Dt1
-   * 
-   * @return metric biinvariant or null if metric is not biinvariant */
-  // FIXME ASCONA API unacceptable
-  Biinvariant biinvariant();
 
   LineDistance lineDistance();
 

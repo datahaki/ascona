@@ -23,6 +23,7 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -106,7 +107,8 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   public Tensor distanceMatrix(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    TensorUnaryOperator tuo = manifoldDisplay.biinvariant().distances(homogeneousSpace, sequence);
+    MetricManifold metricManifold = (MetricManifold) homogeneousSpace;
+    TensorUnaryOperator tuo = metricManifold.biinvariant().distances(homogeneousSpace, sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix

@@ -7,9 +7,7 @@ import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.lie.so3.So3Group;
 import ch.alpine.sophus.lie.so3.So3RandomSample;
@@ -73,11 +71,6 @@ public class So3Display implements ManifoldDisplay, Serializable {
   @Override
   public GeodesicSpace geodesicSpace() {
     return So3Group.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public Biinvariant biinvariant() {
-    return MetricBiinvariant.EUCLIDEAN;
   }
 
   @Override

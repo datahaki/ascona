@@ -7,9 +7,7 @@ import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
 import ch.alpine.sophus.hs.spd.SpdManifold;
 import ch.alpine.sophus.hs.spd.TSpdRandomSample;
@@ -82,11 +80,6 @@ public enum Spd2Display implements ManifoldDisplay {
   @Override
   public GeodesicSpace geodesicSpace() {
     return SpdManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public Biinvariant biinvariant() {
-    return MetricBiinvariant.VECTORIZE0;
   }
 
   @Override // from ManifoldDisplay

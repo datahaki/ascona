@@ -18,8 +18,10 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -57,7 +59,10 @@ public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<Man
       leversRender.renderIndexP();
       // ---
       if (manifoldDisplay.dimensions() < sequence.length()) {
-        Biinvariant metric = manifoldDisplay.biinvariant();
+        Biinvariant metric = null;
+        GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+        if (geodesicSpace instanceof MetricManifold metricManifold)
+          metric = metricManifold.biinvariant();
         Biinvariant[] biinvariants = Objects.isNull(metric) //
             ? new Biinvariant[] { Biinvariants.LEVERAGES, Biinvariants.HARBOR, Biinvariants.GARDEN }
             : new Biinvariant[] { Biinvariants.LEVERAGES, Biinvariants.HARBOR, Biinvariants.GARDEN, metric };

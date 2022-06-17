@@ -7,9 +7,7 @@ import java.util.stream.Stream;
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.rn.RnLineDistance;
 import ch.alpine.sophus.math.sample.BoxRandomSample;
@@ -58,11 +56,6 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   @Override
   public final GeodesicSpace geodesicSpace() {
     return RnGroup.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final Biinvariant biinvariant() {
-    return MetricBiinvariant.EUCLIDEAN;
   }
 
   @Override // from ManifoldDisplay

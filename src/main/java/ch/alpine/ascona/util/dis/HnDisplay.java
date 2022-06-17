@@ -7,10 +7,8 @@ import java.util.Random;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.crv.d2.StarPoints;
 import ch.alpine.sophus.decim.LineDistance;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.hn.HnManifold;
-import ch.alpine.sophus.hs.hn.HnMetricBiinvariant;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Tensor;
@@ -62,11 +60,6 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   @Override
   public final GeodesicSpace geodesicSpace() {
     return HnManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final Biinvariant biinvariant() {
-    return HnMetricBiinvariant.INSTANCE;
   }
 
   @Override // from ManifoldDisplay
