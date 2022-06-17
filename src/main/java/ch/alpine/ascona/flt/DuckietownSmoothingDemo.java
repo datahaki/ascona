@@ -21,6 +21,7 @@ import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.tensor.RationalScalar;
@@ -74,12 +75,13 @@ import ch.alpine.tensor.itp.DeBoor;
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
+    TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
     final int degree = spinnerDegree.getValue();
     final int levels = spinnerRefine.getValue();
     final Tensor control = control();
     Tensor effective = control;
     TensorUnaryOperator centripedalKnotSpacing = //
-        KnotSpacing.centripetal(manifoldDisplay.biinvariantMetric(), 0.5);
+        KnotSpacing.centripetal(tensorMetric, 0.5);
     Tensor knots = centripedalKnotSpacing.apply(control);
     final Scalar upper = Last.of(knots);
     final Scalar parameter = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum()).multiply(upper);
@@ -110,12 +112,14 @@ import ch.alpine.tensor.itp.DeBoor;
     spinnerRefine.getValue();
     final Tensor control = control();
     Tensor effective = control;
+    ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
+    TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
     TensorUnaryOperator centripedalKnotSpacing = //
-        KnotSpacing.centripetal(gokartPoseSpec.manifoldDisplays.manifoldDisplay().biinvariantMetric(), 0.5);
+        KnotSpacing.centripetal(tensorMetric, 0.5);
     Tensor knots = centripedalKnotSpacing.apply(control);
     final Scalar upper = Last.of(knots);
     final Scalar parameter = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum()).multiply(upper);
-    ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
+    // ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
     GeodesicBSplineFunction scalarTensorFunction = //
         GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, knots, effective);
     DeBoor deBoor = scalarTensorFunction.deBoor(parameter);

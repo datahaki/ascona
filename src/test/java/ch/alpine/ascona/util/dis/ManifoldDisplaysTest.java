@@ -3,7 +3,6 @@ package ch.alpine.ascona.util.dis;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -19,6 +18,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -109,11 +109,9 @@ class ManifoldDisplaysTest {
   @EnumSource(ManifoldDisplays.class)
   void testPointDistance(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
-    TensorMetric tensorMetric = manifoldDisplay.biinvariantMetric();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Biinvariant biinvariant = manifoldDisplay.biinvariant();
-    if (tensorMetric == null)
-      assertNull(biinvariant);
-    else
+    if (geodesicSpace instanceof TensorMetric)
       assertNotNull(biinvariant);
   }
 

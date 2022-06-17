@@ -102,8 +102,9 @@ public class MaAveragingDemo extends AnAveragingDemo {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
         D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
-        TensorMetric metric = manifoldDisplay.biinvariantMetric();
-        TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(metric.distance(p, q));
+        TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
+        // TensorMetric metric = manifoldDisplay.biinvariantMetric();
+        TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(tensorMetric.distance(p, q));
         // msq = metric;
         final Tensor dist;
         if (jToggleThresh.isSelected()) {

@@ -4,7 +4,6 @@ package ch.alpine.ascona.util.dis;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -69,11 +68,6 @@ public enum T1dDisplay implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public GeodesicSpace geodesicSpace() {
     return TdGroup.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public TensorMetric biinvariantMetric() {
-    return null;
   }
 
   @Override // from ManifoldDisplay

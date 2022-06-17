@@ -23,6 +23,7 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.tensor.RealScalar;
@@ -59,7 +60,8 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor knots = KnotSpacing.centripetal(manifoldDisplay.biinvariantMetric(), exponent).apply(control);
+    TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
+    Tensor knots = KnotSpacing.centripetal(tensorMetric, exponent).apply(control);
     Scalar upper = Last.of(knots);
     Scalar parameter = ratio.multiply(upper);
     // ---

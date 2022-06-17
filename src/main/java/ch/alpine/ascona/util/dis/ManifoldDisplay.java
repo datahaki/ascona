@@ -2,7 +2,6 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.win.RenderInterface;
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -51,10 +50,9 @@ public interface ManifoldDisplay {
   /** @param p
    * @return operator that maps arbitrary dimension tangent vectors to 2d for display */
   TensorUnaryOperator tangentProjection(Tensor p);
-
   /** @return distance operator that gives distance between two points p and q
    * that is invariant under all symmetries, or null if operator does not exist */
-  TensorMetric biinvariantMetric();
+  // TensorMetric biinvariantMetric();
 
   /** ClA
    * Cl3

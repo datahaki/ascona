@@ -22,7 +22,6 @@ import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.hs.sn.S2Loxodrome;
 import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.hs.sn.SnMetric;
 import ch.alpine.sophus.hs.sn.SnPerturbation;
 import ch.alpine.sophus.hs.sn.SnRotationMatrix;
 import ch.alpine.sophus.itp.UniformResample;
@@ -79,7 +78,7 @@ public class S2DeltaDemo extends AbstractDemo {
   private void compute() {
     ScalarTensorFunction stf = S2Loxodrome.of(param.angle);
     Tensor domain = Subdivide.of(0, 20, 200);
-    CurveSubdivision curveSubdivision = UniformResample.of(SnMetric.INSTANCE, SnManifold.INSTANCE, param.delta);
+    CurveSubdivision curveSubdivision = UniformResample.of(SnManifold.INSTANCE, SnManifold.INSTANCE, param.delta);
     Tensor sequence = Tensor.of(domain.stream().map(Scalar.class::cast).map(stf));
     sequence = curveSubdivision.string(sequence);
     TensorUnaryOperator tuo = SnPerturbation.of(NormalDistribution.of(RealScalar.ZERO, param.noise));

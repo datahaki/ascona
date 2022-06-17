@@ -6,14 +6,12 @@ import java.util.Random;
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
 import ch.alpine.sophus.hs.spd.SpdManifold;
-import ch.alpine.sophus.hs.spd.SpdMetric;
 import ch.alpine.sophus.hs.spd.TSpdRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -84,11 +82,6 @@ public enum Spd2Display implements ManifoldDisplay {
   @Override
   public GeodesicSpace geodesicSpace() {
     return SpdManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public TensorMetric biinvariantMetric() {
-    return SpdMetric.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

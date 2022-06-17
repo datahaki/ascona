@@ -17,6 +17,7 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -46,6 +47,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
     Tensor controlPoints = getGeodesicControlPoints();
     Tensor p = controlPoints.get(0);
     Tensor q = controlPoints.get(1);
@@ -58,7 +60,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
     graphics.setColor(new Color(128, 255, 0));
     graphics.draw(geometricLayer.toPath2D(xys, false));
     try {
-      Scalar pseudoDistance = manifoldDisplay.biinvariantMetric().distance(p, q);
+      Scalar pseudoDistance = tensorMetric.distance(p, q);
       {
         graphics.setColor(Color.DARK_GRAY);
         graphics.drawString("" + pseudoDistance.map(Round._4), 10, 20);

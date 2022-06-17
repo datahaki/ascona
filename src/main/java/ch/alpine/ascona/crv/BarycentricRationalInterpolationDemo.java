@@ -23,6 +23,7 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.itp.BarycentricMetricInterpolation;
@@ -71,8 +72,9 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     Tensor control = getGeodesicControlPoints();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
     TensorUnaryOperator tensorUnaryOperator = //
-        KnotSpacing.centripetal(manifoldDisplay.biinvariantMetric(), param.beta);
+        KnotSpacing.centripetal(tensorMetric, param.beta);
     Tensor knots = tensorUnaryOperator.apply(control);
     if (1 < control.length()) {
       Tensor domain = Subdivide.of(knots.get(0), Last.of(knots), 25 * control.length());

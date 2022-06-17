@@ -3,7 +3,6 @@ package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -11,7 +10,6 @@ import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.hs.rpn.RpnRandomSample;
 import ch.alpine.sophus.hs.sn.SnLineDistance;
 import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.hs.sn.SnMetric;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -40,11 +38,6 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
   @Override
   public final GeodesicSpace geodesicSpace() {
     return SnManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final TensorMetric biinvariantMetric() {
-    return SnMetric.INSTANCE;
   }
 
   @Override // from ManifoldDisplay
