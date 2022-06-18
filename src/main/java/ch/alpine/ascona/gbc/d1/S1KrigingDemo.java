@@ -16,7 +16,6 @@ import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
-import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -82,7 +81,7 @@ public class S1KrigingDemo extends AnAveragingDemo {
           .render(geometricLayer, graphics);
       Tensor covariance = DiagonalMatrix.with(cvarian);
       if (isDeterminate()) {
-        TensorUnaryOperator tensorUnaryOperator = operator(SnManifold.INSTANCE, sequence);
+        TensorUnaryOperator tensorUnaryOperator = operator(sequence);
         Kriging kriging = Kriging.regression(tensorUnaryOperator, sequence, funceva, covariance);
         Tensor estimate = Tensor.of(DOMAIN.stream().map(kriging::estimate));
         Tensor curve = Times.of(estimate, DOMAIN);

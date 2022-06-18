@@ -17,7 +17,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -54,7 +53,7 @@ public class BarycentricExtrapolationDemo extends LogWeightingDemo {
     if (1 < length) {
       Tensor samples = Subdivide.of(-length, 0, 127).map(Tensors::of);
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
-      TensorUnaryOperator tensorUnaryOperator = operator(RnGroup.INSTANCE, domain);
+      TensorUnaryOperator tensorUnaryOperator = operator(domain);
       Tensor curve = Tensor.of(samples.stream() //
           .map(tensorUnaryOperator) //
           .map(weights -> biinvariantMean.mean(sequence, weights)));

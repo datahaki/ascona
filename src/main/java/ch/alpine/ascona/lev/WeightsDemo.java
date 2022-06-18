@@ -26,7 +26,8 @@ import ch.alpine.tensor.ext.ArgMin;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 
-public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+// TODO ASCONA
+/* package */ class WeightsDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
   public WeightsDemo() {
     super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
     // ---
