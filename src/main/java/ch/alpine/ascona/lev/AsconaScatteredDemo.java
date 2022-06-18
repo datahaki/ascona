@@ -18,6 +18,8 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
@@ -42,7 +44,7 @@ public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerList
     ManifoldDisplay manifoldDisplay = Se2CoveringDisplay.INSTANCE;
     manifoldDisplay = R2Display.INSTANCE;
     setManifoldDisplay(manifoldDisplay);
-    setBitype(Bitype.METRIC1);
+    setBitype(Biinvariants.METRIC);
     actionPerformed(manifoldDisplay);
     addManifoldListener(this);
     jToggleNeutral.setSelected(true);
@@ -63,8 +65,8 @@ public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerList
       leversRender.renderSequence();
       leversRender.renderIndexP();
       leversRender.renderIndexX();
-      Biinvariant biinvariant = Bitype.METRIC1.from(R2Display.INSTANCE);
-      TensorUnaryOperator tensorUnaryOperator = biinvariant.coordinate(RnGroup.INSTANCE, InversePowerVariogram.of(2), sequence);
+      Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
+      TensorUnaryOperator tensorUnaryOperator = biinvariant.coordinate(InversePowerVariogram.of(2), sequence);
       try {
         Tensor weights = tensorUnaryOperator.apply(origin);
         leversRender.renderWeights(weights);

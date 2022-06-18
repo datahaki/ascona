@@ -16,7 +16,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.math.sample.RandomSample;
@@ -102,15 +101,6 @@ class ManifoldDisplaysTest {
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._04);
       assertNotNull(biinvariantMean);
     }
-  }
-
-  @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
-  void testPointDistance(ManifoldDisplays manifoldDisplays) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    if (geodesicSpace instanceof MetricManifold metricManifold)
-      assertNotNull(metricManifold.biinvariant());
   }
 
   @Test

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,6 +30,7 @@ import ch.alpine.sophus.fit.SpatialMedian;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.LeveragesBiinvariant;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -115,9 +117,10 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       }
     graphics.setStroke(new BasicStroke(1));
     if (param.median) {
-      Biinvariant biinvariant = param.biinvariants;
+      Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
+      Biinvariant biinvariant = map.getOrDefault(param.biinvariants, new LeveragesBiinvariant(homogeneousSpace));
       TensorUnaryOperator weightingInterface = //
-          biinvariant.weighting(homogeneousSpace, InversePowerVariogram.of(1), sequence);
+          biinvariant.weighting(InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(biinvariantMean, weightingInterface, Chop._05);
       Optional<Tensor> optional = spatialMedian.uniform(sequence);
       if (optional.isPresent()) {

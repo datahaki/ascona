@@ -15,8 +15,6 @@ import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -66,10 +64,7 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
     if (optional.isPresent()) {
       Tensor sequence = getSequence();
       Tensor origin = optional.get();
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      Manifold manifold = homogeneousSpace;
-      TensorUnaryOperator tensorUnaryOperator = //
-          logWeighting().operator(biinvariant(), manifold, variogram(), sequence);
+      TensorUnaryOperator tensorUnaryOperator = logWeighting().operator(biinvariant(), variogram(), sequence);
       Tensor weights = tensorUnaryOperator.apply(origin);
       OrderingHelper.of(manifoldDisplay, origin, sequence, weights, spinnerColorData.getValue(), geometricLayer, graphics);
     }

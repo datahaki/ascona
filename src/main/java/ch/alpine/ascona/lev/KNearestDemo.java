@@ -22,7 +22,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorMapping;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RealScalar;
@@ -101,9 +100,7 @@ public class KNearestDemo extends LogWeightingDemo {
 
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, Tensor sequence, Tensor origin, String p) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    TensorUnaryOperator tensorUnaryOperator = //
-        logWeighting().operator(biinvariant(), homogeneousSpace, variogram(), sequence);
+    TensorUnaryOperator tensorUnaryOperator = logWeighting().operator(biinvariant(), variogram(), sequence);
     Tensor weights = tensorUnaryOperator.apply(origin);
     // ---
     int[] integers = Ordering.INCREASING.of(weights);

@@ -19,11 +19,12 @@ import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.Exponential;
+import ch.alpine.sophus.hs.GardenBiinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
+import ch.alpine.sophus.hs.LeveragesBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
@@ -230,7 +231,8 @@ public class LeversRender {
   public void renderWeightsLeveragesSqrt() {
     if (Tensors.nonEmpty(sequence)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      TensorUnaryOperator coordinate = Biinvariants.LEVERAGES.coordinate(homogeneousSpace, InversePowerVariogram.of(2), sequence);
+      LeveragesBiinvariant leveragesBiinvariant = new LeveragesBiinvariant(homogeneousSpace);
+      TensorUnaryOperator coordinate = leveragesBiinvariant.coordinate(InversePowerVariogram.of(2), sequence);
       Tensor weights = coordinate.apply(origin);
       // Tensor matrix = new HsDesign(homogeneousSpace).matrix(sequence, origin);
       // weights = new Mahalanobis(matrix).leverages_sqrt();
@@ -242,7 +244,8 @@ public class LeversRender {
     if (Tensors.nonEmpty(sequence)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       Manifold manifold = homogeneousSpace;
-      Tensor weights = Biinvariants.GARDEN.distances(manifold, sequence).apply(origin);
+      GardenBiinvariant gardenBiinvariant = new GardenBiinvariant(manifold);
+      Tensor weights = gardenBiinvariant.distances(sequence).apply(origin);
       renderWeights(weights);
     }
   }

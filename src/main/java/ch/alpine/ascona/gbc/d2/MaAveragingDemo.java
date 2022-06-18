@@ -113,8 +113,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
           dist = DistanceMatrix.of(sequence, msq);
         }
         TensorUnaryOperator tuo = LogWeightings.COORDINATE.operator( //
-            MetricBiinvariant.EUCLIDEAN, //
-            homogeneousSpace, //
+            new MetricBiinvariant(homogeneousSpace), //
             InversePowerVariogram.of(2), sequence);
         TensorScalarFunction tsf = p -> {
           Tensor b = tuo.apply(p);

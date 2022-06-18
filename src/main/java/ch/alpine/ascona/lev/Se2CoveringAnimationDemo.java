@@ -14,6 +14,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.TensorMapping;
+import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
@@ -75,7 +76,7 @@ public class Se2CoveringAnimationDemo extends LogWeightingDemo {
       Tensor sequence = getSequence();
       Tensor origin = optional.get();
       LeversHud.render( //
-          Bitype.METRIC1, //
+          Biinvariants.METRIC, //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics));
       TensorMapping actionL = lieGroupOps.actionL(Tensors.vector(7, 0, 0));
       LeversHud.render( //

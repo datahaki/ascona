@@ -3,7 +3,7 @@ package ch.alpine.ascona.lev;
 
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.util.Objects;
+import java.util.Map;
 import java.util.Optional;
 
 import ch.alpine.ascona.util.api.LogWeightings;
@@ -18,10 +18,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
-import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -59,27 +56,20 @@ public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<Man
       leversRender.renderIndexP();
       // ---
       if (manifoldDisplay.dimensions() < sequence.length()) {
-        Biinvariant metric = null;
-        GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-        if (geodesicSpace instanceof MetricManifold metricManifold)
-          metric = metricManifold.biinvariant();
-        Biinvariant[] biinvariants = Objects.isNull(metric) //
-            ? new Biinvariant[] { Biinvariants.LEVERAGES, Biinvariants.HARBOR, Biinvariants.GARDEN }
-            : new Biinvariant[] { Biinvariants.LEVERAGES, Biinvariants.HARBOR, Biinvariants.GARDEN, metric };
+        Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+        Map<Biinvariants, Biinvariant> map2 = Biinvariants.all(manifold);
         Tensor matrix = Tensors.empty();
-        int[] minIndex = new int[biinvariants.length];
-        HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-        Manifold manifold = homogeneousSpace;
-        for (int index = 0; index < biinvariants.length; ++index) {
-          TensorUnaryOperator tensorUnaryOperator = //
-              logWeighting().operator( //
-                  biinvariants[index], //
-                  manifold, //
-                  variogram(), //
-                  sequence);
-          Tensor weights = tensorUnaryOperator.apply(origin);
-          minIndex[index] = ArgMin.of(weights);
-          matrix.append(weights);
+        int[] minIndex = new int[map2.size()];
+        {
+          int index = 0;
+          for (Biinvariant biinvariant : map2.values()) {
+            TensorUnaryOperator tensorUnaryOperator = //
+                logWeighting().operator(biinvariant, variogram(), sequence);
+            Tensor weights = tensorUnaryOperator.apply(origin);
+            minIndex[index] = ArgMin.of(weights);
+            matrix.append(weights);
+            ++index;
+          }
         }
         // System.out.println(Tensors.vectorInt(minIndex));
         // System.out.println("---");
@@ -92,7 +82,7 @@ public class WeightsDemo extends LogWeightingDemo implements SpinnerListener<Man
         graphics.setFont(LeversRender.FONT_MATRIX);
         FontMetrics fontMetrics = graphics.getFontMetrics();
         int fheight = fontMetrics.getAscent();
-        for (Biinvariant biinvariant : biinvariants) {
+        for (Biinvariant biinvariant : map2.values()) {
           graphics.setColor(colorDataIndexed.getColor(index));
           graphics.drawString(biinvariant.toString(), 2, (index + 1) * fheight);
           ++index;

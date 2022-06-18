@@ -12,6 +12,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.lie.so3.Rodrigues;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.RealScalar;
@@ -43,7 +44,7 @@ public class R2AnimationDemo extends LogWeightingDemo {
       timerFrame.jToolBar.add(jToggleAnimate);
     }
     setControlPointsSe2(R2PointCollection.MISC);
-    setBitype(Bitype.GARDEN);
+    setBitype(Biinvariants.GARDEN);
   }
 
   private static Tensor random(double toc, int index) {

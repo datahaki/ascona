@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -31,12 +30,12 @@ public class NdTreeWeighting implements LogWeighting, Serializable {
   }
 
   @Override
-  public TensorUnaryOperator operator(Biinvariant biinvariant, Manifold manifold, ScalarUnaryOperator variogram, Tensor sequence) {
+  public TensorUnaryOperator operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public TensorScalarFunction function(Biinvariant biinvariant, Manifold manifold, //
+  public TensorScalarFunction function(Biinvariant biinvariant, //
       ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
     NdMap<Scalar> ndMap = NdTreeMap.of(CoordinateBounds.of(sequence), 2);
     for (int index = 0; index < values.length(); ++index)

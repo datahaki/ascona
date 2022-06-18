@@ -99,10 +99,9 @@ public class SphereFitDemo extends ControlPointsDemo {
       geometricLayer.popMatrix();
     }
     {
-      Biinvariant biinvariant = MetricBiinvariant.EUCLIDEAN;
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      TensorUnaryOperator weightingInterface = //
-          biinvariant.weighting(homogeneousSpace, InversePowerVariogram.of(1), control);
+      Biinvariant biinvariant = new MetricBiinvariant(homogeneousSpace);
+      TensorUnaryOperator weightingInterface = biinvariant.weighting(InversePowerVariogram.of(1), control);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(Chop._08), weightingInterface, Chop._06);
       Optional<Tensor> optional = spatialMedian.uniform(control);
       if (optional.isPresent()) {

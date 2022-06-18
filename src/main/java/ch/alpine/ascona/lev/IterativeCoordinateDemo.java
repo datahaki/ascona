@@ -17,6 +17,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.gbc.d2.IterativeCoordinateMatrix;
+import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
@@ -37,7 +38,7 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
     // ---
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
     setManifoldDisplay(manifoldDisplay);
-    setBitype(Bitype.LEVERAGES1);
+    setBitype(Biinvariants.LEVERAGES);
     actionPerformed(manifoldDisplay);
     addManifoldListener(this);
   }

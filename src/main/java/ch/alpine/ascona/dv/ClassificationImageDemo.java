@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -33,7 +33,6 @@ import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -51,14 +50,12 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 public class ClassificationImageDemo extends LogWeightingDemo implements ActionListener {
   private static final int REFINEMENT = 160;
   private static final Random RANDOM = new Random();
-
-  private static List<Biinvariant> distinct() {
-    return List.of( //
-        MetricBiinvariant.EUCLIDEAN, // FIXME ASCONA ALG should be retrieved from bitype
-        Biinvariants.LEVERAGES, //
-        Biinvariants.GARDEN);
-  }
-
+  // private static List<Biinvariant> distinct() {
+  // return List.of( //
+  // MetricBiinvariant.EUCLIDEAN, //
+  // Biinvariants.LEVERAGES, //
+  // Biinvariants.GARDEN);
+  // }
   // ---
   private final SpinnerLabel<ColorDataLists> spinnerColor = SpinnerLabel.of(ColorDataLists.class);
   private final SpinnerLabel<Integer> spinnerLabel = SpinnerLabel.of(2, 3, 4, 5);
@@ -210,11 +207,11 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
         manifoldDisplay.toString());
     root.mkdirs();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    for (Biinvariant biinvariant : distinct()) {
+    Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
+    for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = getGeodesicControlPoints();
       TensorUnaryOperator operator = logWeighting.operator( //
           biinvariant, //
-          homogeneousSpace, //
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);

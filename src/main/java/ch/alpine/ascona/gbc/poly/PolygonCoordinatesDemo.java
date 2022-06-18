@@ -26,7 +26,6 @@ import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.io.HtmlUtf8;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -90,10 +89,8 @@ public class PolygonCoordinatesDemo extends AbstractArrayCoordinateDemo //
           exception.printStackTrace();
         }
       }
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       for (LogWeighting logWeighting : array) {
-        TensorUnaryOperator tensorUnaryOperator = logWeighting.operator( //
-            null, homogeneousSpace, null, sequence);
+        TensorUnaryOperator tensorUnaryOperator = logWeighting.operator(null, null, sequence);
         System.out.print("computing " + logWeighting);
         // GeodesicArrayPlot geodesicArrayPlot = geodesicDisplay.geodesicArrayPlot();
         int refinement = resolution();

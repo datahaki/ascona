@@ -192,7 +192,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
   @Override
   protected TensorUnaryOperator operator(Manifold manifold, Tensor sequence) {
     // biinvariant and variogram are not necessary
-    return logWeighting().operator(null, manifold, null, sequence);
+    return logWeighting().operator(null, null, sequence);
   }
 
   @Override

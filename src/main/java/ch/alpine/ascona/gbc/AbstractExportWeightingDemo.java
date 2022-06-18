@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -21,7 +22,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.MetricBiinvariant;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
@@ -51,11 +51,11 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
         logWeighting.toString());
     root.mkdirs();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    for (Biinvariant biinvariant : distinct()) {
+    Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
+    for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = getGeodesicControlPoints();
       TensorUnaryOperator tensorUnaryOperator = logWeighting.operator( //
           biinvariant, //
-          homogeneousSpace, //
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);
@@ -79,13 +79,5 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, fallback);
     Tensor wgs = D2Raster.of(hsArrayPlot, refinement, arrayFunction);
     return ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient(), magnification, logWeighting().equals(LogWeightings.DISTANCES));
-  }
-
-  private static List<Biinvariant> distinct() {
-    return List.of( //
-        MetricBiinvariant.EUCLIDEAN, // FIXME ASCONA ALG should be retrieved from bitype
-        Biinvariants.LEVERAGES, //
-        Biinvariants.GARDEN, //
-        Biinvariants.HARBOR);
   }
 }
