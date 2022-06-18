@@ -19,13 +19,14 @@ import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.TensorMetric;
+import ch.alpine.sophus.dv.GardenBiinvariant;
+import ch.alpine.sophus.dv.LeveragesBiinvariant;
 import ch.alpine.sophus.hs.Exponential;
-import ch.alpine.sophus.hs.GardenBiinvariant;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.LeveragesBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -232,8 +233,8 @@ public class LeversRender {
     if (Tensors.nonEmpty(sequence)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       LeveragesBiinvariant leveragesBiinvariant = new LeveragesBiinvariant(homogeneousSpace);
-      TensorUnaryOperator coordinate = leveragesBiinvariant.coordinate(InversePowerVariogram.of(2), sequence);
-      Tensor weights = coordinate.apply(origin);
+      Sedarim coordinate = leveragesBiinvariant.coordinate(InversePowerVariogram.of(2), sequence);
+      Tensor weights = coordinate.sunder(origin);
       // Tensor matrix = new HsDesign(homogeneousSpace).matrix(sequence, origin);
       // weights = new Mahalanobis(matrix).leverages_sqrt();
       renderWeights(weights);
@@ -245,7 +246,7 @@ public class LeversRender {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       Manifold manifold = homogeneousSpace;
       GardenBiinvariant gardenBiinvariant = new GardenBiinvariant(manifold);
-      Tensor weights = gardenBiinvariant.distances(sequence).apply(origin);
+      Tensor weights = gardenBiinvariant.distances(sequence).sunder(origin);
       renderWeights(weights);
     }
   }

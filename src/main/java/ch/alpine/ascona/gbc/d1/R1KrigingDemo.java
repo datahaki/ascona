@@ -10,6 +10,7 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -20,7 +21,6 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.sca.Abs;
 
@@ -52,7 +52,7 @@ public class R1KrigingDemo extends A1AveragingDemo {
       // ---
       Tensor sequence = support.map(Tensors::of);
       Tensor covariance = DiagonalMatrix.with(cvarian);
-      TensorUnaryOperator weightingInterface = operator(sequence);
+      Sedarim weightingInterface = operator(sequence);
       try {
         Kriging kriging = Kriging.regression(weightingInterface, sequence, funceva, covariance);
         // ---

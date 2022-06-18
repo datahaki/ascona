@@ -25,12 +25,13 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.dv.LeveragesBiinvariant;
 import ch.alpine.sophus.fit.HsWeiszfeldMethod;
 import ch.alpine.sophus.fit.SpatialMedian;
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.LeveragesBiinvariant;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -40,7 +41,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -119,7 +119,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     if (param.median) {
       Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
       Biinvariant biinvariant = map.getOrDefault(param.biinvariants, new LeveragesBiinvariant(homogeneousSpace));
-      TensorUnaryOperator weightingInterface = //
+      Sedarim weightingInterface = //
           biinvariant.weighting(InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(biinvariantMean, weightingInterface, Chop._05);
       Optional<Tensor> optional = spatialMedian.uniform(sequence);

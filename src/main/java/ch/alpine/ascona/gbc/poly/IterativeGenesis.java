@@ -3,7 +3,7 @@ package ch.alpine.ascona.gbc.poly;
 
 import java.util.stream.Stream;
 
-import ch.alpine.sophus.gbc.AffineCoordinate;
+import ch.alpine.sophus.dv.AffineCoordinate;
 import ch.alpine.sophus.gbc.d2.Barycenter;
 import ch.alpine.sophus.gbc.d2.IterativeCoordinateLevel;
 import ch.alpine.sophus.gbc.d2.ThreePointWeighting;

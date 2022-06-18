@@ -15,6 +15,7 @@ import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.tensor.RationalScalar;
@@ -25,7 +26,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -81,7 +81,7 @@ public class S1KrigingDemo extends AnAveragingDemo {
           .render(geometricLayer, graphics);
       Tensor covariance = DiagonalMatrix.with(cvarian);
       if (isDeterminate()) {
-        TensorUnaryOperator tensorUnaryOperator = operator(sequence);
+        Sedarim tensorUnaryOperator = operator(sequence);
         Kriging kriging = Kriging.regression(tensorUnaryOperator, sequence, funceva, covariance);
         Tensor estimate = Tensor.of(DOMAIN.stream().map(kriging::estimate));
         Tensor curve = Times.of(estimate, DOMAIN);

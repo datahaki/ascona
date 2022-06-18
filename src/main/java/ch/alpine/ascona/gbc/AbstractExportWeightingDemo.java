@@ -19,9 +19,10 @@ import ch.alpine.ascona.util.arp.ArrayPlotRender;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
@@ -54,13 +55,13 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
     for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = getGeodesicControlPoints();
-      TensorUnaryOperator tensorUnaryOperator = logWeighting.operator( //
+      Sedarim tensorUnaryOperator = logWeighting.operator( //
           biinvariant, //
           variogram(), //
           sequence);
       System.out.print("computing " + biinvariant);
       // ---
-      ArrayPlotRender arrayPlotRender = arrayPlotRender(sequence, REFINEMENT, tensorUnaryOperator, 1);
+      ArrayPlotRender arrayPlotRender = arrayPlotRender(sequence, REFINEMENT, tensorUnaryOperator::sunder, 1);
       BufferedImage bufferedImage = arrayPlotRender.export();
       try {
         ImageIO.write(bufferedImage, "png", new File(root, biinvariant.toString() + ".png"));

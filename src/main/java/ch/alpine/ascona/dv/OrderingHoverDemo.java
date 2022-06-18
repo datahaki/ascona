@@ -13,8 +13,8 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradients;
 
 public class OrderingHoverDemo extends AbstractHoverDemo {
@@ -33,12 +33,12 @@ public class OrderingHoverDemo extends AbstractHoverDemo {
   protected void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    TensorUnaryOperator tensorUnaryOperator = //
+    Sedarim tensorUnaryOperator = //
         logWeighting().operator(biinvariant(), variogram(), getGeodesicControlPoints());
     RenderQuality.setQuality(graphics);
     Tensor sequence = leversRender.getSequence();
     Tensor origin = leversRender.getOrigin();
-    Tensor weights = tensorUnaryOperator.apply(origin);
+    Tensor weights = tensorUnaryOperator.sunder(origin);
     // ---
     OrderingHelper.of(manifoldDisplay, origin, sequence, weights, spinnerColorData.getValue(), geometricLayer, graphics);
   }

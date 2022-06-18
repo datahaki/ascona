@@ -2,7 +2,7 @@
 package ch.alpine.ascona.lev;
 
 import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;

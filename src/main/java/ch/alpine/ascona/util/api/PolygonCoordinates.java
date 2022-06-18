@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import ch.alpine.sophus.gbc.AffineCoordinate;
-import ch.alpine.sophus.gbc.LagrangeCoordinate;
-import ch.alpine.sophus.gbc.LeveragesGenesis;
-import ch.alpine.sophus.gbc.MetricCoordinate;
+import ch.alpine.sophus.dv.AffineCoordinate;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.LagrangeCoordinate;
+import ch.alpine.sophus.dv.LeveragesGenesis;
+import ch.alpine.sophus.dv.MetricCoordinate;
 import ch.alpine.sophus.gbc.amp.Amplifiers;
 import ch.alpine.sophus.gbc.d2.Barycenter;
 import ch.alpine.sophus.gbc.d2.InsideConvexHullCoordinate;
@@ -19,9 +20,9 @@ import ch.alpine.sophus.gbc.d2.IterativeMeanValueCoordinate;
 import ch.alpine.sophus.gbc.d2.ThreePointCoordinate;
 import ch.alpine.sophus.gbc.it.IterativeAffineCoordinate;
 import ch.alpine.sophus.gbc.it.IterativeTargetCoordinate;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.HsGenesis;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.InverseDistanceWeighting;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
@@ -29,7 +30,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 
 public enum PolygonCoordinates implements LogWeighting {
   MEAN_VALUE(ThreePointCoordinate.of(Barycenter.MEAN_VALUE)), //
@@ -71,7 +71,7 @@ public enum PolygonCoordinates implements LogWeighting {
   }
 
   @Override // from LogWeighting
-  public TensorUnaryOperator operator( //
+  public Sedarim operator( //
       Biinvariant biinvariant, // <- ignored
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
@@ -80,7 +80,7 @@ public enum PolygonCoordinates implements LogWeighting {
         CONVEX.contains(this) //
             ? new InsideConvexHullCoordinate(genesis)
             : new InsidePolygonCoordinate(genesis), //
-        sequence);
+        sequence)::sunder;
   }
 
   @Override // from LogWeighting
@@ -88,9 +88,9 @@ public enum PolygonCoordinates implements LogWeighting {
       Biinvariant biinvariant, // <- ignored
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence, Tensor values) {
-    TensorUnaryOperator tensorUnaryOperator = operator(biinvariant, variogram, sequence);
+    Sedarim tensorUnaryOperator = operator(biinvariant, variogram, sequence);
     Objects.requireNonNull(values);
-    return point -> (Scalar) tensorUnaryOperator.apply(point).dot(values);
+    return point -> (Scalar) tensorUnaryOperator.sunder(point).dot(values);
   }
 
   public static List<LogWeighting> list() {

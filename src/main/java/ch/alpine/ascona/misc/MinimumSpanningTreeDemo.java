@@ -22,6 +22,7 @@ import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.util.DisjointSets;
 import ch.alpine.sophus.fit.MinimumSpanningTree;
 import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.IntUndirectedEdge;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -29,7 +30,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
@@ -99,8 +99,8 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   }
 
   public Tensor distanceMatrix(Tensor sequence) {
-    TensorUnaryOperator tuo = biinvariant().distances(sequence);
-    Tensor matrix = Tensor.of(sequence.stream().map(tuo));
+    Sedarim tuo = biinvariant().distances(sequence);
+    Tensor matrix = Tensor.of(sequence.stream().map(tuo::sunder));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix
         : Symmetrize.of(matrix);

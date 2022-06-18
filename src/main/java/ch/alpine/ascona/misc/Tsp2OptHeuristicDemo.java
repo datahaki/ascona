@@ -22,16 +22,16 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.opt.ts.Tsp2OptHeuristic;
@@ -109,8 +109,8 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Biinvariant biinvariant = new MetricBiinvariant(homogeneousSpace);
-    TensorUnaryOperator tuo = biinvariant.distances(sequence);
-    Tensor matrix = Tensor.of(sequence.stream().map(tuo));
+    Sedarim tuo = biinvariant.distances(sequence);
+    Tensor matrix = Tensor.of(sequence.stream().map(tuo::sunder));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix
         : Symmetrize.of(matrix);

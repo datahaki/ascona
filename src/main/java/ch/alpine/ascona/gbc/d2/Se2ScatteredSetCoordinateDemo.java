@@ -16,6 +16,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -61,8 +62,8 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
     }
     if (manifoldDisplay.dimensions() < controlPoints.length()) { // render basis functions
       Tensor origin = getGeodesicControlPoints();
-      TensorUnaryOperator tensorUnaryOperator = operator(origin);
-      Tensor wgs = compute(tensorUnaryOperator, refinement());
+      Sedarim tensorUnaryOperator = operator(origin);
+      Tensor wgs = compute(tensorUnaryOperator::sunder, refinement());
       RenderQuality.setQuality(graphics);
       ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, magnification(), false).render(graphics);
     }

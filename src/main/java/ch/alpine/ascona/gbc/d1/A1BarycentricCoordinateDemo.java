@@ -12,12 +12,12 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 
@@ -39,9 +39,9 @@ import ch.alpine.tensor.img.ColorDataLists;
       Tensor domain = domain(support);
       // ---
       Tensor sequence = support.map(this::lift);
-      TensorUnaryOperator weightingInterface = operator(sequence);
+      Sedarim weightingInterface = operator(sequence);
       ScalarTensorFunction scalarTensorFunction = //
-          point -> weightingInterface.apply(lift(point));
+          point -> weightingInterface.sunder(lift(point));
       Tensor basis = domain.map(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));

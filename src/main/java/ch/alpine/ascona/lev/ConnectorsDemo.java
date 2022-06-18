@@ -28,7 +28,7 @@ import ch.alpine.tensor.sca.Chop;
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
-    Tensor weights = operator(leversRender.getSequence()).apply(leversRender.getOrigin());
+    Tensor weights = operator(leversRender.getSequence()).sunder(leversRender.getOrigin());
     leversRender.renderLevers(weights);
     // ---
     leversRender.renderWeights(weights);

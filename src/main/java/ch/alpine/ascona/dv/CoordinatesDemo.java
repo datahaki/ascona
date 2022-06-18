@@ -17,7 +17,7 @@ public class CoordinatesDemo extends AbstractHoverDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
-    Tensor weights = operator(leversRender.getSequence()).apply(leversRender.getOrigin());
+    Tensor weights = operator(leversRender.getSequence()).sunder(leversRender.getOrigin());
     leversRender.renderLevers(logWeighting().equals(LogWeightings.DISTANCES) //
         ? weights.negate()
         : weights);

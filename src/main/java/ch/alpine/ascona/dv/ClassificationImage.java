@@ -9,6 +9,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.ColorDataIndexed;
 
+// TODO ASCONA API check if sedarim
 public enum ClassificationImage {
   BLENDED {
     @Override

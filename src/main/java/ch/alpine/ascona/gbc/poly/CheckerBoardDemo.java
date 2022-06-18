@@ -33,6 +33,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerListener;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -189,15 +190,15 @@ public class CheckerBoardDemo extends LogWeightingBase //
   }
 
   @Override
-  protected TensorUnaryOperator operator(Tensor sequence) {
+  protected Sedarim operator(Tensor sequence) {
     // biinvariant and variogram are not necessary
     return logWeighting().operator(null, null, sequence);
   }
 
   @Override
   protected TensorScalarFunction function(Tensor sequence, Tensor values) {
-    TensorUnaryOperator operator = operator(sequence);
-    TensorUnaryOperator dot_prod = point -> operator.apply(point).dot(values);
+    Sedarim operator = operator(sequence);
+    TensorUnaryOperator dot_prod = point -> operator.sunder(point).dot(values);
     return param.pattern.apply(dot_prod);
   }
 

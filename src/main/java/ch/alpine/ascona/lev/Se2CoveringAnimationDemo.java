@@ -14,7 +14,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.TensorMapping;
-import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;

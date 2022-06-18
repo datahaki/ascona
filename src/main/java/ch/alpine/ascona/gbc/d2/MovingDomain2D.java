@@ -5,10 +5,10 @@ import java.util.Objects;
 
 import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** Reference:
  * "Weighted Averages on Surfaces"
@@ -23,7 +23,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
   /** @param origin reference control points that will be associated to given targets
    * @param tensorUnaryOperator
    * @param domain */
-  public MovingDomain2D(Tensor origin, TensorUnaryOperator tensorUnaryOperator, Tensor domain) {
+  public MovingDomain2D(Tensor origin, Sedarim tensorUnaryOperator, Tensor domain) {
     this.origin = origin;
     this.domain = domain;
     int rows = domain.length();
@@ -32,7 +32,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
     for (int cx = 0; cx < rows; ++cx)
       for (int cy = 0; cy < cols; ++cy) {
         Tensor point = domain.get(cx, cy);
-        weights[cx][cy] = tensorUnaryOperator.apply(point);
+        weights[cx][cy] = tensorUnaryOperator.sunder(point);
       }
   }
 

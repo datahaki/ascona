@@ -24,8 +24,9 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.api.TensorMetric;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.DistanceMatrix;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.DoubleScalar;
@@ -35,7 +36,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
@@ -112,11 +112,11 @@ public class MaAveragingDemo extends AnAveragingDemo {
         } else {
           dist = DistanceMatrix.of(sequence, msq);
         }
-        TensorUnaryOperator tuo = LogWeightings.COORDINATE.operator( //
+        Sedarim tuo = LogWeightings.COORDINATE.operator( //
             new MetricBiinvariant(homogeneousSpace), //
             InversePowerVariogram.of(2), sequence);
         TensorScalarFunction tsf = p -> {
-          Tensor b = tuo.apply(p);
+          Tensor b = tuo.sunder(p);
           return Abs.FUNCTION.apply((Scalar) dist.dot(b).dot(b));
         };
         Timing timing = Timing.started();

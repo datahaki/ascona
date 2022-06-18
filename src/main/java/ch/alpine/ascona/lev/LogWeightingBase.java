@@ -10,9 +10,9 @@ import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 
 public abstract class LogWeightingBase extends AbstractPlaceDemo {
   protected final SpinnerLabel<LogWeighting> spinnerLogWeighting;
@@ -67,7 +67,7 @@ public abstract class LogWeightingBase extends AbstractPlaceDemo {
     spinnerLogWeighting.reportToAll();
   }
 
-  protected abstract TensorUnaryOperator operator(Tensor sequence);
+  protected abstract Sedarim operator(Tensor sequence);
 
   protected abstract TensorScalarFunction function(Tensor sequence, Tensor values);
 

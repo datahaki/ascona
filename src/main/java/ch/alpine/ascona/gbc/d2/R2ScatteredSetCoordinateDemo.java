@@ -23,6 +23,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RationalScalar;
@@ -31,7 +32,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -41,7 +41,8 @@ import ch.alpine.tensor.sca.Clips;
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 // TODO ASCONA ALG possibly only recompute when points have changed
-public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
+// FIXME ASCONA demo does not work
+/* package */ class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final double RANGE = 5;
   private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
   // ---
@@ -99,7 +100,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::toPoint));
       RenderQuality.setQuality(graphics);
       // ---
-      TensorUnaryOperator tensorUnaryOperator = operator(domain);
+      Sedarim tensorUnaryOperator = operator(domain);
       Tensor sX = Subdivide.increasing(coordinateBoundingBox.getClip(0), refinement());
       Tensor sY = Subdivide.decreasing(coordinateBoundingBox.getClip(1), refinement());
       int n = sX.length();
@@ -111,7 +112,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
         int c1 = 0;
         for (Tensor y : sY) {
           Tensor px = Tensors.of(x, y);
-          Tensor weights = tensorUnaryOperator.apply(px);
+          Tensor weights = tensorUnaryOperator.sunder(px);
           wgs.set(weights, c1, c0);
           Tensor mean = biinvariantMean.mean(controlPoints, weights);
           array[c0][c1] = mean;

@@ -4,11 +4,11 @@ package ch.alpine.ascona.gbc.d2;
 import java.util.stream.IntStream;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.ConstantArray;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.FiniteTensorQ;
 
 /** Reference:
@@ -18,12 +18,12 @@ import ch.alpine.tensor.chq.FiniteTensorQ;
   /** @param origin
    * @param tensorUnaryOperator
    * @param domain */
-  public static MovingDomain2D of(Tensor origin, TensorUnaryOperator tensorUnaryOperator, Tensor domain) {
+  public static MovingDomain2D of(Tensor origin, Sedarim tensorUnaryOperator, Tensor domain) {
     return new AveragedMovingDomain2D(origin, tensorUnaryOperator, domain);
   }
 
   // ---
-  private AveragedMovingDomain2D(Tensor origin, TensorUnaryOperator tensorUnaryOperator, Tensor domain) {
+  private AveragedMovingDomain2D(Tensor origin, Sedarim tensorUnaryOperator, Tensor domain) {
     super(origin, tensorUnaryOperator, domain);
   }
 

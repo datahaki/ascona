@@ -69,7 +69,7 @@ public class ClassificationDemo extends AbstractHoverDemo {
     Tensor geodesicMouse = leversRender.getOrigin();
     // ---
     Tensor control = leversRender.getSequence();
-    Tensor weights = operator(control).apply(leversRender.getOrigin());
+    Tensor weights = operator(control).sunder(leversRender.getOrigin());
     // leversRender.renderInfluenceX(ColorDataGradients.JET);
     // Tensor influence = new HsInfluence( //
     // geodesicDisplay.vectorLogManifold().logAt(leversRender.getOrigin()), //

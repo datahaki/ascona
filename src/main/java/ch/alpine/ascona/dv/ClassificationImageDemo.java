@@ -30,9 +30,10 @@ import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -158,10 +159,10 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
     Labels labels = Objects.requireNonNull(spinnerLabels.getValue());
     Objects.requireNonNull(vector);
     Classification classification = labels.apply(vector);
-    TensorUnaryOperator operator = operator(getGeodesicControlPoints());
+    Sedarim operator = operator(getGeodesicControlPoints());
     ColorDataLists colorDataLists = spinnerColor.getValue();
     TensorUnaryOperator tensorUnaryOperator = //
-        spinnerImage.getValue().operator(classification, operator, colorDataLists.cyclic());
+        spinnerImage.getValue().operator(classification, operator::sunder, colorDataLists.cyclic());
     int resolution = spinnerRes.getValue();
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
     Tensor raster = D2Raster.of(hsArrayPlot, resolution, arrayFunction);
@@ -210,7 +211,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
     for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = getGeodesicControlPoints();
-      TensorUnaryOperator operator = logWeighting.operator( //
+      Sedarim operator = logWeighting.operator( //
           biinvariant, //
           variogram(), //
           sequence);
@@ -220,7 +221,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
       ColorDataLists colorDataLists = spinnerColor.getValue();
       ColorDataIndexed colorDataIndexed = colorDataLists.strict();
       TensorUnaryOperator tensorUnaryOperator = //
-          spinnerImage.getValue().operator(classification, operator, colorDataIndexed);
+          spinnerImage.getValue().operator(classification, operator::sunder, colorDataIndexed);
       int resolution = REFINEMENT;
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
       Tensor raster = D2Raster.of(hsArrayPlot, resolution, arrayFunction);

@@ -7,13 +7,13 @@ import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 
 // TODO ASCONA ugly when computation fails (probably for accuracy reasons)
@@ -43,7 +43,7 @@ public class H2DeformationDemo extends AbstractDeformationDemo {
     Tensor dx = Subdivide.of(-rad, rad, res - 1);
     Tensor dy = Subdivide.of(-rad, rad, res - 1);
     Tensor domain = Outer.of((cx, cy) -> HnWeierstrassCoordinate.toPoint(Tensors.of(cx, cy)), dx, dy);
-    TensorUnaryOperator tensorUnaryOperator = operator(movingOrigin);
+    Sedarim tensorUnaryOperator = operator(movingOrigin);
     return AveragedMovingDomain2D.of(movingOrigin, tensorUnaryOperator, domain);
   }
 

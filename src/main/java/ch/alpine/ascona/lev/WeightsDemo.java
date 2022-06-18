@@ -16,12 +16,12 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.Biinvariants;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.ArgMin;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
@@ -64,9 +64,9 @@ import ch.alpine.tensor.img.ColorDataLists;
         {
           int index = 0;
           for (Biinvariant biinvariant : map2.values()) {
-            TensorUnaryOperator tensorUnaryOperator = //
+            Sedarim tensorUnaryOperator = //
                 logWeighting().operator(biinvariant, variogram(), sequence);
-            Tensor weights = tensorUnaryOperator.apply(origin);
+            Tensor weights = tensorUnaryOperator.sunder(origin);
             minIndex[index] = ArgMin.of(weights);
             matrix.append(weights);
             ++index;

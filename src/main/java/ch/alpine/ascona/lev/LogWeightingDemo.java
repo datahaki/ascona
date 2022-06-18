@@ -10,10 +10,11 @@ import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.Biinvariants;
-import ch.alpine.sophus.hs.LeveragesBiinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.dv.LeveragesBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.var.VariogramFunctions;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -22,7 +23,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 
 public abstract class LogWeightingDemo extends LogWeightingBase {
   private static final Tensor BETAS = Tensors.fromString("{0, 1/2, 1, 3/2, 7/4, 2, 5/2, 3}");
@@ -97,7 +97,7 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
   }
 
   @Override
-  protected final TensorUnaryOperator operator(Tensor sequence) {
+  protected final Sedarim operator(Tensor sequence) {
     return logWeighting().operator( //
         biinvariant(), //
         variogram(), //

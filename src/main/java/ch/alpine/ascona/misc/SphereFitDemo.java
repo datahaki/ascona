@@ -17,20 +17,20 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.crv.d2.StarPoints;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.fit.HsWeiszfeldMethod;
 import ch.alpine.sophus.fit.SpatialMedian;
 import ch.alpine.sophus.fit.SphereFit;
 import ch.alpine.sophus.fit.WeiszfeldMethod;
-import ch.alpine.sophus.hs.Biinvariant;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Outer;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.lie.r2.CirclePoints;
@@ -101,7 +101,7 @@ public class SphereFitDemo extends ControlPointsDemo {
     {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       Biinvariant biinvariant = new MetricBiinvariant(homogeneousSpace);
-      TensorUnaryOperator weightingInterface = biinvariant.weighting(InversePowerVariogram.of(1), control);
+      Sedarim weightingInterface = biinvariant.weighting(InversePowerVariogram.of(1), control);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(Chop._08), weightingInterface, Chop._06);
       Optional<Tensor> optional = spatialMedian.uniform(control);
       if (optional.isPresent()) {

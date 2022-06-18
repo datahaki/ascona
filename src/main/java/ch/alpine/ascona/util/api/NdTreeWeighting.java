@@ -4,13 +4,13 @@ package ch.alpine.ascona.util.api;
 import java.io.Serializable;
 import java.util.Collection;
 
-import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.opt.nd.NdCenters;
@@ -30,7 +30,7 @@ public class NdTreeWeighting implements LogWeighting, Serializable {
   }
 
   @Override
-  public TensorUnaryOperator operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+  public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
     throw new UnsupportedOperationException();
   }
 

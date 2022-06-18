@@ -26,9 +26,9 @@ import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.io.HtmlUtf8;
 import ch.alpine.bridge.swing.SpinnerListener;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataIndexed;
 
@@ -90,12 +90,12 @@ public class PolygonCoordinatesDemo extends AbstractArrayCoordinateDemo //
         }
       }
       for (LogWeighting logWeighting : array) {
-        TensorUnaryOperator tensorUnaryOperator = logWeighting.operator(null, null, sequence);
+        Sedarim tensorUnaryOperator = logWeighting.operator(null, null, sequence);
         System.out.print("computing " + logWeighting);
         // GeodesicArrayPlot geodesicArrayPlot = geodesicDisplay.geodesicArrayPlot();
         int refinement = resolution();
         try {
-          ArrayPlotRender arrayPlotRender = arrayPlotRender(sequence, refinement, tensorUnaryOperator, 1);
+          ArrayPlotRender arrayPlotRender = arrayPlotRender(sequence, refinement, tensorUnaryOperator::sunder, 1);
           BufferedImage bufferedImage = BackgroundOffscreen.fuseImages(manifoldDisplay, arrayPlotRender.export(), sequence.length());
           File file = new File(root, logWeighting.toString() + ".png");
           ImageIO.write(bufferedImage, "png", file);

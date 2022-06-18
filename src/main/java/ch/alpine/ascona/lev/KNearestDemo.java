@@ -22,6 +22,7 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.api.TensorMapping;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.RealScalar;
@@ -29,7 +30,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Ordering;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -100,8 +100,8 @@ public class KNearestDemo extends LogWeightingDemo {
 
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, Tensor sequence, Tensor origin, String p) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorUnaryOperator tensorUnaryOperator = logWeighting().operator(biinvariant(), variogram(), sequence);
-    Tensor weights = tensorUnaryOperator.apply(origin);
+    Sedarim tensorUnaryOperator = logWeighting().operator(biinvariant(), variogram(), sequence);
+    Tensor weights = tensorUnaryOperator.sunder(origin);
     // ---
     int[] integers = Ordering.INCREASING.of(weights);
     Tensor shape = manifoldDisplay.shape();

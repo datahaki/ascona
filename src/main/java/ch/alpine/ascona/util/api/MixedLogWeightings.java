@@ -4,7 +4,8 @@ package ch.alpine.ascona.util.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.alpine.sophus.hs.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.RadialBasisFunctionInterpolation;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -15,10 +16,10 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 public enum MixedLogWeightings implements LogWeighting {
   RADIAL_BASIS {
     @Override
-    public TensorUnaryOperator operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+    public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
       return RadialBasisFunctionInterpolation.of( //
           biinvariant.var_dist(variogram, sequence), //
-          sequence);
+          sequence)::apply;
     }
 
     @Override

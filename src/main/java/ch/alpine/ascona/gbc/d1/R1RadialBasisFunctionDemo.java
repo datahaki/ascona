@@ -9,6 +9,7 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.CrossAveraging;
 import ch.alpine.sophus.itp.RadialBasisFunctionInterpolation;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
@@ -47,7 +48,7 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
       }
       if (!isDeterminate())
         try {
-          TensorUnaryOperator weightingInterface = operator(sequence);
+          Sedarim weightingInterface = operator(sequence);
           TensorUnaryOperator operator = //
               new CrossAveraging(weightingInterface, RnBiinvariantMean.INSTANCE, funceva);
           Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(operator));

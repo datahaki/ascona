@@ -8,13 +8,13 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
@@ -62,7 +62,7 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
     Tensor dx = Subdivide.of(-1, 1, res - 1);
     Tensor dy = Subdivide.of(-1, 1, res - 1);
     Tensor domain = Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, ZHEIGHT)), dx, dy);
-    TensorUnaryOperator tensorUnaryOperator = operator(movingOrigin);
+    Sedarim tensorUnaryOperator = operator(movingOrigin);
     return AveragedMovingDomain2D.of(movingOrigin, tensorUnaryOperator, domain);
   }
 

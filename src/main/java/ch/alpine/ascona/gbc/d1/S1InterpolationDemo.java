@@ -16,13 +16,13 @@ import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.AngleVector;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.num.Pi;
@@ -66,10 +66,10 @@ public class S1InterpolationDemo extends LogWeightingDemo {
       Tensor domain = Subdivide.of(Pi.VALUE.negate(), Pi.VALUE, 511);
       Tensor spherics = domain.map(AngleVector::of);
       // ---
-      TensorUnaryOperator tensorUnaryOperator = operator(sequence);
+      Sedarim tensorUnaryOperator = operator(sequence);
       try {
         ScalarTensorFunction scalarTensorFunction = //
-            point -> tensorUnaryOperator.apply(AngleVector.of(point));
+            point -> tensorUnaryOperator.sunder(AngleVector.of(point));
         Tensor basis = Tensor.of(domain.stream().parallel().map(Scalar.class::cast).map(scalarTensorFunction));
         Tensor curve = Times.of(basis.dot(values), spherics);
         new PathRender(Color.BLUE, 1.25f).setCurve(curve, true).render(geometricLayer, graphics);

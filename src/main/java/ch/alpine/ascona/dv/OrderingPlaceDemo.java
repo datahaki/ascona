@@ -15,9 +15,9 @@ import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
@@ -64,8 +64,8 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
     if (optional.isPresent()) {
       Tensor sequence = getSequence();
       Tensor origin = optional.get();
-      TensorUnaryOperator tensorUnaryOperator = logWeighting().operator(biinvariant(), variogram(), sequence);
-      Tensor weights = tensorUnaryOperator.apply(origin);
+      Sedarim tensorUnaryOperator = logWeighting().operator(biinvariant(), variogram(), sequence);
+      Tensor weights = tensorUnaryOperator.sunder(origin);
       OrderingHelper.of(manifoldDisplay, origin, sequence, weights, spinnerColorData.getValue(), geometricLayer, graphics);
     }
   }

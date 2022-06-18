@@ -11,13 +11,13 @@ import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Chop;
@@ -65,7 +65,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
     Tensor dx = Subdivide.increasing(coordinateBoundingBox.getClip(0), res - 1);
     Tensor dy = Subdivide.increasing(coordinateBoundingBox.getClip(1), res - 3);
     Tensor domain = Outer.of(Tensors::of, dx, dy);
-    TensorUnaryOperator tensorUnaryOperator = operator(movingOrigin);
+    Sedarim tensorUnaryOperator = operator(movingOrigin);
     return jToggleRigidMotionFit.isSelected() //
         ? RnFittedMovingDomain2D.of(movingOrigin, tensorUnaryOperator, domain)
         : AveragedMovingDomain2D.of(movingOrigin, tensorUnaryOperator, domain);

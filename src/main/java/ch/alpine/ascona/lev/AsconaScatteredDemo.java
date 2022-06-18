@@ -17,15 +17,15 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.sophus.hs.Biinvariant;
-import ch.alpine.sophus.hs.Biinvariants;
-import ch.alpine.sophus.hs.MetricBiinvariant;
+import ch.alpine.sophus.dv.Biinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 
@@ -66,9 +66,9 @@ public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerList
       leversRender.renderIndexP();
       leversRender.renderIndexX();
       Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
-      TensorUnaryOperator tensorUnaryOperator = biinvariant.coordinate(InversePowerVariogram.of(2), sequence);
+      Sedarim tensorUnaryOperator = biinvariant.coordinate(InversePowerVariogram.of(2), sequence);
       try {
-        Tensor weights = tensorUnaryOperator.apply(origin);
+        Tensor weights = tensorUnaryOperator.sunder(origin);
         leversRender.renderWeights(weights);
       } catch (Exception e) {
         // TODO ASCONA does not work for Spd2 SO3 He1

@@ -36,7 +36,7 @@ public class CoordinatesPlaceDemo extends LogWeightingDemo {
       // ---
       if (jCheckBoxW.isSelected())
         try {
-          Tensor weights = operator(leversRender.getSequence()).apply(leversRender.getOrigin());
+          Tensor weights = operator(leversRender.getSequence()).sunder(leversRender.getOrigin());
           leversRender.renderWeights(weights);
         } catch (Exception exception) {
           System.err.println("no can do");

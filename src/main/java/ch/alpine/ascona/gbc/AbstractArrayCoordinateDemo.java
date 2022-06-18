@@ -30,7 +30,7 @@ public abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightin
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     arrayPlotRender = manifoldDisplay.dimensions() < sequence.length() //
-        ? arrayPlotRender(sequence, refinement(), operator(sequence), magnification())
+        ? arrayPlotRender(sequence, refinement(), operator(sequence)::sunder, magnification())
         : null;
   }
 
