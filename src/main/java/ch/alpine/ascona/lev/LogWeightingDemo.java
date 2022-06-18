@@ -12,7 +12,6 @@ import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
-import ch.alpine.sophus.dv.LeveragesBiinvariant;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.var.VariogramFunctions;
@@ -88,8 +87,8 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(manifold);
-    Biinvariants bibis = bitype();
-    return map.getOrDefault(bibis, new LeveragesBiinvariant(manifold));
+    Biinvariants biinvariants = bitype();
+    return map.getOrDefault(biinvariants, Biinvariants.LEVERAGES.of(manifold));
   }
 
   protected final Biinvariants bitype() {

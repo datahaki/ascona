@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
-import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotRender;
 import ch.alpine.ascona.util.arp.D2Raster;
@@ -24,7 +23,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.api.TensorMetric;
-import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.DistanceMatrix;
@@ -100,28 +99,25 @@ public class MaAveragingDemo extends AnAveragingDemo {
     if (2 < n)
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
-        D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
+        D2Raster d2Raster = (D2Raster) manifoldDisplay;
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
         TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
-        // TensorMetric metric = manifoldDisplay.biinvariantMetric();
         TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(tensorMetric.distance(p, q));
-        // msq = metric;
         final Tensor dist;
         if (jToggleThresh.isSelected()) {
           dist = ConstantArray.of(RealScalar.ONE, n, n).subtract(IdentityMatrix.of(n));
         } else {
           dist = DistanceMatrix.of(sequence, msq);
         }
-        Sedarim tuo = LogWeightings.COORDINATE.operator( //
-            new MetricBiinvariant(homogeneousSpace), //
-            InversePowerVariogram.of(2), sequence);
+        Sedarim sedarim = Biinvariants.METRIC.of(homogeneousSpace) //
+            .coordinate(InversePowerVariogram.of(2), sequence);
         TensorScalarFunction tsf = p -> {
-          Tensor b = tuo.sunder(p);
+          Tensor b = sedarim.sunder(p);
           return Abs.FUNCTION.apply((Scalar) dist.dot(b).dot(b));
         };
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-        Tensor matrix = D2Raster.of(hsArrayPlot, resolution, arrayFunction);
+        Tensor matrix = D2Raster.of(d2Raster, resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
         ColorDataGradient colorDataGradient = spinnerColorData.getValue();

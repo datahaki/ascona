@@ -22,8 +22,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophus.dv.Biinvariant;
-import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.RealScalar;
@@ -108,8 +107,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   public Tensor distanceMatrix(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    Biinvariant biinvariant = new MetricBiinvariant(homogeneousSpace);
-    Sedarim tuo = biinvariant.distances(sequence);
+    Sedarim tuo = Biinvariants.METRIC.of(homogeneousSpace).distances(sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(tuo::sunder));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix

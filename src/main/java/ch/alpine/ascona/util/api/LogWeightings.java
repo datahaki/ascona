@@ -19,8 +19,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 public enum LogWeightings implements LogWeighting {
   DISTANCES {
     @Override // from LogWeighting
-    public Sedarim operator( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+    public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
       return biinvariant.distances(sequence)::sunder;
     }
 
@@ -34,8 +33,7 @@ public enum LogWeightings implements LogWeighting {
   // ---
   WEIGHTING {
     @Override // from LogWeighting
-    public Sedarim operator( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+    public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
       return biinvariant.weighting(variogram, sequence)::sunder;
     }
 
@@ -52,8 +50,7 @@ public enum LogWeightings implements LogWeighting {
   // ---
   COORDINATE {
     @Override // from LogWeighting
-    public Sedarim operator( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+    public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
       return biinvariant.coordinate(variogram, sequence)::sunder;
     }
 
@@ -70,8 +67,7 @@ public enum LogWeightings implements LogWeighting {
   // ---
   LAGRAINATE {
     @Override // from LogWeighting
-    public Sedarim operator( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+    public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
       return biinvariant.lagrainate(variogram, sequence)::sunder;
     }
 
@@ -90,8 +86,7 @@ public enum LogWeightings implements LogWeighting {
    * restricted to certain variograms, e.g. power(1.5) */
   KRIGING {
     @Override // from LogWeighting
-    public Sedarim operator( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+    public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
       Sedarim tensorUnaryOperator = biinvariant.var_dist(variogram, sequence);
       return Kriging.barycentric(tensorUnaryOperator::sunder, sequence)::estimate;
     }
@@ -109,10 +104,9 @@ public enum LogWeightings implements LogWeighting {
   // ---
   KRIGING_COORDINATE {
     @Override // from LogWeighting
-    public Sedarim operator( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
-      Sedarim tensorUnaryOperator = biinvariant.var_dist(variogram, sequence);
-      return KrigingCoordinate.of(tensorUnaryOperator::sunder, biinvariant.hsDesign(), sequence);
+    public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+      Sedarim sedarim = biinvariant.var_dist(variogram, sequence);
+      return new KrigingCoordinate(sedarim, biinvariant.hsDesign(), sequence);
     }
 
     @Override // from LogWeighting
@@ -127,10 +121,9 @@ public enum LogWeightings implements LogWeighting {
   },
   INVERSE_COORDINATE {
     @Override // from LogWeighting
-    public Sedarim operator( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
-      Sedarim tensorUnaryOperator = biinvariant.var_dist(variogram, sequence);
-      return InverseCoordinate.of(tensorUnaryOperator::sunder, biinvariant.hsDesign(), sequence);
+    public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+      Sedarim sedarim = biinvariant.var_dist(variogram, sequence);
+      return new InverseCoordinate(sedarim, biinvariant.hsDesign(), sequence);
     }
 
     @Override // from LogWeighting

@@ -9,15 +9,12 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 
 public interface LogWeighting {
   /** @param biinvariant
-   * @param manifold
    * @param variogram
    * @param sequence
    * @return */
-  Sedarim operator( //
-      Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence);
+  Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence);
 
   /** @param biinvariant
-   * @param manifold
    * @param variogram
    * @param sequence
    * @param values

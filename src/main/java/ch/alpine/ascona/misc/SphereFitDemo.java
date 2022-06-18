@@ -18,7 +18,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.crv.d2.StarPoints;
 import ch.alpine.sophus.dv.Biinvariant;
-import ch.alpine.sophus.dv.MetricBiinvariant;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.fit.HsWeiszfeldMethod;
 import ch.alpine.sophus.fit.SpatialMedian;
 import ch.alpine.sophus.fit.SphereFit;
@@ -100,7 +100,7 @@ public class SphereFitDemo extends ControlPointsDemo {
     }
     {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      Biinvariant biinvariant = new MetricBiinvariant(homogeneousSpace);
+      Biinvariant biinvariant = Biinvariants.METRIC.of(homogeneousSpace);
       Sedarim weightingInterface = biinvariant.weighting(InversePowerVariogram.of(1), control);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(Chop._08), weightingInterface, Chop._06);
       Optional<Tensor> optional = spatialMedian.uniform(control);

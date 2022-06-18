@@ -17,9 +17,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
-import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
-import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
@@ -65,8 +63,7 @@ public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerList
       leversRender.renderSequence();
       leversRender.renderIndexP();
       leversRender.renderIndexX();
-      Biinvariant biinvariant = new MetricBiinvariant(RnGroup.INSTANCE);
-      Sedarim tensorUnaryOperator = biinvariant.coordinate(InversePowerVariogram.of(2), sequence);
+      Sedarim tensorUnaryOperator = Biinvariants.METRIC.of(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), sequence);
       try {
         Tensor weights = tensorUnaryOperator.sunder(origin);
         leversRender.renderWeights(weights);

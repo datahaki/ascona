@@ -27,7 +27,6 @@ import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
-import ch.alpine.sophus.dv.LeveragesBiinvariant;
 import ch.alpine.sophus.fit.HsWeiszfeldMethod;
 import ch.alpine.sophus.fit.SpatialMedian;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -118,7 +117,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke(1));
     if (param.median) {
       Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
-      Biinvariant biinvariant = map.getOrDefault(param.biinvariants, new LeveragesBiinvariant(homogeneousSpace));
+      Biinvariant biinvariant = map.getOrDefault(param.biinvariants, Biinvariants.LEVERAGES.of(homogeneousSpace));
       Sedarim weightingInterface = //
           biinvariant.weighting(InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(biinvariantMean, weightingInterface, Chop._05);
