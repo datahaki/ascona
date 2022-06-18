@@ -30,6 +30,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
+import ch.alpine.tensor.nrm.Vector2Norm;
 
 public enum PolygonCoordinates implements LogWeighting {
   MEAN_VALUE(ThreePointCoordinate.of(Barycenter.MEAN_VALUE)), //
@@ -41,8 +42,8 @@ public enum PolygonCoordinates implements LogWeighting {
   WACHSPRESS(ThreePointCoordinate.of(Barycenter.WACHSPRESS)), //
   DISCRETE_HARMONIC(ThreePointCoordinate.of(Barycenter.DISCRETE_HARMONIC)), //
   INVERSE_DISTANCE(MetricCoordinate.of(InversePowerVariogram.of(2))), //
-  LAGRANG_DISTANCE(new LagrangeCoordinate(new InverseDistanceWeighting(InversePowerVariogram.of(2)))), //
-  ITER_TARGET(new IterativeTargetCoordinate(new InverseDistanceWeighting(InversePowerVariogram.of(2)), RealScalar.ONE, 50)), //
+  LAGRANG_DISTANCE(new LagrangeCoordinate(new InverseDistanceWeighting(InversePowerVariogram.of(2), Vector2Norm::of))), //
+  ITER_TARGET(new IterativeTargetCoordinate(new InverseDistanceWeighting(InversePowerVariogram.of(2), Vector2Norm::of), RealScalar.ONE, 50)), //
   ITERATIVE_AF_0(new IterativeCoordinate(AffineCoordinate.INSTANCE, 0)), //
   ITERATIVE_AF_1(new IterativeCoordinate(AffineCoordinate.INSTANCE, 1)), //
   ITERATIVE_AF_2(new IterativeCoordinate(AffineCoordinate.INSTANCE, 2)), //
@@ -72,7 +73,7 @@ public enum PolygonCoordinates implements LogWeighting {
 
   @Override // from LogWeighting
   public Sedarim operator( //
-      Biinvariant biinvariant, // <- ignored
+      Biinvariant biinvariant, //
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
     return HsGenesis.wrap( //

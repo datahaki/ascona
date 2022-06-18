@@ -12,7 +12,6 @@ import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.img.ColorDataGradients;
@@ -32,7 +31,6 @@ public class OrderingHoverDemo extends AbstractHoverDemo {
   @Override // from AbstractHoverDemo
   protected void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Sedarim tensorUnaryOperator = //
         logWeighting().operator(biinvariant(), variogram(), getGeodesicControlPoints());
     RenderQuality.setQuality(graphics);
