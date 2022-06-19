@@ -6,13 +6,13 @@ import java.io.IOException;
 
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
-import ch.alpine.sophus.api.TensorIteration;
 import ch.alpine.sophus.crv.d2.Curvature2D;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
+import ch.alpine.sophus.math.api.TensorIteration;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;

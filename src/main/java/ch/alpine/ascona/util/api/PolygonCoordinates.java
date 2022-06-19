@@ -10,7 +10,7 @@ import ch.alpine.sophus.dv.AffineCoordinate;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.LagrangeCoordinate;
 import ch.alpine.sophus.dv.LeveragesGenesis;
-import ch.alpine.sophus.dv.MetricCoordinate;
+import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.gbc.amp.Amplifiers;
 import ch.alpine.sophus.gbc.d2.Barycenter;
 import ch.alpine.sophus.gbc.d2.InsideConvexHullCoordinate;
@@ -23,14 +23,13 @@ import ch.alpine.sophus.gbc.it.IterativeTargetCoordinate;
 import ch.alpine.sophus.hs.Genesis;
 import ch.alpine.sophus.hs.HsGenesis;
 import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.itp.InverseDistanceWeighting;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.nrm.Vector2Norm;
 
 public enum PolygonCoordinates implements LogWeighting {
   MEAN_VALUE(ThreePointCoordinate.of(Barycenter.MEAN_VALUE)), //
@@ -41,9 +40,11 @@ public enum PolygonCoordinates implements LogWeighting {
   ITERATIVE_MV_5(IterativeMeanValueCoordinate.of(5)), //
   WACHSPRESS(ThreePointCoordinate.of(Barycenter.WACHSPRESS)), //
   DISCRETE_HARMONIC(ThreePointCoordinate.of(Barycenter.DISCRETE_HARMONIC)), //
-  INVERSE_DISTANCE(MetricCoordinate.of(InversePowerVariogram.of(2))), //
-  LAGRANG_DISTANCE(new LagrangeCoordinate(new InverseDistanceWeighting(InversePowerVariogram.of(2), Vector2Norm::of))), //
-  ITER_TARGET(new IterativeTargetCoordinate(new InverseDistanceWeighting(InversePowerVariogram.of(2), Vector2Norm::of), RealScalar.ONE, 50)), //
+  INVERSE_DISTANCE(new MetricBiinvariant(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2))), //
+  LAGRANG_DISTANCE(new LagrangeCoordinate( //
+      new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2)))), //
+  ITER_TARGET(new IterativeTargetCoordinate( //
+      new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2)), RealScalar.ONE, 50)), //
   ITERATIVE_AF_0(new IterativeCoordinate(AffineCoordinate.INSTANCE, 0)), //
   ITERATIVE_AF_1(new IterativeCoordinate(AffineCoordinate.INSTANCE, 1)), //
   ITERATIVE_AF_2(new IterativeCoordinate(AffineCoordinate.INSTANCE, 2)), //

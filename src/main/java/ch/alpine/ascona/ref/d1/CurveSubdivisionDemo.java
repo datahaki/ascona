@@ -53,7 +53,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     public CurveSubdivisionSchemes scheme = CurveSubdivisionSchemes.BSPLINE1;
     @FieldInteger
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
-    public Scalar refine = RealScalar.of(6);
+    public Scalar refine = RealScalar.of(5);
     public Boolean line = false;
     public Boolean cyclic = false;
     public Boolean symi = true;

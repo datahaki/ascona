@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascona.util.win;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Objects;
 import java.util.Timer;
@@ -12,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
+import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.AnimationWriter;
 import ch.alpine.tensor.io.GifAnimationWriter;
@@ -99,11 +98,6 @@ public class TimerFrame extends BaseFrame {
       };
       timer.schedule(timerTask, 100, TimeUnit.MILLISECONDS.convert(period, timeUnit));
     }
-    jFrame.addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowClosed(WindowEvent windowEvent) {
-        timer.cancel();
-      }
-    });
+    WindowClosed.runs(jFrame, () -> timer.cancel());
   }
 }
