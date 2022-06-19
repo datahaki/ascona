@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
+import java.util.Optional;
+
+import ch.alpine.ascona.util.api.Box2D;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -15,15 +19,17 @@ import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.c.ExponentialDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Log;
 
-public enum T1dDisplay implements ManifoldDisplay {
+public enum T1dDisplay implements ManifoldDisplay, D2Raster {
   INSTANCE;
 
-  private static final Tensor PENTAGON = CirclePoints.of(5).multiply(RealScalar.of(0.2)).unmodifiable();
+  private static final Tensor PENTAGON = CirclePoints.of(5).multiply(RealScalar.of(0.1)).unmodifiable();
 
   @Override // from ManifoldDisplay
   public int dimensions() {
@@ -82,6 +88,16 @@ public enum T1dDisplay implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public RenderInterface background() {
     return AxesRender.INSTANCE;
+  }
+
+  @Override // D2Raster
+  public Optional<Tensor> d2lift(Tensor pxy) {
+    return Optional.of(project(pxy));
+  }
+
+  @Override // D2Raster
+  public CoordinateBoundingBox coordinateBoundingBox() {
+    return Box2D.xy(Clips.absolute(3));
   }
 
   @Override // from Object

@@ -30,7 +30,7 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public ThreePointBarycenterDemo() {
-    super(true, ManifoldDisplays.ARRAYS, List.of(PolygonCoordinates.values()));
+    super(true, ManifoldDisplays.RASTERS, List.of(PolygonCoordinates.values()));
     // ---
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---

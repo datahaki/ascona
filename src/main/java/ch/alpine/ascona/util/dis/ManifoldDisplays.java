@@ -3,6 +3,8 @@ package ch.alpine.ascona.util.dis;
 
 import java.util.List;
 
+import ch.alpine.ascona.util.arp.D2Raster;
+
 // TODO ASCONA filter candidates dynamically for properties
 public enum ManifoldDisplays {
   Se2ClA(Se2ClothoidDisplay.ANALYTIC), //
@@ -74,8 +76,15 @@ public enum ManifoldDisplays {
       He1Display.INSTANCE, //
       T1dDisplay.INSTANCE);
   // ---
-  /** have array */
-  public static final List<ManifoldDisplay> ARRAYS = List.of( //
+  /** implement {@link D2Raster} */
+  public static final List<ManifoldDisplay> RASTERS = List.of( //
+      R2Display.INSTANCE, //
+      H2Display.INSTANCE, //
+      S2Display.INSTANCE, //
+      Rp2Display.INSTANCE, //
+      T1dDisplay.INSTANCE);
+  /** implement {@link D2Raster} */
+  public static final List<ManifoldDisplay> METRIC_RASTERS = List.of( //
       R2Display.INSTANCE, //
       H2Display.INSTANCE, //
       S2Display.INSTANCE, //

@@ -76,7 +76,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
   private Tensor reference;
 
   public CheckerBoardDemo() {
-    super(true, ManifoldDisplays.ARRAYS, PolygonCoordinates.list());
+    super(true, ManifoldDisplays.METRIC_RASTERS, PolygonCoordinates.list());
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
     setMidpointIndicated(true);
     FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);

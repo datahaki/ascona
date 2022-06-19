@@ -22,7 +22,6 @@ import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.DistanceMatrix;
@@ -52,7 +51,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
   private final JToggleButton jToggleThresh = new JToggleButton("thresh");
 
   public MaAveragingDemo() {
-    super(ManifoldDisplays.ARRAYS);
+    super(ManifoldDisplays.RASTERS);
     {
       spinnerColorData.setValue(ColorDataGradients.PARULA);
       spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color scheme");
@@ -101,16 +100,15 @@ public class MaAveragingDemo extends AnAveragingDemo {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
         D2Raster d2Raster = (D2Raster) manifoldDisplay;
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
-        TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
-        TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(tensorMetric.distance(p, q));
         final Tensor dist;
-        if (jToggleThresh.isSelected()) {
+        if (jToggleThresh.isSelected() || !(homogeneousSpace instanceof TensorMetric)) {
           dist = ConstantArray.of(RealScalar.ONE, n, n).subtract(IdentityMatrix.of(n));
         } else {
+          TensorMetric tensorMetric = (TensorMetric) homogeneousSpace;
+          TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(tensorMetric.distance(p, q));
           dist = DistanceMatrix.of(sequence, msq);
         }
-        Sedarim sedarim = Biinvariants.METRIC.of(homogeneousSpace) //
-            .coordinate(InversePowerVariogram.of(2), sequence);
+        Sedarim sedarim = biinvariant().coordinate(InversePowerVariogram.of(2), sequence);
         TensorScalarFunction tsf = p -> {
           Tensor b = sedarim.sunder(p);
           return Abs.FUNCTION.apply((Scalar) dist.dot(b).dot(b));

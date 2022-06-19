@@ -27,7 +27,10 @@ public interface D2Raster {
             .map(arrayFunction))));
   }
 
-  /** @param pxy vector of the form {px, py}
+  /** in some simple cases the implementation is just
+   * Optional.of(project(pxy))
+   * 
+   * @param pxy vector of the form {px, py}
    * @return point on manifold, or empty */
   Optional<Tensor> d2lift(Tensor pxy);
 

@@ -18,7 +18,7 @@ public abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightin
   private ArrayPlotRender arrayPlotRender;
 
   public AbstractArrayCoordinateDemo(List<LogWeighting> array) {
-    super(true, ManifoldDisplays.ARRAYS, array);
+    super(true, ManifoldDisplays.RASTERS, array);
     // ---
     jToggleHeatmap.setVisible(false);
     jToggleArrows.setVisible(false);

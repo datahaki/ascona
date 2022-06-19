@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -50,13 +49,6 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
 public class ClassificationImageDemo extends LogWeightingDemo implements ActionListener {
   private static final int REFINEMENT = 160;
-  private static final Random RANDOM = new Random();
-  // private static List<Biinvariant> distinct() {
-  // return List.of( //
-  // MetricBiinvariant.EUCLIDEAN, //
-  // Biinvariants.LEVERAGES, //
-  // Biinvariants.GARDEN);
-  // }
   // ---
   private final SpinnerLabel<ColorDataLists> spinnerColor = SpinnerLabel.of(ColorDataLists.class);
   private final SpinnerLabel<Integer> spinnerLabel = SpinnerLabel.of(2, 3, 4, 5);
@@ -70,7 +62,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   protected Tensor vector;
 
   public ClassificationImageDemo() {
-    super(false, ManifoldDisplays.ARRAYS, LogWeightings.list());
+    super(false, ManifoldDisplays.RASTERS, LogWeightings.list());
     addManifoldListener(v -> shuffle(spinnerCount.getValue()));
     {
       spinnerLogWeighting.addSpinnerListener(logWeighting -> {
@@ -147,7 +139,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
         .map(manifoldDisplay::unproject));
     setControlPointsSe2(tensor);
     // assignment of random labels to points
-    vector = RandomVariate.of(DiscreteUniformDistribution.of(0, spinnerLabel.getValue()), RANDOM, n);
+    vector = RandomVariate.of(DiscreteUniformDistribution.of(0, spinnerLabel.getValue()), n);
     recompute();
   }
 
