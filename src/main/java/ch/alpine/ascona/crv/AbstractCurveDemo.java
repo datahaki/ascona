@@ -4,7 +4,6 @@ package ch.alpine.ascona.crv;
 import java.awt.Graphics2D;
 import java.util.List;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -36,7 +35,7 @@ public abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
     this(ManifoldDisplays.ALL);
   }
 
-  public AbstractCurveDemo(List<ManifoldDisplay> list) {
+  public AbstractCurveDemo(List<ManifoldDisplays> list) {
     super(list);
   }
 

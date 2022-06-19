@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -34,7 +33,7 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
       jButtonShuffle.addActionListener(e -> shuffle());
       timerFrame.jToolBar.add(jButtonShuffle);
     }
-    setManifoldDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(ManifoldDisplays.Se2);
     shuffle();
     timerFrame.jToolBar.addSeparator();
   }

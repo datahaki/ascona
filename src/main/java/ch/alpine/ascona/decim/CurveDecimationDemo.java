@@ -64,7 +64,7 @@ public class CurveDecimationDemo extends AbstractDemo {
 
     @Override
     public List<ManifoldDisplays> manifoldDisplays() {
-      return ManifoldDisplays.l_SE2_R2;
+      return ManifoldDisplays.SE2_R2;
     }
 
     @FieldSelectionArray({ "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })

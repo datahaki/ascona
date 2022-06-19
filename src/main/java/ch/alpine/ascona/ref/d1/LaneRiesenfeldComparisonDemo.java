@@ -16,7 +16,6 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.CurveVisualSet;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -50,9 +49,9 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     this(ManifoldDisplays.ALL);
   }
 
-  public LaneRiesenfeldComparisonDemo(List<ManifoldDisplay> list) {
+  public LaneRiesenfeldComparisonDemo(List<ManifoldDisplays> list) {
     super(true, list);
-    setManifoldDisplay(Se2ClothoidDisplay.LEGENDRE);
+    setManifoldDisplay(ManifoldDisplays.Se2ClL);
     // ---
     jToggleCurvature.setSelected(false);
     jToggleCurvature.setToolTipText("curvature plot");

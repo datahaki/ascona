@@ -14,7 +14,6 @@ import ch.alpine.ascona.misc.VehicleStatic;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -70,7 +69,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     super(true, ManifoldDisplays.MANIFOLDS);
     setMidpointIndicated(false);
     // ---
-    setManifoldDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(ManifoldDisplays.Se2);
     // ---
     FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     fieldsEditor.addUniversalListener(() -> {

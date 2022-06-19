@@ -33,7 +33,7 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
     this(ManifoldDisplays.ALL);
   }
 
-  public AbstractCurvatureDemo(List<ManifoldDisplay> list) {
+  public AbstractCurvatureDemo(List<ManifoldDisplays> list) {
     super(true, list);
   }
 

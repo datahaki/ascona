@@ -8,11 +8,8 @@ import java.util.Optional;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.PolygonCoordinates;
-import ch.alpine.ascona.util.dis.H2Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -26,7 +23,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Chop;
 
 // TODO ASCONA demo becomes unstable when control points are removed
-public class ThreePointBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class ThreePointBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplays> {
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public ThreePointBarycenterDemo() {
@@ -34,9 +31,9 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
     // ---
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---
-    ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
-    setManifoldDisplay(manifoldDisplay);
-    actionPerformed(manifoldDisplay);
+    ManifoldDisplays manifoldDisplays = ManifoldDisplays.S2;
+    setManifoldDisplay(manifoldDisplays);
+    actionPerformed(manifoldDisplays);
     addManifoldListener(this);
     jToggleNeutral.setSelected(true);
   }
@@ -80,16 +77,16 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplay manifoldDisplay) {
-    if (manifoldDisplay instanceof R2Display) {
+  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+    if (manifoldDisplays.equals(ManifoldDisplays.R2)) {
       setControlPointsSe2(Tensors.fromString( //
           "{{-0.175, 0.358, 0.000}, {-0.991, 0.113, 0.000}, {-0.644, 0.967, 0.000}, {0.509, 0.840, 0.000}, {0.689, 0.513, 0.000}, {0.956, -0.627, 0.000}}"));
     } else
-      if (manifoldDisplay instanceof H2Display) {
+      if (manifoldDisplays.equals(ManifoldDisplays.H2)) {
         setControlPointsSe2(Tensors.fromString( //
             "{{0.200, 0.233, 0.000}, {-0.867, 2.450, 0.000}, {2.300, 2.117, 0.000}, {2.567, 0.150, 0.000}, {1.600, -2.583, 0.000}, {-2.550, -1.817, 0.000}}"));
       } else //
-        if (manifoldDisplay instanceof S2Display) {
+        if (manifoldDisplays.equals(ManifoldDisplays.S2)) {
           setControlPointsSe2(Tensors.fromString( //
               "{{-0.363, 0.388, 0.000}, {-0.825, -0.271, 0.000}, {-0.513, 0.804, 0.000}, {0.646, 0.667, 0.000}, {0.704, -0.100, 0.000}, {-0.075, -0.733, 0.000}}"));
         }

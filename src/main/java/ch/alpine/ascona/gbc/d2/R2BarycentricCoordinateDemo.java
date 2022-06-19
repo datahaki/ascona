@@ -22,8 +22,6 @@ import ch.alpine.ascona.util.arp.ArrayPlotRender;
 import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -75,8 +73,8 @@ import ch.alpine.tensor.sca.Sign;
     {
       timerFrame.jToolBar.add(jToggleEntire);
     }
-    setManifoldDisplay(S2Display.INSTANCE);
-    setManifoldDisplay(R2Display.INSTANCE);
+    // setManifoldDisplay(ManifoldDisplays.S2);
+    setManifoldDisplay(ManifoldDisplays.R2);
     setControlPointsSe2(Tensors.fromString("{{0, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}}"));
     setMidpointIndicated(true);
   }

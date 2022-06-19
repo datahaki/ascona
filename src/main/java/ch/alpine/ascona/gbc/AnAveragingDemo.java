@@ -12,7 +12,7 @@ import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
@@ -29,7 +29,7 @@ public abstract class AnAveragingDemo extends LogWeightingDemo {
   // ---
   private final JToggleButton jToggleButton = new JToggleButton("varplot");
 
-  public AnAveragingDemo(List<ManifoldDisplay> geodesicDisplays) {
+  public AnAveragingDemo(List<ManifoldDisplays> geodesicDisplays) {
     super(true, geodesicDisplays, LogWeightings.averagings());
     setMidpointIndicated(false);
     spinnerLogWeighting.addSpinnerListener(v -> recompute());

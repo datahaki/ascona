@@ -11,7 +11,6 @@ import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -43,7 +42,7 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
       spinnerColorData.setValue(ColorDataGradients.THERMOMETER);
       spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color");
     }
-    setManifoldDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(ManifoldDisplays.Se2);
     setLogWeighting(LogWeightings.DISTANCES);
     shuffleSnap();
   }

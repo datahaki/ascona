@@ -6,7 +6,7 @@ import java.awt.Stroke;
 import java.util.List;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -21,7 +21,7 @@ import ch.alpine.tensor.sca.N;
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final Scalar MARGIN = RealScalar.of(2);
 
-  public A1AveragingDemo(ManifoldDisplay manifoldDisplay) {
+  public A1AveragingDemo(ManifoldDisplays manifoldDisplay) {
     super(List.of(manifoldDisplay));
   }
 

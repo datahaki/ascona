@@ -25,7 +25,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
   private Tensor refined = Tensors.empty();
 
   public GeodesicExtrapolationDemo() {
-    super(ManifoldDisplays.l_SE2_R2, GokartPoseDataV2.INSTANCE);
+    super(ManifoldDisplays.SE2_R2, GokartPoseDataV2.INSTANCE);
     updateState();
   }
 

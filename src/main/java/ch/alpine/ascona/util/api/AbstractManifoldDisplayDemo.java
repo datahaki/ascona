@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.util.List;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -15,10 +16,17 @@ import ch.alpine.bridge.swing.SpinnerListener;
 
 @ReflectionMarker
 public abstract class AbstractManifoldDisplayDemo extends AbstractDemo {
-  private final SpinnerLabel<ManifoldDisplay> manifoldDisplaySpinner;
-  private final List<ManifoldDisplay> list;
+  public static final class MdParam {
+    public ManifoldDisplays m;
+  }
 
-  public AbstractManifoldDisplayDemo(List<ManifoldDisplay> list) {
+  private final MdParam mdParam;
+  private final SpinnerLabel<ManifoldDisplays> manifoldDisplaySpinner;
+  private final List<ManifoldDisplays> list;
+
+  public AbstractManifoldDisplayDemo(List<ManifoldDisplays> list) {
+    mdParam = new MdParam();
+    // mdParam.m = list.get(0);
     if (list.isEmpty())
       throw new RuntimeException();
     this.list = list;
@@ -38,10 +46,10 @@ public abstract class AbstractManifoldDisplayDemo extends AbstractDemo {
 
   /** @return */
   public final ManifoldDisplay manifoldDisplay() {
-    return manifoldDisplaySpinner.getValue();
+    return manifoldDisplaySpinner.getValue().manifoldDisplay();
   }
 
-  public synchronized final void setManifoldDisplay(ManifoldDisplay manifoldDisplay) {
+  public synchronized final void setManifoldDisplay(ManifoldDisplays manifoldDisplay) {
     manifoldDisplaySpinner.setValue(manifoldDisplay);
   }
 
@@ -49,12 +57,12 @@ public abstract class AbstractManifoldDisplayDemo extends AbstractDemo {
     manifoldDisplaySpinner.reportToAll();
   }
 
-  public void addManifoldListener(SpinnerListener<ManifoldDisplay> spinnerListener) {
+  public void addManifoldListener(SpinnerListener<ManifoldDisplays> spinnerListener) {
     manifoldDisplaySpinner.addSpinnerListener(spinnerListener);
   }
 
   /** @return */
-  public List<ManifoldDisplay> getManifoldDisplays() {
+  public List<ManifoldDisplays> getManifoldDisplays() {
     return list;
   }
 }

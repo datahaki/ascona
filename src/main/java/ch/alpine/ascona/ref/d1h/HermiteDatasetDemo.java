@@ -64,7 +64,7 @@ public class HermiteDatasetDemo extends AbstractDemo {
 
     @Override
     public List<ManifoldDisplays> manifoldDisplays() {
-      return ManifoldDisplays.l_SE2C_SE2;
+      return ManifoldDisplays.SE2C_SE2;
     }
 
     @FieldSelectionArray({ "1", "2", "5", "10", "25", "50", "100", "250", "500" })

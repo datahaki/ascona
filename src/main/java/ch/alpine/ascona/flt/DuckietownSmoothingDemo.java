@@ -47,7 +47,7 @@ import ch.alpine.tensor.itp.DeBoor;
   private final JSlider jSlider = new JSlider(0, 1000, 500);
 
   public DuckietownSmoothingDemo() {
-    super(ManifoldDisplays.l_R2_ONLY, GokartPoseDataV2.INSTANCE);
+    super(ManifoldDisplays.R2_ONLY, GokartPoseDataV2.INSTANCE);
     // ---
     spinnerDegree = SpinnerLabel.of(DEGREES);
     spinnerDegree.setValue(2);

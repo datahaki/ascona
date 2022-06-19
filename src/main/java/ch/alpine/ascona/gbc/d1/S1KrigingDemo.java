@@ -4,11 +4,10 @@ package ch.alpine.ascona.gbc.d1;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.util.List;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -43,7 +42,7 @@ public class S1KrigingDemo extends AnAveragingDemo {
   private static final Tensor DOMAIN = Drop.tail(CirclePoints.of(161).map(N.DOUBLE), 80);
 
   public S1KrigingDemo() {
-    super(List.of(R2Display.INSTANCE));
+    super(ManifoldDisplays.R2_ONLY);
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-1, 1, 0}}"));
     timerFrame.geometricComponent.addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
     timerFrame.geometricComponent.addRenderInterfaceBackground(S1FrameRender.INSTANCE);

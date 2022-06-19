@@ -10,7 +10,7 @@ import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.Se2CoveringDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -41,7 +41,7 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
     addButtonDubins();
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
-    setManifoldDisplay(Se2CoveringDisplay.INSTANCE);
+    setManifoldDisplay(ManifoldDisplays.Se2C);
     // ---
     Tensor dubins = Tensors.fromString("{{1, 0, 0}, {2, 0, 2.5708}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 0), //

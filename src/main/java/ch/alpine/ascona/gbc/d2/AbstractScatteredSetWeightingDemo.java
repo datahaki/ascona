@@ -8,7 +8,7 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
@@ -22,7 +22,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends LogWeightingDemo
 
   public AbstractScatteredSetWeightingDemo( //
       boolean addRemoveControlPoints, //
-      List<ManifoldDisplay> list, //
+      List<ManifoldDisplays> list, //
       List<LogWeighting> array) {
     super(addRemoveControlPoints, list, array);
     setMidpointIndicated(false);

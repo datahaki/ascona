@@ -55,7 +55,7 @@ public class HermiteDatasetFilterDemo extends AbstractDemo {
 
     @Override
     public List<ManifoldDisplays> manifoldDisplays() {
-      return ManifoldDisplays.l_SE2_ONLY;
+      return ManifoldDisplays.SE2_ONLY;
     }
 
     @FieldInteger

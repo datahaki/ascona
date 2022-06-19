@@ -4,7 +4,7 @@ package ch.alpine.ascona.gbc.d1;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -22,7 +22,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 /** TODO ASCONA ALG investigate, this produces some nice results for kriging+metric+power */
 public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
   public R1RadialBasisFunctionDemo() {
-    super(R2Display.INSTANCE);
+    super(ManifoldDisplays.R2);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 2, 0}, {2, -1, 0}}"));
   }
 

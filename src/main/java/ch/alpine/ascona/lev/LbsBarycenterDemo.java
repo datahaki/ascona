@@ -10,7 +10,6 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -22,7 +21,7 @@ import ch.alpine.tensor.Tensors;
 /** Visualization of
  * "Spherical Barycentric Coordinates"
  * by Torsten Langer, Alexander Belyaev, Hans-Peter Seidel, 2005 */
-public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplays> {
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public LbsBarycenterDemo() {
@@ -30,9 +29,9 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
     // ---
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---
-    ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
-    setManifoldDisplay(manifoldDisplay);
-    actionPerformed(manifoldDisplay);
+    ManifoldDisplays manifoldDisplays = ManifoldDisplays.S2;
+    setManifoldDisplay(manifoldDisplays);
+    actionPerformed(manifoldDisplays);
     addManifoldListener(this);
     jToggleNeutral.setSelected(true);
   }
@@ -78,8 +77,8 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplay manifoldDisplay) {
-    if (manifoldDisplay instanceof S2Display) {
+  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+    if (manifoldDisplays.equals(ManifoldDisplays.S2)) {
       setControlPointsSe2(Tensors.fromString( //
           "{{-0.314, 0.662, 0.000}, {-0.809, 0.426, 0.000}, {-0.261, 0.927, 0.000}, {0.564, 0.685, 0.000}, {0.694, 0.220, 0.000}}"));
     }

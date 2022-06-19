@@ -19,6 +19,7 @@ import ch.alpine.ascona.util.arp.ArrayPlotRender;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -34,7 +35,7 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
   private final JButton jButtonExport = new JButton("export");
 
   public AbstractExportWeightingDemo( //
-      boolean addRemoveControlPoints, List<ManifoldDisplay> list, List<LogWeighting> array) {
+      boolean addRemoveControlPoints, List<ManifoldDisplays> list, List<LogWeighting> array) {
     super(addRemoveControlPoints, list, array);
     {
       jButtonExport.addActionListener(this);

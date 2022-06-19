@@ -25,7 +25,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
   private final SpinnerLabel<Integer> spinnerConvolution = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8);
 
   public GeodesicFiltersDatasetDemo() {
-    super(ManifoldDisplays.l_SE2_R2, GokartPoseDataV1.INSTANCE);
+    super(ManifoldDisplays.SE2_R2, GokartPoseDataV1.INSTANCE);
     {
       spinnerFilters.setValue(GeodesicFilters.GEODESIC);
       spinnerFilters.addToComponentReduced(timerFrame.jToolBar, new Dimension(170, 28), "filter type");

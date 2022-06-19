@@ -16,8 +16,6 @@ import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -90,7 +88,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
           Tensor center = Mean.of(tensor);
           center.set(RealScalar.ZERO, 2);
           tensor = Tensor.of(tensor.stream().map(row -> row.subtract(center)));
-          setManifoldDisplay(Se2Display.INSTANCE);
+          setManifoldDisplay(ManifoldDisplays.Se2);
           param.cyclic = true;
           setControlPointsSe2(tensor);
         });
@@ -140,7 +138,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     // CurveSubdivisionHelper.MAGIC_C = RationalScalar.of(jSlider.getValue(), 1000));
     // timerFrame.jToolBar.add(jSlider);
     // }
-    setManifoldDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(ManifoldDisplays.Se2);
     timerFrame.geometricComponent.setOffset(100, 600);
   }
 
@@ -149,7 +147,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     final CurveSubdivisionSchemes scheme = param.scheme;
     //
     if (scheme.equals(CurveSubdivisionSchemes.DODGSON_SABIN))
-      setManifoldDisplay(R2Display.INSTANCE);
+      setManifoldDisplay(ManifoldDisplays.R2);
     // ---
     if (param.symi) {
       Optional<SymMaskImages> optional = SymMaskImages.get(scheme.name());

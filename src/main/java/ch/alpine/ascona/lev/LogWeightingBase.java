@@ -8,7 +8,7 @@ import java.util.List;
 
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
@@ -17,7 +17,7 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 public abstract class LogWeightingBase extends AbstractPlaceDemo {
   protected final SpinnerLabel<LogWeighting> spinnerLogWeighting;
 
-  public LogWeightingBase(boolean addRemoveControlPoints, List<ManifoldDisplay> list, List<LogWeighting> array) {
+  public LogWeightingBase(boolean addRemoveControlPoints, List<ManifoldDisplays> list, List<LogWeighting> array) {
     super(addRemoveControlPoints, list);
     {
       spinnerLogWeighting = SpinnerLabel.of(array);

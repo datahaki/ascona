@@ -8,8 +8,6 @@ import java.util.Optional;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -24,7 +22,7 @@ import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public class IterativeCoordinateDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class IterativeCoordinateDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplays> {
   private final SpinnerLabel<Integer> spinnerTotal;
   // private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
@@ -36,10 +34,10 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
     // spinnerTotal.addSpinnerListener(this::config);
     spinnerTotal.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "total");
     // ---
-    ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
-    setManifoldDisplay(manifoldDisplay);
+    ManifoldDisplays manifoldDisplays = ManifoldDisplays.R2;
+    setManifoldDisplay(manifoldDisplays);
     setBitype(Biinvariants.LEVERAGES);
-    actionPerformed(manifoldDisplay);
+    actionPerformed(manifoldDisplays);
     addManifoldListener(this);
   }
 
@@ -80,11 +78,11 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplay manifoldDisplay) {
-    if (manifoldDisplay instanceof R2Display) {
+  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+    if (manifoldDisplays.equals(ManifoldDisplays.R2)) {
       setControlPointsSe2(R2PointCollection.SOME);
     } else
-      if (manifoldDisplay instanceof S2Display) {
+      if (manifoldDisplays.equals(ManifoldDisplays.S2)) {
         setControlPointsSe2(Tensors.fromString( //
             "{{0.300, 0.092, 0.000}, {-0.563, -0.658, 0.262}, {-0.854, -0.200, 0.000}, {-0.746, 0.663, -0.262}, {0.467, 0.758, 0.262}, {0.446, -0.554, 0.262}}"));
         setControlPointsSe2(Tensors.fromString( //
@@ -94,7 +92,7 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
         setControlPointsSe2(Tensors.fromString( //
             "{{-0.363, 0.388, 0.000}, {-0.825, -0.271, 0.000}, {-0.513, 0.804, 0.000}, {0.646, 0.667, 0.000}, {0.704, -0.100, 0.000}, {-0.075, -0.733, 0.000}}"));
       } else //
-        if (manifoldDisplay instanceof Se2AbstractDisplay) {
+        if (manifoldDisplays.manifoldDisplay() instanceof Se2AbstractDisplay) {
           setControlPointsSe2(Tensors.fromString(
               "{{3.150, -2.700, -0.524}, {-1.950, -3.683, 0.000}, {-1.500, -1.167, 2.094}, {4.533, -0.733, -1.047}, {8.567, -3.300, -1.309}, {2.917, -5.050, -1.047}}"));
         }

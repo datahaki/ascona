@@ -7,14 +7,14 @@ import java.util.Optional;
 import javax.swing.JButton;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Round;
 
 public abstract class AbstractPlaceDemo extends ControlPointsDemo {
   private final JButton jButtonPrint = new JButton("print");
 
-  public AbstractPlaceDemo(boolean addRemoveControlPoints, List<ManifoldDisplay> list) {
+  public AbstractPlaceDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
     super(addRemoveControlPoints, list);
     setMidpointIndicated(false);
     // ---

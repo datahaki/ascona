@@ -8,6 +8,7 @@ import java.util.Map;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.dv.Biinvariant;
@@ -59,7 +60,7 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
     }
   };
 
-  public LogWeightingDemo(boolean addRemoveControlPoints, List<ManifoldDisplay> list, List<LogWeighting> array) {
+  public LogWeightingDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list, List<LogWeighting> array) {
     super(addRemoveControlPoints, list, array);
     spinnerLogWeighting.addSpinnerListener(spinnerListener);
     {

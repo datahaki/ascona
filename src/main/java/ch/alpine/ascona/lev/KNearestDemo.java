@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -53,7 +52,7 @@ public class KNearestDemo extends LogWeightingDemo {
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     jButton.addActionListener(l -> shuffleSnap());
     timerFrame.jToolBar.add(jButton);
-    setManifoldDisplay(Se2Display.INSTANCE);
+    setManifoldDisplay(ManifoldDisplays.Se2);
     setLogWeighting(LogWeightings.DISTANCES);
     shuffleSnap();
   }

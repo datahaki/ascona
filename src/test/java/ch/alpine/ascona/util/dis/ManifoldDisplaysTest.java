@@ -105,15 +105,15 @@ class ManifoldDisplaysTest {
 
   @Test
   void testTensorMetric() {
-    for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.METRIC)
-      assertTrue(manifoldDisplay.geodesicSpace() instanceof MetricManifold);
+    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.METRIC)
+      assertTrue(manifoldDisplays.manifoldDisplay().geodesicSpace() instanceof MetricManifold);
   }
 
   @Test
   void testRandomSample() {
-    for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.MANIFOLDS) {
-      if (Objects.isNull(manifoldDisplay.randomSampleInterface())) {
-        System.err.println(manifoldDisplay);
+    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.MANIFOLDS) {
+      if (Objects.isNull(manifoldDisplays.manifoldDisplay().randomSampleInterface())) {
+        System.err.println(manifoldDisplays);
         fail();
       }
     }
@@ -135,8 +135,8 @@ class ManifoldDisplaysTest {
 
   @Test
   void testHs() {
-    for (ManifoldDisplay manifoldDisplay : ManifoldDisplays.MANIFOLDS)
-      assertTrue(manifoldDisplay.geodesicSpace() instanceof HomogeneousSpace);
+    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.MANIFOLDS)
+      assertTrue(manifoldDisplays.manifoldDisplay().geodesicSpace() instanceof HomogeneousSpace);
   }
 
   @Test

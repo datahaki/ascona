@@ -4,7 +4,7 @@ package ch.alpine.ascona.util.win;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.AbstractManifoldDisplayDemo;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 
 public enum AbstractDemoHelper {
@@ -23,13 +23,13 @@ public enum AbstractDemoHelper {
     boolean success = true;
     if (abstractDemo instanceof AbstractManifoldDisplayDemo) {
       AbstractManifoldDisplayDemo abstractManifoldDisplayDemo = (AbstractManifoldDisplayDemo) abstractDemo;
-      for (ManifoldDisplay manifoldDisplay : abstractManifoldDisplayDemo.getManifoldDisplays())
+      for (ManifoldDisplays manifoldDisplays : abstractManifoldDisplayDemo.getManifoldDisplays())
         try {
-          abstractManifoldDisplayDemo.setManifoldDisplay(manifoldDisplay);
+          abstractManifoldDisplayDemo.setManifoldDisplay(manifoldDisplays);
           abstractManifoldDisplayDemo.reportToAll();
           abstractManifoldDisplayDemo.render(geometricLayer, bufferedImage.createGraphics());
         } catch (Exception exception) {
-          System.err.println(manifoldDisplay);
+          System.err.println(manifoldDisplays);
           success = false;
         }
     }

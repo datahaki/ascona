@@ -15,6 +15,7 @@ import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.arp.ArrayPlotRender;
 import ch.alpine.ascona.util.arp.MeshRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -45,7 +46,7 @@ import ch.alpine.tensor.sca.N;
   private Tensor movingOrigin;
   private MovingDomain2D movingDomain2D;
 
-  AbstractDeformationDemo(List<ManifoldDisplay> list, List<LogWeighting> array) {
+  AbstractDeformationDemo(List<ManifoldDisplays> list, List<LogWeighting> array) {
     super(false, list, array);
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
     // ---

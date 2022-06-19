@@ -12,10 +12,7 @@ import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.InsideConvexHullLogWeighting;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.dis.H2Display;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.PanelFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerListener;
@@ -23,7 +20,7 @@ import ch.alpine.tensor.Tensors;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
-public class PlanarScatteredSetCoordinateDemo extends AbstractArrayCoordinateDemo implements SpinnerListener<ManifoldDisplay> {
+public class PlanarScatteredSetCoordinateDemo extends AbstractArrayCoordinateDemo implements SpinnerListener<ManifoldDisplays> {
   private final GenesisDequeProperties dequeGenesisProperties = new GenesisDequeProperties();
 
   // FIXME ASCONA the class structure is not correct, since log weighting is empty and not visible
@@ -35,8 +32,7 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractArrayCoordinateDem
     fieldsPanel.addUniversalListener(this::recompute);
     container.add(BorderLayout.WEST, fieldsPanel.createJScrollPane());
     // ---
-    ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
-    actionPerformed(manifoldDisplay);
+    actionPerformed(ManifoldDisplays.R2);
     addManifoldListener(this);
     addManifoldListener(l -> recompute());
     recompute();
@@ -50,12 +46,12 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractArrayCoordinateDem
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplay manifoldDisplay) {
-    if (manifoldDisplay instanceof R2Display) {
+  public void actionPerformed(ManifoldDisplays manifoldDisplay) {
+    if (manifoldDisplay.equals(ManifoldDisplays.R2)) {
       setControlPointsSe2(Tensors.fromString( //
           "{{-1.017, -0.953, 0.000}, {-0.991, 0.113, 0.000}, {-0.644, 0.967, 0.000}, {0.509, 0.840, 0.000}, {0.689, 0.513, 0.000}, {0.956, -0.627, 0.000}}"));
     } else
-      if (manifoldDisplay instanceof S2Display) {
+      if (manifoldDisplay.equals(ManifoldDisplays.S2)) {
         setControlPointsSe2(Tensors.fromString( //
             "{{0.300, 0.092, 0.000}, {-0.563, -0.658, 0.262}, {-0.854, -0.200, 0.000}, {-0.746, 0.663, -0.262}, {0.467, 0.758, 0.262}, {0.446, -0.554, 0.262}}"));
         setControlPointsSe2(Tensors.fromString( //
@@ -65,7 +61,7 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractArrayCoordinateDem
         setControlPointsSe2(Tensors.fromString( //
             "{{-0.363, 0.388, 0.000}, {-0.825, -0.271, 0.000}, {-0.513, 0.804, 0.000}, {0.646, 0.667, 0.000}, {0.704, -0.100, 0.000}, {-0.075, -0.733, 0.000}}"));
       } else //
-        if (manifoldDisplay instanceof H2Display) {
+        if (manifoldDisplay.equals(ManifoldDisplays.H2)) {
           setControlPointsSe2(Tensors.fromString( //
               "{{-1.900, 1.783, 0.000}, {-0.083, 2.517, 0.000}, {0.500, 1.400, 0.000}, {2.300, 2.117, 0.000}, {2.833, 0.217, 0.000}, {1.000, -1.550, 0.000}, {-0.283, -0.667, 0.000}, {-1.450, -1.650, 0.000}}"));
         }

@@ -78,7 +78,7 @@ public class ApproximationDemo extends AbstractDemo {
 
     @Override
     public List<ManifoldDisplays> manifoldDisplays() {
-      return ManifoldDisplays.l_SE2_R2;
+      return ManifoldDisplays.SE2_R2;
     }
 
     @FieldInteger

@@ -5,7 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.JSlider;
 
-import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.ascona.util.win.LookAndFeels;
@@ -32,7 +32,7 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {2, 2, 1}, {5, 0, 2}}"));
     // ---
-    setManifoldDisplay(S2Display.INSTANCE);
+    setManifoldDisplay(ManifoldDisplays.S2);
     setControlPointsSe2(Tensors.fromString("{}"));
   }
 

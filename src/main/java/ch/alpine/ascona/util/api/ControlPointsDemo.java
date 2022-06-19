@@ -15,6 +15,7 @@ import java.util.Optional;
 import javax.swing.JButton;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -127,7 +128,7 @@ public abstract class ControlPointsDemo extends AbstractManifoldDisplayDemo {
    * 
    * @param addRemoveControlPoints whether the number of control points is variable
    * @param list */
-  public ControlPointsDemo(boolean addRemoveControlPoints, List<ManifoldDisplay> list) {
+  public ControlPointsDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
     super(list);
     // ---
     if (addRemoveControlPoints) {

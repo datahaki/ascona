@@ -10,8 +10,6 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.dis.Se2CoveringDisplay;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -27,7 +25,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 
-public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplay> {
+public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplays> {
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
@@ -39,11 +37,10 @@ public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerList
     // ---
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---
-    ManifoldDisplay manifoldDisplay = Se2CoveringDisplay.INSTANCE;
-    manifoldDisplay = R2Display.INSTANCE;
-    setManifoldDisplay(manifoldDisplay);
+    ManifoldDisplays manifoldDisplays = ManifoldDisplays.R2;
+    setManifoldDisplay(manifoldDisplays);
     setBitype(Biinvariants.METRIC);
-    actionPerformed(manifoldDisplay);
+    actionPerformed(manifoldDisplays);
     addManifoldListener(this);
     jToggleNeutral.setSelected(true);
   }
@@ -86,7 +83,7 @@ public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerList
   }).unmodifiable();
 
   @Override
-  public void actionPerformed(ManifoldDisplay manifoldDisplay) {
+  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
     setControlPointsSe2(SOME);
   }
 

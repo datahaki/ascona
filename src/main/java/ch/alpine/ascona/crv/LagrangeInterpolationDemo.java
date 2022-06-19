@@ -11,7 +11,7 @@ import javax.swing.JSlider;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
@@ -55,7 +55,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     // ---
     jSlider.setPreferredSize(new Dimension(500, 28));
     timerFrame.jToolBar.add(jSlider);
-    setManifoldDisplay(R2Display.INSTANCE);
+    setManifoldDisplay(ManifoldDisplays.R2);
   }
 
   @Override // from RenderInterface

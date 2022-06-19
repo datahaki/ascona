@@ -32,7 +32,7 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
   private final JSlider jSlider = new JSlider(1, 999, 500);
 
   public GeodesicCausalFilterDemo() {
-    super(ManifoldDisplays.l_SE2_ONLY, GokartPoseDataV2.INSTANCE);
+    super(ManifoldDisplays.SE2_ONLY, GokartPoseDataV2.INSTANCE);
     {
       spinnerCausalFilter.setValue(GeodesicCausalFilters.BIINVARIANT_MEAN_IIR);
       spinnerCausalFilter.addToComponentReduced(timerFrame.jToolBar, new Dimension(180, 28), "smoothing kernel");

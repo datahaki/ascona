@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -36,7 +35,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
   public HeadTailGeodesicDemo() {
     super(false, ManifoldDisplays.ALL);
     // ---
-    setManifoldDisplay(S2Display.INSTANCE);
+    setManifoldDisplay(ManifoldDisplays.S2);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 0, 0}}"));
