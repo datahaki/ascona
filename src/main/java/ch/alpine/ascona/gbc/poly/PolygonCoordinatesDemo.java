@@ -90,7 +90,7 @@ public class PolygonCoordinatesDemo extends AbstractArrayCoordinateDemo //
         }
       }
       for (LogWeighting logWeighting : array) {
-        Sedarim sedarim = logWeighting.operator(null, null, sequence);
+        Sedarim sedarim = logWeighting.sedarim(null, null, sequence);
         System.out.print("computing " + logWeighting);
         // GeodesicArrayPlot geodesicArrayPlot = geodesicDisplay.geodesicArrayPlot();
         int refinement = resolution();

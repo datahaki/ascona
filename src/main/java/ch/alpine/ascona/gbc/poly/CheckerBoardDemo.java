@@ -197,7 +197,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
     // of biinvariant only hsDesign is used
     Manifold manifold = (Manifold) manifoldDisplay().geodesicSpace();
     Biinvariant biinvariant = Biinvariants.METRIC.of(manifold);
-    return logWeighting().operator(biinvariant, null, sequence);
+    return logWeighting().sedarim(biinvariant, null, sequence);
   }
 
   @Override

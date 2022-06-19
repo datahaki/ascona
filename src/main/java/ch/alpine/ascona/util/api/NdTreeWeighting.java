@@ -30,14 +30,14 @@ public class NdTreeWeighting implements LogWeighting, Serializable {
   }
 
   @Override
-  public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+  public Sedarim sedarim(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
     throw new UnsupportedOperationException();
   }
 
   @Override
   public TensorScalarFunction function(Biinvariant biinvariant, //
       ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
-    NdMap<Scalar> ndMap = NdTreeMap.of(CoordinateBounds.of(sequence), 2);
+    NdMap<Scalar> ndMap = NdTreeMap.of(CoordinateBounds.of(sequence));
     for (int index = 0; index < values.length(); ++index)
       ndMap.insert(sequence.get(index), values.Get(index));
     return new Inner(ndMap, variogram);

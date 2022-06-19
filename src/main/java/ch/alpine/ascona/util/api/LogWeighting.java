@@ -12,7 +12,7 @@ public interface LogWeighting {
    * @param variogram
    * @param sequence
    * @return */
-  Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence);
+  Sedarim sedarim(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence);
 
   /** @param biinvariant
    * @param variogram

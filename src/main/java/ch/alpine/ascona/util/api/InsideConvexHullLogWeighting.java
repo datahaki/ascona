@@ -21,7 +21,7 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
   }
 
   @Override // from LogWeighting
-  public Sedarim operator( //
+  public Sedarim sedarim( //
       Biinvariant biinvariant, // <- ignored
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
@@ -36,7 +36,7 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
       Biinvariant biinvariant, //
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence, Tensor values) {
-    Sedarim sedarim = operator(biinvariant, variogram, sequence);
+    Sedarim sedarim = sedarim(biinvariant, variogram, sequence);
     Objects.requireNonNull(values);
     return point -> (Scalar) sedarim.sunder(point).dot(values);
   }

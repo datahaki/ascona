@@ -46,6 +46,7 @@ public enum ManifoldDisplays {
       R2Display.INSTANCE, //
       S1Display.INSTANCE, //
       S2Display.INSTANCE, //
+      Rp2Display.INSTANCE, //
       H1Display.INSTANCE, //
       H2Display.INSTANCE, //
       So3Display.INSTANCE, //
@@ -70,6 +71,7 @@ public enum ManifoldDisplays {
       R2Display.INSTANCE, //
       S1Display.INSTANCE, //
       S2Display.INSTANCE, //
+      Rp2Display.INSTANCE, //
       H1Display.INSTANCE, //
       H2Display.INSTANCE, //
       So3Display.INSTANCE, //

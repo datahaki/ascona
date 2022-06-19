@@ -64,7 +64,7 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
     if (optional.isPresent()) {
       Tensor sequence = getSequence();
       Tensor origin = optional.get();
-      Sedarim sedarim = logWeighting().operator(biinvariant(), variogram(), sequence);
+      Sedarim sedarim = logWeighting().sedarim(biinvariant(), variogram(), sequence);
       Tensor weights = sedarim.sunder(origin);
       OrderingHelper.of(manifoldDisplay, origin, sequence, weights, spinnerColorData.getValue(), geometricLayer, graphics);
     }

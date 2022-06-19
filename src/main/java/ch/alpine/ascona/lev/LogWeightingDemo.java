@@ -97,7 +97,7 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
 
   @Override
   protected final Sedarim operator(Tensor sequence) {
-    return logWeighting().operator(biinvariant(), variogram(), sequence);
+    return logWeighting().sedarim(biinvariant(), variogram(), sequence);
   }
 
   protected final ScalarUnaryOperator variogram() {

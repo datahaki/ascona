@@ -31,7 +31,7 @@ public class OrderingHoverDemo extends AbstractHoverDemo {
   @Override // from AbstractHoverDemo
   protected void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Sedarim sedarim = logWeighting().operator(biinvariant(), variogram(), getGeodesicControlPoints());
+    Sedarim sedarim = logWeighting().sedarim(biinvariant(), variogram(), getGeodesicControlPoints());
     RenderQuality.setQuality(graphics);
     Tensor sequence = leversRender.getSequence();
     Tensor origin = leversRender.getOrigin();

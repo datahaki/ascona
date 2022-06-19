@@ -70,7 +70,6 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
     }
   }
 
-  // TODO probably sedarim!
   private Tensor compute(Sedarim tensorUnaryOperator, int refinement) {
     Tensor sX = Subdivide.increasing(RANGE_X, refinement);
     Tensor sY = Subdivide.decreasing(RANGE_X, refinement);

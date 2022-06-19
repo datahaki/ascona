@@ -14,6 +14,7 @@ import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
@@ -35,7 +36,7 @@ public class ClassificationDemo extends AbstractHoverDemo {
 
   public ClassificationDemo() {
     super(30);
-    { // code redundant with R2ClassificationDemo
+    {
       SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
         @Override
         public void actionPerformed(LogWeighting logWeighting) {
@@ -113,6 +114,7 @@ public class ClassificationDemo extends AbstractHoverDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.tryUpdateUI();
     new ClassificationDemo().setVisible(1200, 900);
   }
 }

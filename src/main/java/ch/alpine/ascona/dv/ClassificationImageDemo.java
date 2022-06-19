@@ -203,7 +203,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
     for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = getGeodesicControlPoints();
-      Sedarim sedarim = logWeighting.operator( //
+      Sedarim sedarim = logWeighting.sedarim( //
           biinvariant, //
           variogram(), //
           sequence);

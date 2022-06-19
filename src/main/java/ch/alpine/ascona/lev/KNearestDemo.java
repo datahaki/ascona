@@ -100,7 +100,7 @@ public class KNearestDemo extends LogWeightingDemo {
 
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, Tensor sequence, Tensor origin, String p) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Sedarim sedarim = logWeighting().operator(biinvariant(), variogram(), sequence);
+    Sedarim sedarim = logWeighting().sedarim(biinvariant(), variogram(), sequence);
     Tensor weights = sedarim.sunder(origin);
     // ---
     int[] integers = Ordering.INCREASING.of(weights);

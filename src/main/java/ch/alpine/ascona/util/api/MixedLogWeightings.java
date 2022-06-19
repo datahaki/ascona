@@ -16,7 +16,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 public enum MixedLogWeightings implements LogWeighting {
   RADIAL_BASIS {
     @Override
-    public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
+    public Sedarim sedarim(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
       return RadialBasisFunctionInterpolation.of( //
           biinvariant.var_dist(variogram, sequence), //
           sequence)::apply;
