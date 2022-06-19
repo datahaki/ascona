@@ -20,7 +20,8 @@ import ch.alpine.tensor.Tensors;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
-public class PlanarScatteredSetCoordinateDemo extends AbstractArrayCoordinateDemo implements SpinnerListener<ManifoldDisplays> {
+// FIXME ASCONA
+/* package */ class PlanarScatteredSetCoordinateDemo extends AbstractArrayCoordinateDemo implements SpinnerListener<ManifoldDisplays> {
   private final GenesisDequeProperties dequeGenesisProperties = new GenesisDequeProperties();
 
   // FIXME ASCONA the class structure is not correct, since log weighting is empty and not visible
