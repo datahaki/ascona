@@ -24,13 +24,15 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 
 // TODO ASCONA enhance demo by showing the coordinate box from which functions are sampled
 public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
-  private static final double RANGE = 3;
+  private static final Clip RANGE_X = Clips.absolute(3);
+  private static final Clip RANGE_A = Clips.absolute(Pi.VALUE);
   // ---
   private final JToggleButton jToggleAxes = new JToggleButton("axes");
 
@@ -62,17 +64,17 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
     }
     if (manifoldDisplay.dimensions() < controlPoints.length()) { // render basis functions
       Tensor origin = getGeodesicControlPoints();
-      Sedarim tensorUnaryOperator = operator(origin);
-      Tensor wgs = compute(tensorUnaryOperator::sunder, refinement());
+      Tensor wgs = compute(operator(origin), refinement());
       RenderQuality.setQuality(graphics);
       ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, magnification(), false).render(graphics);
     }
   }
 
-  private Tensor compute(TensorUnaryOperator tensorUnaryOperator, int refinement) {
-    Tensor sX = Subdivide.of(-RANGE, +RANGE, refinement);
-    Tensor sY = Subdivide.of(+RANGE, -RANGE, refinement);
-    Tensor sA = Drop.tail(Subdivide.of(Pi.VALUE.negate(), Pi.VALUE, 6), 1);
+  // TODO probably sedarim!
+  private Tensor compute(Sedarim tensorUnaryOperator, int refinement) {
+    Tensor sX = Subdivide.increasing(RANGE_X, refinement);
+    Tensor sY = Subdivide.decreasing(RANGE_X, refinement);
+    Tensor sA = Drop.tail(Subdivide.increasing(RANGE_A, 6), 1);
     int n = sX.length();
     Tensor origin = getGeodesicControlPoints(); // TODO ASCONA ALG
     Tensor wgs = Array.of(l -> DoubleScalar.INDETERMINATE, n * sA.length(), n, origin.length());
@@ -83,7 +85,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
         int c1 = 0;
         for (Tensor y : sY) {
           Tensor point = Tensors.of(x, y, a);
-          wgs.set(tensorUnaryOperator.apply(point), ofs + c1, c0);
+          wgs.set(tensorUnaryOperator.sunder(point), ofs + c1, c0);
           ++c1;
         }
         ofs += n;

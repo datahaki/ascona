@@ -59,8 +59,8 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
       leversRender.renderIndexX();
       leversRender.renderIndexP();
       try {
-        Sedarim tensorUnaryOperator = operator(sequence);
-        Tensor weights = tensorUnaryOperator.sunder(origin);
+        Sedarim sedarim = operator(sequence);
+        Tensor weights = sedarim.sunder(origin);
         leversRender.renderWeights(weights);
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
         BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);

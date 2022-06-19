@@ -82,17 +82,17 @@ public enum PolygonCoordinates implements LogWeighting {
         CONVEX.contains(this) //
             ? new InsideConvexHullCoordinate(genesis)
             : new InsidePolygonCoordinate(genesis), //
-        sequence)::sunder;
+        sequence);
   }
 
   @Override // from LogWeighting
   public TensorScalarFunction function( //
-      Biinvariant biinvariant, // <- ignored
+      Biinvariant biinvariant, //
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence, Tensor values) {
-    Sedarim tensorUnaryOperator = operator(biinvariant, variogram, sequence);
+    Sedarim sedarim = operator(biinvariant, variogram, sequence);
     Objects.requireNonNull(values);
-    return point -> (Scalar) tensorUnaryOperator.sunder(point).dot(values);
+    return point -> (Scalar) sedarim.sunder(point).dot(values);
   }
 
   public static List<LogWeighting> list() {

@@ -99,8 +99,8 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   }
 
   public Tensor distanceMatrix(Tensor sequence) {
-    Sedarim tuo = biinvariant().distances(sequence);
-    Tensor matrix = Tensor.of(sequence.stream().map(tuo::sunder));
+    Sedarim sedarim = biinvariant().distances(sequence);
+    Tensor matrix = Tensor.of(sequence.stream().map(sedarim::sunder));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix
         : Symmetrize.of(matrix);

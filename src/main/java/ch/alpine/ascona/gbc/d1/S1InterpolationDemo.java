@@ -66,10 +66,10 @@ public class S1InterpolationDemo extends LogWeightingDemo {
       Tensor domain = Subdivide.of(Pi.VALUE.negate(), Pi.VALUE, 511);
       Tensor spherics = domain.map(AngleVector::of);
       // ---
-      Sedarim tensorUnaryOperator = operator(sequence);
+      Sedarim sedarim = operator(sequence);
       try {
         ScalarTensorFunction scalarTensorFunction = //
-            point -> tensorUnaryOperator.sunder(AngleVector.of(point));
+            point -> sedarim.sunder(AngleVector.of(point));
         Tensor basis = Tensor.of(domain.stream().parallel().map(Scalar.class::cast).map(scalarTensorFunction));
         Tensor curve = Times.of(basis.dot(values), spherics);
         new PathRender(Color.BLUE, 1.25f).setCurve(curve, true).render(geometricLayer, graphics);

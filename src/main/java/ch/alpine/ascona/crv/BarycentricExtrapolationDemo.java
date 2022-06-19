@@ -53,9 +53,9 @@ public class BarycentricExtrapolationDemo extends LogWeightingDemo {
     if (1 < length) {
       Tensor samples = Subdivide.of(-length, 0, 127).map(Tensors::of);
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
-      Sedarim tensorUnaryOperator = operator(domain);
+      Sedarim sedarim = operator(domain);
       Tensor curve = Tensor.of(samples.stream() //
-          .map(tensorUnaryOperator::sunder) //
+          .map(sedarim::sunder) //
           .map(weights -> biinvariantMean.mean(sequence, weights)));
       new PathRender(Color.BLUE, 1.5f) //
           .setCurve(curve, false) //

@@ -33,11 +33,11 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
 
   @Override // from LogWeighting
   public TensorScalarFunction function( //
-      Biinvariant biinvariant, // <- ignored
+      Biinvariant biinvariant, //
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence, Tensor values) {
-    Sedarim tensorUnaryOperator = operator(biinvariant, variogram, sequence);
+    Sedarim sedarim = operator(biinvariant, variogram, sequence);
     Objects.requireNonNull(values);
-    return point -> (Scalar) tensorUnaryOperator.sunder(point).dot(values);
+    return point -> (Scalar) sedarim.sunder(point).dot(values);
   }
 }

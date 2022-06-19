@@ -55,13 +55,10 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
     for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = getGeodesicControlPoints();
-      Sedarim tensorUnaryOperator = logWeighting.operator( //
-          biinvariant, //
-          variogram(), //
-          sequence);
+      Sedarim sedarim = logWeighting.operator(biinvariant, variogram(), sequence);
       System.out.print("computing " + biinvariant);
       // ---
-      ArrayPlotRender arrayPlotRender = arrayPlotRender(sequence, REFINEMENT, tensorUnaryOperator::sunder, 1);
+      ArrayPlotRender arrayPlotRender = arrayPlotRender(sequence, REFINEMENT, sedarim::sunder, 1);
       BufferedImage bufferedImage = arrayPlotRender.export();
       try {
         ImageIO.write(bufferedImage, "png", new File(root, biinvariant.toString() + ".png"));

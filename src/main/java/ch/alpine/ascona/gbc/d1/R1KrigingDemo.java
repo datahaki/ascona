@@ -52,9 +52,9 @@ public class R1KrigingDemo extends A1AveragingDemo {
       // ---
       Tensor sequence = support.map(Tensors::of);
       Tensor covariance = DiagonalMatrix.with(cvarian);
-      Sedarim weightingInterface = operator(sequence);
+      Sedarim sedarim = operator(sequence);
       try {
-        Kriging kriging = Kriging.regression(weightingInterface, sequence, funceva, covariance);
+        Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
         // ---
         Tensor domain = domain();
         Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(kriging::estimate));

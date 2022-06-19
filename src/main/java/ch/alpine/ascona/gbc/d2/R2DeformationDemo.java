@@ -65,10 +65,10 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
     Tensor dx = Subdivide.increasing(coordinateBoundingBox.getClip(0), res - 1);
     Tensor dy = Subdivide.increasing(coordinateBoundingBox.getClip(1), res - 3);
     Tensor domain = Outer.of(Tensors::of, dx, dy);
-    Sedarim tensorUnaryOperator = operator(movingOrigin);
+    Sedarim sedarim = operator(movingOrigin);
     return jToggleRigidMotionFit.isSelected() //
-        ? RnFittedMovingDomain2D.of(movingOrigin, tensorUnaryOperator, domain)
-        : AveragedMovingDomain2D.of(movingOrigin, tensorUnaryOperator, domain);
+        ? RnFittedMovingDomain2D.of(movingOrigin, sedarim, domain)
+        : AveragedMovingDomain2D.of(movingOrigin, sedarim, domain);
   }
 
   @Override

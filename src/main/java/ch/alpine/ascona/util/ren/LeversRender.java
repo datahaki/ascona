@@ -233,8 +233,8 @@ public class LeversRender {
     if (Tensors.nonEmpty(sequence)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       Biinvariant biinvariant = Biinvariants.LEVERAGES.of(homogeneousSpace);
-      Sedarim coordinate = biinvariant.coordinate(InversePowerVariogram.of(2), sequence);
-      Tensor weights = coordinate.sunder(origin);
+      Sedarim sedarim = biinvariant.coordinate(InversePowerVariogram.of(2), sequence);
+      Tensor weights = sedarim.sunder(origin);
       // Tensor matrix = new HsDesign(homogeneousSpace).matrix(sequence, origin);
       // weights = new Mahalanobis(matrix).leverages_sqrt();
       renderWeights(weights);

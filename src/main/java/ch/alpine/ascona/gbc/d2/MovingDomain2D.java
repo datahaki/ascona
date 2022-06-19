@@ -21,9 +21,9 @@ import ch.alpine.tensor.Unprotect;
   private Tensor _wgs = null;
 
   /** @param origin reference control points that will be associated to given targets
-   * @param tensorUnaryOperator
+   * @param sedarim
    * @param domain */
-  public MovingDomain2D(Tensor origin, Sedarim tensorUnaryOperator, Tensor domain) {
+  public MovingDomain2D(Tensor origin, Sedarim sedarim, Tensor domain) {
     this.origin = origin;
     this.domain = domain;
     int rows = domain.length();
@@ -32,7 +32,7 @@ import ch.alpine.tensor.Unprotect;
     for (int cx = 0; cx < rows; ++cx)
       for (int cy = 0; cy < cols; ++cy) {
         Tensor point = domain.get(cx, cy);
-        weights[cx][cy] = tensorUnaryOperator.sunder(point);
+        weights[cx][cy] = sedarim.sunder(point);
       }
   }
 

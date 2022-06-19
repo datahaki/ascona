@@ -202,8 +202,8 @@ public class CheckerBoardDemo extends LogWeightingBase //
 
   @Override
   protected TensorScalarFunction function(Tensor sequence, Tensor values) {
-    Sedarim operator = operator(sequence);
-    TensorUnaryOperator dot_prod = point -> operator.sunder(point).dot(values);
+    Sedarim sedarim = operator(sequence);
+    TensorUnaryOperator dot_prod = point -> sedarim.sunder(point).dot(values);
     return param.pattern.apply(dot_prod);
   }
 

@@ -90,12 +90,12 @@ public class PolygonCoordinatesDemo extends AbstractArrayCoordinateDemo //
         }
       }
       for (LogWeighting logWeighting : array) {
-        Sedarim tensorUnaryOperator = logWeighting.operator(null, null, sequence);
+        Sedarim sedarim = logWeighting.operator(null, null, sequence);
         System.out.print("computing " + logWeighting);
         // GeodesicArrayPlot geodesicArrayPlot = geodesicDisplay.geodesicArrayPlot();
         int refinement = resolution();
         try {
-          ArrayPlotRender arrayPlotRender = arrayPlotRender(sequence, refinement, tensorUnaryOperator::sunder, 1);
+          ArrayPlotRender arrayPlotRender = arrayPlotRender(sequence, refinement, sedarim::sunder, 1);
           BufferedImage bufferedImage = BackgroundOffscreen.fuseImages(manifoldDisplay, arrayPlotRender.export(), sequence.length());
           File file = new File(root, logWeighting.toString() + ".png");
           ImageIO.write(bufferedImage, "png", file);

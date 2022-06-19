@@ -39,9 +39,9 @@ import ch.alpine.tensor.img.ColorDataLists;
       Tensor domain = domain(support);
       // ---
       Tensor sequence = support.map(this::lift);
-      Sedarim weightingInterface = operator(sequence);
+      Sedarim sedarim = operator(sequence);
       ScalarTensorFunction scalarTensorFunction = //
-          point -> weightingInterface.sunder(lift(point));
+          point -> sedarim.sunder(lift(point));
       Tensor basis = domain.map(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));

@@ -48,9 +48,9 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
       }
       if (!isDeterminate())
         try {
-          Sedarim weightingInterface = operator(sequence);
+          Sedarim sedarim = operator(sequence);
           TensorUnaryOperator operator = //
-              new CrossAveraging(weightingInterface, RnBiinvariantMean.INSTANCE, funceva);
+              new CrossAveraging(sedarim, RnBiinvariantMean.INSTANCE, funceva);
           Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(operator));
           new PathRender(Color.RED, 1.25f) //
               .setCurve(Transpose.of(Tensors.of(domain, result)), false) //

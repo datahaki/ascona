@@ -100,7 +100,7 @@ import ch.alpine.tensor.sca.Clips;
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::toPoint));
       RenderQuality.setQuality(graphics);
       // ---
-      Sedarim tensorUnaryOperator = operator(domain);
+      Sedarim sedarim = operator(domain);
       Tensor sX = Subdivide.increasing(coordinateBoundingBox.getClip(0), refinement());
       Tensor sY = Subdivide.decreasing(coordinateBoundingBox.getClip(1), refinement());
       int n = sX.length();
@@ -112,7 +112,7 @@ import ch.alpine.tensor.sca.Clips;
         int c1 = 0;
         for (Tensor y : sY) {
           Tensor px = Tensors.of(x, y);
-          Tensor weights = tensorUnaryOperator.sunder(px);
+          Tensor weights = sedarim.sunder(px);
           wgs.set(weights, c1, c0);
           Tensor mean = biinvariantMean.mean(controlPoints, weights);
           array[c0][c1] = mean;

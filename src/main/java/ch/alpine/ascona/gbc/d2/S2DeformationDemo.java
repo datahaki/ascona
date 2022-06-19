@@ -62,8 +62,8 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
     Tensor dx = Subdivide.of(-1, 1, res - 1);
     Tensor dy = Subdivide.of(-1, 1, res - 1);
     Tensor domain = Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, ZHEIGHT)), dx, dy);
-    Sedarim tensorUnaryOperator = operator(movingOrigin);
-    return AveragedMovingDomain2D.of(movingOrigin, tensorUnaryOperator, domain);
+    Sedarim sedarim = operator(movingOrigin);
+    return AveragedMovingDomain2D.of(movingOrigin, sedarim, domain);
   }
 
   @Override

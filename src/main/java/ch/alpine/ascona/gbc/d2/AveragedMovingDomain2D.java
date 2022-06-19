@@ -16,15 +16,15 @@ import ch.alpine.tensor.chq.FiniteTensorQ;
  * by Daniele Panozzo, Ilya Baran, Olga Diamanti, Olga Sorkine-Hornung */
 /* package */ class AveragedMovingDomain2D extends MovingDomain2D {
   /** @param origin
-   * @param tensorUnaryOperator
+   * @param sedarim
    * @param domain */
-  public static MovingDomain2D of(Tensor origin, Sedarim tensorUnaryOperator, Tensor domain) {
-    return new AveragedMovingDomain2D(origin, tensorUnaryOperator, domain);
+  public static MovingDomain2D of(Tensor origin, Sedarim sedarim, Tensor domain) {
+    return new AveragedMovingDomain2D(origin, sedarim, domain);
   }
 
   // ---
-  private AveragedMovingDomain2D(Tensor origin, Sedarim tensorUnaryOperator, Tensor domain) {
-    super(origin, tensorUnaryOperator, domain);
+  private AveragedMovingDomain2D(Tensor origin, Sedarim sedarim, Tensor domain) {
+    super(origin, sedarim, domain);
   }
 
   @Override // from MovingDomain2D

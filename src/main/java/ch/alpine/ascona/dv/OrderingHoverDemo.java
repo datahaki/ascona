@@ -31,12 +31,11 @@ public class OrderingHoverDemo extends AbstractHoverDemo {
   @Override // from AbstractHoverDemo
   protected void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Sedarim tensorUnaryOperator = //
-        logWeighting().operator(biinvariant(), variogram(), getGeodesicControlPoints());
+    Sedarim sedarim = logWeighting().operator(biinvariant(), variogram(), getGeodesicControlPoints());
     RenderQuality.setQuality(graphics);
     Tensor sequence = leversRender.getSequence();
     Tensor origin = leversRender.getOrigin();
-    Tensor weights = tensorUnaryOperator.sunder(origin);
+    Tensor weights = sedarim.sunder(origin);
     // ---
     OrderingHelper.of(manifoldDisplay, origin, sequence, weights, spinnerColorData.getValue(), geometricLayer, graphics);
   }

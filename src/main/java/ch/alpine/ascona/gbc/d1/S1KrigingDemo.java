@@ -81,8 +81,8 @@ public class S1KrigingDemo extends AnAveragingDemo {
           .render(geometricLayer, graphics);
       Tensor covariance = DiagonalMatrix.with(cvarian);
       if (isDeterminate()) {
-        Sedarim tensorUnaryOperator = operator(sequence);
-        Kriging kriging = Kriging.regression(tensorUnaryOperator, sequence, funceva, covariance);
+        Sedarim sedarim = operator(sequence);
+        Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
         Tensor estimate = Tensor.of(DOMAIN.stream().map(kriging::estimate));
         Tensor curve = Times.of(estimate, DOMAIN);
         new PathRender(Color.BLUE, 1.25f).setCurve(curve, false).render(geometricLayer, graphics);

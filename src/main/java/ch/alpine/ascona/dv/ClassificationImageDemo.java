@@ -151,10 +151,10 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
     Labels labels = Objects.requireNonNull(spinnerLabels.getValue());
     Objects.requireNonNull(vector);
     Classification classification = labels.apply(vector);
-    Sedarim operator = operator(getGeodesicControlPoints());
+    Sedarim sedarim = operator(getGeodesicControlPoints());
     ColorDataLists colorDataLists = spinnerColor.getValue();
     TensorUnaryOperator tensorUnaryOperator = //
-        spinnerImage.getValue().operator(classification, operator::sunder, colorDataLists.cyclic());
+        spinnerImage.getValue().operator(classification, sedarim::sunder, colorDataLists.cyclic());
     int resolution = spinnerRes.getValue();
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
     Tensor raster = D2Raster.of(hsArrayPlot, resolution, arrayFunction);
@@ -203,7 +203,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
     for (Biinvariant biinvariant : map.values()) {
       Tensor sequence = getGeodesicControlPoints();
-      Sedarim operator = logWeighting.operator( //
+      Sedarim sedarim = logWeighting.operator( //
           biinvariant, //
           variogram(), //
           sequence);
@@ -213,7 +213,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
       ColorDataLists colorDataLists = spinnerColor.getValue();
       ColorDataIndexed colorDataIndexed = colorDataLists.strict();
       TensorUnaryOperator tensorUnaryOperator = //
-          spinnerImage.getValue().operator(classification, operator::sunder, colorDataIndexed);
+          spinnerImage.getValue().operator(classification, sedarim::sunder, colorDataIndexed);
       int resolution = REFINEMENT;
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
       Tensor raster = D2Raster.of(hsArrayPlot, resolution, arrayFunction);

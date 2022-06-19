@@ -63,9 +63,9 @@ public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerList
       leversRender.renderSequence();
       leversRender.renderIndexP();
       leversRender.renderIndexX();
-      Sedarim tensorUnaryOperator = Biinvariants.METRIC.of(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), sequence);
+      Sedarim sedarim = Biinvariants.METRIC.of(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), sequence);
       try {
-        Tensor weights = tensorUnaryOperator.sunder(origin);
+        Tensor weights = sedarim.sunder(origin);
         leversRender.renderWeights(weights);
       } catch (Exception e) {
         // TODO ASCONA does not work for Spd2 SO3 He1

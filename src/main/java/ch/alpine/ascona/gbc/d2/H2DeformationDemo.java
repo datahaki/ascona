@@ -43,8 +43,8 @@ public class H2DeformationDemo extends AbstractDeformationDemo {
     Tensor dx = Subdivide.of(-rad, rad, res - 1);
     Tensor dy = Subdivide.of(-rad, rad, res - 1);
     Tensor domain = Outer.of((cx, cy) -> HnWeierstrassCoordinate.toPoint(Tensors.of(cx, cy)), dx, dy);
-    Sedarim tensorUnaryOperator = operator(movingOrigin);
-    return AveragedMovingDomain2D.of(movingOrigin, tensorUnaryOperator, domain);
+    Sedarim sedarim = operator(movingOrigin);
+    return AveragedMovingDomain2D.of(movingOrigin, sedarim, domain);
   }
 
   @Override // from AbstractDeformationDemo

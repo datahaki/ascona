@@ -20,13 +20,12 @@ public enum LogWeightings implements LogWeighting {
   DISTANCES {
     @Override // from LogWeighting
     public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
-      return biinvariant.distances(sequence)::sunder;
+      return biinvariant.distances(sequence);
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, //
-        Tensor sequence, Tensor values) {
+        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
       throw new UnsupportedOperationException();
     }
   },
@@ -34,13 +33,12 @@ public enum LogWeightings implements LogWeighting {
   WEIGHTING {
     @Override // from LogWeighting
     public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
-      return biinvariant.weighting(variogram, sequence)::sunder;
+      return biinvariant.weighting(variogram, sequence);
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, //
-        Tensor sequence, Tensor values) {
+        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = new CrossAveraging( //
           operator(biinvariant, variogram, sequence), //
           RnBiinvariantMean.INSTANCE, values);
@@ -51,13 +49,12 @@ public enum LogWeightings implements LogWeighting {
   COORDINATE {
     @Override // from LogWeighting
     public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
-      return biinvariant.coordinate(variogram, sequence)::sunder;
+      return biinvariant.coordinate(variogram, sequence);
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, //
-        Tensor sequence, Tensor values) {
+        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = new CrossAveraging( //
           operator(biinvariant, variogram, sequence), //
           RnBiinvariantMean.INSTANCE, values);
@@ -68,13 +65,12 @@ public enum LogWeightings implements LogWeighting {
   LAGRAINATE {
     @Override // from LogWeighting
     public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
-      return biinvariant.lagrainate(variogram, sequence)::sunder;
+      return biinvariant.lagrainate(variogram, sequence);
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, //
-        Tensor sequence, Tensor values) {
+        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = new CrossAveraging( //
           operator(biinvariant, variogram, sequence), //
           RnBiinvariantMean.INSTANCE, values);
@@ -87,17 +83,16 @@ public enum LogWeightings implements LogWeighting {
   KRIGING {
     @Override // from LogWeighting
     public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
-      Sedarim tensorUnaryOperator = biinvariant.var_dist(variogram, sequence);
-      return Kriging.barycentric(tensorUnaryOperator::sunder, sequence)::estimate;
+      Sedarim sedarim = biinvariant.var_dist(variogram, sequence);
+      return Kriging.barycentric(sedarim, sequence)::estimate;
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, //
-        Tensor sequence, Tensor values) {
-      Sedarim tensorUnaryOperator = //
+        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
+      Sedarim sedarim = //
           biinvariant.var_dist(variogram, sequence);
-      Kriging kriging = Kriging.interpolation(tensorUnaryOperator::sunder, sequence, values);
+      Kriging kriging = Kriging.interpolation(sedarim, sequence, values);
       return point -> (Scalar) kriging.estimate(point);
     }
   },
@@ -105,14 +100,15 @@ public enum LogWeightings implements LogWeighting {
   KRIGING_COORDINATE {
     @Override // from LogWeighting
     public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
-      Sedarim sedarim = biinvariant.var_dist(variogram, sequence);
-      return new KrigingCoordinate(sedarim, biinvariant.hsDesign(), sequence);
+      return new KrigingCoordinate( //
+          biinvariant.hsDesign(), // 
+          biinvariant.var_dist(variogram, sequence), // 
+          sequence);
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, //
-        Tensor sequence, Tensor values) {
+        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = new CrossAveraging( //
           operator(biinvariant, variogram, sequence), //
           RnBiinvariantMean.INSTANCE, values);
@@ -122,14 +118,15 @@ public enum LogWeightings implements LogWeighting {
   INVERSE_COORDINATE {
     @Override // from LogWeighting
     public Sedarim operator(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
-      Sedarim sedarim = biinvariant.var_dist(variogram, sequence);
-      return new InverseCoordinate(sedarim, biinvariant.hsDesign(), sequence);
+      return new InverseCoordinate( //
+          biinvariant.hsDesign(), // 
+          biinvariant.var_dist(variogram, sequence), // 
+          sequence);
     }
 
     @Override // from LogWeighting
     public TensorScalarFunction function( //
-        Biinvariant biinvariant, ScalarUnaryOperator variogram, //
-        Tensor sequence, Tensor values) {
+        Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence, Tensor values) {
       TensorUnaryOperator tensorUnaryOperator = new CrossAveraging( //
           operator(biinvariant, variogram, sequence), //
           RnBiinvariantMean.INSTANCE, values);

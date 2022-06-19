@@ -64,9 +64,8 @@ import ch.alpine.tensor.img.ColorDataLists;
         {
           int index = 0;
           for (Biinvariant biinvariant : map2.values()) {
-            Sedarim tensorUnaryOperator = //
-                logWeighting().operator(biinvariant, variogram(), sequence);
-            Tensor weights = tensorUnaryOperator.sunder(origin);
+            Sedarim sedarim = logWeighting().operator(biinvariant, variogram(), sequence);
+            Tensor weights = sedarim.sunder(origin);
             minIndex[index] = ArgMin.of(weights);
             matrix.append(weights);
             ++index;
