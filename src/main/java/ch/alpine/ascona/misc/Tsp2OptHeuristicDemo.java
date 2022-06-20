@@ -52,7 +52,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   private final Tensor points = Tensors.empty();
 
   public Tsp2OptHeuristicDemo() {
-    super(false, ManifoldDisplays.METRIC);
+    super(false, ManifoldDisplays.metricManifolds());
     setPositioningEnabled(false);
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---

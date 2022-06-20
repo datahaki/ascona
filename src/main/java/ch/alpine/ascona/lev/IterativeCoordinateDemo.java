@@ -37,7 +37,7 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
     ManifoldDisplays manifoldDisplays = ManifoldDisplays.R2;
     setManifoldDisplay(manifoldDisplays);
     setBitype(Biinvariants.LEVERAGES);
-    actionPerformed(manifoldDisplays);
+    spun(manifoldDisplays);
     addManifoldListener(this);
   }
 
@@ -78,7 +78,7 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+  public void spun(ManifoldDisplays manifoldDisplays) {
     if (manifoldDisplays.equals(ManifoldDisplays.R2)) {
       setControlPointsSe2(R2PointCollection.SOME);
     } else

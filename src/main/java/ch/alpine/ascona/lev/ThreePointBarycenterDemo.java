@@ -27,13 +27,13 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public ThreePointBarycenterDemo() {
-    super(true, ManifoldDisplays.RASTERS, List.of(PolygonCoordinates.values()));
+    super(true, ManifoldDisplays.d2Rasters(), List.of(PolygonCoordinates.values()));
     // ---
     timerFrame.jToolBar.add(jToggleNeutral);
     // ---
     ManifoldDisplays manifoldDisplays = ManifoldDisplays.S2;
     setManifoldDisplay(manifoldDisplays);
-    actionPerformed(manifoldDisplays);
+    spun(manifoldDisplays);
     addManifoldListener(this);
     jToggleNeutral.setSelected(true);
   }
@@ -77,7 +77,7 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+  public void spun(ManifoldDisplays manifoldDisplays) {
     if (manifoldDisplays.equals(ManifoldDisplays.R2)) {
       setControlPointsSe2(Tensors.fromString( //
           "{{-0.175, 0.358, 0.000}, {-0.991, 0.113, 0.000}, {-0.644, 0.967, 0.000}, {0.509, 0.840, 0.000}, {0.689, 0.513, 0.000}, {0.956, -0.627, 0.000}}"));

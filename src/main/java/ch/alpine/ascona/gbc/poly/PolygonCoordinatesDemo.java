@@ -46,7 +46,7 @@ import ch.alpine.tensor.img.ColorDataIndexed;
     super(array);
     this.array = array;
     // ---
-    actionPerformed(ManifoldDisplays.R2);
+    spun(ManifoldDisplays.R2);
     addManifoldListener(this);
     addManifoldListener(l -> recompute());
     recompute();
@@ -114,7 +114,7 @@ import ch.alpine.tensor.img.ColorDataIndexed;
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+  public void spun(ManifoldDisplays manifoldDisplays) {
     if (manifoldDisplays.equals(ManifoldDisplays.R2)) {
       setControlPointsSe2(Tensors.fromString( //
           "{{-0.076, -0.851, 0.000}, {-0.300, -0.992, 0.000}, {-0.689, -0.097, 0.000}, {-0.689, -0.892, 0.000}, {-1.017, -0.953, 0.000}, {-0.991, 0.113, 0.000}, {-0.465, 0.157, 0.000}, {-0.164, -0.362, 0.000}, {0.431, -0.539, 0.000}, {-0.912, 0.669, 0.000}, {-0.644, 0.967, 0.000}, {0.509, 0.840, 0.000}, {1.051, 0.495, 0.000}, {0.950, -0.209, 0.000}, {0.747, 0.469, 0.000}, {-0.461, 0.637, 0.000}, {0.956, -0.627, 0.000}}"));

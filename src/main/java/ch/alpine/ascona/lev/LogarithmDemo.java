@@ -46,7 +46,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
   private final JToggleButton jToggleCtrl = new JToggleButton("show ctrl");
 
   public LogarithmDemo() {
-    super(true, ManifoldDisplays.RASTERS); // for 2 dimensional
+    super(true, ManifoldDisplays.d2Rasters()); // for 2 dimensional
     {
       spinnerLength.setValue(11);
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
@@ -55,7 +55,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
     // ---
     ManifoldDisplays manifoldDisplays = ManifoldDisplays.H2;
     setManifoldDisplay(manifoldDisplays);
-    actionPerformed(manifoldDisplays);
+    spun(manifoldDisplays);
     addManifoldListener(this);
   }
 
@@ -142,7 +142,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+  public void spun(ManifoldDisplays manifoldDisplays) {
     if (manifoldDisplays.equals(ManifoldDisplays.R2)) {
       setControlPointsSe2(Tensors.fromString( //
           "{{0.358, 0.508, 0.000}, {-0.375, -0.567, 0.000}, {0.442, -0.425, 0.000}, {1.142, 0.000, 0.000}, {1.158, 1.108, 0.000}, {0.192, 1.433, 0.000}, {-0.625, 0.342, 0.000}}"));

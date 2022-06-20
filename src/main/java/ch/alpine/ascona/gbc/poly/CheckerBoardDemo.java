@@ -49,7 +49,7 @@ import ch.alpine.tensor.sca.N;
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 public class CheckerBoardDemo extends LogWeightingBase //
-    implements SpinnerListener<ManifoldDisplays> {
+    implements SpinnerListener<ManifoldDisplays> { // FIXME ASCONA SPIN
   public static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._000.strict();
 
   // ---
@@ -73,13 +73,13 @@ public class CheckerBoardDemo extends LogWeightingBase //
   private Tensor reference;
 
   public CheckerBoardDemo() {
-    super(true, ManifoldDisplays.METRIC_RASTERS, PolygonCoordinates.list());
+    super(true, ManifoldDisplays.metricD2Rasters(), PolygonCoordinates.list());
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
     setMidpointIndicated(true);
     FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     fieldsEditor.addUniversalListener(this::recompute);
     // ---
-    actionPerformed(ManifoldDisplays.R2);
+    spun(ManifoldDisplays.R2);
     addManifoldListener(this);
     addManifoldListener(l -> recompute());
     recompute();
@@ -173,7 +173,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+  public void spun(ManifoldDisplays manifoldDisplays) {
     if (manifoldDisplays.equals(manifoldDisplays.R2)) {
       setControlPointsSe2(Tensors.fromString( //
           "{{0.287, -0.958, 0.000}, {-1.017, -0.953, 0.000}, {-0.717, 0.229, 0.000}, {-0.912, 0.669, 0.000}, {-0.644, 0.967, 0.000}, {0.933, 0.908, 0.000}, {0.950, -0.209, 0.000}, {-0.461, 0.637, 0.000}, {0.956, -0.627, 0.000}}"));

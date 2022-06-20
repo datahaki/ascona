@@ -28,7 +28,7 @@ public class AsconaGrassmannDemo extends LogWeightingDemo implements SpinnerList
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public AsconaGrassmannDemo() {
-    super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
+    super(true, ManifoldDisplays.manifolds(), LogWeightings.list());
     // ---
     spinnerColorData.setValue(ColorDataGradients.TEMPERATURE);
     spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color scheme");
@@ -38,7 +38,7 @@ public class AsconaGrassmannDemo extends LogWeightingDemo implements SpinnerList
     ManifoldDisplays manifoldDisplays = ManifoldDisplays.Se2C;
     setManifoldDisplay(manifoldDisplays);
     setBitype(Biinvariants.LEVERAGES);
-    actionPerformed(manifoldDisplays);
+    spun(manifoldDisplays);
     addManifoldListener(this);
     jToggleNeutral.setSelected(true);
   }
@@ -67,7 +67,7 @@ public class AsconaGrassmannDemo extends LogWeightingDemo implements SpinnerList
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+  public void spun(ManifoldDisplays manifoldDisplays) {
     if (manifoldDisplays.equals(ManifoldDisplays.R2)) {
       setControlPointsSe2(R2PointCollection.SOME);
     } else

@@ -30,7 +30,7 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
 
   public OrderingPlaceDemo() {
-    super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
+    super(true, ManifoldDisplays.manifolds(), LogWeightings.list());
     {
       spinnerLength.addSpinnerListener(v -> shuffleSnap());
       spinnerLength.setValue(200);

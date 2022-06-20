@@ -44,7 +44,7 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 
   public KnotsBSplineFunctionDemo() {
-    super(ManifoldDisplays.METRIC);
+    super(ManifoldDisplays.metricManifolds());
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);
     refine = RealScalar.of(5);

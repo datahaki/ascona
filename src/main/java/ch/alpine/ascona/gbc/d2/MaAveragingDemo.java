@@ -51,7 +51,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
   private final JToggleButton jToggleThresh = new JToggleButton("thresh");
 
   public MaAveragingDemo() {
-    super(ManifoldDisplays.RASTERS);
+    super(ManifoldDisplays.d2Rasters());
     {
       spinnerColorData.setValue(ColorDataGradients.PARULA);
       spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color scheme");

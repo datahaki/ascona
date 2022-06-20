@@ -2,8 +2,12 @@
 package ch.alpine.ascona.util.dis;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import ch.alpine.ascona.util.arp.D2Raster;
+import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.MetricManifold;
 
 // TODO ASCONA filter candidates dynamically for properties
 public enum ManifoldDisplays {
@@ -35,46 +39,44 @@ public enum ManifoldDisplays {
     return manifoldDisplay;
   }
 
+  public GeodesicSpace geodesicSpace() {
+    return manifoldDisplay.geodesicSpace();
+  }
+
   public static final List<ManifoldDisplays> ALL = List.of(values());
+
   // ---
   /** requires biinvariant() */
-  public static final List<ManifoldDisplays> METRIC = List.of( //
-      Spd2, //
-      R2, //
-      S1, //
-      S2, //
-      H1, //
-      H2, //
-      So3);
+  public static List<ManifoldDisplays> metricManifolds() {
+    return Stream.of(values()) //
+        .filter(md -> md.geodesicSpace() instanceof MetricManifold) //
+        .toList();
+  }
+
   // ---
   /** homogeneous spaces (have biinvariant mean) */
-  public static final List<ManifoldDisplays> MANIFOLDS = List.of( //
-      Se2C, //
-      Se2, //
-      Spd2, //
-      R2, //
-      S1, //
-      S2, //
-      Rp2, //
-      H1, //
-      H2, //
-      So3, //
-      He1, //
-      T1d);
+  public static List<ManifoldDisplays> manifolds() {
+    return Stream.of(values()) //
+        .filter(md -> md.geodesicSpace() instanceof Manifold) //
+        .toList();
+  }
+
   // ---
   /** implement {@link D2Raster} */
-  public static final List<ManifoldDisplays> RASTERS = List.of( //
-      R2, //
-      H2, //
-      S2, //
-      Rp2, //
-      T1d);
+  public static List<ManifoldDisplays> d2Rasters() {
+    return Stream.of(values()) //
+        .filter(md -> md.geodesicSpace() instanceof D2Raster) //
+        .toList();
+  }
+
   /** implement {@link D2Raster} */
-  public static final List<ManifoldDisplays> METRIC_RASTERS = List.of( //
-      R2, //
-      H2, //
-      S2, //
-      Rp2);
+  public static List<ManifoldDisplays> metricD2Rasters() {
+    return Stream.of(values()) //
+        .filter(md -> md.geodesicSpace() instanceof D2Raster) //
+        .filter(md -> md.geodesicSpace() instanceof MetricManifold) //
+        .toList();
+  }
+
   // ---
   public static final List<ManifoldDisplays> R2_ONLY = List.of( //
       R2);

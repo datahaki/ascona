@@ -34,7 +34,7 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
     // ---
     ManifoldDisplays manifoldDisplays = ManifoldDisplays.R2;
     setManifoldDisplay(manifoldDisplays);
-    actionPerformed(manifoldDisplays);
+    spun(manifoldDisplays);
     addManifoldListener(this);
     jToggleNeutral.setSelected(true);
     setMidpointIndicated(true);
@@ -69,7 +69,7 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+  public void spun(ManifoldDisplays manifoldDisplays) {
     if (manifoldDisplays.equals(ManifoldDisplays.R2)) {
       setControlPointsSe2(Tensors.fromString("{{0.3, 1, 0}, {0, 0, 0}, {1, 0, 0}}"));
     } else

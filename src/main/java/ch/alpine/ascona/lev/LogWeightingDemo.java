@@ -33,7 +33,7 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
   private final SpinnerLabel<Scalar> spinnerBeta;
   private final SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
     @Override
-    public void actionPerformed(LogWeighting logWeighting) {
+    public void spun(LogWeighting logWeighting) {
       {
         boolean enabled = !logWeighting.equals(LogWeightings.DISTANCES);
         spinnerVariogram.setEnabled(enabled);

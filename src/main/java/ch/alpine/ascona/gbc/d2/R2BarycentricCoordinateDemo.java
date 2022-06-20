@@ -69,7 +69,7 @@ import ch.alpine.tensor.sca.Sign;
   private final JToggleButton jToggleEntire = new JToggleButton("entire");
 
   public R2BarycentricCoordinateDemo() {
-    super(true, ManifoldDisplays.MANIFOLDS, list());
+    super(true, ManifoldDisplays.manifolds(), list());
     {
       timerFrame.jToolBar.add(jToggleEntire);
     }

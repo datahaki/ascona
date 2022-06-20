@@ -136,7 +136,6 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   public ControlPointsDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
     mdParam = new MdParam(list);
     mdParam.manifoldDisplays = list.get(0);
-    // this.= list;
     fieldsEditor = ToolbarFieldsEditor.add(mdParam, timerFrame.jToolBar);
     timerFrame.jToolBar.addSeparator();
     timerFrame.geometricComponent.addRenderInterfaceBackground(new RenderInterface() {
@@ -331,7 +330,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   }
 
   public void addManifoldListener(SpinnerListener<ManifoldDisplays> spinnerListener) {
-    fieldsEditor.addUniversalListener(() -> spinnerListener.actionPerformed(mdParam.manifoldDisplays));
+    fieldsEditor.addUniversalListener(() -> spinnerListener.spun(mdParam.manifoldDisplays));
   }
 
   /** @return */

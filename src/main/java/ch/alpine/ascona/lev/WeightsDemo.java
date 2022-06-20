@@ -26,13 +26,13 @@ import ch.alpine.tensor.img.ColorDataLists;
 // TODO ASCONA
 /* package */ class WeightsDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplays> {
   public WeightsDemo() {
-    super(true, ManifoldDisplays.MANIFOLDS, LogWeightings.list());
+    super(true, ManifoldDisplays.manifolds(), LogWeightings.list());
     // ---
     setControlPointsSe2(Tensors.fromString("{{-1, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}}"));
     ManifoldDisplays manifoldDisplays = ManifoldDisplays.Se2;
     setManifoldDisplay(manifoldDisplays);
     setLogWeighting(LogWeightings.DISTANCES);
-    actionPerformed(manifoldDisplays);
+    spun(manifoldDisplays);
     addManifoldListener(this);
   }
 
@@ -89,7 +89,7 @@ import ch.alpine.tensor.img.ColorDataLists;
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+  public void spun(ManifoldDisplays manifoldDisplays) {
     if (manifoldDisplays.equals(ManifoldDisplays.S2)) {
       setControlPointsSe2(Tensors.fromString( //
           "{{-0.346, -0.096, 0.262}, {-0.113, 0.858, 0.000}, {0.721, 0.288, -0.262}, {0.171, -0.038, 0.262}, {0.429, -0.646, -0.262}, {-0.804, -0.446, 0.524}, {-0.829, 0.513, -0.262}}"));

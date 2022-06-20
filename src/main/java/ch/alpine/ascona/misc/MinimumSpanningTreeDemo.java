@@ -51,7 +51,7 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   final SpinnerLabel<Integer> spinnerRefine;
 
   public MinimumSpanningTreeDemo() {
-    super(true, ManifoldDisplays.MANIFOLDS, List.of(LogWeightings.DISTANCES));
+    super(true, ManifoldDisplays.manifolds(), List.of(LogWeightings.DISTANCES));
     // ---
     spinnerRefine = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     spinnerRefine.setValue(2);

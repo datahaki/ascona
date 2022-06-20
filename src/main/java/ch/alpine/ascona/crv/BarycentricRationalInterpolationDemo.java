@@ -60,7 +60,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   private final Param param = new Param();
 
   public BarycentricRationalInterpolationDemo() {
-    super(true, ManifoldDisplays.METRIC);
+    super(true, ManifoldDisplays.metricManifolds());
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {2, 0, 0}, {4, 3, 1}, {5, -1, -2}}"));

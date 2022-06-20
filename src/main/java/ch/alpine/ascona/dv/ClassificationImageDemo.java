@@ -62,7 +62,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   protected Tensor vector;
 
   public ClassificationImageDemo() {
-    super(false, ManifoldDisplays.RASTERS, LogWeightings.list());
+    super(false, ManifoldDisplays.d2Rasters(), LogWeightings.list());
     addManifoldListener(v -> shuffle(spinnerCount.getValue()));
     {
       spinnerLogWeighting.addSpinnerListener(logWeighting -> {

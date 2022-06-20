@@ -39,7 +39,7 @@ public class ClassificationDemo extends AbstractHoverDemo {
     {
       SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
         @Override
-        public void actionPerformed(LogWeighting logWeighting) {
+        public void spun(LogWeighting logWeighting) {
           if (logWeighting.equals(LogWeightings.DISTANCES))
             spinnerLabels.setValue(Labels.ARG_MIN);
           else
@@ -50,7 +50,7 @@ public class ClassificationDemo extends AbstractHoverDemo {
         }
       };
       spinnerLogWeighting.addSpinnerListener(spinnerListener);
-      spinnerListener.actionPerformed(logWeighting());
+      spinnerListener.spun(logWeighting());
     }
     spinnerLabels.addToComponentReduced(timerFrame.jToolBar, new Dimension(100, 28), "label");
   }

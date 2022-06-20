@@ -59,7 +59,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   private final Param param = new Param();
 
   public GeodesicCatmullRomDemo() {
-    super(ManifoldDisplays.METRIC);
+    super(ManifoldDisplays.metricManifolds());
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     addButtonDubins();

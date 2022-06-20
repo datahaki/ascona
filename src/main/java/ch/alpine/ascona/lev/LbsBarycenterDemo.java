@@ -31,7 +31,7 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
     // ---
     ManifoldDisplays manifoldDisplays = ManifoldDisplays.S2;
     setManifoldDisplay(manifoldDisplays);
-    actionPerformed(manifoldDisplays);
+    spun(manifoldDisplays);
     addManifoldListener(this);
     jToggleNeutral.setSelected(true);
   }
@@ -77,7 +77,7 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
   }
 
   @Override
-  public void actionPerformed(ManifoldDisplays manifoldDisplays) {
+  public void spun(ManifoldDisplays manifoldDisplays) {
     if (manifoldDisplays.equals(ManifoldDisplays.S2)) {
       setControlPointsSe2(Tensors.fromString( //
           "{{-0.314, 0.662, 0.000}, {-0.809, 0.426, 0.000}, {-0.261, 0.927, 0.000}, {0.564, 0.685, 0.000}, {0.694, 0.220, 0.000}}"));

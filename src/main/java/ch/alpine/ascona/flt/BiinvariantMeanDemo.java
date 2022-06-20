@@ -66,7 +66,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   private final Param param = new Param();
 
   public BiinvariantMeanDemo() {
-    super(true, ManifoldDisplays.MANIFOLDS);
+    super(true, ManifoldDisplays.manifolds());
     setMidpointIndicated(false);
     // ---
     setManifoldDisplay(ManifoldDisplays.Se2);

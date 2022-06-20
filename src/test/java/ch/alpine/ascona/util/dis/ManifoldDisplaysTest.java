@@ -20,6 +20,7 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricManifold;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -105,13 +106,13 @@ class ManifoldDisplaysTest {
 
   @Test
   void testTensorMetric() {
-    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.METRIC)
+    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.metricManifolds())
       assertTrue(manifoldDisplays.manifoldDisplay().geodesicSpace() instanceof MetricManifold);
   }
 
   @Test
   void testRandomSample() {
-    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.MANIFOLDS) {
+    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.manifolds()) {
       if (Objects.isNull(manifoldDisplays.manifoldDisplay().randomSampleInterface())) {
         System.err.println(manifoldDisplays);
         fail();
@@ -135,8 +136,25 @@ class ManifoldDisplaysTest {
 
   @Test
   void testHs() {
-    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.MANIFOLDS)
+    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.manifolds())
       assertTrue(manifoldDisplays.manifoldDisplay().geodesicSpace() instanceof HomogeneousSpace);
+  }
+
+  @Test
+  void testMetricConsistency() {
+    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.metricManifolds()) {
+      ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
+      RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
+      Tensor p = RandomSample.of(randomSampleInterface);
+      Tensor q = RandomSample.of(randomSampleInterface);
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      MetricManifold metricManifold = (MetricManifold) manifoldDisplay.geodesicSpace();
+      Scalar distance = metricManifold.distance(p, q);
+      Tensor log = homogeneousSpace.exponential(p).vectorLog(q);
+      Scalar norm = metricManifold.norm(log);
+      if (!manifoldDisplays.equals(ManifoldDisplays.Spd2))
+        Tolerance.CHOP.requireClose(distance, norm);
+    }
   }
 
   @Test

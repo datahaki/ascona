@@ -54,7 +54,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
   private final JToggleButton jToggleThresh = new JToggleButton("thresh");
 
   public D2AveragingDemo() {
-    super(ManifoldDisplays.RASTERS);
+    super(ManifoldDisplays.d2Rasters());
     {
       spinnerCvar = SpinnerLabel.of(Tensors.fromString("{0, 0.01, 0.1, 0.5, 1}").stream().map(Scalar.class::cast).toList());
       spinnerCvar.setValue(RealScalar.ZERO);
