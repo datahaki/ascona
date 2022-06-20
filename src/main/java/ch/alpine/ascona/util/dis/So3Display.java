@@ -92,9 +92,4 @@ public class So3Display implements ManifoldDisplay, Serializable {
   public RenderInterface background() {
     return EmptyRender.INSTANCE;
   }
-
-  @Override // from Object
-  public String toString() {
-    return "SO3";
-  }
 }

@@ -58,7 +58,4 @@ public interface ManifoldDisplay {
 
   /** @return rendering of background, for instance a shaded sphere for S^2 */
   RenderInterface background();
-
-  @Override // from Object
-  String toString();
 }

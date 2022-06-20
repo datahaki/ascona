@@ -46,9 +46,4 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   public final RandomSampleInterface randomSampleInterface() {
     return RpnRandomSample.of(dimensions());
   }
-
-  @Override
-  public final String toString() {
-    return "RP" + dimensions();
-  }
 }

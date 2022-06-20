@@ -99,9 +99,4 @@ public enum T1dDisplay implements ManifoldDisplay, D2Raster {
   public CoordinateBoundingBox coordinateBoundingBox() {
     return Box2D.xy(Clips.absolute(3));
   }
-
-  @Override // from Object
-  public String toString() {
-    return "T1d";
-  }
 }

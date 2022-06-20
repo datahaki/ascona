@@ -82,9 +82,4 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   public final Tensor unproject(Tensor p) {
     return LIFT.apply(p);
   }
-
-  @Override // from Object
-  public final String toString() {
-    return "R" + dimensions;
-  }
 }

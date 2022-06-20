@@ -17,9 +17,14 @@ import javax.swing.JButton;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.FieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.r2.Extract2D;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.RealScalar;
@@ -41,7 +46,7 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 // TODO ASCONA possibly create TABs for each Manifold Display (in order to leave ctrl points)
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
 // TODO ASCONA use LeversRender in control points render
-public abstract class ControlPointsDemo extends AbstractManifoldDisplayDemo {
+public abstract class ControlPointsDemo extends AbstractDemo {
   /** mouse snaps 20 pixel to control points */
   private static final Scalar PIXEL_THRESHOLD = RealScalar.of(20.0);
   /** refined points */
@@ -129,7 +134,17 @@ public abstract class ControlPointsDemo extends AbstractManifoldDisplayDemo {
    * @param addRemoveControlPoints whether the number of control points is variable
    * @param list */
   public ControlPointsDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
-    super(list);
+    mdParam = new MdParam(list);
+    mdParam.manifoldDisplays = list.get(0);
+    // this.= list;
+    fieldsEditor = ToolbarFieldsEditor.add(mdParam, timerFrame.jToolBar);
+    timerFrame.jToolBar.addSeparator();
+    timerFrame.geometricComponent.addRenderInterfaceBackground(new RenderInterface() {
+      @Override
+      public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+        manifoldDisplay().background().render(geometricLayer, graphics);
+      }
+    });
     // ---
     if (addRemoveControlPoints) {
       ActionListener actionListener = actionEvent -> {
@@ -280,5 +295,47 @@ public abstract class ControlPointsDemo extends AbstractManifoldDisplayDemo {
    * @return */
   protected final Tensor getControlPointShape() {
     return manifoldDisplay().shape();
+  }
+
+  @ReflectionMarker
+  public static class MdParam {
+    private final List<ManifoldDisplays> list;
+    @FieldSelectionCallback("getList")
+    public ManifoldDisplays manifoldDisplays;
+
+    public MdParam(List<ManifoldDisplays> list) {
+      this.list = list;
+    }
+
+    public List<ManifoldDisplays> getList() {
+      return list;
+    }
+  }
+
+  private final MdParam mdParam;
+  private final FieldsEditor fieldsEditor;
+
+  /** @return */
+  public final ManifoldDisplay manifoldDisplay() {
+    return mdParam.manifoldDisplays.manifoldDisplay();
+  }
+
+  public synchronized final void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
+    mdParam.manifoldDisplays = manifoldDisplays;
+    fieldsEditor.updateJComponents();
+  }
+
+  public synchronized final void reportToAll() {
+    // TODO ASCONA
+    // fieldsEditor.reportToAll();
+  }
+
+  public void addManifoldListener(SpinnerListener<ManifoldDisplays> spinnerListener) {
+    fieldsEditor.addUniversalListener(() -> spinnerListener.actionPerformed(mdParam.manifoldDisplays));
+  }
+
+  /** @return */
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return mdParam.getList();
   }
 }
