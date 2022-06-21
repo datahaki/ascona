@@ -16,11 +16,12 @@ import javax.swing.JButton;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
+import ch.alpine.ascona.util.ref.SpaceParam;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
@@ -128,15 +129,17 @@ public abstract class ControlPointsDemo extends AbstractDemo {
       }
     }
   };
+  private final AsconaParam asconaParam;
+  private final FieldsEditor fieldsEditor;
 
   /** Hint: {@link #setPositioningEnabled(boolean)} controls positioning of control points
    * 
    * @param addRemoveControlPoints whether the number of control points is variable
    * @param list */
   public ControlPointsDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
-    mdParam = new MdParam(list);
-    mdParam.manifoldDisplays = list.get(0);
-    fieldsEditor = ToolbarFieldsEditor.add(mdParam, timerFrame.jToolBar);
+    asconaParam = new AsconaParam(list);
+    // TODO ASCONA only if list > 1
+    fieldsEditor = ToolbarFieldsEditor.add(asconaParam.spaceParam, timerFrame.jToolBar);
     timerFrame.jToolBar.addSeparator();
     timerFrame.geometricComponent.addRenderInterfaceBackground(new RenderInterface() {
       @Override
@@ -296,31 +299,14 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     return manifoldDisplay().shape();
   }
 
-  @ReflectionMarker
-  public static class MdParam {
-    private final List<ManifoldDisplays> list;
-    @FieldSelectionCallback("getList")
-    public ManifoldDisplays manifoldDisplays;
-
-    public MdParam(List<ManifoldDisplays> list) {
-      this.list = list;
-    }
-
-    public List<ManifoldDisplays> getList() {
-      return list;
-    }
-  }
-
-  private final MdParam mdParam;
-  private final FieldsEditor fieldsEditor;
 
   /** @return */
   public final ManifoldDisplay manifoldDisplay() {
-    return mdParam.manifoldDisplays.manifoldDisplay();
+    return asconaParam.spaceParam.manifoldDisplays.manifoldDisplay();
   }
 
   public synchronized final void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
-    mdParam.manifoldDisplays = manifoldDisplays;
+    asconaParam.spaceParam.manifoldDisplays = manifoldDisplays;
     fieldsEditor.updateJComponents();
   }
 
@@ -330,11 +316,11 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   }
 
   public void addManifoldListener(SpinnerListener<ManifoldDisplays> spinnerListener) {
-    fieldsEditor.addUniversalListener(() -> spinnerListener.spun(mdParam.manifoldDisplays));
+    fieldsEditor.addUniversalListener(() -> spinnerListener.spun(asconaParam.spaceParam.manifoldDisplays));
   }
 
   /** @return */
   public List<ManifoldDisplays> getManifoldDisplays() {
-    return mdParam.getList();
+    return asconaParam.spaceParam.getList();
   }
 }

@@ -10,6 +10,7 @@ import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricManifold;
 
 // TODO ASCONA filter candidates dynamically for properties
+// TODO ASCONA rename to SpaceDisplay(s) etc.
 public enum ManifoldDisplays {
   Se2ClA(Se2ClothoidDisplay.ANALYTIC), //
   Se2ClL(Se2ClothoidDisplay.LEGENDRE), //
