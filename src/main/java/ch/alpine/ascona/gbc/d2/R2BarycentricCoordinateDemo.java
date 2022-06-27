@@ -94,7 +94,7 @@ import ch.alpine.tensor.sca.Sign;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
-      Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::toPoint));
+      Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       PolygonRegion polygonRegion = new PolygonRegion(domain);
       RenderQuality.setQuality(graphics);
       Tensor hull = ConvexHull.of(domain);
@@ -159,23 +159,23 @@ import ch.alpine.tensor.sca.Sign;
         for (int i1 = 1; i1 < n; ++i1) {
           Tensor ao = array[i0][i1];
           if (Objects.nonNull(ao)) {
-            Tensor po = manifoldDisplay.toPoint(ao);
+            Tensor po = manifoldDisplay.point2xy(ao);
             Tensor a0 = array[i0 - 1][i1];
             Tensor a1 = array[i0][i1 - 1];
             Tensor ac = array[i0 - 1][i1 - 1];
             if (Objects.nonNull(a0) && Objects.nonNull(a1) && Objects.nonNull(ac)) {
-              Tensor p0 = manifoldDisplay.toPoint(a0);
-              Tensor p1 = manifoldDisplay.toPoint(a1);
-              Tensor pc = manifoldDisplay.toPoint(ac);
+              Tensor p0 = manifoldDisplay.point2xy(a0);
+              Tensor p1 = manifoldDisplay.point2xy(a1);
+              Tensor pc = manifoldDisplay.point2xy(ac);
               Scalar scalar = VectorAngle.of(p0.subtract(po), p1.subtract(po)).orElseThrow();
               Tensor rgba = cdg.apply(scalar.divide(Pi.VALUE));
               graphics.setColor(ColorFormat.toColor(rgba));
               graphics.fill(geometricLayer.toPath2D(Unprotect.byRef(po, p0, pc, p1)));
             }
             if (Objects.nonNull(a0))
-              graphics.draw(geometricLayer.toPath2D(Tensors.of(manifoldDisplay.toPoint(a0), po)));
+              graphics.draw(geometricLayer.toPath2D(Tensors.of(manifoldDisplay.point2xy(a0), po)));
             if (Objects.nonNull(a1))
-              graphics.draw(geometricLayer.toPath2D(Tensors.of(manifoldDisplay.toPoint(a1), po)));
+              graphics.draw(geometricLayer.toPath2D(Tensors.of(manifoldDisplay.point2xy(a1), po)));
           }
         }
       if (jToggleArrows.isSelected()) {

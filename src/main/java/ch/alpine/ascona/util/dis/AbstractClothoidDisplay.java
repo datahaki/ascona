@@ -39,7 +39,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   }
 
   @Override
-  public final Tensor unproject(Tensor p) {
+  public final Tensor point2xya(Tensor p) {
     return p.copy();
   }
 

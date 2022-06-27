@@ -104,7 +104,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
         graphics.fill(path2d);
         geometricLayer.popMatrix();
       }
-      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
+      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, false, geometricLayer, graphics);
       return refined;
     }

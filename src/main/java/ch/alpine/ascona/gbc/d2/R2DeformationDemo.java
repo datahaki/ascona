@@ -51,7 +51,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   synchronized Tensor shufflePointsSe2(int n) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
-        .map(manifoldDisplay::unproject));
+        .map(manifoldDisplay::point2xya));
     return tensor;
   }
 

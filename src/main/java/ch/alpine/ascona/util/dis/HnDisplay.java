@@ -38,12 +38,12 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final Tensor project(Tensor xya) {
+  public final Tensor xya2point(Tensor xya) {
     return HnWeierstrassCoordinate.toPoint(xya.extract(0, dimensions));
   }
 
   @Override
-  public final Tensor unproject(Tensor p) {
+  public final Tensor point2xya(Tensor p) {
     return LIFT.apply(p.extract(0, dimensions));
   }
 

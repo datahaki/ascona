@@ -22,7 +22,7 @@ public class Se2Display extends Se2AbstractDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor project(Tensor xya) {
+  public Tensor xya2point(Tensor xya) {
     Tensor xym = xya.copy();
     xym.set(So2.MOD, 2);
     return xym;

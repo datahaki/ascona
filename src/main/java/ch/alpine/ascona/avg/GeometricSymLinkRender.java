@@ -53,7 +53,7 @@ import ch.alpine.tensor.sca.Clips;
           {
             Tensor tensor = Subdivide.of(RealScalar.ZERO, symLinkPart.lambda, RESOLUTION) //
                 .map(scalarTensorFunction);
-            Tensor points = Tensor.of(tensor.stream().map(manifoldDisplay::toPoint));
+            Tensor points = Tensor.of(tensor.stream().map(manifoldDisplay::point2xy));
             Path2D path2d = geometricLayer.toPath2D(points);
             graphics.setStroke(new BasicStroke(1.5f));
             graphics.draw(path2d);
@@ -62,7 +62,7 @@ import ch.alpine.tensor.sca.Clips;
           {
             Tensor tensor = Subdivide.of(symLinkPart.lambda, RealScalar.ONE, RESOLUTION) //
                 .map(scalarTensorFunction);
-            Tensor points = Tensor.of(tensor.stream().map(manifoldDisplay::toPoint));
+            Tensor points = Tensor.of(tensor.stream().map(manifoldDisplay::point2xy));
             Path2D path2d = geometricLayer.toPath2D(points);
             graphics.setStroke(STROKE);
             graphics.draw(path2d);

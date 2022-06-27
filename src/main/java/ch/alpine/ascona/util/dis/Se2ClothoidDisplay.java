@@ -26,7 +26,7 @@ public final class Se2ClothoidDisplay extends AbstractClothoidDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor project(Tensor xya) {
+  public Tensor xya2point(Tensor xya) {
     Tensor xym = xya.copy();
     xym.set(So2.MOD, 2);
     return xym;

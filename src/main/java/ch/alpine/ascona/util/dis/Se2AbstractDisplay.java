@@ -30,7 +30,7 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
   }
 
   @Override
-  public final Tensor unproject(Tensor p) {
+  public final Tensor point2xya(Tensor p) {
     return p.copy();
   }
 

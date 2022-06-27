@@ -124,7 +124,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
 
   // @Override
   protected final Tensor control() {
-    return Tensor.of(_control.stream().map(gokartPoseSpec.manifoldDisplays.manifoldDisplay()::project)).unmodifiable();
+    return Tensor.of(_control.stream().map(gokartPoseSpec.manifoldDisplays.manifoldDisplay()::xya2point)).unmodifiable();
   }
 
   /** @return */

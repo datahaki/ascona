@@ -24,7 +24,6 @@ import ch.alpine.sophus.fit.MinimumSpanningTree;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.IntUndirectedEdge;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -84,7 +83,7 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
         Tensor p = sequence.get(directedEdge.i());
         Tensor q = sequence.get(directedEdge.j());
         ScalarTensorFunction curve = geodesicSpace.curve(p, q);
-        Tensor tensor = Tensor.of(domain.stream().map(Scalar.class::cast).map(curve).map(manifoldDisplay::toPoint));
+        Tensor tensor = Tensor.of(domain.map(curve).stream().map(manifoldDisplay::point2xy));
         Path2D line = geometricLayer.toPath2D(tensor);
         graphics.draw(line);
       }

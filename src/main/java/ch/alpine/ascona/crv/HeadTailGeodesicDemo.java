@@ -56,7 +56,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
     Tensor shape = manifoldDisplay.shape();
     Tensor domain = Subdivide.of(0, 1, refine.number().intValue());
     Tensor points = domain.map(scalarTensorFunction);
-    Tensor xys = Tensor.of(points.stream().map(manifoldDisplay::toPoint));
+    Tensor xys = Tensor.of(points.stream().map(manifoldDisplay::point2xy));
     graphics.setColor(new Color(128, 255, 0));
     graphics.draw(geometricLayer.toPath2D(xys, false));
     if (geodesicSpace instanceof TensorMetric tensorMetric) {

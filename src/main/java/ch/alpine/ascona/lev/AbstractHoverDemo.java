@@ -42,7 +42,7 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
     System.out.println("shuffle");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), spinnerCount.getValue()).stream() //
-        .map(manifoldDisplay::unproject));
+        .map(manifoldDisplay::point2xya));
     setControlPointsSe2(tensor);
   }
 
@@ -52,7 +52,7 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
-    Tensor origin = manifoldDisplay.project(mouse);
+    Tensor origin = manifoldDisplay.xya2point(mouse);
     LeversRender leversRender = //
         LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
     render(geometricLayer, graphics, leversRender);

@@ -188,7 +188,7 @@ public class LeversRender {
     for (Tensor p : sequence) {
       ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(origin, p);
       Tensor domain = Subdivide.of(0, 1, 21);
-      Tensor ms = Tensor.of(domain.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
+      Tensor ms = Tensor.of(domain.map(scalarTensorFunction).stream().map(manifoldDisplay::point2xy));
       Tensor rgba = COLOR_DATA_GRADIENT.apply(rescale.Get(index));
       graphics.setColor(ColorFormat.toColor(rgba));
       graphics.draw(geometricLayer.toPath2D(ms));
@@ -206,7 +206,7 @@ public class LeversRender {
       for (Tensor point : sequence) {
         Scalar d = tensorMetric.distance(origin, point);
         ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(origin, point);
-        Tensor ms = manifoldDisplay.toPoint(scalarTensorFunction.apply(RationalScalar.HALF));
+        Tensor ms = manifoldDisplay.point2xy(scalarTensorFunction.apply(RationalScalar.HALF));
         Point2D point2d = geometricLayer.toPoint2D(ms);
         String string = "" + d.map(Round._3);
         int width = fontMetrics.stringWidth(string);
@@ -377,7 +377,7 @@ public class LeversRender {
       Tensor prev = sequence.get(Math.floorMod(index - 1, sequence.length()));
       Tensor next = sequence.get(index);
       DOMAIN.map(manifoldDisplay.geodesicSpace().curve(prev, next)).stream() //
-          .map(manifoldDisplay::toPoint) //
+          .map(manifoldDisplay::point2xy) //
           .forEach(all::append);
     }
     Path2D path2d = geometricLayer.toPath2D(all);
@@ -414,7 +414,7 @@ public class LeversRender {
       if (form_shadow) {
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
         Exponential exponential = homogeneousSpace.exponential(p);
-        Tensor ms = Tensor.of(vs.stream().map(exponential::exp).map(manifoldDisplay::toPoint));
+        Tensor ms = Tensor.of(vs.stream().map(exponential::exp).map(manifoldDisplay::point2xy));
         Path2D path2d = geometricLayer.toPath2D(ms, true);
         graphics.setStroke(new BasicStroke());
         graphics.setColor(new Color(0, 0, 0, 16));

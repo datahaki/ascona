@@ -51,9 +51,9 @@ public class GeodesicDemo extends AbstractDemo {
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor xya = timerFrame.geometricComponent.getMouseSe2CState();
     graphics.setColor(COLOR);
-    Tensor q = manifoldDisplay.project(xya);
+    Tensor q = manifoldDisplay.xya2point(xya);
     ScalarTensorFunction scalarTensorFunction = //
-        geodesicSpace.curve(manifoldDisplay.project(xya.map(Scalar::zero)), q);
+        geodesicSpace.curve(manifoldDisplay.xya2point(xya.map(Scalar::zero)), q);
     for (Tensor split : Subdivide.of(0, 1, SPLITS).map(scalarTensorFunction)) {
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(split));
       graphics.fill(geometricLayer.toPath2D(manifoldDisplay.shape()));
@@ -67,13 +67,13 @@ public class GeodesicDemo extends AbstractDemo {
     }
     if (param.comb) {
       Tensor refined = Subdivide.of(0, 1, SPLITS * 6).map(scalarTensorFunction);
-      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
+      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, false, geometricLayer, graphics);
     }
     if (param.extra) {
       {
         Tensor refined = Subdivide.of(1, 1.5, SPLITS * 3).map(scalarTensorFunction);
-        Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
+        Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
         // CurveCurvatureRender.of(render, false, geometricLayer, graphics);
         pathRender.setCurve(render, false);
         pathRender.render(geometricLayer, graphics);

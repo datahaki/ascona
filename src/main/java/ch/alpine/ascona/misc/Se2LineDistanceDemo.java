@@ -61,7 +61,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     ScalarTensorFunction curve = geodesicSpace.curve(beg, end);
     {
       Tensor tensor = Subdivide.of(-0.5, 1.5, 55).map(curve);
-      Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::toPoint)));
+      Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::point2xy)));
       graphics.setColor(Color.BLUE);
       graphics.draw(path2d);
     }

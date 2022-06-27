@@ -47,19 +47,19 @@ public enum T1dDisplay implements ManifoldDisplay, D2Raster {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor project(Tensor xya) {
+  public Tensor xya2point(Tensor xya) {
     Tensor point = xya.extract(0, 2);
     point.set(Exp.FUNCTION, 1);
     return point;
   }
 
   @Override // from ManifoldDisplay
-  public Tensor unproject(Tensor p) {
-    return Append.of(toPoint(p), RealScalar.ZERO);
+  public Tensor point2xya(Tensor p) {
+    return Append.of(point2xy(p), RealScalar.ZERO);
   }
 
   @Override // from ManifoldDisplay
-  public Tensor toPoint(Tensor p) {
+  public Tensor point2xy(Tensor p) {
     Tensor q = VectorQ.requireLength(p, 2).copy();
     q.set(Log.FUNCTION, 1);
     return q;
@@ -67,7 +67,9 @@ public enum T1dDisplay implements ManifoldDisplay, D2Raster {
 
   @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor p) {
-    return GfxMatrix.translation(toPoint(p));
+    // Scalar f = Exp.FUNCTION.apply(p.Get(1).subtract(RealScalar.of(10)));
+    // Tensor diag = DiagonalMatrix.of(f, f, RealScalar.ONE);
+    return GfxMatrix.translation(point2xy(p)); // .dot(diag);
   }
 
   @Override // from ManifoldDisplay
@@ -92,7 +94,7 @@ public enum T1dDisplay implements ManifoldDisplay, D2Raster {
 
   @Override // D2Raster
   public Optional<Tensor> d2lift(Tensor pxy) {
-    return Optional.of(project(pxy));
+    return Optional.of(xya2point(pxy));
   }
 
   @Override // D2Raster

@@ -78,7 +78,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     Color color = Color.BLACK;
     graphics.setColor(color);
     for (Tensor p : sequence) {
-      Point2D point2d = geometricLayer.toPoint2D(manifoldDisplay.toPoint(p));
+      Point2D point2d = geometricLayer.toPoint2D(manifoldDisplay.point2xy(p));
       graphics.fillRect((int) point2d.getX() - 1, (int) point2d.getY() - 1, 3, 3);
     }
     // for (int index = 0; index < sequence.length(); ++index) {
@@ -94,7 +94,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       Tensor p = sequence.get(index[i]);
       Tensor q = sequence.get(index[(i + 1) % index.length]);
       ScalarTensorFunction curve = homogeneousSpace.curve(p, q);
-      Tensor tensor = Tensor.of(domain.stream().map(Scalar.class::cast).map(curve).map(manifoldDisplay::toPoint));
+      Tensor tensor = Tensor.of(domain.map(curve).stream().map(manifoldDisplay::point2xy));
       Path2D line = geometricLayer.toPath2D(tensor);
       graphics.draw(line);
     }

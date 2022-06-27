@@ -29,7 +29,6 @@ import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.sophus.ref.d1.FourPointCurveSubdivision;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Differences;
@@ -92,7 +91,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
           GRID_RENDER.render(geometricLayer, graphics);
         {
           RenderQuality.setQuality(graphics);
-          Path2D path2d = geometricLayer.toPath2D(Tensor.of(refined.stream().map(manifoldDisplay::toPoint)), true);
+          Path2D path2d = geometricLayer.toPath2D(Tensor.of(refined.stream().map(manifoldDisplay::point2xy)), true);
           graphics.setColor(DOMAIN_F);
           graphics.fill(path2d);
           graphics.setColor(DOMAIN_D);
@@ -112,7 +111,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
           graphics.draw(path2d);
         }
         Tensor angles_acc = Tensor.of(planar.stream().map(ArcTan2D::of));
-        Tensor distances = Tensor.of(Differences.of(angles_acc).stream().map(Scalar.class::cast).map(So2.MOD));
+        Tensor distances = Differences.of(angles_acc).map(So2.MOD);
         try {
           ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, RnGroup.INSTANCE, planar);
           Tensor border = domain.map(scalarTensorFunction);

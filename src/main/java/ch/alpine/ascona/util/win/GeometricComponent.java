@@ -33,7 +33,6 @@ import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.qty.Degree;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Power;
 import ch.alpine.tensor.sca.pow.Sqrt;
@@ -72,7 +71,7 @@ public final class GeometricComponent {
   private int mouseWheel = 0;
   private boolean isZoomable = true;
   private boolean isRotatable = true;
-  private boolean printPositionOnClick = true;
+  // private boolean printPositionOnClick = true;
   private int buttonDrag = MouseEvent.BUTTON3;
 
   public GeometricComponent() {
@@ -153,8 +152,8 @@ public final class GeometricComponent {
       MouseListener mouseListener = new MouseAdapter() {
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
-          if (printPositionOnClick)
-            System.out.println(getMouseSe2CState().map(Round._3));
+          // if (printPositionOnClick)
+          // System.out.println(getMouseSe2CState().map(Round._3));
         }
       };
       jComponent.addMouseListener(mouseListener);
@@ -174,14 +173,13 @@ public final class GeometricComponent {
   public void setZoomable(boolean isZoomable) {
     this.isZoomable = isZoomable;
   }
-
   /** the Position of the mouse should be printed to the console when the right
    * mouse button is clicked
    * 
    * @param printPositionOnClick */
-  public void setPrintPositionOnClick(boolean printPositionOnClick) {
-    this.printPositionOnClick = printPositionOnClick;
-  }
+  // public void setPrintPositionOnClick(boolean printPositionOnClick) {
+  // this.printPositionOnClick = printPositionOnClick;
+  // }
 
   /** @param button for instance MouseEvent.BUTTON1 */
   public void setButtonDrag(int button) {

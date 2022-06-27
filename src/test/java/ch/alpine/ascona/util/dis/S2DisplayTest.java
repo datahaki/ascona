@@ -27,8 +27,8 @@ class S2DisplayTest {
   @Test
   void testInvariant() {
     ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
-    Tensor xyz = manifoldDisplay.project(Tensors.vector(1, 2, 0));
-    Tensor xy = manifoldDisplay.toPoint(xyz);
+    Tensor xyz = manifoldDisplay.xya2point(Tensors.vector(1, 2, 0));
+    Tensor xy = manifoldDisplay.point2xy(xyz);
     Tolerance.CHOP.requireClose(Vector2Norm.of(xy), RealScalar.ONE);
   }
 
@@ -45,7 +45,7 @@ class S2DisplayTest {
     S2Display s2GeodesicDisplay = (S2Display) S2Display.INSTANCE;
     for (int index = 0; index < 10; ++index) {
       Tensor xya = RandomVariate.of(NormalDistribution.standard(), 3);
-      Tensor xyz = s2GeodesicDisplay.project(xya);
+      Tensor xyz = s2GeodesicDisplay.xya2point(xya);
       Tensor tan = s2GeodesicDisplay.createTangent(xya);
       Tolerance.CHOP.requireAllZero(xyz.dot(tan));
     }

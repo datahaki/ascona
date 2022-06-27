@@ -110,8 +110,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     if (Objects.nonNull(mean))
       for (Tensor point : sequence) {
         Tensor curve = Subdivide.of(0, 1, 20).map(homogeneousSpace.curve(point, mean));
-        Path2D path2d = geometricLayer.toPath2D(Tensor.of(curve.stream().map(manifoldDisplay::toPoint)));
-        graphics.draw(path2d);
+        graphics.draw(geometricLayer.toPath2D(Tensor.of(curve.stream().map(manifoldDisplay::point2xy))));
       }
     graphics.setStroke(new BasicStroke(1));
     if (param.median) {

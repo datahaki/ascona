@@ -67,7 +67,7 @@ public class ClothoidComparisonDemo extends AbstractDemo {
       Tensor points = clothoidTransition.linearized(RealScalar.of(geometricLayer.pixel2modelWidth(5)));
       new PathRender(color, 1.5f).setCurve(points, false).render(geometricLayer, graphics);
       // ---
-      Tensor tensor = Tensor.of(points.stream().map(manifoldDisplay::toPoint));
+      Tensor tensor = Tensor.of(points.stream().map(manifoldDisplay::point2xy));
       CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
       curveVisualSet.addCurvature(visualSet);
       {

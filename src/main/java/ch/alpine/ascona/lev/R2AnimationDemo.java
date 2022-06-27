@@ -65,9 +65,8 @@ public class R2AnimationDemo extends LogWeightingDemo {
         vectorExp = RotationMatrix.of(timing.seconds() * 0.2);
         Tensor list = Tensors.empty();
         for (Tensor xya : snapshot) {
-          Tensor project = vectorExp.dot(manifoldDisplay.project(xya));
-          Tensor xya_ = manifoldDisplay.toPoint(project).append(RealScalar.ZERO);
-          list.append(xya_);
+          Tensor project = vectorExp.dot(manifoldDisplay.xya2point(xya));
+          list.append(manifoldDisplay.point2xya(project));
         }
         setControlPointsSe2(list);
       }

@@ -184,7 +184,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
         TensorUnaryOperator tensorUnaryOperator = StaticHelper.create(new BSpline1CurveSubdivision(geodesicSpace), cyclic);
         pathRender.setCurve(Nest.of(tensorUnaryOperator, control, 8), cyclic).render(geometricLayer, graphics);
       }
-      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
+      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, cyclic, param.comb, geometricLayer, graphics);
       if (levels < 5)
         renderPoints(manifoldDisplay, refined, geometricLayer, graphics);

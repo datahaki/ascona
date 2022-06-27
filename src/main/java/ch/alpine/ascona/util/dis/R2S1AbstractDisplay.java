@@ -25,14 +25,14 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   }
 
   @Override // from ManifoldDisplay
-  public final Tensor project(Tensor xya) {
+  public final Tensor xya2point(Tensor xya) {
     Tensor xym = xya.copy();
     xym.set(So2.MOD, 2);
     return xym;
   }
 
   @Override
-  public final Tensor unproject(Tensor p) {
+  public final Tensor point2xya(Tensor p) {
     return p.copy();
   }
 

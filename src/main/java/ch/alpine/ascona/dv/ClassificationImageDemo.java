@@ -136,7 +136,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
     System.out.println("shuffle");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
-        .map(manifoldDisplay::unproject));
+        .map(manifoldDisplay::point2xya));
     setControlPointsSe2(tensor);
     // assignment of random labels to points
     vector = RandomVariate.of(DiscreteUniformDistribution.of(0, spinnerLabel.getValue()), n);

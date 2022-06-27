@@ -65,10 +65,10 @@ class ManifoldDisplaysTest {
   @EnumSource(ManifoldDisplays.class)
   void testProject(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
-    Tensor tensor = manifoldDisplay.project(Array.zeros(3));
+    Tensor tensor = manifoldDisplay.xya2point(Array.zeros(3));
     assertNotNull(tensor);
     manifoldDisplay.matrixLift(tensor);
-    assertThrows(Exception.class, () -> manifoldDisplay.project(null));
+    assertThrows(Exception.class, () -> manifoldDisplay.xya2point(null));
   }
 
   @ParameterizedTest
@@ -76,11 +76,11 @@ class ManifoldDisplaysTest {
   void testToPoint(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     Tensor xya = Tensors.vector(0.1, 0.2, 0.3);
-    Tensor p = manifoldDisplay.project(xya);
-    VectorQ.requireLength(manifoldDisplay.toPoint(p), 2);
+    Tensor p = manifoldDisplay.xya2point(xya);
+    VectorQ.requireLength(manifoldDisplay.point2xy(p), 2);
     Tensor matrix = manifoldDisplay.matrixLift(p);
     assertEquals(Dimensions.of(matrix), List.of(3, 3));
-    assertThrows(Exception.class, () -> manifoldDisplay.toPoint(null));
+    assertThrows(Exception.class, () -> manifoldDisplay.point2xy(null));
   }
 
   @ParameterizedTest
@@ -130,8 +130,8 @@ class ManifoldDisplaysTest {
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
     if (Objects.nonNull(randomSampleInterface)) {
       Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor xya = manifoldDisplay.unproject(p);
-      Tensor q = manifoldDisplay.project(xya);
+      Tensor xya = manifoldDisplay.point2xya(p);
+      Tensor q = manifoldDisplay.xya2point(xya);
       if (!manifoldDisplays.equals(ManifoldDisplays.So3))
         Tolerance.CHOP.requireClose(p, q);
     }
@@ -144,8 +144,8 @@ class ManifoldDisplaysTest {
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
     if (Objects.nonNull(randomSampleInterface)) {
       Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor xya = manifoldDisplay.unproject(p);
-      Tensor xy_ = manifoldDisplay.toPoint(p);
+      Tensor xya = manifoldDisplay.point2xya(p);
+      Tensor xy_ = manifoldDisplay.point2xy(p);
       Tolerance.CHOP.requireClose(xya.extract(0, 2), xy_);
     }
   }
@@ -157,9 +157,9 @@ class ManifoldDisplaysTest {
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(CoordinateBoundingBox.of(Clips.unit(), Clips.unit(), Clips.unit()));
     if (Objects.nonNull(randomSampleInterface)) {
       Tensor rand = RandomSample.of(randomSampleInterface);
-      Tensor p = manifoldDisplay.project(rand);
-      Tensor xya = manifoldDisplay.unproject(p);
-      Tensor xy_ = manifoldDisplay.toPoint(p);
+      Tensor p = manifoldDisplay.xya2point(rand);
+      Tensor xya = manifoldDisplay.point2xya(p);
+      Tensor xy_ = manifoldDisplay.point2xy(p);
       Tolerance.CHOP.requireClose(xya.extract(0, 2), xy_);
     }
   }

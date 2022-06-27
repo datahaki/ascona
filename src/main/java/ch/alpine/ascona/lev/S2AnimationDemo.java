@@ -64,8 +64,8 @@ public class S2AnimationDemo extends LogWeightingDemo {
         Tensor vectorExp = Rodrigues.vectorExp(vector);
         Tensor list = Tensors.empty();
         for (Tensor xya : snapshot) {
-          Tensor project = vectorExp.dot(manifoldDisplay.project(xya));
-          Tensor xya_ = manifoldDisplay.toPoint(project).append(Sign.isNegative(project.Get(2)) //
+          Tensor project = vectorExp.dot(manifoldDisplay.xya2point(xya));
+          Tensor xya_ = manifoldDisplay.point2xy(project).append(Sign.isNegative(project.Get(2)) //
               ? RealScalar.of(-1)
               : RealScalar.ZERO);
           list.append(xya_);

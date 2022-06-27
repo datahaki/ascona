@@ -79,7 +79,7 @@ public class S2DeltaDemo extends AbstractDemo {
     ScalarTensorFunction stf = S2Loxodrome.of(param.angle);
     Tensor domain = Subdivide.of(0, 20, 200);
     CurveSubdivision curveSubdivision = UniformResample.of(SnManifold.INSTANCE, SnManifold.INSTANCE, param.delta);
-    Tensor sequence = Tensor.of(domain.stream().map(Scalar.class::cast).map(stf));
+    Tensor sequence = domain.map(stf);
     sequence = curveSubdivision.string(sequence);
     TensorUnaryOperator tuo = SnPerturbation.of(NormalDistribution.of(RealScalar.ZERO, param.noise));
     sequence = Tensor.of(sequence.stream().map(tuo));
@@ -95,9 +95,8 @@ public class S2DeltaDemo extends AbstractDemo {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
     manifoldDisplay.background().render(geometricLayer, graphics);
-    // Tensor planar = ;
-    pathRenderCurve.setCurve(Tensor.of(snDeltaRaw.sequence.stream().map(manifoldDisplay::toPoint)), false).render(geometricLayer, graphics);
-    pathRenderShape.setCurve(Tensor.of(snDeltaFil.sequence.stream().map(manifoldDisplay::toPoint)), false).render(geometricLayer, graphics);
+    pathRenderCurve.setCurve(Tensor.of(snDeltaRaw.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
+    pathRenderShape.setCurve(Tensor.of(snDeltaFil.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
     if (param.differences)
       for (Tensor ctrl : snDeltaRaw.differences) {
         Tensor p = ctrl.get(0); // point

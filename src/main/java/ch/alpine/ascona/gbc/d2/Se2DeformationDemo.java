@@ -34,7 +34,7 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Distribution distributionp = UniformDistribution.of(-1, 7);
     Distribution distributiona = UniformDistribution.of(-1, 1);
-    return Tensors.vector(i -> manifoldDisplay.project( //
+    return Tensors.vector(i -> manifoldDisplay.xya2point( //
         RandomVariate.of(distributionp, 2).append(RandomVariate.of(distributiona))), n);
   }
 

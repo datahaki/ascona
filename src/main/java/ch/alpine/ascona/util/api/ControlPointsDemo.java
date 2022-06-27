@@ -73,7 +73,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
       CurveSubdivision curveSubdivision = new ControlMidpoints(manifoldDisplay.geodesicSpace());
       midpoints = curveSubdivision.string(getGeodesicControlPoints());
       Tensor mouse_dist = Tensor.of(midpoints.stream() //
-          .map(manifoldDisplay::toPoint) //
+          .map(manifoldDisplay::point2xy) //
           .map(mouse.extract(0, 2)::subtract) //
           .map(Vector2Norm::of));
       ArgMinValue argMinValue = ArgMinValue.of(mouse_dist);
@@ -81,7 +81,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     }
 
     Tensor closestXY() {
-      return manifoldDisplay.toPoint(midpoints.get(index));
+      return manifoldDisplay.point2xy(midpoints.get(index));
     }
   }
 
@@ -115,7 +115,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
             posit.set(closest.get(0), 0);
             posit.set(closest.get(1), 1);
           }
-          geometricLayer.pushMatrix(manifoldDisplay.matrixLift(manifoldDisplay.project(posit)));
+          geometricLayer.pushMatrix(manifoldDisplay.matrixLift(manifoldDisplay.xya2point(posit)));
           graphics.fill(geometricLayer.toPath2D(getControlPointShape()));
           geometricLayer.popMatrix();
         }
@@ -282,7 +282,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     return Tensor.of(control.stream() //
         .skip(skip) //
         .limit(maxSize) //
-        .map(manifoldDisplay()::project) //
+        .map(manifoldDisplay()::xya2point) //
         .map(N.DOUBLE::of));
   }
 

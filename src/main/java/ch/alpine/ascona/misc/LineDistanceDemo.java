@@ -103,8 +103,8 @@ public class LineDistanceDemo extends ControlPointsDemo {
     Tensor cp = getGeodesicControlPoints();
     ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(cp.get(0), cp.get(1));
     graphics.setStroke(STROKE);
-    Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
     graphics.setColor(new Color(192, 192, 192));
+    Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::point2xy));
     graphics.draw(geometricLayer.toPath2D(ms));
     graphics.setStroke(new BasicStroke());
     // ---

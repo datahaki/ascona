@@ -21,7 +21,7 @@ public class Se2CoveringDisplay extends Se2AbstractDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor project(Tensor xya) {
+  public Tensor xya2point(Tensor xya) {
     return xya.copy();
   }
 

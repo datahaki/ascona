@@ -50,7 +50,7 @@ import ch.alpine.tensor.sca.Chop;
             .map(Scalar.class::cast) //
             .map(interpolation::at) //
             .map(w -> biinvariantMean.mean(controlPoints, w)) //
-            .map(manifoldDisplay::toPoint));
+            .map(manifoldDisplay::point2xy));
         Path2D path2d = geometricLayer.toPath2D(map);
         graphics.draw(path2d);
       } catch (Exception e) {

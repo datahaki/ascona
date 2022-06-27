@@ -43,7 +43,7 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final Tensor project(Tensor xya) {
+  public final Tensor xya2point(Tensor xya) {
     return xya.extract(0, dimensions);
   }
 
@@ -79,7 +79,7 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override
-  public final Tensor unproject(Tensor p) {
+  public final Tensor point2xya(Tensor p) {
     return LIFT.apply(p);
   }
 }

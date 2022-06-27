@@ -44,7 +44,7 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
     if (graph && this instanceof BufferedImageSupplier bufferedImageSupplier)
       graphics.drawImage(bufferedImageSupplier.bufferedImage(), 0, 0, null);
     if (curvt && 1 < refined.length()) {
-      Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
+      Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       VisualSet visualSet = new VisualSet(COLOR_DATA_INDEXED);
       CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
       curveVisualSet.addCurvature(visualSet);

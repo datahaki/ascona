@@ -50,7 +50,7 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
     {
       ScalarTensorFunction curve = geodesicSpace.curve(p, q);
       Tensor tensor = Subdivide.of(-0.05, 1.05, 25).map(curve);
-      Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::toPoint)));
+      Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::point2xy)));
       graphics.setColor(Color.BLUE);
       graphics.draw(path2d);
     }

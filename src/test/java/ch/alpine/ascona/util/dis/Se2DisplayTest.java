@@ -18,7 +18,7 @@ class Se2DisplayTest {
 
   @Test
   void testProject() {
-    Tensor tensor = Se2Display.INSTANCE.project(Tensors.vector(1, 2, Math.PI * 2));
+    Tensor tensor = Se2Display.INSTANCE.xya2point(Tensors.vector(1, 2, Math.PI * 2));
     Tolerance.CHOP.requireZero(tensor.Get(2));
   }
 }

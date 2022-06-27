@@ -21,7 +21,7 @@ public class S1Display extends SnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor project(Tensor xya) {
+  public Tensor xya2point(Tensor xya) {
     Tensor xy = xya.extract(0, 2);
     Scalar norm = Vector2Norm.of(xy);
     return Scalars.isZero(norm) //
@@ -30,7 +30,7 @@ public class S1Display extends SnDisplay {
   }
 
   @Override
-  public Tensor unproject(Tensor p) {
+  public Tensor point2xya(Tensor p) {
     return p.copy().append(RealScalar.ZERO);
   }
 
@@ -41,7 +41,7 @@ public class S1Display extends SnDisplay {
 
   @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor xy) {
-    return GfxMatrix.translation(toPoint(xy));
+    return GfxMatrix.translation(point2xy(xy));
   }
 
   @Override

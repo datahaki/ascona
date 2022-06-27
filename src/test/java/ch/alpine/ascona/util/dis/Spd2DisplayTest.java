@@ -17,9 +17,9 @@ class Spd2DisplayTest {
 
   @Test
   void testSimple() {
-    Tensor tensor = GEODESIC_DISPLAY.project(Tensors.vector(1, 0.2, -1));
+    Tensor tensor = GEODESIC_DISPLAY.xya2point(Tensors.vector(1, 0.2, -1));
     assertTrue(PositiveDefiniteMatrixQ.ofHermitian(tensor));
-    Tensor vector = GEODESIC_DISPLAY.toPoint(tensor);
+    Tensor vector = GEODESIC_DISPLAY.point2xy(tensor);
     Chop._10.requireClose(vector, Tensors.vector(1, 0.2));
     Tensor lift = GEODESIC_DISPLAY.matrixLift(tensor);
     TensorUnaryOperator tensorUnaryOperator = PadRight.zeros(2, 2);

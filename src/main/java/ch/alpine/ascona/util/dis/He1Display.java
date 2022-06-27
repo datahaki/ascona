@@ -31,12 +31,12 @@ public enum He1Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor project(Tensor xya) {
+  public Tensor xya2point(Tensor xya) {
     return xya.copy();
   }
 
   @Override // from ManifoldDisplay
-  public Tensor unproject(Tensor p) {
+  public Tensor point2xya(Tensor p) {
     return p.copy();
   }
 

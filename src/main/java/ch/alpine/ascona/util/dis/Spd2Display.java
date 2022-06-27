@@ -5,7 +5,6 @@ import java.util.Random;
 
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.win.RenderInterface;
-import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
@@ -59,13 +58,13 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor project(Tensor xya) {
+  public Tensor xya2point(Tensor xya) {
     Tensor sim = xya2sim(xya);
     return Spd0Exponential.INSTANCE.exp(sim);
   }
 
   @Override // from ManifoldDisplay
-  public Tensor unproject(Tensor p) {
+  public Tensor point2xya(Tensor p) {
     return sim2xya(Spd0Exponential.INSTANCE.log(p));
   }
 
@@ -73,7 +72,10 @@ public enum Spd2Display implements ManifoldDisplay {
   public Tensor matrixLift(Tensor sym) {
     Tensor matrix = PAD_RIGHT.apply(sym); // log is possible
     matrix.set(RealScalar.ONE, 2, 2);
-    return GfxMatrix.translation(toPoint(sym)).dot(matrix);
+    Tensor xy = point2xy(sym);
+    matrix.set(xy.Get(0), 0, 2);
+    matrix.set(xy.Get(1), 1, 2);
+    return matrix;
   }
 
   @Override

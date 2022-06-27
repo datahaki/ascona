@@ -87,7 +87,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i) {
       Tensor refined = curve(geometricLayer, graphics, i);
       if (jToggleCurvature.isSelected() && 1 < refined.length()) {
-        Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
+        Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
         VisualSet visualSet = new VisualSet(ColorDataLists._097.cyclic().deriveWithAlpha(192));
         CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
         VisualRow visualRow = curveVisualSet.addCurvature(visualSet);
@@ -149,7 +149,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     Tensor refined = StaticHelper.refine(control, levels, scheme.of(manifoldDisplay), //
         CurveSubdivisionHelper.isDual(scheme), false, geodesicSpace);
     // ---
-    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
+    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     pathRender.setCurve(render, false);
     pathRender.render(geometricLayer, graphics);
     {

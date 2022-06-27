@@ -45,7 +45,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor project(Tensor xya) {
+  public Tensor xya2point(Tensor xya) {
     Tensor axis = xya.divide(radius);
     Scalar norm = Vector2Norm.of(axis);
     if (Scalars.lessThan(RealScalar.ONE, norm))
@@ -54,7 +54,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor unproject(Tensor p) {
+  public Tensor point2xya(Tensor p) {
     return Rodrigues.INSTANCE.vectorLog(p).multiply(radius);
   }
 
@@ -65,7 +65,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor xyz) {
-    return GfxMatrix.translation(toPoint(xyz));
+    return GfxMatrix.translation(point2xy(xyz));
   }
 
   @Override

@@ -97,7 +97,7 @@ import ch.alpine.tensor.sca.Clips;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
-      Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::toPoint));
+      Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       RenderQuality.setQuality(graphics);
       // ---
       Sedarim sedarim = operator(domain);
@@ -116,7 +116,7 @@ import ch.alpine.tensor.sca.Clips;
           wgs.set(weights, c1, c0);
           Tensor mean = biinvariantMean.mean(controlPoints, weights);
           array[c0][c1] = mean;
-          point[c0][c1] = manifoldDisplay.toPoint(mean);
+          point[c0][c1] = manifoldDisplay.point2xy(mean);
           ++c1;
         }
         ++c0;

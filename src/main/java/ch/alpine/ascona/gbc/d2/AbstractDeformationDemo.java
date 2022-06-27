@@ -77,7 +77,7 @@ import ch.alpine.tensor.sca.N;
 
   final void snap() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    movingOrigin = Tensor.of(getControlPointsSe2().map(N.DOUBLE).stream().map(manifoldDisplay::project));
+    movingOrigin = Tensor.of(getControlPointsSe2().map(N.DOUBLE).stream().map(manifoldDisplay::xya2point));
     recompute();
   }
 
@@ -114,9 +114,9 @@ import ch.alpine.tensor.sca.N;
       for (int index = 0; index < origin.length(); ++index) {
         ScalarTensorFunction scalarTensorFunction = //
             geodesicSpace.curve(origin.get(index), target.get(index));
-        Tensor ms = Tensor.of(DOMAIN.map(scalarTensorFunction).stream() //
-            .map(manifoldDisplay::toPoint));
-        graphics.draw(geometricLayer.toPath2D(ms));
+        Tensor points = Tensor.of(DOMAIN.map(scalarTensorFunction).stream() //
+            .map(manifoldDisplay::point2xy));
+        graphics.draw(geometricLayer.toPath2D(points));
       }
       graphics.setStroke(new BasicStroke(1));
     }

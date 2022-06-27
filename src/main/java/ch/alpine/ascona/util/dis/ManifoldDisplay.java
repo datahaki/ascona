@@ -21,20 +21,20 @@ public interface ManifoldDisplay {
 
   /** @param xya vector of length 3
    * @return control point */
-  Tensor project(Tensor xya);
+  Tensor xya2point(Tensor xya);
 
-  /** inverse to project function
+  /** pseudo-inverse to xya2point function
    * 
    * @param p
    * @return xya */
-  Tensor unproject(Tensor p);
+  Tensor point2xya(Tensor p);
 
   /** function is for drawing paths
    * 
    * @param p control point
    * @return vector of length 2 with grid coordinates {x, y} */
-  default Tensor toPoint(Tensor p) {
-    return unproject(p).extract(0, 2);
+  default Tensor point2xy(Tensor p) {
+    return point2xya(p).extract(0, 2);
   }
 
   /** function is for drawing control points with proper orientation
@@ -54,7 +54,7 @@ public interface ManifoldDisplay {
 
   LineDistance lineDistance();
 
-  /** @return points in manifold that have to be {@link #unproject(Tensor)}ed
+  /** @return points in manifold that have to be {@link #point2xya(Tensor)}ed
    * in order to become control points in the form xya */
   RandomSampleInterface randomSampleInterface();
 

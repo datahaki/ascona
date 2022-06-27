@@ -50,7 +50,7 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
     TensorUnaryOperator geodesicMeanFilter = GeodesicMeanFilter.of(manifoldDisplay.geodesicSpace(), _radius);
     Tensor refined = geodesicMeanFilter.apply(control);
     Tensor curve = Nest.of(BSpline4CurveSubdivision.split2lo(manifoldDisplay.geodesicSpace())::string, refined, 7);
-    Tensor render = Tensor.of(curve.stream().map(manifoldDisplay::toPoint));
+    Tensor render = Tensor.of(curve.stream().map(manifoldDisplay::point2xy));
     // ---
     RenderQuality.setQuality(graphics);
     Curvature2DRender.of(render, false, geometricLayer, graphics);

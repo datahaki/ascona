@@ -61,7 +61,7 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
         Tensor prev = sequence.get(Math.floorMod(index - 1, sequence.length()));
         Tensor next = sequence.get(index);
         Tensor curve = doma.map(manifoldDisplay.geodesicSpace().curve(prev, next));
-        Tensor polygon = Tensor.of(curve.stream().map(manifoldDisplay::toPoint));
+        Tensor polygon = Tensor.of(curve.stream().map(manifoldDisplay::point2xy));
         Path2D path2d = geometricLayer.toPath2D(polygon);
         graphics.draw(path2d);
       }

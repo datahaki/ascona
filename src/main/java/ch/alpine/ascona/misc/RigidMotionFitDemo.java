@@ -65,7 +65,7 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     Tensor sequence = getGeodesicControlPoints();
     {
-      Tensor target = Tensor.of(sequence.stream().map(R2Display.INSTANCE::project));
+      Tensor target = Tensor.of(sequence.stream().map(R2Display.INSTANCE::xya2point));
       Tensor solve = Se2RigidMotionFit.of(points, target);
       POINTS_RENDER_RESULT //
           .show(Se2Display.INSTANCE::matrixLift, Se2Display.INSTANCE.shape(), Tensors.of(solve)) //

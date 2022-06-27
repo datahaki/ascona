@@ -46,7 +46,7 @@ public class BarycentricExtrapolationDemo extends LogWeightingDemo {
     for (int index = 0; index < length; ++index) {
       Line2D line2d = geometricLayer.toLine2D( //
           domain.get(index).append(RealScalar.ZERO), //
-          manifoldDisplay.toPoint(sequence.get(index)));
+          manifoldDisplay.point2xy(sequence.get(index)));
       graphics.draw(line2d);
     }
     graphics.setStroke(new BasicStroke());

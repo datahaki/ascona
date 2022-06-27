@@ -40,7 +40,7 @@ public class S2Display extends SnDisplay implements D2Raster {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor project(Tensor xya) {
+  public Tensor xya2point(Tensor xya) {
     Tensor xyz = xya.copy();
     Optional<Tensor> optional = optionalZ(xyz);
     if (optional.isPresent())
@@ -51,7 +51,7 @@ public class S2Display extends SnDisplay implements D2Raster {
   }
 
   @Override
-  public Tensor unproject(Tensor p) {
+  public Tensor point2xya(Tensor p) {
     return p.copy();
   }
 
@@ -71,7 +71,7 @@ public class S2Display extends SnDisplay implements D2Raster {
   }
 
   public Tensor createTangent(Tensor xya, Scalar angle) {
-    Tensor xyz = project(xya);
+    Tensor xyz = xya2point(xya);
     return AngleVector.of(angle).dot(tangentSpace(xyz));
   }
 
@@ -96,7 +96,7 @@ public class S2Display extends SnDisplay implements D2Raster {
     skew.set(RealScalar.ONE, 2, 2);
     Scalar r = CLIP_Z.rescale(xyz.Get(2));
     skew = Times.of(Tensors.of(r, r, RealScalar.ONE), skew);
-    return GfxMatrix.translation(toPoint(xyz)).dot(skew);
+    return GfxMatrix.translation(point2xy(xyz)).dot(skew);
   }
 
   @Override // from GeodesicArrayPlot

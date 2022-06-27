@@ -66,7 +66,7 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
       geometricLayer.popMatrix();
     }
     Tensor refined = Subdivide.of(0, upper, Math.max(1, upper * (1 << levels))).map(scalarTensorFunction);
-    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::toPoint));
+    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     Curvature2DRender.of(render, false, geometricLayer, graphics);
     if (levels < 5)
       renderPoints(manifoldDisplay, refined, geometricLayer, graphics);

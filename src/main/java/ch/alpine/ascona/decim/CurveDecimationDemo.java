@@ -122,7 +122,7 @@ public class CurveDecimationDemo extends AbstractDemo {
     HomogeneousSpace geodesicSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     CurveDecimation curveDecimation = CurveDecimation.of( //
         param.type.supply(geodesicSpace), epsilon);
-    Tensor control = Tensor.of(_control.stream().map(manifoldDisplay::project));
+    Tensor control = Tensor.of(_control.stream().map(manifoldDisplay::xya2point));
     DecimationResult result = curveDecimation.evaluate(control);
     Tensor simplified = result.result();
     graphics.setColor(Color.DARK_GRAY);

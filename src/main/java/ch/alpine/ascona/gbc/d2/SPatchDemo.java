@@ -89,7 +89,7 @@ public class SPatchDemo extends ControlPointsDemo {
           int i0 = sPatch.basis(r0);
           int i1 = sPatch.basis(r1);
           ScalarTensorFunction stf = homogeneousSpace.curve(sequence.get(i0), sequence.get(i1));
-          Tensor points = Tensor.of(domain.map(stf).stream().map(manifoldDisplay::toPoint));
+          Tensor points = Tensor.of(domain.map(stf).stream().map(manifoldDisplay::point2xy));
           Path2D path2d = geometricLayer.toPath2D(points);
           graphics.draw(path2d);
         }
