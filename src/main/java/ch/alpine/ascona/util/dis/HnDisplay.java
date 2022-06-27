@@ -42,6 +42,11 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
     return HnWeierstrassCoordinate.toPoint(xya.extract(0, dimensions));
   }
 
+  @Override
+  public final Tensor unproject(Tensor p) {
+    return LIFT.apply(p.extract(0, dimensions));
+  }
+
   @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor xyz) {
     return null;
@@ -77,10 +82,5 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
         return HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, dimensions));
       }
     };
-  }
-
-  @Override
-  public final Tensor unproject(Tensor p) {
-    return LIFT.apply(p.extract(0, dimensions));
   }
 }

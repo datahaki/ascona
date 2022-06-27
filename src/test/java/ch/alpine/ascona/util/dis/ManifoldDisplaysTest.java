@@ -18,6 +18,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricManifold;
+import ch.alpine.sophus.math.sample.BoxRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.Scalar;
@@ -29,7 +30,9 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Clips;
 
 class ManifoldDisplaysTest {
   @Test
@@ -131,6 +134,33 @@ class ManifoldDisplaysTest {
       Tensor q = manifoldDisplay.project(xya);
       if (!manifoldDisplays.equals(ManifoldDisplays.So3))
         Tolerance.CHOP.requireClose(p, q);
+    }
+  }
+
+  @ParameterizedTest
+  @EnumSource(ManifoldDisplays.class)
+  void testToPoint2(ManifoldDisplays manifoldDisplays) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
+    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
+    if (Objects.nonNull(randomSampleInterface)) {
+      Tensor p = RandomSample.of(randomSampleInterface);
+      Tensor xya = manifoldDisplay.unproject(p);
+      Tensor xy_ = manifoldDisplay.toPoint(p);
+      Tolerance.CHOP.requireClose(xya.extract(0, 2), xy_);
+    }
+  }
+
+  @ParameterizedTest
+  @EnumSource(ManifoldDisplays.class)
+  void testToPoint3(ManifoldDisplays manifoldDisplays) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
+    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(CoordinateBoundingBox.of(Clips.unit(),Clips.unit(),Clips.unit()));
+    if (Objects.nonNull(randomSampleInterface)) {
+      Tensor rand = RandomSample.of(randomSampleInterface);
+      Tensor p = manifoldDisplay.project(rand);
+      Tensor xya = manifoldDisplay.unproject(p);
+      Tensor xy_ = manifoldDisplay.toPoint(p);
+      Tolerance.CHOP.requireClose(xya.extract(0, 2), xy_);
     }
   }
 

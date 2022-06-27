@@ -38,6 +38,11 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
     return v -> v.extract(0, 2);
   }
 
+  @Override
+  public final Tensor unproject(Tensor p) {
+    return p.copy();
+  }
+
   @Override // from ManifoldDisplay
   public final Tensor toPoint(Tensor p) {
     return p.extract(0, 2);
@@ -56,11 +61,6 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
     return null;
-  }
-
-  @Override
-  public final Tensor unproject(Tensor p) {
-    return p.copy();
   }
 
   @Override // from ManifoldDisplay

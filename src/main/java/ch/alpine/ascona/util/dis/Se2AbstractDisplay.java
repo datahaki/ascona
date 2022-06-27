@@ -29,6 +29,11 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
     return ARROWHEAD;
   }
 
+  @Override
+  public final Tensor unproject(Tensor p) {
+    return p.copy();
+  }
+
   @Override // from ManifoldDisplay
   public final Tensor toPoint(Tensor p) {
     return p.extract(0, 2);
@@ -47,11 +52,6 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
   @Override // from ManifoldDisplay
   public final RenderInterface background() {
     return EmptyRender.INSTANCE;
-  }
-
-  @Override
-  public final Tensor unproject(Tensor p) {
-    return p.copy();
   }
 
   @Override // from Object

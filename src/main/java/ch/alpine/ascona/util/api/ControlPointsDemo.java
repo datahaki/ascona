@@ -17,7 +17,6 @@ import javax.swing.JButton;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ref.SpaceParam;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.RenderInterface;
@@ -298,7 +297,6 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   protected final Tensor getControlPointShape() {
     return manifoldDisplay().shape();
   }
-
 
   /** @return */
   public final ManifoldDisplay manifoldDisplay() {

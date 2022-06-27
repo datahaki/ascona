@@ -29,9 +29,9 @@ public class S1Display extends SnDisplay {
         : xy.divide(norm);
   }
 
-  @Override // from ManifoldDisplay
-  public TensorUnaryOperator tangentProjection(Tensor p) {
-    return null;
+  @Override
+  public Tensor unproject(Tensor p) {
+    return p.copy().append(RealScalar.ZERO);
   }
 
   @Override // from ManifoldDisplay
@@ -40,13 +40,13 @@ public class S1Display extends SnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor matrixLift(Tensor xy) {
-    return GfxMatrix.translation(toPoint(xy));
+  public TensorUnaryOperator tangentProjection(Tensor p) {
+    return null;
   }
 
-  @Override
-  public Tensor unproject(Tensor p) {
-    return p.copy().append(RealScalar.ZERO);
+  @Override // from ManifoldDisplay
+  public Tensor matrixLift(Tensor xy) {
+    return GfxMatrix.translation(toPoint(xy));
   }
 
   @Override

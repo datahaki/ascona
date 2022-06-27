@@ -59,6 +59,16 @@ public class Rp2Display extends RpnDisplay implements D2Raster {
   }
 
   @Override // from ManifoldDisplay
+  public Tensor unproject(Tensor p) {
+    return p.copy();
+  }
+
+  @Override // from ManifoldDisplay
+  public Tensor toPoint(Tensor xyz) {
+    return xyz.extract(0, 2);
+  }
+
+  @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor xyz) {
     return null;
   }
@@ -82,11 +92,6 @@ public class Rp2Display extends RpnDisplay implements D2Raster {
     return Optional.empty();
   }
 
-  @Override // from ManifoldDisplay
-  public Tensor toPoint(Tensor xyz) {
-    return xyz.extract(0, 2);
-  }
-
   private static final Clip CLIP_Z = Clips.interval(-2.5, 1);
 
   @Override // from ManifoldDisplay
@@ -99,11 +104,6 @@ public class Rp2Display extends RpnDisplay implements D2Raster {
     Scalar r = CLIP_Z.rescale(xyz.Get(2));
     skew = Times.of(Tensors.of(r, r, RealScalar.ONE), skew);
     return GfxMatrix.translation(toPoint(xyz)).dot(skew);
-  }
-
-  @Override // from ManifoldDisplay
-  public Tensor unproject(Tensor p) {
-    return p.copy();
   }
 
   @Override

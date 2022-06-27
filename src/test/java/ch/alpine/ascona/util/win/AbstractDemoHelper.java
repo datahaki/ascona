@@ -26,7 +26,7 @@ public enum AbstractDemoHelper {
       for (ManifoldDisplays manifoldDisplays : abstractManifoldDisplayDemo.getManifoldDisplays())
         try {
           abstractManifoldDisplayDemo.setManifoldDisplay(manifoldDisplays);
-          // TODO
+          // TODO ASCONA
           // abstractManifoldDisplayDemo.reportToAll();
           abstractManifoldDisplayDemo.render(geometricLayer, bufferedImage.createGraphics());
         } catch (Exception exception) {

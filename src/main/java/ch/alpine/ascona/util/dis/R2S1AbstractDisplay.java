@@ -31,14 +31,19 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
     return xym;
   }
 
-  @Override // from ManifoldDisplay
-  public final TensorUnaryOperator tangentProjection(Tensor xyz) {
-    return null;
+  @Override
+  public final Tensor unproject(Tensor p) {
+    return p.copy();
   }
 
   @Override // from ManifoldDisplay
   public final Tensor toPoint(Tensor p) {
     return p.extract(0, 2);
+  }
+
+  @Override // from ManifoldDisplay
+  public final TensorUnaryOperator tangentProjection(Tensor xyz) {
+    return null;
   }
 
   @Override // from ManifoldDisplay
@@ -54,10 +59,5 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
     return null;
-  }
-
-  @Override
-  public final Tensor unproject(Tensor p) {
-    return p.copy();
   }
 }

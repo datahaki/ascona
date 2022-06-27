@@ -9,8 +9,8 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 @ReflectionMarker
 public class AsconaParam {
   public final SpaceParam spaceParam;
-  
+
   public AsconaParam(List<ManifoldDisplays> list) {
-   spaceParam = new SpaceParam(list);
+    spaceParam = new SpaceParam(list);
   }
 }

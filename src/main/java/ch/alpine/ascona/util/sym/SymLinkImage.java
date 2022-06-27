@@ -54,7 +54,10 @@ public class SymLinkImage {
     Tensor position = root.getPosition();
     double max = Math.max(position.Get(0).number().doubleValue(), vector.length() - 1);
     // ---
-    bufferedImage = new BufferedImage((int) (100 + Math.round(WIDTH * max)), 100 + HEIGHT * depth, BufferedImage.TYPE_INT_ARGB);
+    bufferedImage = new BufferedImage( //
+        (int) (100 + Math.round(WIDTH * max)), //
+        100 + HEIGHT * depth, //
+        BufferedImage.TYPE_INT_ARGB);
     // ---
     Graphics2D graphics = bufferedImage.createGraphics();
     RenderQuality.setQuality(graphics);

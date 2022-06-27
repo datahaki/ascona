@@ -65,6 +65,11 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
+  public Tensor unproject(Tensor p) {
+    return sim2xya(Spd0Exponential.INSTANCE.log(p));
+  }
+
+  @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor sym) {
     Tensor sim = Spd0Exponential.INSTANCE.log(sym);
     return sim2xya(sim).extract(0, 2);
@@ -96,11 +101,6 @@ public enum Spd2Display implements ManifoldDisplay {
         return Spd0Exponential.INSTANCE.exp(tSpdRandomSample.randomSample(random));
       }
     };
-  }
-
-  @Override // from ManifoldDisplay
-  public Tensor unproject(Tensor p) {
-    return sim2xya(Spd0Exponential.INSTANCE.log(p));
   }
 
   @Override // from ManifoldDisplay

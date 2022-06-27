@@ -54,13 +54,18 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
-  public final TensorUnaryOperator tangentProjection(Tensor xyz) {
-    return null;
+  public Tensor unproject(Tensor p) {
+    return Rodrigues.INSTANCE.vectorLog(p).multiply(radius);
   }
 
   @Override // from ManifoldDisplay
   public Tensor toPoint(Tensor xyz) {
     return Rodrigues.INSTANCE.vectorLog(xyz).extract(0, 2).multiply(radius);
+  }
+
+  @Override // from ManifoldDisplay
+  public final TensorUnaryOperator tangentProjection(Tensor xyz) {
+    return null;
   }
 
   @Override // from ManifoldDisplay
@@ -81,11 +86,6 @@ public class So3Display implements ManifoldDisplay, Serializable {
   @Override
   public RandomSampleInterface randomSampleInterface() {
     return So3RandomSample.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public Tensor unproject(Tensor p) {
-    return Rodrigues.INSTANCE.vectorLog(p).multiply(radius);
   }
 
   @Override // from ManifoldDisplay

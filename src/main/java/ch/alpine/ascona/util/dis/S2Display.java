@@ -50,6 +50,16 @@ public class S2Display extends SnDisplay implements D2Raster {
     return Vector2Norm.NORMALIZE.apply(xyz);
   }
 
+  @Override
+  public Tensor unproject(Tensor p) {
+    return p.copy();
+  }
+
+  @Override // from ManifoldDisplay
+  public Tensor toPoint(Tensor xyz) {
+    return xyz.extract(0, 2);
+  }
+
   /** @param xyz normalized vector, point on 2-dimensional sphere
    * @return 2 x 3 matrix with rows spanning the space tangent to given xyz */
   /* package */ static Tensor tangentSpace(Tensor xyz) {
@@ -80,11 +90,6 @@ public class S2Display extends SnDisplay implements D2Raster {
     return Optional.empty();
   }
 
-  @Override // from ManifoldDisplay
-  public Tensor toPoint(Tensor xyz) {
-    return xyz.extract(0, 2);
-  }
-
   private static final Clip CLIP_Z = Clips.interval(-2.5, 1);
 
   @Override // from ManifoldDisplay
@@ -108,11 +113,6 @@ public class S2Display extends SnDisplay implements D2Raster {
   @Override
   public final CoordinateBoundingBox coordinateBoundingBox() {
     return Box2D.xy(Clips.absolute(1));
-  }
-
-  @Override
-  public Tensor unproject(Tensor p) {
-    return p.copy();
   }
 
   @Override
