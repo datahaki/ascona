@@ -35,11 +35,6 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
   }
 
   @Override // from ManifoldDisplay
-  public final Tensor toPoint(Tensor p) {
-    return p.extract(0, 2);
-  }
-
-  @Override // from ManifoldDisplay
   public final Tensor matrixLift(Tensor p) {
     return GfxMatrix.of(p);
   }

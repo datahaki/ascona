@@ -37,11 +37,6 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   }
 
   @Override // from ManifoldDisplay
-  public final Tensor toPoint(Tensor p) {
-    return p.extract(0, 2);
-  }
-
-  @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor xyz) {
     return null;
   }

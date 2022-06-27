@@ -55,11 +55,6 @@ public class S2Display extends SnDisplay implements D2Raster {
     return p.copy();
   }
 
-  @Override // from ManifoldDisplay
-  public Tensor toPoint(Tensor xyz) {
-    return xyz.extract(0, 2);
-  }
-
   /** @param xyz normalized vector, point on 2-dimensional sphere
    * @return 2 x 3 matrix with rows spanning the space tangent to given xyz */
   /* package */ static Tensor tangentSpace(Tensor xyz) {

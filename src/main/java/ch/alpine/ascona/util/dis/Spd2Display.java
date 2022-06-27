@@ -70,12 +70,6 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor toPoint(Tensor sym) {
-    Tensor sim = Spd0Exponential.INSTANCE.log(sym);
-    return sim2xya(sim).extract(0, 2);
-  }
-
-  @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor sym) {
     Tensor matrix = PAD_RIGHT.apply(sym); // log is possible
     matrix.set(RealScalar.ONE, 2, 2);

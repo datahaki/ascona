@@ -33,7 +33,9 @@ public interface ManifoldDisplay {
    * 
    * @param p control point
    * @return vector of length 2 with grid coordinates {x, y} */
-  Tensor toPoint(Tensor p);
+  default Tensor toPoint(Tensor p) {
+    return unproject(p).extract(0, 2);
+  }
 
   /** function is for drawing control points with proper orientation
    * 

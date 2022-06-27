@@ -41,11 +41,6 @@ public enum He1Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor toPoint(Tensor p) {
-    return p.extract(0, 2);
-  }
-
-  @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor xyz) {
     return null;
   }

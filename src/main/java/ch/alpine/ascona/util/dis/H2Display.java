@@ -18,11 +18,6 @@ public class H2Display extends HnDisplay implements D2Raster {
     super(2);
   }
 
-  @Override // from ManifoldDisplay
-  public Tensor toPoint(Tensor p) {
-    return p.extract(0, 2);
-  }
-
   @Override // from HsArrayPlot
   public Optional<Tensor> d2lift(Tensor pxy) {
     return Optional.of(HnWeierstrassCoordinate.toPoint(pxy));

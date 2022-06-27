@@ -35,11 +35,6 @@ public class S1Display extends SnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor toPoint(Tensor xy) {
-    return xy.copy();
-  }
-
-  @Override // from ManifoldDisplay
   public TensorUnaryOperator tangentProjection(Tensor p) {
     return null;
   }

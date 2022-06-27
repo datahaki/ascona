@@ -154,7 +154,7 @@ class ManifoldDisplaysTest {
   @EnumSource(ManifoldDisplays.class)
   void testToPoint3(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
-    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(CoordinateBoundingBox.of(Clips.unit(),Clips.unit(),Clips.unit()));
+    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(CoordinateBoundingBox.of(Clips.unit(), Clips.unit(), Clips.unit()));
     if (Objects.nonNull(randomSampleInterface)) {
       Tensor rand = RandomSample.of(randomSampleInterface);
       Tensor p = manifoldDisplay.project(rand);
