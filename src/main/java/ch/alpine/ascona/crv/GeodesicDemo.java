@@ -3,6 +3,7 @@ package ch.alpine.ascona.crv;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.Curvature2DRender;
@@ -14,14 +15,17 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.lang.Unicode;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.qty.Quantity;
 
 public class GeodesicDemo extends AbstractDemo {
   private static final Color COLOR = new Color(128, 128, 128, 128);
@@ -85,6 +89,10 @@ public class GeodesicDemo extends AbstractDemo {
         geometricLayer.popMatrix();
       }
     }
+    graphics.setColor(Color.DARK_GRAY);
+    graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));
+    graphics.drawString(Unicode.valueOf(RationalScalar.of(2358476923847L, 234567L)), 0, 100);
+    graphics.drawString(Unicode.valueOf(Quantity.of(92746289954L, "degC*m^2")), 0, 120);
     RenderQuality.setDefault(graphics);
   }
 
