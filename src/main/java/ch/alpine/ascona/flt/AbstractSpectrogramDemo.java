@@ -16,6 +16,7 @@ import ch.alpine.ascona.util.dat.GokartPoseDatas;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
@@ -78,16 +79,9 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
       Color draw = conv //
           ? new Color(255, 128, 128, 128)
           : new Color(255, 128, 128, 255);
-      for (Tensor point : control) {
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-        Path2D path2d = geometricLayer.toPath2D(shape);
-        path2d.closePath();
-        graphics.setColor(fill);
-        graphics.fill(path2d);
-        graphics.setColor(draw);
-        graphics.draw(path2d);
-        geometricLayer.popMatrix();
-      }
+      new PointsRender(fill, draw) //
+          .show(manifoldDisplay::matrixLift, shape, control) //
+          .render(geometricLayer, graphics);
     }
     Tensor refined = protected_render(geometricLayer, graphics);
     // ---

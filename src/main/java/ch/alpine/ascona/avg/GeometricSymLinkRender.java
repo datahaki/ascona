@@ -8,6 +8,7 @@ import java.awt.Stroke;
 import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.ren.AreaRender;
 import ch.alpine.ascona.util.sym.SymLink;
 import ch.alpine.ascona.util.sym.SymLinkPart;
 import ch.alpine.ascona.util.win.RenderInterface;
@@ -71,15 +72,10 @@ import ch.alpine.tensor.sca.Clips;
           {
             Tensor tensor = Subdivide.increasing(Clips.unit(), steps).extract(1, steps) //
                 .map(scalarTensorFunction);
-            Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
-            graphics.setColor(new Color(64, 128 + 64, 64, 128));
-            for (Tensor p : tensor) {
-              geometricLayer.pushMatrix(manifoldDisplay.matrixLift(p));
-              Path2D path2d = geometricLayer.toPath2D(shape);
-              path2d.closePath();
-              graphics.fill(path2d);
-              geometricLayer.popMatrix();
-            }
+            new AreaRender( //
+                new Color(64, 128 + 64, 64, 128), //
+                manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.5)), tensor) //
+                    .render(geometricLayer, graphics);
           }
         }
         // ---

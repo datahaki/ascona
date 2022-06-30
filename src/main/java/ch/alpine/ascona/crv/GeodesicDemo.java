@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AreaRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
@@ -58,11 +59,10 @@ public class GeodesicDemo extends AbstractDemo {
     Tensor q = manifoldDisplay.xya2point(xya);
     ScalarTensorFunction scalarTensorFunction = //
         geodesicSpace.curve(manifoldDisplay.xya2point(xya.map(Scalar::zero)), q);
-    for (Tensor split : Subdivide.of(0, 1, SPLITS).map(scalarTensorFunction)) {
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(split));
-      graphics.fill(geometricLayer.toPath2D(manifoldDisplay.shape()));
-      geometricLayer.popMatrix();
-    }
+    new AreaRender( //
+        COLOR, //
+        manifoldDisplay::matrixLift, manifoldDisplay.shape(), Subdivide.of(0, 1, SPLITS).map(scalarTensorFunction)) //
+            .render(geometricLayer, graphics);
     {
       Tensor sequence = Subdivide.of(0, 1, 1).map(scalarTensorFunction);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
@@ -82,12 +82,10 @@ public class GeodesicDemo extends AbstractDemo {
         pathRender.setCurve(render, false);
         pathRender.render(geometricLayer, graphics);
       }
-      graphics.setColor(new Color(255, 128, 128));
-      for (Tensor split : Subdivide.of(1, 1.5, SPLITS).map(scalarTensorFunction)) {
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(split));
-        graphics.fill(geometricLayer.toPath2D(manifoldDisplay.shape().multiply(RealScalar.of(0.3))));
-        geometricLayer.popMatrix();
-      }
+      new AreaRender( //
+          new Color(255, 128, 128), //
+          manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.3)), Subdivide.of(1, 1.5, SPLITS).map(scalarTensorFunction)) //
+              .render(geometricLayer, graphics);
     }
     graphics.setColor(Color.DARK_GRAY);
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));

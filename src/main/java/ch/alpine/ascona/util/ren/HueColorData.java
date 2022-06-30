@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.ren;
 
+import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -21,7 +22,7 @@ public enum HueColorData {
 
   public static ColorDataIndexed of(int max, int sep) {
     Tensor tensor = Tensors.reserve(max * sep);
-    Scalar offset = RealScalar.of(0.66);
+    Scalar offset = RationalScalar.of(2, 3);
     Tensor sats = Subdivide.of(1.0, 0.2, sep - 1);
     for (int index = 0; index < max; ++index) {
       for (Tensor sat : sats)

@@ -17,6 +17,7 @@ import ch.alpine.ascona.util.dat.GokartPoseParam;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -105,17 +106,11 @@ public class CurveDecimationDemo extends AbstractDemo {
     {
       final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
       pathRenderCurve.setCurve(_control, false).render(geometricLayer, graphics);
-      if (_control.length() <= 1000)
-        for (Tensor point : _control) {
-          geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-          Path2D path2d = geometricLayer.toPath2D(shape);
-          path2d.closePath();
-          graphics.setColor(new Color(255, 128, 128, 64));
-          graphics.fill(path2d);
-          graphics.setColor(COLOR_CURVE);
-          graphics.draw(path2d);
-          geometricLayer.popMatrix();
-        }
+      if (_control.length() <= 1000) {
+        new PointsRender(new Color(255, 128, 128, 64), COLOR_CURVE) //
+            .show(manifoldDisplay::matrixLift, shape, _control) //
+            .render(geometricLayer, graphics);
+      }
     }
     Scalar epsilon = Power.of(RationalScalar.HALF, param.level.number().intValue());
     // epsilon = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum() * 3);

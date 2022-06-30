@@ -4,7 +4,6 @@ package ch.alpine.ascona.crv;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
 
 import javax.swing.JSlider;
 
@@ -12,6 +11,7 @@ import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AreaRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
@@ -29,6 +29,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.Interpolation;
@@ -81,14 +82,12 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).map(interpolation::at);
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     Curvature2DRender.of(render, false, geometricLayer, graphics);
-    {
-      Tensor selected = interpolation.at(parameter);
-      graphics.setColor(Color.DARK_GRAY);
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(selected));
-      Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape());
-      graphics.fill(path2d);
-      geometricLayer.popMatrix();
-    }
+    new AreaRender( //
+        Color.DARK_GRAY, //
+        manifoldDisplay::matrixLift, //
+        manifoldDisplay.shape(), //
+        Unprotect.byRef(interpolation.at(parameter))) //
+            .render(geometricLayer, graphics);
     if (levels < 5)
       renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
     {

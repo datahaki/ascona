@@ -3,7 +3,6 @@ package ch.alpine.ascona.crv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
@@ -11,6 +10,7 @@ import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AreaRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymLinkImages;
@@ -29,6 +29,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.itp.DeBoor;
@@ -74,14 +75,12 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     // ---
     RenderQuality.setQuality(graphics);
     Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << levels))).map(scalarTensorFunction);
-    {
-      Tensor selected = scalarTensorFunction.apply(parameter);
-      graphics.setColor(Color.DARK_GRAY);
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(selected));
-      Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape());
-      graphics.fill(path2d);
-      geometricLayer.popMatrix();
-    }
+    new AreaRender( //
+        Color.DARK_GRAY, //
+        manifoldDisplay::matrixLift, //
+        manifoldDisplay.shape(), //
+        Unprotect.byRef(scalarTensorFunction.apply(parameter))) //
+            .render(geometricLayer, graphics);
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     Curvature2DRender.of(render, false, geometricLayer, graphics);
     if (levels < 5)

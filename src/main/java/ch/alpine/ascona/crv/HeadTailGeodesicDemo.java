@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.AreaRender;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -65,13 +66,10 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
       graphics.drawString("" + pseudoDistance.map(Round._4), 10, 20);
     }
     // ---
-    graphics.setColor(Color.LIGHT_GRAY);
-    for (Tensor _t : domain) {
-      Tensor pq = scalarTensorFunction.apply((Scalar) _t);
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(pq));
-      graphics.draw(geometricLayer.toPath2D(shape, true));
-      geometricLayer.popMatrix();
-    }
+    new AreaRender( //
+        Color.LIGHT_GRAY, //
+        manifoldDisplay::matrixLift, manifoldDisplay.shape(), domain.map(scalarTensorFunction)) //
+            .render(geometricLayer, graphics);
     graphics.setColor(Color.BLUE);
     for (Tensor _t : Subdivide.of(0, 1, 1)) {
       Tensor pq = scalarTensorFunction.apply((Scalar) _t);
