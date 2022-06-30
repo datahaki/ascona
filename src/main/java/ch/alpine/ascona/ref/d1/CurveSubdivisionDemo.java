@@ -12,6 +12,7 @@ import java.util.Optional;
 import javax.swing.JButton;
 
 import ch.alpine.ascona.crv.AbstractCurvatureDemo;
+import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -187,7 +188,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, cyclic, param.comb, geometricLayer, graphics);
       if (levels < 5)
-        renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+        ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
       return refined;
     }
     return Tensors.empty();

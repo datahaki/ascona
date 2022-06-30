@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
+import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -84,7 +85,7 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     Curvature2DRender.of(render, false, geometricLayer, graphics);
     if (levels < 5)
-      renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+      ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
       leversRender.renderSequence();

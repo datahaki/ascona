@@ -7,6 +7,7 @@ import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.api.Box2D;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.PathRender;
@@ -52,7 +53,8 @@ public class S1KrigingDemo extends AnAveragingDemo {
   @Override // from RenderInterface
   public void protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();
-    final Tensor shape = getControlPointShape(); // .multiply(RealScalar.of(0.3));
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    final Tensor shape = manifoldDisplay.shape(); // .multiply(RealScalar.of(0.3));
     if (1 < control.length()) {
       // TODO ASCONA ALG check for zero norm below
       Tensor sequence = Tensor.of(control.stream().map(Vector2Norm.NORMALIZE));

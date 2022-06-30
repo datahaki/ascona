@@ -49,7 +49,7 @@ public class S1InterpolationDemo extends LogWeightingDemo {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
-    final Tensor shape = getControlPointShape(); // .multiply(RealScalar.of(0.3));
+    final Tensor shape = manifoldDisplay.shape(); // .multiply(RealScalar.of(0.3));
     if (0 < control.length()) {
       // TODO ASCONA ALG check for zero norm below
       Tensor sequence = Tensor.of(control.stream().map(Vector2Norm.NORMALIZE));

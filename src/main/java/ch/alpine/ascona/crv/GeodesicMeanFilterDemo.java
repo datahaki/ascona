@@ -4,6 +4,7 @@ package ch.alpine.ascona.crv;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -54,7 +55,7 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
     // ---
     RenderQuality.setQuality(graphics);
     Curvature2DRender.of(render, false, geometricLayer, graphics);
-    renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+    ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
       leversRender.renderSequence();

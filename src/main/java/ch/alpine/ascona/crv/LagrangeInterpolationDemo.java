@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JSlider;
 
+import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -89,7 +90,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
         Unprotect.byRef(interpolation.at(parameter))) //
             .render(geometricLayer, graphics);
     if (levels < 5)
-      renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+      ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
       leversRender.renderSequence();

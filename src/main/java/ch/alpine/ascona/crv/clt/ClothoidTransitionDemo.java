@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.api.RnLineTrim;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -79,10 +80,7 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       graphics.setStroke(new BasicStroke(2));
       graphics.draw(geometricLayer.toPath2D(linearized));
       if (smpl)
-        POINTS_RENDER_1.show( //
-            Se2Display.INSTANCE::matrixLift, //
-            Se2Display.INSTANCE.shape(), //
-            linearized).render(geometricLayer, graphics);
+        ControlPointsStatic.renderPoints(Se2Display.INSTANCE, linearized, geometricLayer, graphics);
       if (plot)
         visualSet.add(samples, RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
             Tensor.of(linearized.stream().map(Extract2D.FUNCTION))));

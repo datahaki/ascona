@@ -7,6 +7,7 @@ import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
+import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -69,7 +70,7 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     Curvature2DRender.of(render, false, geometricLayer, graphics);
     if (levels < 5)
-      renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+      ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
     return refined;
   }
 

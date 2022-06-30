@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
+import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -83,7 +84,7 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     Curvature2DRender.of(render, false, geometricLayer, graphics);
     if (levels < 5)
-      renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+      ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
     return refined;
   }
 

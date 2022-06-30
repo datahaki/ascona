@@ -81,7 +81,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           s2Display.xya2point(xy0), //
           s2Display.createTangent(xy0, xya.Get(2)).multiply(vscale));
     }));
-    POINTS_RENDER_0.show(manifoldDisplay::matrixLift, getControlPointShape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
+    POINTS_RENDER_0.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
     // GeodesicSpace geodesicSpace = s2Display.geodesicSpace();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     { // render tangents as geodesic on sphere

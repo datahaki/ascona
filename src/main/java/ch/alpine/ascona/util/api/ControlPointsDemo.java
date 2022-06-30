@@ -17,7 +17,6 @@ import javax.swing.JButton;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -50,8 +49,6 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   /** mouse snaps 20 pixel to control points */
   private static final Scalar PIXEL_THRESHOLD = RealScalar.of(20.0);
   /** refined points */
-  protected static final PointsRender POINTS_RENDER_1 = //
-      new PointsRender(new Color(160, 160, 160, 128 + 64), Color.BLACK);
   private static final Stroke STROKE = new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   // ---
   private Tensor control = Tensors.empty();
@@ -116,7 +113,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
             posit.set(closest.get(1), 1);
           }
           geometricLayer.pushMatrix(manifoldDisplay.matrixLift(manifoldDisplay.xya2point(posit)));
-          graphics.fill(geometricLayer.toPath2D(getControlPointShape()));
+          graphics.fill(geometricLayer.toPath2D(manifoldDisplay.shape()));
           geometricLayer.popMatrix();
         }
         if (!hold && Tensors.nonEmpty(control) && midpointIndicated) {
@@ -284,18 +281,6 @@ public abstract class ControlPointsDemo extends AbstractDemo {
         .limit(maxSize) //
         .map(manifoldDisplay()::xya2point) //
         .map(N.DOUBLE::of));
-  }
-
-  protected final void renderPoints( //
-      ManifoldDisplay manifoldDisplay, Tensor points, GeometricLayer geometricLayer, Graphics2D graphics) {
-    POINTS_RENDER_1.show(manifoldDisplay::matrixLift, getControlPointShape(), points).render(geometricLayer, graphics);
-  }
-
-  /** function exists so that shape can be altered, for instance magnified
-   * 
-   * @return */
-  protected final Tensor getControlPointShape() {
-    return manifoldDisplay().shape();
   }
 
   /** @return */

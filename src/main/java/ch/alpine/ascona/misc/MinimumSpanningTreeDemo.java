@@ -93,7 +93,7 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
       int unique = map.get(disjointSets.key(index));
       Color color = ColorDataLists._097.cyclic().getColor(unique);
       PointsRender pointsRender = new PointsRender(color, color);
-      pointsRender.show(manifoldDisplay::matrixLift, getControlPointShape(), Tensors.of(sequence.get(index))).render(geometricLayer, graphics);
+      pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(sequence.get(index))).render(geometricLayer, graphics);
     }
   }
 
