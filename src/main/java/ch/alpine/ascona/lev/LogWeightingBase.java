@@ -37,7 +37,7 @@ public abstract class LogWeightingBase extends AbstractPlaceDemo {
       public void mousePressed(MouseEvent mouseEvent) {
         switch (mouseEvent.getButton()) {
         case MouseEvent.BUTTON1: // insert point
-          if (!isPositioningOngoing())
+          if (!renderInterface.isPositioningOngoing())
             recompute();
           break;
         default:
@@ -46,7 +46,7 @@ public abstract class LogWeightingBase extends AbstractPlaceDemo {
 
       @Override
       public void mouseMoved(MouseEvent e) {
-        if (isPositioningOngoing())
+        if (renderInterface.isPositioningOngoing())
           recompute();
       }
     };

@@ -75,7 +75,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
   public CheckerBoardDemo() {
     super(true, ManifoldDisplays.metricD2Rasters(), PolygonCoordinates.list());
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
-    setMidpointIndicated(true);
+    renderInterface.setMidpointIndicated(true);
     FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     fieldsEditor.addUniversalListener(this::recompute);
     // ---

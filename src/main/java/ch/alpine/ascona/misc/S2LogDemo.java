@@ -27,10 +27,10 @@ public class S2LogDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    Tensor points = getGeodesicControlPoints(0, 1);
+    Tensor points = renderInterface.getGeodesicControlPoints(0, 1);
     if (0 < points.length()) {
       Tensor origin = points.get(0);
-      Tensor sequence = getGeodesicControlPoints(1, Integer.MAX_VALUE);
+      Tensor sequence = renderInterface.getGeodesicControlPoints(1, Integer.MAX_VALUE);
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay(), sequence, origin, geometricLayer, graphics);
       leversRender.renderLevers();

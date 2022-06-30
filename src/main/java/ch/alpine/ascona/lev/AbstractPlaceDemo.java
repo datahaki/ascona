@@ -16,20 +16,20 @@ public abstract class AbstractPlaceDemo extends ControlPointsDemo {
 
   public AbstractPlaceDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
     super(addRemoveControlPoints, list);
-    setMidpointIndicated(false);
+    renderInterface.setMidpointIndicated(false);
     // ---
     jButtonPrint.addActionListener(l -> System.out.println(getControlPointsSe2().map(Round._3)));
     timerFrame.jToolBar.add(jButtonPrint);
   }
 
   protected final Optional<Tensor> getOrigin() {
-    Tensor geodesicControlPoints = getGeodesicControlPoints(0, 1);
+    Tensor geodesicControlPoints = renderInterface.getGeodesicControlPoints(0, 1);
     return 0 < geodesicControlPoints.length() //
         ? Optional.of(geodesicControlPoints.get(0))
         : Optional.empty();
   }
 
   protected final Tensor getSequence() {
-    return getGeodesicControlPoints(1, Integer.MAX_VALUE);
+    return renderInterface.getGeodesicControlPoints(1, Integer.MAX_VALUE);
   }
 }

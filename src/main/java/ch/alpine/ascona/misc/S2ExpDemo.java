@@ -34,7 +34,7 @@ public class S2ExpDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor points = getGeodesicControlPoints(0, 1);
+    Tensor points = renderInterface.getGeodesicControlPoints(0, 1);
     if (0 < points.length()) {
       Tensor origin = points.get(0);
       Exponential exponential = SnManifold.INSTANCE.exponential(origin);

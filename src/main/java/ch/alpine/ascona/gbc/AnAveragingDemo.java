@@ -31,7 +31,7 @@ public abstract class AnAveragingDemo extends LogWeightingDemo {
 
   public AnAveragingDemo(List<ManifoldDisplays> geodesicDisplays) {
     super(true, geodesicDisplays, LogWeightings.averagings());
-    setMidpointIndicated(false);
+    renderInterface.setMidpointIndicated(false);
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
     // ---
     jToggleButton.setSelected(false);

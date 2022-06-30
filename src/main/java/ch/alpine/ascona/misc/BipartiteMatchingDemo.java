@@ -27,7 +27,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
     super(true, ManifoldDisplays.R2_ONLY);
     // ---
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {1, 1, 0}}"));
-    setMidpointIndicated(false);
+    renderInterface.setMidpointIndicated(false);
   }
 
   @Override // from RenderInterface
