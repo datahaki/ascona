@@ -8,9 +8,9 @@ import ch.alpine.ascona.lev.AbstractHoverDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
@@ -41,7 +41,7 @@ public class OrderingHoverDemo extends AbstractHoverDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new OrderingHoverDemo().setVisible(1200, 600);
   }
 }

@@ -5,7 +5,7 @@ import java.awt.Dimension;
 
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Sedarim;
@@ -77,7 +77,7 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new S2DeformationDemo().setVisible(1400, 800);
   }
 }

@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.red.Times;
@@ -42,7 +42,7 @@ public class S2LogDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new S2LogDemo().setVisible(1000, 800);
   }
 }

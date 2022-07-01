@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.CrossAveraging;
 import ch.alpine.sophus.itp.RadialBasisFunctionInterpolation;
@@ -62,7 +62,7 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new R1RadialBasisFunctionDemo().setVisible(1000, 800);
   }
 }

@@ -9,12 +9,12 @@ import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -85,7 +85,7 @@ public class DeBoorCustomDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new DeBoorCustomDemo().setVisible(1000, 800);
   }
 }

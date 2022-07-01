@@ -14,7 +14,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
@@ -22,6 +21,7 @@ import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.api.TensorNorm;
@@ -115,7 +115,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new LineDistanceDemo().setVisible(1200, 600);
   }
 }

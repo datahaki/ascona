@@ -11,13 +11,13 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.S2Display;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.hs.sn.S2Loxodrome;
@@ -140,7 +140,7 @@ public class S2DeltaDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new S2DeltaDemo().setVisible(1200, 800);
   }
 }

@@ -10,9 +10,9 @@ import ch.alpine.ascona.util.arp.MeshRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.gbc.d2.Barycenter;
 import ch.alpine.sophus.gbc.d2.InsidePolygonCoordinate;
 import ch.alpine.sophus.gbc.d2.SPatch;
@@ -99,7 +99,7 @@ public class SPatchDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new SPatchDemo().setVisible(1200, 600);
   }
 }

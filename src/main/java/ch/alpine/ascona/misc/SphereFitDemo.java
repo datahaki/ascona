@@ -12,10 +12,10 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.d2.StarPoints;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
@@ -124,7 +124,7 @@ public class SphereFitDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new SphereFitDemo().setVisible(1000, 600);
   }
 }

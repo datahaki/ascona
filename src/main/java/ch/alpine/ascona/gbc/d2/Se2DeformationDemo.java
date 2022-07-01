@@ -4,7 +4,7 @@ package ch.alpine.ascona.gbc.d2;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -59,7 +59,7 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new Se2DeformationDemo().setVisible(1200, 800);
   }
 }

@@ -20,10 +20,10 @@ import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidContext;
@@ -199,7 +199,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new CustomClothoidDemo().setVisible(1200, 900);
   }
 }

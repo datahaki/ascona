@@ -12,9 +12,9 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.itp.Kriging;
@@ -99,7 +99,7 @@ public class S1KrigingDemo extends AnAveragingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new S1KrigingDemo().setVisible(1000, 800);
   }
 }

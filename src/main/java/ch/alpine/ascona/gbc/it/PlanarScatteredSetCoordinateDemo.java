@@ -12,9 +12,9 @@ import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.InsideConvexHullLogWeighting;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.PanelFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
@@ -79,7 +79,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new PlanarScatteredSetCoordinateDemo().setVisible(1300, 900);
   }
 }

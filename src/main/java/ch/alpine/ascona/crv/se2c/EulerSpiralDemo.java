@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.crv.se2c;
 
-import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.se2c.EulerSpiral;
 
 public class EulerSpiralDemo extends AbstractSpiralDemo {
@@ -10,7 +10,7 @@ public class EulerSpiralDemo extends AbstractSpiralDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new EulerSpiralDemo().setVisible(1000, 600);
   }
 }

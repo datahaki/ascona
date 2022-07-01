@@ -16,12 +16,12 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.gbc.it.GenesisDeque;
 import ch.alpine.sophus.gbc.it.WeightsFactors;
@@ -131,7 +131,7 @@ public class ExponentialDemo extends AbstractPlaceDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new ExponentialDemo().setVisible(1300, 900);
   }
 }

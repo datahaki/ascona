@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.S2Display;
-import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Abs;
@@ -25,7 +25,7 @@ public class S2TreeMapDemo extends AbstractTreeMapDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new S2TreeMapDemo().setVisible(1000, 800);
   }
 }

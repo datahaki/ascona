@@ -17,9 +17,9 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymLinkImages;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.math.api.TensorMetric;
@@ -128,7 +128,7 @@ import ch.alpine.tensor.itp.DeBoor;
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new DuckietownSmoothingDemo().setVisible(1000, 800);
   }
 }

@@ -2,7 +2,7 @@
 package ch.alpine.ascona.gbc.d1;
 
 import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.win.LookAndFeels;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
@@ -26,7 +26,7 @@ public class S1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new S1BarycentricCoordinateDemo().setVisible(1000, 800);
   }
 }

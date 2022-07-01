@@ -21,7 +21,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -29,6 +28,7 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
@@ -174,15 +174,15 @@ public class CheckerBoardDemo extends LogWeightingBase //
 
   @Override
   public void spun(ManifoldDisplays manifoldDisplays) {
-    if (manifoldDisplays.equals(manifoldDisplays.R2)) {
+    if (manifoldDisplays.equals(ManifoldDisplays.R2)) {
       setControlPointsSe2(Tensors.fromString( //
           "{{0.287, -0.958, 0.000}, {-1.017, -0.953, 0.000}, {-0.717, 0.229, 0.000}, {-0.912, 0.669, 0.000}, {-0.644, 0.967, 0.000}, {0.933, 0.908, 0.000}, {0.950, -0.209, 0.000}, {-0.461, 0.637, 0.000}, {0.956, -0.627, 0.000}}"));
     } else
-      if (manifoldDisplays.equals(manifoldDisplays.H2)) {
+      if (manifoldDisplays.equals(ManifoldDisplays.H2)) {
         setControlPointsSe2(Tensors.fromString( //
             "{{0.783, -2.467, 0.000}, {-0.083, -1.667, 0.000}, {-2.683, -1.167, 0.000}, {-2.650, 0.133, 0.000}, {-1.450, 2.467, 0.000}, {0.083, 0.033, 0.000}, {0.867, 2.383, 0.000}, {2.217, 2.500, 0.000}, {2.183, -0.517, 0.000}}"));
       } else //
-        if (manifoldDisplays.equals(manifoldDisplays.S2)) {
+        if (manifoldDisplays.equals(ManifoldDisplays.S2)) {
           setControlPointsSe2(Tensors.fromString( //
               "{{-0.715, -0.357, 0.000}, {-0.708, 0.500, 0.000}, {-0.102, 0.592, 0.000}, {0.181, 0.892, 0.000}, {0.733, 0.455, 0.000}, {-0.349, 0.232, 0.000}, {-0.226, 0.008, 0.000}, {0.434, 0.097, 0.000}, {0.759, -0.492, 0.000}, {0.067, -0.712, 0.000}}"));
         }
@@ -204,7 +204,7 @@ public class CheckerBoardDemo extends LogWeightingBase //
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new CheckerBoardDemo().setVisible(1300, 900);
   }
 }

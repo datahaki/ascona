@@ -10,8 +10,8 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -82,7 +82,7 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new Se2UnprojectDemo().setVisible(1200, 600);
   }
 }

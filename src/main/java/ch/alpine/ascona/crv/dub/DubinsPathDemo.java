@@ -12,11 +12,11 @@ import ch.alpine.ascona.util.dis.Se2CoveringDisplay;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
 import ch.alpine.sophus.crv.clt.ClothoidTransition;
@@ -131,7 +131,7 @@ public class DubinsPathDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.INTELLI_J.tryUpdateUI();
+    LookAndFeels.INTELLI_J.updateComponentTreeUI();
     new DubinsPathDemo().setVisible(1000, 600);
   }
 }

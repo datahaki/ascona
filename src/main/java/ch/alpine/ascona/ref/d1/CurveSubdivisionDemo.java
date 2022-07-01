@@ -19,13 +19,13 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerMenu;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -82,7 +82,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       JButton jButton = new JButton("load");
       List<String> list = List.of("ducttape/20180514.csv", "tires/20190116.csv", "tires/20190117.csv");
       jButton.addActionListener(e -> {
-        SpinnerMenu<String> spinnerMenu = new SpinnerMenu<String>(list, null, false);
+        SpinnerMenu<String> spinnerMenu = new SpinnerMenu<>(list, null, false);
         spinnerMenu.addSpinnerListener(string -> {
           Tensor tensor = ResourceData.of("/dubilab/controlpoints/" + string);
           tensor = Tensor.of(tensor.stream().map(Times.operator(Tensors.vector(0.5, 0.5, 1))));
@@ -195,7 +195,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new CurveSubdivisionDemo().setVisible(1200, 800);
   }
 }

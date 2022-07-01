@@ -8,9 +8,9 @@ import javax.swing.JSlider;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
-import ch.alpine.ascona.util.win.LookAndFeels;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.BezierFunction;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -51,7 +51,7 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.tryUpdateUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new BezierFunctionSplitsDemo().setVisible(1000, 600);
   }
 }
