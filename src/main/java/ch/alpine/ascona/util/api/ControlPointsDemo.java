@@ -17,6 +17,7 @@ import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 
 /** class is used in other projects outside of owl */
 @ReflectionMarker
@@ -24,7 +25,7 @@ import ch.alpine.tensor.Tensor;
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
 // TODO ASCONA use LeversRender in control points render
 public abstract class ControlPointsDemo extends AbstractDemo {
-  public final ControlPointsRender renderInterface;
+  public final ControlPointsRender controlPointsRender;
   private final AsconaParam asconaParam;
   private final FieldsEditor fieldsEditor;
 
@@ -34,15 +35,13 @@ public abstract class ControlPointsDemo extends AbstractDemo {
    * @param list */
   public ControlPointsDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
     asconaParam = new AsconaParam(list);
-    renderInterface = new ControlPointsRender(addRemoveControlPoints, this::manifoldDisplay, //
-        timerFrame.geometricComponent::getMouseSe2CState, //
-        timerFrame.geometricComponent::getModel2Pixel);
-    // TODO ASCONA only if list > 1
+    controlPointsRender = ControlPointsRenders.create( //
+        addRemoveControlPoints, this::manifoldDisplay, timerFrame.geometricComponent);
     fieldsEditor = ToolbarFieldsEditor.add(asconaParam.spaceParam, timerFrame.jToolBar);
     timerFrame.jToolBar.addSeparator();
     if (addRemoveControlPoints) {
       JButton jButton = new JButton("clear");
-      jButton.addActionListener(renderInterface.actionListener);
+      jButton.addActionListener(e -> controlPointsRender.setControlPointsSe2(Tensors.empty()));
       timerFrame.jToolBar.add(jButton);
     }
     timerFrame.geometricComponent.addRenderInterfaceBackground(new RenderInterface() {
@@ -51,18 +50,13 @@ public abstract class ControlPointsDemo extends AbstractDemo {
         manifoldDisplay().background().render(geometricLayer, graphics);
       }
     });
-    // ---
-    // ---
-    timerFrame.geometricComponent.jComponent.addMouseListener(renderInterface.mouseAdapter);
-    timerFrame.geometricComponent.jComponent.addMouseMotionListener(renderInterface.mouseAdapter);
-    timerFrame.geometricComponent.addRenderInterface(renderInterface);
   }
 
   // TODO ASCONA API function should not be here!
   public final void addButtonDubins() {
     JButton jButton = new JButton("dubins");
     jButton.setToolTipText("project control points to dubins path");
-    jButton.addActionListener(actionEvent -> renderInterface.setControlPointsSe2(DubinsGenerator.project(renderInterface.control)));
+    jButton.addActionListener(actionEvent -> controlPointsRender.setControlPointsSe2(DubinsGenerator.project(controlPointsRender.control)));
     timerFrame.jToolBar.add(jButton);
   }
 
@@ -92,16 +86,16 @@ public abstract class ControlPointsDemo extends AbstractDemo {
 
   /** @param control points as matrix of dimensions N x 3 */
   public final void setControlPointsSe2(Tensor control) {
-    renderInterface.setControlPointsSe2(control);
+    controlPointsRender.setControlPointsSe2(control);
   }
 
   /** @return control points as matrix of dimensions N x 3 */
   public final Tensor getControlPointsSe2() {
-    return renderInterface.getControlPointsSe2();
+    return controlPointsRender.getControlPointsSe2();
   }
 
   /** @return control points for selected {@link ManifoldDisplay} */
   public final Tensor getGeodesicControlPoints() {
-    return renderInterface.getGeodesicControlPoints();
+    return controlPointsRender.getGeodesicControlPoints();
   }
 }

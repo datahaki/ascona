@@ -25,7 +25,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends LogWeightingDemo
       List<ManifoldDisplays> list, //
       List<LogWeighting> array) {
     super(addRemoveControlPoints, list, array);
-    renderInterface.setMidpointIndicated(false);
+    controlPointsRender.setMidpointIndicated(false);
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
     {
       spinnerRefine = SpinnerLabel.of(3, 5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 120, 160);

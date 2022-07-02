@@ -118,7 +118,7 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
       timerFrame.geometricComponent.jComponent.addMouseMotionListener(new MouseMotionListener() {
         @Override
         public void mouseMoved(MouseEvent e) {
-          if (renderInterface.isPositioningOngoing())
+          if (controlPointsRender.isPositioningOngoing())
             recompute();
         }
 

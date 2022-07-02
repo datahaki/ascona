@@ -67,7 +67,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
 
   public BiinvariantMeanDemo() {
     super(true, ManifoldDisplays.manifolds());
-    renderInterface.setMidpointIndicated(false);
+    controlPointsRender.setMidpointIndicated(false);
     // ---
     setManifoldDisplay(ManifoldDisplays.Se2);
     // ---

@@ -76,7 +76,7 @@ import ch.alpine.tensor.sca.Sign;
     // setManifoldDisplay(ManifoldDisplays.S2);
     setManifoldDisplay(ManifoldDisplays.R2);
     setControlPointsSe2(Tensors.fromString("{{0, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}}"));
-    renderInterface.setMidpointIndicated(true);
+    controlPointsRender.setMidpointIndicated(true);
   }
 
   @Override

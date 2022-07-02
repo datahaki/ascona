@@ -37,7 +37,7 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
     spun(manifoldDisplays);
     addManifoldListener(this);
     jToggleNeutral.setSelected(true);
-    renderInterface.setMidpointIndicated(true);
+    controlPointsRender.setMidpointIndicated(true);
   }
 
   @Override // from RenderInterface

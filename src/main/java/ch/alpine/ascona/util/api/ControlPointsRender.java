@@ -1,10 +1,10 @@
+// code by jph
 package ch.alpine.ascona.util.api;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
@@ -108,7 +108,7 @@ public class ControlPointsRender implements RenderInterface {
     }
   }
 
-  MouseAdapter mouseAdapter = new MouseAdapter() {
+  public final MouseAdapter mouseAdapter = new MouseAdapter() {
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
       if (!isPositioningEnabled())
@@ -160,11 +160,10 @@ public class ControlPointsRender implements RenderInterface {
       }
     }
   };
-  final boolean addRemoveControlPoints;
-  final Supplier<ManifoldDisplay> supplier;
-  final Supplier<Tensor> mouseSe2CState;
-  final Supplier<Tensor> model2Pixel;
-  public final ActionListener actionListener;
+  private final boolean addRemoveControlPoints;
+  private final Supplier<ManifoldDisplay> supplier;
+  private final Supplier<Tensor> mouseSe2CState;
+  private final Supplier<Tensor> model2Pixel;
 
   public ControlPointsRender(boolean addRemoveControlPoints, Supplier<ManifoldDisplay> supplier, //
       Supplier<Tensor> mouseSe2CState, //
@@ -173,14 +172,6 @@ public class ControlPointsRender implements RenderInterface {
     this.supplier = supplier;
     this.mouseSe2CState = mouseSe2CState;
     this.model2Pixel = model2Pixel;
-    actionListener = addRemoveControlPoints //
-        ? actionEvent -> {
-          min_index = null;
-          control = Tensors.empty();
-        }
-        : e -> {
-          // ---
-        };
     setMidpointIndicated(addRemoveControlPoints);
   }
 
@@ -203,6 +194,10 @@ public class ControlPointsRender implements RenderInterface {
     return Objects.nonNull(min_index);
   }
 
+  /** curve control points, or
+   * scattered set mode
+   * 
+   * @param enabled */
   public final void setMidpointIndicated(boolean enabled) {
     midpointIndicated = enabled;
   }
@@ -217,6 +212,7 @@ public class ControlPointsRender implements RenderInterface {
 
   /** @param control points as matrix of dimensions N x 3 */
   public final void setControlPointsSe2(Tensor control) {
+    min_index = null;
     this.control = Tensor.of(control.stream() //
         .map(row -> VectorQ.requireLength(row, 3).map(Tensor::copy)));
   }

@@ -34,7 +34,7 @@ public abstract class AbstractSplitsDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     // ---
-    renderInterface.setMidpointIndicated(closest);
+    controlPointsRender.setMidpointIndicated(closest);
     SymScalar symScalar = symScalar(SymSequence.of(control.length()));
     SymLink symLink = null;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

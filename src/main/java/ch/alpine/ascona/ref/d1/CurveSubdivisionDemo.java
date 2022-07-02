@@ -116,7 +116,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     timerFrame.jToolBar.addSeparator();
     addButtonDubins();
     // ---
-    renderInterface.setMidpointIndicated(true);
+    controlPointsRender.setMidpointIndicated(true);
     // ---
     // ---
     spinnerMagicC = SpinnerLabel.of(Tensors.fromString("{1/100, 1/10, 1/8, 1/6, 1/4, 1/3, 1/2, 2/3, 9/10, 99/100}").stream() //

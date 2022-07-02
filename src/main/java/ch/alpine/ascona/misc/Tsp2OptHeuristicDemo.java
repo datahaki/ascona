@@ -53,7 +53,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
 
   public Tsp2OptHeuristicDemo() {
     super(false, ManifoldDisplays.metricManifolds());
-    renderInterface.setPositioningEnabled(false);
+    controlPointsRender.setPositioningEnabled(false);
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
     Distribution distribution = UniformDistribution.of(-4, 4);

@@ -5,10 +5,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.api.ControlPointsRender;
+import ch.alpine.ascona.util.api.ControlPointsRenders;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.LookAndFeels;
@@ -20,20 +22,22 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
 
-public class BipartiteMatchingDemo extends ControlPointsDemo {
+// TODO ASCONA generalize demo for 2 scattered sets on a manifold
+public class BipartiteMatchingDemo extends AbstractDemo {
   private static final Tensor CIRCLE = CirclePoints.of(5).multiply(RealScalar.of(3));
+  private final ControlPointsRender controlPointsRender;
 
   public BipartiteMatchingDemo() {
-    super(true, ManifoldDisplays.R2_ONLY);
-    // ---
-    setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {1, 1, 0}}"));
-    renderInterface.setMidpointIndicated(false);
+    controlPointsRender = ControlPointsRenders.create( //
+        true, () -> ManifoldDisplays.R2.manifoldDisplay(), timerFrame.geometricComponent);
+    controlPointsRender.setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {1, 1, 0}}"));
+    controlPointsRender.setMidpointIndicated(false);
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    Tensor control = getGeodesicControlPoints();
+    Tensor control = controlPointsRender.getGeodesicControlPoints();
     if (0 < control.length()) {
       new PathRender(Color.GRAY).setCurve(CIRCLE, true).render(geometricLayer, graphics);
       Tensor matrix = Outer.of(Vector2Norm::between, control, CIRCLE);
@@ -47,7 +51,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
         }
     }
     {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(ManifoldDisplays.R2.manifoldDisplay(), control, null, geometricLayer, graphics);
       leversRender.renderSequence();
     }
   }

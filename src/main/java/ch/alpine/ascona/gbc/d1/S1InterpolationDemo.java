@@ -36,7 +36,7 @@ public class S1InterpolationDemo extends LogWeightingDemo {
 
   public S1InterpolationDemo() {
     super(true, ManifoldDisplays.R2_ONLY, LogWeightings.list());
-    renderInterface.setMidpointIndicated(false);
+    controlPointsRender.setMidpointIndicated(false);
     // ---
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-1, 0, 0}}"));
     timerFrame.geometricComponent.setOffset(500, 500);

@@ -50,7 +50,7 @@ public class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     boolean isMoving = jToggleButton.isSelected();
-    renderInterface.setPositioningEnabled(!isMoving);
+    controlPointsRender.setPositioningEnabled(!isMoving);
     RenderQuality.setQuality(graphics);
     if (isMoving) {
       Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();

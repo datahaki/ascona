@@ -22,7 +22,7 @@ public abstract class AbstractHoverDemo extends LogWeightingDemo {
 
   public AbstractHoverDemo(int n) {
     super(false, ManifoldDisplays.manifolds(), LogWeightings.list());
-    renderInterface.setPositioningEnabled(false);
+    controlPointsRender.setPositioningEnabled(false);
     {
       spinnerCount = SpinnerLabel.of(5, 10, 15, 20, 25, 30, 40, 100, 200);
       spinnerCount.setValue(n);
