@@ -14,14 +14,13 @@ import ch.alpine.ascona.misc.VehicleStatic;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.FieldsEditor;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.dv.Biinvariant;
@@ -55,7 +54,11 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       Clips.interval(-0.22, 0.22));
 
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.manifolds());
+    }
+
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public Boolean median = false;
     @FieldFuse("shuffle")
@@ -63,15 +66,13 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     public Boolean vehicle = false;
   }
 
-  private final Param param = new Param();
+  private final Param param;
 
-  public BiinvariantMeanDemo() {
-    super(true, ManifoldDisplays.manifolds());
+  public BiinvariantMeanDemo(Param param) {
+    super(param);
+    this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---
-    setManifoldDisplay(ManifoldDisplays.Se2);
-    // ---
-    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     fieldsEditor.addUniversalListener(() -> {
       if (param.shuffle) {
         param.shuffle = false;
@@ -152,6 +153,8 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
 
   public static void main(String[] args) {
     LookAndFeels.LIGHT.updateComponentTreeUI();
-    new BiinvariantMeanDemo().setVisible(1200, 600);
+    Param param = new Param();
+    param.spaceParam.manifoldDisplays = ManifoldDisplays.Se2;
+    new BiinvariantMeanDemo(param).setVisible(1200, 600);
   }
 }

@@ -23,23 +23,27 @@ import ch.alpine.tensor.Tensors;
 @ReflectionMarker
 // TODO ASCONA possibly create TABs for each Manifold Display (in order to leave ctrl points)
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
-// TODO ASCONA use LeversRender in control points render
 public abstract class ControlPointsDemo extends AbstractDemo {
   public final ControlPointsRender controlPointsRender;
   private final AsconaParam asconaParam;
-  private final FieldsEditor fieldsEditor;
+  public final FieldsEditor fieldsEditor;
 
   /** Hint: {@link #setPositioningEnabled(boolean)} controls positioning of control points
    * 
    * @param addRemoveControlPoints whether the number of control points is variable
    * @param list */
+  @Deprecated
   public ControlPointsDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
-    asconaParam = new AsconaParam(list);
+    this(new AsconaParam(addRemoveControlPoints, list));
+  }
+
+  public ControlPointsDemo(AsconaParam asconaParam) {
+    this.asconaParam = asconaParam;
     controlPointsRender = ControlPointsRenders.create( //
-        addRemoveControlPoints, this::manifoldDisplay, timerFrame.geometricComponent);
-    fieldsEditor = ToolbarFieldsEditor.add(asconaParam.spaceParam, timerFrame.jToolBar);
+        asconaParam.addRemoveControlPoints, this::manifoldDisplay, timerFrame.geometricComponent);
+    fieldsEditor = ToolbarFieldsEditor.add(asconaParam, timerFrame.jToolBar);
     timerFrame.jToolBar.addSeparator();
-    if (addRemoveControlPoints) {
+    if (asconaParam.addRemoveControlPoints) {
       JButton jButton = new JButton("clear");
       jButton.addActionListener(e -> controlPointsRender.setControlPointsSe2(Tensors.empty()));
       timerFrame.jToolBar.add(jButton);
@@ -68,11 +72,6 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   public synchronized final void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
     asconaParam.spaceParam.manifoldDisplays = manifoldDisplays;
     fieldsEditor.updateJComponents();
-  }
-
-  public synchronized final void reportToAll() {
-    // TODO ASCONA
-    // fieldsEditor.reportToAll();
   }
 
   public void addManifoldListener(SpinnerListener<ManifoldDisplays> spinnerListener) {

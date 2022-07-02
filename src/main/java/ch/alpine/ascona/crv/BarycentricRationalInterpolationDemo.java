@@ -11,6 +11,7 @@ import org.jfree.chart.JFreeChart;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -21,7 +22,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -45,7 +45,11 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   private static final int HEIGHT = 300;
 
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.metricManifolds());
+    }
+
     @FieldPreferredWidth(100)
     @FieldSelectionArray({ "0", "1/4", "1/2", "3/4", "1" })
     public Scalar beta = RealScalar.ZERO;
@@ -57,11 +61,11 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     public Boolean basis = true;
   }
 
-  private final Param param = new Param();
+  private final Param param;
 
-  public BarycentricRationalInterpolationDemo() {
-    super(true, ManifoldDisplays.metricManifolds());
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+  public BarycentricRationalInterpolationDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {2, 0, 0}, {4, 3, 1}, {5, -1, -2}}"));
   }
@@ -127,6 +131,8 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
 
   public static void main(String[] args) {
     LookAndFeels.INTELLI_J.updateComponentTreeUI();
-    new BarycentricRationalInterpolationDemo().setVisible(1200, 600);
+    Param param = new Param();
+    param.spaceParam.manifoldDisplays = ManifoldDisplays.R2;
+    new BarycentricRationalInterpolationDemo(param).setVisible(1200, 600);
   }
 }

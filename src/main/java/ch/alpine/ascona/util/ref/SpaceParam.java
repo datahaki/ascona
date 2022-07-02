@@ -10,6 +10,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 @ReflectionMarker
 public class SpaceParam {
   private final List<ManifoldDisplays> list;
+  /** currently selected */
   @FieldSelectionCallback("getList")
   public ManifoldDisplays manifoldDisplays;
 

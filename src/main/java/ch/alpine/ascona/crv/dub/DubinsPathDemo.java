@@ -8,14 +8,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2CoveringDisplay;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
@@ -31,7 +32,7 @@ import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.PadLeft;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -41,32 +42,39 @@ import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Clips;
 
-public class DubinsPathDemo extends AbstractDemo {
+public class DubinsPathDemo extends ControlPointsDemo {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
-  private static final Tensor START = Array.zeros(3).unmodifiable();
   private static final int POINTS = 200;
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
 
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(false, ManifoldDisplays.SE2_ONLY);
+    }
+
     public Boolean allDubins = true;
     public Boolean relax = true;
     public Boolean shortest = true;
     public Boolean clothoid = true;
   }
 
-  private final Param param = new Param();
+  private final Param param;
   private final PathRender pathRender = new PathRender(Color.RED, 2f);
   private final PathRender pathRenderClothoid = new PathRender(Color.CYAN, 2f);
 
-  public DubinsPathDemo() {
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+  public DubinsPathDemo(Param param) {
+    super(param);
+    this.param = param;
+    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {3, 0, 0}}"));
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
+    Tensor controlPointsSe2 = getControlPointsSe2();
+    Tensor START = controlPointsSe2.get(0);
+    Tensor mouse = controlPointsSe2.get(1);
     // ---
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(START, mouse, RealScalar.of(1));
     List<DubinsPath> list = dubinsPathGenerator.stream().collect(Collectors.toList());
@@ -126,12 +134,15 @@ public class DubinsPathDemo extends AbstractDemo {
     }
   }
 
-  private static Tensor sample(DubinsPath dubinsPath) {
+  private Tensor sample(DubinsPath dubinsPath) {
+    Tensor controlPointsSe2 = getControlPointsSe2();
+    Tensor START = controlPointsSe2.get(0);
     return Subdivide.of(0.0, 1.0, POINTS).map(dubinsPath.unit(START));
   }
 
   public static void main(String[] args) {
     LookAndFeels.INTELLI_J.updateComponentTreeUI();
-    new DubinsPathDemo().setVisible(1000, 600);
+    Param param = new Param();
+    new DubinsPathDemo(param).setVisible(1000, 600);
   }
 }
