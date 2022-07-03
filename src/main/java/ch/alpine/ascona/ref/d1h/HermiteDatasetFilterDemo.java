@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 
@@ -50,12 +49,7 @@ public class HermiteDatasetFilterDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param extends GokartPoseParam {
     public Param(GokartPoseData gokartPoseData) {
-      super(gokartPoseData);
-    }
-
-    @Override
-    public List<ManifoldDisplays> manifoldDisplays() {
-      return ManifoldDisplays.SE2_ONLY;
+      super(gokartPoseData, ManifoldDisplays.SE2_ONLY);
     }
 
     @FieldInteger

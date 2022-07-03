@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
 
 import javax.swing.JTextField;
 
@@ -59,12 +58,7 @@ public class HermiteDatasetDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param extends GokartPoseParam {
     public Param(GokartPoseData gokartPoseData) {
-      super(gokartPoseData);
-    }
-
-    @Override
-    public List<ManifoldDisplays> manifoldDisplays() {
-      return ManifoldDisplays.SE2C_SE2;
+      super(gokartPoseData, ManifoldDisplays.SE2C_SE2);
     }
 
     @FieldSelectionArray({ "1", "2", "5", "10", "25", "50", "100", "250", "500" })

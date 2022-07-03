@@ -73,12 +73,7 @@ public class ApproximationDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param extends GokartPoseParam {
     public Param(GokartPoseData gokartPoseData) {
-      super(gokartPoseData);
-    }
-
-    @Override
-    public List<ManifoldDisplays> manifoldDisplays() {
-      return ManifoldDisplays.SE2_R2;
+      super(gokartPoseData, ManifoldDisplays.SE2_R2);
     }
 
     @FieldInteger

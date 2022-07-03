@@ -1,15 +1,18 @@
 // code by ob, jph
 package ch.alpine.ascona.flt;
 
+import java.util.List;
+
 import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseParam;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 @ReflectionMarker
-public abstract class GokartPoseSpec extends GokartPoseParam {
-  public GokartPoseSpec(GokartPoseData gokartPoseData) {
-    super(gokartPoseData);
+public class GokartPoseSpec extends GokartPoseParam {
+  public GokartPoseSpec(GokartPoseData gokartPoseData, List<ManifoldDisplays> list) {
+    super(gokartPoseData, list);
   }
 
   public Boolean diff = true;

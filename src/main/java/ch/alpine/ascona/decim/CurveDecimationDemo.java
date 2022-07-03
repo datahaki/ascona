@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 
@@ -60,12 +59,7 @@ public class CurveDecimationDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param extends GokartPoseParam {
     public Param(GokartPoseData gokartPoseData) {
-      super(gokartPoseData);
-    }
-
-    @Override
-    public List<ManifoldDisplays> manifoldDisplays() {
-      return ManifoldDisplays.SE2_R2;
+      super(gokartPoseData, ManifoldDisplays.SE2_R2);
     }
 
     @FieldSelectionArray({ "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })
