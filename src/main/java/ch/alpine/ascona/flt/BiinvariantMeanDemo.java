@@ -68,6 +68,10 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
 
   private final Param param;
 
+  public BiinvariantMeanDemo() {
+    this(new Param());
+  }
+
   public BiinvariantMeanDemo(Param param) {
     super(param);
     this.param = param;
@@ -154,7 +158,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   public static void main(String[] args) {
     LookAndFeels.LIGHT.updateComponentTreeUI();
     Param param = new Param();
-    param.spaceParam.manifoldDisplays = ManifoldDisplays.Se2;
+    param.manifoldDisplays = ManifoldDisplays.Se2;
     new BiinvariantMeanDemo(param).setVisible(1200, 600);
   }
 }

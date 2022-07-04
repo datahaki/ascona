@@ -43,6 +43,10 @@ public class GeodesicDemo extends ControlPointsDemo {
 
   private final Param param;
 
+  public GeodesicDemo() {
+    this(new Param());
+  }
+
   public GeodesicDemo(Param param) {
     super(param);
     this.param = param;
@@ -52,7 +56,7 @@ public class GeodesicDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    ManifoldDisplay manifoldDisplay = param.spaceParam.manifoldDisplays.manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor points = getGeodesicControlPoints();
     Tensor p = points.get(0);

@@ -63,6 +63,10 @@ public class DubinsPathDemo extends ControlPointsDemo {
   private final PathRender pathRender = new PathRender(Color.RED, 2f);
   private final PathRender pathRenderClothoid = new PathRender(Color.CYAN, 2f);
 
+  public DubinsPathDemo() {
+    this(new Param());
+  }
+
   public DubinsPathDemo(Param param) {
     super(param);
     this.param = param;

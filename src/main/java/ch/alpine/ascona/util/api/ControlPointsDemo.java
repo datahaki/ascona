@@ -66,21 +66,21 @@ public abstract class ControlPointsDemo extends AbstractDemo {
 
   /** @return */
   public final ManifoldDisplay manifoldDisplay() {
-    return asconaParam.spaceParam.manifoldDisplays.manifoldDisplay();
+    return asconaParam.manifoldDisplays.manifoldDisplay();
   }
 
   public synchronized final void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
-    asconaParam.spaceParam.manifoldDisplays = manifoldDisplays;
+    asconaParam.manifoldDisplays = manifoldDisplays;
     fieldsEditor.updateJComponents();
   }
 
   public void addManifoldListener(SpinnerListener<ManifoldDisplays> spinnerListener) {
-    fieldsEditor.addUniversalListener(() -> spinnerListener.spun(asconaParam.spaceParam.manifoldDisplays));
+    fieldsEditor.addUniversalListener(() -> spinnerListener.spun(asconaParam.manifoldDisplays));
   }
 
   /** @return */
   public List<ManifoldDisplays> getManifoldDisplays() {
-    return asconaParam.spaceParam.getList();
+    return asconaParam.getList();
   }
 
   /** @param control points as matrix of dimensions N x 3 */

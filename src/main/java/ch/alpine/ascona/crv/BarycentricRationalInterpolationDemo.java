@@ -63,6 +63,10 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
 
   private final Param param;
 
+  public BarycentricRationalInterpolationDemo() {
+    this(new Param());
+  }
+
   public BarycentricRationalInterpolationDemo(Param param) {
     super(param);
     this.param = param;
@@ -132,7 +136,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   public static void main(String[] args) {
     LookAndFeels.INTELLI_J.updateComponentTreeUI();
     Param param = new Param();
-    param.spaceParam.manifoldDisplays = ManifoldDisplays.R2;
+    param.manifoldDisplays = ManifoldDisplays.R2;
     new BarycentricRationalInterpolationDemo(param).setVisible(1200, 600);
   }
 }
