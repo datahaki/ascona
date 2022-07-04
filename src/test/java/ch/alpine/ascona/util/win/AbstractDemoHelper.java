@@ -2,10 +2,14 @@
 package ch.alpine.ascona.util.win;
 
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Constructor;
+import java.util.Objects;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.util.FieldOuterProduct;
+import ch.alpine.bridge.ref.util.ObjectProperties;
 
 public enum AbstractDemoHelper {
   ;
@@ -20,21 +24,29 @@ public enum AbstractDemoHelper {
     );
     BufferedImage bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
     abstractDemo.render(geometricLayer, bufferedImage.createGraphics());
-    boolean success = true;
     if (abstractDemo instanceof ControlPointsDemo) {
-      ControlPointsDemo abstractManifoldDisplayDemo = (ControlPointsDemo) abstractDemo;
-      for (ManifoldDisplays manifoldDisplays : abstractManifoldDisplayDemo.getManifoldDisplays())
-        try {
-          abstractManifoldDisplayDemo.setManifoldDisplay(manifoldDisplays);
-          // TODO ASCONA
-          // abstractManifoldDisplayDemo.reportToAll();
-          abstractManifoldDisplayDemo.render(geometricLayer, bufferedImage.createGraphics());
-        } catch (Exception exception) {
-          System.err.println(manifoldDisplays);
-          success = false;
-        }
+      ControlPointsDemo controlPointsDemo = (ControlPointsDemo) abstractDemo;
+      AsconaParam asconaParam = controlPointsDemo.asconaParam();
+      Constructor<?> constructor = null;
+      try {
+        constructor = abstractDemo.getClass().getConstructor(asconaParam.getClass());
+      } catch (Exception exception) {
+        exception.printStackTrace();
+      }
+      if (Objects.nonNull(constructor)) {
+        Constructor<?> fi_constructor = constructor;
+        FieldOuterProduct.forEach(asconaParam, a -> {
+          try {
+            Object newInstance = fi_constructor.newInstance(a);
+            ControlPointsDemo cpd = (ControlPointsDemo) newInstance;
+            cpd.render(geometricLayer, bufferedImage.createGraphics());
+          } catch (Exception exception) {
+            System.out.println("settings bad:");
+            System.err.println(ObjectProperties.join(a));
+            throw new RuntimeException(exception);
+          }
+        });
+      }
     }
-    if (!success)
-      throw new RuntimeException();
   }
 }

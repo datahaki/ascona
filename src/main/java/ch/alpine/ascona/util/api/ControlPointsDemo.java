@@ -56,6 +56,10 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     });
   }
 
+  public AsconaParam asconaParam() {
+    return asconaParam;
+  }
+
   // TODO ASCONA API function should not be here!
   public final void addButtonDubins() {
     JButton jButton = new JButton("dubins");
