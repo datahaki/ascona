@@ -10,7 +10,7 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.Tolerance;
@@ -39,7 +39,7 @@ class RootScalarTest {
   @Test
   void testNumber() {
     RootScalar rootScalar = new RootScalar(RationalScalar.of(-7, 5), RationalScalar.of(-3, 17), RealScalar.of(3));
-    assertThrows(TensorRuntimeException.class, () -> rootScalar.number());
+    assertThrows(Throw.class, () -> rootScalar.number());
   }
 
   @Test

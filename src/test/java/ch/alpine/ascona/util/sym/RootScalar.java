@@ -11,7 +11,7 @@ import ch.alpine.tensor.MultiplexScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.api.AbsInterface;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Abs;
@@ -29,7 +29,7 @@ public class RootScalar extends MultiplexScalar implements //
     if (re instanceof MultiplexScalar || //
         im instanceof MultiplexScalar || //
         ba instanceof MultiplexScalar)
-      throw TensorRuntimeException.of(re, im, ba);
+      throw Throw.of(re, im, ba);
     return Scalars.isZero(im) || Scalars.isZero(ba) //
         ? re
         : new RootScalar(re, im, ba);

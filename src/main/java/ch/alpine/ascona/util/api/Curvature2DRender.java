@@ -10,7 +10,7 @@ import ch.alpine.sophus.crv.d2.CurvatureComb;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.TensorRuntimeException;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.Unprotect;
 
 public enum Curvature2DRender {
@@ -59,7 +59,7 @@ public enum Curvature2DRender {
   public static void of(Tensor curve, boolean isCyclic, boolean comb, Scalar scale, GeometricLayer geometricLayer, Graphics2D graphics) {
     if (0 < curve.length())
       if (Unprotect.dimension1(curve) != 2)
-        throw TensorRuntimeException.of(curve);
+        throw Throw.of(curve);
     new PathRender(Color.BLUE, 1.25f).setCurve(curve, isCyclic).render(geometricLayer, graphics);
     if (comb)
       new PathRender(COLOR_CURVATURE_COMB) //
