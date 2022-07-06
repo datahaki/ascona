@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 import ch.alpine.sophus.lie.se3.Se3Matrix;
 import ch.alpine.tensor.Scalars;
@@ -43,7 +43,7 @@ public enum UzhSe3TxtFormat {
   }
 
   private static Tensor parse(String string) {
-    Tensor vector = Tensor.of(Stream.of(string.split(" ")).map(Scalars::fromString));
+    Tensor vector = Tensor.of(Arrays.stream(string.split(" ")).map(Scalars::fromString));
     Quaternion quaternion = Quaternion.of(vector.Get(5), vector.Get(6), vector.Get(7), vector.Get(8));
     return Se3Matrix.of(QuaternionToRotationMatrix.of(quaternion), vector.extract(2, 5));
   }

@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -49,7 +49,7 @@ public enum ManifoldDisplays {
   // ---
   /** requires biinvariant() */
   public static List<ManifoldDisplays> metricManifolds() {
-    return Stream.of(values()) //
+    return Arrays.stream(values()) //
         .filter(md -> md.geodesicSpace() instanceof MetricManifold) //
         .toList();
   }
@@ -57,14 +57,14 @@ public enum ManifoldDisplays {
   // ---
   /** homogeneous spaces (have biinvariant mean) */
   public static List<ManifoldDisplays> manifolds() {
-    return Stream.of(values()) //
+    return Arrays.stream(values()) //
         .filter(md -> md.geodesicSpace() instanceof Manifold) //
         .toList();
   }
 
   /** homogeneous spaces (have biinvariant mean) */
   public static List<ManifoldDisplays> homogeneousSpaces() {
-    return Stream.of(values()) //
+    return Arrays.stream(values()) //
         .filter(md -> md.geodesicSpace() instanceof HomogeneousSpace) //
         .toList();
   }
@@ -72,14 +72,14 @@ public enum ManifoldDisplays {
   // ---
   /** implement {@link D2Raster} */
   public static List<ManifoldDisplays> d2Rasters() {
-    return Stream.of(values()) //
+    return Arrays.stream(values()) //
         .filter(md -> md.geodesicSpace() instanceof D2Raster) //
         .toList();
   }
 
   /** implement {@link D2Raster} */
   public static List<ManifoldDisplays> metricD2Rasters() {
-    return Stream.of(values()) //
+    return Arrays.stream(values()) //
         .filter(md -> md.geodesicSpace() instanceof D2Raster) //
         .filter(md -> md.geodesicSpace() instanceof MetricManifold) //
         .toList();

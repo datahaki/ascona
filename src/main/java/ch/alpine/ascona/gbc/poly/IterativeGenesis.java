@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.gbc.poly;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 import ch.alpine.sophus.dv.AffineCoordinate;
 import ch.alpine.sophus.gbc.d2.Barycenter;
@@ -32,10 +32,10 @@ public enum IterativeGenesis {
 
   public static TensorUnaryOperator counts(Manifold manifold, Tensor sequence, int max) {
     HsDesign hsDesign = new HsDesign(manifold);
-    TensorScalarFunction[] array = Stream.of(values()).map(ig -> ig.with(max)).toArray(TensorScalarFunction[]::new);
+    TensorScalarFunction[] array = Arrays.stream(values()).map(ig -> ig.with(max)).toArray(TensorScalarFunction[]::new);
     return point -> {
       Tensor matrix = hsDesign.matrix(sequence, point);
-      return Tensor.of(Stream.of(array).map(ig -> ig.apply(matrix)));
+      return Tensor.of(Arrays.stream(array).map(ig -> ig.apply(matrix)));
     };
   }
 }

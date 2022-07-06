@@ -8,8 +8,8 @@ import java.util.Objects;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.util.FieldOuterProduct;
 import ch.alpine.bridge.ref.util.ObjectProperties;
+import ch.alpine.bridge.ref.util.OuterFieldsAssignment;
 
 public enum AbstractDemoHelper {
   ;
@@ -35,7 +35,7 @@ public enum AbstractDemoHelper {
       }
       if (Objects.nonNull(constructor)) {
         Constructor<?> fi_constructor = constructor;
-        FieldOuterProduct.forEach(asconaParam, a -> {
+        OuterFieldsAssignment<AsconaParam> fieldOuterProduct = new OuterFieldsAssignment<>(asconaParam, a -> {
           try {
             Object newInstance = fi_constructor.newInstance(a);
             ControlPointsDemo cpd = (ControlPointsDemo) newInstance;
@@ -46,6 +46,7 @@ public enum AbstractDemoHelper {
             throw new RuntimeException(exception);
           }
         });
+        fieldOuterProduct.randomize(20);
       }
     }
   }

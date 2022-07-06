@@ -5,9 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
@@ -79,7 +79,7 @@ import ch.alpine.tensor.img.ColorDataIndexed;
           File file = new File(root, "levels.png");
           ImageIO.write(bufferedImage, "png", file);
           htmlUtf8.appendln("min K until non-negative<br/>");
-          String collect = Stream.of(IterativeGenesis.values()).map(Object::toString).collect(Collectors.joining(" | "));
+          String collect = Arrays.stream(IterativeGenesis.values()).map(Object::toString).collect(Collectors.joining(" | "));
           htmlUtf8.appendln(collect + ":<br/>");
           htmlUtf8.appendln("<img src='" + file.getName() + "'><br/>");
           htmlUtf8.appendln("<hr/>");
