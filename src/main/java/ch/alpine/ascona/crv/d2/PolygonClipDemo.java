@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.lev.AbstractPlaceDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -35,7 +36,7 @@ public class PolygonClipDemo extends AbstractPlaceDemo {
   private static final SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);
 
   public PolygonClipDemo() {
-    super(true, ManifoldDisplays.R2_ONLY);
+    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
     setControlPointsSe2(Tensor.of(CogPoints.of(4, RealScalar.of(5), RealScalar.of(-2)).stream().map(row -> row.append(RealScalar.ZERO))));
   }
 

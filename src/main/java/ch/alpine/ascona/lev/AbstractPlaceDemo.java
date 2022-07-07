@@ -1,21 +1,20 @@
 // code by jph
 package ch.alpine.ascona.lev;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.swing.JButton;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Round;
 
 public abstract class AbstractPlaceDemo extends ControlPointsDemo {
   private final JButton jButtonPrint = new JButton("print");
 
-  public AbstractPlaceDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
-    super(addRemoveControlPoints, list);
+  public AbstractPlaceDemo(AsconaParam asconaParam) {
+    super(asconaParam);
     controlPointsRender.setMidpointIndicated(false);
     // ---
     jButtonPrint.addActionListener(l -> System.out.println(getControlPointsSe2().map(Round._3)));

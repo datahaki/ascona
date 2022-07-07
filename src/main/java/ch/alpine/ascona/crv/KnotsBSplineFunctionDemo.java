@@ -18,7 +18,6 @@ import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
@@ -36,20 +35,32 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.red.Times;
 
-@ReflectionMarker
 public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
-  @FieldSlider
-  @FieldPreferredWidth(200)
-  @FieldClip(min = "0", max = "1")
-  public Scalar exponent = RealScalar.ONE;
+  @ReflectionMarker
+  public static class Param extends AbstractCurveParam {
+    public Param() {
+      super(ManifoldDisplays.metricManifolds());
+    }
+
+    @FieldSlider
+    @FieldClip(min = "0", max = "1")
+    public Scalar exponent = RealScalar.ONE;
+  }
+
   // TODO ASCONA REDUNDANT to GeodesicBSplineFunctionDemo
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+  private final Param param;
 
   public KnotsBSplineFunctionDemo() {
-    super(ManifoldDisplays.metricManifolds());
+    this(new Param());
+  }
+
+  public KnotsBSplineFunctionDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);
-    refine = RealScalar.of(5);
+    param.refine = RealScalar.of(5);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
     Tensor dubins = Tensors.fromString(
@@ -62,9 +73,9 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
-    Tensor knots = KnotSpacing.centripetal(tensorMetric, exponent).apply(control);
+    Tensor knots = KnotSpacing.centripetal(tensorMetric, param.exponent).apply(control);
     Scalar upper = Last.of(knots);
-    Scalar parameter = ratio.multiply(upper);
+    Scalar parameter = param.ratio.multiply(upper);
     // ---
     GeodesicBSplineFunction scalarTensorFunction = //
         GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, knots, control);

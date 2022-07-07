@@ -10,7 +10,7 @@ import java.util.Set;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -19,7 +19,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.d2.PolygonArea;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -45,7 +44,11 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
 
   // ---
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(false, ManifoldDisplays.SE2C_R2);
+    }
+
     public Boolean ctrl = true;
     public SurfaceMeshRefinements ref = SurfaceMeshRefinements.CATMULL_CLARK;
     @FieldSlider
@@ -55,13 +58,17 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
     public Scalar refine = RealScalar.of(2);
   }
 
-  private final Param param = new Param();
+  private final Param param;
   private final SurfaceMesh surfaceMesh = SurfaceMeshExamples.mixed11();
 
   // TODO ASCONA DEMO needs BM
   public SurfaceMeshDemo() {
-    super(false, ManifoldDisplays.SE2C_R2);
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public SurfaceMeshDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     setControlPointsSe2(surfaceMesh.vrt);
     // ---
@@ -119,10 +126,6 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
             new PathRender(new Color(0, 0, 255, 128), 1.5f).setCurve(points, false).render(geometricLayer, graphics);
           }
         }
-      }
-      {
-        LeversRender leversRender = LeversRender.of(manifoldDisplay, surfaceMesh.vrt, null, geometricLayer, graphics);
-        leversRender.renderSequence();
       }
     }
   }

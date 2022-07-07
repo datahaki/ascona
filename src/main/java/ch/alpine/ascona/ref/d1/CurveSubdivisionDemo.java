@@ -24,7 +24,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerMenu;
@@ -43,12 +42,15 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.red.Times;
 
 /** split interface and biinvariant mean based curve subdivision */
-@ReflectionMarker
 public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
   private static final PathRender pathRender = new PathRender(new Color(0, 255, 0, 128));
 
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AbstractCurvatureParam {
+    public Param() {
+      super(ManifoldDisplays.ALL);
+    }
+
     public CurveSubdivisionSchemes scheme = CurveSubdivisionSchemes.BSPLINE1;
     @FieldInteger
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
@@ -59,15 +61,18 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     public Boolean comb = true;
   }
 
-  private final Param param = new Param();
+  private final Param param;
   final SpinnerLabel<Scalar> spinnerMagicC;
   private static final Tensor OMEGA = Tensors.fromString("{-1/16, -1/36, 0, 1/72, 1/42, 1/36, 1/18, 1/16}");
   private final SpinnerLabel<Scalar> spinnerBeta;
 
   public CurveSubdivisionDemo() {
-    super(ManifoldDisplays.ALL);
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public CurveSubdivisionDemo(Param param) {
+    super(param);
+    this.param = param;
     Tensor control = null;
     {
       Tensor move = Tensors.fromString( //

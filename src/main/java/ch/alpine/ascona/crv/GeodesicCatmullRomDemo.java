@@ -18,7 +18,6 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.GeodesicCatmullRom;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -38,10 +37,13 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-@ReflectionMarker
 public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AbstractCurvatureParam {
+    public Param() {
+      super(ManifoldDisplays.metricManifolds());
+    }
+
     @FieldInteger
     @FieldPreferredWidth(100)
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
@@ -56,12 +58,16 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
     public Scalar exponent = RealScalar.ONE;
   }
 
-  private final Param param = new Param();
+  private final Param param;
 
   public GeodesicCatmullRomDemo() {
-    super(ManifoldDisplays.metricManifolds());
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public GeodesicCatmullRomDemo(Param param) {
+    super(param);
+    this.param = param;
+    // ---
     addButtonDubins();
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);

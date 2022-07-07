@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.lev.AbstractPlaceDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -30,17 +31,26 @@ import ch.alpine.tensor.ext.Timing;
 
 public class ClothoidEvolution extends AbstractPlaceDemo {
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.CLC_ONLY);
+    }
+
     @FieldSelectionArray({ "0.05", "0.1", "0.2", "0.3", "0.4", "0.5" })
     public Scalar beta = RealScalar.of(0.05);
     public Boolean animate = true;
   }
 
   private final Timing timing = Timing.started();
-  public final Param param = new Param();
+  public final Param param;
 
   public ClothoidEvolution() {
-    super(true, ManifoldDisplays.CLC_ONLY);
+    this(new Param());
+  }
+
+  public ClothoidEvolution(Param param) {
+    super(param);
+    this.param = param;
     // ---
     ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---

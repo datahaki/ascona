@@ -9,6 +9,7 @@ import java.util.List;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
@@ -18,7 +19,7 @@ public abstract class LogWeightingBase extends AbstractPlaceDemo {
   protected final SpinnerLabel<LogWeighting> spinnerLogWeighting;
 
   public LogWeightingBase(boolean addRemoveControlPoints, List<ManifoldDisplays> list, List<LogWeighting> array) {
-    super(addRemoveControlPoints, list);
+    super(new AsconaParam(addRemoveControlPoints, list));
     {
       spinnerLogWeighting = SpinnerLabel.of(array);
       if (array.contains(LogWeightings.COORDINATE))

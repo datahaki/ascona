@@ -12,27 +12,16 @@ import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
 /** class is used in other projects outside of owl */
-@ReflectionMarker
 // TODO ASCONA possibly create TABs for each Manifold Display (in order to leave ctrl points)
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
 public abstract class ControlPointsDemo extends AbstractDemo {
   public final ControlPointsRender controlPointsRender;
   private final AsconaParam asconaParam;
-
-  /** Hint: {@link #setPositioningEnabled(boolean)} controls positioning of control points
-   * 
-   * @param addRemoveControlPoints whether the number of control points is variable
-   * @param list */
-  @Deprecated
-  public ControlPointsDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
-    this(new AsconaParam(addRemoveControlPoints, list));
-  }
 
   public ControlPointsDemo(AsconaParam asconaParam) {
     super(asconaParam);

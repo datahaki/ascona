@@ -9,10 +9,9 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
-import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -27,15 +26,26 @@ import ch.alpine.tensor.itp.BSplineFunctionString;
 /** use of tensor lib {@link BSplineFunction} */
 @ReflectionMarker
 public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
-  @FieldInteger
-  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
-  public Scalar degree = RealScalar.of(3);
-  public Boolean cyclic = false;
+  public static class Param extends AbstractCurvatureParam {
+    public Param() {
+      super(ManifoldDisplays.R2_ONLY);
+    }
+
+    @FieldInteger
+    @FieldClip(min = "0", max = "9")
+    public Scalar degree = RealScalar.of(3);
+    public Boolean cyclic = false;
+  }
+
+  private final Param param;
 
   public R2BSplineFunctionDemo() {
-    super(ManifoldDisplays.R2_ONLY);
-    // ---
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public R2BSplineFunctionDemo(Param param) {
+    super(param);
+    this.param = param;
   }
 
   @Override
@@ -43,13 +53,13 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
     Tensor control = getGeodesicControlPoints();
     Tensor refined = Tensors.empty();
     if (0 < control.length()) {
-      int _degree = degree.number().intValue();
-      ScalarTensorFunction scalarTensorFunction = cyclic //
+      int _degree = param.degree.number().intValue();
+      ScalarTensorFunction scalarTensorFunction = param.cyclic //
           ? BSplineFunctionCyclic.of(_degree, control)
           : BSplineFunctionString.of(_degree, control);
-      refined = Subdivide.of(0, cyclic ? control.length() : control.length() - 1, 100) //
+      refined = Subdivide.of(0, param.cyclic ? control.length() : control.length() - 1, 100) //
           .map(scalarTensorFunction);
-      new PathRender(Color.BLUE).setCurve(refined, cyclic).render(geometricLayer, graphics);
+      new PathRender(Color.BLUE).setCurve(refined, param.cyclic).render(geometricLayer, graphics);
     }
     RenderQuality.setQuality(graphics);
     {

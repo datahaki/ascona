@@ -10,6 +10,7 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -25,7 +26,7 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
   public AffineDemo() {
-    super(true, ManifoldDisplays.R2_ONLY);
+    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
     // ---
     spinnerColorData.setValue(ColorDataGradients.TEMPERATURE);
     spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color scheme");

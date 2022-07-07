@@ -39,6 +39,7 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 
   public GeodesicDeBoorDemo() {
+    super(new AbstractCurveParam(ManifoldDisplays.ALL));
     addButtonDubins();
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
@@ -53,7 +54,7 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     final int upper = control.length() - 1;
-    final Scalar parameter = ratio.multiply(RealScalar.of(upper));
+    final Scalar parameter = abstractCurveParam.ratio.multiply(RealScalar.of(upper));
     Tensor knots = Range.of(0, 2 * upper);
     bufferedImage = SymLinkImages.deboor(knots, control.length(), parameter).bufferedImage();
     // ---

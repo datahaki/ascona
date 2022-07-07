@@ -20,23 +20,28 @@ import ch.alpine.tensor.Tensors;
 
 @ReflectionMarker
 public abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
-  @FieldInteger
-  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
-  public Scalar degree = RealScalar.of(3);
-  @FieldInteger
-  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
-  public Scalar refine = RealScalar.of(4);
-  @FieldSlider
-  @FieldPreferredWidth(300)
-  @FieldClip(min = "0", max = "1")
-  public Scalar ratio = RationalScalar.HALF;
+  public static class AbstractCurveParam extends AbstractCurvatureParam {
+    public AbstractCurveParam(List<ManifoldDisplays> list) {
+      super(list);
+    }
 
-  public AbstractCurveDemo() {
-    this(ManifoldDisplays.ALL);
+    @FieldInteger
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
+    public Scalar degree = RealScalar.of(3);
+    @FieldInteger
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
+    public Scalar refine = RealScalar.of(4);
+    @FieldSlider
+    @FieldPreferredWidth(300)
+    @FieldClip(min = "0", max = "1")
+    public Scalar ratio = RationalScalar.HALF;
   }
 
-  public AbstractCurveDemo(List<ManifoldDisplays> list) {
-    super(list);
+  protected final AbstractCurveParam abstractCurveParam;
+
+  public AbstractCurveDemo(AbstractCurveParam abstractCurveParam) {
+    super(abstractCurveParam);
+    this.abstractCurveParam = abstractCurveParam;
   }
 
   @Override
@@ -44,7 +49,7 @@ public abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
     Tensor control = getGeodesicControlPoints();
     if (Tensors.isEmpty(control))
       return Tensors.empty();
-    return protected_render(geometricLayer, graphics, degree.number().intValue(), refine.number().intValue(), control);
+    return protected_render(geometricLayer, graphics, abstractCurveParam.degree.number().intValue(), abstractCurveParam.refine.number().intValue(), control);
   }
 
   protected abstract Tensor protected_render( //

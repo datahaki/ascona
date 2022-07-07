@@ -11,12 +11,11 @@ import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.tensor.RealScalar;
@@ -27,13 +26,18 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.red.Times;
 
-@ReflectionMarker
 public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+  private final AbstractCurveParam abstractCurveParam;
 
   public GeodesicBSplineFunctionDemo() {
+    this(new AbstractCurveParam(ManifoldDisplays.ALL));
+  }
+
+  public GeodesicBSplineFunctionDemo(AbstractCurveParam abstractCurveParam) {
+    super(abstractCurveParam);
+    this.abstractCurveParam = abstractCurveParam;
     addButtonDubins();
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
     Tensor dubins = Tensors.fromString(
         "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");
@@ -44,7 +48,7 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
   @Override // from RenderInterface
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
     final int upper = control.length() - 1;
-    final Scalar parameter = ratio.multiply(RealScalar.of(upper));
+    final Scalar parameter = abstractCurveParam.ratio.multiply(RealScalar.of(upper));
     bufferedImage = SymLinkImages.symLinkImageGBSF(degree, upper + 1, parameter).bufferedImage();
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

@@ -15,7 +15,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
-import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
@@ -32,16 +31,29 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.sca.Chop;
 
 /** Bezier function with extrapolation */
-@ReflectionMarker
 public class BezierFunctionDemo extends AbstractCurvatureDemo {
-  @FieldPreferredWidth(200)
-  @FieldSlider
-  @FieldInteger
-  @FieldClip(min = "0", max = "10")
-  public Scalar refine = RealScalar.of(6);
-  public Boolean extrap = false;
+  @ReflectionMarker
+  public static class Param extends AbstractCurvatureParam {
+    public Param() {
+      super(ManifoldDisplays.ALL);
+    }
+
+    @FieldSlider
+    @FieldInteger
+    @FieldClip(min = "0", max = "10")
+    public Scalar refine = RealScalar.of(6);
+    public Boolean extrap = false;
+  }
+
+  private final Param param;
 
   public BezierFunctionDemo() {
+    this(new Param());
+  }
+
+  public BezierFunctionDemo(Param param) {
+    super(param);
+    this.param = param;
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     addButtonDubins();
     {
@@ -64,10 +76,10 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     int n = sequence.length();
     if (0 == n)
       return Tensors.empty();
-    int levels = refine.number().intValue();
+    int levels = param.refine.number().intValue();
     Tensor domain = n <= 1 //
         ? Tensors.vector(0)
-        : Subdivide.of(0.0, extrap //
+        : Subdivide.of(0.0, param.extrap //
             ? n / (double) (n - 1)
             : 1.0, 1 << levels);
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();

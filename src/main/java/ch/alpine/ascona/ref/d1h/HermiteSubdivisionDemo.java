@@ -14,15 +14,15 @@ import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
-import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.clt.ClothoidDistance;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.r2.Extract2D;
@@ -41,25 +41,37 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.r2.AngleVector;
 import ch.alpine.tensor.red.Mean;
 
-@ReflectionMarker
 public class HermiteSubdivisionDemo extends ControlPointsDemo {
   // TODO ASCONA redundant
   private static final PointsRender POINTS_RENDER_0 = //
       new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
+
   // ---
-  public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
-  @FieldSlider
-  @FieldPreferredWidth(100)
-  @FieldInteger
-  @FieldClip(min = "0", max = "9")
-  public Scalar refine = RealScalar.of(6);
-  public Boolean diff = true;
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.SE2C_SE2_R2);
+    }
+
+    public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
+    @FieldSlider
+    @FieldInteger
+    @FieldClip(min = "0", max = "7")
+    public Scalar refine = RealScalar.of(6);
+    public Boolean diff = true;
+  }
+
+  private final Param param;
 
   public HermiteSubdivisionDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2_R2);
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public HermiteSubdivisionDemo(Param param) {
+    super(param);
+    this.param = param;
   }
 
   private static final GridRender GRID_RENDER = new GridRender(Subdivide.of(0, 10, 10));
@@ -106,9 +118,9 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
       }
       Scalar delta = RealScalar.ONE;
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);
+      HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
-      int levels = refine.number().intValue();
+      int levels = param.refine.number().intValue();
       Tensor iterate = Do.of(control, tensorIteration::iterate, levels);
       Tensor curve = Tensor.of(iterate.get(Tensor.ALL, 0).stream().map(Extract2D.FUNCTION));
       Curvature2DRender.of(curve, false, geometricLayer, graphics);
@@ -126,7 +138,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
         }
       }
       // ---
-      if (diff) {
+      if (param.diff) {
         Tensor deltas = iterate.get(Tensor.ALL, 1);
         if (0 < deltas.length()) {
           JFreeChart jFreeChart = StaticHelper.listPlot(deltas, delta, levels);
@@ -138,6 +150,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new HermiteSubdivisionDemo().setVisible(1200, 600);
   }
 }

@@ -14,13 +14,13 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -41,20 +41,28 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 // TODO ASCONA idea: start from minimum spanning tree
 public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(false, ManifoldDisplays.metricManifolds());
+    }
+
     @FieldInteger
     public Scalar attempts = RealScalar.of(20);
     public Boolean active = false;
   }
 
-  private final Param param = new Param();
+  private final Param param;
   private final Tsp2OptHeuristic tsp2OptHeuristic;
   private final Tensor points = Tensors.empty();
 
   public Tsp2OptHeuristicDemo() {
-    super(false, ManifoldDisplays.metricManifolds());
+    this(new Param());
+  }
+
+  public Tsp2OptHeuristicDemo(Param param) {
+    super(param);
+    this.param = param;
     controlPointsRender.setPositioningEnabled(false);
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
     // ---
     Distribution distribution = UniformDistribution.of(-4, 4);
     setControlPointsSe2(RandomVariate.of(distribution, 200, 3));

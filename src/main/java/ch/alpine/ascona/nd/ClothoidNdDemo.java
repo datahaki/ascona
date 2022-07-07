@@ -7,13 +7,13 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.Transition;
 import ch.alpine.sophus.crv.clt.Clothoid;
@@ -39,19 +39,26 @@ public class ClothoidNdDemo extends ControlPointsDemo {
   private final ClothoidNdMap<Tensor> clothoidNdMap = new ClothoidNdMap<>(ND_BOX_R2, t -> t);
 
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(false, ManifoldDisplays.CL_ONLY);
+    }
+
     @FieldInteger
     @FieldClip(min = "1", max = "20")
     @FieldSlider
     public Scalar value = RealScalar.of(3);
   }
 
-  private final Param param = new Param();
+  private final Param param;
 
   public ClothoidNdDemo() {
-    super(false, ManifoldDisplays.CL_ONLY);
-    // ---
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public ClothoidNdDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     controlPointsRender.setPositioningEnabled(false);
     // ---

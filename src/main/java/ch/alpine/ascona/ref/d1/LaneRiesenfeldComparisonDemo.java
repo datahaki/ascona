@@ -8,14 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import javax.swing.JToggleButton;
-
 import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.CurveVisualSet;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -23,9 +22,13 @@ import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualRow;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Differences;
@@ -40,30 +43,34 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLORS = ColorDataLists._097.cyclic();
   private static final List<CurveSubdivisionSchemes> CURVE_SUBDIVISION_SCHEMES = //
       CurveSubdivisionHelper.LANE_RIESENFELD;
-  // ---
-  private final SpinnerLabel<Integer> spinnerRefine;
-  private final JToggleButton jToggleCurvature = new JToggleButton("crvt");
-  private final List<PathRender> pathRenders = new ArrayList<>();
 
-  public LaneRiesenfeldComparisonDemo() {
-    this(ManifoldDisplays.ALL);
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.ALL);
+    }
+
+    @FieldInteger
+    @FieldClip(min = "0", max = "9")
+    public Scalar refine = RealScalar.of(3);
+    public Boolean curv = false;
   }
 
-  public LaneRiesenfeldComparisonDemo(List<ManifoldDisplays> list) {
-    super(true, list);
+  private final List<PathRender> pathRenders = new ArrayList<>();
+  private final Param param;
+
+  public LaneRiesenfeldComparisonDemo() {
+    this(new Param());
+  }
+
+  public LaneRiesenfeldComparisonDemo(Param param) {
+    super(param);
+    this.param = param;
     setManifoldDisplay(ManifoldDisplays.Se2ClL);
-    // ---
-    jToggleCurvature.setSelected(false);
-    jToggleCurvature.setToolTipText("curvature plot");
-    timerFrame.jToolBar.add(jToggleCurvature);
     // ---
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {3, 1, 0}, {4, 1, 0}, {5, 0, 0}, {6, 0, 0}, {7, 0, 0}}").multiply(RealScalar.of(2));
     setControlPointsSe2(control);
     timerFrame.jToolBar.addSeparator();
-    // ---
-    spinnerRefine = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-    spinnerRefine.setValue(3);
-    spinnerRefine.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
     // ---
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i)
       pathRenders.add(new PathRender(COLORS.getColor(i)));
@@ -86,7 +93,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     visualSet2.getAxisY().setLabel("curvature d/ds");
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i) {
       Tensor refined = curve(geometricLayer, graphics, i);
-      if (jToggleCurvature.isSelected() && 1 < refined.length()) {
+      if (param.curv && 1 < refined.length()) {
         Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
         VisualSet visualSet = new VisualSet(ColorDataLists._097.cyclic().deriveWithAlpha(192));
         CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
@@ -110,7 +117,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     }
     // ---
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    if (jToggleCurvature.isSelected()) {
+    if (param.curv) {
       JFreeChart jFreeChart1 = ListPlot.of(visualSet1, true);
       jFreeChart1.draw(graphics, new Rectangle2D.Double(dimension.width * .5, 0, dimension.width * .5, dimension.height * .5));
       // ---
@@ -143,7 +150,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     PathRender pathRender = pathRenders.get(index);
     // ---
     Tensor control = getGeodesicControlPoints();
-    int levels = spinnerRefine.getValue();
+    int levels = param.refine.number().intValue();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor refined = StaticHelper.refine(control, levels, scheme.of(manifoldDisplay), //
@@ -154,13 +161,14 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     pathRender.render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
+      // leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     return refined;
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new LaneRiesenfeldComparisonDemo().setVisible(1200, 800);
   }
 }

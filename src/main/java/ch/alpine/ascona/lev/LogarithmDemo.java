@@ -14,6 +14,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.Se2AbstractDisplay;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -45,7 +46,7 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
   private final JToggleButton jToggleCtrl = new JToggleButton("show ctrl");
 
   public LogarithmDemo() {
-    super(true, ManifoldDisplays.d2Rasters()); // for 2 dimensional
+    super(new AsconaParam(true, ManifoldDisplays.d2Rasters())); // for 2 dimensional
     {
       spinnerLength.setValue(11);
       spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");

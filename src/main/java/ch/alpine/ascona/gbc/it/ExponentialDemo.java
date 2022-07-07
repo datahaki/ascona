@@ -13,6 +13,7 @@ import org.jfree.chart.JFreeChart;
 import ch.alpine.ascona.lev.AbstractPlaceDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -43,7 +44,7 @@ public class ExponentialDemo extends AbstractPlaceDemo {
   private final GenesisDequeProperties genesisDequeProperties = new GenesisDequeProperties();
 
   public ExponentialDemo() {
-    super(true, ManifoldDisplays.R2_ONLY);
+    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
     // ---
     ToolbarFieldsEditor.add(genesisDequeProperties, timerFrame.jToolBar);
     // ---

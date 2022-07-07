@@ -10,6 +10,7 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascona.lev.AbstractPlaceDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -41,7 +42,7 @@ public class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
   private final JToggleButton jToggleButton = new JToggleButton("move");
 
   public SutherlandHodgmanAlgorithmDemo() {
-    super(true, ManifoldDisplays.R2_ONLY);
+    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
     timerFrame.jToolBar.add(jToggleButton);
     setControlPointsSe2(Tensor.of(CirclePoints.of(4).stream().map(row -> row.append(RealScalar.ZERO))));
   }

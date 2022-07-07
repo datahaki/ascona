@@ -11,6 +11,7 @@ import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -36,25 +37,42 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.red.Times;
 
-@ReflectionMarker
 public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   // TODO ASCONA redundant
   private static final PointsRender POINTS_RENDER_0 = //
       new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
-  public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
-  @FieldSlider
-  @FieldPreferredWidth(100)
-  @FieldInteger
-  @FieldClip(min = "0", max = "8")
-  public Scalar refine = RealScalar.of(4);
-  // ---
-  @FieldSelectionArray({ "1/8", "1/4", "1/2", "1", "3/2", "2" })
-  public Scalar beta = RealScalar.ONE;
-  public Boolean cyclic = false;
-  public Boolean derivatives = true;
+  private static final Stroke STROKE = //
+      new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
+  private static final Tensor GEODESIC_DOMAIN = Subdivide.of(0.0, 1.0, 11);
+
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.S2_ONLY);
+    }
+
+    public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
+    @FieldSlider
+    @FieldPreferredWidth(100)
+    @FieldInteger
+    @FieldClip(min = "0", max = "8")
+    public Scalar refine = RealScalar.of(4);
+    // ---
+    @FieldSelectionArray({ "1/8", "1/4", "1/2", "1", "3/2", "2" })
+    public Scalar beta = RealScalar.ONE;
+    public Boolean cyclic = false;
+    public Boolean derivatives = true;
+  }
+
+  private final Param param;
 
   public S2HermiteSubdivisionDemo() {
-    super(true, ManifoldDisplays.S2_ONLY);
+    this(new Param());
+  }
+
+  public S2HermiteSubdivisionDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
@@ -64,16 +82,12 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.fromString("{{-0.3, 0.0, 0}, {0.0, 0.5, 0.0}, {0.5, 0.5, 1}, {0.5, -0.4, 0}}"));
   }
 
-  private static final Stroke STROKE = //
-      new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
-  private static final Tensor GEODESIC_DOMAIN = Subdivide.of(0.0, 1.0, 11);
-
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     S2Display s2Display = (S2Display) manifoldDisplay();
-    Scalar vscale = beta;
+    Scalar vscale = param.beta;
     Tensor control = Tensor.of(getControlPointsSe2().stream().map(xya -> {
       Tensor xy0 = xya.copy();
       xy0.set(Scalar::zero, 2);
@@ -88,7 +102,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
       for (Tensor ctrl : control) {
         Tensor p = ctrl.get(0); // point
         Tensor v = ctrl.get(1); // vector
-        if (derivatives) {
+        if (param.derivatives) {
           Tensor q = new SnExponential(p).exp(v); // point on sphere
           ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(p, q);
           graphics.setStroke(STROKE);
@@ -105,16 +119,16 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
         }
       }
     }
-    HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);
+    HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
     if (1 < control.length()) {
-      TensorIteration tensorIteration = cyclic //
+      TensorIteration tensorIteration = param.cyclic //
           ? hermiteSubdivision.cyclic(RealScalar.ONE, control)
           : hermiteSubdivision.string(RealScalar.ONE, control);
-      int n = refine.number().intValue();
+      int n = param.refine.number().intValue();
       Tensor result = Do.of(control, tensorIteration::iterate, n);
       Tensor points = result.get(Tensor.ALL, 0);
-      new PathRender(Color.BLUE).setCurve(points, cyclic).render(geometricLayer, graphics);
-      if (derivatives && result.length() < 100) {
+      new PathRender(Color.BLUE).setCurve(points, param.cyclic).render(geometricLayer, graphics);
+      if (param.derivatives && result.length() < 100) {
         for (Tensor pv : result) {
           Tensor p = pv.get(0);
           Tensor v = pv.get(1);
