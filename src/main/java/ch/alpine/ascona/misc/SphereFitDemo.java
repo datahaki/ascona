@@ -10,6 +10,7 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -48,7 +49,8 @@ public class SphereFitDemo extends ControlPointsDemo {
   private final PathRender pathRenderHull = new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5f);
 
   public SphereFitDemo() {
-    super(false, ManifoldDisplays.R2_ONLY);
+    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
+    controlPointsRender.setMidpointIndicated(false);
     // ---
     timerFrame.geometricComponent.addRenderInterface(pathRenderHull);
     // ---
@@ -63,7 +65,7 @@ public class SphereFitDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
-    {
+    if (!Tensors.isEmpty(control)) {
       Optional<SphereFit> optional = SphereFit.of(control);
       if (optional.isPresent()) {
         Tensor center = optional.get().center();
@@ -75,8 +77,8 @@ public class SphereFitDemo extends ControlPointsDemo {
       }
     }
     pathRenderHull.setCurve(ConvexHull.of(control), true);
-    {
-      new PathRender(Color.GRAY).setCurve(CIRCLE, true).render(geometricLayer, graphics);
+    new PathRender(Color.GRAY).setCurve(CIRCLE, true).render(geometricLayer, graphics);
+    if (!Tensors.isEmpty(control)) {
       Tensor matrix = Outer.of(Vector2Norm::between, control, CIRCLE);
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
       int[] matching = bipartiteMatching.matching();
@@ -87,7 +89,7 @@ public class SphereFitDemo extends ControlPointsDemo {
           graphics.draw(path2d);
         }
     }
-    {
+    if (!Tensors.isEmpty(control)) {
       Tensor weiszfeld = new WeiszfeldMethod(Chop._04).uniform(control).get();
       geometricLayer.pushMatrix(GfxMatrix.translation(weiszfeld));
       Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape());
@@ -98,7 +100,7 @@ public class SphereFitDemo extends ControlPointsDemo {
       graphics.draw(path2d);
       geometricLayer.popMatrix();
     }
-    {
+    if (!Tensors.isEmpty(control)) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       Biinvariant biinvariant = Biinvariants.METRIC.of(homogeneousSpace);
       Sedarim sedarim = biinvariant.weighting(InversePowerVariogram.of(1), control);
@@ -118,7 +120,7 @@ public class SphereFitDemo extends ControlPointsDemo {
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
+      // leversRender.renderSequence();
       leversRender.renderIndexP();
     }
   }

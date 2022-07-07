@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AreaRender;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -29,12 +30,25 @@ import ch.alpine.tensor.sca.Round;
 
 @ReflectionMarker
 public class HeadTailGeodesicDemo extends ControlPointsDemo {
-  @FieldInteger
-  @FieldSelectionArray({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
-  public Scalar refine = RealScalar.of(6);
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(false, ManifoldDisplays.ALL);
+    }
+
+    @FieldInteger
+    @FieldSelectionArray({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
+    public Scalar refine = RealScalar.of(6);
+  }
+
+  private final Param param;
 
   public HeadTailGeodesicDemo() {
-    super(false, ManifoldDisplays.ALL);
+    this(new Param());
+  }
+
+  public HeadTailGeodesicDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     setManifoldDisplay(ManifoldDisplays.S2);
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
@@ -55,7 +69,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
     ScalarTensorFunction scalarTensorFunction = manifoldDisplay.geodesicSpace().curve(p, q);
     graphics.setStroke(new BasicStroke(1.5f));
     Tensor shape = manifoldDisplay.shape();
-    Tensor domain = Subdivide.of(0, 1, refine.number().intValue());
+    Tensor domain = Subdivide.of(0, 1, param.refine.number().intValue());
     Tensor points = domain.map(scalarTensorFunction);
     Tensor xys = Tensor.of(points.stream().map(manifoldDisplay::point2xy));
     graphics.setColor(new Color(128, 255, 0));

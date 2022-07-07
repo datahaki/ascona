@@ -9,10 +9,12 @@ import java.awt.Stroke;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.decim.LineDistances;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -36,7 +38,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
 
   public BulkDecimationDemo() {
-    super(true, ManifoldDisplays.SE2_R2);
+    super(new AsconaParam(true, ManifoldDisplays.SE2_R2));
     Distribution dX = UniformDistribution.of(-3, 3);
     Distribution dY = NormalDistribution.of(0, .3);
     Distribution dA = NormalDistribution.of(1, .5);
@@ -87,6 +89,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new BulkDecimationDemo().setVisible(1200, 600);
   }
 }

@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -27,7 +28,7 @@ import ch.alpine.tensor.sca.Chop;
  * original control points */
 public class InterpolationDemo extends ControlPointsDemo {
   public InterpolationDemo() {
-    super(true, ManifoldDisplays.homogeneousSpaces());
+    super(new AsconaParam(true, ManifoldDisplays.homogeneousSpaces()));
     // ---
     addButtonDubins();
   }

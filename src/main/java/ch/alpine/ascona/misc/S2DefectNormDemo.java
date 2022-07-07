@@ -14,6 +14,7 @@ import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -22,7 +23,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -50,14 +50,17 @@ import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-@ReflectionMarker
 public class S2DefectNormDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final Tensor INITIAL = Tensors.fromString("{{-0.5, 0, 0}, {0.5, 0, 0}, {0, 0.5, 0}, {0, -0.5, 0}}").unmodifiable();
 
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.S2_ONLY);
+    }
+
     @FieldInteger
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })
     public Scalar resolution = RealScalar.of(20);
@@ -68,12 +71,15 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     public Tensor user_weights = Tensors.vector(3, 2, -2, 1, 1, 1, 1);
   }
 
-  public final Param param = new Param();
+  public final Param param;
 
   public S2DefectNormDemo() {
-    super(true, ManifoldDisplays.S2_ONLY);
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public S2DefectNormDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     setControlPointsSe2(INITIAL);
     // ---

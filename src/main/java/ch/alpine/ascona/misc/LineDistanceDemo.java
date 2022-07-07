@@ -12,6 +12,7 @@ import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -20,7 +21,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -45,7 +45,11 @@ public class LineDistanceDemo extends ControlPointsDemo {
   private static final Tensor INITIAL = Tensors.fromString("{{-0.5, 0, 0}, {0.5, 0, 0}}").unmodifiable();
 
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(false, ManifoldDisplays.R2_S2);
+    }
+
     @FieldInteger
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200" })
     public Scalar resolution = RealScalar.of(50);
@@ -53,11 +57,15 @@ public class LineDistanceDemo extends ControlPointsDemo {
     public ColorDataGradients colorDataGradients = ColorDataGradients.PARULA;
   }
 
-  private final Param param = new Param();
+  private final Param param;
 
   public LineDistanceDemo() {
-    super(false, ManifoldDisplays.R2_S2);
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public LineDistanceDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     setControlPointsSe2(INITIAL);
     // ---

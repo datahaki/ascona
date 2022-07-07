@@ -8,7 +8,7 @@ import java.util.Objects;
 import ch.alpine.ascona.avg.GeometricSymLinkRender.Link;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymLink;
 import ch.alpine.ascona.util.sym.SymLinkBuilder;
@@ -23,10 +23,9 @@ import ch.alpine.tensor.Tensor;
 @ReflectionMarker
 public abstract class AbstractSplitsDemo extends ControlPointsDemo {
   private static final Font FONT = new Font(Font.DIALOG, Font.PLAIN, 13);
-  public Boolean closest = true;
 
-  public AbstractSplitsDemo() {
-    super(true, ManifoldDisplays.ALL);
+  public AbstractSplitsDemo(AsconaParam asconaParam) {
+    super(asconaParam);
   }
 
   @Override // from RenderInterface
@@ -34,7 +33,6 @@ public abstract class AbstractSplitsDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     // ---
-    controlPointsRender.setMidpointIndicated(closest);
     SymScalar symScalar = symScalar(SymSequence.of(control.length()));
     SymLink symLink = null;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

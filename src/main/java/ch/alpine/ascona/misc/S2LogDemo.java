@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -15,7 +16,8 @@ import ch.alpine.tensor.red.Times;
 
 public class S2LogDemo extends ControlPointsDemo {
   public S2LogDemo() {
-    super(true, ManifoldDisplays.S2_ONLY);
+    super(new AsconaParam(true, ManifoldDisplays.S2_ONLY));
+    controlPointsRender.setMidpointIndicated(false);
     // ---
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));

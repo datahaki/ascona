@@ -1,15 +1,12 @@
 // code by jph
 package ch.alpine.ascona.avg;
 
-import java.awt.Dimension;
-
-import javax.swing.JSlider;
-
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.BezierFunction;
 import ch.alpine.tensor.RationalScalar;
@@ -20,16 +17,26 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 /** visualization of geodesic average along geodesics */
-@ReflectionMarker
 public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
-  // TODO ASCONA old school gui element!
-  private final JSlider jSlider = new JSlider(0, 1000, 500);
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.ALL);
+    }
+
+    @FieldClip(min = "0", max = "1")
+    public Scalar ratio = RealScalar.of(0.5);
+  }
+
+  private final Param param;
 
   public BezierFunctionSplitsDemo() {
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
-    // ---
-    jSlider.setPreferredSize(new Dimension(500, 28));
-    timerFrame.jToolBar.add(jSlider);
+    this(new Param());
+  }
+
+  public BezierFunctionSplitsDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {2, 2, 1}, {5, 0, 2}}"));
     // ---
@@ -45,7 +52,7 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
       Scalar parameter = n <= 1 //
           ? RealScalar.ZERO
           : RationalScalar.of(n, n - 1);
-      parameter = parameter.multiply(RationalScalar.of(jSlider.getValue(), 1000));
+      parameter = parameter.multiply(param.ratio);
       return (SymScalar) scalarTensorFunction.apply(parameter);
     }
     return null;

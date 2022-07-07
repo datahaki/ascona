@@ -2,24 +2,28 @@
 package ch.alpine.ascona.misc;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.ascona.util.dis.Se2Display;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.r2.Se2Bijection;
 import ch.alpine.sophus.hs.r2.Se2RigidMotionFit;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Append;
@@ -37,21 +41,36 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
       new PointsRender(new Color(128, 128, 255, 64), new Color(128, 128, 255, 255));
   private static final PointsRender POINTS_RENDER_POINTS = //
       new PointsRender(new Color(64, 255, 64, 64), new Color(64, 255, 64, 255));
-  // ---
-  private final SpinnerLabel<Integer> spinnerLength = SpinnerLabel.of(3, 4, 5, 6, 7, 8, 9, 10);
+
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(false, ManifoldDisplays.R2_ONLY);
+    }
+
+    @FieldInteger
+    @FieldClip(min = "2", max = "10")
+    public Scalar length = RealScalar.of(5);
+  }
+
+  private final Param param;
   private Tensor points;
 
   public RigidMotionFitDemo() {
-    super(false, ManifoldDisplays.R2_ONLY);
-    // ---
-    spinnerLength.addSpinnerListener(this::shufflePoints);
-    spinnerLength.setValue(5);
-    spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
-    // ---
-    shufflePoints(spinnerLength.getValue());
+    this(new Param());
   }
 
-  private synchronized void shufflePoints(int n) {
+  public RigidMotionFitDemo(Param param) {
+    super(param);
+    this.param = param;
+    // ---
+    fieldsEditor.addUniversalListener(this::shufflePoints);
+    // ---
+    shufflePoints();
+  }
+
+  private synchronized void shufflePoints() {
+    int n = param.length.number().intValue();
     Distribution distribution = NormalDistribution.of(0, 2);
     points = RandomVariate.of(distribution, n, 2);
     Tensor xya = RandomVariate.of(distribution, 3);
@@ -95,6 +114,7 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new RigidMotionFitDemo().setVisible(1000, 800);
   }
 }

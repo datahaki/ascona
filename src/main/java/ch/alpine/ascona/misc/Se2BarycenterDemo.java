@@ -5,13 +5,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import javax.swing.JToggleButton;
-
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -35,12 +33,9 @@ import ch.alpine.tensor.sca.Chop;
 public class Se2BarycenterDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
-  // ---
-  private final JToggleButton axes = new JToggleButton("axes");
 
   public Se2BarycenterDemo() {
-    super(false, ManifoldDisplays.SE2C_SE2);
-    timerFrame.jToolBar.add(axes);
+    super(new AsconaParam(false, ManifoldDisplays.SE2C_SE2));
     Tensor tensor = DubinsGenerator.of(Tensors.vector(0, 0, 0), Tensors.fromString("{{5, 0, -1}}")) //
         .append(Tensors.vector(0, -1, 0)) //
         .append(Tensors.vector(0, 0, Math.PI / 7));
@@ -51,8 +46,8 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    if (axes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
+    // if (axes.isSelected())
+    // AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     if (sequence.length() == 4)
       try {
@@ -120,7 +115,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
       }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderSequence();
+      // leversRender.renderSequence();
       leversRender.renderIndexP();
     }
   }

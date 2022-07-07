@@ -16,6 +16,7 @@ import javax.swing.event.ChangeListener;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.ascona.util.ren.LeversRender;
@@ -50,6 +51,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   private static final Tensor LAMBDAS = CLOTHOID_SOLUTIONS.probes;
   private static final Tensor POINTER = Tensors.fromString("{{0, 0}, {-0.2, -1}, {+0.2, -1}}");
   // ---
+  // TODO ASCONA use param design
   private final JSlider jSlider = new JSlider(0, LAMBDAS.length() - 1, LAMBDAS.length() / 2);
   private final JTextField jTextField = new JTextField(10);
   private final JLabel jLabel = new JLabel();
@@ -59,7 +61,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   private ClothoidDefectContainer clothoidDefectContainer = null;
 
   public CustomClothoidDemo() {
-    super(false, ManifoldDisplays.CL_ONLY);
+    super(new AsconaParam(false, ManifoldDisplays.CL_ONLY));
     {
       jTextField.setPreferredSize(new Dimension(100, 28));
       timerFrame.jToolBar.add(jTextField);

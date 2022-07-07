@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -34,14 +35,14 @@ import ch.alpine.tensor.sca.Round;
  * Therefore, for simplicity in algorithms we use degree == 1. */
 public class ClothoidDemo extends ControlPointsDemo {
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 100);
-  private static final Tensor ARROWS = Subdivide.of(0.0, 1.0, 10);
+  // private static final Tensor ARROWS = Subdivide.of(0.0, 1.0, 10);
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //
       ColorDataLists._097.cyclic().deriveWithAlpha(192);
   // private static final PointsRender POINTS_RENDER = //
   // new PointsRender(new Color(0, 0, 0, 0), new Color(128, 128, 128, 64));
 
   public ClothoidDemo() {
-    super(false, ManifoldDisplays.SE2C_ONLY);
+    super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
     setControlPointsSe2(Tensors.fromString("{{0,0,0},{3,0,0}}"));
   }
 

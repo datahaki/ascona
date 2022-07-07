@@ -4,12 +4,15 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ch.alpine.ascona.util.api.ControlPointsDemo;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.clt.Clothoid;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
@@ -20,7 +23,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Subdivide;
@@ -33,18 +35,23 @@ import ch.alpine.tensor.sca.exp.Exp;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
-// TODO ASCONA make as control point demo
-public class ClothoidStrokeDemo extends AbstractDemo {
-  private static final Tensor START = Array.zeros(3).unmodifiable();
+public class ClothoidStrokeDemo extends ControlPointsDemo {
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 100);
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //
       ColorDataLists._097.cyclic().deriveWithAlpha(192);
+
+  public ClothoidStrokeDemo() {
+    super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
+    setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
+  }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     AxesRender.INSTANCE.render(geometricLayer, graphics);
-    Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
+    Tensor control = getGeodesicControlPoints();
+    Tensor start = control.get(0);
+    Tensor mouse = control.get(1);
     // ---
     {
       graphics.setColor(new Color(255, 0, 0, 128));
@@ -54,7 +61,7 @@ public class ClothoidStrokeDemo extends AbstractDemo {
     }
     ClothoidBuilder clothoidBuilder = ClothoidBuilders.SE2_COVERING.clothoidBuilder();
     {
-      Clothoid clothoid = clothoidBuilder.curve(START, mouse);
+      Clothoid clothoid = clothoidBuilder.curve(start, mouse);
       Tensor points = DOMAIN.map(clothoid);
       Color color = COLOR_DATA_INDEXED.getColor(0);
       new PathRender(color, 1.5f) //
@@ -80,6 +87,7 @@ public class ClothoidStrokeDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new ClothoidStrokeDemo().setVisible(1000, 600);
   }
 }

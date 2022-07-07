@@ -6,9 +6,11 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.TSnProjection;
@@ -21,13 +23,13 @@ import ch.alpine.tensor.red.Times;
 
 public class S2ExpDemo extends ControlPointsDemo {
   public S2ExpDemo() {
-    super(true, ManifoldDisplays.S2_ONLY);
+    super(new AsconaParam(false, ManifoldDisplays.S2_ONLY));
     // ---
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     timerFrame.geometricComponent.setOffset(400, 400);
     // ---
-    setControlPointsSe2(Tensors.fromString("{{-0.3, 0.0, 0}, {0.0, 0.5, 0.0}, {0.5, 0.5, 1}, {0.5, -0.4, 0}}"));
+    setControlPointsSe2(Tensors.fromString("{{0.0, 0.0, 0}}"));
   }
 
   @Override
@@ -49,6 +51,7 @@ public class S2ExpDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new S2ExpDemo().setVisible(1000, 800);
   }
 }

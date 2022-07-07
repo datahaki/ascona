@@ -8,13 +8,14 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.d2.ParametricResample;
 import ch.alpine.sophus.crv.d2.ResampleResult;
 import ch.alpine.tensor.RealScalar;
@@ -25,18 +26,35 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 
-@ReflectionMarker
 public class R2ParametricResampleDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict().deriveWithAlpha(128);
   private static final PointsRender POINTS_RENDER = new PointsRender(new Color(0, 128, 128, 64), new Color(0, 128, 128, 255));
+
   // ---
-  @FieldClip(min = "0", max = "10")
-  public Scalar threshold = RealScalar.of(3);
-  public Scalar ds = RealScalar.of(0.3);
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.R2_ONLY);
+    }
+
+    @FieldClip(min = "0", max = "10")
+    public Scalar threshold = RealScalar.of(3);
+    public Scalar ds = RealScalar.of(0.3);
+
+    public ParametricResample parametricResample() {
+      return new ParametricResample(threshold, ds);
+    }
+  }
+
+  private final Param param;
 
   public R2ParametricResampleDemo() {
-    super(true, ManifoldDisplays.R2_ONLY);
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public R2ParametricResampleDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     int n = 20;
     setControlPointsSe2(PadRight.zeros(n, 3).apply(CirclePoints.of(n).multiply(RealScalar.of(3))));
@@ -56,7 +74,7 @@ public class R2ParametricResampleDemo extends ControlPointsDemo {
       leversRender.renderIndexP();
     }
     // ---
-    ParametricResample parametricResample = new ParametricResample(threshold, ds);
+    ParametricResample parametricResample = param.parametricResample();
     ResampleResult resampleResult = parametricResample.apply(control);
     for (Tensor points : resampleResult.getPoints())
       POINTS_RENDER.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), points) //
@@ -64,6 +82,7 @@ public class R2ParametricResampleDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new R2ParametricResampleDemo().setVisible(1000, 600);
   }
 }

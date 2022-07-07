@@ -11,6 +11,7 @@ import java.util.Objects;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -36,34 +37,48 @@ import ch.alpine.tensor.ext.Cache;
 
 @ReflectionMarker
 public class ClothoidBrushDemo extends ControlPointsDemo {
+  public static final Scalar BETA = RealScalar.of(0.05);
+
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.CLC_ONLY);
+    }
+
+    @FieldPreferredWidth(200)
+    public Tensor shiftL = Tensors.vector(-1.3, -1.3, 0);
+    @FieldPreferredWidth(200)
+    public Tensor shiftR = Tensors.vector(0, 0, 0);
+    @FieldSlider
+    @FieldClip(min = "0.00", max = "1")
+    public Scalar round = RealScalar.of(0.1);
+    public Boolean shade = true;
+    @FieldSlider
+    @FieldClip(min = "0", max = "1.5708")
+    public Scalar angle = RealScalar.of(0.8);
+    @FieldSlider
+    @FieldClip(min = "0", max = "0.7")
+    public Scalar width = RealScalar.of(0.3);
+    // private bufferedImage = null;
+    private Font font = null;
+  }
+
   public final Cache<Tensor, Tensor> cache = Cache.of(ClothoidBrushDemo::sample, 100);
-  @FieldPreferredWidth(200)
-  public Tensor shiftL = Tensors.vector(-1.3, -1.3, 0);
-  @FieldPreferredWidth(200)
-  public Tensor shiftR = Tensors.vector(0, 0, 0);
-  @FieldSlider
-  @FieldClip(min = "0.00", max = "1")
-  public Scalar round = RealScalar.of(0.1);
-  public static final Scalar beta = RealScalar.of(0.05);
-  public Boolean shade = true;
-  @FieldSlider
-  @FieldClip(min = "0", max = "1.5708")
-  public Scalar angle = RealScalar.of(0.8);
-  @FieldSlider
-  @FieldClip(min = "0", max = "0.7")
-  public Scalar width = RealScalar.of(0.3);
-  // private bufferedImage = null;
-  private Font font = null;
+  private final Param param;
 
   public ClothoidBrushDemo() {
-    super(true, ManifoldDisplays.CLC_ONLY);
+    this(new Param());
+  }
+
+  public ClothoidBrushDemo(Param param) {
+    super(param);
+    this.param = param;
     try {
       // Font.TYPE1_FONT
       // Font[] fonts = Font.createFonts(new File("/usr/share/fonts/urw-base35/Z003-MediumItalic.t1"));
       Font[] fonts = Font.createFonts(new File("/home/datahaki/.local/share/fonts/DS Elzevier Initialen.ttf"));
       System.out.println("fonts.length=" + fonts.length);
       if (0 < fonts.length)
-        font = fonts[0].deriveFont(500f);
+        param.font = fonts[0].deriveFont(500f);
     } catch (Exception exception) {
       exception.printStackTrace();
     }
@@ -83,23 +98,23 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    if (Objects.nonNull(font)) {
+    if (Objects.nonNull(param.font)) {
       graphics.setColor(new Color(164, 164, 64));
-      graphics.setFont(font);
+      graphics.setFont(param.font);
       graphics.drawString("ABCDEF", 0, 500);
     }
     Tensor sequence = getGeodesicControlPoints();
     for (int index = 1; index < sequence.length(); ++index) {
       Tensor beg0 = sequence.get(index - 1);
       Tensor end0 = sequence.get(index + 0);
-      Se2CoveringGroupElement shL = Se2CoveringGroup.INSTANCE.element(shiftL);
-      Tensor beg1 = Se2CoveringGroup.INSTANCE.element(shL.combine(beg0)).combine(shiftR);
-      Tensor end1 = Se2CoveringGroup.INSTANCE.element(shL.combine(end0)).combine(shiftR);
+      Se2CoveringGroupElement shL = Se2CoveringGroup.INSTANCE.element(param.shiftL);
+      Tensor beg1 = Se2CoveringGroup.INSTANCE.element(shL.combine(beg0)).combine(param.shiftR);
+      Tensor end1 = Se2CoveringGroup.INSTANCE.element(shL.combine(end0)).combine(param.shiftR);
       Tensor crv0 = cache.apply(Tensors.of(beg0, end0));
       Tensor crv1 = cache.apply(Tensors.of(beg1, end1));
       {
         graphics.setColor(new Color(0, 0, 0, 128));
-        float model2pixelWidth = geometricLayer.model2pixelWidth(round);
+        float model2pixelWidth = geometricLayer.model2pixelWidth(param.round);
         graphics.setStroke(new BasicStroke(model2pixelWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         Tensor polygon = Join.of(crv0, Reverse.of(crv1));
         {
@@ -128,7 +143,7 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
     Tensor beg0 = be.get(0);
     Tensor end0 = be.get(1);
     ClothoidBuilder clothoidBuilder = ClothoidBuilders.SE2_COVERING.clothoidBuilder();
-    return ClothoidSampler.of(clothoidBuilder.curve(beg0, end0), beta);
+    return ClothoidSampler.of(clothoidBuilder.curve(beg0, end0), BETA);
   }
 
   public static void main(String[] args) {

@@ -9,6 +9,7 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.arp.MeshRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -36,7 +37,8 @@ public class SPatchDemo extends ControlPointsDemo {
   private final MovingDomain2D movingDomain2D;
 
   public SPatchDemo() {
-    super(false, ManifoldDisplays.SE2C_R2);
+    super(new AsconaParam(false, ManifoldDisplays.SE2C_R2));
+    // ---
     Genesis genesis = new InsidePolygonCoordinate(ThreePointCoordinate.of(Barycenter.MEAN_VALUE));
     sPatch = SPatch.of(5, genesis, 2);
     Tensor embed = sPatch.getEmbed();

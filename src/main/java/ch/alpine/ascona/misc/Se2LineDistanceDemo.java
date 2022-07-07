@@ -6,15 +6,14 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import javax.swing.JToggleButton;
-
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.HsLineDistance;
 import ch.alpine.sophus.decim.HsLineDistanceLocal;
@@ -35,20 +34,16 @@ import ch.alpine.tensor.sca.Round;
 public class Se2LineDistanceDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
-  // ---
-  private final JToggleButton axes = new JToggleButton("axes");
 
   public Se2LineDistanceDemo() {
-    super(false, ManifoldDisplays.SE2_ONLY);
-    timerFrame.jToolBar.add(axes);
+    super(new AsconaParam(false, ManifoldDisplays.SE2_ONLY));
+    // ---
     Tensor tensor = Tensors.fromString("{{0, 0, 0}, {5, 0, 1}}");
     setControlPointsSe2(tensor);
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (axes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
@@ -138,6 +133,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new Se2LineDistanceDemo().setVisible(1200, 600);
   }
 }

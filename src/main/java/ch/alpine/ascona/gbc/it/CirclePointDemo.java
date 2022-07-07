@@ -8,6 +8,7 @@ import ch.alpine.ascona.lev.LeversHud;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -28,7 +29,8 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 public class CirclePointDemo extends ControlPointsDemo {
   public CirclePointDemo() {
-    super(true, ManifoldDisplays.R2_ONLY);
+    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
+    // ---
     Tensor sequence = Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(2)).stream().map(PadRight.zeros(3)));
     setControlPointsSe2(sequence);
   }

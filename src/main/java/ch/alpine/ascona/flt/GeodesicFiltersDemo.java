@@ -2,18 +2,18 @@
 package ch.alpine.ascona.flt;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.GeodesicFilters;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -30,17 +30,26 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 public class GeodesicFiltersDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DRAW = ColorDataLists._001.strict();
   private static final ColorDataIndexed COLOR_FILL = COLOR_DRAW.deriveWithAlpha(64);
+
   // ---
-  protected final SpinnerLabel<WindowFunctions> spinnerKernel = SpinnerLabel.of(WindowFunctions.class);
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.SE2C_SE2_R2);
+    }
+
+    public WindowFunctions windowFunctions = WindowFunctions.DIRICHLET;
+  }
+
+  private final Param param;
 
   public GeodesicFiltersDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2_R2);
+    this(new Param());
+  }
+
+  public GeodesicFiltersDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
-    timerFrame.jToolBar.addSeparator();
-    {
-      spinnerKernel.setValue(WindowFunctions.GAUSSIAN);
-      spinnerKernel.addToComponentReduced(timerFrame.jToolBar, new Dimension(180, 28), "smoothing kernel");
-    }
     setControlPointsSe2(TensorProduct.of(Range.of(0, 5), UnitVector.of(3, 0)).multiply(RealScalar.of(2)));
   }
 
@@ -51,11 +60,11 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
     Tensor control = getGeodesicControlPoints();
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
+      // leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     if (!Integers.isEven(control.length())) {
-      ScalarUnaryOperator smoothingKernel = spinnerKernel.getValue().get();
+      ScalarUnaryOperator smoothingKernel = param.windowFunctions.get();
       for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
         int ordinal = geodesicFilters.ordinal();
         Tensor mean = geodesicFilters.from(manifoldDisplay, smoothingKernel).apply(control);
@@ -69,6 +78,7 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new GeodesicFiltersDemo().setVisible(1000, 600);
   }
 }

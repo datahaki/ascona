@@ -27,15 +27,15 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.sca.pow.Power;
 
-@ReflectionMarker
 public class HilbertPolygonDemo extends AbstractDemo {
   private static final int CACHE_SIZE = 10;
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict();
 
-  public static Tensor curve(int n) {
+  private static Tensor curve(int n) {
     return HilbertPolygon.of(n).multiply(Power.of(2.0, -n));
   }
 
+  @ReflectionMarker
   public static class Param {
     @FieldSlider
     @FieldInteger

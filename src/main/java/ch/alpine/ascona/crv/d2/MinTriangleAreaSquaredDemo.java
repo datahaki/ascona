@@ -7,6 +7,7 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -30,7 +31,7 @@ public class MinTriangleAreaSquaredDemo extends ControlPointsDemo {
   private final PathRender pathRender = new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5f);
 
   public MinTriangleAreaSquaredDemo() {
-    super(true, ManifoldDisplays.R2_ONLY);
+    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
     // ---
     timerFrame.geometricComponent.addRenderInterface(pathRender);
     // ---

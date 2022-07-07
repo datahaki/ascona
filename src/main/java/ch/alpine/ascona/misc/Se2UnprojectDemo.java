@@ -8,6 +8,7 @@ import java.awt.geom.Path2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -32,7 +33,8 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
   private static final Tensor ARROWHEAD = Arrowhead.of(0.5);
 
   public Se2UnprojectDemo() {
-    super(false, ManifoldDisplays.SE2C_SE2);
+    super(new AsconaParam(false, ManifoldDisplays.SE2C_SE2));
+    // ---
     Tensor tensor = Tensors.fromString("{{0, 0, 0}, {5, 0, 1}}");
     setControlPointsSe2(tensor);
   }

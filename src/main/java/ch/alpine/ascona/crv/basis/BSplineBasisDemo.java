@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -30,21 +31,35 @@ import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.itp.BSplineInterpolation;
 import ch.alpine.tensor.mat.re.Inverse;
 
-@ReflectionMarker
 public class BSplineBasisDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final Color TICKS_COLOR = new Color(0, 0, 0, 128);
+
   // ---
-  @FieldInteger
-  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
-  public Scalar degree = RealScalar.of(1);
-  @FieldInteger
-  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
-  public Scalar refine = RealScalar.of(4);
-  public Boolean interp = false;
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.R2_ONLY);
+    }
+
+    @FieldInteger
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
+    public Scalar degree = RealScalar.of(1);
+    @FieldInteger
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
+    public Scalar refine = RealScalar.of(4);
+    public Boolean interp = false;
+  }
+
+  private final Param param;
 
   public BSplineBasisDemo() {
-    super(true, ManifoldDisplays.R2_ONLY);
+    this(new Param());
+  }
+
+  public BSplineBasisDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
@@ -54,8 +69,8 @@ public class BSplineBasisDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    int _degree = degree.number().intValue();
-    int _levels = refine.number().intValue();
+    int _degree = param.degree.number().intValue();
+    int _levels = param.refine.number().intValue();
     Tensor control = getGeodesicControlPoints();
     {
       graphics.setStroke(new BasicStroke(1.25f));
@@ -84,7 +99,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
       graphics.setStroke(new BasicStroke(1f));
     }
     // ---
-    Tensor effective = interp //
+    Tensor effective = param.interp //
         ? BSplineInterpolation.solve(_degree, control)
         : control;
     GeodesicBSplineFunction bSplineFunction = //
