@@ -70,9 +70,12 @@ public class HermiteDatasetFilterDemo extends AbstractDemo {
   }
 
   public HermiteDatasetFilterDemo(GokartPoseDataV2 gokartPoseData) {
-    param = new Param(gokartPoseData);
-    this.gokartPoseDataV2 = gokartPoseData;
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    this(new Param(gokartPoseData));
+  }
+  public HermiteDatasetFilterDemo(Param param) {
+    super(param);
+    this.param = param;
+    this.gokartPoseDataV2 = (GokartPoseDataV2) param.gpd();
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     updateState();
   }

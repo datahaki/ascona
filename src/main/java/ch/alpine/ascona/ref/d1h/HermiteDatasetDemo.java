@@ -30,7 +30,6 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
@@ -83,9 +82,15 @@ public class HermiteDatasetDemo extends AbstractDemo {
   }
 
   public HermiteDatasetDemo(GokartPoseDataV2 gokartPoseData) {
-    param = new Param(gokartPoseData);
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::updateState);
-    this.gokartPoseDataV2 = gokartPoseData;
+    this(new Param(gokartPoseData));
+  }
+
+  public HermiteDatasetDemo(Param param) {
+    super(param);
+    this.param = param;
+    this.gokartPoseDataV2 = (GokartPoseDataV2) param.gpd();
+    fieldsEditor.addUniversalListener(this::updateState);
+    // ---
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     timerFrame.jToolBar.addSeparator();
     {

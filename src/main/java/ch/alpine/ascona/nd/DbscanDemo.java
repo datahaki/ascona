@@ -15,9 +15,9 @@ import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.FieldsEditor;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -32,7 +32,6 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import ch.alpine.tensor.sca.Abs;
 
 public class DbscanDemo extends AbstractDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
@@ -41,20 +40,29 @@ public class DbscanDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     @FieldInteger
-    @FieldClip(min = "1", max = "1000")
+    @FieldSelectionArray({ "100", "200", "500", "1000" })
     public Scalar count = RealScalar.of(200);
     @FieldInteger
+    @FieldClip(min = "1", max = "10")
     public Scalar minPts = RealScalar.of(5);
     public CenterNorms centerNorms = CenterNorms._2;
+    @FieldSlider
+    @FieldClip(min = "0", max = "1")
+    public Scalar radius = RealScalar.of(0.3);
     @FieldFuse
     public transient Boolean shuffle = false;
   }
 
-  private final Param param = new Param();
+  private final Param param;
   private Tensor pointsAll;
 
   public DbscanDemo() {
-    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public DbscanDemo(Param param) {
+    super(param);
+    this.param = param;
     fieldsEditor.addUniversalListener(() -> {
       if (param.shuffle) {
         param.shuffle = false;
@@ -83,7 +91,7 @@ public class DbscanDemo extends AbstractDemo {
     graphics.setColor(Color.GRAY);
     Tensor points = Tensor.of(pointsAll.stream().limit(param.count.number().intValue()));
     Tensor xya = timerFrame.geometricComponent.getMouseSe2CState();
-    Scalar radius = Abs.FUNCTION.apply(xya.Get(2)).multiply(RealScalar.of(0.2));
+    Scalar radius = param.radius;
     Timing timing = Timing.started();
     CenterNorms centerNorms = param.centerNorms;
     Integer[] labels = Dbscan.of(points, centerNorms::ndCenterInterface, radius, param.minPts.number().intValue());

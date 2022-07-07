@@ -38,6 +38,7 @@ import ch.alpine.tensor.img.ColorDataLists;
  * number clothoid approximation to generate figures in report:
  * 
  * https://github.com/idsc-frazzoli/retina/files/3568308/20190903_appox_clothoids_with_ext_windings.pdf */
+// TODO ASCONA make as DubinsPathDemo
 public class ClothoidComparisonDemo extends AbstractDemo {
   private static final int WIDTH = 480;
   private static final int HEIGHT = 360;

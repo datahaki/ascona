@@ -22,6 +22,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 /** visualization of geodesic average along geodesics */
 @ReflectionMarker
 public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
+  // TODO ASCONA old school gui element!
   private final JSlider jSlider = new JSlider(0, 1000, 500);
 
   public BezierFunctionSplitsDemo() {

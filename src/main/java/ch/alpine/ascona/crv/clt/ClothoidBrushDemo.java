@@ -61,7 +61,7 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
       // Font.TYPE1_FONT
       // Font[] fonts = Font.createFonts(new File("/usr/share/fonts/urw-base35/Z003-MediumItalic.t1"));
       Font[] fonts = Font.createFonts(new File("/home/datahaki/.local/share/fonts/DS Elzevier Initialen.ttf"));
-      System.out.println(fonts.length);
+      System.out.println("fonts.length=" + fonts.length);
       if (0 < fonts.length)
         font = fonts[0].deriveFont(500f);
     } catch (Exception exception) {

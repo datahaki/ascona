@@ -12,8 +12,8 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
@@ -26,15 +26,26 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.itp.DeBoor;
 
-@ReflectionMarker
 public class DeBoorCustomDemo extends AbstractDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
+
   // ---
-  @FieldPreferredWidth(200)
-  public Tensor knots = Tensors.vector(0, 1);
+  @ReflectionMarker
+  public static class Param {
+    @FieldPreferredWidth(200)
+    @FieldSelectionArray({"{0, 1}","{0, 0, 1, 1}"})
+    public Tensor knots = Tensors.vector(0, 1);
+  }
+
+  private final Param param;
 
   public DeBoorCustomDemo() {
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public DeBoorCustomDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     timerFrame.geometricComponent.addRenderInterface(AxesRender.INSTANCE);
   }
@@ -48,7 +59,7 @@ public class DeBoorCustomDemo extends AbstractDemo {
       try {
         Tensor domain = Subdivide.of(0, 1, 100);
         Tensor domahi = Subdivide.of(1, 2, 100);
-        Tensor _knots = knots;
+        Tensor _knots = param.knots;
         if (Integers.isEven(_knots.length())) {
           int degree = _knots.length() >> 1;
           int length = degree + 1;

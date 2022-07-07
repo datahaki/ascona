@@ -51,7 +51,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
       rate = rate.multiply(RationalScalar.HALF);
     }
     delta = QuantityMagnitude.SI().in("s").apply(rate.reciprocal());
-    System.out.println(delta);
+    System.out.println("delta="+delta);
     data = GokartPoseDataV2.INSTANCE.getPoseVel(name, delta2 * 20 + 1);
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     System.out.println(Dimensions.of(data));

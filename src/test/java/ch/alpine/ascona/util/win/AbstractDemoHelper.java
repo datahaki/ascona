@@ -2,52 +2,34 @@
 package ch.alpine.ascona.util.win;
 
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Constructor;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.alpine.ascona.util.api.ControlPointsDemo;
-import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.util.FieldsAssignment;
 import ch.alpine.bridge.ref.util.ObjectProperties;
 import ch.alpine.bridge.ref.util.OuterFieldsAssignment;
 
 public enum AbstractDemoHelper {
   ;
-  /** off-screen test
-   * 
-   * @param abstractDemo
-   * @throws IllegalAccessException
-   * @throws IllegalArgumentException */
   public static void offscreen(AbstractDemo abstractDemo) {
-    GeometricLayer geometricLayer = new GeometricLayer( //
-        abstractDemo.timerFrame.geometricComponent.getModel2Pixel() //
-    );
-    BufferedImage bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
-    abstractDemo.render(geometricLayer, bufferedImage.createGraphics());
-    if (abstractDemo instanceof ControlPointsDemo) {
-      ControlPointsDemo controlPointsDemo = (ControlPointsDemo) abstractDemo;
-      AsconaParam asconaParam = controlPointsDemo.asconaParam();
-      Constructor<?> constructor = null;
-      try {
-        constructor = abstractDemo.getClass().getConstructor(asconaParam.getClass());
-      } catch (Exception exception) {
-        exception.printStackTrace();
-      }
-      if (Objects.nonNull(constructor)) {
-        Constructor<?> fi_constructor = constructor;
-        OuterFieldsAssignment<AsconaParam> fieldOuterProduct = new OuterFieldsAssignment<>(asconaParam, a -> {
-          try {
-            Object newInstance = fi_constructor.newInstance(a);
-            ControlPointsDemo cpd = (ControlPointsDemo) newInstance;
-            cpd.render(geometricLayer, bufferedImage.createGraphics());
-          } catch (Exception exception) {
-            System.out.println("settings bad:");
-            System.err.println(ObjectProperties.join(a));
-            throw new RuntimeException(exception);
-          }
-        });
-        fieldOuterProduct.randomize(20);
-      }
+    Object object = abstractDemo.object();
+    if (Objects.nonNull(object)) {
+      AtomicInteger atomicInteger = new AtomicInteger();
+      GeometricLayer geometricLayer = new GeometricLayer(abstractDemo.timerFrame.geometricComponent.getModel2Pixel());
+      BufferedImage bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
+      FieldsAssignment outerFieldsAssignment = OuterFieldsAssignment.of(object, () -> {
+        try {
+          abstractDemo.fieldsEditor.notifyListeners();
+          abstractDemo.render(geometricLayer, bufferedImage.createGraphics());
+        } catch (Exception exception) {
+          exception.printStackTrace();
+          System.err.println(ObjectProperties.join(object));
+        }
+        atomicInteger.getAndIncrement();
+      });
+      outerFieldsAssignment.randomize(50);
+      System.out.println(abstractDemo.getClass().getSimpleName() + " " + atomicInteger.get());
     }
   }
 }

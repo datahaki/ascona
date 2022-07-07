@@ -20,7 +20,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.r2.Extract2D;
@@ -44,20 +43,30 @@ import ch.alpine.tensor.sca.N;
 public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
-  // ---
-  public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
-  @FieldSlider
-  @FieldPreferredWidth(100)
-  @FieldInteger
-  @FieldClip(min = "0", max = "8")
-  public Scalar refine = RealScalar.of(4);
-  @FieldPreferredWidth(300)
-  public Tensor coeffs = Tensors.fromString("{2, 1, -1/5, -1/10}");
-  // ---
-  public Boolean derivatives = true;
+
+  public static class Param {
+    public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
+    @FieldSlider
+    @FieldPreferredWidth(100)
+    @FieldInteger
+    @FieldClip(min = "0", max = "8")
+    public Scalar refine = RealScalar.of(4);
+    @FieldPreferredWidth(300)
+    public Tensor coeffs = Tensors.fromString("{2, 1, -1/5, -1/10}");
+    // ---
+    public Boolean derivatives = true;
+  }
+
+  private final Param param;
 
   public SeriesHermiteSubdivisionDemo() {
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar).addUniversalListener(this::compute);
+    this(new Param());
+  }
+
+  public SeriesHermiteSubdivisionDemo(Param param) {
+    super(param);
+    this.param = param;
+    fieldsEditor.addUniversalListener(this::compute);
     compute();
   }
 
@@ -70,16 +79,16 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
     RenderQuality.setQuality(graphics);
     if (1 < _control.length()) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      HermiteSubdivision hermiteSubdivision = scheme.supply(homogeneousSpace);
+      HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
       Tensor control = N.DOUBLE.of(_control);
       Scalar delta = RealScalar.ONE;
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
-      int levels = refine.number().intValue();
+      int levels = param.refine.number().intValue();
       Tensor iterate = Do.of(control, tensorIteration::iterate, levels);
       Tensor curve = Tensor.of(iterate.get(Tensor.ALL, 0).stream().map(Extract2D.FUNCTION));
       Curvature2DRender.of(curve, false, geometricLayer, graphics);
       // ---
-      if (derivatives) {
+      if (param.derivatives) {
         Tensor deltas = iterate.get(Tensor.ALL, 1);
         if (0 < deltas.length()) {
           JFreeChart jFreeChart = StaticHelper.listPlot(deltas, delta, levels);
@@ -95,7 +104,7 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
   }
 
   private void compute() {
-    Tensor _coeffs = coeffs;
+    Tensor _coeffs = param.coeffs;
     if (VectorQ.of(_coeffs) && //
         FiniteTensorQ.of(_coeffs)) {
       Polynomial f0 = Polynomial.of(_coeffs);

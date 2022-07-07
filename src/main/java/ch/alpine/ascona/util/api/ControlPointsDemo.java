@@ -26,7 +26,6 @@ import ch.alpine.tensor.Tensors;
 public abstract class ControlPointsDemo extends AbstractDemo {
   public final ControlPointsRender controlPointsRender;
   private final AsconaParam asconaParam;
-  public final FieldsEditor fieldsEditor;
 
   /** Hint: {@link #setPositioningEnabled(boolean)} controls positioning of control points
    * 
@@ -38,10 +37,10 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   }
 
   public ControlPointsDemo(AsconaParam asconaParam) {
+    super(asconaParam);
     this.asconaParam = asconaParam;
     controlPointsRender = ControlPointsRenders.create( //
         asconaParam.addRemoveControlPoints, this::manifoldDisplay, timerFrame.geometricComponent);
-    fieldsEditor = ToolbarFieldsEditor.add(asconaParam, timerFrame.jToolBar);
     timerFrame.jToolBar.addSeparator();
     if (asconaParam.addRemoveControlPoints) {
       JButton jButton = new JButton("clear");
@@ -54,10 +53,6 @@ public abstract class ControlPointsDemo extends AbstractDemo {
         manifoldDisplay().background().render(geometricLayer, graphics);
       }
     });
-  }
-
-  public AsconaParam asconaParam() {
-    return asconaParam;
   }
 
   // TODO ASCONA API function should not be here!

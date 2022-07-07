@@ -17,7 +17,6 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.d2.HilbertPolygon;
 import ch.alpine.tensor.RealScalar;
@@ -37,20 +36,29 @@ public class HilbertPolygonDemo extends AbstractDemo {
     return HilbertPolygon.of(n).multiply(Power.of(2.0, -n));
   }
 
-  @FieldSlider
-  @FieldInteger
-  @FieldClip(min = "1", max = "7")
-  public Scalar total = RealScalar.of(2);
+  public static class Param {
+    @FieldSlider
+    @FieldInteger
+    @FieldClip(min = "1", max = "7")
+    public Scalar total = RealScalar.of(2);
+  }
+
   private final Function<Integer, Tensor> cache = Cache.of(HilbertPolygonDemo::curve, CACHE_SIZE);
+  private final Param param;
 
   public HilbertPolygonDemo() {
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public HilbertPolygonDemo(Param param) {
+    super(param);
+    this.param = param;
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    int n = total.number().intValue();
+    int n = param.total.number().intValue();
     Tensor tensor = cache.apply(n);
     // ---
     Path2D path2d = geometricLayer.toPath2D(tensor);

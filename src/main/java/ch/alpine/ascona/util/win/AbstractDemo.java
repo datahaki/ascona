@@ -2,14 +2,30 @@
 package ch.alpine.ascona.util.win;
 
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.bridge.ref.util.FieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 
 @ReflectionMarker
 public abstract class AbstractDemo implements RenderInterface {
   public final TimerFrame timerFrame = new TimerFrame();
+  private final Object object;
+  protected final FieldsEditor fieldsEditor;
 
-  public AbstractDemo() {
+  /** @param object may be null */
+  public AbstractDemo(Object object) {
+    this.object = object;
     timerFrame.jFrame.setTitle(getClass().getSimpleName());
+    fieldsEditor = ToolbarFieldsEditor.add(object, timerFrame.jToolBar);
     timerFrame.geometricComponent.addRenderInterface(this);
+  }
+
+  @Deprecated
+  public AbstractDemo() {
+    this(null);
+  }
+
+  public Object object() {
+    return object;
   }
 
   /** @param width

@@ -99,11 +99,14 @@ public class ApproximationDemo extends AbstractDemo {
   }
 
   public ApproximationDemo(GokartPoseData gokartPoseData) {
-    param = new Param(gokartPoseData);
+    this(new Param(gokartPoseData));
+  }
+  public ApproximationDemo(Param param) {
+    super(param);
+    this.param = param;
     timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
-    param.string = gokartPoseData.list().get(0);
-    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    param.string = param.gpd().list().get(0);
     fieldsEditor.addUniversalListener(this::updateState);
     updateState();
   }
