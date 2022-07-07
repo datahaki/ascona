@@ -33,7 +33,7 @@ public class DeBoorCustomDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     @FieldPreferredWidth(200)
-    @FieldSelectionArray({"{0, 1}","{0, 0, 1, 1}"})
+    @FieldSelectionArray({ "{0, 1}", "{0, 0, 1, 1}" })
     public Tensor knots = Tensors.vector(0, 1);
   }
 

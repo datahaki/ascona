@@ -82,7 +82,6 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
       ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     return refined;

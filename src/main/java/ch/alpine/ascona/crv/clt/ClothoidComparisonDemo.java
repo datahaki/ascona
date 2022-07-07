@@ -9,13 +9,14 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.CurveVisualSet;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2CoveringClothoidDisplay;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
@@ -28,7 +29,6 @@ import ch.alpine.sophus.crv.clt.LagrangeQuadraticD;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataIndexed;
@@ -38,22 +38,25 @@ import ch.alpine.tensor.img.ColorDataLists;
  * number clothoid approximation to generate figures in report:
  * 
  * https://github.com/idsc-frazzoli/retina/files/3568308/20190903_appox_clothoids_with_ext_windings.pdf */
-// TODO ASCONA make as DubinsPathDemo
-public class ClothoidComparisonDemo extends AbstractDemo {
+public class ClothoidComparisonDemo extends ControlPointsDemo {
   private static final int WIDTH = 480;
   private static final int HEIGHT = 360;
-  private static final Tensor START = Array.zeros(3).unmodifiable();
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
+
+  public ClothoidComparisonDemo() {
+    super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
+    setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
+  }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
-    Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
+    Tensor control = getGeodesicControlPoints();
+    Tensor start = control.get(0);
+    Tensor mouse = control.get(1);
     // ---
     ManifoldDisplay manifoldDisplay = Se2CoveringClothoidDisplay.INSTANCE;
-    LeversRender leversRender = LeversRender.of(manifoldDisplay, Tensors.of(Array.zeros(3), mouse), null, geometricLayer, graphics);
-    leversRender.renderSequence();
     VisualSet visualSet = new VisualSet(ColorDataLists._097.cyclic().deriveWithAlpha(192));
     for (ClothoidTransitionSpace clothoidTransitionSpace : ClothoidTransitionSpace.values()) {
       int ordinal = clothoidTransitionSpace.ordinal();
@@ -63,7 +66,7 @@ public class ClothoidComparisonDemo extends AbstractDemo {
         graphics.setColor(color);
         graphics.drawString(clothoidTransitionSpace.name(), 0, 24 + ordinal * 14);
       }
-      ClothoidTransition clothoidTransition = clothoidTransitionSpace.connect(START, mouse);
+      ClothoidTransition clothoidTransition = clothoidTransitionSpace.connect(start, mouse);
       Clothoid clothoid = clothoidTransition.clothoid();
       Tensor points = clothoidTransition.linearized(RealScalar.of(geometricLayer.pixel2modelWidth(5)));
       new PathRender(color, 1.5f).setCurve(points, false).render(geometricLayer, graphics);

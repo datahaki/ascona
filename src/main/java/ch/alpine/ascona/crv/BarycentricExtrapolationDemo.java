@@ -63,7 +63,6 @@ public class BarycentricExtrapolationDemo extends LogWeightingDemo {
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
   }

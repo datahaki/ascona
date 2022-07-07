@@ -13,10 +13,10 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.FieldsEditor;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
@@ -50,10 +50,17 @@ public class S2DeltaDemo extends AbstractDemo {
 
   @ReflectionMarker
   public static class Param {
+    @FieldSlider
+    @FieldClip(min = "0", max = "1")
     public Scalar angle = RealScalar.of(0.1);
+    @FieldSlider
+    @FieldClip(min = "0", max = "1")
     public Scalar delta = RealScalar.of(0.1);
+    @FieldSlider
+    @FieldClip(min = "0", max = "0.1")
     public Scalar noise = RealScalar.of(0.01);
     @FieldInteger
+    @FieldClip(min = "1", max = "11")
     public Scalar width = RealScalar.of(5);
     public WindowFunctions f_window = WindowFunctions.FLAT_TOP;
     public WindowFunctions s_window = WindowFunctions.HANN;
@@ -65,12 +72,17 @@ public class S2DeltaDemo extends AbstractDemo {
     }
   }
 
-  private final Param param = new Param();
+  private final Param param;
   private SnDeltaContainer snDeltaRaw;
   private SnDeltaContainer snDeltaFil;
 
   public S2DeltaDemo() {
-    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public S2DeltaDemo(Param param) {
+    super(param);
+    this.param = param;
     fieldsEditor.addUniversalListener(this::compute);
     compute();
   }
@@ -81,7 +93,7 @@ public class S2DeltaDemo extends AbstractDemo {
     CurveSubdivision curveSubdivision = UniformResample.of(SnManifold.INSTANCE, SnManifold.INSTANCE, param.delta);
     Tensor sequence = domain.map(stf);
     sequence = curveSubdivision.string(sequence);
-    TensorUnaryOperator tuo = SnPerturbation.of(NormalDistribution.of(RealScalar.ZERO, param.noise));
+    TensorUnaryOperator tuo = SnPerturbation.of(NormalDistribution.of(param.noise.zero(), param.noise));
     sequence = Tensor.of(sequence.stream().map(tuo));
     ScalarUnaryOperator s_window = param.s_window.get();
     snDeltaRaw = new SnDeltaContainer(sequence, s_window);

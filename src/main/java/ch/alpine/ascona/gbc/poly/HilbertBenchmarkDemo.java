@@ -17,7 +17,6 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.d2.HilbertPolygon;
 import ch.alpine.tensor.RealScalar;
@@ -42,11 +41,17 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
     public Boolean ctrl = false;
   }
 
-  private final Param param = new Param();
+  private final Param param;
   private Tensor polygon;
 
   public HilbertBenchmarkDemo() {
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::updateCtrl);
+    this(new Param());
+  }
+
+  public HilbertBenchmarkDemo(Param param) {
+    super(param);
+    this.param = param;
+    fieldsEditor.addUniversalListener(this::updateCtrl);
     // ---
     updateCtrl();
   }

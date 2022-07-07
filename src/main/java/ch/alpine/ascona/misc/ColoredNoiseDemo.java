@@ -17,7 +17,7 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.math.noise.ColoredNoise;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -27,7 +27,6 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.sca.Clips;
 
 // TODO ASCONA separate standalone demos (like this one) from geometric/manifold demos
-@ReflectionMarker
 public class ColoredNoiseDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
@@ -42,14 +41,18 @@ public class ColoredNoiseDemo extends AbstractDemo {
     public transient Boolean generate = true;
   }
 
-  private final Param param = new Param();
-  // ---
+  private final Param param;
   private JFreeChart jFreeChart;
   private JFreeChart spectrogra;
 
   public ColoredNoiseDemo() {
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar).addUniversalListener(this::compute);
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::compute);
+    this(new Param());
+  }
+
+  public ColoredNoiseDemo(Param param) {
+    super(param);
+    this.param = param;
+    fieldsEditor.addUniversalListener(this::compute);
     // ---
     timerFrame.geometricComponent.setRotatable(false);
     compute();
@@ -82,6 +85,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new ColoredNoiseDemo().setVisible(1000, 800);
   }
 }

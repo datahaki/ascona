@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class GeodesicCausalFiltersTest {
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testSimple(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();

@@ -15,7 +15,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -26,15 +25,24 @@ import ch.alpine.tensor.sca.Ceiling;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-@ReflectionMarker
 public class CirclesDemo extends AbstractDemo {
-  @FieldSlider
-  @FieldClip(min = "1", max = "20")
-  public Scalar quality = RealScalar.of(10);
-  public Boolean plot = true;
+  @ReflectionMarker
+  public static class Param {
+    @FieldSlider
+    @FieldClip(min = "1", max = "20")
+    public Scalar quality = RealScalar.of(10);
+    public Boolean plot = true;
+  }
+
+  private final Param param;
 
   public CirclesDemo() {
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public CirclesDemo(Param param) {
+    super(param);
+    this.param = param;
   }
 
   @Override
@@ -43,15 +51,15 @@ public class CirclesDemo extends AbstractDemo {
     VisualSet visualSet = new VisualSet();
     for (Tensor _x : Subdivide.of(0.1, 2, 20)) {
       Scalar radius = (Scalar) _x;
-      int n = Math.max(2, Ceiling.intValueExact(Sqrt.FUNCTION.apply(radius).multiply(quality)));
+      int n = Math.max(2, Ceiling.intValueExact(Sqrt.FUNCTION.apply(radius).multiply(param.quality)));
       Tensor curve = CirclePoints.of(n).multiply(radius);
       graphics.draw(geometricLayer.toPath2D(curve, true));
-      if (plot)
+      if (param.plot)
         visualSet.add(Subdivide.increasing(Clips.unit(), curve.length() - 1), //
             RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
                 curve));
     }
-    if (plot) {
+    if (param.plot) {
       JFreeChart jFreeChart = ListPlot.of(visualSet, true);
       jFreeChart.draw(graphics, new Rectangle2D.Double(0, 0, 400, 300));
     }

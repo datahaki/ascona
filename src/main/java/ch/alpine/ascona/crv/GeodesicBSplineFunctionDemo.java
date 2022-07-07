@@ -51,7 +51,6 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
     RenderQuality.setQuality(graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     // ---

@@ -88,7 +88,6 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
       ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     return refined;

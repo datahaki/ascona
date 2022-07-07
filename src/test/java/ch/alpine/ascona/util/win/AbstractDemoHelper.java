@@ -20,7 +20,7 @@ public enum AbstractDemoHelper {
       BufferedImage bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
       FieldsAssignment outerFieldsAssignment = OuterFieldsAssignment.of(object, () -> {
         try {
-          abstractDemo.fieldsEditor.notifyListeners();
+          abstractDemo.fieldsEditor.notifyUniversalListeners();
           abstractDemo.render(geometricLayer, bufferedImage.createGraphics());
         } catch (Exception exception) {
           exception.printStackTrace();

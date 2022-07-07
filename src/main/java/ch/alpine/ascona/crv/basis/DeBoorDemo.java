@@ -31,7 +31,6 @@ public class DeBoorDemo extends AbstractDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final Color TICKS_COLOR = new Color(0, 0, 0, 128);
 
-  // ---
   @ReflectionMarker
   public static class Param {
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6" })

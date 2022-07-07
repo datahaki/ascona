@@ -148,7 +148,6 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       }
     } else {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, mean, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderOrigin();
       leversRender.renderIndexP();
       leversRender.renderIndexX();

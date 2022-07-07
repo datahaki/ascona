@@ -24,8 +24,6 @@ import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.FieldsEditor;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.LieGroup;
@@ -55,9 +53,9 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   protected Tensor _control = null;
 
   protected AbstractSpectrogramDemo(GokartPoseSpec gokartPoseSpec) {
+    super(gokartPoseSpec);
     this.gokartPoseSpec = gokartPoseSpec;
     gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
-    FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(gokartPoseSpec, timerFrame.jToolBar);
     fieldsEditor.addUniversalListener(this::updateState);
     timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
     // ---

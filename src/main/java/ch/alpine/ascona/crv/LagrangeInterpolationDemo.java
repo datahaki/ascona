@@ -93,7 +93,6 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
       ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     return refined;

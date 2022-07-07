@@ -128,7 +128,6 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
   }

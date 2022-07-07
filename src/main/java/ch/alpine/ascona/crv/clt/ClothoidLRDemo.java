@@ -31,6 +31,7 @@ import ch.alpine.tensor.red.Nest;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
+// TODO ASCONA make as CPD
 public class ClothoidLRDemo extends AbstractDemo {
   private static final Tensor START = Array.zeros(3).unmodifiable();
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 100);

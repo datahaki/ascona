@@ -10,7 +10,6 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.Cielab;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -21,28 +20,36 @@ import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.red.Times;
 
 /** uses ColorSpace.CS_CIEXYZ to interpolate colors */
-@ReflectionMarker
 public class ColorInterpDemo extends AbstractDemo {
   private static final ColorSpace COLOR_SPACE = ColorSpace.getInstance(ColorSpace.CS_CIEXYZ);
-  // ---
-  public Color c1 = Color.RED;
-  public Color c2 = Color.BLUE;
-  public Tensor offset = Tensors.vector(0, 0, 0);
-  public Tensor weights = Tensors.vector(1, 1, 1);
-
-  public ColorInterpDemo() {
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
-  }
-
   private static final int HEIGHT = 100;
   private static final int HEIGHT_INCR = 110;
+
+  @ReflectionMarker
+  public static class Param {
+    public Color c1 = Color.RED;
+    public Color c2 = Color.BLUE;
+    public Tensor offset = Tensors.vector(0, 0, 0);
+    public Tensor weights = Tensors.vector(1, 1, 1);
+  }
+
+  private final Param param;
+
+  public ColorInterpDemo() {
+    this(new Param());
+  }
+
+  public ColorInterpDemo(Param param) {
+    super(param);
+    this.param = param;
+  }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     float[] rgba1 = new float[4];
-    c1.getComponents(rgba1);
+    param.c1.getComponents(rgba1);
     float[] rgba2 = new float[4];
-    c2.getComponents(rgba2);
+    param.c2.getComponents(rgba2);
     // ---
     {
       Tensor tensor = Tensors.of(Subdivide.of(Tensors.vectorFloat(rgba1), Tensors.vectorFloat(rgba2), 255));
@@ -57,8 +64,8 @@ public class ColorInterpDemo extends AbstractDemo {
       float[] xyz2 = COLOR_SPACE.fromRGB(rgba2);
       Tensor result = Tensors.empty();
       for (Tensor xyz : Subdivide.of( //
-          Times.of(Tensors.vectorFloat(xyz1), weights).add(offset), //
-          Times.of(Tensors.vectorFloat(xyz2), weights).add(offset), //
+          Times.of(Tensors.vectorFloat(xyz1), param.weights).add(param.offset), //
+          Times.of(Tensors.vectorFloat(xyz2), param.weights).add(param.offset), //
           255)) {
         float[] rgb = COLOR_SPACE.toRGB(Primitives.toFloatArray(xyz));
         Tensor append = Tensors.vectorFloat(rgb);
@@ -75,8 +82,8 @@ public class ColorInterpDemo extends AbstractDemo {
       Tensor lab1 = cielab.xyz2lab(Tensors.vectorFloat(xyz1));
       Tensor lab2 = cielab.xyz2lab(Tensors.vectorFloat(xyz2));
       for (Tensor lab : Subdivide.of( //
-          Times.of(lab1, weights).add(offset), //
-          Times.of(lab2, weights).add(offset), //
+          Times.of(lab1, param.weights).add(param.offset), //
+          Times.of(lab2, param.weights).add(param.offset), //
           255)) {
         Tensor xyz = cielab.lab2xyz(lab);
         float[] rgb = COLOR_SPACE.toRGB(Primitives.toFloatArray(xyz));
@@ -90,7 +97,7 @@ public class ColorInterpDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.DARK.updateComponentTreeUI();
+    LookAndFeels.LIGHT.updateComponentTreeUI();
     new ColorInterpDemo().setVisible(1000, 600);
   }
 }

@@ -59,7 +59,6 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     Tensor sequence = getGeodesicControlPoints();
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     int n = sequence.length();

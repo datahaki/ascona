@@ -13,8 +13,6 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.FieldsEditor;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -53,6 +51,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
         manifoldDisplay().background().render(geometricLayer, graphics);
       }
     });
+    timerFrame.geometricComponent.addRenderInterface(controlPointsRender);
   }
 
   // TODO ASCONA API function should not be here!

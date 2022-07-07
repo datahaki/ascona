@@ -15,8 +15,9 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -30,30 +31,38 @@ import ch.alpine.tensor.opt.nd.NdMap;
 import ch.alpine.tensor.opt.nd.NdMatch;
 import ch.alpine.tensor.opt.nd.NdTreeMap;
 import ch.alpine.tensor.red.Max;
-import ch.alpine.tensor.sca.Abs;
 
 /* package */ abstract class AbstractTreeMapDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     @FieldInteger
+    @FieldClip(min = "1", max = "5")
     public Scalar leafSizeMax = RealScalar.of(5);
     @FieldInteger
-    @FieldClip(min = "1", max = "10000")
+    @FieldSelectionArray({ "100", "200", "500", "1000", "2000", "5000", "10000" })
     public Scalar count = RealScalar.of(1000);
     @FieldInteger
     @FieldClip(min = "1", max = "20")
     public Scalar multi = RealScalar.of(10);
     @FieldInteger
-    public Scalar pCount = RealScalar.of(4);
+    public Scalar limit = RealScalar.of(4);
     public Boolean nearest = false;
     public CenterNorms centerNorms = CenterNorms._2;
+    @FieldSlider
+    @FieldClip(min = "0", max = "1")
+    public Scalar radius = RealScalar.of(0.3);
   }
 
-  private final Param param = new Param();
+  private final Param param;
   private final Tensor pointsAll;
 
   public AbstractTreeMapDemo() {
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public AbstractTreeMapDemo(Param param) {
+    super(param);
+    this.param = param;
     pointsAll = pointsAll(5000);
     timerFrame.geometricComponent.setModel2Pixel(DiagonalMatrix.of(200, -200, 1));
     timerFrame.geometricComponent.setOffset(300, 300);
@@ -72,7 +81,7 @@ import ch.alpine.tensor.sca.Abs;
       Point2D point2d = geometricLayer.toPoint2D(point);
       graphics.fillRect((int) point2d.getX(), (int) point2d.getY(), 2, 2);
     }
-    Scalar radius = Abs.FUNCTION.apply(mouse.Get(2).multiply(RealScalar.of(0.3)));
+    Scalar radius = param.radius;
     CoordinateBoundingBox actual = CoordinateBounds.of(points);
     NdMap<Void> ndMap = NdTreeMap.of(actual, param.leafSizeMax.number().intValue());
     Random random = new Random(1);
@@ -85,7 +94,7 @@ import ch.alpine.tensor.sca.Abs;
     Timing timing = Timing.started();
     CenterNorms centerNorms = param.centerNorms;
     NdCenterInterface ndCenterInterface = centerNorms.ndCenterInterface(xyz);
-    int limit = param.pCount.number().intValue();
+    int limit = param.limit.number().intValue();
     final Collection<NdMatch<Void>> collection;
     if (param.nearest) {
       GraphicNearest<Void> graphicNearest = //

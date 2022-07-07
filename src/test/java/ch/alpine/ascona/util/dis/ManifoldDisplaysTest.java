@@ -41,19 +41,19 @@ class ManifoldDisplaysTest {
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testSerializable(ManifoldDisplays manifoldDisplays) throws ClassNotFoundException, IOException {
     Serialization.copy(manifoldDisplays);
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testDimensions(ManifoldDisplays manifoldDisplays) {
     assertTrue(0 < manifoldDisplays.manifoldDisplay().dimensions());
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testShape(ManifoldDisplays manifoldDisplays) {
     Tensor shape = manifoldDisplays.manifoldDisplay().shape();
     List<Integer> list = Dimensions.of(shape);
@@ -62,7 +62,7 @@ class ManifoldDisplaysTest {
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testProject(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     Tensor tensor = manifoldDisplay.xya2point(Array.zeros(3));
@@ -72,7 +72,7 @@ class ManifoldDisplaysTest {
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testToPoint(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     Tensor xya = Tensors.vector(0.1, 0.2, 0.3);
@@ -84,21 +84,21 @@ class ManifoldDisplaysTest {
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testMatrixLiftNull(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     assertThrows(Exception.class, () -> manifoldDisplay.matrixLift(null));
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testGeodesicSpace(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     assertNotNull(manifoldDisplay.geodesicSpace());
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testBiinvariantMean(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     if (manifoldDisplay.geodesicSpace() instanceof HomogeneousSpace homogeneousSpace) {
@@ -124,7 +124,7 @@ class ManifoldDisplaysTest {
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testList(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
@@ -138,7 +138,7 @@ class ManifoldDisplaysTest {
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testToPoint2(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
@@ -151,7 +151,7 @@ class ManifoldDisplaysTest {
   }
 
   @ParameterizedTest
-  @EnumSource(ManifoldDisplays.class)
+  @EnumSource
   void testToPoint3(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     RandomSampleInterface randomSampleInterface = BoxRandomSample.of(CoordinateBoundingBox.of(Clips.unit(), Clips.unit(), Clips.unit()));
@@ -170,21 +170,20 @@ class ManifoldDisplaysTest {
       assertTrue(manifoldDisplays.manifoldDisplay().geodesicSpace() instanceof HomogeneousSpace);
   }
 
-  @Test
-  void testMetricConsistency() {
-    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.metricManifolds()) {
-      ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
-      RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
-      Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor q = RandomSample.of(randomSampleInterface);
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      MetricManifold metricManifold = (MetricManifold) manifoldDisplay.geodesicSpace();
-      Scalar distance = metricManifold.distance(p, q);
-      Tensor log = homogeneousSpace.exponential(p).vectorLog(q);
-      Scalar norm = metricManifold.norm(log);
-      if (!manifoldDisplays.equals(ManifoldDisplays.Spd2))
-        Tolerance.CHOP.requireClose(distance, norm);
-    }
+  @ParameterizedTest
+  @EnumSource
+  void testMetricConsistency(ManifoldDisplays manifoldDisplays) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
+    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor q = RandomSample.of(randomSampleInterface);
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    MetricManifold metricManifold = (MetricManifold) manifoldDisplay.geodesicSpace();
+    Scalar distance = metricManifold.distance(p, q);
+    Tensor log = homogeneousSpace.exponential(p).vectorLog(q);
+    Scalar norm = metricManifold.norm(log);
+    if (!manifoldDisplays.equals(ManifoldDisplays.Spd2))
+      Tolerance.CHOP.requireClose(distance, norm);
   }
 
   @Test

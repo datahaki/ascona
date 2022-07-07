@@ -92,7 +92,6 @@ public class BSplineBasisDemo extends ControlPointsDemo {
     Tensor refined = Subdivide.of(0, effective.length() - 1, 4 << _levels).map(bSplineFunction);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     Curvature2DRender.of(refined, false, geometricLayer, graphics);

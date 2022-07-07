@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.hs.r2.Extract2D;
@@ -69,13 +70,13 @@ public class ControlPointsRender implements RenderInterface {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     if (!isPositioningEnabled())
       return;
     mouse = mouseSe2CState.get();
     if (isPositioningOngoing())
       control.set(mouse, min_index);
     else {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
       final boolean hold;
       {
         Tensor mouse_dist = Tensor.of(control.stream() //
@@ -106,6 +107,9 @@ public class ControlPointsRender implements RenderInterface {
         graphics.setStroke(new BasicStroke());
       }
     }
+    // FIXME ASCONA synchronization
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
+    leversRender.renderSequence();
   }
 
   public final MouseAdapter mouseAdapter = new MouseAdapter() {

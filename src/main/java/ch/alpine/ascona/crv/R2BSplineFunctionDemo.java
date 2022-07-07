@@ -54,7 +54,6 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
     RenderQuality.setQuality(graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     return refined;

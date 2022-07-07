@@ -8,11 +8,11 @@ import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldFuse;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.sn.SnRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -63,13 +63,23 @@ public class SnRotationDemo extends AbstractDemo {
     }
   }
 
-  private final JButton jButton = new JButton("shuffle");
+  @ReflectionMarker
+  public static class Param {
+    // TODO ASCONA shuffle not effective
+    @FieldFuse
+    public transient Boolean shuffle = false;
+  }
+
+  private final Param param;
   private final List<SnRotationChunk> list = new ArrayList<>();
 
   public SnRotationDemo() {
-    // jButton.addActionListener(a -> setDimension(DIM));
-    timerFrame.jToolBar.add(jButton);
-    // setDimension(DIM);
+    this(new Param());
+  }
+
+  public SnRotationDemo(Param param) {
+    super(param);
+    this.param = param;
     list.add(new SnRotationChunk(3, 200, 3, 0.3, ColorDataGradients.PARULA.deriveWithOpacity(RealScalar.of(0.3))));
     // list.add(new SnRotationChunk(3, 50, 20, 0.02, ColorDataGradients.SOLAR.deriveWithOpacity(RealScalar.of(0.5))));
   }

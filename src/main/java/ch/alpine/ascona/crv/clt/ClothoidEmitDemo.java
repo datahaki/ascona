@@ -33,6 +33,7 @@ import ch.alpine.tensor.sca.Clips;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
+// TODO ASCONA make as CPD
 public class ClothoidEmitDemo extends AbstractDemo {
   private static final Tensor START = Array.zeros(3).unmodifiable();
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //

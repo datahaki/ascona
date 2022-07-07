@@ -24,7 +24,6 @@ import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.decim.DecimationResult;
@@ -80,8 +79,13 @@ public class CurveDecimationDemo extends AbstractDemo {
   }
 
   public CurveDecimationDemo(GokartPoseData gokartPoseData) {
-    param = new Param(gokartPoseData);
-    ToolbarFieldsEditor.add(param, timerFrame.jToolBar).addUniversalListener(this::updateState);
+    this(new Param(gokartPoseData));
+  }
+
+  public CurveDecimationDemo(Param param) {
+    super(param);
+    this.param = param;
+    fieldsEditor.addUniversalListener(this::updateState);
     // ---
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     updateState();

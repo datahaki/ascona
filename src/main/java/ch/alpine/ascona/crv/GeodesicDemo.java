@@ -69,7 +69,6 @@ public class GeodesicDemo extends ControlPointsDemo {
     {
       Tensor sequence = Subdivide.of(0, 1, 1).map(scalarTensorFunction);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     if (param.comb) {

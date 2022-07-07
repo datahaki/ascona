@@ -23,8 +23,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.FieldsEditor;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
@@ -101,6 +99,7 @@ public class ApproximationDemo extends AbstractDemo {
   public ApproximationDemo(GokartPoseData gokartPoseData) {
     this(new Param(gokartPoseData));
   }
+
   public ApproximationDemo(Param param) {
     super(param);
     this.param = param;

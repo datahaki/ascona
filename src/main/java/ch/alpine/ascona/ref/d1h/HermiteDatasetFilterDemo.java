@@ -22,7 +22,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
@@ -72,6 +71,7 @@ public class HermiteDatasetFilterDemo extends AbstractDemo {
   public HermiteDatasetFilterDemo(GokartPoseDataV2 gokartPoseData) {
     this(new Param(gokartPoseData));
   }
+
   public HermiteDatasetFilterDemo(Param param) {
     super(param);
     this.param = param;

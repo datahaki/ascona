@@ -8,13 +8,13 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -32,17 +32,28 @@ import ch.alpine.tensor.sca.Clips;
 
 @ReflectionMarker
 public class NonuniformSplineDemo extends ControlPointsDemo {
-  @FieldInteger
-  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
-  public Scalar degree = RealScalar.of(1);
-  @FieldInteger
-  @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" })
-  public Scalar refine = RealScalar.of(4);
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.R2_ONLY);
+    }
+
+    @FieldInteger
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
+    public Scalar degree = RealScalar.of(1);
+    @FieldInteger
+    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" })
+    public Scalar refine = RealScalar.of(4);
+  }
+
+  private final Param param;
 
   public NonuniformSplineDemo() {
-    super(true, ManifoldDisplays.R2_ONLY);
-    // ---
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public NonuniformSplineDemo(Param param) {
+    super(param);
+    this.param = param;
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 0, 0}}"));
   }
@@ -51,8 +62,8 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RenderQuality.setQuality(graphics);
-    int _degree = degree.number().intValue();
-    int _levels = refine.number().intValue();
+    int _degree = param.degree.number().intValue();
+    int _levels = param.refine.number().intValue();
     Tensor control = getGeodesicControlPoints();
     if (1 < control.length()) {
       Tensor _effective = control;
@@ -68,7 +79,6 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
       Curvature2DRender.of(Transpose.of(Tensors.of(domain, values)), false, geometricLayer, graphics);
     }
     LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-    leversRender.renderSequence();
     leversRender.renderIndexP();
   }
 
