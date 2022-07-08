@@ -41,7 +41,7 @@ public enum ManifoldDisplays {
   }
 
   public GeodesicSpace geodesicSpace() {
-    return manifoldDisplay.geodesicSpace();
+    return manifoldDisplay().geodesicSpace();
   }
 
   public static final List<ManifoldDisplays> ALL = List.of(values());
@@ -73,14 +73,14 @@ public enum ManifoldDisplays {
   /** implement {@link D2Raster} */
   public static List<ManifoldDisplays> d2Rasters() {
     return Arrays.stream(values()) //
-        .filter(md -> md.geodesicSpace() instanceof D2Raster) //
+        .filter(md -> md.manifoldDisplay() instanceof D2Raster) //
         .toList();
   }
 
   /** implement {@link D2Raster} */
   public static List<ManifoldDisplays> metricD2Rasters() {
     return Arrays.stream(values()) //
-        .filter(md -> md.geodesicSpace() instanceof D2Raster) //
+        .filter(md -> md.manifoldDisplay() instanceof D2Raster) //
         .filter(md -> md.geodesicSpace() instanceof MetricManifold) //
         .toList();
   }

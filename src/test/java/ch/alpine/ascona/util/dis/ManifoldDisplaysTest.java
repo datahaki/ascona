@@ -170,20 +170,26 @@ class ManifoldDisplaysTest {
       assertTrue(manifoldDisplays.manifoldDisplay().geodesicSpace() instanceof HomogeneousSpace);
   }
 
-  @ParameterizedTest
-  @EnumSource
-  void testMetricConsistency(ManifoldDisplays manifoldDisplays) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
-    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
-    Tensor p = RandomSample.of(randomSampleInterface);
-    Tensor q = RandomSample.of(randomSampleInterface);
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    MetricManifold metricManifold = (MetricManifold) manifoldDisplay.geodesicSpace();
-    Scalar distance = metricManifold.distance(p, q);
-    Tensor log = homogeneousSpace.exponential(p).vectorLog(q);
-    Scalar norm = metricManifold.norm(log);
-    if (!manifoldDisplays.equals(ManifoldDisplays.Spd2))
-      Tolerance.CHOP.requireClose(distance, norm);
+  @Test
+  void testMetricConsistency() {
+    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.metricManifolds()) {
+      ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
+      RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
+      Tensor p = RandomSample.of(randomSampleInterface);
+      Tensor q = RandomSample.of(randomSampleInterface);
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      MetricManifold metricManifold = (MetricManifold) manifoldDisplay.geodesicSpace();
+      Scalar distance = metricManifold.distance(p, q);
+      Tensor log = homogeneousSpace.exponential(p).vectorLog(q);
+      Scalar norm = metricManifold.norm(log);
+      if (!manifoldDisplays.equals(ManifoldDisplays.Spd2))
+        Tolerance.CHOP.requireClose(distance, norm);
+    }
+  }
+
+  @Test
+  void testRaster() {
+    assertTrue(5 <= ManifoldDisplays.d2Rasters().size());
   }
 
   @Test
