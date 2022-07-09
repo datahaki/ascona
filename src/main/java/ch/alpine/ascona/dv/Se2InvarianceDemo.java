@@ -1,20 +1,19 @@
 // code by jph
-package ch.alpine.ascona.lev;
+package ch.alpine.ascona.dv;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-
-import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.lev.LeversHud;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupOps;
@@ -23,21 +22,28 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 
-public class Se2CoveringInvarianceDemo extends LogWeightingDemo {
-  private final JToggleButton jToggleAxes = new JToggleButton("axes");
-  private final JTextField jTextField = new JTextField();
+public class Se2InvarianceDemo extends ControlPointsDemo {
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.SE2C_SE2);
+      drawControlPoints = false;
+    }
 
-  public Se2CoveringInvarianceDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2, LogWeightings.list());
-    {
-      timerFrame.jToolBar.add(jToggleAxes);
-    }
-    {
-      jTextField.setText("{1, 1, 3}");
-      jTextField.setPreferredSize(new Dimension(100, 28));
-      timerFrame.jToolBar.add(jTextField);
-    }
-    setManifoldDisplay(ManifoldDisplays.Se2);
+    @FieldSelectionArray({ "{0,0,0}", "{1,1,3}" })
+    public Tensor xya = Tensors.vector(1, 1, 3);
+  }
+
+  private final Param param;
+
+  public Se2InvarianceDemo() {
+    this(new Param());
+  }
+
+  public Se2InvarianceDemo(Param param) {
+    super(param);
+    this.param = param;
+    controlPointsRender.setMidpointIndicated(false);
     setControlPointsSe2(Tensors.fromString( //
         "{{0, 0, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}, {-3, 0, 0}}"));
     setControlPointsSe2(Tensors.fromString( //
@@ -46,8 +52,6 @@ public class Se2CoveringInvarianceDemo extends LogWeightingDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (jToggleAxes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
@@ -71,7 +75,7 @@ public class Se2CoveringInvarianceDemo extends LogWeightingDemo {
       }
       geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(10, 0)));
       try {
-        TensorMapping lieGroupOR = lieGroupOps.actionR(Tensors.fromString(jTextField.getText()));
+        TensorMapping lieGroupOR = lieGroupOps.actionR(param.xya);
         Tensor allR = lieGroupOR.slash(controlPointsAll);
         TensorMapping lieGroupOp = lieGroupOps.actionL(lieGroup.element(allR.get(0)).inverse().toCoordinate());
         Tensor result = lieGroupOp.slash(allR);

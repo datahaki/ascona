@@ -2,38 +2,29 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Graphics2D;
-import java.util.List;
 import java.util.Optional;
 
-import javax.swing.JToggleButton;
-
-import ch.alpine.ascona.util.api.PolygonCoordinates;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
 /** Visualization of
  * "Spherical Barycentric Coordinates"
  * by Torsten Langer, Alexander Belyaev, Hans-Peter Seidel, 2005 */
-public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplays> {
-  private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
-
+public class LbsBarycenterDemo extends ControlPointsDemo {
   public LbsBarycenterDemo() {
-    super(true, ManifoldDisplays.S2_ONLY, List.of(PolygonCoordinates.values()));
+    super(new AsconaParam(true, ManifoldDisplays.S2_ONLY));
     // ---
-    timerFrame.jToolBar.add(jToggleNeutral);
-    // ---
-    ManifoldDisplays manifoldDisplays = ManifoldDisplays.S2;
-    setManifoldDisplay(manifoldDisplays);
-    spun(manifoldDisplays);
-    addManifoldListener(this);
-    jToggleNeutral.setSelected(true);
+    setManifoldDisplay(ManifoldDisplays.S2);
+    setControlPointsSe2(Tensors.fromString( //
+        "{{-0.314, 0.662, 0.000}, {-0.809, 0.426, 0.000}, {-0.261, 0.927, 0.000}, {0.564, 0.685, 0.000}, {0.694, 0.220, 0.000}}"));
   }
 
   @Override // from RenderInterface
@@ -74,14 +65,6 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
         LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
         leversRender.renderSequence();
       }
-    }
-  }
-
-  @Override
-  public void spun(ManifoldDisplays manifoldDisplays) {
-    if (manifoldDisplays.equals(ManifoldDisplays.S2)) {
-      setControlPointsSe2(Tensors.fromString( //
-          "{{-0.314, 0.662, 0.000}, {-0.809, 0.426, 0.000}, {-0.261, 0.927, 0.000}, {0.564, 0.685, 0.000}, {0.694, 0.220, 0.000}}"));
     }
   }
 

@@ -6,13 +6,14 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AxesRender;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.LieGroupOps;
@@ -22,18 +23,30 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Timing;
 
-// TODO ASCONA ALG refactor with S2AnimationDemo
-public class Se2CoveringAnimationDemo extends LogWeightingDemo {
-  private final JToggleButton jToggleAxes = new JToggleButton("axes");
+public class Se2AnimationDemo extends ControlPointsDemo {
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.SE2C_SE2);
+      drawControlPoints = false;
+    }
+  }
+
+  private final Param param;
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();
   // ---
   private Tensor snapshotUncentered;
   private Tensor snapshot;
 
-  public Se2CoveringAnimationDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2, LogWeightings.list());
-    timerFrame.jToolBar.add(jToggleAxes);
+  public Se2AnimationDemo() {
+    this(new Param());
+  }
+
+  public Se2AnimationDemo(Param param) {
+    super(param);
+    this.param = param;
+    controlPointsRender.setMidpointIndicated(false);
     {
       jToggleAnimate.addActionListener(e -> {
         if (jToggleAnimate.isSelected()) {
@@ -50,7 +63,6 @@ public class Se2CoveringAnimationDemo extends LogWeightingDemo {
       });
       timerFrame.jToolBar.add(jToggleAnimate);
     }
-    setLogWeighting(LogWeightings.DISTANCES);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1.5, -1, -1}, {2, 1, 1}, {-0.5, 1.5, 2}, {-1, -1.5, -2}, {-1.5, 0, 0.3}}"));
   }
 
@@ -63,8 +75,6 @@ public class Se2CoveringAnimationDemo extends LogWeightingDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (jToggleAxes.isSelected())
-      AxesRender.INSTANCE.render(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
     LieGroupOps lieGroupOps = new LieGroupOps(lieGroup);
@@ -81,7 +91,7 @@ public class Se2CoveringAnimationDemo extends LogWeightingDemo {
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics));
       TensorMapping actionL = lieGroupOps.actionL(Tensors.vector(7, 0, 0));
       LeversHud.render( //
-          bitype(), //
+          Biinvariants.LEVERAGES, //
           LeversRender.of(manifoldDisplay, actionL.slash(sequence), actionL.apply(origin), geometricLayer, graphics));
     }
   }

@@ -21,6 +21,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.lie.r2.RotationMatrix;
 
+// TODO ASCONA merge with S2AnimationDemo
 public class R2AnimationDemo extends LogWeightingDemo {
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();
