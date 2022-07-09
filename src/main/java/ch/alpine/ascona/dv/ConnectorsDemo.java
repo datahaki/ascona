@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
+import javax.swing.JToggleButton;
+
 import ch.alpine.ascona.lev.AbstractHoverDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.LeversRender;
@@ -22,8 +24,11 @@ import ch.alpine.tensor.sca.Chop;
 
 // TODO ASCONA cannot always compute the biinvariant mean for S2/SE(2) ...
 public class ConnectorsDemo extends AbstractHoverDemo {
+  private final JToggleButton jToggleButton = new JToggleButton("connect");
+
   public ConnectorsDemo() {
     super(10);
+    timerFrame.jToolBar.add(jToggleButton);
   }
 
   @Override // from RenderInterface
@@ -35,26 +40,28 @@ public class ConnectorsDemo extends AbstractHoverDemo {
     leversRender.renderSequence();
     leversRender.renderOrigin();
     // ---
-    Tensor controlPoints = leversRender.getSequence();
-    int length = controlPoints.length();
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
-    graphics.setColor(Color.RED);
-    Tensor domain = Subdivide.of(0.0, 1.0, 20);
-    for (int index = 0; index < length; ++index) {
-      Tensor blend = UnitVector.of(length, index);
-      Interpolation interpolation = LinearInterpolation.of(Tensors.of(weights, blend));
-      try {
-        Tensor map = Tensor.of(domain.stream() //
-            .map(Scalar.class::cast) //
-            .map(interpolation::at) //
-            .map(w -> biinvariantMean.mean(controlPoints, w)) //
-            .map(manifoldDisplay::point2xy));
-        Path2D path2d = geometricLayer.toPath2D(map);
-        graphics.draw(path2d);
-      } catch (Exception e) {
-        System.err.println("no can do: " + manifoldDisplay);
+    if (jToggleButton.isSelected()) {
+      Tensor controlPoints = leversRender.getSequence();
+      int length = controlPoints.length();
+      ManifoldDisplay manifoldDisplay = manifoldDisplay();
+      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+      graphics.setColor(Color.RED);
+      Tensor domain = Subdivide.of(0.0, 1.0, 20);
+      for (int index = 0; index < length; ++index) {
+        Tensor blend = UnitVector.of(length, index);
+        Interpolation interpolation = LinearInterpolation.of(Tensors.of(weights, blend));
+        try {
+          Tensor map = Tensor.of(domain.stream() //
+              .map(Scalar.class::cast) //
+              .map(interpolation::at) //
+              .map(w -> biinvariantMean.mean(controlPoints, w)) //
+              .map(manifoldDisplay::point2xy));
+          Path2D path2d = geometricLayer.toPath2D(map);
+          graphics.draw(path2d);
+        } catch (Exception e) {
+          System.err.println("no can do: " + manifoldDisplay);
+        }
       }
     }
   }
