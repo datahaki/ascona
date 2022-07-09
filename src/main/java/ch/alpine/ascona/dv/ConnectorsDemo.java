@@ -1,10 +1,11 @@
 // code by jph
-package ch.alpine.ascona.lev;
+package ch.alpine.ascona.dv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
+import ch.alpine.ascona.lev.AbstractHoverDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -20,7 +21,7 @@ import ch.alpine.tensor.itp.LinearInterpolation;
 import ch.alpine.tensor.sca.Chop;
 
 // TODO ASCONA cannot always compute the biinvariant mean for S2/SE(2) ...
-/* package */ class ConnectorsDemo extends AbstractHoverDemo {
+public class ConnectorsDemo extends AbstractHoverDemo {
   public ConnectorsDemo() {
     super(10);
   }

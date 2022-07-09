@@ -11,7 +11,7 @@ import ch.alpine.tensor.Tensor;
 
 public class CoordinatesDemo extends AbstractHoverDemo {
   public CoordinatesDemo() {
-    super(200);
+    super(10);
   }
 
   @Override // from RenderInterface

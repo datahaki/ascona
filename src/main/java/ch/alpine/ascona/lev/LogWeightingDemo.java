@@ -2,13 +2,17 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
 
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.dv.Biinvariant;
@@ -24,10 +28,11 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
 
-public abstract class LogWeightingDemo extends LogWeightingBase {
+public abstract class LogWeightingDemo extends ControlPointsDemo {
   private static final Tensor BETAS = Tensors.fromString("{0, 1/2, 1, 3/2, 7/4, 2, 5/2, 3}");
   // ---
   // TODO ASCONA DEMO manage by reflection and simplify class structure
+  protected final SpinnerLabel<LogWeighting> spinnerLogWeighting;
   private final SpinnerLabel<Biinvariants> spinnerBiinvariant = SpinnerLabel.of(Biinvariants.class);
   private final SpinnerLabel<VariogramFunctions> spinnerVariogram = SpinnerLabel.of(VariogramFunctions.class);
   private final SpinnerLabel<Scalar> spinnerBeta;
@@ -61,7 +66,17 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
   };
 
   public LogWeightingDemo(boolean addRemoveControlPoints, List<ManifoldDisplays> list, List<LogWeighting> array) {
-    super(addRemoveControlPoints, list, array);
+    super(new AsconaParam(addRemoveControlPoints, list));
+    {
+      spinnerLogWeighting = SpinnerLabel.of(array);
+      if (array.contains(LogWeightings.COORDINATE))
+        spinnerLogWeighting.setValue(LogWeightings.COORDINATE);
+      else
+        spinnerLogWeighting.setValue(array.get(0));
+      if (1 < array.size())
+        spinnerLogWeighting.addToComponentReduced(timerFrame.jToolBar, new Dimension(150, 28), "weights");
+    }
+    timerFrame.jToolBar.addSeparator();
     spinnerLogWeighting.addSpinnerListener(spinnerListener);
     {
       spinnerBiinvariant.setValue(Biinvariants.LEVERAGES);
@@ -96,7 +111,6 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
     return spinnerBiinvariant.getValue();
   }
 
-  @Override
   protected final Sedarim operator(Tensor sequence) {
     return logWeighting().sedarim(biinvariant(), variogram(), sequence);
   }
@@ -105,13 +119,47 @@ public abstract class LogWeightingDemo extends LogWeightingBase {
     return spinnerVariogram.getValue().of(spinnerBeta.getValue());
   }
 
-  @Override
   protected final TensorScalarFunction function(Tensor sequence, Tensor values) {
     return logWeighting().function(biinvariant(), variogram(), sequence, values);
   }
 
-  @Override
   protected void recompute() {
     // ---
+  }
+
+  public final void addMouseRecomputation() {
+    MouseAdapter mouseAdapter = new MouseAdapter() {
+      @Override
+      public void mousePressed(MouseEvent mouseEvent) {
+        switch (mouseEvent.getButton()) {
+        case MouseEvent.BUTTON1: // insert point
+          if (!controlPointsRender.isPositioningOngoing())
+            recompute();
+          break;
+        default:
+        }
+      }
+
+      @Override
+      public void mouseMoved(MouseEvent e) {
+        if (controlPointsRender.isPositioningOngoing())
+          recompute();
+      }
+    };
+    // ---
+    timerFrame.geometricComponent.jComponent.addMouseListener(mouseAdapter);
+    timerFrame.geometricComponent.jComponent.addMouseMotionListener(mouseAdapter);
+  }
+
+  /** Hint: override is possible for customization
+   * 
+   * @return */
+  protected LogWeighting logWeighting() {
+    return spinnerLogWeighting.getValue();
+  }
+
+  protected final void setLogWeighting(LogWeighting logWeighting) {
+    spinnerLogWeighting.setValue(logWeighting);
+    spinnerLogWeighting.reportToAll();
   }
 }
