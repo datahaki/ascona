@@ -10,6 +10,7 @@ import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.CrossAveraging;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
+import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -135,6 +136,12 @@ public enum LogWeightings implements LogWeighting {
   }, //
   ;
 
+  public ScalarUnaryOperator variogramForInterpolation() {
+    return name().startsWith(KRIGING.name()) || equals(INVERSE_COORDINATE) //
+        ? s -> s
+        : InversePowerVariogram.of(2);
+  }
+
   public static List<LogWeighting> list() {
     return List.of(values());
   }
@@ -145,6 +152,23 @@ public enum LogWeightings implements LogWeighting {
         LAGRAINATE, //
         KRIGING_COORDINATE, //
         INVERSE_COORDINATE);
+  }
+
+  public static List<LogWeightings> noDistances() {
+    return List.of( //
+        WEIGHTING, //
+        COORDINATE, //
+        LAGRAINATE, //
+        KRIGING, //
+        KRIGING_COORDINATE, //
+        INVERSE_COORDINATE);
+  }
+
+  public boolean forceMetric() {
+    return List.of( //
+        KRIGING, //
+        KRIGING_COORDINATE, //
+        INVERSE_COORDINATE).contains(this);
   }
 
   public static List<LogWeighting> averagings() {

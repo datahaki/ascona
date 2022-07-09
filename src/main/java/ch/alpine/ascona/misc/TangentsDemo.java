@@ -2,7 +2,9 @@
 package ch.alpine.ascona.misc;
 
 import java.awt.Graphics2D;
+import java.util.Optional;
 
+import ch.alpine.ascona.lev.PlaceWrap;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -11,16 +13,11 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.red.Times;
 
-public class S2LogDemo extends ControlPointsDemo {
-  public S2LogDemo() {
-    super(new AsconaParam(true, ManifoldDisplays.S2_ONLY));
+public class TangentsDemo extends ControlPointsDemo {
+  public TangentsDemo() {
+    super(new AsconaParam(true, ManifoldDisplays.manifolds()));
     controlPointsRender.setMidpointIndicated(false);
-    // ---
-    Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
-    timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
-    timerFrame.geometricComponent.setOffset(400, 400);
     // ---
     setControlPointsSe2(Tensors.fromString("{{-0.3, 0.0, 0}, {0.0, 0.5, 0.0}, {0.5, 0.5, 1}, {0.5, -0.4, 0}}"));
   }
@@ -28,10 +25,11 @@ public class S2LogDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    Tensor points = controlPointsRender.getGeodesicControlPoints(0, 1);
-    if (0 < points.length()) {
-      Tensor origin = points.get(0);
-      Tensor sequence = controlPointsRender.getGeodesicControlPoints(1, Integer.MAX_VALUE);
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
+    if (optional.isPresent()) {
+      Tensor origin = optional.orElseThrow();
+      Tensor sequence = placeWrap.getSequence();
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay(), sequence, origin, geometricLayer, graphics);
       leversRender.renderLevers();
@@ -39,6 +37,8 @@ public class S2LogDemo extends ControlPointsDemo {
       leversRender.renderSequence();
       leversRender.renderTangentsPtoX(true);
       leversRender.renderTangentsXtoP(true);
+      leversRender.renderIndexP();
+      leversRender.renderIndexX();
     }
   }
 
