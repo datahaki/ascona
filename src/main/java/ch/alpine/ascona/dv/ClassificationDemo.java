@@ -49,7 +49,7 @@ public class ClassificationDemo extends ControlPointsDemo {
     @FieldSelectionArray({ "10", "20", "50" })
     public Scalar size = RealScalar.of(20);
     @FieldFuse
-    public transient Boolean shuffle = false;
+    public transient Boolean shuffle;
   }
 
   @ReflectionMarker
