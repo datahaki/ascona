@@ -58,7 +58,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
     @FieldSelectionArray({ "2", "3", "4", "5" })
     public Scalar labels = RealScalar.of(3);
     @FieldFuse("shuffle")
-    public Boolean shuffle;
+    public transient Boolean shuffle = false;
   }
 
   @ReflectionMarker
@@ -112,7 +112,6 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    System.out.println("shuffle");
     int n = param0.size.number().intValue();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //

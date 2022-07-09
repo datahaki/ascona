@@ -48,7 +48,7 @@ public class OrderingDemo extends ControlPointsDemo {
     @FieldSelectionArray({ "10", "50", "100" })
     public Scalar size = RealScalar.of(100);
     @FieldFuse("shuffle")
-    public Boolean shuffle;
+    public transient Boolean shuffle = false;
   }
 
   @ReflectionMarker
@@ -87,7 +87,7 @@ public class OrderingDemo extends ControlPointsDemo {
     sequence = RandomSample.of(manifoldDisplay().randomSampleInterface(), param0.size.number().intValue());
   }
 
-  @Override // from AbstractHoverDemo
+  @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor origin = getGeodesicControlPoints().get(0);
