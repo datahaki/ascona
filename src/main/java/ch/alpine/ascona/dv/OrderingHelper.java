@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.arp.BarLegend;
@@ -57,7 +58,7 @@ import ch.alpine.tensor.sca.Clips;
           Clips.absolute(Pi.VALUE));
       new ImageRender(bufferedImage, coordinateBoundingBox).render(geometricLayer, graphics);
     }
-    {
+    if (Objects.nonNull(origin)){
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
       Path2D path2d = geometricLayer.toPath2D(shape, true);
       graphics.setColor(Color.DARK_GRAY);

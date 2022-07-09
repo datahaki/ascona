@@ -62,7 +62,7 @@ public class DbscanDemo extends AbstractDemo {
   public DbscanDemo(Param param) {
     super(param);
     this.param = param;
-    fieldsEditor.addUniversalListener(() -> {
+    fieldsEditor(0).addUniversalListener(() -> {
       if (param.shuffle) {
         param.shuffle = false;
         pointsAll = recomp();

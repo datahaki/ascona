@@ -54,7 +54,7 @@ public class BipartiteMatchingDemo extends AbstractDemo {
     this.param = param;
     controlPointsRender = ControlPointsRenders.create( //
         true, () -> ManifoldDisplays.R2.manifoldDisplay(), timerFrame.geometricComponent);
-    fieldsEditor.addUniversalListener(() -> {
+    fieldsEditor(0).addUniversalListener(() -> {
       ManifoldDisplay manifoldDisplay = ManifoldDisplays.R2.manifoldDisplay();
       Tensor tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), param.m.number().intValue());
       Tensor xyas = Tensor.of(tensor.stream().map(manifoldDisplay::point2xya));

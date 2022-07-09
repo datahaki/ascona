@@ -65,7 +65,7 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
   public SeriesHermiteSubdivisionDemo(Param param) {
     super(param);
     this.param = param;
-    fieldsEditor.addUniversalListener(this::compute);
+    fieldsEditor(0).addUniversalListener(this::compute);
     compute();
   }
 

@@ -23,9 +23,9 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   public final ControlPointsRender controlPointsRender;
   private final AsconaParam asconaParam;
 
-  public ControlPointsDemo(AsconaParam asconaParam) {
-    super(asconaParam);
-    this.asconaParam = asconaParam;
+  public ControlPointsDemo(Object... objects) {
+    super(objects);
+    this.asconaParam = (AsconaParam) objects[0];
     controlPointsRender = ControlPointsRenders.create( //
         asconaParam.addRemoveControlPoints, this::manifoldDisplay, timerFrame.geometricComponent);
     timerFrame.jToolBar.addSeparator();
@@ -58,11 +58,12 @@ public abstract class ControlPointsDemo extends AbstractDemo {
 
   public synchronized final void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
     asconaParam.manifoldDisplays = manifoldDisplays;
-    fieldsEditor.updateJComponents();
+    fieldsEditor(0).updateJComponents();
   }
 
+
   public void addManifoldListener(SpinnerListener<ManifoldDisplays> spinnerListener) {
-    fieldsEditor.addUniversalListener(() -> spinnerListener.spun(asconaParam.manifoldDisplays));
+    fieldsEditor(0).addUniversalListener(() -> spinnerListener.spun(asconaParam.manifoldDisplays));
   }
 
   /** @return */

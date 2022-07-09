@@ -51,7 +51,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
   public ColoredNoiseDemo(Param param) {
     super(param);
     this.param = param;
-    fieldsEditor.addUniversalListener(this::compute);
+    fieldsEditor(0).addUniversalListener(this::compute);
     // ---
     timerFrame.geometricComponent.setRotatable(false);
     compute();

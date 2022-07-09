@@ -5,8 +5,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import javax.swing.JToggleButton;
-
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -17,6 +15,8 @@ import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.sophus.crv.d2.PolyclipResult;
 import ch.alpine.sophus.crv.d2.PolygonCentroid;
 import ch.alpine.sophus.crv.d2.SutherlandHodgmanAlgorithm;
@@ -36,27 +36,44 @@ import ch.alpine.tensor.red.Times;
 
 public class SutherlandHodgmanAlgorithmDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict();
-  private static final Tensor CIRCLE = CirclePoints.of(7).multiply(RealScalar.of(2));
-  private static final SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);
-  // ---
-  private final JToggleButton jToggleButton = new JToggleButton("move");
+
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.R2_ONLY);
+    }
+
+    public Boolean move = false;
+    @FieldInteger
+    @FieldClip(min = "1", max = "10")
+    public Scalar n = RealScalar.of(4);
+  }
+
+  private final Param param;
 
   public SutherlandHodgmanAlgorithmDemo() {
-    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
-    timerFrame.jToolBar.add(jToggleButton);
+    this(new Param());
+  }
+
+  public SutherlandHodgmanAlgorithmDemo(Param param) {
+    super(param);
+    this.param = param;
     setControlPointsSe2(Tensor.of(CirclePoints.of(4).stream().map(row -> row.append(RealScalar.ZERO))));
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    boolean isMoving = jToggleButton.isSelected();
+    boolean isMoving = param.move;
     controlPointsRender.setPositioningEnabled(!isMoving);
     RenderQuality.setQuality(graphics);
     if (isMoving) {
       Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
       Se2Bijection se2Bijection = new Se2Bijection(Times.of(mouse, Tensors.vector(1, 1, 0.3)));
       Tensor sequence = Tensor.of(getGeodesicControlPoints().stream().map(se2Bijection.forward()));
+      // ---
+      Tensor CIRCLE = CirclePoints.of(param.n.number().intValue()).multiply(RealScalar.of(2));
+      SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);
+      // ---
       new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f).setCurve(sequence, true).render(geometricLayer, graphics);
       new PathRender(COLOR_DATA_INDEXED.getColor(3), 1.5f).setCurve(CIRCLE, true).render(geometricLayer, graphics);
       PolyclipResult polyclipResult = POLYGON_CLIP.apply(sequence);

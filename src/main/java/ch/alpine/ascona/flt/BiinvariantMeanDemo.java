@@ -76,7 +76,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---
-    fieldsEditor.addUniversalListener(() -> {
+    fieldsEditor(0).addUniversalListener(() -> {
       if (param.shuffle) {
         param.shuffle = false;
         shuffle();

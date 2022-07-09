@@ -63,7 +63,7 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     // ---
-    fieldsEditor.addUniversalListener(this::shufflePoints);
+    fieldsEditor(0).addUniversalListener(this::shufflePoints);
     // ---
     shufflePoints();
   }

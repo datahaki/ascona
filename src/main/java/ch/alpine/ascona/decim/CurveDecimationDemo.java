@@ -84,7 +84,7 @@ public class CurveDecimationDemo extends AbstractDemo {
   public CurveDecimationDemo(Param param) {
     super(param);
     this.param = param;
-    fieldsEditor.addUniversalListener(this::updateState);
+    fieldsEditor(0).addUniversalListener(this::updateState);
     // ---
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     updateState();

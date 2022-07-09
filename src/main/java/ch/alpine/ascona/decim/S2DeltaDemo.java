@@ -82,7 +82,7 @@ public class S2DeltaDemo extends AbstractDemo {
   public S2DeltaDemo(Param param) {
     super(param);
     this.param = param;
-    fieldsEditor.addUniversalListener(this::compute);
+    fieldsEditor(0).addUniversalListener(this::compute);
     compute();
   }
 

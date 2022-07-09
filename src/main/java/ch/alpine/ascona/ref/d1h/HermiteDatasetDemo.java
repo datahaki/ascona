@@ -89,7 +89,7 @@ public class HermiteDatasetDemo extends AbstractDemo {
     super(param);
     this.param = param;
     this.gokartPoseDataV2 = (GokartPoseDataV2) param.gpd();
-    fieldsEditor.addUniversalListener(this::updateState);
+    fieldsEditor(0).addUniversalListener(this::updateState);
     // ---
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     timerFrame.jToolBar.addSeparator();

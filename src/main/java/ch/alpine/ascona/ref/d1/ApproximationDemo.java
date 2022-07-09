@@ -105,7 +105,7 @@ public class ApproximationDemo extends AbstractDemo {
     timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     param.string = param.gpd().list().get(0);
-    fieldsEditor.addUniversalListener(this::updateState);
+    fieldsEditor(0).addUniversalListener(this::updateState);
     updateState();
   }
 

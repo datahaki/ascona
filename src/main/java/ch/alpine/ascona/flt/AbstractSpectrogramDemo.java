@@ -56,7 +56,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
     super(gokartPoseSpec);
     this.gokartPoseSpec = gokartPoseSpec;
     gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
-    fieldsEditor.addUniversalListener(this::updateState);
+    fieldsEditor(0).addUniversalListener(this::updateState);
     timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
     // ---
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);

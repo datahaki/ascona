@@ -50,7 +50,7 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
   public HilbertBenchmarkDemo(Param param) {
     super(param);
     this.param = param;
-    fieldsEditor.addUniversalListener(this::updateCtrl);
+    fieldsEditor(0).addUniversalListener(this::updateCtrl);
     // ---
     updateCtrl();
   }

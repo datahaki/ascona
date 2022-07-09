@@ -201,7 +201,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
 
   public void setLambda(Scalar lambda) {
     param.lambda = Round._6.apply(lambda);
-    fieldsEditor.updateJComponents();
+    fieldsEditor(0).updateJComponents();
   }
 
   public static void main(String[] args) {

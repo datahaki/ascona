@@ -3,6 +3,8 @@ package ch.alpine.ascona.util.win;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
 
 import ch.alpine.bridge.awt.WindowBounds;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -14,6 +16,8 @@ import ch.alpine.tensor.ext.HomeDirectory;
 @ReflectionMarker
 public abstract class AbstractDemo implements RenderInterface {
   public static void launch() {
+    LookAndFeels.LIGHT.updateComponentTreeUI();
+    // ---
     StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
     StackTraceElement stackTraceElement = stackTraceElements[2];
     try {
@@ -21,7 +25,6 @@ public abstract class AbstractDemo implements RenderInterface {
       Class<?> cls = Class.forName(clsName);
       Constructor<?> constructor = cls.getConstructor();
       AbstractDemo abstractDemo = (AbstractDemo) constructor.newInstance();
-      LookAndFeels.LIGHT.updateComponentTreeUI();
       File folder = HomeDirectory.file(".config", "ascona", "window");
       folder.mkdirs();
       File file = new File(folder, clsName + "_WindowBounds.properties");
@@ -34,24 +37,29 @@ public abstract class AbstractDemo implements RenderInterface {
 
   // ---
   public final TimerFrame timerFrame = new TimerFrame();
-  private final Object object;
-  protected final FieldsEditor fieldsEditor;
+  private final Object[] objects;
+  private final List<FieldsEditor> fieldsEditors = new ArrayList<>();
 
   /** @param object may be null */
-  public AbstractDemo(Object object) {
-    this.object = object;
+  public AbstractDemo(Object... objects) {
+    this.objects = objects;
     timerFrame.jFrame.setTitle(getClass().getSimpleName());
-    fieldsEditor = ToolbarFieldsEditor.add(object, timerFrame.jToolBar);
+    int index = 0;
+    for (Object object : objects) {
+      FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(object, timerFrame.jToolBar);
+      fieldsEditors.add(fieldsEditor);
+      if (++index < objects.length)
+        timerFrame.jToolBar.addSeparator();
+    }
     timerFrame.geometricComponent.addRenderInterface(this);
   }
 
-  @Deprecated
-  public AbstractDemo() {
-    this(null);
+  public Object[] objects() {
+    return objects;
   }
 
-  public Object object() {
-    return object;
+  public FieldsEditor fieldsEditor(int index) {
+    return fieldsEditors.get(index);
   }
 
   /** @param width

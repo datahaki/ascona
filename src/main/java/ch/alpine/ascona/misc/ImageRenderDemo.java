@@ -25,6 +25,7 @@ public class ImageRenderDemo extends AbstractDemo {
   private final BufferedImage grayscale;
 
   public ImageRenderDemo() {
+    
     bufferedImage = VehicleStatic.INSTANCE.bufferedImage_c();
     Tensor tensor = ImageFormat.from(bufferedImage);
     Tensor graysc = TensorMap.of(rgba -> Mean.of(rgba.extract(0, 3)), tensor, 2);

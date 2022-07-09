@@ -55,7 +55,7 @@ public enum ManifoldDisplays {
   }
 
   // ---
-  /** homogeneous spaces (have biinvariant mean) */
+  /** manifolds */
   public static List<ManifoldDisplays> manifolds() {
     return Arrays.stream(values()) //
         .filter(md -> md.geodesicSpace() instanceof Manifold) //
