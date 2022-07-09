@@ -48,7 +48,7 @@ public class ClassificationDemo extends ControlPointsDemo {
     @FieldInteger
     @FieldSelectionArray({ "10", "20", "50" })
     public Scalar size = RealScalar.of(20);
-    @FieldFuse("shuffle")
+    @FieldFuse
     public transient Boolean shuffle = false;
   }
 

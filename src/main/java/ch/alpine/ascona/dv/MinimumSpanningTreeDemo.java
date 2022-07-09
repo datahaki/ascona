@@ -62,7 +62,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
     @FieldInteger
     @FieldSelectionArray({ "10", "20", "30" })
     public Scalar size = RealScalar.of(20);
-    @FieldFuse("shuffle")
+    @FieldFuse
     public transient Boolean shuffle = false;
   }
 
@@ -93,7 +93,6 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    param0.shuffle = false;
     int n = param0.size.number().intValue();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //

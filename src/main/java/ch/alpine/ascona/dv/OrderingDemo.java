@@ -47,8 +47,8 @@ public class OrderingDemo extends ControlPointsDemo {
     @FieldInteger
     @FieldSelectionArray({ "10", "50", "100" })
     public Scalar size = RealScalar.of(100);
-    @FieldFuse("shuffle")
-    public transient Boolean shuffle = false;
+    @FieldFuse
+    public transient Boolean shuffle;
   }
 
   @ReflectionMarker

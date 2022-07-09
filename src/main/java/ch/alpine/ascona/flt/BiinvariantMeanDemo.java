@@ -60,7 +60,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
 
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public Boolean median = false;
-    @FieldFuse("shuffle")
+    @FieldFuse
     public transient Boolean shuffle = false;
     public Boolean vehicle = false;
   }

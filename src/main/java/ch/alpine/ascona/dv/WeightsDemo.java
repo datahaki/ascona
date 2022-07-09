@@ -44,8 +44,8 @@ public class WeightsDemo extends ControlPointsDemo {
     @FieldInteger
     @FieldSelectionArray({ "3", "5", "10" })
     public Scalar size = RealScalar.of(5);
-    @FieldFuse("shuffle")
-    public transient Boolean shuffle = false;
+    @FieldFuse
+    public transient Boolean shuffle;
   }
 
   @ReflectionMarker

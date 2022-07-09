@@ -41,7 +41,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
     @FieldInteger
     @FieldClip(min = "1", max = "10")
     public Scalar m = RealScalar.of(3);
-    @FieldFuse("shuffle")
+    @FieldFuse
     public transient Boolean shuffle = true;
   }
 

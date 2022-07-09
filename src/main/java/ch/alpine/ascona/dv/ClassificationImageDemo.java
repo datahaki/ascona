@@ -57,7 +57,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
     @FieldInteger
     @FieldSelectionArray({ "2", "3", "4", "5" })
     public Scalar labels = RealScalar.of(3);
-    @FieldFuse("shuffle")
+    @FieldFuse
     public transient Boolean shuffle = false;
   }
 

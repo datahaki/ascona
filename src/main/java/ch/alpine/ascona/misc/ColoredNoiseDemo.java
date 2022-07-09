@@ -36,7 +36,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
     @FieldPreferredWidth(150)
     @FieldInteger
     public Scalar length = RealScalar.of(300);
-    @FieldFuse("generate")
+    @FieldFuse
     public transient Boolean generate = true;
   }
 
