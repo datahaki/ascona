@@ -73,10 +73,10 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
 
   protected final ArrayPlotRender arrayPlotRender(Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator, int magnification) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
+    D2Raster d2Raster = (D2Raster) manifoldDisplay;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, fallback);
-    Tensor wgs = D2Raster.of(hsArrayPlot, refinement, arrayFunction);
+    Tensor wgs = D2Raster.of(d2Raster, refinement, arrayFunction);
     return ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient(), magnification, logWeighting().equals(LogWeightings.DISTANCES));
   }
 }

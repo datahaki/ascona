@@ -31,14 +31,14 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
     super(ManifoldDisplays.R2_ONLY, MixedLogWeightings.scattered());
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
+    D2Raster d2Raster = (D2Raster) manifoldDisplay;
     {
       jToggleRigidMotionFit.addActionListener(l -> recompute());
       timerFrame.jToolBar.add(jToggleRigidMotionFit);
     }
     timerFrame.geometricComponent.setOffset(300, 500);
     timerFrame.geometricComponent.addRenderInterfaceBackground( //
-        new BoundingBoxRender(hsArrayPlot.coordinateBoundingBox()));
+        new BoundingBoxRender(d2Raster.coordinateBoundingBox()));
     setControlPointsSe2(shufflePointsSe2(7));
     // deformed to:
     // "{{1.400, 4.067, 0.000}, {2.867, 4.167, 0.000}, {1.667, 2.283, 0.000}, {3.983, 2.283, 0.000}, {2.617, 1.200, 0.000}, {0.600, 0.350, 0.000}, {3.917,
@@ -59,8 +59,8 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
     int res = refinement();
     // TODO ASCONA ALG meshgrid functionality is already(?)/should be generalized
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
-    CoordinateBoundingBox coordinateBoundingBox = hsArrayPlot.coordinateBoundingBox();
+    D2Raster d2Raster = (D2Raster) manifoldDisplay;
+    CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
     Tensor dx = Subdivide.increasing(coordinateBoundingBox.getClip(0), res - 1);
     Tensor dy = Subdivide.increasing(coordinateBoundingBox.getClip(1), res - 3);
     Tensor domain = Outer.of(Tensors::of, dx, dy);

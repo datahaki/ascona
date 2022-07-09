@@ -23,8 +23,8 @@ public enum BackgroundOffscreen {
     int height = foreground.getHeight();
     BufferedImage background = new BufferedImage(_width, height, BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = background.createGraphics();
-    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
-    CoordinateBoundingBox coordinateBoundingBox = hsArrayPlot.coordinateBoundingBox();
+    D2Raster d2Raster = (D2Raster) manifoldDisplay;
+    CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
     Tensor matrix = ImageRender.pixel2model(coordinateBoundingBox, height, height);
     GeometricLayer geometricLayer = new GeometricLayer(Inverse.of(matrix));
     Scalar width = coordinateBoundingBox.getClip(0).width();
