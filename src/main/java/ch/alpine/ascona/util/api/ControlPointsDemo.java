@@ -17,7 +17,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
 /** class is used in other projects outside of owl */
-// TODO ASCONA possibly create TABs for each Manifold Display (in order to leave ctrl points)
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
 public abstract class ControlPointsDemo extends AbstractDemo {
   public final ControlPointsRender controlPointsRender;
