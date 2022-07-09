@@ -61,7 +61,7 @@ public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerList
       leversRender.renderSequence();
       leversRender.renderIndexP();
       leversRender.renderIndexX();
-      Sedarim sedarim = Biinvariants.METRIC.of(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), sequence);
+      Sedarim sedarim = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), sequence);
       try {
         Tensor weights = sedarim.sunder(origin);
         leversRender.renderWeights(weights);

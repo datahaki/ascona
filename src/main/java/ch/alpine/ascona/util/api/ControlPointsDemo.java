@@ -61,7 +61,6 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     fieldsEditor(0).updateJComponents();
   }
 
-
   public void addManifoldListener(SpinnerListener<ManifoldDisplays> spinnerListener) {
     fieldsEditor(0).addUniversalListener(() -> spinnerListener.spun(asconaParam.manifoldDisplays));
   }

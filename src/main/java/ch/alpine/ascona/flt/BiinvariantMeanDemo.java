@@ -119,7 +119,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke(1));
     if (param.median) {
       Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
-      Biinvariant biinvariant = map.getOrDefault(param.biinvariants, Biinvariants.LEVERAGES.of(homogeneousSpace));
+      Biinvariant biinvariant = map.getOrDefault(param.biinvariants, Biinvariants.LEVERAGES.ofSafe(homogeneousSpace));
       Sedarim sedarim = biinvariant.weighting(InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(biinvariantMean, sedarim, Chop._05);
       Optional<Tensor> optional = spatialMedian.uniform(sequence);

@@ -104,7 +104,7 @@ public abstract class LogWeightingDemo extends ControlPointsDemo {
     Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(manifold);
     Biinvariants biinvariants = bitype();
-    return map.getOrDefault(biinvariants, Biinvariants.LEVERAGES.of(manifold));
+    return map.getOrDefault(biinvariants, Biinvariants.LEVERAGES.ofSafe(manifold));
   }
 
   protected final Biinvariants bitype() {

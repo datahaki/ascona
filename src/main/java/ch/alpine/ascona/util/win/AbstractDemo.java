@@ -9,6 +9,7 @@ import java.util.List;
 import ch.alpine.bridge.awt.WindowBounds;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.FieldsEditor;
+import ch.alpine.bridge.ref.util.ReflectionMarkers;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.ext.HomeDirectory;
@@ -16,6 +17,7 @@ import ch.alpine.tensor.ext.HomeDirectory;
 @ReflectionMarker
 public abstract class AbstractDemo implements RenderInterface {
   public static void launch() {
+    ReflectionMarkers.INSTANCE.enableDebugPrint();
     LookAndFeels.LIGHT.updateComponentTreeUI();
     // ---
     StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();

@@ -114,7 +114,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   public Tensor distanceMatrix(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    Sedarim sedarim = Biinvariants.METRIC.of(homogeneousSpace).distances(sequence);
+    Sedarim sedarim = Biinvariants.METRIC.ofSafe(homogeneousSpace).distances(sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(sedarim::sunder));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix
