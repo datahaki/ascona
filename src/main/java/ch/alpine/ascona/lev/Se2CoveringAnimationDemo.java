@@ -68,12 +68,13 @@ public class Se2CoveringAnimationDemo extends LogWeightingDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
     LieGroupOps lieGroupOps = new LieGroupOps(lieGroup);
-    Optional<Tensor> optional = getOrigin();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
       if (jToggleAnimate.isSelected())
         setControlPointsSe2(lieGroupOps.conjugation(random(10 + timing.seconds() * 0.1, 0)).slash(snapshot));
       RenderQuality.setQuality(graphics);
-      Tensor sequence = getSequence();
+      Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.get();
       LeversHud.render( //
           Biinvariants.METRIC, //

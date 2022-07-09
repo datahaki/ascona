@@ -26,9 +26,10 @@ public class CoordinatesPlaceDemo extends LogWeightingDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Optional<Tensor> optional = getOrigin();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, getSequence(), optional.orElseThrow(), geometricLayer, graphics);
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, placeWrap.getSequence(), optional.orElseThrow(), geometricLayer, graphics);
       if (jCheckBoxL.isSelected())
         leversRender.renderLevers();
       leversRender.renderSequence();

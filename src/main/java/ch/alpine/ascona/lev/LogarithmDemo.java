@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.R2Display;
@@ -37,7 +38,7 @@ import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<ManifoldDisplays> {
+public class LogarithmDemo extends ControlPointsDemo implements SpinnerListener<ManifoldDisplays> {
   private static final GridRender GRID_RENDER = new GridRender(Tensors.vector(-1, 0, 1), Color.LIGHT_GRAY);
   private static final Color DOMAIN_F = new Color(192, 192, 64, 64);
   private static final Color DOMAIN_D = new Color(192, 192, 64, 192);
@@ -64,9 +65,10 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    Optional<Tensor> optional = getOrigin();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
-      Tensor sequence = getSequence();
+      Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.get();
       {
         LeversRender leversRender = //

@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.lev.AbstractPlaceDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -34,7 +34,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.red.Times;
 
-public class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
+public class SutherlandHodgmanAlgorithmDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict();
   private static final Tensor CIRCLE = CirclePoints.of(7).multiply(RealScalar.of(2));
   private static final SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);

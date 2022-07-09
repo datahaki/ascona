@@ -10,7 +10,8 @@ import java.util.Optional;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.lev.AbstractPlaceDemo;
+import ch.alpine.ascona.lev.PlaceWrap;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -37,7 +38,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.lie.r2.ConvexHull;
 import ch.alpine.tensor.red.Times;
 
-public class ExponentialDemo extends AbstractPlaceDemo {
+public class ExponentialDemo extends ControlPointsDemo {
   private static final int WIDTH = 300;
   // ---
   private final GenesisDequeProperties genesisDequeProperties = new GenesisDequeProperties();
@@ -58,12 +59,13 @@ public class ExponentialDemo extends AbstractPlaceDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Optional<Tensor> optional = getOrigin();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
       Tensor origin = optional.get();
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       Manifold manifold = homogeneousSpace;
-      final Tensor sequence = getSequence();
+      final Tensor sequence = placeWrap.getSequence();
       HsDesign hsDesign = new HsDesign(manifold);
       final Tensor levers2 = hsDesign.matrix(sequence, origin);
       {

@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.swing.JButton;
 
 import ch.alpine.ascona.lev.LogWeightingDemo;
+import ch.alpine.ascona.lev.PlaceWrap;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -59,9 +60,10 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Optional<Tensor> optional = getOrigin();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
-      Tensor sequence = getSequence();
+      Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.get();
       Sedarim sedarim = logWeighting().sedarim(biinvariant(), variogram(), sequence);
       Tensor weights = sedarim.sunder(origin);

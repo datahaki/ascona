@@ -45,8 +45,9 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Optional<Tensor> optional = getOrigin();
-    Tensor sequence = getSequence();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
+    Tensor sequence = placeWrap.getSequence();
     if (optional.isPresent() && 2 < sequence.length()) {
       Tensor origin = optional.get();
       LeversRender leversRender = //

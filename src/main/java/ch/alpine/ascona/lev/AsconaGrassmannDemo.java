@@ -47,8 +47,9 @@ public class AsconaGrassmannDemo extends LogWeightingDemo implements SpinnerList
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Optional<Tensor> optional = getOrigin();
-    Tensor sequence = getSequence();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
+    Tensor sequence = placeWrap.getSequence();
     if (optional.isPresent()) {
       Tensor origin = optional.get();
       LeversRender leversRender = //

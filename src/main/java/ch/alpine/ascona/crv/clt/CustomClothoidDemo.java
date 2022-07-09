@@ -10,7 +10,6 @@ import java.util.Objects;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
-import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -24,7 +23,7 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidContext;
 import ch.alpine.sophus.crv.clt.ClothoidSolutions;
@@ -34,7 +33,6 @@ import ch.alpine.sophus.crv.clt.mid.MidpointTangentOrder2;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -43,28 +41,40 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
+// TODO ASCONA much is broken
 public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListener {
   private static final Tensor CONFIG = Tensors.fromString("{{0, 0}, {3, 0}}");
   private static final PathRender PATH_RENDER = new PathRender(new Color(0, 0, 255, 128), 2f);
   private static final ClothoidSolutions CLOTHOID_SOLUTIONS = ClothoidSolutions.of(Clips.absolute(20.0));
   private static final Tensor LAMBDAS = CLOTHOID_SOLUTIONS.probes;
   private static final Tensor POINTER = Tensors.fromString("{{0, 0}, {-0.2, -1}, {+0.2, -1}}");
-  // ---
-  // TODO ASCONA use param design
+
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(false, ManifoldDisplays.CL_ONLY);
+    }
+
+    public Scalar lambda = RealScalar.ZERO;
+    @FieldInteger
+    public Scalar solution = RealScalar.ZERO;
+  }
+
   private final JSlider jSlider = new JSlider(0, LAMBDAS.length() - 1, LAMBDAS.length() / 2);
-  private final JTextField jTextField = new JTextField(10);
+  // private final JTextField jTextField = new JTextField(10);
   private final JLabel jLabel = new JLabel();
-  private final SpinnerLabel<Integer> spinnerSolution = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8);
+  // private final SpinnerLabel<Integer> spinnerSolution = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8);
   private static final Scalar MIN_RESOLUTION = RealScalar.of(0.1);
   // ---
   private ClothoidDefectContainer clothoidDefectContainer = null;
+  private final Param param;
 
   public CustomClothoidDemo() {
-    super(new AsconaParam(false, ManifoldDisplays.CL_ONLY));
-    {
-      jTextField.setPreferredSize(new Dimension(100, 28));
-      timerFrame.jToolBar.add(jTextField);
-    }
+    this(new Param());
+  }
+
+  public CustomClothoidDemo(Param param) {
+    super(param);
+    this.param = param;
     {
       jSlider.addChangeListener(this);
       jSlider.setPreferredSize(new Dimension(700, 28));
@@ -79,15 +89,16 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
       });
       timerFrame.jToolBar.add(jButton);
     }
-    spinnerSolution.addSpinnerListener(index -> {
-      Tensor lambdas2 = clothoidDefectContainer.search.lambdas();
-      try {
-        setLambda(lambdas2.Get(index));
-      } catch (Exception exception) {
-        // ---
-      }
-    });
-    spinnerSolution.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "sol. index");
+    // fieldsEditor.addUniversalListener(()much is b->);
+    // spinnerSolution.addSpinnerListener(index -> {
+    // Tensor lambdas2 = clothoidDefectContainer.search.lambdas();
+    // try {
+    // setLambda(lambdas2.Get(index));
+    // } catch (Exception exception) {
+    // // ---
+    // }
+    // });
+    // spinnerSolution.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "sol. index");
     {
       timerFrame.jToolBar.add(jLabel);
     }
@@ -129,14 +140,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
     // ---
     ClothoidContext clothoidContext = clothoidDefectContainer.clothoidContext;
     Scalar lambda = LAMBDAS.Get(jSlider.getValue());
-    try {
-      jTextField.setBackground(new Color(128 + 64, 255, 128 + 64));
-      lambda = Scalars.fromString(jTextField.getText());
-      if (!(lambda instanceof RealScalar))
-        throw new IllegalArgumentException();
-    } catch (Exception exception) {
-      jTextField.setBackground(new Color(255, 128 + 64, 128 + 64));
-    }
+    lambda = param.lambda;
     {
       geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.of(clothoidContext.s1(), clothoidContext.s2())));
       graphics.setColor(Color.RED);
@@ -196,7 +200,8 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   }
 
   public void setLambda(Scalar lambda) {
-    jTextField.setText(lambda.map(Round._6).toString());
+    param.lambda = Round._6.apply(lambda);
+    fieldsEditor.updateJComponents();
   }
 
   public static void main(String[] args) {

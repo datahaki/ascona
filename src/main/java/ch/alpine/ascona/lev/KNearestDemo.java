@@ -68,9 +68,10 @@ public class KNearestDemo extends LogWeightingDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    Optional<Tensor> optional = getOrigin();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
-      Tensor sequence = getSequence();
+      Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.get();
       // ---
       render(geometricLayer, graphics, sequence, origin, "");

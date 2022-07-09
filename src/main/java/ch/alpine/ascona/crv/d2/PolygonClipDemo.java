@@ -4,7 +4,7 @@ package ch.alpine.ascona.crv.d2;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.lev.AbstractPlaceDemo;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -30,7 +30,7 @@ import ch.alpine.tensor.lie.Cross;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.red.Mean;
 
-public class PolygonClipDemo extends AbstractPlaceDemo {
+public class PolygonClipDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict();
   private static final Tensor CIRCLE = CirclePoints.of(7).multiply(RealScalar.of(4));
   private static final SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);

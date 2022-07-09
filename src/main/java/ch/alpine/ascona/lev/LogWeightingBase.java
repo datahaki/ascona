@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -15,7 +16,7 @@ import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
 
-public abstract class LogWeightingBase extends AbstractPlaceDemo {
+public abstract class LogWeightingBase extends ControlPointsDemo {
   protected final SpinnerLabel<LogWeighting> spinnerLogWeighting;
 
   public LogWeightingBase(boolean addRemoveControlPoints, List<ManifoldDisplays> list, List<LogWeighting> array) {

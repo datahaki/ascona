@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -21,7 +22,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataGradients;
 
-public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<ManifoldDisplays> {
+public class AffineDemo extends ControlPointsDemo implements SpinnerListener<ManifoldDisplays> {
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
   private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
 
@@ -45,9 +46,10 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Optional<Tensor> optional = getOrigin();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
-      Tensor sequence = getSequence();
+      Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.orElseThrow();
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);

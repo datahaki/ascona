@@ -41,9 +41,10 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Optional<Tensor> optional = getOrigin();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
-      Tensor sequence = getSequence();
+      Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.get();
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
@@ -69,7 +70,7 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
       }
     } else {
       LeversRender leversRender = //
-          LeversRender.of(manifoldDisplay, getSequence(), null, geometricLayer, graphics);
+          LeversRender.of(manifoldDisplay, placeWrap.getSequence(), null, geometricLayer, graphics);
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }

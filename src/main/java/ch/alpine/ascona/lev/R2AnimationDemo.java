@@ -57,7 +57,8 @@ public class R2AnimationDemo extends LogWeightingDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Optional<Tensor> optional = getOrigin();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
       if (jToggleAnimate.isSelected()) {
         Tensor vector = random(10 + timing.seconds() * 0.1, 0);
@@ -71,7 +72,7 @@ public class R2AnimationDemo extends LogWeightingDemo {
         setControlPointsSe2(list);
       }
       RenderQuality.setQuality(graphics);
-      Tensor sequence = getSequence();
+      Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.get();
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       LeversHud.render(bitype(), leversRender);

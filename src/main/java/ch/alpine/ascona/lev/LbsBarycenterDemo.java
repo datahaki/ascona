@@ -40,8 +40,9 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Optional<Tensor> optional = getOrigin();
-    Tensor sequence = getSequence();
+    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Optional<Tensor> optional = placeWrap.getOrigin();
+    Tensor sequence = placeWrap.getSequence();
     if (optional.isPresent() && 0 < sequence.length()) {
       Tensor origin = optional.get();
       LeversRender leversRender = //
