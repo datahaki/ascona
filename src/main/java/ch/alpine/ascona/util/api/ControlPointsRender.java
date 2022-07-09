@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -107,9 +108,10 @@ public class ControlPointsRender implements RenderInterface {
         graphics.setStroke(new BasicStroke());
       }
     }
-    // FIXME ASCONA synchronization
-    LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
-    leversRender.renderSequence();
+    if (asconaParam.drawControlPoints) {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
+    }
   }
 
   public final MouseAdapter mouseAdapter = new MouseAdapter() {
@@ -131,7 +133,7 @@ public class ControlPointsRender implements RenderInterface {
             ArgMinValue argMinValue = ArgMinValue.of(mouse_dist);
             min_index = argMinValue.index(getPositioningThreshold()).orElse(null);
           }
-          if (!isPositioningOngoing() && addRemoveControlPoints) {
+          if (!isPositioningOngoing() && asconaParam.addRemoveControlPoints) {
             // insert
             if (control.length() < 2 || !isMidpointIndicated()) {
               control = control.append(mouse);
@@ -145,7 +147,7 @@ public class ControlPointsRender implements RenderInterface {
         }
         break;
       case MouseEvent.BUTTON3: // remove point
-        if (addRemoveControlPoints) {
+        if (asconaParam.addRemoveControlPoints) {
           if (!isPositioningOngoing()) {
             Tensor mouse_dist = Tensor.of(control.stream() //
                 .map(mouse::subtract) //
@@ -164,19 +166,19 @@ public class ControlPointsRender implements RenderInterface {
       }
     }
   };
-  private final boolean addRemoveControlPoints;
+  private final AsconaParam asconaParam;
   private final Supplier<ManifoldDisplay> supplier;
   private final Supplier<Tensor> mouseSe2CState;
   private final Supplier<Tensor> model2Pixel;
 
-  public ControlPointsRender(boolean addRemoveControlPoints, Supplier<ManifoldDisplay> supplier, //
+  public ControlPointsRender(AsconaParam asconaParam, Supplier<ManifoldDisplay> supplier, //
       Supplier<Tensor> mouseSe2CState, //
       Supplier<Tensor> model2Pixel) {
-    this.addRemoveControlPoints = addRemoveControlPoints;
+    this.asconaParam = asconaParam;
     this.supplier = supplier;
     this.mouseSe2CState = mouseSe2CState;
     this.model2Pixel = model2Pixel;
-    setMidpointIndicated(addRemoveControlPoints);
+    setMidpointIndicated(asconaParam.addRemoveControlPoints);
   }
 
   /** when positioning is disabled, the mouse position is not indicated graphically

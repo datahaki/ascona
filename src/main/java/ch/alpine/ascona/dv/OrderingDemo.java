@@ -40,6 +40,8 @@ public class OrderingDemo extends ControlPointsDemo {
   public static class Param0 extends AsconaParam {
     public Param0() {
       super(false, ManifoldDisplays.manifolds());
+      manifoldDisplays = ManifoldDisplays.Se2;
+      drawControlPoints = false;
     }
 
     @FieldInteger

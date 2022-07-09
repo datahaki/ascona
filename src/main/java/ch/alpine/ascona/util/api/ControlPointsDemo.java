@@ -27,7 +27,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     super(objects);
     this.asconaParam = (AsconaParam) objects[0];
     controlPointsRender = ControlPointsRenders.create( //
-        asconaParam.addRemoveControlPoints, this::manifoldDisplay, timerFrame.geometricComponent);
+        asconaParam, this::manifoldDisplay, timerFrame.geometricComponent);
     timerFrame.jToolBar.addSeparator();
     if (asconaParam.addRemoveControlPoints) {
       JButton jButton = new JButton("clear");

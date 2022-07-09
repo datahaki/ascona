@@ -5,13 +5,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.api.ControlPointsRender;
-import ch.alpine.ascona.util.api.ControlPointsRenders;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -29,9 +28,13 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
 
 // TODO ASCONA generalize demo for 2 scattered sets on a manifold
-public class BipartiteMatchingDemo extends AbstractDemo {
+public class BipartiteMatchingDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.R2_ONLY);
+    }
+
     @FieldInteger
     @FieldClip(min = "1", max = "10")
     public Scalar n = RealScalar.of(5);
@@ -42,7 +45,6 @@ public class BipartiteMatchingDemo extends AbstractDemo {
     public transient Boolean shuffle = true;
   }
 
-  private final ControlPointsRender controlPointsRender;
   private final Param param;
 
   public BipartiteMatchingDemo() {
@@ -52,8 +54,6 @@ public class BipartiteMatchingDemo extends AbstractDemo {
   public BipartiteMatchingDemo(Param param) {
     super(param);
     this.param = param;
-    controlPointsRender = ControlPointsRenders.create( //
-        true, () -> ManifoldDisplays.R2.manifoldDisplay(), timerFrame.geometricComponent);
     fieldsEditor(0).addUniversalListener(() -> {
       ManifoldDisplay manifoldDisplay = ManifoldDisplays.R2.manifoldDisplay();
       Tensor tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), param.m.number().intValue());

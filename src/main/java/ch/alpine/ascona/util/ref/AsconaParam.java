@@ -9,6 +9,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 @ReflectionMarker
 public class AsconaParam extends SpaceParam {
   public final boolean addRemoveControlPoints;
+  public boolean drawControlPoints = true;
 
   public AsconaParam(boolean addRemoveControlPoints, List<ManifoldDisplays> list) {
     super(list);

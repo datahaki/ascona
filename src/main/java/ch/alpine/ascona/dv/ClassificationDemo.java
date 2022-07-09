@@ -2,22 +2,30 @@
 package ch.alpine.ascona.dv;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
+import java.util.List;
 
-import ch.alpine.ascona.lev.AbstractHoverDemo;
-import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.cls.Classification;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.bridge.swing.SpinnerListener;
+import ch.alpine.bridge.ref.ann.FieldFuse;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataIndexed;
@@ -26,50 +34,71 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-public class ClassificationDemo extends AbstractHoverDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED_O = ColorDataLists._097.cyclic();
-  private static final ColorDataIndexed COLOR_DATA_INDEXED_T = COLOR_DATA_INDEXED_O.deriveWithAlpha(128);
+public class ClassificationDemo extends ControlPointsDemo {
+  @ReflectionMarker
+  public static class Param0 extends AsconaParam {
+    public Param0() {
+      super(false, ManifoldDisplays.manifolds());
+      manifoldDisplays = ManifoldDisplays.Se2;
+      drawControlPoints = false;
+    }
+
+    @FieldInteger
+    @FieldSelectionArray({ "10", "20", "50" })
+    public Scalar size = RealScalar.of(20);
+    @FieldFuse("shuffle")
+    public Boolean shuffle;
+  }
+
+  @ReflectionMarker
+  public static class Param1 {
+    @FieldSelectionCallback("biinvariants")
+    public Biinvariants biinvariants = Biinvariants.LEVERAGES;
+    public ColorDataLists cdg = ColorDataLists._097;
+    public Boolean connect = true;
+    public Labels labels = Labels.ARG_MIN;
+
+    @ReflectionMarker
+    public List<Biinvariants> biinvariants() {
+      return Biinvariants.FAST;
+    }
+  }
+
+  private final Param0 param0;
+  private final Param1 param1;
+  private Tensor sequence;
   // ---
-  private final SpinnerLabel<Labels> spinnerLabels = SpinnerLabel.of(Labels.class);
   private Tensor vector;
 
   public ClassificationDemo() {
-    super(30);
-    {
-      SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
-        @Override
-        public void spun(LogWeighting logWeighting) {
-          if (logWeighting.equals(LogWeightings.DISTANCES))
-            spinnerLabels.setValue(Labels.ARG_MIN);
-          else
-            if ( //
-            logWeighting.equals(LogWeightings.WEIGHTING) || //
-                logWeighting.equals(LogWeightings.COORDINATE))
-              spinnerLabels.setValue(Labels.ARG_MAX);
-        }
-      };
-      spinnerLogWeighting.addSpinnerListener(spinnerListener);
-      spinnerListener.spun(logWeighting());
-    }
-    spinnerLabels.addToComponentReduced(timerFrame.jToolBar, new Dimension(100, 28), "label");
+    this(new Param0(), new Param1());
   }
 
-  @Override
+  public ClassificationDemo(Param0 param0, Param1 param1) {
+    super(param0, param1);
+    this.param0 = param0;
+    this.param1 = param1;
+    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}}"));
+    fieldsEditor(0).addUniversalListener(this::shuffle);
+    shuffle();
+  }
+
   protected void shuffle() {
-    super.shuffle();
     // assignment of random labels to points
-    vector = RandomVariate.of(DiscreteUniformDistribution.of(0, 3), spinnerCount.getValue());
+    int n = param0.size.number().intValue();
+    sequence = RandomSample.of(manifoldDisplay().randomSampleInterface(), n);
+    vector = RandomVariate.of(DiscreteUniformDistribution.of(0, 3), n);
   }
 
   @Override // from RenderInterface
-  protected void render(GeometricLayer geometricLayer, Graphics2D graphics, LeversRender leversRender) {
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    // GeodesicInterface geodesicInterface = geodesicDisplay.geodesicInterface();
-    Tensor controlPoints = leversRender.getSequence();
-    Tensor geodesicMouse = leversRender.getOrigin();
+    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Tensor origin = getGeodesicControlPoints().get(0);
     // ---
-    Tensor control = leversRender.getSequence();
-    Tensor weights = operator(control).sunder(leversRender.getOrigin());
+    Tensor weights = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), null, sequence) //
+        .sunder(origin);
     // leversRender.renderInfluenceX(ColorDataGradients.JET);
     // Tensor influence = new HsInfluence( //
     // geodesicDisplay.vectorLogManifold().logAt(leversRender.getOrigin()), //
@@ -84,13 +113,18 @@ public class ClassificationDemo extends AbstractHoverDemo {
     // Path2D line = geometricLayer.toPath2D(domain.map(curve));
     // graphics.draw(line);
     // }
-    leversRender.renderLevers(spinnerLabels.getValue().equals(Labels.ARG_MIN) //
-        ? Sqrt.of(weights).negate()
-        : weights);
+    if (param1.connect) {
+      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
+      leversRender.renderLevers(param1.labels.equals(Labels.ARG_MIN) //
+          ? Sqrt.of(weights).negate()
+          : weights);
+    }
     // ---
-    Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(1.4));
+    ColorDataIndexed COLOR_DATA_INDEXED_O = param1.cdg.cyclic();
+    ColorDataIndexed COLOR_DATA_INDEXED_T = COLOR_DATA_INDEXED_O.deriveWithAlpha(128);
+    Tensor shape = manifoldDisplay.shape();
     int index = 0;
-    for (Tensor point : controlPoints) {
+    for (Tensor point : sequence) {
       int label = vector.Get(index).number().intValue();
       PointsRender pointsRender = new PointsRender( //
           COLOR_DATA_INDEXED_T.getColor(label), //
@@ -99,15 +133,14 @@ public class ClassificationDemo extends AbstractHoverDemo {
       ++index;
     }
     // ---
-    Classification classification = spinnerLabels.getValue().apply(vector);
+    Classification classification = param1.labels.apply(vector);
     int bestLabel = classification.result(weights).getLabel();
-    geometricLayer.pushMatrix(manifoldDisplay.matrixLift(geodesicMouse));
-    Path2D path2d = geometricLayer.toPath2D(shape, true);
-    graphics.setColor(COLOR_DATA_INDEXED_T.getColor(bestLabel));
+    geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
+    Path2D path2d = geometricLayer.toPath2D(shape.multiply(RealScalar.of(1.4)), true);
+    graphics.setColor(COLOR_DATA_INDEXED_O.getColor(bestLabel));
     graphics.fill(path2d);
     // ---
     graphics.setStroke(new BasicStroke(1.5f));
-    graphics.setColor(Color.RED);
     graphics.draw(path2d);
     geometricLayer.popMatrix();
   }

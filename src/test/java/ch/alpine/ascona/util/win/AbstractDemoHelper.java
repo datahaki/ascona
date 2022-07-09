@@ -5,22 +5,23 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.FieldsAssignment;
 import ch.alpine.bridge.ref.util.ObjectProperties;
 import ch.alpine.bridge.ref.util.RandomFieldsAssignment;
 
 public class AbstractDemoHelper implements Runnable {
-  /** @param abstractDemo */
-  public static void offscreen(AbstractDemo abstractDemo) {
+  /** @param abstractDemo non-null */
+  public static AbstractDemoHelper offscreen(AbstractDemo abstractDemo) {
     AbstractDemoHelper abstractDemoHelper = new AbstractDemoHelper(abstractDemo);
-    abstractDemoHelper.randomize(50);
+    abstractDemoHelper.randomize(25);
     String string = abstractDemo.getClass().getSimpleName();
     if (0 < abstractDemoHelper.error.get())
-      System.err.println(string + " err=" + abstractDemoHelper.error.get() + " (of " + abstractDemoHelper.total.get() + ")");
-    else
-      System.out.println(string + " ok=" + abstractDemoHelper.total.get());
+      System.err.println(string + " " + abstractDemoHelper.error.get() + " Errors");
+    return abstractDemoHelper;
   }
 
+  @ReflectionMarker
   public static class Holder {
     public final Object[] objects;
 
@@ -42,7 +43,6 @@ public class AbstractDemoHelper implements Runnable {
     holder = new Holder(abstractDemo.objects());
     geometricLayer = new GeometricLayer(abstractDemo.timerFrame.geometricComponent.getModel2Pixel());
     bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
-    abstractDemo.render(geometricLayer, bufferedImage.createGraphics());
     fieldsAssignment = RandomFieldsAssignment.of(holder, this);
   }
 
@@ -57,10 +57,14 @@ public class AbstractDemoHelper implements Runnable {
         abstractDemo.fieldsEditor(index).notifyUniversalListeners();
       abstractDemo.render(geometricLayer, bufferedImage.createGraphics());
     } catch (Exception exception) {
-      exception.printStackTrace();
+      System.err.println("Error in " + abstractDemo.getClass().getSimpleName() + ":");
       System.err.println(ObjectProperties.join(holder));
       error.getAndIncrement();
     }
     total.getAndIncrement();
+  }
+
+  public int errors() {
+    return error.get();
   }
 }
