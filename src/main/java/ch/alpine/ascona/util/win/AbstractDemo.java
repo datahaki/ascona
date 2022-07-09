@@ -61,7 +61,10 @@ public abstract class AbstractDemo implements RenderInterface {
   }
 
   public FieldsEditor fieldsEditor(int index) {
-    return fieldsEditors.get(index);
+    if (index < fieldsEditors.size())
+      return fieldsEditors.get(index);
+    System.err.println("no can do");
+    return null;
   }
 
   /** @param width
