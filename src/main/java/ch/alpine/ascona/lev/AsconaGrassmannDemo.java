@@ -88,6 +88,6 @@ public class AsconaGrassmannDemo extends LogWeightingDemo implements SpinnerList
   }
 
   public static void main(String[] args) {
-    new AsconaGrassmannDemo().setVisible(1200, 900);
+    launch();
   }
 }

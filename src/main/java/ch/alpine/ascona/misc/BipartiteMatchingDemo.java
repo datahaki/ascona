@@ -18,7 +18,6 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -89,7 +88,6 @@ public class BipartiteMatchingDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new BipartiteMatchingDemo().setVisible(1000, 600);
+    launch();
   }
 }

@@ -68,6 +68,6 @@ public class BarycentricExtrapolationDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    new BarycentricExtrapolationDemo().setVisible(1200, 600);
+    launch();
   }
 }

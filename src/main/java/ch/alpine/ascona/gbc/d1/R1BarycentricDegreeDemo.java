@@ -17,7 +17,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.itp.BarycentricRationalInterpolation;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -113,7 +112,6 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new R1BarycentricDegreeDemo().setVisible(1000, 800);
+    launch();
   }
 }

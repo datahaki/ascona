@@ -17,7 +17,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.r2.Se2Bijection;
 import ch.alpine.sophus.hs.r2.Se2RigidMotionFit;
 import ch.alpine.sophus.lie.LieGroupElement;
@@ -114,7 +113,6 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new RigidMotionFitDemo().setVisible(1000, 800);
+    launch();
   }
 }

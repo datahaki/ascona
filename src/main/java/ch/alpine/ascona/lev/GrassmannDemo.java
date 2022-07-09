@@ -80,6 +80,6 @@ public class GrassmannDemo extends LogWeightingDemo implements SpinnerListener<M
   }
 
   public static void main(String[] args) {
-    new GrassmannDemo().setVisible(1200, 900);
+    launch();
   }
 }

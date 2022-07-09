@@ -13,7 +13,6 @@ import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.ascona.util.sym.SymSequence;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolationFilter;
 import ch.alpine.tensor.Tensor;
@@ -57,7 +56,6 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new GeodesicExtrapolationDemo().setVisible(1000, 600);
+    launch();
   }
 }

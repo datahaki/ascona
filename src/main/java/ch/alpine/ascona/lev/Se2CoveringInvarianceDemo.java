@@ -96,6 +96,6 @@ public class Se2CoveringInvarianceDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    new Se2CoveringInvarianceDemo().setVisible(1200, 600);
+    launch();
   }
 }

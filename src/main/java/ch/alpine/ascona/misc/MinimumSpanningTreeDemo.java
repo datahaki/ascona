@@ -106,6 +106,6 @@ public class MinimumSpanningTreeDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    new MinimumSpanningTreeDemo().setVisible(1000, 600);
+    launch();
   }
 }

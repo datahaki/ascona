@@ -25,7 +25,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.d2.PolygonRegion;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -195,7 +194,6 @@ import ch.alpine.tensor.sca.Sign;
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new R2BarycentricCoordinateDemo().setVisible(1200, 600);
+    launch();
   }
 }

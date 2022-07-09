@@ -21,7 +21,6 @@ import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Sedarim;
@@ -123,7 +122,6 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new Tsp2OptHeuristicDemo().setVisible(1000, 600);
+    launch();
   }
 }

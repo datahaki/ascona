@@ -17,7 +17,6 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.hs.sn.S2Loxodrome;
@@ -152,7 +151,6 @@ public class S2DeltaDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new S2DeltaDemo().setVisible(1200, 800);
+    launch();
   }
 }

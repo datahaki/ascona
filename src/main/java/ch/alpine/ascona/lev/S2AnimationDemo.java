@@ -82,6 +82,6 @@ public class S2AnimationDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    new S2AnimationDemo().setVisible(1200, 600);
+    launch();
   }
 }

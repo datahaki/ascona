@@ -8,7 +8,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.CrossAveraging;
 import ch.alpine.sophus.itp.RadialBasisFunctionInterpolation;
@@ -62,7 +61,6 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new R1RadialBasisFunctionDemo().setVisible(1000, 800);
+    launch();
   }
 }

@@ -15,7 +15,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
@@ -83,7 +82,6 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new NonuniformSplineDemo().setVisible(1000, 800);
+    launch();
   }
 }

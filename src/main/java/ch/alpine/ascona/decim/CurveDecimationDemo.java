@@ -24,7 +24,6 @@ import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.decim.CurveDecimation;
 import ch.alpine.sophus.decim.DecimationResult;
 import ch.alpine.sophus.decim.LineDistances;
@@ -152,7 +151,6 @@ public class CurveDecimationDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new CurveDecimationDemo(GokartPoseDataV2.RACING_DAY).setVisible(1000, 800);
+    launch();
   }
 }

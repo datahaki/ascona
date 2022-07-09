@@ -106,6 +106,6 @@ import ch.alpine.tensor.img.ColorDataLists;
   }
 
   public static void main(String[] args) {
-    new WeightsDemo().setVisible(1200, 600);
+    launch();
   }
 }

@@ -28,7 +28,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
@@ -204,7 +203,6 @@ public class CheckerBoardDemo extends LogWeightingBase //
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new CheckerBoardDemo().setVisible(1300, 900);
+    launch();
   }
 }

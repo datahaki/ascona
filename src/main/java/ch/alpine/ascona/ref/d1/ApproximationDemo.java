@@ -23,7 +23,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
@@ -174,7 +173,6 @@ public class ApproximationDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new ApproximationDemo(GokartPoseDataV2.RACING_DAY).setVisible(1000, 800);
+    launch();
   }
 }

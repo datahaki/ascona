@@ -17,7 +17,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
@@ -95,7 +94,6 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new HeadTailGeodesicDemo().setVisible(1000, 600);
+    launch();
   }
 }

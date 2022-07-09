@@ -7,7 +7,6 @@ import ch.alpine.ascona.lev.AbstractHoverDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.Tensor;
 
 public class CoordinatesDemo extends AbstractHoverDemo {
@@ -28,7 +27,6 @@ public class CoordinatesDemo extends AbstractHoverDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new CoordinatesDemo().setVisible(1200, 900);
+    launch();
   }
 }

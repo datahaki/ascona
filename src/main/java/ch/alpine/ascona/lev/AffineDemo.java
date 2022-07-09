@@ -91,6 +91,6 @@ public class AffineDemo extends AbstractPlaceDemo implements SpinnerListener<Man
   }
 
   public static void main(String[] args) {
-    new AffineDemo().setVisible(1200, 900);
+    launch();
   }
 }

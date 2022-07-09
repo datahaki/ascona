@@ -164,6 +164,6 @@ public class LogarithmDemo extends AbstractPlaceDemo implements SpinnerListener<
   }
 
   public static void main(String[] args) {
-    new LogarithmDemo().setVisible(1200, 600);
+    launch();
   }
 }

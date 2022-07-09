@@ -10,7 +10,6 @@ import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.sn.SnManifold;
 import ch.alpine.sophus.hs.sn.TSnProjection;
@@ -51,7 +50,6 @@ public class S2ExpDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new S2ExpDemo().setVisible(1000, 800);
+    launch();
   }
 }

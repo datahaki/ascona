@@ -16,7 +16,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.clt.Clothoid;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidComparators;
@@ -89,7 +88,6 @@ public class ClothoidEvolution extends AbstractPlaceDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new ClothoidEvolution().setVisible(1000, 600);
+    launch();
   }
 }

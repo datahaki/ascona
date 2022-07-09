@@ -46,6 +46,6 @@ public class CoordinatesPlaceDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    new CoordinatesPlaceDemo().setVisible(1200, 900);
+    launch();
   }
 }

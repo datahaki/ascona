@@ -20,7 +20,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.r2.Extract2D;
 import ch.alpine.sophus.math.Do;
@@ -121,7 +120,6 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new SeriesHermiteSubdivisionDemo().setVisible(1200, 600);
+    launch();
   }
 }

@@ -120,6 +120,6 @@ public class SutherlandHodgmanAlgorithmDemo extends AbstractPlaceDemo {
   }
 
   public static void main(String[] args) {
-    new SutherlandHodgmanAlgorithmDemo().setVisible(1000, 600);
+    launch();
   }
 }

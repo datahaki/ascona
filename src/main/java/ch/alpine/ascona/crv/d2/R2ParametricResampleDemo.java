@@ -15,7 +15,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.d2.ParametricResample;
 import ch.alpine.sophus.crv.d2.ResampleResult;
 import ch.alpine.tensor.RealScalar;
@@ -82,7 +81,6 @@ public class R2ParametricResampleDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new R2ParametricResampleDemo().setVisible(1000, 600);
+    launch();
   }
 }

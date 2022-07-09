@@ -70,6 +70,6 @@ public class OrderingPlaceDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    new OrderingPlaceDemo().setVisible(1200, 600);
+    launch();
   }
 }

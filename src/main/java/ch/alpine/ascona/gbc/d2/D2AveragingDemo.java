@@ -26,7 +26,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.VisualImage;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
@@ -186,7 +185,6 @@ public class D2AveragingDemo extends AnAveragingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new D2AveragingDemo().setVisible(1300, 800);
+    launch();
   }
 }

@@ -147,6 +147,6 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    new ClothoidBrushDemo().setVisible(1700, 800);
+    launch();
   }
 }

@@ -6,7 +6,6 @@ import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
 import ch.alpine.tensor.Tensor;
@@ -50,7 +49,6 @@ public class GeodesicSplitsDemo extends AbstractSplitsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new GeodesicSplitsDemo().setVisible(1000, 600);
+    launch();
   }
 }

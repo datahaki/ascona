@@ -105,6 +105,6 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
   }
 
   public static void main(String[] args) {
-    new LagrangeInterpolationDemo().setVisible(1000, 600);
+    launch();
   }
 }

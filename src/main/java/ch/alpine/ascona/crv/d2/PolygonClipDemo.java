@@ -101,6 +101,6 @@ public class PolygonClipDemo extends AbstractPlaceDemo {
   }
 
   public static void main(String[] args) {
-    new PolygonClipDemo().setVisible(1000, 600);
+    launch();
   }
 }

@@ -12,7 +12,6 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.clt.Clothoid;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
 import ch.alpine.sophus.crv.clt.LagrangeQuadraticD;
@@ -85,7 +84,6 @@ public class ClothoidDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new ClothoidDemo().setVisible(1000, 600);
+    launch();
   }
 }

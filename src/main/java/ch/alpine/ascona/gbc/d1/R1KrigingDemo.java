@@ -9,7 +9,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.Kriging;
 import ch.alpine.tensor.RationalScalar;
@@ -75,7 +74,6 @@ public class R1KrigingDemo extends A1AveragingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new R1KrigingDemo().setVisible(1000, 800);
+    launch();
   }
 }

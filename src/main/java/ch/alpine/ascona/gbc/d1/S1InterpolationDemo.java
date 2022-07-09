@@ -15,7 +15,6 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -90,7 +89,6 @@ public class S1InterpolationDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new S1InterpolationDemo().setVisible(1000, 800);
+    launch();
   }
 }

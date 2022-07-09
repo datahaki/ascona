@@ -95,7 +95,6 @@ public class SnRotationDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    SnRotationDemo snRotationDemo = new SnRotationDemo();
-    snRotationDemo.setVisible(800, 600);
+    launch();
   }
 }

@@ -22,7 +22,6 @@ import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.itp.BarycentricMetricInterpolation;
@@ -133,9 +132,6 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.INTELLI_J.updateComponentTreeUI();
-    Param param = new Param();
-    param.manifoldDisplays = ManifoldDisplays.R2;
-    new BarycentricRationalInterpolationDemo(param).setVisible(1200, 600);
+    launch();
   }
 }

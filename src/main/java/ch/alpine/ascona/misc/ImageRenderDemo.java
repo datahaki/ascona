@@ -10,7 +10,6 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.TensorMap;
@@ -55,7 +54,6 @@ public class ImageRenderDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new ImageRenderDemo().setVisible(1000, 600);
+    launch();
   }
 }

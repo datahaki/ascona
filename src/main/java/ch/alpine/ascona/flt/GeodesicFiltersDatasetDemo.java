@@ -12,7 +12,6 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.tensor.Tensor;
@@ -68,7 +67,6 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new GeodesicFiltersDatasetDemo().setVisible(1000, 800);
+    launch();
   }
 }

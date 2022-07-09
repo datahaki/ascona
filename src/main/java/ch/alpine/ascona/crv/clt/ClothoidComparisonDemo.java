@@ -21,7 +21,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.clt.Clothoid;
 import ch.alpine.sophus.crv.clt.ClothoidTransition;
 import ch.alpine.sophus.crv.clt.ClothoidTransitionSpace;
@@ -89,7 +88,6 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new ClothoidComparisonDemo().setVisible(1000, 390);
+    launch();
   }
 }

@@ -82,6 +82,6 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
   }
 
   public static void main(String[] args) {
-    new GeodesicCausalFilterDemo().setVisible(1000, 800);
+    launch();
   }
 }

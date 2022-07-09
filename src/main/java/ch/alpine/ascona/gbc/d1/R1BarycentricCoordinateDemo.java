@@ -31,6 +31,6 @@ public class R1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
   }
 
   public static void main(String[] args) {
-    new R1BarycentricCoordinateDemo().setVisible(1000, 800);
+    launch();
   }
 }

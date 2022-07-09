@@ -27,7 +27,6 @@ import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.dv.Biinvariant;
 import ch.alpine.sophus.dv.Biinvariants;
@@ -238,7 +237,6 @@ public class ClassificationImageDemo extends LogWeightingDemo implements ActionL
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new ClassificationImageDemo().setVisible(1300, 900);
+    launch();
   }
 }

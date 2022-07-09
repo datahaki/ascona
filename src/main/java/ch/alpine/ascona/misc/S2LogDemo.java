@@ -9,7 +9,6 @@ import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.red.Times;
@@ -44,7 +43,6 @@ public class S2LogDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new S2LogDemo().setVisible(1000, 800);
+    launch();
   }
 }

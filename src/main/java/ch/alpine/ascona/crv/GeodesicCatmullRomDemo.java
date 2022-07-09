@@ -18,7 +18,6 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.GeodesicCatmullRom;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.math.api.TensorMetric;
@@ -117,7 +116,6 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new GeodesicCatmullRomDemo().setVisible(1200, 600);
+    launch();
   }
 }

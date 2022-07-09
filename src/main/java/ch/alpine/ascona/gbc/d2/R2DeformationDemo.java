@@ -8,7 +8,6 @@ import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Sedarim;
@@ -83,7 +82,6 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new R2DeformationDemo().setVisible(1300, 800);
+    launch();
   }
 }

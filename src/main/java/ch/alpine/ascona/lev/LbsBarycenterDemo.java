@@ -85,6 +85,6 @@ public class LbsBarycenterDemo extends LogWeightingDemo implements SpinnerListen
   }
 
   public static void main(String[] args) {
-    new LbsBarycenterDemo().setVisible(1200, 900);
+    launch();
   }
 }

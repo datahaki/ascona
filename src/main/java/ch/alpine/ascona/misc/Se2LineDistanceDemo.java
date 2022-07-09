@@ -13,7 +13,6 @@ import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.decim.HsLineDistance;
 import ch.alpine.sophus.decim.HsLineDistanceLocal;
@@ -133,7 +132,6 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new Se2LineDistanceDemo().setVisible(1200, 600);
+    launch();
   }
 }

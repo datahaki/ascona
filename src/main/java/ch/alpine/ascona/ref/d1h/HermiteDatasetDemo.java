@@ -213,6 +213,6 @@ public class HermiteDatasetDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    new HermiteDatasetDemo(GokartPoseDataV2.RACING_DAY).setVisible(1000, 800);
+    launch();
   }
 }

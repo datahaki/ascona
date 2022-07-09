@@ -3,7 +3,6 @@ package ch.alpine.ascona.nd;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.Tensor;
 
 public class NdTreeMapDemo extends AbstractTreeMapDemo {
@@ -18,7 +17,6 @@ public class NdTreeMapDemo extends AbstractTreeMapDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new NdTreeMapDemo().setVisible(1000, 800);
+    launch();
   }
 }

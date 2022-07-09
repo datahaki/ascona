@@ -88,6 +88,6 @@ public class AsconaScatteredDemo extends LogWeightingDemo implements SpinnerList
   }
 
   public static void main(String[] args) {
-    new AsconaScatteredDemo().setVisible(1200, 900);
+    launch();
   }
 }

@@ -62,6 +62,6 @@ public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
   }
 
   public static void main(String[] args) {
-    new Se2BiinvariantMeanDemo().setVisible(1000, 800);
+    launch();
   }
 }

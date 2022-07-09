@@ -18,7 +18,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.RationalScalar;
@@ -94,7 +93,6 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new GeodesicDeBoorDemo().setVisible(1200, 600);
+    launch();
   }
 }

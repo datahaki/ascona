@@ -86,6 +86,6 @@ public class Se2CoveringAnimationDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    new Se2CoveringAnimationDemo().setVisible(1200, 600);
+    launch();
   }
 }

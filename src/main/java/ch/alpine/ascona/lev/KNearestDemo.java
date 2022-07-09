@@ -19,7 +19,6 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2.Se2Group;
@@ -130,7 +129,6 @@ public class KNearestDemo extends LogWeightingDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new KNearestDemo().setVisible(1200, 600);
+    launch();
   }
 }

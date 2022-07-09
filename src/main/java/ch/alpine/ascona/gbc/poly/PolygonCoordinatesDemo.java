@@ -22,7 +22,6 @@ import ch.alpine.ascona.util.ren.HueColorData;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.io.HtmlUtf8;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
@@ -130,7 +129,6 @@ import ch.alpine.tensor.img.ColorDataIndexed;
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new PolygonCoordinatesDemo().setVisible(1300, 900);
+    launch();
   }
 }

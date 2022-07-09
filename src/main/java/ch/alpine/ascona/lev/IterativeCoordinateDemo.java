@@ -99,6 +99,6 @@ public class IterativeCoordinateDemo extends LogWeightingDemo implements Spinner
   }
 
   public static void main(String[] args) {
-    new IterativeCoordinateDemo().setVisible(1200, 900);
+    launch();
   }
 }

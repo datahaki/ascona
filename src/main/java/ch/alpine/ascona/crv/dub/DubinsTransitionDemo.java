@@ -27,6 +27,7 @@ public class DubinsTransitionDemo extends AbstractDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
 
   public DubinsTransitionDemo() {
+    super(new Object());
     timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }
 
@@ -49,6 +50,6 @@ public class DubinsTransitionDemo extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    new DubinsTransitionDemo().setVisible(1000, 600);
+    launch();
   }
 }

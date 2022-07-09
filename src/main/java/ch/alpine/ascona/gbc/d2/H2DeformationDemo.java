@@ -58,6 +58,6 @@ public class H2DeformationDemo extends AbstractDeformationDemo {
   }
 
   public static void main(String[] args) {
-    new H2DeformationDemo().setVisible(1200, 800);
+    launch();
   }
 }

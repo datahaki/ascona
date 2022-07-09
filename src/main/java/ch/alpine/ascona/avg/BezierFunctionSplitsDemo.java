@@ -7,7 +7,6 @@ import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.sophus.crv.BezierFunction;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -59,7 +58,6 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    new BezierFunctionSplitsDemo().setVisible(1000, 600);
+    launch();
   }
 }
