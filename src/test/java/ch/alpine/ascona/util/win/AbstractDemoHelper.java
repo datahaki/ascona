@@ -5,12 +5,15 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.lang.ShortStackTrace;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.FieldsAssignment;
 import ch.alpine.bridge.ref.util.ObjectProperties;
 import ch.alpine.bridge.ref.util.RandomFieldsAssignment;
 
 public class AbstractDemoHelper implements Runnable {
+  private static final ShortStackTrace SHORT_STACK_TRACE = new ShortStackTrace("ch.alpine.");
+
   /** @param abstractDemo non-null */
   public static AbstractDemoHelper offscreen(AbstractDemo abstractDemo) {
     AbstractDemoHelper abstractDemoHelper = new AbstractDemoHelper(abstractDemo);
@@ -59,6 +62,7 @@ public class AbstractDemoHelper implements Runnable {
     } catch (Exception exception) {
       System.err.println("Error in " + abstractDemo.getClass().getSimpleName() + ":");
       System.err.println(ObjectProperties.join(holder));
+      SHORT_STACK_TRACE.err(exception);
       error.getAndIncrement();
     }
     total.getAndIncrement();
