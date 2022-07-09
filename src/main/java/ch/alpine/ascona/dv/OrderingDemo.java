@@ -124,6 +124,7 @@ public class OrderingDemo extends ControlPointsDemo {
               .mapToObj(sequence::get)), //
           origin, geometricLayer, graphics);
       leversRender.renderLevers();
+      leversRender.renderOrigin();
       leversRender.renderIndexX();
     }
   }

@@ -13,6 +13,8 @@ import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.cls.Classification;
+import ch.alpine.ascona.util.cls.ClassificationImage;
+import ch.alpine.ascona.util.cls.Labels;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -132,7 +134,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
     Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), null, getGeodesicControlPoints());
     ColorDataLists colorDataLists = param1.cdg;
     TensorUnaryOperator tensorUnaryOperator = //
-        param1.classificationImage.operator(classification, sedarim::sunder, colorDataLists.cyclic());
+        param1.classificationImage.operator(classification, sedarim, colorDataLists.cyclic());
     int resolution = param1.res.number().intValue();
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
     Tensor raster = D2Raster.of(d2Raster, resolution, arrayFunction);

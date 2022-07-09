@@ -9,6 +9,7 @@ import java.util.List;
 import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.cls.Classification;
+import ch.alpine.ascona.util.cls.Labels;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -23,6 +24,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -56,6 +58,7 @@ public class ClassificationDemo extends ControlPointsDemo {
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public ColorDataLists cdg = ColorDataLists._097;
     public Boolean connect = true;
+    public Boolean weights = true;
     public Labels labels = Labels.ARG_MIN;
 
     @ReflectionMarker
@@ -97,8 +100,8 @@ public class ClassificationDemo extends ControlPointsDemo {
     Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
     Tensor origin = getGeodesicControlPoints().get(0);
     // ---
-    Tensor weights = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), null, sequence) //
-        .sunder(origin);
+    Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), null, sequence);
+    Tensor weights = sedarim.sunder(origin);
     // leversRender.renderInfluenceX(ColorDataGradients.JET);
     // Tensor influence = new HsInfluence( //
     // geodesicDisplay.vectorLogManifold().logAt(leversRender.getOrigin()), //
@@ -113,12 +116,13 @@ public class ClassificationDemo extends ControlPointsDemo {
     // Path2D line = geometricLayer.toPath2D(domain.map(curve));
     // graphics.draw(line);
     // }
-    if (param1.connect) {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
+    if (param1.connect)
       leversRender.renderLevers(param1.labels.equals(Labels.ARG_MIN) //
           ? Sqrt.of(weights).negate()
           : weights);
-    }
+    if (param1.weights)
+      leversRender.renderWeights(weights);
     // ---
     ColorDataIndexed COLOR_DATA_INDEXED_O = param1.cdg.cyclic();
     ColorDataIndexed COLOR_DATA_INDEXED_T = COLOR_DATA_INDEXED_O.deriveWithAlpha(128);

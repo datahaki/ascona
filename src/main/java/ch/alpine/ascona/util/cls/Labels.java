@@ -1,11 +1,8 @@
 // code by jph
-package ch.alpine.ascona.dv;
+package ch.alpine.ascona.util.cls;
 
 import java.util.function.Function;
 
-import ch.alpine.ascona.util.cls.Classification;
-import ch.alpine.ascona.util.cls.Classifier;
-import ch.alpine.ascona.util.cls.KNearestClassifier;
 import ch.alpine.tensor.Tensor;
 
 public enum Labels implements Function<Tensor, Classification> {
