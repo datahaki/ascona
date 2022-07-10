@@ -9,7 +9,6 @@ import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -67,21 +66,16 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         param.refine.number().intValue());
     RenderQuality.setQuality(graphics);
     // TODO ASCONA LR
-    for (Tensor points : refined)
-      for (Tensor point : points) {
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-        Path2D path2d = geometricLayer.toPath2D(ARROWHEAD_LO);
-        geometricLayer.popMatrix();
-        int rgb = 128 + 32;
-        path2d.closePath();
-        graphics.setColor(new Color(rgb, rgb, rgb, 128 + 64));
-        graphics.fill(path2d);
-        graphics.setColor(Color.BLACK);
-        graphics.draw(path2d);
-      }
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
+    for (Tensor point : Tensor.of(refined.flatten(1))) {
+      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
+      Path2D path2d = geometricLayer.toPath2D(ARROWHEAD_LO);
+      geometricLayer.popMatrix();
+      int rgb = 128 + 32;
+      path2d.closePath();
+      graphics.setColor(new Color(rgb, rgb, rgb, 128 + 64));
+      graphics.fill(path2d);
+      graphics.setColor(Color.BLACK);
+      graphics.draw(path2d);
     }
   }
 

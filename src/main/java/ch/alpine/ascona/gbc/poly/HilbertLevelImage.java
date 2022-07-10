@@ -4,7 +4,7 @@ package ch.alpine.ascona.gbc.poly;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.ArrayPlotRender;
+import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.BackgroundOffscreen;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.arp.ImageTiling;
@@ -26,7 +26,7 @@ public enum HilbertLevelImage {
     D2Raster d2Raster = (D2Raster) manifoldDisplay;
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, fallback);
     Tensor wgs = D2Raster.of(d2Raster, res, arrayFunction);
-    ArrayPlotRender arrayPlotRender = ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, 1, false);
+    ArrayPlotImage arrayPlotRender = ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, 1, false);
     return BackgroundOffscreen.fuseImages(manifoldDisplay, arrayPlotRender.export(), sequence_length);
   }
 }

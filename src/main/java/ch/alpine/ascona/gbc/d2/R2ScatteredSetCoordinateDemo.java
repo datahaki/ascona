@@ -11,13 +11,13 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.arp.ArrayPlotRender;
+import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.ImageTiling;
-import ch.alpine.ascona.util.arp.MeshRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.ren.MeshRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -124,7 +124,7 @@ import ch.alpine.tensor.sca.Clips;
       new MeshRender(point, colorDataGradient.deriveWithOpacity(RationalScalar.HALF)).render(geometricLayer, graphics);
       // ---
       if (jToggleHeatmap.isSelected()) // render basis functions
-        ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, 3, false).render(graphics);
+        ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, 3, false).draw(graphics);
       // render grid lines functions
       if (jToggleArrows.isSelected()) {
         graphics.setColor(Color.LIGHT_GRAY);

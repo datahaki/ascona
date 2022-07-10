@@ -3,7 +3,7 @@ package ch.alpine.ascona.analysis;
 
 import java.io.IOException;
 
-import ch.alpine.ascona.util.ren.HueColorData;
+import ch.alpine.ascona.util.col.HueColorData;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;

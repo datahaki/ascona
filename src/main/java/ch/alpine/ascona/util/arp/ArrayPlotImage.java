@@ -2,7 +2,7 @@
 package ch.alpine.ascona.util.arp;
 
 import java.awt.Dimension;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.tensor.Scalar;
@@ -15,7 +15,7 @@ import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class ArrayPlotRender {
+public class ArrayPlotImage {
   /** @param matrix
    * @param colorDataGradient
    * @param magnify
@@ -23,11 +23,11 @@ public class ArrayPlotRender {
    * @return */
   // TODO ASCONA separate image and legend
   // TODO ASCONA param magnify obsolete
-  public static ArrayPlotRender rescale( //
+  public static ArrayPlotImage rescale( //
       Tensor matrix, ScalarTensorFunction colorDataGradient, int magnify, boolean coverZero) {
     Rescale rescale = new Rescale(matrix);
     Clip clip = rescale.scalarSummaryStatistics().getClip();
-    return new ArrayPlotRender( //
+    return new ArrayPlotImage( //
         rescale.result(), //
         coverZero //
             ? cover(clip, clip.width().zero())
@@ -51,14 +51,14 @@ public class ArrayPlotRender {
   private final int height;
   private final BufferedImage legend;
 
-  private ArrayPlotRender(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient, int magnify) {
+  private ArrayPlotImage(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient, int magnify) {
     bufferedImage = ImageFormat.of(matrix.map(colorDataGradient));
     width = bufferedImage.getWidth() * magnify;
     height = bufferedImage.getHeight() * magnify;
     legend = BarLegend.of(colorDataGradient, height, clip);
   }
 
-  public void render(Graphics2D graphics) {
+  public void draw(Graphics graphics) {
     graphics.drawImage(bufferedImage, //
         0, //
         0, //
@@ -87,7 +87,7 @@ public class ArrayPlotRender {
         width + 10 + legend.getWidth(), // magic constant corresponds to width of legend
         height, //
         BufferedImage.TYPE_INT_ARGB);
-    render(bi.createGraphics());
+    draw(bi.createGraphics());
     return bi;
   }
 

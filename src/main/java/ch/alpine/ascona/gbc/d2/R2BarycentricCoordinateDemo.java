@@ -18,7 +18,7 @@ import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.api.MixedLogWeightings;
 import ch.alpine.ascona.util.api.PolygonCoordinates;
-import ch.alpine.ascona.util.arp.ArrayPlotRender;
+import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -135,8 +135,8 @@ import ch.alpine.tensor.sca.Sign;
       });
       if (jToggleHeatmap.isSelected()) { // render basis functions
         final int magnify = magnification();
-        ArrayPlotRender arrayPlotRender = ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, magnify, false);
-        arrayPlotRender.render(graphics);
+        ArrayPlotImage arrayPlotRender = ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, magnify, false);
+        arrayPlotRender.draw(graphics);
         {
           // BufferedImage bufferedImage = ImageFormat.of(ArrayPlot.of(_wgs, colorDataGradient));
           // graphics.drawImage(bufferedImage, //

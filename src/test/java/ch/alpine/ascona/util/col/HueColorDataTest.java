@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.util.ren;
+package ch.alpine.ascona.util.col;
 
 import org.junit.jupiter.api.Test;
 

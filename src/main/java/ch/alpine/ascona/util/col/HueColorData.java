@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.util.ren;
+package ch.alpine.ascona.util.col;
 
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;

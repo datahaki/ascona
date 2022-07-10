@@ -16,7 +16,7 @@ import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.ArrayPlotRender;
+import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -99,7 +99,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
   }
 
   private static final int CACHE_SIZE = 1;
-  private final Cache<Tensor, ArrayPlotRender> cache = Cache.of(this::computeImage, CACHE_SIZE);
+  private final Cache<Tensor, ArrayPlotImage> cache = Cache.of(this::computeImage, CACHE_SIZE);
   private double computeTime = 0;
 
   @Override
@@ -108,7 +108,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
     cache.clear();
   }
 
-  private final ArrayPlotRender computeImage(Tensor tensor) {
+  private final ArrayPlotImage computeImage(Tensor tensor) {
     Tensor sequence = tensor.get(0).map(N.DOUBLE);
     Tensor values = tensor.get(1).map(N.DOUBLE);
     int resolution = spinnerRes.getValue();
@@ -141,7 +141,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
         rgba.set(s -> RealScalar.of(255), Tensor.ALL, 3);
         ColorDataGradient colorDataGradient = LinearColorDataGradient.of(rgba);
         // TODO ASCONA not efficient: rescale happens twice
-        return ArrayPlotRender.rescale(matrix, colorDataGradient, spinnerMagnif.getValue(), false);
+        return ArrayPlotImage.rescale(matrix, colorDataGradient, spinnerMagnif.getValue(), false);
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();
@@ -160,7 +160,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
     CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
     Tensor sequence = getGeodesicControlPoints();
     Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
-    ArrayPlotRender arrayPlotRender = cache.apply(Unprotect.byRef(sequence, values));
+    ArrayPlotImage arrayPlotRender = cache.apply(Unprotect.byRef(sequence, values));
     if (Objects.nonNull(arrayPlotRender)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
       new ImageRender(arrayPlotRender.bufferedImage(), coordinateBoundingBox) //

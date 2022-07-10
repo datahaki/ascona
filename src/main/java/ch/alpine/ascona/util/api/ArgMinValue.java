@@ -9,6 +9,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.ArgMin;
 
+// TODO ASCONA this package needs to be distributed
 /** Hint:
  * does not implement {@link Serializable} because {@link Optional} does not implement {@link Serializable} */
 /* package */ class ArgMinValue {

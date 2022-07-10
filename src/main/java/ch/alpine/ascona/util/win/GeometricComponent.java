@@ -62,6 +62,7 @@ public final class GeometricComponent {
       graphics.drawString(String.format("%3.1f Hz", intervalClock.hertz()), 0, 10);
     }
   };
+  // TODO ASCONA possibly use EnumMultimap with background... main .. hud
   private final List<RenderInterface> renderBackground = new CopyOnWriteArrayList<>();
   private final List<RenderInterface> renderInterfaces = new CopyOnWriteArrayList<>();
   // ---

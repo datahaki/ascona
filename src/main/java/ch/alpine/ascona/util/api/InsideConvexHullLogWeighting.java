@@ -22,7 +22,7 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
 
   @Override // from LogWeighting
   public Sedarim sedarim( //
-      Biinvariant biinvariant, // <- ignored
+      Biinvariant biinvariant, // only used for hsDesign
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
     return HsGenesis.wrap( //
@@ -33,7 +33,7 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
 
   @Override // from LogWeighting
   public TensorScalarFunction function( //
-      Biinvariant biinvariant, //
+      Biinvariant biinvariant, // only used for hsDesign
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence, Tensor values) {
     Sedarim sedarim = sedarim(biinvariant, variogram, sequence);

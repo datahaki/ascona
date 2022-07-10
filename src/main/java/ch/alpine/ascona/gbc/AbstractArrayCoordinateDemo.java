@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascona.util.api.LogWeighting;
-import ch.alpine.ascona.util.arp.ArrayPlotRender;
+import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
@@ -15,7 +15,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 
 public abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightingDemo {
-  private ArrayPlotRender arrayPlotRender;
+  private ArrayPlotImage arrayPlotRender;
 
   public AbstractArrayCoordinateDemo(List<LogWeighting> array) {
     super(true, ManifoldDisplays.d2Rasters(), array);
@@ -48,6 +48,6 @@ public abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightin
     if (Objects.isNull(arrayPlotRender))
       recompute();
     if (Objects.nonNull(arrayPlotRender))
-      arrayPlotRender.render(graphics);
+      arrayPlotRender.draw(graphics);
   }
 }

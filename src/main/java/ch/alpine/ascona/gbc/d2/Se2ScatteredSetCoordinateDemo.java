@@ -8,7 +8,7 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.gbc.AbstractExportWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.arp.ArrayPlotRender;
+import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -65,7 +65,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
       Tensor origin = getGeodesicControlPoints();
       Tensor wgs = compute(operator(origin), refinement());
       RenderQuality.setQuality(graphics);
-      ArrayPlotRender.rescale(ImageTiling.of(wgs), colorDataGradient, magnification(), false).render(graphics);
+      ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, magnification(), false).draw(graphics);
     }
   }
 

@@ -60,9 +60,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   }
 
   private final JSlider jSlider = new JSlider(0, LAMBDAS.length() - 1, LAMBDAS.length() / 2);
-  // private final JTextField jTextField = new JTextField(10);
   private final JLabel jLabel = new JLabel();
-  // private final SpinnerLabel<Integer> spinnerSolution = SpinnerLabel.of(0, 1, 2, 3, 4, 5, 6, 7, 8);
   private static final Scalar MIN_RESOLUTION = RealScalar.of(0.1);
   // ---
   private ClothoidDefectContainer clothoidDefectContainer = null;

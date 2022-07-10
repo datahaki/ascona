@@ -12,11 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascona.util.api.LogWeighting;
-import ch.alpine.ascona.util.arp.ArrayPlotRender;
-import ch.alpine.ascona.util.arp.MeshRender;
+import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.ren.MeshRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -130,6 +130,6 @@ import ch.alpine.tensor.sca.N;
       leversRender.renderSequence();
     leversRender.renderIndexP(isTarget ? "q" : "p");
     if (jToggleHeatmap.isSelected())
-      ArrayPlotRender.rescale(movingDomain2D.arrayReshape_weights(), colorDataGradient(), 3, false).render(graphics);
+      ArrayPlotImage.rescale(movingDomain2D.arrayReshape_weights(), colorDataGradient(), 3, false).draw(graphics);
   }
 }
