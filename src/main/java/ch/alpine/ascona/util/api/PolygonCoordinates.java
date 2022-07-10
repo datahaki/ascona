@@ -74,7 +74,7 @@ public enum PolygonCoordinates implements LogWeighting {
 
   @Override // from LogWeighting
   public Sedarim sedarim( //
-      Biinvariant biinvariant, //
+      Biinvariant biinvariant, // <- only used to generate hsDesign
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
     return HsGenesis.wrap( //

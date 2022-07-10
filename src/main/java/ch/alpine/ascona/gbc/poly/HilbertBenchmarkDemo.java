@@ -35,7 +35,7 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
     public Scalar levels = RealScalar.of(2);
     @FieldInteger
     @FieldClip(min = "20", max = "100")
-    @FieldSelectionArray({ "30", "50" })
+    @FieldSelectionArray({ "20", "30", "50" })
     public Scalar resolution = RealScalar.of(20);
     public Boolean ctrl = false;
   }

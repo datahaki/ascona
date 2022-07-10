@@ -13,11 +13,12 @@ import ch.alpine.bridge.ref.util.RandomFieldsAssignment;
 
 public class AbstractDemoHelper implements Runnable {
   private static final ShortStackTrace SHORT_STACK_TRACE = new ShortStackTrace("ch.alpine.");
+  private static final int MAX = 20;
 
   /** @param abstractDemo non-null */
   public static AbstractDemoHelper offscreen(AbstractDemo abstractDemo) {
     AbstractDemoHelper abstractDemoHelper = new AbstractDemoHelper(abstractDemo);
-    abstractDemoHelper.randomize(25);
+    abstractDemoHelper.randomize(MAX);
     String string = abstractDemo.getClass().getSimpleName();
     if (0 < abstractDemoHelper.error.get())
       System.err.println(string + " " + abstractDemoHelper.error.get() + " Errors");
@@ -46,6 +47,7 @@ public class AbstractDemoHelper implements Runnable {
     holder = new Holder(abstractDemo.objects());
     geometricLayer = new GeometricLayer(abstractDemo.timerFrame.geometricComponent.getModel2Pixel());
     bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
+    wrap(() -> abstractDemo.render(geometricLayer, bufferedImage.createGraphics()));
     fieldsAssignment = RandomFieldsAssignment.of(holder, this);
   }
 
@@ -55,14 +57,20 @@ public class AbstractDemoHelper implements Runnable {
 
   @Override
   public void run() {
-    try {
+    wrap(() -> {
       for (int index = 0; index < holder.objects.length; ++index)
         abstractDemo.fieldsEditor(index).notifyUniversalListeners();
       abstractDemo.render(geometricLayer, bufferedImage.createGraphics());
+    });
+  }
+
+  private void wrap(Runnable runnable) {
+    try {
+      runnable.run();
     } catch (Exception exception) {
       System.err.println("Error in " + abstractDemo.getClass().getSimpleName() + ":");
       System.err.println(ObjectProperties.join(holder));
-      SHORT_STACK_TRACE.err(exception);
+      SHORT_STACK_TRACE.print(exception);
       error.getAndIncrement();
     }
     total.getAndIncrement();

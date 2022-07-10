@@ -2,45 +2,54 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Graphics2D;
-import java.util.List;
 import java.util.Optional;
 
-import javax.swing.JToggleButton;
-
+import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerListener;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Chop;
 
-// TODO ASCONA demo becomes unstable when control points are removed
-public class ThreePointBarycenterDemo extends LogWeightingDemo implements SpinnerListener<ManifoldDisplays> {
-  private final JToggleButton jToggleNeutral = new JToggleButton("neutral");
+public class ThreePointBarycenterDemo extends ControlPointsDemo {
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.d2Rasters());
+    }
+
+    public PolygonCoordinates polygonCoordinates = PolygonCoordinates.MEAN_VALUE;
+  }
+
+  private final Param param;
 
   public ThreePointBarycenterDemo() {
-    super(true, ManifoldDisplays.d2Rasters(), List.of(PolygonCoordinates.values()));
-    // ---
-    timerFrame.jToolBar.add(jToggleNeutral);
-    // ---
-    ManifoldDisplays manifoldDisplays = ManifoldDisplays.S2;
-    setManifoldDisplay(manifoldDisplays);
-    spun(manifoldDisplays);
-    addManifoldListener(this);
-    jToggleNeutral.setSelected(true);
+    this(new Param());
+  }
+
+  public ThreePointBarycenterDemo(Param param) {
+    super(param);
+    this.param = param;
+    controlPointsRender.setMidpointIndicated(false);
+    spun();
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
     PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
     Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
@@ -56,7 +65,7 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
       leversRender.renderIndexX();
       leversRender.renderIndexP();
       try {
-        Sedarim sedarim = operator(sequence);
+        Sedarim sedarim = param.polygonCoordinates.sedarim(Biinvariants.LEVERAGES.ofSafe(manifold), null, sequence);
         Tensor weights = sedarim.sunder(origin);
         leversRender.renderWeights(weights);
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
@@ -76,20 +85,26 @@ public class ThreePointBarycenterDemo extends LogWeightingDemo implements Spinne
     }
   }
 
-  @Override
-  public void spun(ManifoldDisplays manifoldDisplays) {
-    if (manifoldDisplays.equals(ManifoldDisplays.R2)) {
+  public void spun() {
+    switch (asconaParam().manifoldDisplays) {
+    case R2:
+    case T1d: {
       setControlPointsSe2(Tensors.fromString( //
           "{{-0.175, 0.358, 0.000}, {-0.991, 0.113, 0.000}, {-0.644, 0.967, 0.000}, {0.509, 0.840, 0.000}, {0.689, 0.513, 0.000}, {0.956, -0.627, 0.000}}"));
-    } else
-      if (manifoldDisplays.equals(ManifoldDisplays.H2)) {
-        setControlPointsSe2(Tensors.fromString( //
-            "{{0.200, 0.233, 0.000}, {-0.867, 2.450, 0.000}, {2.300, 2.117, 0.000}, {2.567, 0.150, 0.000}, {1.600, -2.583, 0.000}, {-2.550, -1.817, 0.000}}"));
-      } else //
-        if (manifoldDisplays.equals(ManifoldDisplays.S2)) {
-          setControlPointsSe2(Tensors.fromString( //
-              "{{-0.363, 0.388, 0.000}, {-0.825, -0.271, 0.000}, {-0.513, 0.804, 0.000}, {0.646, 0.667, 0.000}, {0.704, -0.100, 0.000}, {-0.075, -0.733, 0.000}}"));
-        }
+      break;
+    }
+    case H2: {
+      setControlPointsSe2(Tensors.fromString( //
+          "{{0.200, 0.233, 0.000}, {-0.867, 2.450, 0.000}, {2.300, 2.117, 0.000}, {2.567, 0.150, 0.000}, {1.600, -2.583, 0.000}, {-2.550, -1.817, 0.000}}"));
+      break;
+    }
+    case S2:
+    case Rp2: {
+      setControlPointsSe2(Tensors.fromString( //
+          "{{-0.363, 0.388, 0.000}, {-0.825, -0.271, 0.000}, {-0.513, 0.804, 0.000}, {0.646, 0.667, 0.000}, {0.704, -0.100, 0.000}, {-0.075, -0.733, 0.000}}"));
+      break;
+    }
+    }
   }
 
   public static void main(String[] args) {
