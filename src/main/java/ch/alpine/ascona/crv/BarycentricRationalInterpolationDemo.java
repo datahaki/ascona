@@ -18,9 +18,9 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
-import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
-import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -47,16 +47,16 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   public static class Param extends AsconaParam {
     public Param() {
       super(true, ManifoldDisplays.metricManifolds());
+      manifoldDisplays = ManifoldDisplays.R2;
     }
 
-    @FieldPreferredWidth(100)
-    @FieldSelectionArray({ "0", "1/4", "1/2", "3/4", "1" })
+    @FieldSlider
+    @FieldClip(min = "0", max = "1")
     public Scalar beta = RealScalar.ZERO;
-    @FieldPreferredWidth(100)
     @FieldInteger
-    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7" })
+    @FieldClip(min = "0", max = "7")
     public Scalar degree = RealScalar.ONE;
-    public Boolean lagra = false;
+    public Boolean lagrange = false;
     public Boolean basis = true;
   }
 
@@ -86,7 +86,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     if (1 < control.length()) {
       Tensor domain = Subdivide.of(knots.get(0), Last.of(knots), 25 * control.length());
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._03);
-      Tensor basis2 = domain.map(param.lagra //
+      Tensor basis2 = domain.map(param.lagrange //
           ? BarycentricMetricInterpolation.la(knots, InversePowerVariogram.of(2))
           : BarycentricMetricInterpolation.of(knots, InversePowerVariogram.of(2)));
       try {

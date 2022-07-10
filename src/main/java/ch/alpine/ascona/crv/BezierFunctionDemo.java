@@ -17,7 +17,6 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.BezierFunction;
 import ch.alpine.sophus.hs.GeodesicSpace;
@@ -41,7 +40,7 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     @FieldInteger
     @FieldClip(min = "0", max = "10")
     public Scalar refine = RealScalar.of(6);
-    public Boolean extrap = false;
+    public Boolean extrapolate = false;
   }
 
   private final Param param;
@@ -53,7 +52,6 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
   public BezierFunctionDemo(Param param) {
     super(param);
     this.param = param;
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     addButtonDubins();
     {
       Tensor tensor = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}}");
@@ -78,7 +76,7 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     int levels = param.refine.number().intValue();
     Tensor domain = n <= 1 //
         ? Tensors.vector(0)
-        : Subdivide.of(0.0, param.extrap //
+        : Subdivide.of(0.0, param.extrapolate //
             ? n / (double) (n - 1)
             : 1.0, 1 << levels);
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();

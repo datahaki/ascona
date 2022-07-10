@@ -74,6 +74,7 @@ public class AnimationDemo extends ControlPointsDemo {
         SimplexContinuousNoise.FUNCTION.at(toc, index, 2)).multiply(RealScalar.of(1));
   }
 
+  @SuppressWarnings("incomplete-switch")
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

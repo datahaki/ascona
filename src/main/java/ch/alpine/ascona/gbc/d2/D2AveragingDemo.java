@@ -140,7 +140,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
         }
         rgba.set(s -> RealScalar.of(255), Tensor.ALL, 3);
         ColorDataGradient colorDataGradient = LinearColorDataGradient.of(rgba);
-        // TODO not efficient: rescale happens twice
+        // TODO ASCONA not efficient: rescale happens twice
         return ArrayPlotRender.rescale(matrix, colorDataGradient, spinnerMagnif.getValue(), false);
       } catch (Exception exception) {
         System.out.println(exception);

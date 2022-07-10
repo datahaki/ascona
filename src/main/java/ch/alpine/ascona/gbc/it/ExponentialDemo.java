@@ -22,7 +22,6 @@ import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
 import ch.alpine.sophus.gbc.it.GenesisDeque;
 import ch.alpine.sophus.gbc.it.WeightsFactors;
@@ -41,12 +40,12 @@ import ch.alpine.tensor.red.Times;
 public class ExponentialDemo extends ControlPointsDemo {
   private static final int WIDTH = 300;
   // ---
-  private final GenesisDequeProperties genesisDequeProperties = new GenesisDequeProperties();
+  private final GenesisDequeProperties genesisDequeProperties;
 
   public ExponentialDemo() {
-    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
+    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY), new GenesisDequeProperties());
     // ---
-    ToolbarFieldsEditor.add(genesisDequeProperties, timerFrame.jToolBar);
+    genesisDequeProperties = (GenesisDequeProperties) objects()[1];
     // ---
     Tensor sequence = Tensor.of(CirclePoints.of(15).multiply(RealScalar.of(2)).stream().skip(5).map(PadRight.zeros(3)));
     sequence.set(Scalar::zero, 0, Tensor.ALL);

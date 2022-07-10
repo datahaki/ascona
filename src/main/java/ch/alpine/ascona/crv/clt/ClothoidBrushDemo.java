@@ -20,8 +20,6 @@ import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
-import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidBuilders;
 import ch.alpine.sophus.crv.clt.ClothoidSampler;
@@ -35,7 +33,6 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.ext.Cache;
 
-@ReflectionMarker
 public class ClothoidBrushDemo extends ControlPointsDemo {
   public static final Scalar BETA = RealScalar.of(0.05);
 
@@ -82,7 +79,6 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
     } catch (Exception exception) {
       exception.printStackTrace();
     }
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
     // Tensor image = ResourceData.of("/letter/cal2/hi/a.png");
     // if (Objects.nonNull(image)) {

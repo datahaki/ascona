@@ -85,6 +85,7 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
     }
   }
 
+  @SuppressWarnings("incomplete-switch")
   public void spun() {
     switch (asconaParam().manifoldDisplays) {
     case R2:

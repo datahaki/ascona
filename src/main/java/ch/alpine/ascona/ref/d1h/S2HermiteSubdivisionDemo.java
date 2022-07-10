@@ -22,7 +22,6 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.math.Do;
@@ -73,7 +72,6 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     // ---
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     timerFrame.geometricComponent.setOffset(400, 400);

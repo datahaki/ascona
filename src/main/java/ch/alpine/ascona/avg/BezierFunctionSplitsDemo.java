@@ -6,13 +6,13 @@ import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.crv.BezierFunction;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 /** visualization of geodesic average along geodesics */
@@ -23,6 +23,7 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
       super(true, ManifoldDisplays.ALL);
     }
 
+    @FieldSlider
     @FieldClip(min = "0", max = "1")
     public Scalar ratio = RealScalar.of(0.5);
   }
@@ -36,11 +37,6 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   public BezierFunctionSplitsDemo(Param param) {
     super(param);
     this.param = param;
-    // ---
-    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {2, 2, 1}, {5, 0, 2}}"));
-    // ---
-    setManifoldDisplay(ManifoldDisplays.S2);
-    setControlPointsSe2(Tensors.fromString("{}"));
   }
 
   @Override // from GeodesicAverageDemo
