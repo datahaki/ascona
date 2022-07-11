@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 

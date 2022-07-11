@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.stream.Stream;
 
 import ch.alpine.ascona.util.ren.EmptyRender;
-import ch.alpine.ascona.util.win.RenderInterface;
+import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.rn.RnGroup;

@@ -1,10 +1,11 @@
 // code by jph
-package ch.alpine.ascona.util.api;
+package ch.alpine.ascona.util.ren;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.ascona.util.ren.ControlMidpoints;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.Tensor;

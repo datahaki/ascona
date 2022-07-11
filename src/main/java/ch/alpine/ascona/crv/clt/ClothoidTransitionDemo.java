@@ -9,7 +9,6 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.api.RnLineTrim;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -17,6 +16,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.dis.Se2Display;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;

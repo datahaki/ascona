@@ -1,16 +1,17 @@
 // code by jph, gjoel
-package ch.alpine.ascona.util.api;
+package ch.alpine.ascona.util.win;
 
 import java.awt.Graphics2D;
 import java.util.List;
 
 import javax.swing.JButton;
 
+import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.win.AbstractDemo;
-import ch.alpine.ascona.util.win.RenderInterface;
+import ch.alpine.ascona.util.ren.ControlPointsRender;
+import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.tensor.Tensor;
@@ -25,7 +26,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   public ControlPointsDemo(Object... objects) {
     super(objects);
     this.asconaParam = (AsconaParam) objects[0];
-    controlPointsRender = ControlPointsRenders.create( //
+    controlPointsRender = ControlPointsRender.create( //
         asconaParam, this::manifoldDisplay, timerFrame.geometricComponent);
     timerFrame.jToolBar.addSeparator();
     if (asconaParam.addRemoveControlPoints) {

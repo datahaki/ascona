@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import ch.alpine.ascona.util.win.RenderInterface;
+import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

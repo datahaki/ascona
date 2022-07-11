@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import ch.alpine.ascona.util.win.RenderInterface;
+import ch.alpine.ascona.util.ren.RenderInterface;
 
 public class H1Display extends HnDisplay {
   public static final ManifoldDisplay INSTANCE = new H1Display();

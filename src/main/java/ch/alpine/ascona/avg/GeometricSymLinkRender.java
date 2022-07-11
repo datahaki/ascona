@@ -9,9 +9,9 @@ import java.awt.geom.Path2D;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ren.AreaRender;
+import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.ascona.util.sym.SymLink;
 import ch.alpine.ascona.util.sym.SymLinkPart;
-import ch.alpine.ascona.util.win.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;

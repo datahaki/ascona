@@ -11,6 +11,7 @@ import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.VectorQ;
 
 /** SE(2) control point utility functions */
+// TODO ASCONA move to SOPHUS
 public enum DubinsGenerator {
   ;
   /** @param init vector of length 3

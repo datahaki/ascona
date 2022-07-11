@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.util.api;
+package ch.alpine.ascona.util.ren;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -13,8 +13,7 @@ import java.util.function.Supplier;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.RenderInterface;
+import ch.alpine.ascona.util.win.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.hs.r2.Extract2D;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
@@ -38,7 +37,7 @@ public class ControlPointsRender implements RenderInterface {
   /** refined points */
   private static final Stroke STROKE = new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   // ---
-  Tensor control = Tensors.empty();
+  public Tensor control = Tensors.empty();
   private Tensor mouse = Array.zeros(3);
   /** min_index is non-null while the user drags a control points */
   private Integer min_index = null;
@@ -246,5 +245,15 @@ public class ControlPointsRender implements RenderInterface {
 
   public final ManifoldDisplay manifoldDisplay() {
     return supplier.get();
+  }
+
+  public static ControlPointsRender create(AsconaParam asconaParam, Supplier<ManifoldDisplay> supplier, GeometricComponent geometricComponent) {
+    ControlPointsRender controlPointsRender = new ControlPointsRender(asconaParam, supplier, //
+        geometricComponent::getMouseSe2CState, //
+        geometricComponent::getModel2Pixel);
+    geometricComponent.jComponent.addMouseListener(controlPointsRender.mouseAdapter);
+    geometricComponent.jComponent.addMouseMotionListener(controlPointsRender.mouseAdapter);
+    geometricComponent.addRenderInterface(controlPointsRender);
+    return controlPointsRender;
   }
 }

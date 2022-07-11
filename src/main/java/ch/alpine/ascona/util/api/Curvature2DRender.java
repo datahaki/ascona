@@ -60,6 +60,7 @@ public enum Curvature2DRender {
     if (0 < curve.length())
       if (Unprotect.dimension1(curve) != 2)
         throw Throw.of(curve);
+    // TODO ASCONA placement bad: renders curve
     new PathRender(Color.BLUE, 1.25f).setCurve(curve, isCyclic).render(geometricLayer, graphics);
     if (comb)
       new PathRender(COLOR_CURVATURE_COMB) //

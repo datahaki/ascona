@@ -1,11 +1,12 @@
 // code by jph
-package ch.alpine.ascona.util.api;
+package ch.alpine.ascona.util.ren;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.ascona.util.ren.ArgMinValue;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensors;

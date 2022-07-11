@@ -4,7 +4,7 @@ package ch.alpine.ascona.util.dis;
 import java.util.Random;
 
 import ch.alpine.ascona.util.ren.EmptyRender;
-import ch.alpine.ascona.util.win.RenderInterface;
+import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;

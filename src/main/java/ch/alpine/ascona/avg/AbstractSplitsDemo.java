@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 
 import ch.alpine.ascona.avg.GeometricSymLinkRender.Link;
-import ch.alpine.ascona.util.api.ControlPointsDemo;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
@@ -15,6 +14,7 @@ import ch.alpine.ascona.util.sym.SymLinkBuilder;
 import ch.alpine.ascona.util.sym.SymLinkImage;
 import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.ascona.util.sym.SymSequence;
+import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;

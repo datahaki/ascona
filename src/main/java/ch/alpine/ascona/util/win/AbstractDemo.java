@@ -6,6 +6,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.bridge.awt.WindowBounds;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ReflectionMarkers;
