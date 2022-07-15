@@ -46,8 +46,9 @@ import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.LinearColorDataGradient;
+import ch.alpine.tensor.itp.LinearBinaryAverage;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
 
@@ -113,21 +114,21 @@ public class D2AveragingDemo extends ControlPointsDemo {
         computeTime = timing.seconds();
         // ---
         Rescale rescale = new Rescale(matrix);
+        Clip clip = rescale.scalarSummaryStatistics().getClip();
         ColorDataGradients colorDataGradients = param.cdg;
-        // ColorDataGradient = colorDataGradients;
-        // Rescale rescale = new Rescale(matrix);
-        // Clip clip = rescale.scalarSummaryStatistics().getClip();
-        Tensor domain = Subdivide.increasing(Clips.unit(), 50);
-        Tensor rgba = domain.map(colorDataGradients);
-        for (int c = 10; c < domain.length() - 2; c += 10) {
-          rgba.set(RealScalar.of(0.25)::multiply, c, Tensor.ALL);
-          rgba.set(RealScalar.of(0.5)::multiply, c - 1, Tensor.ALL);
-          rgba.set(RealScalar.of(0.5)::multiply, c + 1, Tensor.ALL);
+        Tensor domain = Subdivide.increasing(clip, 50);
+        Tensor rgba = Tensors.empty();
+        IntBlend intBlend = new IntBlend(RealScalar.of(0.1));
+        Tensor c_blck = Tensors.vector(0, 0, 0, 255);
+        for (int index = 0; index < domain.length(); ++index) {
+          Scalar x = domain.Get(index);
+          Tensor c_rgba = clip.rescale(x).map(colorDataGradients);
+          Scalar weight = intBlend.apply(x);
+          Tensor split = LinearBinaryAverage.INSTANCE.split(c_blck, c_rgba, weight);
+          rgba.append(split);
         }
-        rgba.set(s -> RealScalar.of(255), Tensor.ALL, 3);
         ColorDataGradient colorDataGradient = LinearColorDataGradient.of(rgba);
-        // TODO ASCONA not efficient: rescale happens twice
-        return new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient);
+        return new ArrayPlotImage(rescale.result(), clip, colorDataGradient);
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();
