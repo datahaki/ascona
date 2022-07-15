@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.api.Curvature2DRender;
-import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -16,6 +15,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.crv.dub.DubinsGenerator;
 import ch.alpine.sophus.flt.ga.GeodesicMeanFilter;
 import ch.alpine.sophus.ref.d1.BSpline4CurveSubdivision;
 import ch.alpine.tensor.RealScalar;

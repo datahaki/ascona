@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 
-import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -14,6 +13,7 @@ import ch.alpine.ascona.util.ren.ControlPointsRender;
 import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerListener;
+import ch.alpine.sophus.crv.dub.DubinsGenerator;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 

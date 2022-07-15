@@ -3,7 +3,6 @@ package ch.alpine.ascona.crv.d2;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.api.DubinsGenerator;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -13,6 +12,7 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.crv.d2.PolygonCentroid;
+import ch.alpine.sophus.crv.dub.DubinsGenerator;
 import ch.alpine.sophus.hs.r3.MinTriangleAreaSquared;
 import ch.alpine.sophus.math.AppendOne;
 import ch.alpine.tensor.Tensor;
