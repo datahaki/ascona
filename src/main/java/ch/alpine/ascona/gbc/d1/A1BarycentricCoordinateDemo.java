@@ -3,27 +3,57 @@ package ch.alpine.ascona.gbc.d1;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.List;
 
-import ch.alpine.ascona.lev.LogWeightingDemo;
-import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
+import ch.alpine.sophus.math.var.InversePowerVariogram;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 
-/* package */ abstract class A1BarycentricCoordinateDemo extends LogWeightingDemo {
-  public A1BarycentricCoordinateDemo(List<LogWeighting> array) {
-    super(true, ManifoldDisplays.R2_ONLY, array);
+/* package */ abstract class A1BarycentricCoordinateDemo extends ControlPointsDemo {
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.R2_ONLY);
+    }
+
+    public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+    @FieldInteger
+    @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
+    public Scalar resolution = RealScalar.of(50);
+    public ColorDataGradients cdg = ColorDataGradients.PARULA;
+  }
+
+  private final Param param;
+
+  public A1BarycentricCoordinateDemo() {
+    this(new Param());
+  }
+
+  public A1BarycentricCoordinateDemo(Param param) {
+    super(param);
+    this.param = param;
+    controlPointsRender.setMidpointIndicated(false);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 2, 0}}"));
   }
@@ -39,7 +69,8 @@ import ch.alpine.tensor.img.ColorDataLists;
       Tensor domain = domain(support);
       // ---
       Tensor sequence = support.map(this::lift);
-      Sedarim sedarim = operator(sequence);
+      Manifold manifold = (Manifold) param.manifoldDisplays.geodesicSpace();
+      Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
       ScalarTensorFunction scalarTensorFunction = //
           point -> sedarim.sunder(lift(point));
       Tensor basis = domain.map(scalarTensorFunction);
@@ -55,7 +86,7 @@ import ch.alpine.tensor.img.ColorDataLists;
       }
       {
         LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
-        leversRender.renderSequence();
+        // leversRender.renderSequence();
         leversRender.renderIndexP();
       }
     }

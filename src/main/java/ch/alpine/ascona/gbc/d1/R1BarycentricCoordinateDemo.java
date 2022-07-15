@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.gbc.d1;
 
-import ch.alpine.ascona.util.api.MixedLogWeightings;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -13,10 +12,6 @@ import ch.alpine.tensor.sca.N;
 
 public class R1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
   private static final Scalar MARGIN = RealScalar.of(2);
-
-  public R1BarycentricCoordinateDemo() {
-    super(MixedLogWeightings.scattered());
-  }
 
   @Override
   Tensor domain(Tensor support) {
