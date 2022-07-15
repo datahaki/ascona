@@ -35,7 +35,6 @@ import ch.alpine.tensor.img.ColorDataGradients;
 public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDemo {
   protected final SpinnerLabel<Integer> spinnerRefine;
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
-//  protected final JToggleButton jToggleHeatmap = new JToggleButton("heatmap");
   protected final JToggleButton jToggleArrows = new JToggleButton("arrows");
   protected final List<LogWeighting> array;
 
@@ -83,7 +82,6 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(120, 28), "color scheme");
     spinnerColorData.addSpinnerListener(v -> recompute());
     {
-      
       jToggleArrows.setSelected(false);
       timerFrame.jToolBar.add(jToggleArrows);
     }

@@ -3,7 +3,6 @@ package ch.alpine.ascona.gbc.d2;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.api.MixedLogWeightings;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -28,7 +27,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   private final JToggleButton jToggleRigidMotionFit = new JToggleButton("MLS");
 
   public R2DeformationDemo() {
-    super(ManifoldDisplays.R2_ONLY, MixedLogWeightings.scattered());
+    super(ManifoldDisplays.R2_ONLY);
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     D2Raster d2Raster = (D2Raster) manifoldDisplay;
@@ -43,7 +42,6 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
     // deformed to:
     // "{{1.400, 4.067, 0.000}, {2.867, 4.167, 0.000}, {1.667, 2.283, 0.000}, {3.983, 2.283, 0.000}, {2.617, 1.200, 0.000}, {0.600, 0.350, 0.000}, {3.917,
     // 1.183, 0.000}}"
-    snap();
   }
 
   @Override

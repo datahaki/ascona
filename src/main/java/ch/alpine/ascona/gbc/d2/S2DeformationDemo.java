@@ -3,7 +3,6 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Dimension;
 
-import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -29,7 +28,7 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
   private final SpinnerLabel<SnMeans> spinnerSnMeans = SpinnerLabel.of(SnMeans.class);
 
   public S2DeformationDemo() {
-    super(ManifoldDisplays.S2_ONLY, LogWeightings.coordinates());
+    super(ManifoldDisplays.S2_ONLY);
     // ---
     spinnerSnMeans.setValue(SnMeans.FAST);
     spinnerSnMeans.addToComponentReduced(timerFrame.jToolBar, new Dimension(120, 28), "sn means");
@@ -38,13 +37,10 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     timerFrame.geometricComponent.setOffset(400, 400);
     // ---
-    shuffleSnap();
-    // ---
     setControlPointsSe2(Tensors.fromString( //
         "{{-13/75, 7/20, 0.0}, {19/300, 31/150, 0.0}, {53/150, 101/300, 0.0}, {31/300, -1/100, 0.0}, {-7/25, -7/150, 0.0}, {-1/100, -97/300, 0.0}, {27/100, -29/150, 0.0}, {-9/25, -137/300, 0.0}}"));
     setControlPointsSe2(Tensors.fromString( //
         "{{-13/25, 9/25, 0.0}, {7/100, 7/12, 0.0}, {-9/50, -1/12, 0.0}, {59/100, 1/60, 0.0}, {-2/5, -27/50, 0.0}, {113/300, -133/300, 0.0}}"));
-    snap();
   }
 
   @Override

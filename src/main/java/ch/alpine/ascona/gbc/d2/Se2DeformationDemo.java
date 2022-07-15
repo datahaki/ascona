@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -22,10 +21,9 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor ORIGIN = Arrowhead.of(RealScalar.of(0.2));
 
   public Se2DeformationDemo() {
-    super(ManifoldDisplays.SE2C_SE2, LogWeightings.coordinates());
+    super(ManifoldDisplays.SE2C_SE2);
     // ---
     timerFrame.geometricComponent.setOffset(300, 500);
-    shuffleSnap();
   }
 
   @Override

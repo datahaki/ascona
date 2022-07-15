@@ -3,7 +3,6 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Dimension;
 
-import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -23,12 +22,10 @@ public class H2DeformationDemo extends AbstractDeformationDemo {
   private final SpinnerLabel<HnMeans> spinnerMeans = SpinnerLabel.of(HnMeans.class);
 
   public H2DeformationDemo() {
-    super(ManifoldDisplays.H2_ONLY, LogWeightings.coordinates());
+    super(ManifoldDisplays.H2_ONLY);
     // ---
     spinnerMeans.setValue(HnMeans.EXACT);
     spinnerMeans.addToComponentReduced(timerFrame.jToolBar, new Dimension(120, 28), "hn means");
-    // ---
-    shuffleSnap();
   }
 
   @Override // from AbstractDeformationDemo

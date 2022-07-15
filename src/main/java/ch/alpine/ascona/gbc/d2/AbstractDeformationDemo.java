@@ -3,86 +3,106 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.List;
+import java.util.Objects;
 
-import javax.swing.JButton;
-import javax.swing.JToggleButton;
-
-import ch.alpine.ascona.util.api.LogWeighting;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.MeshRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldFuse;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.Sedarim;
+import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradient;
+import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.sca.N;
 
-/* package */ abstract class AbstractDeformationDemo extends AbstractScatteredSetWeightingDemo {
+/* package */ abstract class AbstractDeformationDemo extends ControlPointsDemo {
   private static final PointsRender POINTS_RENDER_POINTS = //
       new PointsRender(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255));
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   /** for parameterization of geodesic */
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 10);
+
   // ---
-  private final SpinnerLabel<Integer> spinnerLength;
-  private final JButton jButton = new JButton("snap");
-  private final JToggleButton jToggleTarget = new JToggleButton("target");
+  @ReflectionMarker
+  public static class Param0 extends AsconaParam {
+    public Param0(List<ManifoldDisplays> list) {
+      super(false, list);
+    }
+
+    public LogWeightings logWeightings = LogWeightings.COORDINATE;
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public ColorDataGradients cdg = ColorDataGradients.RAINBOW;
+    public Scalar refine = RealScalar.of(20);
+    public Boolean target = false;
+    @FieldFuse
+    public transient Boolean snap = true; // true intentional
+  }
+
+  @ReflectionMarker
+  public static class Param1 {
+    @FieldInteger
+    @FieldClip(min = "3", max = "12")
+    public Scalar length = RealScalar.of(6);
+  }
+
+  private final Param0 param0;
+  private final Param1 param1;
   // ---
   /** in coordinate specific to geodesic display */
   private Tensor movingOrigin;
   private MovingDomain2D movingDomain2D;
 
-  AbstractDeformationDemo(List<ManifoldDisplays> list, List<LogWeighting> array) {
-    super(false, list, array);
-    spinnerLogWeighting.addSpinnerListener(v -> recompute());
-    // ---
-    spinnerRefine.addSpinnerListener(v -> recompute());
-    // ---
-    {
-      spinnerLength = SpinnerLabel.of(3, 4, 5, 6, 7, 8, 9, 10);
-      spinnerLength.setValue(6);
-      spinnerLength.addSpinnerListener(v -> shuffleSnap());
-      spinnerLength.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "number of points");
-    }
-    jToggleTarget.setSelected(true);
-    jToggleTarget.setToolTipText("display target");
-    timerFrame.jToolBar.add(jToggleTarget);
-    {
-      jButton.addActionListener(l -> snap());
-      timerFrame.jToolBar.add(jButton);
-    }
+  AbstractDeformationDemo(List<ManifoldDisplays> list) {
+    this(new Param0(list), new Param1());
+  }
+
+  AbstractDeformationDemo(Param0 param0, Param1 param1) {
+    super(param0, param1);
+    this.param0 = param0;
+    this.param1 = param1;
+    fieldsEditor(0).addUniversalListener(this::recompute);
+    fieldsEditor(1).addUniversalListener(this::shuffleSnap);
   }
 
   abstract Tensor shufflePointsSe2(int n);
 
   final void shuffleSnap() {
-    setControlPointsSe2(shufflePointsSe2(spinnerLength.getValue()));
-    snap();
-  }
-
-  final void snap() {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    movingOrigin = Tensor.of(getControlPointsSe2().map(N.DOUBLE).stream().map(manifoldDisplay::xya2point));
+    setControlPointsSe2(shufflePointsSe2(param1.length.number().intValue()));
+    param0.snap = true;
     recompute();
   }
 
-  @Override
   protected final void recompute() {
+    if (param0.snap) {
+      param0.snap = false;
+      ManifoldDisplay manifoldDisplay = manifoldDisplay();
+      movingOrigin = Tensor.of(getControlPointsSe2().map(N.DOUBLE).stream().map(manifoldDisplay::xya2point));
+    }
     System.out.println("recomp");
     movingDomain2D = updateMovingDomain2D(movingOrigin);
   }
@@ -94,20 +114,30 @@ import ch.alpine.tensor.sca.N;
 
   abstract Tensor shapeOrigin();
 
+  int refinement() {
+    return param0.refine.number().intValue();
+  }
+
+  Sedarim operator(Tensor sequence) {
+    Manifold manifold = (Manifold) param0.manifoldDisplays.geodesicSpace();
+    return param0.logWeightings.sedarim(param0.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
+  }
+
   @Override // from RenderInterface
   public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    if (Objects.isNull(movingDomain2D))
+      recompute();
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor origin = movingDomain2D.origin();
     Tensor target = getGeodesicControlPoints();
     // ---
     {
-      ColorDataGradient colorDataGradient = colorDataGradient().deriveWithOpacity(RealScalar.of(0.5));
+      ColorDataGradient colorDataGradient = param0.cdg.deriveWithOpacity(RealScalar.of(0.5));
       new MeshRender(movingDomain2D.forward(target, biinvariantMean()), colorDataGradient) //
           .render(geometricLayer, graphics);
     }
-    boolean isTarget = jToggleTarget.isSelected();
-    if (isTarget) { // connect origin and target pairs with lines/geodesics
+    if (param0.target) { // connect origin and target pairs with lines/geodesics
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       graphics.setColor(new Color(128, 128, 128, 255));
       graphics.setStroke(STROKE);
@@ -123,15 +153,13 @@ import ch.alpine.tensor.sca.N;
     POINTS_RENDER_POINTS //
         .show(manifoldDisplay::matrixLift, shapeOrigin(), origin) //
         .render(geometricLayer, graphics);
-    LeversRender leversRender = LeversRender.of(manifoldDisplay, isTarget //
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, param0.target //
         ? getGeodesicControlPoints()
         : origin, null, geometricLayer, graphics);
-    if (isTarget)
-      leversRender.renderSequence();
-    leversRender.renderIndexP(isTarget ? "q" : "p");
+    leversRender.renderIndexP(param0.target ? "q" : "p");
     {
       Rescale rescale = new Rescale(movingDomain2D.arrayReshape_weights());
-      new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient()).draw(graphics);
+      new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), param0.cdg).draw(graphics);
     }
   }
 }

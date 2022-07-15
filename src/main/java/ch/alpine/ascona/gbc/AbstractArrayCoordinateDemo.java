@@ -20,7 +20,6 @@ public abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightin
   public AbstractArrayCoordinateDemo(List<LogWeighting> array) {
     super(true, ManifoldDisplays.d2Rasters(), array);
     // ---
-    jToggleArrows.setVisible(false);
     addMouseRecomputation();
   }
 
