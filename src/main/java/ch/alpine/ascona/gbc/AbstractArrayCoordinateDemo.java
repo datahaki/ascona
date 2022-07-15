@@ -15,7 +15,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 
 public abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightingDemo {
-  private ArrayPlotImage arrayPlotRender;
+  private ArrayPlotImage arrayPlotImage;
 
   public AbstractArrayCoordinateDemo(List<LogWeighting> array) {
     super(true, ManifoldDisplays.d2Rasters(), array);
@@ -27,8 +27,8 @@ public abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightin
   protected final void recompute() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
-    arrayPlotRender = manifoldDisplay.dimensions() < sequence.length() //
-        ? arrayPlotRender(sequence, refinement(), operator(sequence)::sunder)
+    arrayPlotImage = manifoldDisplay.dimensions() < sequence.length() //
+        ? arrayPlotImage(sequence, refinement(), operator(sequence)::sunder)
         : null;
   }
 
@@ -43,9 +43,9 @@ public abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightin
       leversRender.renderIndexP();
     }
     // ---
-    if (Objects.isNull(arrayPlotRender))
+    if (Objects.isNull(arrayPlotImage))
       recompute();
-    if (Objects.nonNull(arrayPlotRender))
-      arrayPlotRender.draw(graphics);
+    if (Objects.nonNull(arrayPlotImage))
+      arrayPlotImage.draw(graphics);
   }
 }

@@ -131,11 +131,11 @@ public class MaAveragingDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     // Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
-    ArrayPlotImage arrayPlotRender = cache.apply(sequence);
-    if (Objects.nonNull(arrayPlotRender)) {
+    ArrayPlotImage arrayPlotImage = cache.apply(sequence);
+    if (Objects.nonNull(arrayPlotImage)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
       D2Raster d2Raster = (D2Raster) manifoldDisplay;
-      new ImageRender(arrayPlotRender.bufferedImage(), d2Raster.coordinateBoundingBox()) //
+      new ImageRender(arrayPlotImage.bufferedImage(), d2Raster.coordinateBoundingBox()) //
           .render(geometricLayer, graphics);
     }
     RenderQuality.setQuality(graphics);

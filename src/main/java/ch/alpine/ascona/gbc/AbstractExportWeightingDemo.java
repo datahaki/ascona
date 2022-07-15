@@ -59,8 +59,8 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
       Sedarim sedarim = logWeighting.sedarim(biinvariant, variogram(), sequence);
       System.out.print("computing " + biinvariant);
       // ---
-      ArrayPlotImage arrayPlotRender = arrayPlotRender(sequence, REFINEMENT, sedarim::sunder);
-      BufferedImage bufferedImage = arrayPlotRender.export();
+      ArrayPlotImage arrayPlotImage = arrayPlotImage(sequence, REFINEMENT, sedarim::sunder);
+      BufferedImage bufferedImage = arrayPlotImage.export();
       try {
         ImageIO.write(bufferedImage, "png", new File(root, biinvariant.toString() + ".png"));
       } catch (Exception exception) {
@@ -71,7 +71,7 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
     System.out.println("all done");
   }
 
-  protected final ArrayPlotImage arrayPlotRender(Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator) {
+  protected final ArrayPlotImage arrayPlotImage(Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     D2Raster d2Raster = (D2Raster) manifoldDisplay;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());

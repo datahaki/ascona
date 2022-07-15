@@ -136,8 +136,8 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
       });
       { // render basis functions
         Rescale rescale = new Rescale(ImageTiling.of(wgs));
-        ArrayPlotImage arrayPlotRender = new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient);
-        arrayPlotRender.draw(graphics);
+        ArrayPlotImage arrayPlotImage = new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient);
+        arrayPlotImage.draw(graphics);
         {
           // BufferedImage bufferedImage = ImageFormat.of(ArrayPlot.of(_wgs, colorDataGradient));
           // graphics.drawImage(bufferedImage, //
@@ -148,7 +148,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
         {
           Tensor image = Raster.of(neg, ColorDataGradients.TEMPERATURE);
           BufferedImage bufferedImage = ImageFormat.of(image);
-          graphics.drawImage(bufferedImage, 0, 32 + arrayPlotRender.height(), //
+          graphics.drawImage(bufferedImage, 0, 32 + arrayPlotImage.height(), //
               bufferedImage.getWidth() * 1, //
               bufferedImage.getHeight() * 1, null);
         }

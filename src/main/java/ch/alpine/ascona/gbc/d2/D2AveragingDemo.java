@@ -25,8 +25,10 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.VisualImage;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.Manifold;
@@ -39,7 +41,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Timing;
@@ -65,6 +66,9 @@ public class D2AveragingDemo extends ControlPointsDemo {
     @FieldInteger
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
     public Scalar resolution = RealScalar.of(50);
+    @FieldSlider
+    @FieldClip(min = "0", max = "0.2")
+    public Scalar radius = RealScalar.of(0.1);
     public ColorDataGradients cdg = ColorDataGradients.PARULA;
   }
 
@@ -85,8 +89,7 @@ public class D2AveragingDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setOffset(400, 400);
   }
 
-  private static final int CACHE_SIZE = 1;
-  private final Cache<Tensor, ArrayPlotImage> cache = Cache.of(this::computeImage, CACHE_SIZE);
+  private final Cache<Tensor, ArrayPlotImage> cache = Cache.of(this::computeImage, 1);
   private double computeTime = 0;
 
   protected void recompute() {
@@ -102,14 +105,11 @@ public class D2AveragingDemo extends ControlPointsDemo {
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
         Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
-        // return logWeighting().function(biinvariant(), variogram(), sequence, values);
         TensorScalarFunction tensorScalarFunction = //
             param.logWeightings.function(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence, values);
         D2Raster d2Raster = (D2Raster) manifoldDisplay;
-        ScalarUnaryOperator suo = s -> s; // Round.toMultipleOf(RationalScalar.of(2, 10));
-        TensorScalarFunction tsf = tensorScalarFunction.andThen(suo);
         Timing timing = Timing.started();
-        ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
+        ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tensorScalarFunction, DoubleScalar.INDETERMINATE);
         Tensor matrix = D2Raster.of(d2Raster, resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
@@ -118,7 +118,7 @@ public class D2AveragingDemo extends ControlPointsDemo {
         ColorDataGradients colorDataGradients = param.cdg;
         Tensor domain = Subdivide.increasing(clip, 50);
         Tensor rgba = Tensors.empty();
-        IntBlend intBlend = new IntBlend(RealScalar.of(0.1));
+        IntBlend intBlend = new IntBlend(param.radius);
         Tensor c_blck = Tensors.vector(0, 0, 0, 255);
         for (int index = 0; index < domain.length(); ++index) {
           Scalar x = domain.Get(index);
@@ -130,7 +130,6 @@ public class D2AveragingDemo extends ControlPointsDemo {
         ColorDataGradient colorDataGradient = LinearColorDataGradient.of(rgba);
         return new ArrayPlotImage(rescale.result(), clip, colorDataGradient);
       } catch (Exception exception) {
-        System.out.println(exception);
         exception.printStackTrace();
       }
     return null;
@@ -147,14 +146,14 @@ public class D2AveragingDemo extends ControlPointsDemo {
     CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
     Tensor sequence = getGeodesicControlPoints();
     Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
-    ArrayPlotImage arrayPlotRender = cache.apply(Unprotect.byRef(sequence, values));
-    if (Objects.nonNull(arrayPlotRender)) {
+    ArrayPlotImage arrayPlotImage = cache.apply(Unprotect.byRef(sequence, values));
+    if (Objects.nonNull(arrayPlotImage)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      new ImageRender(arrayPlotRender.bufferedImage(), coordinateBoundingBox) //
+      new ImageRender(arrayPlotImage.bufferedImage(), coordinateBoundingBox) //
           .render(geometricLayer, graphics);
-      BufferedImage legend = arrayPlotRender.legend();
+      BufferedImage legend = arrayPlotImage.legend();
       graphics.drawImage(legend, dimension.width - legend.getWidth(), 0, null);
-      VisualImage visualImage = new VisualImage(arrayPlotRender.bufferedImage(), coordinateBoundingBox);
+      VisualImage visualImage = new VisualImage(arrayPlotImage.bufferedImage(), coordinateBoundingBox);
       JFreeChart jFreeChart = ArrayPlot.of(visualImage);
       jFreeChart.draw(graphics, new Rectangle(0, 50, 300, 300));
     }
