@@ -29,8 +29,14 @@ public class AbstractDemoHelper implements Runnable {
   public static class Holder {
     public final Object[] objects;
 
+    @SafeVarargs
     public Holder(Object... objects) {
       this.objects = objects;
+    }
+
+    @Override
+    public String toString() {
+      return ObjectProperties.join(this);
     }
   }
 
@@ -48,11 +54,11 @@ public class AbstractDemoHelper implements Runnable {
     geometricLayer = new GeometricLayer(abstractDemo.timerFrame.geometricComponent.getModel2Pixel());
     bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
     wrap(() -> abstractDemo.render(geometricLayer, bufferedImage.createGraphics()));
-    fieldsAssignment = RandomFieldsAssignment.of(holder, this);
+    fieldsAssignment = RandomFieldsAssignment.of(holder);
   }
 
   private void randomize(int count) {
-    fieldsAssignment.randomize(count);
+    fieldsAssignment.randomize(count).forEach(i -> run());
   }
 
   @Override

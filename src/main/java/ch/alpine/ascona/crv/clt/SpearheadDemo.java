@@ -1,8 +1,6 @@
+// code by jph
 package ch.alpine.ascona.crv.clt;
 
-//// code by jph
-// package ch.alpine.sophus.demo.clt;
-//
 // import java.awt.Graphics2D;
 //
 // import ch.alpine.java.awt.RenderQuality;

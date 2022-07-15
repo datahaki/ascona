@@ -399,15 +399,16 @@ public class LeversRender {
 
   private void renderEllipse(Tensor p, Tensor sigma_inverse) {
     Tensor vs = null;
+    // TODO ASCONA should be part of manifoldDisplay interface
     if (manifoldDisplay.equals(R2Display.INSTANCE))
       vs = CIRCLE;
-    else
-      if (manifoldDisplay.equals(S2Display.INSTANCE))
-        vs = CIRCLE; // .dot(TSnProjection.of(p));
-      else //
-        if (manifoldDisplay instanceof Se2AbstractDisplay) {
-          vs = Tensor.of(CIRCLE.stream().map(PadRight.zeros(3)));
-        }
+    else //
+    if (manifoldDisplay.equals(S2Display.INSTANCE))
+      vs = CIRCLE; // .dot(TSnProjection.of(p));
+    else //
+    if (manifoldDisplay instanceof Se2AbstractDisplay) {
+      vs = Tensor.of(CIRCLE.stream().map(PadRight.zeros(3)));
+    }
     // ---
     if (Objects.nonNull(vs)) {
       vs = Tensor.of(vs.stream().map(sigma_inverse::dot));
