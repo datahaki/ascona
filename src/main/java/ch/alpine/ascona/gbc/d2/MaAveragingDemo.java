@@ -2,25 +2,24 @@
 package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
-import javax.swing.JButton;
-import javax.swing.JToggleButton;
-
-import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.ImageRender;
-import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.DistanceMatrix;
@@ -43,48 +42,44 @@ import ch.alpine.tensor.sca.AbsSquared;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
 
-/** TODO ASCONA reference marc alexa */
-public class MaAveragingDemo extends AnAveragingDemo {
-  private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
-  private final SpinnerLabel<Integer> spinnerRes = SpinnerLabel.of(20, 30, 40, 50, 75, 100, 150, 200, 250);
-  private final JToggleButton jToggleThresh = new JToggleButton("thresh");
+/** Reference:
+ * "Circumscribed Quadrics in Barycentric Coordinates"
+ * by Marc Alexa */
+public class MaAveragingDemo extends ControlPointsDemo {
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.d2Rasters());
+    }
+
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public Boolean type = false;
+    @FieldInteger
+    @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
+    public Scalar resolution = RealScalar.of(40);
+    public ColorDataGradients cdg = ColorDataGradients.PARULA;
+  }
+
+  private final Param param;
 
   public MaAveragingDemo() {
-    super(ManifoldDisplays.d2Rasters());
-    {
-      spinnerColorData.setValue(ColorDataGradients.PARULA);
-      spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color scheme");
-      spinnerColorData.addSpinnerListener(v -> recompute());
-    }
-    {
-      spinnerRes.setValue(30);
-      spinnerRes.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "resolution");
-      spinnerRes.addSpinnerListener(v -> recompute());
-    }
-    {
-      timerFrame.jToolBar.add(jToggleThresh);
-    }
-    {
-      JButton jButton = new JButton("round");
-      jButton.addActionListener(e -> {
-        Tensor tensor = getControlPointsSe2().copy();
-        tensor.set(Round.FUNCTION, Tensor.ALL, 2);
-        setControlPointsSe2(tensor);
-      });
-      timerFrame.jToolBar.add(jButton);
-    }
-    timerFrame.jToolBar.addSeparator();
-    addManifoldListener(v -> recompute());
-    timerFrame.geometricComponent.setOffset(400, 400);
+    this(new Param());
+  }
+
+  public MaAveragingDemo(Param param) {
+    super(param);
+    this.param = param;
+    controlPointsRender.setMidpointIndicated(false);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
+    // ---
+    timerFrame.geometricComponent.setOffset(400, 400);
   }
 
   private static final int CACHE_SIZE = 1;
   private final Cache<Tensor, ArrayPlotImage> cache = Cache.of(this::computeImage, CACHE_SIZE);
   private double computeTime = 0;
 
-  @Override
   protected final void recompute() {
     System.out.println("clear");
     cache.clear();
@@ -92,7 +87,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
 
   private final ArrayPlotImage computeImage(Tensor tensor) {
     Tensor sequence = tensor.map(N.DOUBLE);
-    int resolution = spinnerRes.getValue();
+    int resolution = param.resolution.number().intValue();
     int n = sequence.length();
     if (2 < n)
       try {
@@ -100,14 +95,14 @@ public class MaAveragingDemo extends AnAveragingDemo {
         D2Raster d2Raster = (D2Raster) manifoldDisplay;
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
         final Tensor dist;
-        if (jToggleThresh.isSelected() || !(homogeneousSpace instanceof TensorMetric)) {
+        if (param.type || !(homogeneousSpace instanceof TensorMetric)) {
           dist = ConstantArray.of(RealScalar.ONE, n, n).subtract(IdentityMatrix.of(n));
         } else {
           TensorMetric tensorMetric = (TensorMetric) homogeneousSpace;
           TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(tensorMetric.distance(p, q));
           dist = DistanceMatrix.of(sequence, msq);
         }
-        Sedarim sedarim = biinvariant().coordinate(InversePowerVariogram.of(2), sequence);
+        Sedarim sedarim = param.biinvariants.ofSafe(homogeneousSpace).coordinate(InversePowerVariogram.of(2), sequence);
         TensorScalarFunction tsf = p -> {
           Tensor b = sedarim.sunder(p);
           return Abs.FUNCTION.apply((Scalar) dist.dot(b).dot(b));
@@ -117,7 +112,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
         Tensor matrix = D2Raster.of(d2Raster, resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
-        ColorDataGradient colorDataGradient = spinnerColorData.getValue();
+        ColorDataGradient colorDataGradient = param.cdg;
         return ArrayPlotImage.rescale(matrix, colorDataGradient, 1, false);
       } catch (Exception exception) {
         System.out.println(exception);
@@ -127,7 +122,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
   }
 
   @Override
-  public final void protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     prepare();
     // ---
@@ -142,10 +137,7 @@ public class MaAveragingDemo extends AnAveragingDemo {
           .render(geometricLayer, graphics);
     }
     RenderQuality.setQuality(graphics);
-    // renderControlPoints(geometricLayer, graphics);
-    LeversRender leversRender = //
-        LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-    leversRender.renderSequence();
+    // ---
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);
     graphics.drawString("compute: " + RealScalar.of(computeTime).map(Round._3), 0, 30);

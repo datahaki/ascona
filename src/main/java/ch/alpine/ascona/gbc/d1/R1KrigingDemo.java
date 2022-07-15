@@ -5,12 +5,20 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.itp.Kriging;
+import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -20,18 +28,43 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.sca.Abs;
 
 // TODO ASCONA DEMO behaves counter intuitively!?
 public class R1KrigingDemo extends A1AveragingDemo {
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.R2_ONLY);
+    }
+
+    public LogWeightings logWeightings = LogWeightings.WEIGHTING;
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public Boolean type = false;
+    @FieldInteger
+    @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
+    public Scalar resolution = RealScalar.of(40);
+    public ColorDataGradients cdg = ColorDataGradients.PARULA;
+  }
+
+  private final Param param;
+
   public R1KrigingDemo() {
-    super(ManifoldDisplays.R2);
+    this(new Param());
+  }
+
+  public R1KrigingDemo(Param param) {
+    super(param);
+    this.param = param;
+    controlPointsRender.setMidpointIndicated(false);
+    // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 1, 1}, {2, 2, 0}}"));
   }
 
   @Override
-  public void protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = Sort.of(getControlPointsSe2());
     if (1 < control.length()) {
       Tensor support = control.get(Tensor.ALL, 0);
@@ -51,11 +84,13 @@ public class R1KrigingDemo extends A1AveragingDemo {
       // ---
       Tensor sequence = support.map(Tensors::of);
       Tensor covariance = DiagonalMatrix.with(cvarian);
-      Sedarim sedarim = operator(sequence);
+      Manifold manifold = (Manifold) manifoldDisplay().geodesicSpace();
+      Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
+      // Sedarim sedarim = operator(sequence);
       try {
         Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
         // ---
-        Tensor domain = domain();
+        Tensor domain = StaticHelper.domain(getControlPointsSe2());
         Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(kriging::estimate));
         Tensor errors = Tensor.of(domain.stream().map(Tensors::of).map(kriging::variance));
         // ---

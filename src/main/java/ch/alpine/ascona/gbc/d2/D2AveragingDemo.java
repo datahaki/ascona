@@ -9,24 +9,28 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-import javax.swing.JButton;
-import javax.swing.JToggleButton;
-
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.gbc.AnAveragingDemo;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.VisualImage;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -46,64 +50,43 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
 
-public class D2AveragingDemo extends AnAveragingDemo {
-  private final SpinnerLabel<Scalar> spinnerCvar;
-  private final SpinnerLabel<Integer> spinnerMagnif;
-  private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
-  private final SpinnerLabel<Integer> spinnerRes = SpinnerLabel.of(20, 30, 40, 50, 75, 100, 150, 200, 250);
-  private final JToggleButton jToggleVarian = new JToggleButton("est/var");
-  private final JToggleButton jToggleThresh = new JToggleButton("thresh");
+public class D2AveragingDemo extends ControlPointsDemo {
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.d2Rasters());
+    }
+
+    public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+    @FieldInteger
+    @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
+    public Scalar resolution = RealScalar.of(50);
+    public ColorDataGradients cdg = ColorDataGradients.PARULA;
+  }
+
+  private final Param param;
 
   public D2AveragingDemo() {
-    super(ManifoldDisplays.d2Rasters());
-    {
-      spinnerCvar = SpinnerLabel.of(Tensors.fromString("{0, 0.01, 0.1, 0.5, 1}").stream().map(Scalar.class::cast).toList());
-      spinnerCvar.setValue(RealScalar.ZERO);
-      spinnerCvar.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "error");
-    }
-    {
-      spinnerMagnif = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8);
-      spinnerMagnif.setValue(6);
-      spinnerMagnif.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
-      spinnerMagnif.addSpinnerListener(v -> recompute());
-    }
-    {
-      spinnerColorData.setValue(ColorDataGradients.PARULA);
-      spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(200, 28), "color scheme");
-      spinnerColorData.addSpinnerListener(v -> recompute());
-    }
-    {
-      // spinnerRes.setArray();
-      spinnerRes.setValue(30);
-      spinnerRes.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "resolution");
-      spinnerRes.addSpinnerListener(v -> recompute());
-    }
-    {
-      timerFrame.jToolBar.add(jToggleVarian);
-      timerFrame.jToolBar.add(jToggleThresh);
-    }
-    {
-      JButton jButton = new JButton("round");
-      jButton.addActionListener(e -> {
-        Tensor tensor = getControlPointsSe2().copy();
-        tensor.set(Round.FUNCTION, Tensor.ALL, 2);
-        setControlPointsSe2(tensor);
-      });
-      timerFrame.jToolBar.add(jButton);
-    }
-    timerFrame.jToolBar.addSeparator();
-    addManifoldListener(v -> recompute());
-    timerFrame.geometricComponent.setOffset(400, 400);
+    this(new Param());
+  }
+
+  public D2AveragingDemo(Param param) {
+    super(param);
+    this.param = param;
+    controlPointsRender.setMidpointIndicated(false);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
+    fieldsEditor(0).addUniversalListener(this::recompute);
+    // ---
+    timerFrame.geometricComponent.setOffset(400, 400);
   }
 
   private static final int CACHE_SIZE = 1;
   private final Cache<Tensor, ArrayPlotImage> cache = Cache.of(this::computeImage, CACHE_SIZE);
   private double computeTime = 0;
 
-  @Override
-  protected final void recompute() {
+  protected void recompute() {
     System.out.println("clear");
     cache.clear();
   }
@@ -111,11 +94,14 @@ public class D2AveragingDemo extends AnAveragingDemo {
   private final ArrayPlotImage computeImage(Tensor tensor) {
     Tensor sequence = tensor.get(0).map(N.DOUBLE);
     Tensor values = tensor.get(1).map(N.DOUBLE);
-    int resolution = spinnerRes.getValue();
+    int resolution = param.resolution.number().intValue();
     if (2 < values.length())
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
-        TensorScalarFunction tensorScalarFunction = function(sequence, values);
+        Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+        // return logWeighting().function(biinvariant(), variogram(), sequence, values);
+        TensorScalarFunction tensorScalarFunction = //
+            param.logWeightings.function(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence, values);
         D2Raster d2Raster = (D2Raster) manifoldDisplay;
         ScalarUnaryOperator suo = s -> s; // Round.toMultipleOf(RationalScalar.of(2, 10));
         TensorScalarFunction tsf = tensorScalarFunction.andThen(suo);
@@ -124,10 +110,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
         Tensor matrix = D2Raster.of(d2Raster, resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
-        if (jToggleThresh.isSelected())
-          matrix = matrix.map(Round.FUNCTION); // effectively maps to 0 or 1
-        // ---
-        ColorDataGradients colorDataGradients = spinnerColorData.getValue();
+        ColorDataGradients colorDataGradients = param.cdg;
         // ColorDataGradient = colorDataGradients;
         // Rescale rescale = new Rescale(matrix);
         // Clip clip = rescale.scalarSummaryStatistics().getClip();
@@ -141,7 +124,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
         rgba.set(s -> RealScalar.of(255), Tensor.ALL, 3);
         ColorDataGradient colorDataGradient = LinearColorDataGradient.of(rgba);
         // TODO ASCONA not efficient: rescale happens twice
-        return ArrayPlotImage.rescale(matrix, colorDataGradient, spinnerMagnif.getValue(), false);
+        return ArrayPlotImage.rescale(matrix, colorDataGradient, 1, false);
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();
@@ -150,7 +133,7 @@ public class D2AveragingDemo extends AnAveragingDemo {
   }
 
   @Override
-  public final void protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     RenderQuality.setQuality(graphics);
     prepare();

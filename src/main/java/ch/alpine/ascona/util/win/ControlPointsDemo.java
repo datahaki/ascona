@@ -23,6 +23,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   public final ControlPointsRender controlPointsRender;
   private final AsconaParam asconaParam;
 
+  @SafeVarargs
   public ControlPointsDemo(Object... objects) {
     super(objects);
     this.asconaParam = (AsconaParam) objects[0];
@@ -65,6 +66,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     fieldsEditor(0).updateJComponents();
   }
 
+  @Deprecated
   public void addManifoldListener(SpinnerListener<ManifoldDisplays> spinnerListener) {
     fieldsEditor(0).addUniversalListener(() -> spinnerListener.spun(asconaParam.manifoldDisplays));
   }

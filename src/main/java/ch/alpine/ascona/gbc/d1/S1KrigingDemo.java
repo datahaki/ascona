@@ -5,15 +5,22 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.gbc.AnAveragingDemo;
 import ch.alpine.ascona.util.api.Box2D;
+import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
+import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.r2.ArcTan2D;
 import ch.alpine.sophus.itp.Kriging;
@@ -25,6 +32,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
+import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -36,13 +44,37 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.N;
 
 // FIXME ASCONA DEMO what does this demo do: there is no curve shown
-public class S1KrigingDemo extends AnAveragingDemo {
+public class S1KrigingDemo extends ControlPointsDemo {
   private static final double RANGE = 2;
-  private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
   private static final Tensor DOMAIN = Drop.tail(CirclePoints.of(161).map(N.DOUBLE), 80);
+  private static final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
+
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.R2_ONLY);
+    }
+
+    public LogWeightings logWeightings = LogWeightings.KRIGING;
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public Boolean type = false;
+    @FieldInteger
+    @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
+    public Scalar resolution = RealScalar.of(40);
+    public ColorDataGradients cdg = ColorDataGradients.PARULA;
+  }
+
+  private final Param param;
 
   public S1KrigingDemo() {
-    super(ManifoldDisplays.R2_ONLY);
+    this(new Param());
+  }
+
+  public S1KrigingDemo(Param param) {
+    super(param);
+    this.param = param;
+    controlPointsRender.setMidpointIndicated(false);
+    // ---
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-1, 1, 0}}"));
     timerFrame.geometricComponent.addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
     timerFrame.geometricComponent.addRenderInterfaceBackground(S1FrameRender.INSTANCE);
@@ -50,9 +82,10 @@ public class S1KrigingDemo extends AnAveragingDemo {
   }
 
   @Override // from RenderInterface
-  public void protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
     final Tensor shape = manifoldDisplay.shape(); // .multiply(RealScalar.of(0.3));
     if (1 < control.length()) {
       // TODO ASCONA ALG check for zero norm below
@@ -80,8 +113,9 @@ public class S1KrigingDemo extends AnAveragingDemo {
           .show(manifoldDisplay()::matrixLift, shape, sequence) //
           .render(geometricLayer, graphics);
       Tensor covariance = DiagonalMatrix.with(cvarian);
-      if (isDeterminate()) {
-        Sedarim sedarim = operator(sequence);
+      // if (isDeterminate())
+      {
+        Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), s -> s, sequence);
         Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
         Tensor estimate = Tensor.of(DOMAIN.stream().map(kriging::estimate));
         Tensor curve = Times.of(estimate, DOMAIN);

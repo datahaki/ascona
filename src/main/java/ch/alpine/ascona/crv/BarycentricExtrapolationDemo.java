@@ -7,15 +7,18 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 
-import ch.alpine.ascona.lev.LogWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.RealScalar;
@@ -25,12 +28,30 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.sca.Chop;
 
-public class BarycentricExtrapolationDemo extends LogWeightingDemo {
+public class BarycentricExtrapolationDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
 
+  @ReflectionMarker
+  public static class Param extends AsconaParam {
+    public Param() {
+      super(true, ManifoldDisplays.SE2C_R2);
+      manifoldDisplays = ManifoldDisplays.R2;
+    }
+
+    public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+  }
+
+  private final Param param;
+
   public BarycentricExtrapolationDemo() {
-    super(true, ManifoldDisplays.SE2C_R2, LogWeightings.list());
+    this(new Param());
+  }
+
+  public BarycentricExtrapolationDemo(Param param) {
+    super(param);
+    this.param = param;
   }
 
   @Override
@@ -53,7 +74,7 @@ public class BarycentricExtrapolationDemo extends LogWeightingDemo {
     if (1 < length) {
       Tensor samples = Subdivide.of(-length, 0, 127).map(Tensors::of);
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
-      Sedarim sedarim = operator(domain);
+      Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(homogeneousSpace), s -> s, domain);
       Tensor curve = Tensor.of(samples.stream() //
           .map(sedarim::sunder) //
           .map(weights -> biinvariantMean.mean(sequence, weights)));
