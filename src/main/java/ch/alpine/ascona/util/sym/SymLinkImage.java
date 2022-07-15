@@ -94,6 +94,7 @@ public class SymLinkImage {
       graphics.draw(path2d);
       geometricLayer.popMatrix();
     }
+    graphics.dispose();
   }
 
   public void title(String string) {
@@ -105,6 +106,7 @@ public class SymLinkImage {
     graphics.setFont(font);
     graphics.setColor(Color.BLACK);
     graphics.drawString(string, (int) (minx + (maxx - minx - stringWidth) * 0.5), 25);
+    graphics.dispose();
   }
 
   public BufferedImage bufferedImage() {
@@ -122,6 +124,7 @@ public class SymLinkImage {
       graphics.setColor(Color.GRAY);
       int piy = 22;
       graphics.drawLine(0, piy, bufferedImage.getWidth(), piy);
+      graphics.dispose();
     }
     return image;
   }

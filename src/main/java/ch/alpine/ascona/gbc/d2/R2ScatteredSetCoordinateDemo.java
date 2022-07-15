@@ -30,6 +30,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
@@ -41,7 +42,7 @@ import ch.alpine.tensor.sca.Clips;
  * in the square domain (subset of R^2) to means in non-linear spaces */
 // TODO ASCONA ALG possibly only recompute when points have changed
 // FIXME ASCONA demo does not work
-/* package */ class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
+public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final double RANGE = 5;
   private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
   // ---
@@ -123,8 +124,10 @@ import ch.alpine.tensor.sca.Clips;
       // ---
       new MeshRender(point, colorDataGradient.deriveWithOpacity(RationalScalar.HALF)).render(geometricLayer, graphics);
       // ---
-      if (jToggleHeatmap.isSelected()) // render basis functions
-        ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, false).draw(graphics);
+      if (jToggleHeatmap.isSelected()) { // render basis functions
+        Rescale rescale = new Rescale(ImageTiling.of(wgs));
+        new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient).draw(graphics);
+      }
       // render grid lines functions
       if (jToggleArrows.isSelected()) {
         graphics.setColor(Color.LIGHT_GRAY);

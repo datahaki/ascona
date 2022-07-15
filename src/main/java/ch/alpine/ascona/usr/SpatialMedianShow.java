@@ -86,6 +86,7 @@ import ch.alpine.tensor.sca.Chop;
         graphics.fill(path2d);
         geometricLayer.popMatrix();
       }
+      graphics.dispose();
     }
     return ImageFormat.from(bufferedImage);
   }

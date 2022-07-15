@@ -25,6 +25,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradient;
@@ -129,7 +130,9 @@ import ch.alpine.tensor.sca.N;
     if (isTarget)
       leversRender.renderSequence();
     leversRender.renderIndexP(isTarget ? "q" : "p");
-    if (jToggleHeatmap.isSelected())
-      ArrayPlotImage.rescale(movingDomain2D.arrayReshape_weights(), colorDataGradient(), false).draw(graphics);
+    if (jToggleHeatmap.isSelected()) {
+      Rescale rescale = new Rescale(movingDomain2D.arrayReshape_weights());
+      new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient()).draw(graphics);
+    }
   }
 }

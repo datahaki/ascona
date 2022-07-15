@@ -51,6 +51,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
       graphics.fill(path2d);
       geometricLayer.popMatrix();
     }
+    graphics.dispose();
     return ImageFormat.from(bufferedImage);
   }
 

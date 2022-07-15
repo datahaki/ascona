@@ -4,6 +4,7 @@ package ch.alpine.ascona.util.win;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -64,7 +65,9 @@ public class BaseFrame {
     Dimension dimension = geometricComponent.jComponent.getSize();
     BufferedImage bufferedImage = //
         new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_ARGB);
-    geometricComponent.render(bufferedImage.createGraphics(), dimension);
+    Graphics2D graphics = bufferedImage.createGraphics();
+    geometricComponent.render(graphics, dimension);
+    graphics.dispose();
     return bufferedImage;
   }
 

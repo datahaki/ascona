@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.io;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
@@ -23,7 +24,9 @@ public class BGR3AnimationWriter implements AnimationWriter {
         bufferedImage.getWidth(), //
         bufferedImage.getHeight(), //
         BufferedImage.TYPE_3BYTE_BGR);
-    frame.createGraphics().drawImage(bufferedImage, 0, 0, null);
+    Graphics2D graphics = frame.createGraphics();
+    graphics.drawImage(bufferedImage, 0, 0, null);
+    graphics.dispose();
     animationWriter.write(frame);
   }
 

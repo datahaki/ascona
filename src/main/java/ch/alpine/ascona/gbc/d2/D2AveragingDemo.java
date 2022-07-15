@@ -37,6 +37,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
@@ -55,6 +56,7 @@ public class D2AveragingDemo extends ControlPointsDemo {
   public static class Param extends AsconaParam {
     public Param() {
       super(true, ManifoldDisplays.d2Rasters());
+      manifoldDisplays = ManifoldDisplays.S2;
     }
 
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
@@ -110,6 +112,7 @@ public class D2AveragingDemo extends ControlPointsDemo {
         Tensor matrix = D2Raster.of(d2Raster, resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
+        Rescale rescale = new Rescale(matrix);
         ColorDataGradients colorDataGradients = param.cdg;
         // ColorDataGradient = colorDataGradients;
         // Rescale rescale = new Rescale(matrix);
@@ -124,7 +127,7 @@ public class D2AveragingDemo extends ControlPointsDemo {
         rgba.set(s -> RealScalar.of(255), Tensor.ALL, 3);
         ColorDataGradient colorDataGradient = LinearColorDataGradient.of(rgba);
         // TODO ASCONA not efficient: rescale happens twice
-        return ArrayPlotImage.rescale(matrix, colorDataGradient, false);
+        return new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient);
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();

@@ -36,9 +36,11 @@ public enum BarLegend {
 
   // ---
   private static int fontw(String smax, String smin) {
+    // TODO ASCONA can this be done easier
     Graphics2D graphics = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).createGraphics();
     graphics.setFont(FONT);
     FontMetrics fontMetrics = graphics.getFontMetrics();
+    graphics.dispose();
     return Math.max( //
         fontMetrics.stringWidth(smin), //
         fontMetrics.stringWidth(smax));
@@ -64,6 +66,7 @@ public enum BarLegend {
     RenderQuality.setQuality(graphics);
     graphics.drawString(smax, ofx - wmax, fontMetrics.getAscent());
     graphics.drawString(smin, ofx - wmin, height);
+    graphics.dispose();
     return bufferedImage;
   }
 }

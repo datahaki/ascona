@@ -13,7 +13,6 @@ import javax.swing.JButton;
 
 import ch.alpine.ascona.gbc.d2.AbstractScatteredSetWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
-import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.D2Raster;
@@ -27,6 +26,7 @@ import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 
@@ -77,6 +77,8 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, fallback);
     Tensor wgs = D2Raster.of(d2Raster, refinement, arrayFunction);
-    return ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient(), logWeighting().equals(LogWeightings.DISTANCES));
+    Rescale rescale = new Rescale(ImageTiling.of(wgs));
+    // logWeighting().equals(LogWeightings.DISTANCES)
+    return new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient());
   }
 }

@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.util.win;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -53,7 +54,9 @@ public class AbstractDemoHelper implements Runnable {
     holder = new Holder(abstractDemo.objects());
     geometricLayer = new GeometricLayer(abstractDemo.timerFrame.geometricComponent.getModel2Pixel());
     bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
-    wrap(() -> abstractDemo.render(geometricLayer, bufferedImage.createGraphics()));
+    // TODO ASCONA create close() to dispose gfx
+    Graphics2D graphics = bufferedImage.createGraphics();
+    wrap(() -> abstractDemo.render(geometricLayer, graphics));
     fieldsAssignment = RandomFieldsAssignment.of(holder);
   }
 

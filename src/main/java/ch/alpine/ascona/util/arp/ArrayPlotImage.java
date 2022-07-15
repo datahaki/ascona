@@ -3,53 +3,21 @@ package ch.alpine.ascona.util.arp;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.io.ImageFormat;
-import ch.alpine.tensor.red.Max;
-import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Clip;
-import ch.alpine.tensor.sca.Clips;
 
 public class ArrayPlotImage {
-  /** @param matrix
-   * @param colorDataGradient
-   * @param magnify
-   * @param coverZero
-   * @return */
-  // TODO ASCONA separate image and legend
-  public static ArrayPlotImage rescale( //
-      Tensor matrix, ScalarTensorFunction colorDataGradient, boolean coverZero) {
-    Rescale rescale = new Rescale(matrix);
-    Clip clip = rescale.scalarSummaryStatistics().getClip();
-    return new ArrayPlotImage( //
-        rescale.result(), //
-        coverZero //
-            ? cover(clip, clip.width().zero())
-            : clip, //
-        colorDataGradient);
-  }
-
-  /** @param clip
-   * @param scalar
-   * @return */
-  /* package */ static Clip cover(Clip clip, Scalar scalar) {
-    return Clips.interval( //
-        Min.of(clip.min(), scalar), //
-        Max.of(clip.max(), scalar));
-  }
-
-  // ---
   private final BufferedImage bufferedImage;
   private final int width;
   private final int height;
   private final BufferedImage legend;
 
-  private ArrayPlotImage(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient) {
+  public ArrayPlotImage(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient) {
     bufferedImage = ImageFormat.of(matrix.map(colorDataGradient));
     width = bufferedImage.getWidth();
     height = bufferedImage.getHeight();
@@ -85,7 +53,9 @@ public class ArrayPlotImage {
         width + 10 + legend.getWidth(), // magic constant corresponds to width of legend
         height, //
         BufferedImage.TYPE_INT_ARGB);
-    draw(bi.createGraphics());
+    Graphics2D graphics = bi.createGraphics();
+    draw(graphics);
+    graphics.dispose();
     return bi;
   }
 

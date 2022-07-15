@@ -22,6 +22,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Drop;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.num.Pi;
@@ -65,7 +66,8 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
       Tensor origin = getGeodesicControlPoints();
       Tensor wgs = compute(operator(origin), refinement());
       RenderQuality.setQuality(graphics);
-      ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, false).draw(graphics);
+      Rescale rescale = new Rescale(ImageTiling.of(wgs));
+      new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient).draw(graphics);
     }
   }
 

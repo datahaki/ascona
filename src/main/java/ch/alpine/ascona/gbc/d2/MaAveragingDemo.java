@@ -31,6 +31,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Timing;
@@ -113,7 +114,8 @@ public class MaAveragingDemo extends ControlPointsDemo {
         computeTime = timing.seconds();
         // ---
         ColorDataGradient colorDataGradient = param.cdg;
-        return ArrayPlotImage.rescale(matrix, colorDataGradient, false);
+        Rescale rescale = new Rescale(matrix);
+        return new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient);
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();

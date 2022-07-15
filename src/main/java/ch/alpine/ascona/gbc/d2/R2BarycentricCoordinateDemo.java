@@ -37,6 +37,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
@@ -134,7 +135,8 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
         // ++c0;
       });
       if (jToggleHeatmap.isSelected()) { // render basis functions
-        ArrayPlotImage arrayPlotRender = ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, false);
+        Rescale rescale = new Rescale(ImageTiling.of(wgs));
+        ArrayPlotImage arrayPlotRender = new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient);
         arrayPlotRender.draw(graphics);
         {
           // BufferedImage bufferedImage = ImageFormat.of(ArrayPlot.of(_wgs, colorDataGradient));
