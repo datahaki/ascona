@@ -51,7 +51,6 @@ import ch.alpine.tensor.sca.N;
     super(false, list, array);
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
     // ---
-    jToggleHeatmap.setSelected(false);
     spinnerRefine.addSpinnerListener(v -> recompute());
     // ---
     {
@@ -130,7 +129,7 @@ import ch.alpine.tensor.sca.N;
     if (isTarget)
       leversRender.renderSequence();
     leversRender.renderIndexP(isTarget ? "q" : "p");
-    if (jToggleHeatmap.isSelected()) {
+    {
       Rescale rescale = new Rescale(movingDomain2D.arrayReshape_weights());
       new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient()).draw(graphics);
     }

@@ -134,7 +134,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
         }
         // ++c0;
       });
-      if (jToggleHeatmap.isSelected()) { // render basis functions
+      { // render basis functions
         Rescale rescale = new Rescale(ImageTiling.of(wgs));
         ArrayPlotImage arrayPlotRender = new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient);
         arrayPlotRender.draw(graphics);

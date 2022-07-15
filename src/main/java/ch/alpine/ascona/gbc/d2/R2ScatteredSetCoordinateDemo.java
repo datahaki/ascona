@@ -124,7 +124,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       // ---
       new MeshRender(point, colorDataGradient.deriveWithOpacity(RationalScalar.HALF)).render(geometricLayer, graphics);
       // ---
-      if (jToggleHeatmap.isSelected()) { // render basis functions
+      { // render basis functions
         Rescale rescale = new Rescale(ImageTiling.of(wgs));
         new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient).draw(graphics);
       }
@@ -144,7 +144,6 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     }
     LeversRender leversRender = //
         LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
-    leversRender.renderSequence();
     leversRender.renderIndexP("q");
   }
 
