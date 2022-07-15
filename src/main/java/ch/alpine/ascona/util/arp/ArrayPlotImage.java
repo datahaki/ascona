@@ -22,9 +22,8 @@ public class ArrayPlotImage {
    * @param coverZero
    * @return */
   // TODO ASCONA separate image and legend
-  // TODO ASCONA param magnify obsolete
   public static ArrayPlotImage rescale( //
-      Tensor matrix, ScalarTensorFunction colorDataGradient, int magnify, boolean coverZero) {
+      Tensor matrix, ScalarTensorFunction colorDataGradient, boolean coverZero) {
     Rescale rescale = new Rescale(matrix);
     Clip clip = rescale.scalarSummaryStatistics().getClip();
     return new ArrayPlotImage( //
@@ -32,8 +31,7 @@ public class ArrayPlotImage {
         coverZero //
             ? cover(clip, clip.width().zero())
             : clip, //
-        colorDataGradient, //
-        magnify);
+        colorDataGradient);
   }
 
   /** @param clip
@@ -51,10 +49,10 @@ public class ArrayPlotImage {
   private final int height;
   private final BufferedImage legend;
 
-  private ArrayPlotImage(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient, int magnify) {
+  private ArrayPlotImage(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient) {
     bufferedImage = ImageFormat.of(matrix.map(colorDataGradient));
-    width = bufferedImage.getWidth() * magnify;
-    height = bufferedImage.getHeight() * magnify;
+    width = bufferedImage.getWidth();
+    height = bufferedImage.getHeight();
     legend = BarLegend.of(colorDataGradient, height, clip);
   }
 

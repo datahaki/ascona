@@ -130,6 +130,6 @@ import ch.alpine.tensor.sca.N;
       leversRender.renderSequence();
     leversRender.renderIndexP(isTarget ? "q" : "p");
     if (jToggleHeatmap.isSelected())
-      ArrayPlotImage.rescale(movingDomain2D.arrayReshape_weights(), colorDataGradient(), 3, false).draw(graphics);
+      ArrayPlotImage.rescale(movingDomain2D.arrayReshape_weights(), colorDataGradient(), false).draw(graphics);
   }
 }

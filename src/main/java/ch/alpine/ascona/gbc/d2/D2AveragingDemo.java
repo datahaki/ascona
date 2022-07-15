@@ -124,7 +124,7 @@ public class D2AveragingDemo extends ControlPointsDemo {
         rgba.set(s -> RealScalar.of(255), Tensor.ALL, 3);
         ColorDataGradient colorDataGradient = LinearColorDataGradient.of(rgba);
         // TODO ASCONA not efficient: rescale happens twice
-        return ArrayPlotImage.rescale(matrix, colorDataGradient, 1, false);
+        return ArrayPlotImage.rescale(matrix, colorDataGradient, false);
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();

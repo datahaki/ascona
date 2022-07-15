@@ -92,7 +92,7 @@ import ch.alpine.tensor.img.ColorDataIndexed;
         // GeodesicArrayPlot geodesicArrayPlot = geodesicDisplay.geodesicArrayPlot();
         int refinement = resolution();
         try {
-          ArrayPlotImage arrayPlotRender = arrayPlotRender(sequence, refinement, sedarim::sunder, 1);
+          ArrayPlotImage arrayPlotRender = arrayPlotRender(sequence, refinement, sedarim::sunder);
           BufferedImage bufferedImage = BackgroundOffscreen.fuseImages(manifoldDisplay, arrayPlotRender.export(), sequence.length());
           File file = new File(root, logWeighting.toString() + ".png");
           ImageIO.write(bufferedImage, "png", file);

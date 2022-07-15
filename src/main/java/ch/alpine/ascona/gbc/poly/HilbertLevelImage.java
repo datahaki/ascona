@@ -26,7 +26,7 @@ public enum HilbertLevelImage {
     D2Raster d2Raster = (D2Raster) manifoldDisplay;
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, fallback);
     Tensor wgs = D2Raster.of(d2Raster, res, arrayFunction);
-    ArrayPlotImage arrayPlotRender = ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, 1, false);
+    ArrayPlotImage arrayPlotRender = ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, false);
     return BackgroundOffscreen.fuseImages(manifoldDisplay, arrayPlotRender.export(), sequence_length);
   }
 }

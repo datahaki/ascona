@@ -113,7 +113,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
         computeTime = timing.seconds();
         // ---
         ColorDataGradient colorDataGradient = param.cdg;
-        return ArrayPlotImage.rescale(matrix, colorDataGradient, 1, false);
+        return ArrayPlotImage.rescale(matrix, colorDataGradient, false);
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();

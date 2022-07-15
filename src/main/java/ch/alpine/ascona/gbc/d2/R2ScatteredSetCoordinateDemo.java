@@ -124,7 +124,7 @@ import ch.alpine.tensor.sca.Clips;
       new MeshRender(point, colorDataGradient.deriveWithOpacity(RationalScalar.HALF)).render(geometricLayer, graphics);
       // ---
       if (jToggleHeatmap.isSelected()) // render basis functions
-        ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, 3, false).draw(graphics);
+        ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, false).draw(graphics);
       // render grid lines functions
       if (jToggleArrows.isSelected()) {
         graphics.setColor(Color.LIGHT_GRAY);

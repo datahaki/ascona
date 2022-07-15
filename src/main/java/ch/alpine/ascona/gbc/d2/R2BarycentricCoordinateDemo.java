@@ -134,8 +134,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
         // ++c0;
       });
       if (jToggleHeatmap.isSelected()) { // render basis functions
-        final int magnify = magnification();
-        ArrayPlotImage arrayPlotRender = ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, magnify, false);
+        ArrayPlotImage arrayPlotRender = ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient, false);
         arrayPlotRender.draw(graphics);
         {
           // BufferedImage bufferedImage = ImageFormat.of(ArrayPlot.of(_wgs, colorDataGradient));
@@ -148,8 +147,8 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
           Tensor image = Raster.of(neg, ColorDataGradients.TEMPERATURE);
           BufferedImage bufferedImage = ImageFormat.of(image);
           graphics.drawImage(bufferedImage, 0, 32 + arrayPlotRender.height(), //
-              bufferedImage.getWidth() * magnify, //
-              bufferedImage.getHeight() * magnify, null);
+              bufferedImage.getWidth() * 1, //
+              bufferedImage.getHeight() * 1, null);
         }
       }
       // render grid lines functions

@@ -15,7 +15,6 @@ import ch.alpine.tensor.img.ColorDataGradients;
 
 public abstract class AbstractScatteredSetWeightingDemo extends LogWeightingDemo {
   protected final SpinnerLabel<Integer> spinnerRefine;
-  private final SpinnerLabel<Integer> spinnerMagnif;
   private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
   protected final JToggleButton jToggleHeatmap = new JToggleButton("heatmap");
   protected final JToggleButton jToggleArrows = new JToggleButton("arrows");
@@ -33,12 +32,6 @@ public abstract class AbstractScatteredSetWeightingDemo extends LogWeightingDemo
       spinnerRefine.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "refinement");
       spinnerRefine.addSpinnerListener(v -> recompute());
     }
-    {
-      spinnerMagnif = SpinnerLabel.of(1, 2, 3, 4);
-      spinnerMagnif.setValue(2);
-      spinnerMagnif.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "magnify");
-      spinnerMagnif.addSpinnerListener(v -> recompute());
-    }
     spinnerColorData.setValue(ColorDataGradients.CLASSIC);
     spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(120, 28), "color scheme");
     spinnerColorData.addSpinnerListener(v -> recompute());
@@ -54,10 +47,6 @@ public abstract class AbstractScatteredSetWeightingDemo extends LogWeightingDemo
 
   protected final int refinement() {
     return spinnerRefine.getValue();
-  }
-
-  protected final int magnification() {
-    return spinnerMagnif.getValue();
   }
 
   protected final ColorDataGradient colorDataGradient() {

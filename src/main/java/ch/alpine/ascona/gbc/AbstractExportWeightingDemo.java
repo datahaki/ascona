@@ -59,7 +59,7 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
       Sedarim sedarim = logWeighting.sedarim(biinvariant, variogram(), sequence);
       System.out.print("computing " + biinvariant);
       // ---
-      ArrayPlotImage arrayPlotRender = arrayPlotRender(sequence, REFINEMENT, sedarim::sunder, 1);
+      ArrayPlotImage arrayPlotRender = arrayPlotRender(sequence, REFINEMENT, sedarim::sunder);
       BufferedImage bufferedImage = arrayPlotRender.export();
       try {
         ImageIO.write(bufferedImage, "png", new File(root, biinvariant.toString() + ".png"));
@@ -71,12 +71,12 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
     System.out.println("all done");
   }
 
-  protected final ArrayPlotImage arrayPlotRender(Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator, int magnification) {
+  protected final ArrayPlotImage arrayPlotRender(Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     D2Raster d2Raster = (D2Raster) manifoldDisplay;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, fallback);
     Tensor wgs = D2Raster.of(d2Raster, refinement, arrayFunction);
-    return ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient(), magnification, logWeighting().equals(LogWeightings.DISTANCES));
+    return ArrayPlotImage.rescale(ImageTiling.of(wgs), colorDataGradient(), logWeighting().equals(LogWeightings.DISTANCES));
   }
 }
