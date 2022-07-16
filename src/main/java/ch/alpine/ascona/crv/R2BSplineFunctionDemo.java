@@ -23,8 +23,8 @@ import ch.alpine.tensor.itp.BSplineFunctionCyclic;
 import ch.alpine.tensor.itp.BSplineFunctionString;
 
 /** use of tensor lib {@link BSplineFunction} */
-@ReflectionMarker
 public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
+  @ReflectionMarker
   public static class Param extends AbstractCurvatureParam {
     public Param() {
       super(ManifoldDisplays.R2_ONLY);
@@ -49,6 +49,7 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
 
   @Override
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor refined = Tensors.empty();
     if (0 < control.length()) {
@@ -60,7 +61,6 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
           .map(scalarTensorFunction);
       new PathRender(Color.BLUE).setCurve(refined, param.cyclic).render(geometricLayer, graphics);
     }
-    RenderQuality.setQuality(graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
       leversRender.renderIndexP();

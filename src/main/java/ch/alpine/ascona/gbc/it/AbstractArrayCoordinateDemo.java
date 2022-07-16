@@ -1,10 +1,11 @@
 // code by jph
-package ch.alpine.ascona.gbc;
+package ch.alpine.ascona.gbc.it;
 
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Objects;
 
+import ch.alpine.ascona.gbc.d2.AbstractExportWeightingDemo;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -14,7 +15,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 
-public abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightingDemo {
+/* package */ abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightingDemo {
   private ArrayPlotImage arrayPlotImage;
 
   public AbstractArrayCoordinateDemo(List<LogWeighting> array) {

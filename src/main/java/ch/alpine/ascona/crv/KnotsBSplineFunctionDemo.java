@@ -19,7 +19,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.crv.dub.DubinsGenerator;
 import ch.alpine.sophus.math.api.TensorMetric;
@@ -46,7 +45,6 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     public Scalar exponent = RealScalar.ONE;
   }
 
-  // TODO ASCONA REDUNDANT to GeodesicBSplineFunctionDemo
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
   private final Param param;
 
@@ -60,7 +58,6 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);
     param.refine = RealScalar.of(5);
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
     // ---
     Tensor dubins = Tensors.fromString(
         "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");

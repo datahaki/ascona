@@ -12,8 +12,10 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.lie.rn.RnGroup;
@@ -30,10 +32,8 @@ import ch.alpine.tensor.itp.BSplineInterpolation;
 import ch.alpine.tensor.mat.re.Inverse;
 
 public class BSplineBasisDemo extends ControlPointsDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final Color TICKS_COLOR = new Color(0, 0, 0, 128);
 
-  // ---
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
@@ -43,10 +43,12 @@ public class BSplineBasisDemo extends ControlPointsDemo {
     @FieldInteger
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
     public Scalar degree = RealScalar.of(1);
+    @FieldSlider
     @FieldInteger
-    @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
+    @FieldClip(min = "0", max = "8")
     public Scalar refine = RealScalar.of(4);
     public Boolean interp = false;
+    public ColorDataLists cdl = ColorDataLists._097;
   }
 
   private final Param param;
@@ -73,6 +75,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
       Tensor matrix = geometricLayer.getMatrix();
       geometricLayer.pushMatrix(Inverse.of(matrix));
       {
+        ColorDataIndexed colorDataIndexed = param.cdl.cyclic().deriveWithAlpha(192);
         for (int length = 2; length <= 8; ++length) {
           Tensor string = Tensors.fromString("{{100, 0, 0}, {0, -100, 0}, {0, 0, 1}}");
           string.set(RealScalar.of(110 * length), 1, 2);
@@ -83,7 +86,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
             Tensor domain = Subdivide.of(0, length - 1, 100);
             Tensor values = domain.map(bSplineFunction);
             Tensor tensor = Transpose.of(Tensors.of(domain, values));
-            graphics.setColor(COLOR_DATA_INDEXED.getColor(k_th));
+            graphics.setColor(colorDataIndexed.getColor(k_th));
             graphics.draw(geometricLayer.toPath2D(tensor));
             graphics.setColor(TICKS_COLOR);
             graphics.draw(geometricLayer.toPath2D(Tensors.matrix(new Number[][] { { k_th, 0 }, { k_th, .1 } })));

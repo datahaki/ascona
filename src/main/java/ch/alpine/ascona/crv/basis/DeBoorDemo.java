@@ -27,13 +27,12 @@ import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.mat.re.Inverse;
 
 public class DeBoorDemo extends AbstractDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
-  private static final Color TICKS_COLOR = new Color(0, 0, 0, 128);
-
   @ReflectionMarker
   public static class Param {
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6" })
     public Scalar degree = RealScalar.of(1);
+    public ColorDataLists cdl = ColorDataLists._097;
+    public Color color = new Color(0, 0, 0);
   }
 
   private final Param param;
@@ -57,6 +56,7 @@ public class DeBoorDemo extends AbstractDemo {
       geometricLayer.pushMatrix(Inverse.of(matrix));
       {
         graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
+        ColorDataIndexed colorDataIndexed = param.cdl.cyclic().deriveWithAlpha(192);
         for (int length = 2; length <= 6; ++length) {
           Tensor string = Tensors.fromString("{{200, 0, 0}, {0, -180, 0}, {0, 0, 1}}");
           string.set(RealScalar.of(210 * (length - 1)), 1, 2);
@@ -64,7 +64,7 @@ public class DeBoorDemo extends AbstractDemo {
           Tensor domain = Subdivide.of(0, length - 1, (length - 1) * 20);
           {
             for (int k_th = 0; k_th < length; ++k_th) {
-              graphics.setColor(COLOR_DATA_INDEXED.getColor(k_th));
+              graphics.setColor(colorDataIndexed.getColor(k_th));
               BSplineFunction bSplineFunction = (BSplineFunction) BSplineFunctionString.of(degree, UnitVector.of(length, k_th));
               DeBoor deBoor = bSplineFunction.deBoor(k_th);
               Tensor knots = deBoor.knots();
@@ -75,7 +75,7 @@ public class DeBoorDemo extends AbstractDemo {
               Tensor values = domain.map(bSplineFunction);
               Tensor tensor = Transpose.of(Tensors.of(domain, values));
               graphics.draw(geometricLayer.toPath2D(tensor));
-              graphics.setColor(TICKS_COLOR);
+              graphics.setColor(param.color);
               graphics.draw(geometricLayer.toPath2D(Tensors.matrix(new Number[][] { { k_th, 0 }, { k_th, .1 } })));
             }
           }

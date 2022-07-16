@@ -34,8 +34,8 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.N;
 
 /** LagrangeInterpolation with extrapolation */
-@ReflectionMarker
 public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
+  @ReflectionMarker
   public static class Param extends AbstractCurvatureParam {
     public Param() {
       super(ManifoldDisplays.ALL);

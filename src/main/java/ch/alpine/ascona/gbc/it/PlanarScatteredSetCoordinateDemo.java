@@ -7,7 +7,6 @@ import java.awt.Container;
 import java.awt.Graphics2D;
 import java.util.List;
 
-import ch.alpine.ascona.gbc.AbstractArrayCoordinateDemo;
 import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.InsideConvexHullLogWeighting;
 import ch.alpine.ascona.util.api.LogWeighting;

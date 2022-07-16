@@ -15,6 +15,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
@@ -26,6 +27,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Round;
 
 public class HeadTailGeodesicDemo extends ControlPointsDemo {
+  @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
       super(false, ManifoldDisplays.ALL);

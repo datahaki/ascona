@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc;
+package ch.alpine.ascona.gbc.d2;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-import ch.alpine.ascona.gbc.d2.AbstractScatteredSetWeightingDemo;
 import ch.alpine.ascona.util.api.ImageTiling;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.arp.ArrayFunction;

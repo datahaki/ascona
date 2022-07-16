@@ -18,8 +18,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-@ReflectionMarker
 public abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
+  @ReflectionMarker
   public static class AbstractCurveParam extends AbstractCurvatureParam {
     public AbstractCurveParam(List<ManifoldDisplays> list) {
       super(list);

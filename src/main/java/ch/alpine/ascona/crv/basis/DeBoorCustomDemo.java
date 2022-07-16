@@ -26,14 +26,12 @@ import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.itp.DeBoor;
 
 public class DeBoorCustomDemo extends AbstractDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
-
-  // ---
   @ReflectionMarker
   public static class Param {
     @FieldPreferredWidth(200)
     @FieldSelectionArray({ "{0, 1}", "{0, 0, 1, 1}" })
     public Tensor knots = Tensors.vector(0, 1);
+    public ColorDataLists cdl = ColorDataLists._097;
   }
 
   private final Param param;
@@ -70,8 +68,9 @@ public class DeBoorCustomDemo extends AbstractDemo {
             graphics.setColor(Color.RED);
             graphics.draw(path2d);
           }
+          ColorDataIndexed colorDataIndexed = param.cdl.cyclic().deriveWithAlpha(192);
           for (int k_th = 0; k_th < length; ++k_th) {
-            graphics.setColor(COLOR_DATA_INDEXED.getColor(k_th));
+            graphics.setColor(colorDataIndexed.getColor(k_th));
             DeBoor deBoor = DeBoor.of(RnGroup.INSTANCE, _knots, UnitVector.of(length, k_th));
             {
               graphics.setStroke(new BasicStroke(1.25f));
