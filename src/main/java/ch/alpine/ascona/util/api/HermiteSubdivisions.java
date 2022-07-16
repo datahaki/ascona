@@ -6,8 +6,6 @@ import ch.alpine.sophus.ref.d1h.Hermite1Subdivisions;
 import ch.alpine.sophus.ref.d1h.Hermite2Subdivisions;
 import ch.alpine.sophus.ref.d1h.Hermite3Subdivisions;
 import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
-import ch.alpine.tensor.RationalScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.sca.Chop;
 
 // TODO ASCONA all demos that use this should provide means to modify lambda, mu etc
@@ -15,7 +13,7 @@ public enum HermiteSubdivisions {
   HERMITE1 {
     @Override
     public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite1Subdivisions.of(homogeneousSpace, LAMBDA, MU);
+      return Hermite1Subdivisions.of(homogeneousSpace, HermiteSubdivisionParam.GLOBAL.hermiteLoParam);
     }
   },
   H1STANDARD {
@@ -28,7 +26,7 @@ public enum HermiteSubdivisions {
   HERMITE2 {
     @Override
     public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite2Subdivisions.of(homogeneousSpace, LAMBDA, MU);
+      return Hermite2Subdivisions.of(homogeneousSpace, HermiteSubdivisionParam.GLOBAL.hermiteLoParam);
     }
   },
   H2STANDARD {
@@ -47,7 +45,7 @@ public enum HermiteSubdivisions {
   HERMITE3 {
     @Override
     public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite3Subdivisions.of(homogeneousSpace, chop, THETA, OMEGA);
+      return Hermite3Subdivisions.of(homogeneousSpace, chop, HermiteSubdivisionParam.GLOBAL.hermiteHiParam);
     }
   },
   H3STANDARD {
@@ -68,12 +66,6 @@ public enum HermiteSubdivisions {
       return Hermite3Subdivisions.a2(homogeneousSpace, chop);
     }
   };
-
-  // TODO ASCONA ALG class design is no good
-  public static Scalar LAMBDA = RationalScalar.of(-1, 8);
-  public static Scalar MU = RationalScalar.of(-1, 2);
-  public static Scalar THETA = RationalScalar.of(+1, 128);
-  public static Scalar OMEGA = RationalScalar.of(-1, 16);
 
   /** @param homogeneousSpace
    * @param chop

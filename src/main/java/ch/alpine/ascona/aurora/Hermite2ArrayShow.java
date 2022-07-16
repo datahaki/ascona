@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.alpine.sophus.ref.d1h.Hermite2Subdivisions;
+import ch.alpine.sophus.ref.d1h.HermiteLoParam;
 import ch.alpine.tensor.Parallelize;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -21,7 +22,7 @@ import ch.alpine.tensor.sca.exp.Log;
   }
 
   private Scalar h2(Scalar lambda, Scalar mu) {
-    return process(Hermite2Subdivisions.of(HS_EXPONENTIAL, lambda, mu));
+    return process(Hermite2Subdivisions.of(HS_EXPONENTIAL, new HermiteLoParam(lambda, mu)));
   }
 
   @Override // from HermiteArray

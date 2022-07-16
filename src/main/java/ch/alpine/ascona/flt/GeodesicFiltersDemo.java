@@ -13,6 +13,7 @@ import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -30,7 +31,7 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DRAW = ColorDataLists._001.strict();
   private static final ColorDataIndexed COLOR_FILL = COLOR_DRAW.deriveWithAlpha(64);
 
-  // ---
+  @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
       super(true, ManifoldDisplays.SE2C_SE2_R2);
@@ -66,7 +67,7 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
       ScalarUnaryOperator smoothingKernel = param.windowFunctions.get();
       for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
         int ordinal = geodesicFilters.ordinal();
-        Tensor mean = geodesicFilters.from(manifoldDisplay, smoothingKernel).apply(control);
+        Tensor mean = geodesicFilters.supply(manifoldDisplay.geodesicSpace(), smoothingKernel).apply(control);
         Color color = COLOR_DRAW.getColor(ordinal);
         PointsRender pointsRender = new PointsRender(COLOR_FILL.getColor(ordinal), color);
         pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)).render(geometricLayer, graphics);

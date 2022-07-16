@@ -9,10 +9,9 @@ import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
-import javax.swing.JTextField;
-
 import org.jfree.chart.JFreeChart;
 
+import ch.alpine.ascona.util.api.HermiteSubdivisionParam;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
@@ -38,11 +37,8 @@ import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.chq.FiniteScalarQ;
-import ch.alpine.tensor.io.StringScalar;
 
 public class HermiteDatasetDemo extends AbstractDemo {
   private static final int WIDTH = 640;
@@ -71,6 +67,7 @@ public class HermiteDatasetDemo extends AbstractDemo {
     @FieldClip(min = "0", max = "8")
     public Scalar level = RealScalar.of(3);
     public Boolean diff = true;
+    public final HermiteSubdivisionParam hsp = HermiteSubdivisionParam.GLOBAL;
   }
 
   private final GokartPoseDataV2 gokartPoseDataV2;
@@ -92,68 +89,6 @@ public class HermiteDatasetDemo extends AbstractDemo {
     fieldsEditor(0).addUniversalListener(this::updateState);
     // ---
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
-    timerFrame.jToolBar.addSeparator();
-    {
-      JTextField jTextField = new JTextField(6);
-      jTextField.setText(HermiteSubdivisions.LAMBDA.toString());
-      jTextField.addActionListener(e -> {
-        try {
-          Scalar scalar = Scalars.fromString(jTextField.getText());
-          if (!(scalar instanceof StringScalar) && FiniteScalarQ.of(scalar))
-            HermiteSubdivisions.LAMBDA = scalar;
-        } catch (Exception exception) {
-          exception.printStackTrace();
-        }
-      });
-      jTextField.setPreferredSize(new Dimension(40, 28));
-      timerFrame.jToolBar.add(jTextField);
-    }
-    {
-      JTextField jTextField = new JTextField(6);
-      jTextField.setText(HermiteSubdivisions.MU.toString());
-      jTextField.addActionListener(e -> {
-        try {
-          Scalar scalar = Scalars.fromString(jTextField.getText());
-          if (!(scalar instanceof StringScalar) && FiniteScalarQ.of(scalar))
-            HermiteSubdivisions.MU = scalar;
-        } catch (Exception exception) {
-          exception.printStackTrace();
-        }
-      });
-      jTextField.setPreferredSize(new Dimension(40, 28));
-      timerFrame.jToolBar.add(jTextField);
-    }
-    {
-      JTextField jTextField = new JTextField(6);
-      jTextField.setText(HermiteSubdivisions.THETA.toString());
-      jTextField.addActionListener(e -> {
-        try {
-          Scalar scalar = Scalars.fromString(jTextField.getText());
-          if (!(scalar instanceof StringScalar) && FiniteScalarQ.of(scalar))
-            HermiteSubdivisions.THETA = scalar;
-        } catch (Exception exception) {
-          exception.printStackTrace();
-        }
-      });
-      jTextField.setPreferredSize(new Dimension(40, 28));
-      timerFrame.jToolBar.add(jTextField);
-    }
-    {
-      JTextField jTextField = new JTextField(6);
-      jTextField.setText(HermiteSubdivisions.OMEGA.toString());
-      jTextField.addActionListener(e -> {
-        try {
-          Scalar scalar = Scalars.fromString(jTextField.getText());
-          if (!(scalar instanceof StringScalar) && FiniteScalarQ.of(scalar))
-            HermiteSubdivisions.OMEGA = scalar;
-        } catch (Exception exception) {
-          exception.printStackTrace();
-        }
-      });
-      jTextField.setPreferredSize(new Dimension(40, 28));
-      timerFrame.jToolBar.add(jTextField);
-    }
-    timerFrame.jToolBar.addSeparator();
     updateState();
   }
 

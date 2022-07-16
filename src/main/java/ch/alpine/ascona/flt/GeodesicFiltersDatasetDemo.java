@@ -49,7 +49,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
     ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
     ScalarUnaryOperator smoothingKernel = gokartPoseSpec.kernel.get();
     GeodesicFilters geodesicFilters = spinnerFilters.getValue();
-    TensorUnaryOperator tensorUnaryOperator = geodesicFilters.from(manifoldDisplay, smoothingKernel);
+    TensorUnaryOperator tensorUnaryOperator = geodesicFilters.supply(manifoldDisplay.geodesicSpace(), smoothingKernel);
     return Nest.of( //
         new CenterFilter(tensorUnaryOperator, spinnerRadius.getValue()), //
         control(), spinnerConvolution.getValue());

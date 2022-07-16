@@ -37,7 +37,7 @@ class GeodesicFiltersTest {
     Map<GeodesicFilters, Tensor> map = new EnumMap<>(GeodesicFilters.class);
     for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
       TensorUnaryOperator tensorUnaryOperator = //
-          geodesicFilters.supply(homogeneousSpace, smoothingKernel, biinvariantMean);
+          geodesicFilters.supply(homogeneousSpace, smoothingKernel);
       Tensor filtered = new CenterFilter(tensorUnaryOperator, radius).apply(control);
       map.put(geodesicFilters, filtered);
     }
@@ -66,9 +66,7 @@ class GeodesicFiltersTest {
     for (int radius : new int[] { 0, 10 }) {
       for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
         TensorUnaryOperator tensorUnaryOperator = //
-            geodesicFilters.supply(homogeneousSpace, smoothingKernel,
-                // lieGroup, exponential,
-                biinvariantMean);
+            geodesicFilters.supply(homogeneousSpace, smoothingKernel);
         Timing timing = Timing.started();
         new CenterFilter(tensorUnaryOperator, radius).apply(control);
         timing.stop();
