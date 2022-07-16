@@ -38,6 +38,7 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
     @FieldSelectionArray({ "20", "30", "50" })
     public Scalar resolution = RealScalar.of(20);
     public Boolean ctrl = false;
+    public ColorDataGradients cdg = ColorDataGradients.CLASSIC;
   }
 
   private final Param param;
@@ -82,11 +83,11 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
     if (Objects.isNull(bufferedImage))
       compute();
     if (Objects.nonNull(bufferedImage))
-      graphics.drawImage(bufferedImage, 0, 200, bufferedImage.getWidth() * magnification, bufferedImage.getHeight() * magnification, null);
+      graphics.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth() * magnification, bufferedImage.getHeight() * magnification, null);
   }
 
   public void compute() {
-    bufferedImage = HilbertLevelImage.of(R2Display.INSTANCE, polygon, param.resolution.number().intValue(), ColorDataGradients.CLASSIC, 32);
+    bufferedImage = HilbertLevelImage.of(R2Display.INSTANCE, polygon, param.resolution.number().intValue(), param.cdg, 32);
   }
 
   /** @param n positive

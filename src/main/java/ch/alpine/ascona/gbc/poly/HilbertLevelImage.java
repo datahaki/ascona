@@ -27,7 +27,8 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /* package */ enum HilbertLevelImage {
   ;
-  public static BufferedImage of(ManifoldDisplay manifoldDisplay, Tensor sequence, int res, ColorDataGradient colorDataGradient, int max) {
+  public static BufferedImage of( //
+      ManifoldDisplay manifoldDisplay, Tensor sequence, int res, ColorDataGradient colorDataGradient, int max) {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     TensorUnaryOperator tuo = IterativeGenesis.counts(homogeneousSpace, sequence, max);
     int sequence_length = IterativeGenesis.values().length;

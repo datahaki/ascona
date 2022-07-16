@@ -12,6 +12,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.api.RectangleAlignment;
+import org.jfree.chart.api.RectangleInsets;
 
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
@@ -160,11 +162,16 @@ public class D2AveragingDemo extends ControlPointsDemo {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
       new ImageRender(arrayPlotImage.bufferedImage(), coordinateBoundingBox) //
           .render(geometricLayer, graphics);
-      BufferedImage createImage = arrayPlotImage.legend().createImage(new Dimension(10, 200));
+      int height = 300;
+      BufferedImage createImage = arrayPlotImage.legend().createImage(new Dimension(10, height - 40));
       graphics.drawImage(createImage, dimension.width - createImage.getWidth(), 0, null);
       VisualImage visualImage = new VisualImage(arrayPlotImage.bufferedImage(), coordinateBoundingBox);
       JFreeChart jFreeChart = ArrayPlot.of(visualImage);
-      jFreeChart.draw(graphics, new Rectangle(0, 50, 300, 300));
+      jFreeChart.setBackgroundImageAlignment(RectangleAlignment.CENTER_RIGHT);
+      jFreeChart.setBackgroundImage(createImage);
+      jFreeChart.setBackgroundImageAlpha(1);
+      jFreeChart.setPadding(new RectangleInsets(0, 0, 0, createImage.getWidth()));
+      jFreeChart.draw(graphics, new Rectangle(0, 50, 320, height));
     }
     RenderQuality.setQuality(graphics);
     LeversRender leversRender = //
