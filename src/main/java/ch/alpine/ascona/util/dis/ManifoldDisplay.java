@@ -2,6 +2,8 @@
 package ch.alpine.ascona.util.dis;
 
 import ch.alpine.ascona.util.ren.RenderInterface;
+import ch.alpine.sophus.crv.TransitionSpace;
+import ch.alpine.sophus.crv.UniformTransitionSpace;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -47,6 +49,10 @@ public interface ManifoldDisplay {
    * @see HomogeneousSpace
    * @see LieGroup */
   GeodesicSpace geodesicSpace();
+
+  default TransitionSpace transitionSpace() {
+    return new UniformTransitionSpace(geodesicSpace());
+  }
 
   /** @param p
    * @return operator that maps arbitrary dimension tangent vectors to 2d for display */

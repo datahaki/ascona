@@ -41,7 +41,6 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(192);
 
-  // ---
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {

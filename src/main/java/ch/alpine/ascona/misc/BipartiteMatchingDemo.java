@@ -8,8 +8,7 @@ import java.awt.geom.Path2D;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.ren.ControlPointsStatic;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -17,35 +16,31 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.crv.Transition;
+import ch.alpine.sophus.crv.TransitionSpace;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Outer;
-import ch.alpine.tensor.lie.r2.CirclePoints;
-import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
 
-// TODO ASCONA generalize demo for 2 scattered sets on a manifold
 public class BipartiteMatchingDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.R2_ONLY);
+      super(true, ManifoldDisplays.d2Rasters());
     }
 
     @FieldInteger
-    @FieldClip(min = "1", max = "10")
+    @FieldClip(min = "1", max = "20")
     public Scalar n = RealScalar.of(5);
-    @FieldInteger
-    @FieldClip(min = "1", max = "10")
-    public Scalar m = RealScalar.of(3);
     @FieldFuse
     public transient Boolean shuffle = true;
   }
 
   private final Param param;
+  private Tensor ground;
 
   public BipartiteMatchingDemo() {
     this(new Param());
@@ -54,14 +49,18 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
   public BipartiteMatchingDemo(Param param) {
     super(param);
     this.param = param;
-    fieldsEditor(0).addUniversalListener(() -> {
-      ManifoldDisplay manifoldDisplay = ManifoldDisplays.R2.manifoldDisplay();
-      Tensor tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), param.m.number().intValue());
-      Tensor xyas = Tensor.of(tensor.stream().map(manifoldDisplay::point2xya));
-      controlPointsRender.setControlPointsSe2(xyas);
-    });
-    controlPointsRender.setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {1, 1, 0}}"));
+    fieldsEditor(0).addUniversalListener(this::shuffle);
+    shuffle();
     controlPointsRender.setMidpointIndicated(false);
+  }
+
+  private void shuffle() {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    int n = param.n.number().intValue();
+    ground = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
+    Tensor tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
+    Tensor xyas = Tensor.of(tensor.stream().map(manifoldDisplay::point2xya));
+    controlPointsRender.setControlPointsSe2(xyas);
   }
 
   @Override // from RenderInterface
@@ -69,22 +68,23 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     Tensor control = controlPointsRender.getGeodesicControlPoints();
     if (0 < control.length()) {
-      Tensor CIRCLE = CirclePoints.of(param.n.number().intValue()).multiply(RealScalar.of(2));
-      new PathRender(Color.GRAY).setCurve(CIRCLE, true).render(geometricLayer, graphics);
-      Tensor matrix = Outer.of(Vector2Norm::between, control, CIRCLE);
+      ManifoldDisplay manifoldDisplay = manifoldDisplay();
+      Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+      Tensor matrix = StaticHelper.distanceMatrix(manifold, control, ground);
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
       int[] matching = bipartiteMatching.matching();
       graphics.setColor(Color.RED);
+      TransitionSpace transitionSpace = manifoldDisplay.transitionSpace();
       for (int index = 0; index < matching.length; ++index)
         if (matching[index] != BipartiteMatching.UNASSIGNED) {
-          Path2D path2d = geometricLayer.toPath2D(Tensors.of(control.get(index), CIRCLE.get(matching[index])));
+          Tensor head = control.get(index);
+          Tensor tail = ground.get(matching[index]);
+          Transition transition = transitionSpace.connect(head, tail);
+          Path2D path2d = geometricLayer.toPath2D(transition.linearized(RealScalar.of(0.1)));
           graphics.draw(path2d);
         }
     }
-    {
-      LeversRender leversRender = LeversRender.of(ManifoldDisplays.R2.manifoldDisplay(), control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
-    }
+    ControlPointsStatic.gray(manifoldDisplay(), ground).render(geometricLayer, graphics);
   }
 
   public static void main(String[] args) {

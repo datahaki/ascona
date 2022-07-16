@@ -6,10 +6,12 @@ import java.util.stream.Stream;
 
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.ren.RenderInterface;
+import ch.alpine.sophus.crv.TransitionSpace;
 import ch.alpine.sophus.decim.LineDistance;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.rn.RnLineDistance;
+import ch.alpine.sophus.lie.rn.RnTransitionSpace;
 import ch.alpine.sophus.math.sample.BoxRandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
@@ -53,9 +55,14 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     return PadRight.zeros(2);
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
     return RnGroup.INSTANCE;
+  }
+
+  @Override // from ManifoldDisplay
+  public final TransitionSpace transitionSpace() {
+    return RnTransitionSpace.INSTANCE;
   }
 
   @Override // from ManifoldDisplay
@@ -63,13 +70,13 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     return RnLineDistance.INSTANCE;
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final RenderInterface background() {
     return EmptyRender.INSTANCE;
     // return AxesRender.INSTANCE;
   }
 
-  public CoordinateBoundingBox coordinateBoundingBox() {
+  public final CoordinateBoundingBox coordinateBoundingBox() {
     return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(dimensions));
   }
 
@@ -78,7 +85,7 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     return BoxRandomSample.of(coordinateBoundingBox());
   }
 
-  @Override
+  @Override // from ManifoldDisplay
   public final Tensor point2xya(Tensor p) {
     return LIFT.apply(p);
   }
