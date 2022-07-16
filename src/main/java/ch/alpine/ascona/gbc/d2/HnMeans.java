@@ -11,10 +11,9 @@ import ch.alpine.tensor.sca.Chop;
 
 /** RMF(p,t,w)[x] == w.t for w = IDC(p,x) */
 /* package */ enum HnMeans implements Supplier<BiinvariantMean> {
-  EXACT(HnManifold.INSTANCE.biinvariantMean(Chop._05)), //
-  FAST(HnFastMean.INSTANCE), //
-  PHONG(HnPhongMean.INSTANCE), //
-  ;
+  EXACT(HnManifold.INSTANCE.biinvariantMean(Chop._05)),
+  FAST(HnFastMean.INSTANCE),
+  PHONG(HnPhongMean.INSTANCE);
 
   private final BiinvariantMean biinvariantMean;
 

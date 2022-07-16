@@ -12,22 +12,22 @@ import ch.alpine.sophus.hs.MetricManifold;
 
 // TODO ASCONA rename to SpaceDisplay(s) etc.
 public enum ManifoldDisplays {
-  Se2ClA(Se2ClothoidDisplay.ANALYTIC), //
-  Se2ClL(Se2ClothoidDisplay.LEGENDRE), //
-  Se2CCl(Se2CoveringClothoidDisplay.INSTANCE), //
-  Se2C(Se2CoveringDisplay.INSTANCE), //
-  R2S1A(R2S1ADisplay.INSTANCE), //
-  R2S1B(R2S1BDisplay.INSTANCE), //
-  Se2(Se2Display.INSTANCE), //
-  Spd2(Spd2Display.INSTANCE), //
-  R2(R2Display.INSTANCE), //
-  S1(S1Display.INSTANCE), //
-  S2(S2Display.INSTANCE), //
-  Rp2(Rp2Display.INSTANCE), //
-  H1(H1Display.INSTANCE), //
-  H2(H2Display.INSTANCE), //
-  So3(So3Display.INSTANCE), //
-  He1(He1Display.INSTANCE), //
+  Se2ClA(Se2ClothoidDisplay.ANALYTIC),
+  Se2ClL(Se2ClothoidDisplay.LEGENDRE),
+  Se2CCl(Se2CoveringClothoidDisplay.INSTANCE),
+  Se2C(Se2CoveringDisplay.INSTANCE),
+  R2S1A(R2S1ADisplay.INSTANCE),
+  R2S1B(R2S1BDisplay.INSTANCE),
+  Se2(Se2Display.INSTANCE),
+  Spd2(Spd2Display.INSTANCE),
+  R2(R2Display.INSTANCE),
+  S1(S1Display.INSTANCE),
+  S2(S2Display.INSTANCE),
+  Rp2(Rp2Display.INSTANCE),
+  H1(H1Display.INSTANCE),
+  H2(H2Display.INSTANCE),
+  So3(So3Display.INSTANCE),
+  He1(He1Display.INSTANCE),
   T1d(T1dDisplay.INSTANCE);
 
   private final ManifoldDisplay manifoldDisplay;

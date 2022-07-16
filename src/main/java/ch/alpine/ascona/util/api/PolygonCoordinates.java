@@ -32,36 +32,33 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
 
 public enum PolygonCoordinates implements LogWeighting {
-  MEAN_VALUE(ThreePointCoordinate.of(Barycenter.MEAN_VALUE)), //
+  MEAN_VALUE(ThreePointCoordinate.of(Barycenter.MEAN_VALUE)),
   // CIRCULAR(CircularCoordinate.INSTANCE), //
-  ITERATIVE_MV_1(IterativeMeanValueCoordinate.of(1)), //
-  ITERATIVE_MV_2(IterativeMeanValueCoordinate.of(2)), //
-  ITERATIVE_MV_3(IterativeMeanValueCoordinate.of(3)), //
-  ITERATIVE_MV_5(IterativeMeanValueCoordinate.of(5)), //
-  WACHSPRESS(ThreePointCoordinate.of(Barycenter.WACHSPRESS)), //
-  DISCRETE_HARMONIC(ThreePointCoordinate.of(Barycenter.DISCRETE_HARMONIC)), //
-  INVERSE_DISTANCE(new MetricBiinvariant(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2))), //
-  LAGRANG_DISTANCE(new LagrangeCoordinate( //
-      new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2)))), //
-  ITER_TARGET(new IterativeTargetCoordinate( //
-      new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2)), RealScalar.ONE, 50)), //
-  ITERATIVE_AF_0(new IterativeCoordinate(AffineCoordinate.INSTANCE, 0)), //
-  ITERATIVE_AF_1(new IterativeCoordinate(AffineCoordinate.INSTANCE, 1)), //
-  ITERATIVE_AF_2(new IterativeCoordinate(AffineCoordinate.INSTANCE, 2)), //
-  ITERATIVE_AF_3(new IterativeCoordinate(AffineCoordinate.INSTANCE, 3)), //
-  ITERATIVE_AF_5(new IterativeCoordinate(AffineCoordinate.INSTANCE, 5)), //
-  ITERATIVE_EX_05(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 05)), //
-  ITERATIVE_EX_10(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 10)), //
-  ITERATIVE_EX_20(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 20)), //
-  ITERATIVE_EX_30(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 30)), //
-  ITERATIVE_EX_50(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 50)), //
-  TARGET(new LeveragesGenesis(InversePowerVariogram.of(2))), //
-  ITERATIVE_IL_0(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 0)), //
-  ITERATIVE_IL_1(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 1)), //
-  ITERATIVE_IL_2(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 2)), //
-  ITERATIVE_IL_3(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 3)), //
-  ITERATIVE_IL_5(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 5)), //
-  ;
+  ITERATIVE_MV_1(IterativeMeanValueCoordinate.of(1)),
+  ITERATIVE_MV_2(IterativeMeanValueCoordinate.of(2)),
+  ITERATIVE_MV_3(IterativeMeanValueCoordinate.of(3)),
+  ITERATIVE_MV_5(IterativeMeanValueCoordinate.of(5)),
+  WACHSPRESS(ThreePointCoordinate.of(Barycenter.WACHSPRESS)),
+  DISCRETE_HARMONIC(ThreePointCoordinate.of(Barycenter.DISCRETE_HARMONIC)),
+  INVERSE_DISTANCE(new MetricBiinvariant(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2))),
+  LAGRANG_DISTANCE(new LagrangeCoordinate(new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2)))),
+  ITER_TARGET(new IterativeTargetCoordinate(new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2)), RealScalar.ONE, 50)),
+  ITERATIVE_AF_0(new IterativeCoordinate(AffineCoordinate.INSTANCE, 0)),
+  ITERATIVE_AF_1(new IterativeCoordinate(AffineCoordinate.INSTANCE, 1)),
+  ITERATIVE_AF_2(new IterativeCoordinate(AffineCoordinate.INSTANCE, 2)),
+  ITERATIVE_AF_3(new IterativeCoordinate(AffineCoordinate.INSTANCE, 3)),
+  ITERATIVE_AF_5(new IterativeCoordinate(AffineCoordinate.INSTANCE, 5)),
+  ITERATIVE_EX_05(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 05)),
+  ITERATIVE_EX_10(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 10)),
+  ITERATIVE_EX_20(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 20)),
+  ITERATIVE_EX_30(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 30)),
+  ITERATIVE_EX_50(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 50)),
+  TARGET(new LeveragesGenesis(InversePowerVariogram.of(2))),
+  ITERATIVE_IL_0(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 0)),
+  ITERATIVE_IL_1(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 1)),
+  ITERATIVE_IL_2(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 2)),
+  ITERATIVE_IL_3(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 3)),
+  ITERATIVE_IL_5(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 5));
 
   private static final Set<PolygonCoordinates> CONVEX = //
       EnumSet.of(INVERSE_DISTANCE, LAGRANG_DISTANCE, ITER_TARGET, TARGET);

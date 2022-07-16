@@ -30,7 +30,6 @@ public enum LogWeightings implements LogWeighting {
       throw new UnsupportedOperationException();
     }
   },
-  // ---
   WEIGHTING {
     @Override // from LogWeighting
     public Sedarim sedarim(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
@@ -46,7 +45,6 @@ public enum LogWeightings implements LogWeighting {
       return point -> (Scalar) tensorUnaryOperator.apply(point);
     }
   },
-  // ---
   COORDINATE {
     @Override // from LogWeighting
     public Sedarim sedarim(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
@@ -62,7 +60,6 @@ public enum LogWeightings implements LogWeighting {
       return point -> (Scalar) tensorUnaryOperator.apply(point);
     }
   },
-  // ---
   LAGRAINATE {
     @Override // from LogWeighting
     public Sedarim sedarim(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
@@ -78,7 +75,6 @@ public enum LogWeightings implements LogWeighting {
       return point -> (Scalar) tensorUnaryOperator.apply(point);
     }
   },
-  // ---
   /** produces affine weights
    * restricted to certain variograms, e.g. power(1.5) */
   KRIGING {
@@ -97,7 +93,6 @@ public enum LogWeightings implements LogWeighting {
       return point -> (Scalar) kriging.estimate(point);
     }
   },
-  // ---
   KRIGING_COORDINATE {
     @Override // from LogWeighting
     public Sedarim sedarim(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
@@ -133,8 +128,7 @@ public enum LogWeightings implements LogWeighting {
           RnBiinvariantMean.INSTANCE, values);
       return point -> (Scalar) tensorUnaryOperator.apply(point);
     }
-  }, //
-  ;
+  };
 
   public ScalarUnaryOperator variogramForInterpolation() {
     return name().startsWith(KRIGING.name()) || equals(INVERSE_COORDINATE) //

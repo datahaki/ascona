@@ -30,8 +30,7 @@ public enum MixedLogWeightings implements LogWeighting {
           sequence, values);
       return tensor -> (Scalar) tensorUnaryOperator.apply(tensor);
     }
-  }, //
-  ;
+  };
 
   public static List<LogWeighting> scattered() { //
     List<LogWeighting> list = new ArrayList<>();

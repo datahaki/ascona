@@ -40,8 +40,7 @@ import ch.alpine.tensor.opt.nd.NdCenters;
     protected Tensor shape() {
       return Box2D.CORNERS;
     }
-  }, //
-  ;
+  };
 
   public abstract NdCenterInterface ndCenterInterface(Tensor center);
 
