@@ -15,7 +15,7 @@ import ch.alpine.bridge.ref.util.RandomFieldsAssignment;
 
 public class AbstractDemoHelper {
   private static final ShortStackTrace SHORT_STACK_TRACE = new ShortStackTrace("ch.alpine.");
-  private static final int MAX = 20;
+  private static final int MAX = 10;
 
   /** @param abstractDemo non-null */
   public static AbstractDemoHelper offscreen(AbstractDemo abstractDemo) {

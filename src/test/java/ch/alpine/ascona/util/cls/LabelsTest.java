@@ -1,12 +1,10 @@
 // code by jph
-package ch.alpine.ascona.dv;
+package ch.alpine.ascona.util.cls;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascona.util.cls.Classification;
-import ch.alpine.ascona.util.cls.Labels;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.pdf.Distribution;

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.misc;
+package ch.alpine.ascona.ext;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -25,7 +25,6 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.sca.Clips;
 
-// TODO ASCONA separate standalone demos (like this one) from geometric/manifold demos
 public class ColoredNoiseDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {

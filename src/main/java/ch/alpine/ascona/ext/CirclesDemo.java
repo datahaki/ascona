@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.misc;
+package ch.alpine.ascona.ext;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
