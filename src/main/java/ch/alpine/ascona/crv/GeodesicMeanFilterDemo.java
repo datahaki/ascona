@@ -3,10 +3,10 @@ package ch.alpine.ascona.crv;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
+import ch.alpine.ascona.util.ren.ControlPointsStatic;
 import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;

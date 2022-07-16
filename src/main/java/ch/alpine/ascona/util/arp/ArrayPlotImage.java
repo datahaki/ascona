@@ -10,23 +10,31 @@ import java.util.Set;
 import ch.alpine.bridge.fig.BarLegend;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Round;
 
 public class ArrayPlotImage {
+  public static ArrayPlotImage of(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient) {
+    Set<Scalar> set = Set.of(Round._3.apply(clip.min()), Round._3.apply(clip.max()));
+    return new ArrayPlotImage(matrix, clip, colorDataGradient, set);
+  }
+
   private final BufferedImage bufferedImage;
   private final int width;
   private final int height;
   private final BarLegend legend;
   private final BufferedImage create;
 
-  public ArrayPlotImage(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient) {
+  /** @param matrix with entries in the interval [0, 1]
+   * @param clip of data range before {@link Rescale}
+   * @param colorDataGradient */
+  public ArrayPlotImage(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient, Set<Scalar> set) {
     bufferedImage = ImageFormat.of(matrix.map(colorDataGradient));
     width = bufferedImage.getWidth();
     height = bufferedImage.getHeight();
-    Set<Scalar> set = Set.of(Round._3.apply(clip.min()), Round._3.apply(clip.max()));
     legend = BarLegend.of(colorDataGradient, clip, set);
     create = legend.createImage(new Dimension(10, height));
   }

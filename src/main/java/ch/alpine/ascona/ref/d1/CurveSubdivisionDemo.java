@@ -11,9 +11,9 @@ import java.util.Optional;
 import javax.swing.JButton;
 
 import ch.alpine.ascona.crv.AbstractCurvatureDemo;
-import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.ControlPointsStatic;
 import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;

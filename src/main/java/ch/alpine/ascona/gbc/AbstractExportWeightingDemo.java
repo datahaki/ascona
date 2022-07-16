@@ -79,6 +79,6 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
     Tensor wgs = D2Raster.of(d2Raster, refinement, arrayFunction);
     Rescale rescale = new Rescale(ImageTiling.of(wgs));
     // logWeighting().equals(LogWeightings.DISTANCES)
-    return new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient());
+    return ArrayPlotImage.of(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient());
   }
 }

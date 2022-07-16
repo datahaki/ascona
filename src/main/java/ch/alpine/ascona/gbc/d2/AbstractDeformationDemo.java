@@ -156,7 +156,7 @@ import ch.alpine.tensor.sca.N;
     leversRender.renderIndexP(param0.target ? "q" : "p");
     {
       Rescale rescale = new Rescale(movingDomain2D.arrayReshape_weights());
-      new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), param0.cdg).draw(graphics);
+      ArrayPlotImage.of(rescale.result(), rescale.scalarSummaryStatistics().getClip(), param0.cdg).draw(graphics);
     }
   }
 

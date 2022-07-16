@@ -6,10 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
-import ch.alpine.ascona.util.api.ControlPointsStatic;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.AreaRender;
+import ch.alpine.ascona.util.ren.ControlPointsStatic;
 import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymLinkImage;

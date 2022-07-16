@@ -1,11 +1,9 @@
 // code by jph
-package ch.alpine.ascona.util.api;
+package ch.alpine.ascona.util.ren;
 
 import java.awt.Color;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.tensor.Tensor;
 
 public enum ControlPointsStatic {

@@ -7,7 +7,9 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import org.jfree.chart.JFreeChart;
 
@@ -39,6 +41,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorScalarFunction;
@@ -49,7 +52,9 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.LinearColorDataGradient;
 import ch.alpine.tensor.itp.LinearBinaryAverage;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.sca.Ceiling;
 import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Floor;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
 
@@ -128,7 +133,11 @@ public class D2AveragingDemo extends ControlPointsDemo {
           rgba.append(split);
         }
         ColorDataGradient colorDataGradient = LinearColorDataGradient.of(rgba);
-        return new ArrayPlotImage(rescale.result(), clip, colorDataGradient);
+        Set<Scalar> set = new HashSet<>();
+        Range.of(Ceiling.intValueExact(clip.min()), Floor.intValueExact(clip.max()) + 1).stream() //
+            .map(Scalar.class::cast) //
+            .forEach(set::add);
+        return new ArrayPlotImage(rescale.result(), clip, colorDataGradient, set);
       } catch (Exception exception) {
         exception.printStackTrace();
       }
