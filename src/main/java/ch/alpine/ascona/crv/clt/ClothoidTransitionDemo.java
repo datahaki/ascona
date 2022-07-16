@@ -92,7 +92,7 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       graphics.setStroke(new BasicStroke(2));
       graphics.draw(geometricLayer.toPath2D(linearized));
       if (param.smpl)
-        ControlPointsStatic.renderPoints(Se2Display.INSTANCE, linearized, geometricLayer, graphics);
+        ControlPointsStatic.gray(Se2Display.INSTANCE, linearized).render(geometricLayer, graphics);
       if (param.plot)
         visualSet.add(samples, RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
             Tensor.of(linearized.stream().map(Extract2D.FUNCTION))));

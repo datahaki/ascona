@@ -7,10 +7,10 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
-import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -85,7 +85,7 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
       int levels = param.refine.number().intValue();
       Tensor iterate = Do.of(control, tensorIteration::iterate, levels);
       Tensor curve = Tensor.of(iterate.get(Tensor.ALL, 0).stream().map(Extract2D.FUNCTION));
-      Curvature2DRender.of(curve, false, geometricLayer, graphics);
+      Curvature2DRender.of(curve, false).render(geometricLayer, graphics);
       // ---
       if (param.derivatives) {
         Tensor deltas = iterate.get(Tensor.ALL, 1);

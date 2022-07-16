@@ -5,9 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -109,7 +109,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
         geometricLayer.popMatrix();
       }
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-      Curvature2DRender.of(render, false, geometricLayer, graphics);
+      Curvature2DRender.of(render, false).render(geometricLayer, graphics);
       return refined;
     }
     return control;

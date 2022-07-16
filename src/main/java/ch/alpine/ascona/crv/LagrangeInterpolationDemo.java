@@ -5,10 +5,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.ControlPointsStatic;
-import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.AreaRender;
+import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymGeodesic;
 import ch.alpine.ascona.util.sym.SymLinkImage;
@@ -88,7 +88,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     Interpolation interpolation = LagrangeInterpolation.of(manifoldDisplay.geodesicSpace(), getGeodesicControlPoints());
     Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).map(interpolation::at);
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-    Curvature2DRender.of(render, false, geometricLayer, graphics);
+    Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     new AreaRender( //
         Color.DARK_GRAY, //
         manifoldDisplay::matrixLift, //
@@ -96,7 +96,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
         Unprotect.byRef(interpolation.at(parameter))) //
             .render(geometricLayer, graphics);
     if (levels < 5)
-      ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+      ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
       leversRender.renderIndexP();

@@ -60,7 +60,7 @@ public class OrderingDemo extends ControlPointsDemo {
     public ColorDataGradients cdg = ColorDataGradients.THERMOMETER;
     @FieldInteger
     @FieldSelectionArray({ "1", "3", "5", "8" })
-    public Scalar closest = RealScalar.of(8);
+    public Scalar closest = RealScalar.of(5);
 
     @ReflectionMarker
     public List<Biinvariants> biinvariants() {

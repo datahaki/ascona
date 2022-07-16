@@ -1,10 +1,9 @@
 // code by jph
-package ch.alpine.ascona.util.api;
+package ch.alpine.ascona.util.ren;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.crv.d2.CurvatureComb;
 import ch.alpine.tensor.DoubleScalar;
@@ -22,8 +21,8 @@ public enum Curvature2DRender {
    * @param isCyclic
    * @param geometricLayer
    * @param graphics */
-  public static void of(Tensor curve, boolean isCyclic, GeometricLayer geometricLayer, Graphics2D graphics) {
-    of(curve, isCyclic, true, geometricLayer, graphics);
+  public static RenderInterface of(Tensor curve, boolean isCyclic) {
+    return of(curve, isCyclic, true);
   }
 
   /** @param curve {{x0, y0}, {x1, y1}, ...}
@@ -31,8 +30,8 @@ public enum Curvature2DRender {
    * @param comb
    * @param geometricLayer
    * @param graphics */
-  public static void of(Tensor curve, boolean isCyclic, boolean comb, GeometricLayer geometricLayer, Graphics2D graphics) {
-    of(curve, isCyclic, comb, COMB_SCALE, geometricLayer, graphics);
+  public static RenderInterface of(Tensor curve, boolean isCyclic, boolean comb) {
+    return of(curve, isCyclic, comb, COMB_SCALE);
   }
 
   /** Hint: when control points have coordinates with unit "m",
@@ -43,8 +42,8 @@ public enum Curvature2DRender {
    * @param scale
    * @param geometricLayer
    * @param graphics */
-  public static void of(Tensor curve, boolean isCyclic, Scalar scale, GeometricLayer geometricLayer, Graphics2D graphics) {
-    of(curve, isCyclic, true, scale, geometricLayer, graphics);
+  public static RenderInterface of(Tensor curve, boolean isCyclic, Scalar scale) {
+    return of(curve, isCyclic, true, scale);
   }
 
   /** Hint: when control points have coordinates with unit "m",
@@ -56,15 +55,20 @@ public enum Curvature2DRender {
    * @param scale
    * @param geometricLayer
    * @param graphics */
-  public static void of(Tensor curve, boolean isCyclic, boolean comb, Scalar scale, GeometricLayer geometricLayer, Graphics2D graphics) {
+  public static RenderInterface of(Tensor curve, boolean isCyclic, boolean comb, Scalar scale) {
     if (0 < curve.length())
       if (Unprotect.dimension1(curve) != 2)
         throw Throw.of(curve);
-    // TODO ASCONA placement bad: renders curve
-    new PathRender(Color.BLUE, 1.25f).setCurve(curve, isCyclic).render(geometricLayer, graphics);
-    if (comb)
-      new PathRender(COLOR_CURVATURE_COMB) //
-          .setCurve(CurvatureComb.of(curve, scale, isCyclic), isCyclic) //
-          .render(geometricLayer, graphics);
+    RenderInterface ri1 = new PathRender(Color.BLUE, 1.25f).setCurve(curve, isCyclic);
+    RenderInterface ri2 = comb //
+        ? new PathRender(COLOR_CURVATURE_COMB).setCurve(CurvatureComb.of(curve, scale, isCyclic), isCyclic)
+        : EmptyRender.INSTANCE;
+    return new RenderInterface() {
+      @Override
+      public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+        ri1.render(geometricLayer, graphics);
+        ri2.render(geometricLayer, graphics);
+      }
+    };
   }
 }

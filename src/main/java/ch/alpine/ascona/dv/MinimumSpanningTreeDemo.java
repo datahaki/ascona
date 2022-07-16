@@ -60,7 +60,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
     }
 
     @FieldInteger
-    @FieldSelectionArray({ "10", "20", "30" })
+    @FieldSelectionArray({ "10", "20", "30", "50" })
     public Scalar size = RealScalar.of(20);
     @FieldFuse
     public transient Boolean shuffle = false;

@@ -4,10 +4,10 @@ package ch.alpine.ascona.crv;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.api.ControlPointsStatic;
-import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
+import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -65,8 +65,8 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
     Tensor render = Tensor.of(curve.stream().map(manifoldDisplay::point2xy));
     // ---
     RenderQuality.setQuality(graphics);
-    Curvature2DRender.of(render, false, geometricLayer, graphics);
-    ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+    Curvature2DRender.of(render, false).render(geometricLayer, graphics);
+    ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
       leversRender.renderIndexP();

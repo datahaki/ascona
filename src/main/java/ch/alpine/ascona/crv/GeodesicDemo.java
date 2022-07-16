@@ -5,11 +5,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AreaRender;
+import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
@@ -73,7 +73,7 @@ public class GeodesicDemo extends ControlPointsDemo {
     if (param.comb) {
       Tensor refined = Subdivide.of(0, 1, SPLITS * 6).map(scalarTensorFunction);
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-      Curvature2DRender.of(render, false, geometricLayer, graphics);
+      Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     }
     if (param.extra) {
       {

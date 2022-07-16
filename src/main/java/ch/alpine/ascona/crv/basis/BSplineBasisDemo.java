@@ -5,9 +5,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
+import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -105,7 +105,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     }
-    Curvature2DRender.of(refined, false, geometricLayer, graphics);
+    Curvature2DRender.of(refined, false).render(geometricLayer, graphics);
   }
 
   public static void main(String[] args) {

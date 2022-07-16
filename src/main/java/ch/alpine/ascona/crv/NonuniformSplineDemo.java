@@ -4,10 +4,10 @@ package ch.alpine.ascona.crv;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 
-import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
+import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -75,7 +75,7 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
       Clip clip = Clips.interval(x.Get(0), Last.of(x));
       Tensor domain = Subdivide.increasing(clip, 4 << _levels);
       Tensor values = domain.map(scalarTensorFunction);
-      Curvature2DRender.of(Transpose.of(Tensors.of(domain, values)), false, geometricLayer, graphics);
+      Curvature2DRender.of(Transpose.of(Tensors.of(domain, values)), false).render(geometricLayer, graphics);
     }
     LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
     leversRender.renderIndexP();

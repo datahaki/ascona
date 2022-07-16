@@ -8,9 +8,9 @@ import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.api.ControlPointsStatic;
-import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -77,9 +77,9 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
       geometricLayer.popMatrix();
     }
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-    Curvature2DRender.of(render, false, geometricLayer, graphics);
+    Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (levels < 5)
-      ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+      ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
       leversRender.renderIndexP();

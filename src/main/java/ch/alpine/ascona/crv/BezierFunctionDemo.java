@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 
 import ch.alpine.ascona.util.api.ControlPointsStatic;
-import ch.alpine.ascona.util.api.Curvature2DRender;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -90,9 +90,9 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     }
     Tensor refined = domain.map(new BezierFunction(geodesicSpace, sequence));
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-    Curvature2DRender.of(render, false, geometricLayer, graphics);
+    Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (levels < 5)
-      ControlPointsStatic.renderPoints(manifoldDisplay, refined, geometricLayer, graphics);
+      ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
     return refined;
   }
 
