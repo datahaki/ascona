@@ -2,7 +2,6 @@
 package ch.alpine.ascona.ref.d1;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -23,13 +22,11 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerMenu;
 import ch.alpine.sophus.crv.dub.DubinsGenerator;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
-import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -58,12 +55,10 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     public Boolean cyclic = false;
     public Boolean symi = true;
     public Boolean comb = true;
+    public final CurveSubdivisionParam csp = CurveSubdivisionParam.GLOBAL;
   }
 
   private final Param param;
-  final SpinnerLabel<Scalar> spinnerMagicC;
-  private static final Tensor OMEGA = Tensors.fromString("{-1/16, -1/36, 0, 1/72, 1/42, 1/36, 1/18, 1/16}");
-  private final SpinnerLabel<Scalar> spinnerBeta;
 
   public CurveSubdivisionDemo() {
     this(new Param());
@@ -122,27 +117,6 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     // ---
     controlPointsRender.setMidpointIndicated(true);
     // ---
-    // ---
-    spinnerMagicC = SpinnerLabel.of(Tensors.fromString("{1/100, 1/10, 1/8, 1/6, 1/4, 1/3, 1/2, 2/3, 9/10, 99/100}").stream() //
-        .map(Scalar.class::cast) //
-        .toList());
-    spinnerMagicC.addSpinnerListener(value -> CurveSubdivisionHelper.MAGIC_C = value);
-    spinnerMagicC.setValue(RationalScalar.HALF);
-    spinnerMagicC.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "refinement");
-    {
-      spinnerBeta = SpinnerLabel.of(OMEGA.stream().map(Scalar.class::cast).toList());
-      spinnerBeta.setValue(RationalScalar.of(1, 16));
-      spinnerBeta.addSpinnerListener(l -> CurveSubdivisionHelper.OMEGA = spinnerBeta.getValue());
-      spinnerBeta.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "beta");
-    }
-    // ---
-    // {
-    // JSlider jSlider = new JSlider(1, 999, 500);
-    // jSlider.setPreferredSize(new Dimension(360, 28));
-    // jSlider.addChangeListener(changeEvent -> //
-    // CurveSubdivisionHelper.MAGIC_C = RationalScalar.of(jSlider.getValue(), 1000));
-    // timerFrame.jToolBar.add(jSlider);
-    // }
     setManifoldDisplay(ManifoldDisplays.Se2);
     timerFrame.geometricComponent.setOffset(100, 600);
   }
@@ -184,7 +158,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       Tensor refined = StaticHelper.refine( //
           control, levels, curveSubdivision, //
-          CurveSubdivisionHelper.isDual(scheme), cyclic, geodesicSpace);
+          scheme.isDual(), cyclic, geodesicSpace);
       if (param.line) {
         TensorUnaryOperator tensorUnaryOperator = StaticHelper.create(new BSpline1CurveSubdivision(geodesicSpace), cyclic);
         pathRender.setCurve(Nest.of(tensorUnaryOperator, control, 8), cyclic).render(geometricLayer, graphics);

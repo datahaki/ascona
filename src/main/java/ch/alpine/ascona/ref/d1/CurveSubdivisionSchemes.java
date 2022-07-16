@@ -25,31 +25,31 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Chop;
 
 /* package */ enum CurveSubdivisionSchemes {
-  BSPLINE1 {
+  BSPLINE1(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return new BSpline1CurveSubdivision(manifoldDisplay.geodesicSpace());
     }
   },
-  BSPLINE2 {
+  BSPLINE2(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return new BSpline2CurveSubdivision(manifoldDisplay.geodesicSpace());
     }
   },
-  BSPLINE3 {
+  BSPLINE3(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return new BSpline3CurveSubdivision(manifoldDisplay.geodesicSpace());
     }
   },
-  BSPLINE3LR {
+  BSPLINE3LR(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return LaneRiesenfeld3CurveSubdivision.of(manifoldDisplay.geodesicSpace());
     }
   },
-  BSPLINE3M {
+  BSPLINE3M(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
@@ -58,130 +58,140 @@ import ch.alpine.tensor.sca.Chop;
     }
   },
   /** Dyn/Sharon 2014 that uses 2 binary averages */
-  BSPLINE4_S2LO {
+  BSPLINE4_S2LO(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return BSpline4CurveSubdivision.split2lo(manifoldDisplay.geodesicSpace());
     }
   },
   /** Alternative to Dyn/Sharon 2014 that also uses 2 binary averages */
-  BSPLINE4_S2HI {
+  BSPLINE4_S2HI(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return BSpline4CurveSubdivision.split2hi(manifoldDisplay.geodesicSpace());
     }
   },
   /** Hakenberg 2018 that uses 3 binary averages */
-  BSPLINE4_S3 {
+  BSPLINE4_S3(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return CurveSubdivisionHelper.of(manifoldDisplay.geodesicSpace());
     }
   },
   /** Hakenberg 2018 that uses 3 binary averages */
-  BSPLINE4M {
+  BSPLINE4M(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       return MSpline4CurveSubdivision.of(homogeneousSpace.biinvariantMean(Chop._06));
     }
   },
-  BSPLINE5 {
+  BSPLINE5(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return new BSpline5CurveSubdivision(manifoldDisplay.geodesicSpace());
     }
   },
-  BSPLINE6 {
+  BSPLINE6(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return BSpline6CurveSubdivision.of(manifoldDisplay.geodesicSpace());
     }
   },
-  LR1 {
+  LR1(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesicSpace(), 1);
     }
   },
-  LR2 {
+  LR2(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesicSpace(), 2);
     }
   },
-  LR3 {
+  LR3(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesicSpace(), 3);
     }
   },
-  LR4 {
+  LR4(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesicSpace(), 4);
     }
   },
-  LR5 {
+  LR5(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesicSpace(), 5);
     }
   },
-  LR6 {
+  LR6(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesicSpace(), 6);
     }
   },
-  DODGSON_SABIN {
+  DODGSON_SABIN(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return DodgsonSabinCurveSubdivision.INSTANCE;
     }
   },
-  THREEPOINT {
+  THREEPOINT(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return HormannSabinCurveSubdivision.of(manifoldDisplay.geodesicSpace());
     }
   },
-  FOURPOINT {
+  FOURPOINT(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return CurveSubdivisionHelper.fps(manifoldDisplay.geodesicSpace());
     }
   },
-  C2CUBIC {
+  C2CUBIC(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return DualC2FourPointCurveSubdivision.cubic(manifoldDisplay.geodesicSpace());
     }
   },
-  C2TIGHT {
+  C2TIGHT(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return DualC2FourPointCurveSubdivision.tightest(manifoldDisplay.geodesicSpace());
     }
   },
-  SIXPOINT {
+  SIXPOINT(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return new SixPointCurveSubdivision(manifoldDisplay.geodesicSpace());
     }
   },
-  SIXFAR {
+  SIXFAR(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return new FarSixPointCurveSubdivision(manifoldDisplay.geodesicSpace());
     }
   },
-  EIGHTPOINT {
+  EIGHTPOINT(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       return new EightPointCurveSubdivision(manifoldDisplay.geodesicSpace());
     }
   };
+
+  private final boolean isDual;
+
+  private CurveSubdivisionSchemes(boolean isDual) {
+    this.isDual = isDual;
+  }
+
+  public boolean isDual() {
+    return isDual;
+  }
 
   public abstract CurveSubdivision of(ManifoldDisplay manifoldDisplay);
 

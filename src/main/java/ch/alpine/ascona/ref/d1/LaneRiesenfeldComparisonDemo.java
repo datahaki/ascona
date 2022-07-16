@@ -153,7 +153,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor refined = StaticHelper.refine(control, levels, scheme.of(manifoldDisplay), //
-        CurveSubdivisionHelper.isDual(scheme), false, geodesicSpace);
+        scheme.isDual(), false, geodesicSpace);
     // ---
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     pathRender.setCurve(render, false);
