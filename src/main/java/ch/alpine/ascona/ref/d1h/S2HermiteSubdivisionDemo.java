@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 
+import ch.alpine.ascona.util.api.HermiteSubdivisionParam;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -50,6 +51,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
     }
 
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
+    public final HermiteSubdivisionParam hsp = HermiteSubdivisionParam.GLOBAL;
     @FieldSlider
     @FieldPreferredWidth(100)
     @FieldInteger

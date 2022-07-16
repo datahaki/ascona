@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import ch.alpine.sophus.ref.d1h.Hermite3Subdivisions;
-import ch.alpine.sophus.ref.d1h.HermiteHiParam;
+import ch.alpine.sophus.ref.d1h.HermiteHiConfig;
 import ch.alpine.tensor.Parallelize;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.exp.Log;
   }
 
   private Scalar h3(Scalar theta, Scalar omega) {
-    return process(Hermite3Subdivisions.of(HS_EXPONENTIAL, Chop._08, new HermiteHiParam(theta, omega)));
+    return process(Hermite3Subdivisions.of(HS_EXPONENTIAL, Chop._08, new HermiteHiConfig(theta, omega)));
   }
 
   @Override // from HermiteArray

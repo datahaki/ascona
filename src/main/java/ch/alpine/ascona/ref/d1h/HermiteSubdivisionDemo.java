@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.jfree.chart.JFreeChart;
 
+import ch.alpine.ascona.util.api.HermiteSubdivisionParam;
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -55,6 +56,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
     }
 
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
+    public final HermiteSubdivisionParam hsp = HermiteSubdivisionParam.GLOBAL;
     @FieldSlider
     @FieldInteger
     @FieldClip(min = "0", max = "7")
@@ -128,10 +130,10 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
         switch (manifoldDisplay.toString()) {
         case "SE2C":
         case "SE2":
-          new Se2HermitePlot(iterate, scale).render(geometricLayer, graphics);
+          new Se2HermiteRender(iterate, scale).render(geometricLayer, graphics);
           break;
         case "R2":
-          new R2HermitePlot(iterate, scale).render(geometricLayer, graphics);
+          new R2HermiteRender(iterate, scale).render(geometricLayer, graphics);
           break;
         default:
         }

@@ -135,7 +135,7 @@ public class HermiteDatasetDemo extends AbstractDemo {
     int levels = param.level.number().intValue();
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);
     pathRenderShape.setCurve(refined.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
-    new Se2HermitePlot(refined, RealScalar.of(0.3)).render(geometricLayer, graphics);
+    new Se2HermiteRender(refined, RealScalar.of(0.3)).render(geometricLayer, graphics);
     if (param.diff) {
       Tensor deltas = refined.get(Tensor.ALL, 1);
       int dims = deltas.get(0).length();

@@ -13,7 +13,7 @@ public enum HermiteSubdivisions {
   HERMITE1 {
     @Override
     public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite1Subdivisions.of(homogeneousSpace, HermiteSubdivisionParam.GLOBAL.hermiteLoParam);
+      return Hermite1Subdivisions.of(homogeneousSpace, HermiteSubdivisionParam.GLOBAL.hermiteLoParam.config());
     }
   },
   H1STANDARD {
@@ -26,7 +26,7 @@ public enum HermiteSubdivisions {
   HERMITE2 {
     @Override
     public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite2Subdivisions.of(homogeneousSpace, HermiteSubdivisionParam.GLOBAL.hermiteLoParam);
+      return Hermite2Subdivisions.of(homogeneousSpace, HermiteSubdivisionParam.GLOBAL.hermiteLoParam.config());
     }
   },
   H2STANDARD {
@@ -45,7 +45,7 @@ public enum HermiteSubdivisions {
   HERMITE3 {
     @Override
     public HermiteSubdivision supply(HomogeneousSpace homogeneousSpace, Chop chop) {
-      return Hermite3Subdivisions.of(homogeneousSpace, chop, HermiteSubdivisionParam.GLOBAL.hermiteHiParam);
+      return Hermite3Subdivisions.of(homogeneousSpace, chop, HermiteSubdivisionParam.GLOBAL.hermiteHiParam.config());
     }
   },
   H3STANDARD {

@@ -10,7 +10,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.Cross;
 
-/* package */ record R2HermitePlot(Tensor points, Scalar scale) implements RenderInterface {
+/* package */ record R2HermiteRender(Tensor points, Scalar scale) implements RenderInterface {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     graphics.setColor(new Color(128, 128, 128, 128));
