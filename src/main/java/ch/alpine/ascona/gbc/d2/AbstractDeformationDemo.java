@@ -10,9 +10,11 @@ import java.util.Objects;
 
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
+import ch.alpine.ascona.util.ren.BoundingBoxRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.MeshRender;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -39,6 +41,7 @@ import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.sca.N;
 
+// TODO ASCONA maps to target every frame right now
 /* package */ abstract class AbstractDeformationDemo extends ControlPointsDemo {
   private static final PointsRender POINTS_RENDER_POINTS = //
       new PointsRender(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255));
@@ -58,7 +61,7 @@ import ch.alpine.tensor.sca.N;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public ColorDataGradients cdg = ColorDataGradients.RAINBOW;
     public Scalar refine = RealScalar.of(20);
-    public Boolean target = false;
+    public Boolean target = true;
     @FieldFuse
     public transient Boolean snap = true; // true intentional
   }
@@ -77,21 +80,26 @@ import ch.alpine.tensor.sca.N;
   private Tensor movingOrigin;
   private MovingDomain2D movingDomain2D;
 
-  AbstractDeformationDemo(List<ManifoldDisplays> list, Object object) {
+  protected AbstractDeformationDemo(List<ManifoldDisplays> list, Object object) {
     this(new Param0(list), new Param1(), object);
   }
 
-  AbstractDeformationDemo(Param0 param0, Param1 param1, Object object) {
+  protected AbstractDeformationDemo(Param0 param0, Param1 param1, Object object) {
     super(param0, param1, object);
     this.param0 = param0;
     this.param1 = param1;
     fieldsEditor(0).addUniversalListener(this::recompute);
     fieldsEditor(1).addUniversalListener(this::shuffleSnap);
+    fieldsEditor(2).addUniversalListener(this::recompute);
+    // ---
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    D2Raster d2Raster = (D2Raster) manifoldDisplay;
+    timerFrame.geometricComponent.addRenderInterfaceBackground( //
+        new BoundingBoxRender(d2Raster.coordinateBoundingBox()));
+    setControlPointsSe2(shufflePointsSe2(param1.length.number().intValue()));
   }
 
-  abstract Tensor shufflePointsSe2(int n);
-
-  final void shuffleSnap() {
+  protected final void shuffleSnap() {
     setControlPointsSe2(shufflePointsSe2(param1.length.number().intValue()));
     param0.snap = true;
     recompute();
@@ -104,21 +112,10 @@ import ch.alpine.tensor.sca.N;
       movingOrigin = Tensor.of(getControlPointsSe2().map(N.DOUBLE).stream().map(manifoldDisplay::xya2point));
     }
     System.out.println("recomp");
-    movingDomain2D = updateMovingDomain2D(movingOrigin);
+    movingDomain2D = updateMovingDomain2D(movingOrigin, param0.refine.number().intValue());
   }
 
-  /** @return method to compute mean (for instance approximation instead of exact mean) */
-  abstract BiinvariantMean biinvariantMean();
-
-  abstract MovingDomain2D updateMovingDomain2D(Tensor movingOrigin);
-
-  abstract Tensor shapeOrigin();
-
-  int refinement() {
-    return param0.refine.number().intValue();
-  }
-
-  Sedarim operator(Tensor sequence) {
+  protected final Sedarim operator(Tensor sequence) {
     Manifold manifold = (Manifold) param0.manifoldDisplays.geodesicSpace();
     return param0.logWeightings.sedarim(param0.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
   }
@@ -162,4 +159,13 @@ import ch.alpine.tensor.sca.N;
       new ArrayPlotImage(rescale.result(), rescale.scalarSummaryStatistics().getClip(), param0.cdg).draw(graphics);
     }
   }
+
+  protected abstract Tensor shufflePointsSe2(int n);
+
+  /** @return method to compute mean (for instance approximation instead of exact mean) */
+  protected abstract BiinvariantMean biinvariantMean();
+
+  protected abstract MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res);
+
+  protected abstract Tensor shapeOrigin();
 }

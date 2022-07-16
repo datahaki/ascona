@@ -13,7 +13,6 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 public class H2Display extends HnDisplay implements D2Raster {
   public static final ManifoldDisplay INSTANCE = new H2Display();
 
-  // ---
   private H2Display() {
     super(2);
   }

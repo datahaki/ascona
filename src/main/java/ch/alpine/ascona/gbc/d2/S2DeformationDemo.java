@@ -2,6 +2,8 @@
 package ch.alpine.ascona.gbc.d2;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Sedarim;
@@ -16,16 +18,16 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
-import ch.alpine.tensor.red.Times;
 
-// TODO ASCONA recomputes every frame right now
 public class S2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.05));
-  private static final Scalar ZHEIGHT = RealScalar.of(1.0); // 1.8 for initial pics
 
   @ReflectionMarker
   public static class Param2 {
     public SnMeans snMeans = SnMeans.FAST;
+    @FieldSlider
+    @FieldClip(min = "1/2", max = "2")
+    public Scalar zHeight = RealScalar.of(1.0);
   }
 
   private final Param2 param2;
@@ -37,20 +39,10 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
   public S2DeformationDemo(Param2 param2) {
     super(ManifoldDisplays.S2_ONLY, param2);
     this.param2 = param2;
-    fieldsEditor(2).addUniversalListener(this::recompute);
-    // ---
-    Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
-    timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
-    timerFrame.geometricComponent.setOffset(400, 400);
-    // ---
-    setControlPointsSe2(Tensors.fromString( //
-        "{{-13/75, 7/20, 0.0}, {19/300, 31/150, 0.0}, {53/150, 101/300, 0.0}, {31/300, -1/100, 0.0}, {-7/25, -7/150, 0.0}, {-1/100, -97/300, 0.0}, {27/100, -29/150, 0.0}, {-9/25, -137/300, 0.0}}"));
-    setControlPointsSe2(Tensors.fromString( //
-        "{{-13/25, 9/25, 0.0}, {7/100, 7/12, 0.0}, {-9/50, -1/12, 0.0}, {59/100, 1/60, 0.0}, {-2/5, -27/50, 0.0}, {113/300, -133/300, 0.0}}"));
   }
 
   @Override
-  synchronized Tensor shufflePointsSe2(int n) {
+  protected synchronized Tensor shufflePointsSe2(int n) {
     Distribution distribution = UniformDistribution.of(-0.5, 0.5);
     return Tensor.of(RandomVariate.of(distribution, n, 2).stream() //
         .map(Tensor::copy) //
@@ -58,22 +50,21 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
   }
 
   @Override
-  MovingDomain2D updateMovingDomain2D(Tensor movingOrigin) {
-    int res = refinement();
+  protected MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
     Tensor dx = Subdivide.of(-1, 1, res - 1);
     Tensor dy = Subdivide.of(-1, 1, res - 1);
-    Tensor domain = Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, ZHEIGHT)), dx, dy);
+    Tensor domain = Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, param2.zHeight)), dx, dy);
     Sedarim sedarim = operator(movingOrigin);
     return AveragedMovingDomain2D.of(movingOrigin, sedarim, domain);
   }
 
   @Override
-  BiinvariantMean biinvariantMean() {
+  protected BiinvariantMean biinvariantMean() {
     return param2.snMeans.get();
   }
 
   @Override
-  Tensor shapeOrigin() {
+  protected Tensor shapeOrigin() {
     return TRIANGLE;
   }
 

@@ -16,7 +16,6 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
-// TODO ASCONA ALG jToggleArrows does not have effect
 public class Se2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor ORIGIN = Arrowhead.of(RealScalar.of(0.2));
 
@@ -27,7 +26,7 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
   }
 
   @Override
-  synchronized Tensor shufflePointsSe2(int n) {
+  protected synchronized Tensor shufflePointsSe2(int n) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Distribution distributionp = UniformDistribution.of(-1, 7);
     Distribution distributiona = UniformDistribution.of(-1, 1);
@@ -36,8 +35,7 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
   }
 
   @Override
-  MovingDomain2D updateMovingDomain2D(Tensor movingOrigin) {
-    int res = refinement();
+  protected MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
     Tensor dx = Subdivide.of(0, 6, res - 1);
     Tensor dy = Subdivide.of(0, 6, res - 1);
     Tensor domain = Outer.of((cx, cy) -> Tensors.of(cx, cy, RealScalar.ZERO), dx, dy);
@@ -45,12 +43,12 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
   }
 
   @Override
-  Tensor shapeOrigin() {
+  protected Tensor shapeOrigin() {
     return ORIGIN;
   }
 
   @Override
-  BiinvariantMean biinvariantMean() {
+  protected BiinvariantMean biinvariantMean() {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
     return homogeneousSpace.biinvariantMean(Chop._08);
   }
