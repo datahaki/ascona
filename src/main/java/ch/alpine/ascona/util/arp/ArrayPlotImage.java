@@ -17,37 +17,47 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Round;
 
 public class ArrayPlotImage {
+  private static final int COLOR_WIDTH = 10;
+  private static final int IMAGE_LEGEND_SPACE = 10;
+
   public static ArrayPlotImage of(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient) {
     Set<Scalar> set = Set.of(Round._3.apply(clip.min()), Round._3.apply(clip.max()));
     return new ArrayPlotImage(matrix, clip, colorDataGradient, set);
   }
 
   private final BufferedImage bufferedImage;
-  private final int width;
-  private final int height;
-  private final BarLegend legend;
-  private final BufferedImage create;
+  private final BarLegend barLegend;
 
   /** @param matrix with entries in the interval [0, 1]
    * @param clip of data range before {@link Rescale}
    * @param colorDataGradient */
   public ArrayPlotImage(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient, Set<Scalar> set) {
     bufferedImage = ImageFormat.of(matrix.map(colorDataGradient));
-    width = bufferedImage.getWidth();
-    height = bufferedImage.getHeight();
-    legend = BarLegend.of(colorDataGradient, clip, set);
-    create = legend.createImage(new Dimension(10, height));
+    barLegend = BarLegend.of(colorDataGradient, clip, set);
   }
 
+  /** @param graphics
+   * @param dimension of image part without legend */
   public void draw(Graphics graphics) {
+    draw(graphics, getDimension());
+  }
+
+  public void draw(Graphics graphics, Dimension dimension) {
+    BufferedImage legendImage = barLegend.createImage(new Dimension(COLOR_WIDTH, dimension.height));
+    draw(graphics, dimension, legendImage);
+  }
+
+  private void draw(Graphics graphics, Dimension dimension, BufferedImage legendImage) {
     graphics.drawImage(bufferedImage, //
         0, //
         0, //
-        width, //
-        height, null);
-    graphics.drawImage(create, //
-        width + 10, //
+        dimension.width, //
+        dimension.height, null);
+    graphics.drawImage(legendImage, //
+        dimension.width + IMAGE_LEGEND_SPACE, //
         0, //
+        legendImage.getWidth(), //
+        legendImage.getHeight(), //
         null);
   }
 
@@ -55,26 +65,33 @@ public class ArrayPlotImage {
     return bufferedImage;
   }
 
-  public BufferedImage legend() {
-    return create;
-  }
-
-  public int height() {
-    return height;
+  public BarLegend legend() {
+    return barLegend;
   }
 
   public BufferedImage export() {
-    BufferedImage bi = new BufferedImage( //
-        width + 10 + create.getWidth(), // magic constant corresponds to width of legend
-        height, //
+    return export(getDimension());
+  }
+
+  public BufferedImage export(Dimension dimension) {
+    BufferedImage legendImage = barLegend.createImage(new Dimension(COLOR_WIDTH, dimension.height));
+    BufferedImage bufferedImage = new BufferedImage( //
+        dimension.width + IMAGE_LEGEND_SPACE + legendImage.getWidth(), // magic constant corresponds to width of legend
+        dimension.height, //
         BufferedImage.TYPE_INT_ARGB);
-    Graphics2D graphics = bi.createGraphics();
-    draw(graphics);
+    Graphics2D graphics = bufferedImage.createGraphics();
+    draw(graphics, dimension, legendImage);
     graphics.dispose();
-    return bi;
+    return bufferedImage;
   }
 
   public Dimension getDimension() {
-    return new Dimension(width, height);
+    return new Dimension( //
+        bufferedImage.getWidth(), //
+        bufferedImage.getHeight());
+  }
+
+  public int height() {
+    return bufferedImage.getHeight();
   }
 }

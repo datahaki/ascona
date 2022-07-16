@@ -20,10 +20,14 @@ import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldInteger;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
+import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -33,48 +37,52 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.opt.ts.Tsp2OptHeuristic;
-import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-// TODO ASCONA idea: start from minimum spanning tree
 public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
+  public static class Param0 extends AsconaParam {
+    public Param0() {
       super(false, ManifoldDisplays.metricManifolds());
+      manifoldDisplays = ManifoldDisplays.R2;
     }
 
+    @FieldInteger
+    @FieldSelectionArray({ "25", "50", "100", "150", "200" })
+    public Scalar numel = RealScalar.of(50);
+    public transient Boolean shuffle = false;
+  }
+
+  @ReflectionMarker
+  public static class Param1 {
     @FieldInteger
     public Scalar attempts = RealScalar.of(20);
     public Boolean active = false;
   }
 
-  private final Param param;
-  private final Tsp2OptHeuristic tsp2OptHeuristic;
-  private final Tensor points = Tensors.empty();
+  private final Random random = new Random();
+  private final Param0 param0;
+  private final Param1 param1;
+  private Tsp2OptHeuristic tsp2OptHeuristic;
+  private Tensor points = Tensors.empty();
 
   public Tsp2OptHeuristicDemo() {
-    this(new Param());
+    this(new Param0(), new Param1());
   }
 
-  public Tsp2OptHeuristicDemo(Param param) {
-    super(param);
-    this.param = param;
+  public Tsp2OptHeuristicDemo(Param0 param0, Param1 param1) {
+    super(param0, param1);
+    this.param0 = param0;
+    this.param1 = param1;
     controlPointsRender.setPositioningEnabled(false);
+    fieldsEditor(0).addUniversalListener(this::shuffle);
     // ---
-    Distribution distribution = UniformDistribution.of(-4, 4);
-    setControlPointsSe2(RandomVariate.of(distribution, 200, 3));
-    // TODO ASCONA random sample
-    // TODO ASCONA refresh when manifold selection changes
-    Tensor matrix = distanceMatrix(getGeodesicControlPoints());
-    tsp2OptHeuristic = new Tsp2OptHeuristic(matrix, new Random());
+    shuffle();
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (param.active) {
-      for (int i = 0; i < param.attempts.number().intValue(); ++i)
+    if (param1.active) {
+      for (int i = 0; i < param1.attempts.number().intValue(); ++i)
         tsp2OptHeuristic.next();
       points.append(Tensors.of(RealScalar.of(points.length()), tsp2OptHeuristic.cost()));
     }
@@ -113,12 +121,22 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
 
   public Tensor distanceMatrix(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    Sedarim sedarim = Biinvariants.METRIC.ofSafe(homogeneousSpace).distances(sequence);
+    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Sedarim sedarim = Biinvariants.METRIC.ofSafe(manifold).distances(sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(sedarim::sunder));
     return SymmetricMatrixQ.of(matrix) //
         ? matrix
         : Symmetrize.of(matrix);
+  }
+
+  private void shuffle() {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
+    Tensor sample = RandomSample.of(randomSampleInterface, random, param0.numel.number().intValue());
+    setControlPointsSe2(Tensor.of(sample.stream().map(manifoldDisplay::point2xya)));
+    Tensor matrix = distanceMatrix(getGeodesicControlPoints());
+    tsp2OptHeuristic = new Tsp2OptHeuristic(matrix, random);
+    points = Tensors.empty();
   }
 
   public static void main(String[] args) {

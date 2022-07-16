@@ -160,8 +160,8 @@ public class D2AveragingDemo extends ControlPointsDemo {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
       new ImageRender(arrayPlotImage.bufferedImage(), coordinateBoundingBox) //
           .render(geometricLayer, graphics);
-      BufferedImage legend = arrayPlotImage.legend();
-      graphics.drawImage(legend, dimension.width - legend.getWidth(), 0, null);
+      BufferedImage createImage = arrayPlotImage.legend().createImage(new Dimension(10, 200));
+      graphics.drawImage(createImage, dimension.width - createImage.getWidth(), 0, null);
       VisualImage visualImage = new VisualImage(arrayPlotImage.bufferedImage(), coordinateBoundingBox);
       JFreeChart jFreeChart = ArrayPlot.of(visualImage);
       jFreeChart.draw(graphics, new Rectangle(0, 50, 300, 300));

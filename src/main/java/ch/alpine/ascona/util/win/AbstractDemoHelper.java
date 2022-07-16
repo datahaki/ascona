@@ -3,6 +3,7 @@ package ch.alpine.ascona.util.win;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -12,7 +13,7 @@ import ch.alpine.bridge.ref.util.FieldsAssignment;
 import ch.alpine.bridge.ref.util.ObjectProperties;
 import ch.alpine.bridge.ref.util.RandomFieldsAssignment;
 
-public class AbstractDemoHelper implements Runnable {
+public class AbstractDemoHelper {
   private static final ShortStackTrace SHORT_STACK_TRACE = new ShortStackTrace("ch.alpine.");
   private static final int MAX = 20;
 
@@ -54,26 +55,31 @@ public class AbstractDemoHelper implements Runnable {
     holder = new Holder(abstractDemo.objects());
     geometricLayer = new GeometricLayer(abstractDemo.timerFrame.geometricComponent.getModel2Pixel());
     bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
-    // TODO ASCONA create close() to dispose gfx
-    Graphics2D graphics = bufferedImage.createGraphics();
-    wrap(() -> abstractDemo.render(geometricLayer, graphics));
+    try_wrap(this::render);
     fieldsAssignment = RandomFieldsAssignment.of(holder);
   }
 
   private void randomize(int count) {
-    fieldsAssignment.randomize(count).forEach(i -> run());
+    fieldsAssignment.randomize(count).forEach(this::set_render);
   }
 
-  @Override
-  public void run() {
-    wrap(() -> {
+  private void set_render(Object ignore) {
+    Objects.requireNonNull(ignore);
+    try_wrap(() -> {
       for (int index = 0; index < holder.objects.length; ++index)
         abstractDemo.fieldsEditor(index).notifyUniversalListeners();
-      abstractDemo.render(geometricLayer, bufferedImage.createGraphics());
+      render();
     });
   }
 
-  private void wrap(Runnable runnable) {
+  private void render() {
+    Graphics2D graphics = bufferedImage.createGraphics();
+    abstractDemo.render(geometricLayer, graphics);
+    graphics.dispose();
+  }
+
+  /** @param runnable */
+  private void try_wrap(Runnable runnable) {
     try {
       runnable.run();
     } catch (Exception exception) {
