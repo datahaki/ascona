@@ -6,16 +6,17 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.arp.BarLegend;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.BarLegend;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldInteger;
@@ -34,6 +35,7 @@ import ch.alpine.tensor.alg.Ordering;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.ColorFormat;
+import ch.alpine.tensor.sca.Clips;
 
 public class OrderingDemo extends ControlPointsDemo {
   @ReflectionMarker
@@ -113,7 +115,9 @@ public class OrderingDemo extends ControlPointsDemo {
       geometricLayer.popMatrix();
     }
     {
-      BufferedImage bufferedImage = BarLegend.of(colorDataGradientD, 200, "far", "near");
+      Map<Scalar, String> map = Map.of(RealScalar.ZERO, "near", RealScalar.ONE, "far");
+      BarLegend barLegend = new BarLegend(colorDataGradientD, Clips.unit(), map);
+      BufferedImage bufferedImage = barLegend.createImage(new Dimension(10, 200));
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       graphics.drawImage(bufferedImage, dimension.width - bufferedImage.getWidth(), 0, null);
     }

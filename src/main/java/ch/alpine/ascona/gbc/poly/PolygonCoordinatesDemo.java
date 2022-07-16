@@ -4,11 +4,11 @@ package ch.alpine.ascona.gbc.poly;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
+import ch.alpine.ascona.util.api.ImageTiling;
 import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.col.HueColorData;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;

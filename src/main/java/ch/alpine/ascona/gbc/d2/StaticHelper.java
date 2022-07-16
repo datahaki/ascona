@@ -17,11 +17,9 @@ enum StaticHelper {
   static <T extends Tensor> Tensor of(CoordinateBoundingBox coordinateBoundingBox, ManifoldDisplay manifoldDisplay, int resolution) {
     Tensor dx = Subdivide.increasing(coordinateBoundingBox.getClip(0), resolution - 1).map(N.DOUBLE);
     Tensor dy = Subdivide.decreasing(coordinateBoundingBox.getClip(1), resolution - 1).map(N.DOUBLE);
-    
     return Tensor.of(dy.stream().map(Scalar.class::cast).parallel() //
         .map(py -> Tensor.of(dx.stream().map(Scalar.class::cast) //
             .map(px -> Unprotect.using(List.of(px, py, RealScalar.ZERO))) //
             .map(manifoldDisplay::xya2point))));
   }
-
 }

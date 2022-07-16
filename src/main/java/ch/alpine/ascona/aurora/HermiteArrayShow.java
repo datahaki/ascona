@@ -26,7 +26,6 @@ import ch.alpine.tensor.nrm.Vector1Norm;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 
 /* package */ abstract class HermiteArrayShow {
-  // TODO ASCONA rename
   static final HomogeneousSpace HS_EXPONENTIAL = Se2CoveringGroup.INSTANCE;
   // private static final BiinvariantMean BIINVARIANT_MEAN = Se2CoveringBiinvariantMean.INSTANCE;
   static final Function<Scalar, ? extends Tensor> FUNCTION = ColorDataGradients.JET;

@@ -3,11 +3,11 @@ package ch.alpine.ascona.gbc.poly;
 
 import java.awt.image.BufferedImage;
 
+import ch.alpine.ascona.util.api.ImageTiling;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.BackgroundOffscreen;
 import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.DoubleScalar;

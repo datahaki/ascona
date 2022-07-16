@@ -12,11 +12,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
 import ch.alpine.ascona.gbc.d2.AbstractScatteredSetWeightingDemo;
+import ch.alpine.ascona.util.api.ImageTiling;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.arp.ImageTiling;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.sophus.dv.Biinvariant;
