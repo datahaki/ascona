@@ -45,6 +45,7 @@ import ch.alpine.tensor.red.Max;
     @FieldClip(min = "1", max = "20")
     public Scalar multi = RealScalar.of(10);
     @FieldInteger
+    @FieldClip(min = "1", max = "10")
     public Scalar limit = RealScalar.of(4);
     public Boolean nearest = false;
     public CenterNorms centerNorms = CenterNorms._2;
@@ -152,7 +153,7 @@ import ch.alpine.tensor.red.Max;
     return RandomSample.of(manifoldDisplay.randomSampleInterface(), length);
   }
 
-  abstract Tensor center(Tensor xya);
+  protected abstract Tensor center(Tensor xya);
 
-  abstract ManifoldDisplay manifoldDisplay();
+  protected abstract ManifoldDisplay manifoldDisplay();
 }

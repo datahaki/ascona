@@ -11,12 +11,12 @@ import ch.alpine.tensor.sca.Abs;
 
 public class S2TreeMapDemo extends AbstractTreeMapDemo {
   @Override
-  ManifoldDisplay manifoldDisplay() {
+  protected ManifoldDisplay manifoldDisplay() {
     return S2Display.INSTANCE;
   }
 
   @Override
-  Tensor center(Tensor xya) {
+  protected Tensor center(Tensor xya) {
     Optional<Tensor> optionalZ = S2Display.optionalZ(xya);
     Tensor xyz = optionalZ.orElse(xya.extract(0, 2).append(RealScalar.ZERO));
     xyz.set(Abs.FUNCTION, 2);

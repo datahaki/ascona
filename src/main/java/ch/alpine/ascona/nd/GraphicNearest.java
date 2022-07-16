@@ -21,13 +21,13 @@ import ch.alpine.tensor.opt.nd.NdEntry;
     this.graphics = graphics;
   }
 
-  @Override
+  @Override // from NdVisitor
   public boolean isViable(CoordinateBoundingBox coordinateBoundingBox) {
     StaticHelper.draw(coordinateBoundingBox, geometricLayer, graphics);
     return super.isViable(coordinateBoundingBox);
   }
 
-  @Override
+  @Override // from NdVisitor
   public void consider(NdEntry<V> ndEntry) {
     StaticHelper.draw(ndEntry.location(), geometricLayer, graphics);
     super.consider(ndEntry);

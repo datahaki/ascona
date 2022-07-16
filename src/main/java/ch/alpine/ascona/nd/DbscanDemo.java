@@ -33,9 +33,6 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 public class DbscanDemo extends AbstractDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
-  private static final ColorDataIndexed COLOR_FILL_INDEXED = COLOR_DATA_INDEXED.deriveWithAlpha(96);
-
   @ReflectionMarker
   public static class Param {
     @FieldInteger
@@ -50,6 +47,7 @@ public class DbscanDemo extends AbstractDemo {
     public Scalar radius = RealScalar.of(0.3);
     @FieldFuse
     public transient Boolean shuffle = false;
+    public ColorDataLists cdl = ColorDataLists._097;
   }
 
   private final Param param;
@@ -96,6 +94,8 @@ public class DbscanDemo extends AbstractDemo {
     Integer[] labels = Dbscan.of(points, centerNorms::ndCenterInterface, radius, param.minPts.number().intValue());
     double seconds = timing.seconds();
     graphics.drawString(String.format("%6.4f", seconds), 0, 40);
+    ColorDataIndexed colorDataIndexed = param.cdl.cyclic();
+    ColorDataIndexed colorFillIndexed = colorDataIndexed.deriveWithAlpha(96);
     {
       Map<Integer, Tensor> map = new HashMap<>();
       IntStream.range(0, labels.length) //
@@ -103,7 +103,7 @@ public class DbscanDemo extends AbstractDemo {
       for (Entry<Integer, Tensor> entry : map.entrySet())
         if (Dbscan.NOISE < entry.getKey()) {
           Tensor tensor = ConvexHull.of(entry.getValue());
-          graphics.setColor(COLOR_FILL_INDEXED.getColor(entry.getKey()));
+          graphics.setColor(colorFillIndexed.getColor(entry.getKey()));
           graphics.fill(geometricLayer.toPath2D(tensor, true));
         }
     }
@@ -114,7 +114,7 @@ public class DbscanDemo extends AbstractDemo {
         Integer label = labels[index];
         graphics.setColor(label < 0 //
             ? Color.BLACK
-            : COLOR_DATA_INDEXED.getColor(label));
+            : colorDataIndexed.getColor(label));
         graphics.fillRect((int) point2d.getX() - 2, (int) point2d.getY() - 2, 5, 5);
         ++index;
       }

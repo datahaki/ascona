@@ -5,14 +5,14 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.R2Display;
 import ch.alpine.tensor.Tensor;
 
-public class NdTreeMapDemo extends AbstractTreeMapDemo {
+public class R2TreeMapDemo extends AbstractTreeMapDemo {
   @Override
-  ManifoldDisplay manifoldDisplay() {
+  protected ManifoldDisplay manifoldDisplay() {
     return R2Display.INSTANCE;
   }
 
   @Override
-  Tensor center(Tensor xya) {
+  protected Tensor center(Tensor xya) {
     return xya.extract(0, 2);
   }
 
