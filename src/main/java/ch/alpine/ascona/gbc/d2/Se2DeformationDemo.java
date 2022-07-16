@@ -21,7 +21,7 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor ORIGIN = Arrowhead.of(RealScalar.of(0.2));
 
   public Se2DeformationDemo() {
-    super(ManifoldDisplays.SE2C_SE2);
+    super(ManifoldDisplays.SE2C_SE2, new Object());
     // ---
     timerFrame.geometricComponent.setOffset(300, 500);
   }

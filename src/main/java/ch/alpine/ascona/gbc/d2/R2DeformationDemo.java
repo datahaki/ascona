@@ -27,7 +27,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   private final JToggleButton jToggleRigidMotionFit = new JToggleButton("MLS");
 
   public R2DeformationDemo() {
-    super(ManifoldDisplays.R2_ONLY);
+    super(ManifoldDisplays.R2_ONLY, new Object());
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     D2Raster d2Raster = (D2Raster) manifoldDisplay;

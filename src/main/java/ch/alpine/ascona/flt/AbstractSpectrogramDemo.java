@@ -52,8 +52,8 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   protected final GokartPoseSpec gokartPoseSpec;
   protected Tensor _control = null;
 
-  protected AbstractSpectrogramDemo(GokartPoseSpec gokartPoseSpec) {
-    super(gokartPoseSpec);
+  protected AbstractSpectrogramDemo(GokartPoseSpec gokartPoseSpec, Object object) {
+    super(gokartPoseSpec, object);
     this.gokartPoseSpec = gokartPoseSpec;
     gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
     fieldsEditor(0).addUniversalListener(this::updateState);

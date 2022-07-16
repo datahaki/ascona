@@ -1,10 +1,8 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import java.awt.Dimension;
-
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
@@ -18,14 +16,21 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 // TODO ASCONA ugly when computation fails (probably for accuracy reasons)
 public class H2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.05));
-  // ---
-  private final SpinnerLabel<HnMeans> spinnerMeans = SpinnerLabel.of(HnMeans.class);
+
+  @ReflectionMarker
+  public static class Param2 {
+    public HnMeans hnMeans = HnMeans.EXACT;
+  }
+
+  private final Param2 param2;
 
   public H2DeformationDemo() {
-    super(ManifoldDisplays.H2_ONLY);
-    // ---
-    spinnerMeans.setValue(HnMeans.EXACT);
-    spinnerMeans.addToComponentReduced(timerFrame.jToolBar, new Dimension(120, 28), "hn means");
+    this(new Param2());
+  }
+
+  public H2DeformationDemo(Param2 param2) {
+    super(ManifoldDisplays.H2_ONLY, param2);
+    this.param2 = param2;
   }
 
   @Override // from AbstractDeformationDemo
@@ -46,7 +51,7 @@ public class H2DeformationDemo extends AbstractDeformationDemo {
 
   @Override // from AbstractDeformationDemo
   BiinvariantMean biinvariantMean() {
-    return spinnerMeans.getValue().get();
+    return param2.hnMeans.get();
   }
 
   @Override // from AbstractDeformationDemo

@@ -77,12 +77,12 @@ import ch.alpine.tensor.sca.N;
   private Tensor movingOrigin;
   private MovingDomain2D movingDomain2D;
 
-  AbstractDeformationDemo(List<ManifoldDisplays> list) {
-    this(new Param0(list), new Param1());
+  AbstractDeformationDemo(List<ManifoldDisplays> list, Object object) {
+    this(new Param0(list), new Param1(), object);
   }
 
-  AbstractDeformationDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
+  AbstractDeformationDemo(Param0 param0, Param1 param1, Object object) {
+    super(param0, param1, object);
     this.param0 = param0;
     this.param1 = param1;
     fieldsEditor(0).addUniversalListener(this::recompute);

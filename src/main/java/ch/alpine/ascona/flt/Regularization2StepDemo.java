@@ -13,7 +13,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophus.flt.ga.Regularization2Step;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -23,14 +22,23 @@ import ch.alpine.tensor.sca.N;
 
 @ReflectionMarker
 public class Regularization2StepDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
-  /** regularization parameter in the interval [0, 1] */
-  @FieldSlider
-  @FieldClip(min = "0.0", max = "1.0")
-  public Scalar ratio = RealScalar.of(0.6);
+  @ReflectionMarker
+  public static class Param {
+    /** regularization parameter in the interval [0, 1] */
+    @FieldSlider
+    @FieldClip(min = "0.0", max = "1.0")
+    public Scalar ratio = RealScalar.of(0.6);
+  }
+
+  private final Param param;
 
   public Regularization2StepDemo() {
-    super(GokartPoseSpecV2.INSTANCE);
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    this(new Param());
+  }
+
+  public Regularization2StepDemo(Param param2) {
+    super(GokartPoseSpecV2.INSTANCE, param2);
+    this.param = param2;
     // ---
     updateState();
   }
@@ -39,17 +47,17 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     return Regularization2Step.string( //
         gokartPoseSpec.manifoldDisplays.manifoldDisplay().geodesicSpace(), //
-        N.DOUBLE.apply(ratio)).apply(control());
+        N.DOUBLE.apply(param.ratio)).apply(control());
   }
 
   @Override // from UniformDatasetFilterDemo
   protected String plotLabel() {
-    return "Regularization2Step " + ratio;
+    return "Regularization2Step " + param.ratio;
   }
 
   @Override // from BufferedImageSupplier
   public BufferedImage bufferedImage() {
-    Scalar factor = ratio;
+    Scalar factor = param.ratio;
     TensorUnaryOperator tensorUnaryOperator = Regularization2Step.string(SymGeodesic.INSTANCE, factor);
     Tensor vector = SymSequence.of(3);
     Tensor tensor = tensorUnaryOperator.apply(vector);

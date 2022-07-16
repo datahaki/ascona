@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   protected final SpinnerLabel<Integer> spinnerRadius;
 
   protected AbstractDatasetKernelDemo(List<ManifoldDisplays> list, GokartPoseData gokartPoseData) {
-    super(new GokartPoseSpec(gokartPoseData, list));
+    super(new GokartPoseSpec(gokartPoseData, list), new Object());
     {
       spinnerRadius = SpinnerLabel.of(IntStream.range(0, 25).boxed().toList());
       spinnerRadius.setValue(1);

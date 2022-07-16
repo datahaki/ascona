@@ -1,10 +1,8 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import java.awt.Dimension;
-
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.RealScalar;
@@ -24,14 +22,22 @@ import ch.alpine.tensor.red.Times;
 public class S2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.05));
   private static final Scalar ZHEIGHT = RealScalar.of(1.0); // 1.8 for initial pics
-  // ---
-  private final SpinnerLabel<SnMeans> spinnerSnMeans = SpinnerLabel.of(SnMeans.class);
+
+  @ReflectionMarker
+  public static class Param2 {
+    public SnMeans snMeans = SnMeans.FAST;
+  }
+
+  private final Param2 param2;
 
   public S2DeformationDemo() {
-    super(ManifoldDisplays.S2_ONLY);
-    // ---
-    spinnerSnMeans.setValue(SnMeans.FAST);
-    spinnerSnMeans.addToComponentReduced(timerFrame.jToolBar, new Dimension(120, 28), "sn means");
+    this(new Param2());
+  }
+
+  public S2DeformationDemo(Param2 param2) {
+    super(ManifoldDisplays.S2_ONLY, param2);
+    this.param2 = param2;
+    fieldsEditor(2).addUniversalListener(this::recompute);
     // ---
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
@@ -63,7 +69,7 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
 
   @Override
   BiinvariantMean biinvariantMean() {
-    return spinnerSnMeans.getValue().get();
+    return param2.snMeans.get();
   }
 
   @Override
