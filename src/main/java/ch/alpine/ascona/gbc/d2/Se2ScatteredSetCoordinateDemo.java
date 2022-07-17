@@ -1,11 +1,14 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Path2D;
 import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
+import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.ImageTiling;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
@@ -28,7 +31,6 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-// TODO ASCONA enhance demo by showing the coordinate box from which functions are sampled
 public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
   private static final Clip RANGE_X = Clips.absolute(3);
   private static final Clip RANGE_A = Clips.absolute(Pi.VALUE);
@@ -52,17 +54,22 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    // if (jToggleAxes.isSelected())
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     ColorDataGradient colorDataGradient = colorDataGradient();
     Tensor controlPoints = getGeodesicControlPoints();
     {
+      Tensor box = Box2D.polygon(Box2D.xy(RANGE_X));
+      Path2D path2d = geometricLayer.toPath2D(box, true);
+      graphics.setColor(Color.LIGHT_GRAY);
+      graphics.draw(path2d);
+    }
+    {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     if (manifoldDisplay.dimensions() < controlPoints.length()) { // render basis functions
       Tensor origin = getGeodesicControlPoints();
+      // TODO ASCONA use cache
       Tensor wgs = compute(operator(origin), refinement());
       RenderQuality.setQuality(graphics);
       Rescale rescale = new Rescale(ImageTiling.of(wgs));

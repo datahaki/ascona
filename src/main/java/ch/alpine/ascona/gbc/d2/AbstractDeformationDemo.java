@@ -92,10 +92,6 @@ import ch.alpine.tensor.sca.N;
     fieldsEditor(1).addUniversalListener(this::shuffleSnap);
     fieldsEditor(2).addUniversalListener(this::recompute);
     // ---
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster d2Raster = (D2Raster) manifoldDisplay;
-    timerFrame.geometricComponent.addRenderInterfaceBackground( //
-        new BoundingBoxRender(d2Raster.coordinateBoundingBox()));
     setControlPointsSe2(shufflePointsSe2(param1.length.number().intValue()));
   }
 

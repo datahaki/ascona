@@ -50,7 +50,6 @@ public class LogarithmDemo extends ControlPointsDemo {
     public Boolean ctrl = false;
   }
 
-  // ---
   private final Param param;
 
   public LogarithmDemo() {

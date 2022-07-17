@@ -21,9 +21,12 @@ import ch.alpine.ascona.util.ren.MeshRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Sedarim;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
+import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -41,7 +44,6 @@ import ch.alpine.tensor.sca.Clips;
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 // TODO ASCONA ALG possibly only recompute when points have changed
-// FIXME ASCONA demo does not work
 public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final double RANGE = 5;
   private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
@@ -100,7 +102,8 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       RenderQuality.setQuality(graphics);
       // ---
-      Sedarim sedarim = operator(domain);
+      Sedarim sedarim = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), domain);
+      // operator(domain);
       Tensor sX = Subdivide.increasing(coordinateBoundingBox.getClip(0), refinement());
       Tensor sY = Subdivide.decreasing(coordinateBoundingBox.getClip(1), refinement());
       int n = sX.length();
