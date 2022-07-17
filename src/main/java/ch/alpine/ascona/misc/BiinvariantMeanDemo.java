@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.flt;
+package ch.alpine.ascona.misc;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

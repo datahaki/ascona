@@ -32,7 +32,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
     Container container = timerFrame.jFrame.getContentPane();
     PanelFieldsEditor fieldsPanel = new PanelFieldsEditor(dequeGenesisProperties);
     fieldsPanel.addUniversalListener(this::recompute);
-    container.add(BorderLayout.WEST, fieldsPanel.createJScrollPane());
+    container.add(fieldsPanel.createJScrollPane(), BorderLayout.WEST);
     // ---
     TensorUnaryOperator tuo = PadRight.zeros(3);
     setControlPointsSe2(Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(0.6)).stream().map(tuo)));
