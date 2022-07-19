@@ -34,7 +34,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.lie.r2.CirclePoints;
-import ch.alpine.tensor.lie.r2.ConvexHull;
+import ch.alpine.tensor.lie.r2.ConvexHull2D;
 import ch.alpine.tensor.red.Times;
 
 public class ExponentialDemo extends ControlPointsDemo {
@@ -68,7 +68,7 @@ public class ExponentialDemo extends ControlPointsDemo {
       HsDesign hsDesign = new HsDesign(manifold);
       final Tensor levers2 = hsDesign.matrix(sequence, origin);
       {
-        Tensor hull = ConvexHull.of(sequence);
+        Tensor hull = ConvexHull2D.of(sequence);
         PathRender pathRender = new PathRender(new Color(0, 0, 255, 128));
         pathRender.setCurve(hull, true);
         pathRender.render(geometricLayer, graphics);

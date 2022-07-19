@@ -34,7 +34,7 @@ import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.lie.r2.CirclePoints;
-import ch.alpine.tensor.lie.r2.ConvexHull;
+import ch.alpine.tensor.lie.r2.ConvexHull2D;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
 import ch.alpine.tensor.red.Times;
@@ -75,7 +75,7 @@ public class SphereFitDemo extends ControlPointsDemo {
         geometricLayer.popMatrix();
       }
     }
-    pathRenderHull.setCurve(ConvexHull.of(control), true);
+    pathRenderHull.setCurve(ConvexHull2D.of(control), true);
     new PathRender(Color.GRAY).setCurve(CIRCLE, true).render(geometricLayer, graphics);
     if (!Tensors.isEmpty(control)) {
       Tensor matrix = Outer.of(Vector2Norm::between, control, CIRCLE);

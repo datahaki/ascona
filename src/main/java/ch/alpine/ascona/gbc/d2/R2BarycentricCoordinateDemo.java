@@ -44,7 +44,7 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.ColorFormat;
 import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.ImageFormat;
-import ch.alpine.tensor.lie.r2.ConvexHull;
+import ch.alpine.tensor.lie.r2.ConvexHull2D;
 import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.num.Boole;
 import ch.alpine.tensor.num.Pi;
@@ -97,7 +97,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       PolygonRegion polygonRegion = new PolygonRegion(domain);
       RenderQuality.setQuality(graphics);
-      Tensor hull = ConvexHull.of(domain);
+      Tensor hull = ConvexHull2D.of(domain);
       {
         graphics.setColor(Color.LIGHT_GRAY);
         graphics.setStroke(STROKE);

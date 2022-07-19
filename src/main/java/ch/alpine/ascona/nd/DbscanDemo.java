@@ -25,7 +25,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
-import ch.alpine.tensor.lie.r2.ConvexHull;
+import ch.alpine.tensor.lie.r2.ConvexHull2D;
 import ch.alpine.tensor.opt.nd.Dbscan;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -102,7 +102,7 @@ public class DbscanDemo extends AbstractDemo {
           .forEach(index -> map.computeIfAbsent(labels[index], i -> Tensors.empty()).append(points.get(index)));
       for (Entry<Integer, Tensor> entry : map.entrySet())
         if (Dbscan.NOISE < entry.getKey()) {
-          Tensor tensor = ConvexHull.of(entry.getValue());
+          Tensor tensor = ConvexHull2D.of(entry.getValue());
           graphics.setColor(colorFillIndexed.getColor(entry.getKey()));
           graphics.fill(geometricLayer.toPath2D(tensor, true));
         }
