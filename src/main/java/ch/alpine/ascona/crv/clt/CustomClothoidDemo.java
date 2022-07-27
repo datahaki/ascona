@@ -46,7 +46,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   private static final Tensor CONFIG = Tensors.fromString("{{0, 0}, {3, 0}}");
   private static final PathRender PATH_RENDER = new PathRender(new Color(0, 0, 255, 128), 2f);
   private static final ClothoidSolutions CLOTHOID_SOLUTIONS = ClothoidSolutions.of(Clips.absolute(20.0));
-  private static final Tensor LAMBDAS = CLOTHOID_SOLUTIONS.probes;
+  private static final Tensor LAMBDAS = CLOTHOID_SOLUTIONS.probes();
   private static final Tensor POINTER = Tensors.fromString("{{0, 0}, {-0.2, -1}, {+0.2, -1}}");
 
   public static class Param extends AsconaParam {

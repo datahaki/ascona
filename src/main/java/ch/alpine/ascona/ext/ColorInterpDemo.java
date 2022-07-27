@@ -7,7 +7,7 @@ import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.win.AbstractDemo;
-import ch.alpine.bridge.awt.Cielab;
+import ch.alpine.bridge.col.Cielab;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;

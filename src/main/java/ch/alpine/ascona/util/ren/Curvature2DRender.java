@@ -58,7 +58,7 @@ public enum Curvature2DRender {
   public static RenderInterface of(Tensor curve, boolean isCyclic, boolean comb, Scalar scale) {
     if (0 < curve.length())
       if (Unprotect.dimension1(curve) != 2)
-        throw Throw.of(curve);
+        throw new Throw(curve);
     RenderInterface ri1 = new PathRender(Color.BLUE, 1.25f).setCurve(curve, isCyclic);
     RenderInterface ri2 = comb //
         ? new PathRender(COLOR_CURVATURE_COMB).setCurve(CurvatureComb.of(curve, scale, isCyclic), isCyclic)

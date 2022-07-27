@@ -28,13 +28,13 @@ import ch.alpine.sophus.gbc.it.WeightsFactors;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
+import ch.alpine.sophus.hs.r2.ConvexHull2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.lie.r2.CirclePoints;
-import ch.alpine.tensor.lie.r2.ConvexHull2D;
 import ch.alpine.tensor.red.Times;
 
 public class ExponentialDemo extends ControlPointsDemo {

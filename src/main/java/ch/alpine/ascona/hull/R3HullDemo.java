@@ -13,11 +13,11 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.sophus.hs.r2.SignedCurvature2D;
+import ch.alpine.sophus.hs.r3.qh3.ConvexHull3D;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.r2.SignedCurvature2D;
-import ch.alpine.tensor.opt.qh3.ConvexHull3D;
 import ch.alpine.tensor.sca.Sign;
 
 public class R3HullDemo extends AbstractDemo {
@@ -50,12 +50,11 @@ public class R3HullDemo extends AbstractDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     if (hullParam.quality)
       RenderQuality.setQuality(graphics);
-    LeversRender leversRender = LeversRender.of(manifoldDisplay, tensor, null, geometricLayer, graphics);
+    Tensor rotate = this.tensor.dot(hullParam.rotation());
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, rotate, null, geometricLayer, graphics);
     leversRender.renderSequence();
-    // Tensor pnts =
-    // hull.getVertices2();
     for (int[] face : faces) {
-      Tensor polygon = Tensor.of(IntStream.of(face).mapToObj(tensor::get));
+      Tensor polygon = Tensor.of(IntStream.of(face).mapToObj(rotate::get));
       Optional<Scalar> optional = SignedCurvature2D.of( //
           polygon.get(0).extract(0, 2), //
           polygon.get(1).extract(0, 2), //

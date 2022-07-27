@@ -44,7 +44,7 @@ public class ClothoidDefectContainer implements RenderInterface {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     PathRender pathRender = new PathRender(new Color(0, 0, 0, 128));
-    Tensor tensor = Transpose.of(Tensors.of(CLOTHOID_SOLUTIONS.probes, search.defects_real));
+    Tensor tensor = Transpose.of(Tensors.of(CLOTHOID_SOLUTIONS.probes(), search.defects_real));
     pathRender.setCurve(tensor, false);
     pathRender.render(geometricLayer, graphics);
     Tensor lambdas = search.lambdas();

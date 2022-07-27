@@ -81,7 +81,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       JButton jButton = new JButton("load");
       List<String> list = List.of("ducttape/20180514.csv", "tires/20190116.csv", "tires/20190117.csv");
       jButton.addActionListener(e -> {
-        SpinnerMenu<String> spinnerMenu = new SpinnerMenu<>(list, null, false);
+        SpinnerMenu<String> spinnerMenu = new SpinnerMenu<>(list, null, Object::toString, false);
         spinnerMenu.addSpinnerListener(string -> {
           Tensor tensor = ResourceData.of("/dubilab/controlpoints/" + string);
           tensor = Tensor.of(tensor.stream().map(Times.operator(Tensors.vector(0.5, 0.5, 1))));

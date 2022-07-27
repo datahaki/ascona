@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.ren.RenderInterface;
-import ch.alpine.bridge.awt.Hsluv;
+import ch.alpine.bridge.col.Hsluv;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.Scalar;
