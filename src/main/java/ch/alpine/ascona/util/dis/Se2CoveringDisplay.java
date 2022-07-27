@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import java.util.Random;
-
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
@@ -34,13 +32,8 @@ public class Se2CoveringDisplay extends Se2AbstractDisplay {
   public RandomSampleInterface randomSampleInterface() {
     double lim = 3;
     Distribution distribution = UniformDistribution.of(-lim, lim);
-    return new RandomSampleInterface() {
-      @Override
-      public Tensor randomSample(Random random) {
-        return RandomVariate.of(distribution, random, 2).append( //
-            RandomVariate.of(UniformDistribution.of(Pi.TWO.negate(), Pi.TWO), random));
-      }
-    };
+    return random -> RandomVariate.of(distribution, random, 2).append( //
+        RandomVariate.of(UniformDistribution.of(Pi.TWO.negate(), Pi.TWO), random));
   }
 
   @Override // from Object

@@ -3,7 +3,6 @@ package ch.alpine.ascona.crv.clt;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,7 +53,7 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
     Tensor start = control.get(0);
     Tensor mouse = control.get(1);
     // ---
-    List<Clothoid> list = Arrays.asList();
+    List<Clothoid> list = List.of();
     ClothoidContext clothoidContext = new ClothoidContext(start, mouse);
     try {
       Search search = CLOTHOID_SOLUTIONS.new Search(clothoidContext.s1(), clothoidContext.s2());

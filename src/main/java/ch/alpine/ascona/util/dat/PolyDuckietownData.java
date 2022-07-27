@@ -23,8 +23,7 @@ public class PolyDuckietownData {
     duckieNumber = Tensor.of(tensor.stream().map(row -> row.Get(6)).distinct());
   }
 
-  /** @param tensor
-   * @param duckiebot
+  /** @param duckiebot
    * @return */
   public Tensor filter(int duckiebot) {
     Tensor data = Tensors.empty();

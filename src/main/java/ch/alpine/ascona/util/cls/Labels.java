@@ -15,7 +15,7 @@ public enum Labels implements Function<Tensor, Classification> {
 
   private final Function<Tensor, Classification> function;
 
-  private Labels(Function<Tensor, Classification> function) {
+  Labels(Function<Tensor, Classification> function) {
     this.function = function;
   }
 

@@ -17,7 +17,7 @@ import ch.alpine.tensor.sca.Chop;
 
   private final BiinvariantMean biinvariantMean;
 
-  private SnMeans(BiinvariantMean biinvariantMean) {
+  SnMeans(BiinvariantMean biinvariantMean) {
     this.biinvariantMean = biinvariantMean;
   }
 

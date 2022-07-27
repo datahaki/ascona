@@ -14,8 +14,8 @@ public enum ClassificationImage {
     public TensorUnaryOperator operator(Classification classification, Sedarim sedarim, ColorDataIndexed colorDataIndexed) {
       return point -> {
         ClassificationResult classificationResult = classification.result(sedarim.sunder(point));
-        Tensor rgba = colorDataIndexed.apply(RealScalar.of(classificationResult.getLabel()));
-        rgba.set(classificationResult.getConfidence().multiply(RealScalar.of(128 + 64)), 3);
+        Tensor rgba = colorDataIndexed.apply(RealScalar.of(classificationResult.label()));
+        rgba.set(classificationResult.confidence().multiply(RealScalar.of(128 + 64)), 3);
         return rgba;
       };
     }
@@ -24,19 +24,19 @@ public enum ClassificationImage {
     @Override
     public TensorUnaryOperator operator(Classification classification, Sedarim sedarim, ColorDataIndexed colorDataIndexed) {
       ColorDataIndexed _colorDataIndexed = colorDataIndexed.deriveWithAlpha(128 + 64);
-      return point -> _colorDataIndexed.apply(RealScalar.of(classification.result(sedarim.sunder(point)).getLabel()));
+      return point -> _colorDataIndexed.apply(RealScalar.of(classification.result(sedarim.sunder(point)).label()));
     }
   }, //
   CONFIDENCE {
     @Override
     public TensorUnaryOperator operator(Classification classification, Sedarim sedarim, ColorDataIndexed colorDataIndexed) {
-      return point -> ColorDataGradients.CLASSIC.apply(classification.result(sedarim.sunder(point)).getConfidence());
+      return point -> ColorDataGradients.CLASSIC.apply(classification.result(sedarim.sunder(point)).confidence());
     }
   }, //
   ;
 
   /** @param classification
-   * @param operator that maps a point to distances/weights/coordinates
+   * @param sedarim that maps a point to distances/weights/coordinates
    * @param colorDataIndexed
    * @return */
   public abstract TensorUnaryOperator operator( //

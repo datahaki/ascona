@@ -39,7 +39,7 @@ class RootScalarTest {
   @Test
   void testNumber() {
     RootScalar rootScalar = new RootScalar(RationalScalar.of(-7, 5), RationalScalar.of(-3, 17), RealScalar.of(3));
-    assertThrows(Throw.class, () -> rootScalar.number());
+    assertThrows(Throw.class, rootScalar::number);
   }
 
   @Test

@@ -138,7 +138,7 @@ public class ClassificationDemo extends ControlPointsDemo {
     }
     // ---
     Classification classification = param1.labels.apply(vector);
-    int bestLabel = classification.result(weights).getLabel();
+    int bestLabel = classification.result(weights).label();
     geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
     Path2D path2d = geometricLayer.toPath2D(shape.multiply(RealScalar.of(1.4)), true);
     graphics.setColor(COLOR_DATA_INDEXED_O.getColor(bestLabel));

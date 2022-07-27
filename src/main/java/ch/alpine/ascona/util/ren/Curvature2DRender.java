@@ -18,18 +18,14 @@ public enum Curvature2DRender {
   private static final Scalar COMB_SCALE = DoubleScalar.of(-1);
 
   /** @param curve {{x0, y0}, {x1, y1}, ...}
-   * @param isCyclic
-   * @param geometricLayer
-   * @param graphics */
+   * @param isCyclic */
   public static RenderInterface of(Tensor curve, boolean isCyclic) {
     return of(curve, isCyclic, true);
   }
 
   /** @param curve {{x0, y0}, {x1, y1}, ...}
    * @param isCyclic
-   * @param comb
-   * @param geometricLayer
-   * @param graphics */
+   * @param comb */
   public static RenderInterface of(Tensor curve, boolean isCyclic, boolean comb) {
     return of(curve, isCyclic, comb, COMB_SCALE);
   }
@@ -39,9 +35,7 @@ public enum Curvature2DRender {
    *
    * @param curve {{x0, y0}, {x1, y1}, ...}
    * @param isCyclic
-   * @param scale
-   * @param geometricLayer
-   * @param graphics */
+   * @param scale */
   public static RenderInterface of(Tensor curve, boolean isCyclic, Scalar scale) {
     return of(curve, isCyclic, true, scale);
   }
@@ -52,9 +46,7 @@ public enum Curvature2DRender {
    * @param curve {{x0, y0}, {x1, y1}, ...}
    * @param isCyclic
    * @param comb
-   * @param scale
-   * @param geometricLayer
-   * @param graphics */
+   * @param scale */
   public static RenderInterface of(Tensor curve, boolean isCyclic, boolean comb, Scalar scale) {
     if (0 < curve.length())
       if (Unprotect.dimension1(curve) != 2)

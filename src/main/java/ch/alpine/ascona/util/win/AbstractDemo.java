@@ -42,7 +42,7 @@ public abstract class AbstractDemo implements RenderInterface {
   private final Object[] objects;
   private final List<FieldsEditor> fieldsEditors = new ArrayList<>();
 
-  /** @param object may be null */
+  /** @param objects may be null */
   public AbstractDemo(Object... objects) {
     this.objects = objects;
     timerFrame.jFrame.setTitle(getClass().getSimpleName());

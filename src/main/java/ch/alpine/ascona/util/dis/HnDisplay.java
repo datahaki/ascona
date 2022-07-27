@@ -2,7 +2,6 @@
 package ch.alpine.ascona.util.dis;
 
 import java.io.Serializable;
-import java.util.Random;
 
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.crv.d2.StarPoints;
@@ -75,12 +74,9 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
     Distribution distribution = UniformDistribution.of(CLIP);
-    return new RandomSampleInterface() {
-      @Override
-      public Tensor randomSample(Random random) {
-        // return VectorQ.requireLength(RandomVariate.of(distribution, random, 2).append(RealScalar.ZERO), 3);
-        return HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, dimensions));
-      }
+    return random -> {
+      // return VectorQ.requireLength(RandomVariate.of(distribution, random, 2).append(RealScalar.ZERO), 3);
+      return HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, dimensions));
     };
   }
 }

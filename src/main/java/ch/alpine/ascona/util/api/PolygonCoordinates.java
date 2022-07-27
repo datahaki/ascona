@@ -48,7 +48,7 @@ public enum PolygonCoordinates implements LogWeighting {
   ITERATIVE_AF_2(new IterativeCoordinate(AffineCoordinate.INSTANCE, 2)),
   ITERATIVE_AF_3(new IterativeCoordinate(AffineCoordinate.INSTANCE, 3)),
   ITERATIVE_AF_5(new IterativeCoordinate(AffineCoordinate.INSTANCE, 5)),
-  ITERATIVE_EX_05(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 05)),
+  ITERATIVE_EX_05(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 5)),
   ITERATIVE_EX_10(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 10)),
   ITERATIVE_EX_20(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 20)),
   ITERATIVE_EX_30(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 30)),
@@ -65,7 +65,7 @@ public enum PolygonCoordinates implements LogWeighting {
   // ---
   private final Genesis genesis;
 
-  private PolygonCoordinates(Genesis genesis) {
+  PolygonCoordinates(Genesis genesis) {
     this.genesis = genesis;
   }
 

@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
-import java.util.Random;
-
 import ch.alpine.ascona.util.ren.EmptyRender;
 import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.sophus.decim.LineDistance;
@@ -91,12 +89,7 @@ public enum Spd2Display implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
     TSpdRandomSample tSpdRandomSample = new TSpdRandomSample(2, UniformDistribution.of(-1, 1));
-    return new RandomSampleInterface() {
-      @Override
-      public Tensor randomSample(Random random) {
-        return Spd0Exponential.INSTANCE.exp(tSpdRandomSample.randomSample(random));
-      }
-    };
+    return random -> Spd0Exponential.INSTANCE.exp(tSpdRandomSample.randomSample(random));
   }
 
   @Override // from ManifoldDisplay

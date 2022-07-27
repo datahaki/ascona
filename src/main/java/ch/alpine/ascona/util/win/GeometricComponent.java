@@ -227,7 +227,8 @@ public final class GeometricComponent {
     return model2pixel.copy();
   }
 
-  /** @param vector of length at least 2 */
+  /** @param pix
+   * @param piy */
   public void setOffset(int pix, int piy) {
     model2pixel.set(RealScalar.of(pix), 0, 2);
     model2pixel.set(RealScalar.of(piy), 1, 2);

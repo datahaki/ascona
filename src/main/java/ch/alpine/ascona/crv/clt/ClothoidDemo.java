@@ -72,7 +72,7 @@ public class ClothoidDemo extends ControlPointsDemo {
       graphics.setColor(color);
       {
         Scalar angle = ArcTan2D.of(clothoid.apply(RealScalar.of(1e-8)));
-        graphics.drawString(angle.map(Round._5) + "  " + clothoid.toString(), 0, index * 20);
+        graphics.drawString(angle.map(Round._5) + "  " + clothoid, 0, index * 20);
         graphics.draw(geometricLayer.toLine2D(AngleVector.of(angle)));
       }
       {

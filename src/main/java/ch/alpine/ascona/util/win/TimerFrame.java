@@ -98,6 +98,6 @@ public class TimerFrame extends BaseFrame {
       };
       timer.schedule(timerTask, 100, TimeUnit.MILLISECONDS.convert(period, timeUnit));
     }
-    WindowClosed.runs(jFrame, () -> timer.cancel());
+    WindowClosed.runs(jFrame, timer::cancel);
   }
 }

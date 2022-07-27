@@ -6,10 +6,7 @@ import java.io.Serializable;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.sca.Clips;
 
-public class ClassificationResult implements Serializable {
-  private final int label;
-  private final Scalar confidence;
-
+public record ClassificationResult(int label, Scalar confidence) implements Serializable {
   /** @param label
    * @param confidence inside [0, 1] */
   public ClassificationResult(int label, Scalar confidence) {
@@ -18,12 +15,14 @@ public class ClassificationResult implements Serializable {
   }
 
   /** @return */
-  public int getLabel() {
+  @Override
+  public int label() {
     return label;
   }
 
   /** @return scalar in the interval [0, 1] */
-  public Scalar getConfidence() {
+  @Override
+  public Scalar confidence() {
     return confidence;
   }
 }

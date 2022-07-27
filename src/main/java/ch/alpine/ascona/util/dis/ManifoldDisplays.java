@@ -32,7 +32,7 @@ public enum ManifoldDisplays {
 
   private final ManifoldDisplay manifoldDisplay;
 
-  private ManifoldDisplays(ManifoldDisplay manifoldDisplay) {
+  ManifoldDisplays(ManifoldDisplay manifoldDisplay) {
     this.manifoldDisplay = manifoldDisplay;
   }
 

@@ -49,18 +49,7 @@ public class ApproximationDemo extends AbstractDemo {
       CurveSubdivisionSchemes.FOURPOINT, //
       CurveSubdivisionSchemes.SIXPOINT };
 
-  private static class Container {
-    private final ManifoldDisplay manifoldDisplay;
-    private final Tensor tracked;
-    private final Tensor control;
-    private final Tensor refined;
-
-    public Container(ManifoldDisplay manifoldDisplay, Tensor tracked, Tensor control, Tensor refined) {
-      this.manifoldDisplay = manifoldDisplay;
-      this.tracked = tracked;
-      this.control = control;
-      this.refined = refined;
-    }
+  private record Container(ManifoldDisplay manifoldDisplay, Tensor tracked, Tensor control, Tensor refined) {
   }
 
   // ---

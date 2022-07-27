@@ -3,8 +3,6 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
@@ -56,14 +54,11 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   public R2ScatteredSetCoordinateDemo() {
     super(true, ManifoldDisplays.SE2C_SE2, LogWeightings.list());
     {
-      jToggleAnimate.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          if (jToggleAnimate.isSelected())
-            snapshot = getControlPointsSe2();
-          else
-            setControlPointsSe2(snapshot);
-        }
+      jToggleAnimate.addActionListener(e -> {
+        if (jToggleAnimate.isSelected())
+          snapshot = getControlPointsSe2();
+        else
+          setControlPointsSe2(snapshot);
       });
       timerFrame.jToolBar.add(jToggleAnimate);
     }
@@ -135,9 +130,9 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       if (jToggleArrows.isSelected()) {
         graphics.setColor(Color.LIGHT_GRAY);
         Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(Math.min(1, 3.0 / Math.sqrt(refinement()))));
-        for (int i0 = 0; i0 < array.length; ++i0)
+        for (Tensor[] tensors : array)
           for (int i1 = 0; i1 < array.length; ++i1) {
-            Tensor mean = array[i0][i1];
+            Tensor mean = tensors[i1];
             geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
             graphics.setColor(new Color(128, 128, 128, 64));
             graphics.fill(geometricLayer.toPath2D(shape, true));

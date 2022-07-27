@@ -82,16 +82,15 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
         }
         // ---
         graphics.setColor(Color.LIGHT_GRAY);
-        for (int c0 = 0; c0 < array.length; ++c0)
+        for (Tensor[] value : array)
           for (int c1 = 1; c1 < n; ++c1)
-            graphics.draw(geometricLayer.toPath2D(Tensors.of(array[c0][c1 - 1], array[c0][c1])));
+            graphics.draw(geometricLayer.toPath2D(Tensors.of(value[c1 - 1], value[c1])));
         for (int c0 = 1; c0 < array.length; ++c0)
           for (int c1 = 0; c1 < n; ++c1)
             graphics.draw(geometricLayer.toPath2D(Tensors.of(array[c0 - 1][c1], array[c0][c1])));
         // ---
-        for (int c0 = 0; c0 < array.length; ++c0)
-          for (int c1 = 0; c1 < n; ++c1) {
-            Tensor mean = array[c0][c1];
+        for (Tensor[] tensors : array)
+          for (Tensor mean : tensors) {
             geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
             Path2D path2d = geometricLayer.toPath2D(Arrowhead.of(0.1));
             path2d.closePath();

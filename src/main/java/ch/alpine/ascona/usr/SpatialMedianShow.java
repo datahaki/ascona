@@ -33,14 +33,9 @@ import ch.alpine.tensor.sca.Chop;
 
 /* package */ enum SpatialMedianShow {
   ;
-  private static class Pixel2Coord {
+  /** @param points --- */
+  private record Pixel2Coord(Tensor points) {
     private static final Tensor INVERSE = Inverse.of(StaticHelper.SE2);
-    // ---
-    private final Tensor points;
-
-    public Pixel2Coord(Tensor points) {
-      this.points = points;
-    }
 
     Scalar dist(Scalar y, Scalar x) {
       Tensor p = INVERSE.dot(Tensors.of(x, y, RealScalar.ONE)).extract(0, 2);

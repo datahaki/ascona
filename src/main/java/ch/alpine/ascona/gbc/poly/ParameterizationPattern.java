@@ -14,7 +14,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 
   private final Function<TensorUnaryOperator, TensorScalarFunction> function;
 
-  private ParameterizationPattern(Function<TensorUnaryOperator, TensorScalarFunction> function) {
+  ParameterizationPattern(Function<TensorUnaryOperator, TensorScalarFunction> function) {
     this.function = function;
   }
 

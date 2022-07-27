@@ -22,7 +22,7 @@ public enum IterativeGenesis {
 
   private final Genesis genesis;
 
-  private IterativeGenesis(Genesis genesis) {
+  IterativeGenesis(Genesis genesis) {
     this.genesis = genesis;
   }
 

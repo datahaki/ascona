@@ -56,8 +56,7 @@ public class RootScalar extends MultiplexScalar implements //
     if (scalar instanceof RealScalar)
       // TODO ASCONA ALG check for exact precision
       return new RootScalar(re.multiply(scalar), im.multiply(scalar), ba);
-    if (scalar instanceof RootScalar) {
-      RootScalar rootScalar = (RootScalar) scalar;
+    if (scalar instanceof RootScalar rootScalar) {
       if (ba.equals(rootScalar.ba))
         return of( //
             re.multiply(rootScalar.re).add(im.multiply(rootScalar.im).multiply(ba)), //
@@ -88,8 +87,7 @@ public class RootScalar extends MultiplexScalar implements //
   protected Scalar plus(Scalar scalar) {
     if (scalar instanceof RealScalar)
       return new RootScalar(re.add(scalar), im, ba);
-    if (scalar instanceof RootScalar) {
-      RootScalar rootScalar = (RootScalar) scalar;
+    if (scalar instanceof RootScalar rootScalar) {
       if (ba.equals(rootScalar.ba))
         return of( //
             re.add(rootScalar.re), //
@@ -137,8 +135,7 @@ public class RootScalar extends MultiplexScalar implements //
 
   @Override // from AbstractScalar
   public boolean equals(Object object) {
-    if (object instanceof RootScalar) {
-      RootScalar rootScalar = (RootScalar) object;
+    if (object instanceof RootScalar rootScalar) {
       return re.equals(rootScalar.re) //
           && im.equals(rootScalar.im) //
           && ba.equals(rootScalar.ba);

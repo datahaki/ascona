@@ -36,8 +36,7 @@ public class ArrayPlotImage {
     barLegend = BarLegend.of(colorDataGradient, clip, set);
   }
 
-  /** @param graphics
-   * @param dimension of image part without legend */
+  /** @param graphics */
   public void draw(Graphics graphics) {
     draw(graphics, getDimension());
   }

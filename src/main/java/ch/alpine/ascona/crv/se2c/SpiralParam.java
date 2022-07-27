@@ -15,7 +15,7 @@ public enum SpiralParam {
   public final ScalarTensorFunction scalarTensorFunction;
   public final Tensor points;
 
-  private SpiralParam(ScalarTensorFunction scalarTensorFunction) {
+  SpiralParam(ScalarTensorFunction scalarTensorFunction) {
     this.scalarTensorFunction = scalarTensorFunction;
     points = Subdivide.of(-10.0, 10.0, 10000).map(scalarTensorFunction).unmodifiable();
   }

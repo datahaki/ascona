@@ -11,5 +11,4 @@ package ch.alpine.ascona.util.dat;
   outdoor_forward_1_davis, //
   outdoor_forward_3_davis, //
   outdoor_forward_5_davis, //
-  ;
 }

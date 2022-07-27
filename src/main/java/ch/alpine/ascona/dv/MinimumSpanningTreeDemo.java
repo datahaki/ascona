@@ -4,7 +4,6 @@ package ch.alpine.ascona.dv;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +41,7 @@ import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 
 public class MinimumSpanningTreeDemo extends ControlPointsDemo {
-  private static record EdgeComparator(Tensor matrix) implements Comparator<IntUndirectedEdge> {
+  private record EdgeComparator(Tensor matrix) implements Comparator<IntUndirectedEdge> {
     @Override
     public int compare(IntUndirectedEdge edge1, IntUndirectedEdge edge2) {
       return Scalars.compare( //
@@ -113,7 +112,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
     if (0 < sequence.length()) {
       Tensor matrix = distanceMatrix(manifold, sequence);
       List<IntUndirectedEdge> list = MinimumSpanningTree.of(matrix);
-      Collections.sort(list, new EdgeComparator(matrix));
+      list.sort(new EdgeComparator(matrix));
       int count = Math.max(0, list.size() - splits);
       {
         for (IntUndirectedEdge directedEdge : list.subList(0, count))

@@ -47,7 +47,7 @@ import ch.alpine.tensor.Tensor;
   private final int index0;
   private final int index1;
 
-  private SymMaskImages(Function<GeodesicSpace, CurveSubdivision> function, int support, int index0, int index1) {
+  SymMaskImages(Function<GeodesicSpace, CurveSubdivision> function, int support, int index0, int index1) {
     this.function = function;
     this.support = support;
     this.index0 = index0;

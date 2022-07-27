@@ -185,7 +185,7 @@ import ch.alpine.tensor.sca.Chop;
 
   private final boolean isDual;
 
-  private CurveSubdivisionSchemes(boolean isDual) {
+  CurveSubdivisionSchemes(boolean isDual) {
     this.isDual = isDual;
   }
 
