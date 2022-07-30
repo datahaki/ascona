@@ -26,6 +26,7 @@ public class HullParam {
   @FieldSlider
   @FieldClip(min = "-2", max = "+2")
   public Scalar t2 = RealScalar.of(0);
+  public Boolean cuboid = false;
   @FieldFuse
   public transient Boolean shuffle = true;
 

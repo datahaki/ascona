@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -15,9 +16,13 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.hs.r2.SignedCurvature2D;
 import ch.alpine.sophus.hs.r3.qh3.ConvexHull3D;
+import ch.alpine.sophus.math.sample.BoxRandomSample;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Sign;
 
 public class R3HullDemo extends AbstractDemo {
@@ -41,9 +46,23 @@ public class R3HullDemo extends AbstractDemo {
     if (hullParam.shuffle) {
       hullParam.shuffle = false;
       int n = hullParam.count.number().intValue();
-      tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
-      faces = ConvexHull3D.of(tensor);
+      if (hullParam.cuboid) {
+        Clip[] clips = { Clips.absoluteOne(), Clips.absoluteOne(), Clips.absoluteOne() };
+        CoordinateBoundingBox ccb = CoordinateBoundingBox.of(clips);
+        Random random = new Random();
+        tensor = RandomSample.of(BoxRandomSample.of(ccb), random, n);
+        for (int index = 0; index < tensor.length(); ++index) {
+          int i = random.nextInt(3);
+          if (random.nextBoolean())
+            tensor.set(clips[i].min(), index, i);
+          else
+            tensor.set(clips[i].max(), index, i);
+        }
+      } else {
+        tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
+      }
     }
+    faces = ConvexHull3D.of(tensor);
   }
 
   @Override
