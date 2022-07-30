@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -16,27 +15,27 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.hs.r2.SignedCurvature2D;
 import ch.alpine.sophus.hs.r3.qh3.ConvexHull3D;
-import ch.alpine.sophus.math.sample.BoxRandomSample;
-import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.sca.Clip;
-import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Subdivide;
+import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.sca.pow.Sqrt;
 
 // TODO ASCONA generalize NdCenters
-public class R3HullDemo extends AbstractDemo {
+public class SymHullDemo extends AbstractDemo {
   private final ManifoldDisplay manifoldDisplay = R3Display.INSTANCE;
   private Tensor tensor;
-  private final HullParam hullParam;
+  private final SymParam hullParam;
   private int[][] faces;
 
-  public R3HullDemo() {
-    this(new HullParam());
+  public SymHullDemo() {
+    this(new SymParam());
   }
 
-  public R3HullDemo(HullParam hullParam) {
+  public SymHullDemo(SymParam hullParam) {
     super(hullParam);
     this.hullParam = hullParam;
     fieldsEditor(0).addUniversalListener(this::shuffle);
@@ -44,32 +43,21 @@ public class R3HullDemo extends AbstractDemo {
   }
 
   private void shuffle() {
-    if (hullParam.shuffle) {
-      hullParam.shuffle = false;
-      int n = hullParam.count.number().intValue();
-      if (hullParam.cuboid) {
-        Clip[] clips = { Clips.absoluteOne(), Clips.absoluteOne(), Clips.absoluteOne() };
-        CoordinateBoundingBox ccb = CoordinateBoundingBox.of(clips);
-        Random random = new Random();
-        tensor = RandomSample.of(BoxRandomSample.of(ccb), random, n);
-        for (int index = 0; index < tensor.length(); ++index) {
-          int i = random.nextInt(3);
-          if (random.nextBoolean())
-            tensor.set(clips[i].min(), index, i);
-          else
-            tensor.set(clips[i].max(), index, i);
-        }
-      } else {
-        tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
-      }
+    int layers = hullParam.layers.number().intValue();
+    int n = hullParam.n.number().intValue();
+    tensor = Tensors.empty();
+    for (Tensor _z : Subdivide.of(-0.9, 0.9, layers)) {
+      Scalar z = (Scalar) _z;
+      Scalar r = Sqrt.FUNCTION.apply(RealScalar.ONE.subtract(z.multiply(z)));
+      CirclePoints.of(n).stream().map(xy -> xy.multiply(r).append(z)).forEach(tensor::append);
     }
+    // tensor = empty;
     faces = ConvexHull3D.of(tensor);
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (hullParam.quality)
-      RenderQuality.setQuality(graphics);
+    RenderQuality.setQuality(graphics);
     Tensor rotate = this.tensor.dot(hullParam.rotation());
     LeversRender leversRender = LeversRender.of(manifoldDisplay, rotate, null, geometricLayer, graphics);
     leversRender.renderSequence();
