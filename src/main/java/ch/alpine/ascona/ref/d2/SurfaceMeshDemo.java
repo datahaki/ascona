@@ -11,6 +11,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascona.util.ren.SurfaceMeshRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -23,6 +24,7 @@ import ch.alpine.sophus.crv.d2.PolygonArea;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.r2.Extract2D;
+import ch.alpine.sophus.hs.r3.PlatonicSolid;
 import ch.alpine.sophus.ref.d2.SurfaceMeshRefinement;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.tensor.RealScalar;
@@ -57,7 +59,7 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
   }
 
   private final Param param;
-  private final SurfaceMesh surfaceMesh = SurfaceMeshExamples.mixed11();
+  private final SurfaceMesh surfaceMesh; // = SurfaceMeshExamples.mixed11();
 
   // TODO ASCONA DEMO needs BM
   public SurfaceMeshDemo() {
@@ -68,6 +70,7 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     // ---
+    surfaceMesh = PlatonicSolid.ICOSAHEDRON.surfaceMesh();
     setControlPointsSe2(surfaceMesh.vrt);
     // ---
     timerFrame.geometricComponent.setOffset(100, 600);
@@ -91,13 +94,17 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
           System.err.println("neg");
       }
     }
-    for (Tensor polygon : refine.polygons()) {
-      Path2D path2d = geometricLayer.toPath2D(polygon);
-      path2d.closePath();
-      graphics.setColor(COLOR_DATA_INDEXED_DRAW.getColor(0));
-      graphics.draw(path2d);
-      graphics.setColor(COLOR_DATA_INDEXED_FILL.getColor(0));
-      graphics.fill(path2d);
+    if (param.manifoldDisplays.equals(ManifoldDisplays.R2))
+      new SurfaceMeshRender(refine).render(geometricLayer, graphics);
+    else {
+      for (Tensor polygon : refine.polygons()) {
+        Path2D path2d = geometricLayer.toPath2D(polygon);
+        path2d.closePath();
+        graphics.setColor(COLOR_DATA_INDEXED_DRAW.getColor(0));
+        graphics.draw(path2d);
+        graphics.setColor(COLOR_DATA_INDEXED_FILL.getColor(0));
+        graphics.fill(path2d);
+      }
     }
     {
       // TODO ASCONA levers render
