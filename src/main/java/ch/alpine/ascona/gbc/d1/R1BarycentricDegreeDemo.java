@@ -15,7 +15,6 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.itp.BarycentricRationalInterpolation;
 import ch.alpine.tensor.RealScalar;
@@ -44,9 +43,8 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
     }
 
     public Boolean lagrange = true;
-    @FieldInteger
     @FieldClip(min = "0", max = "4")
-    public Scalar degree = RealScalar.ONE;
+    public Integer degree = 1;
   }
 
   private final Param param;
@@ -91,7 +89,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
       }
       // ---
       ScalarTensorFunction scalarTensorFunction = //
-          BarycentricRationalInterpolation.of(support, param.degree.number().intValue());
+          BarycentricRationalInterpolation.of(support, param.degree);
       Tensor basis = domain.map(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));

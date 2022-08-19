@@ -12,14 +12,12 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -38,9 +36,8 @@ import ch.alpine.tensor.img.ColorDataLists;
 
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
-    @FieldInteger
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
-    public Scalar resolution = RealScalar.of(50);
+    public Integer resolution = 50;
     public ColorDataGradients cdg = ColorDataGradients.PARULA;
   }
 

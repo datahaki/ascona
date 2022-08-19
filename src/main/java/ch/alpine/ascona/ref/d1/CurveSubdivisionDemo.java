@@ -19,7 +19,6 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerMenu;
@@ -28,7 +27,6 @@ import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -48,9 +46,8 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     }
 
     public CurveSubdivisionSchemes scheme = CurveSubdivisionSchemes.BSPLINE1;
-    @FieldInteger
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
-    public Scalar refine = RealScalar.of(5);
+    public Integer refine = 5;
     public Boolean line = false;
     public Boolean cyclic = false;
     public Boolean symi = true;
@@ -141,7 +138,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     // ---
     final boolean cyclic = param.cyclic || !scheme.isStringSupported();
     Tensor control = getGeodesicControlPoints();
-    int levels = param.refine.number().intValue();
+    int levels = param.refine;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);

@@ -12,15 +12,12 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.gbc.d2.IterativeCoordinateMatrix;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 
 public class IterativeCoordinateDemo extends ControlPointsDemo {
@@ -30,9 +27,8 @@ public class IterativeCoordinateDemo extends ControlPointsDemo {
       super(true, ManifoldDisplays.R2_ONLY);
     }
 
-    @FieldInteger
     @FieldClip(min = "2", max = "20")
-    public Scalar total = RealScalar.of(2);
+    public Integer total = 2;
   }
 
   private final Param param;
@@ -67,7 +63,7 @@ public class IterativeCoordinateDemo extends ControlPointsDemo {
       Manifold manifold = homogeneousSpace;
       HsDesign hsDesign = new HsDesign(manifold);
       try {
-        Tensor matrix = new IterativeCoordinateMatrix(param.total.number().intValue()).origin(hsDesign.matrix(sequence, origin));
+        Tensor matrix = new IterativeCoordinateMatrix(param.total).origin(hsDesign.matrix(sequence, origin));
         Tensor circum = matrix.dot(sequence);
         // new PointsRender(color_fill, color_draw).show(matrixLift, shape, points);
         // new PointsRender(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255)) //

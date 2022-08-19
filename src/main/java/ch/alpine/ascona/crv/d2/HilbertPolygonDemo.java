@@ -14,12 +14,9 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.crv.d2.HilbertPolygon;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.img.ColorDataIndexed;
@@ -37,9 +34,8 @@ public class HilbertPolygonDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     @FieldSlider
-    @FieldInteger
     @FieldClip(min = "1", max = "7")
-    public Scalar total = RealScalar.of(2);
+    public Integer total = 2;
   }
 
   private final Function<Integer, Tensor> cache = Cache.of(HilbertPolygonDemo::curve, CACHE_SIZE);
@@ -57,7 +53,7 @@ public class HilbertPolygonDemo extends AbstractDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    int n = param.total.number().intValue();
+    int n = param.total;
     Tensor tensor = cache.apply(n);
     // ---
     Path2D path2d = geometricLayer.toPath2D(tensor);

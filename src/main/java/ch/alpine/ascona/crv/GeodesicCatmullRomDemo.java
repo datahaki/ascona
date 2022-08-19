@@ -12,7 +12,6 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -43,10 +42,9 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
       super(ManifoldDisplays.metricManifolds());
     }
 
-    @FieldInteger
     @FieldPreferredWidth(100)
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
-    public Scalar refine = RealScalar.of(5);
+    public Integer refine = 5;
     @FieldSlider
     @FieldPreferredWidth(300)
     @FieldClip(min = "0", max = "1")
@@ -80,7 +78,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   @Override // from RenderInterface
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    final int levels = param.refine.number().intValue();
+    final int levels = param.refine;
     final Tensor control = getGeodesicControlPoints();
     RenderQuality.setQuality(graphics);
     {

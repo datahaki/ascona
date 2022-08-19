@@ -12,14 +12,11 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.crv.dub.DubinsGenerator;
 import ch.alpine.sophus.flt.ga.GeodesicMeanFilter;
 import ch.alpine.sophus.ref.d1.BSpline4CurveSubdivision;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -33,9 +30,8 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
       super(true, ManifoldDisplays.ALL);
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
-    public Scalar radius = RealScalar.of(2);
+    public Integer radius = 2;
   }
 
   private final Param param;
@@ -58,7 +54,7 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
-    int _radius = param.radius.number().intValue();
+    int _radius = param.radius;
     TensorUnaryOperator geodesicMeanFilter = GeodesicMeanFilter.of(manifoldDisplay.geodesicSpace(), _radius);
     Tensor refined = geodesicMeanFilter.apply(control);
     Tensor curve = Nest.of(BSpline4CurveSubdivision.split2lo(manifoldDisplay.geodesicSpace())::string, refined, 7);

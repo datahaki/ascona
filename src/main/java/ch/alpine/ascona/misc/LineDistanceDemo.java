@@ -17,7 +17,6 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -49,9 +48,8 @@ public class LineDistanceDemo extends ControlPointsDemo {
       super(false, ManifoldDisplays.R2_S2);
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200" })
-    public Scalar resolution = RealScalar.of(50);
+    public Integer resolution = 50;
     @FieldLabel("color data gradient")
     public ColorDataGradients colorDataGradients = ColorDataGradients.PARULA;
   }
@@ -102,7 +100,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
     D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     RenderQuality.setDefault(graphics);
-    BufferedImage bufferedImage = bufferedImage(param.resolution.number().intValue());
+    BufferedImage bufferedImage = bufferedImage(param.resolution);
     new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);

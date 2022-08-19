@@ -19,7 +19,6 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -60,9 +59,8 @@ public class S2DefectNormDemo extends ControlPointsDemo {
       super(true, ManifoldDisplays.S2_ONLY);
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })
-    public Scalar resolution = RealScalar.of(20);
+    public Integer resolution = 20;
     @FieldLabel("color data gradient")
     public ColorDataGradients colorDataGradients = ColorDataGradients.PARULA;
     public Boolean vector = true;
@@ -124,7 +122,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     RenderQuality.setDefault(graphics);
-    int res = param.resolution.number().intValue();
+    int res = param.resolution;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     BufferedImage bufferedImage = bufferedImage(res);
     new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()) //

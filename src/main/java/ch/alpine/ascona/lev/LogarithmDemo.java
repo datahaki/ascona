@@ -18,7 +18,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.HsDesign;
@@ -28,8 +27,6 @@ import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.sophus.ref.d1.FourPointCurveSubdivision;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Differences;
@@ -44,9 +41,8 @@ public class LogarithmDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   public static class Param {
-    @FieldInteger
     @FieldClip(min = "5", max = "20")
-    public Scalar length = RealScalar.of(11);
+    public Integer length = 11;
     public Boolean ctrl = false;
   }
 
@@ -105,7 +101,7 @@ public class LogarithmDemo extends ControlPointsDemo {
           graphics.setColor(DOMAIN_D);
           graphics.draw(path2d);
         }
-        final Tensor domain = Drop.tail(Subdivide.of(0.0, 1.0, param.length.number().intValue()), 1);
+        final Tensor domain = Drop.tail(Subdivide.of(0.0, 1.0, param.length), 1);
         geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(10, 0)));
         GRID_RENDER.render(geometricLayer, graphics);
         HsDesign hsDesign = new HsDesign(homogeneousSpace);

@@ -22,7 +22,6 @@ import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -31,7 +30,6 @@ import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -51,12 +49,10 @@ public class ClassificationImageDemo extends ControlPointsDemo {
       drawControlPoints = false;
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "10", "20", "50" })
-    public Scalar size = RealScalar.of(20);
-    @FieldInteger
+    public Integer size = 20;
     @FieldSelectionArray({ "2", "3", "4", "5" })
-    public Scalar labels = RealScalar.of(3);
+    public Integer labels = 3;
     @FieldFuse
     public transient Boolean shuffle = false;
   }
@@ -66,9 +62,8 @@ public class ClassificationImageDemo extends ControlPointsDemo {
     @FieldSelectionCallback("biinvariants")
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public Labels labels = Labels.ARG_MIN;
-    @FieldInteger
     @FieldSelectionArray({ "50", "75", "100", "200" })
-    public Scalar res = RealScalar.of(50);
+    public Integer res = 50;
     public ColorDataLists cdg = ColorDataLists._097;
     public ClassificationImage classificationImage = ClassificationImage.BLENDED;
 
@@ -112,13 +107,13 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    int n = param0.size.number().intValue();
+    int n = param0.size;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
         .map(manifoldDisplay::point2xya));
     setControlPointsSe2(tensor);
     // assignment of random labels to points
-    int k = param0.labels.number().intValue();
+    int k = param0.labels;
     vector = RandomVariate.of(DiscreteUniformDistribution.of(0, k), n);
     recompute();
   }
@@ -134,7 +129,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
     ColorDataLists colorDataLists = param1.cdg;
     TensorUnaryOperator tensorUnaryOperator = //
         param1.classificationImage.operator(classification, sedarim, colorDataLists.cyclic());
-    int resolution = param1.res.number().intValue();
+    int resolution = param1.res;
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
     Tensor raster = D2Raster.of(d2Raster, resolution, arrayFunction);
     bufferedImage = ImageFormat.of(raster);

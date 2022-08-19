@@ -19,7 +19,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.BarLegend;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -46,9 +45,8 @@ public class OrderingDemo extends ControlPointsDemo {
       drawControlPoints = false;
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "10", "50", "100" })
-    public Scalar size = RealScalar.of(100);
+    public Integer size = 100;
     @FieldFuse
     public transient Boolean shuffle;
   }
@@ -58,9 +56,8 @@ public class OrderingDemo extends ControlPointsDemo {
     @FieldSelectionCallback("biinvariants")
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public ColorDataGradients cdg = ColorDataGradients.THERMOMETER;
-    @FieldInteger
     @FieldSelectionArray({ "1", "3", "5", "8" })
-    public Scalar closest = RealScalar.of(5);
+    public Integer closest = 5;
 
     @ReflectionMarker
     public List<Biinvariants> biinvariants() {
@@ -86,7 +83,7 @@ public class OrderingDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    sequence = RandomSample.of(manifoldDisplay().randomSampleInterface(), param0.size.number().intValue());
+    sequence = RandomSample.of(manifoldDisplay().randomSampleInterface(), param0.size);
   }
 
   @Override // from RenderInterface
@@ -123,7 +120,7 @@ public class OrderingDemo extends ControlPointsDemo {
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, //
-          Tensor.of(IntStream.range(0, param1.closest.number().intValue()).limit(integers.length) //
+          Tensor.of(IntStream.range(0, param1.closest).limit(integers.length) //
               .map(index -> integers[index]) //
               .mapToObj(sequence::get)), //
           origin, geometricLayer, graphics);

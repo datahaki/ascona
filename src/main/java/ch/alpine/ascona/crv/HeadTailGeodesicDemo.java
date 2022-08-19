@@ -13,12 +13,10 @@ import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.math.api.TensorMetric;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -33,9 +31,8 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
       super(false, ManifoldDisplays.ALL);
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
-    public Scalar refine = RealScalar.of(6);
+    public Integer refine = 6;
   }
 
   private final Param param;
@@ -66,7 +63,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
     ScalarTensorFunction scalarTensorFunction = manifoldDisplay.geodesicSpace().curve(p, q);
     graphics.setStroke(new BasicStroke(1.5f));
     Tensor shape = manifoldDisplay.shape();
-    Tensor domain = Subdivide.of(0, 1, param.refine.number().intValue());
+    Tensor domain = Subdivide.of(0, 1, param.refine);
     Tensor points = domain.map(scalarTensorFunction);
     Tensor xys = Tensor.of(points.stream().map(manifoldDisplay::point2xy));
     graphics.setColor(new Color(128, 255, 0));

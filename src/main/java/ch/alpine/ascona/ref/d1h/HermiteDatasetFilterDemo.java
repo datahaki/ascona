@@ -19,7 +19,6 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
@@ -50,12 +49,10 @@ public class HermiteDatasetFilterDemo extends AbstractDemo {
       super(gokartPoseData, ManifoldDisplays.SE2_ONLY);
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "1", "2", "5", "10", "25", "50" })
-    public Scalar skips = RealScalar.of(5);
-    @FieldInteger
+    public Integer skips = 5;
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6" })
-    public Scalar level = RealScalar.of(5);
+    public Integer level = 5;
     public Boolean adjoint = false;
     public Boolean derivat = true;
   }
@@ -80,11 +77,11 @@ public class HermiteDatasetFilterDemo extends AbstractDemo {
   }
 
   protected void updateState() {
-    int limit = param.limit.number().intValue();
+    int limit = param.limit;
     String name = param.string;
     Tensor control = gokartPoseDataV2.getPoseVel(name, limit);
     Tensor result = Tensors.empty();
-    int skips = param.skips.number().intValue();
+    int skips = param.skips;
     for (int index = 0; index < control.length(); index += skips)
       result.append(control.get(index));
     _control = result;
@@ -111,12 +108,12 @@ public class HermiteDatasetFilterDemo extends AbstractDemo {
         }
     }
     graphics.setColor(Color.DARK_GRAY);
-    Scalar delta = RationalScalar.of(param.skips.number().intValue(), 50);
+    Scalar delta = RationalScalar.of(param.skips, 50);
     TensorIteration tensorIteration = //
         // new Hermite1Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE).string(delta, _control);
         new Hermite3Filter(Se2Group.INSTANCE, Se2BiinvariantMeans.FILTER) //
             .string(delta, _control);
-    int levels = 2 * param.level.number().intValue();
+    int levels = 2 * param.level;
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);
     {
       final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));

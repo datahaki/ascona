@@ -16,7 +16,6 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -47,9 +46,8 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
     @FieldSlider
     @FieldPreferredWidth(100)
-    @FieldInteger
     @FieldClip(min = "0", max = "8")
-    public Scalar refine = RealScalar.of(4);
+    public Integer refine = 4;
     @FieldPreferredWidth(300)
     public Tensor coeffs = Tensors.fromString("{2, 1, -1/5, -1/10}");
     // ---
@@ -82,7 +80,7 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
       Tensor control = N.DOUBLE.of(_control);
       Scalar delta = RealScalar.ONE;
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
-      int levels = param.refine.number().intValue();
+      int levels = param.refine;
       Tensor iterate = Do.of(control, tensorIteration::iterate, levels);
       Tensor curve = Tensor.of(iterate.get(Tensor.ALL, 0).stream().map(Extract2D.FUNCTION));
       Curvature2DRender.of(curve, false).render(geometricLayer, graphics);

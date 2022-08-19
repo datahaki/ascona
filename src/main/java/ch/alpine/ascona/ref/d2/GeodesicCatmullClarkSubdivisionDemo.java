@@ -12,14 +12,12 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.crv.d2.Arrowhead;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.ref.d2.GeodesicCatmullClarkSubdivision;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ArrayReshape;
@@ -35,9 +33,8 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
     }
 
     @FieldSlider
-    @FieldInteger
     @FieldClip(min = "0", max = "4")
-    public Scalar refine = RealScalar.of(2);
+    public Integer refine = 2;
   }
 
   private final Param param;
@@ -63,7 +60,7 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
     Tensor refined = Nest.of( //
         catmullClarkSubdivision::refine, //
         ArrayReshape.of(control, 2, 3, 3), //
-        param.refine.number().intValue());
+        param.refine);
     RenderQuality.setQuality(graphics);
     // TODO ASCONA LR
     for (Tensor point : Tensor.of(refined.flatten(1))) {

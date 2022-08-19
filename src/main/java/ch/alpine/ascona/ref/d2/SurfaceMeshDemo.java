@@ -16,7 +16,6 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -53,9 +52,8 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
     public SurfaceMeshRefinements ref = SurfaceMeshRefinements.CATMULL_CLARK;
     @FieldSlider
     @FieldPreferredWidth(100)
-    @FieldInteger
     @FieldClip(min = "0", max = "4")
-    public Scalar refine = RealScalar.of(2);
+    public Integer refine = 2;
   }
 
   private final Param param;
@@ -84,7 +82,7 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     SurfaceMeshRefinement surfaceMeshRefinement = param.ref.operator(homogeneousSpace.biinvariantMean(Chop._08));
     SurfaceMesh refine = surfaceMesh;
-    for (int count = 0; count < param.refine.number().intValue(); ++count)
+    for (int count = 0; count < param.refine; ++count)
       refine = surfaceMeshRefinement.refine(refine);
     if (false) {
       for (int index = 0; index < refine.faces().size(); ++index) {

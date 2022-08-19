@@ -24,7 +24,6 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -63,9 +62,8 @@ public class HermiteDatasetDemo extends AbstractDemo {
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
     @FieldSlider
     @FieldPreferredWidth(80)
-    @FieldInteger
     @FieldClip(min = "0", max = "8")
-    public Scalar level = RealScalar.of(3);
+    public Integer level = 3;
     public Boolean diff = true;
     public final HermiteSubdivisionParam hsp = HermiteSubdivisionParam.GLOBAL;
   }
@@ -93,7 +91,7 @@ public class HermiteDatasetDemo extends AbstractDemo {
   }
 
   protected void updateState() {
-    int limit = param.limit.number().intValue();
+    int limit = param.limit;
     String name = param.string;
     Tensor control = gokartPoseDataV2.getPoseVel(name, limit);
     control.set(new So2Lift(), Tensor.ALL, 0, 2);
@@ -132,7 +130,7 @@ public class HermiteDatasetDemo extends AbstractDemo {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
     TensorIteration tensorIteration = hermiteSubdivision.string(delta, _control);
-    int levels = param.level.number().intValue();
+    int levels = param.level;
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);
     pathRenderShape.setCurve(refined.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
     new Se2HermiteRender(refined, RealScalar.of(0.3)).render(geometricLayer, graphics);

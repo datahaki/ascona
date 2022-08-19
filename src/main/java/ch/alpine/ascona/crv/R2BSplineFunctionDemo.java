@@ -10,10 +10,7 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -30,9 +27,8 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
       super(ManifoldDisplays.R2_ONLY);
     }
 
-    @FieldInteger
     @FieldClip(min = "0", max = "9")
-    public Scalar degree = RealScalar.of(3);
+    public Integer degree = 3;
     public Boolean cyclic = false;
   }
 
@@ -53,7 +49,7 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
     Tensor control = getGeodesicControlPoints();
     Tensor refined = Tensors.empty();
     if (0 < control.length()) {
-      int _degree = param.degree.number().intValue();
+      int _degree = param.degree;
       ScalarTensorFunction scalarTensorFunction = param.cyclic //
           ? BSplineFunctionCyclic.of(_degree, control)
           : BSplineFunctionString.of(_degree, control);

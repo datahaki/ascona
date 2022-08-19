@@ -18,7 +18,6 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -54,9 +53,8 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
     public final HermiteSubdivisionParam hsp = HermiteSubdivisionParam.GLOBAL;
     @FieldSlider
     @FieldPreferredWidth(100)
-    @FieldInteger
     @FieldClip(min = "0", max = "8")
-    public Scalar refine = RealScalar.of(4);
+    public Integer refine = 4;
     // ---
     @FieldSelectionArray({ "1/8", "1/4", "1/2", "1", "3/2", "2" })
     public Scalar beta = RealScalar.ONE;
@@ -123,7 +121,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
       TensorIteration tensorIteration = param.cyclic //
           ? hermiteSubdivision.cyclic(RealScalar.ONE, control)
           : hermiteSubdivision.string(RealScalar.ONE, control);
-      int n = param.refine.number().intValue();
+      int n = param.refine;
       Tensor result = Do.of(control, tensorIteration::iterate, n);
       Tensor points = result.get(Tensor.ALL, 0);
       new PathRender(Color.BLUE).setCurve(points, param.cyclic).render(geometricLayer, graphics);

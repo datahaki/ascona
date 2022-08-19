@@ -15,14 +15,12 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.r2.Se2Bijection;
 import ch.alpine.sophus.hs.r2.Se2RigidMotionFit;
 import ch.alpine.sophus.lie.LieGroupElement;
 import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Append;
@@ -47,9 +45,8 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
       super(false, ManifoldDisplays.R2_ONLY);
     }
 
-    @FieldInteger
     @FieldClip(min = "2", max = "10")
-    public Scalar length = RealScalar.of(5);
+    public Integer length = 5;
   }
 
   private final Param param;
@@ -69,7 +66,7 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
   }
 
   private synchronized void shufflePoints() {
-    int n = param.length.number().intValue();
+    int n = param.length;
     Distribution distribution = NormalDistribution.of(0, 2);
     points = RandomVariate.of(distribution, n, 2);
     Tensor xya = RandomVariate.of(distribution, 3);

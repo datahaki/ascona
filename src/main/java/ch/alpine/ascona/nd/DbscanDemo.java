@@ -14,7 +14,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -35,12 +34,10 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 public class DbscanDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
-    @FieldInteger
     @FieldSelectionArray({ "100", "200", "500", "1000" })
-    public Scalar count = RealScalar.of(200);
-    @FieldInteger
+    public Integer count = 200;
     @FieldClip(min = "1", max = "10")
-    public Scalar minPts = RealScalar.of(5);
+    public Integer minPts = 5;
     public CenterNorms centerNorms = CenterNorms._2;
     @FieldSlider
     @FieldClip(min = "0", max = "1")
@@ -86,12 +83,12 @@ public class DbscanDemo extends AbstractDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     graphics.setColor(Color.GRAY);
-    Tensor points = Tensor.of(pointsAll.stream().limit(param.count.number().intValue()));
+    Tensor points = Tensor.of(pointsAll.stream().limit(param.count));
     Tensor xya = timerFrame.geometricComponent.getMouseSe2CState();
     Scalar radius = param.radius;
     Timing timing = Timing.started();
     CenterNorms centerNorms = param.centerNorms;
-    Integer[] labels = Dbscan.of(points, centerNorms::ndCenterInterface, radius, param.minPts.number().intValue());
+    Integer[] labels = Dbscan.of(points, centerNorms::ndCenterInterface, radius, param.minPts);
     double seconds = timing.seconds();
     graphics.drawString(String.format("%6.4f", seconds), 0, 40);
     ColorDataIndexed colorDataIndexed = param.cdl.cyclic();

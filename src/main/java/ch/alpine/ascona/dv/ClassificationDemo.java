@@ -18,7 +18,6 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -27,7 +26,6 @@ import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataIndexed;
@@ -45,9 +43,8 @@ public class ClassificationDemo extends ControlPointsDemo {
       drawControlPoints = false;
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "10", "20", "50" })
-    public Scalar size = RealScalar.of(20);
+    public Integer size = 20;
     @FieldFuse
     public transient Boolean shuffle;
   }
@@ -88,7 +85,7 @@ public class ClassificationDemo extends ControlPointsDemo {
 
   protected void shuffle() {
     // assignment of random labels to points
-    int n = param0.size.number().intValue();
+    int n = param0.size;
     sequence = RandomSample.of(manifoldDisplay().randomSampleInterface(), n);
     vector = RandomVariate.of(DiscreteUniformDistribution.of(0, 3), n);
   }

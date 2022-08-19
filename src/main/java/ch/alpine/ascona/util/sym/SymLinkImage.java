@@ -29,7 +29,7 @@ public class SymLinkImage {
       { 100, 0, WIDTH / 2 }, //
       { 0, -100, HEIGHT + HEIGHT / 2 }, //
       { 0, 0, 1 } });
-  private static final TensorUnaryOperator IMAGE_CROP = ImageCrop.color(Tensors.vector(255, 255, 255, 255));
+  private static final TensorUnaryOperator IMAGE_CROP = ImageCrop.eq(Tensors.vector(255, 255, 255, 255));
   private static final Font FONT = new Font(Font.DIALOG, Font.PLAIN, 22);
   // ---
   private final BufferedImage bufferedImage;

@@ -18,7 +18,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.util.DisjointSets;
@@ -29,8 +28,6 @@ import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.IntUndirectedEdge;
 import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -58,9 +55,8 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
       drawControlPoints = false;
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "10", "20", "30", "50" })
-    public Scalar size = RealScalar.of(20);
+    public Integer size = 20;
     @FieldFuse
     public transient Boolean shuffle = false;
   }
@@ -68,9 +64,8 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param1 {
     public Biinvariants biinvariants = Biinvariants.METRIC;
-    @FieldInteger
     @FieldClip(min = "1", max = "8")
-    public Scalar refine = RealScalar.of(2);
+    public Integer refine = 2;
     public ColorDataLists colorDataLists = ColorDataLists._097;
   }
 
@@ -92,7 +87,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    int n = param0.size.number().intValue();
+    int n = param0.size;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
         .map(manifoldDisplay::point2xya));
@@ -107,7 +102,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     Tensor sequence = getGeodesicControlPoints();
     Tensor domain = Subdivide.of(0.0, 1.0, 10);
-    final int splits = param1.refine.number().intValue();
+    final int splits = param1.refine;
     DisjointSets disjointSets = DisjointSets.allocate(sequence.length());
     if (0 < sequence.length()) {
       Tensor matrix = distanceMatrix(manifold, sequence);

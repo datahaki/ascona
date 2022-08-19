@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.gbc.it;
 
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.MetricBiinvariant;
 import ch.alpine.sophus.gbc.amp.Amplifiers;
@@ -19,11 +18,10 @@ public class GenesisDequeProperties {
   public Boolean lagrange = false;
   public Amplifiers amplifiers = Amplifiers.EXP;
   public Scalar beta = RealScalar.of(3);
-  @FieldInteger
-  public Scalar refine = RealScalar.of(20);
+  public Integer refine = 20;
 
   public Genesis genesis() {
-    int resolution = refine.number().intValue();
+    int resolution = refine;
     TensorUnaryOperator tensorUnaryOperator = amplifiers.supply(beta);
     return lagrange //
         ? new IterativeTargetCoordinate( //

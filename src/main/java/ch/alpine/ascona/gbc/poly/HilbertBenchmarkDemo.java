@@ -14,12 +14,10 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.crv.d2.HilbertPolygon;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.sca.pow.Power;
@@ -30,13 +28,11 @@ import ch.alpine.tensor.sca.pow.Power;
 public class HilbertBenchmarkDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
-    @FieldInteger
     @FieldClip(min = "1", max = "4")
-    public Scalar levels = RealScalar.of(2);
-    @FieldInteger
+    public Integer levels = 2;
     @FieldClip(min = "20", max = "100")
     @FieldSelectionArray({ "20", "30", "50" })
-    public Scalar resolution = RealScalar.of(20);
+    public Integer resolution = 20;
     public Boolean ctrl = false;
     public ColorDataGradients cdg = ColorDataGradients.CLASSIC;
   }
@@ -58,7 +54,7 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
 
   void updateCtrl() {
     System.out.println("update");
-    polygon = unit(param.levels.number().intValue());
+    polygon = unit(param.levels);
     bufferedImage = null;
   }
 
@@ -87,7 +83,7 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
   }
 
   public void compute() {
-    bufferedImage = HilbertLevelImage.of(R2Display.INSTANCE, polygon, param.resolution.number().intValue(), param.cdg, 32);
+    bufferedImage = HilbertLevelImage.of(R2Display.INSTANCE, polygon, param.resolution, param.cdg, 32);
   }
 
   /** @param n positive

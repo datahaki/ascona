@@ -23,11 +23,9 @@ import ch.alpine.bridge.fig.VisualRow;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Differences;
@@ -49,9 +47,8 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
       super(true, ManifoldDisplays.ALL);
     }
 
-    @FieldInteger
     @FieldClip(min = "0", max = "9")
-    public Scalar refine = RealScalar.of(3);
+    public Integer refine = 3;
     public Boolean curv = false;
   }
 
@@ -149,7 +146,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     PathRender pathRender = pathRenders.get(index);
     // ---
     Tensor control = getGeodesicControlPoints();
-    int levels = param.refine.number().intValue();
+    int levels = param.refine;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor refined = StaticHelper.refine(control, levels, scheme.of(manifoldDisplay), //

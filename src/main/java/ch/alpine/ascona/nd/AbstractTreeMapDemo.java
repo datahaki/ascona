@@ -14,7 +14,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -35,18 +34,14 @@ import ch.alpine.tensor.red.Max;
 /* package */ abstract class AbstractTreeMapDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
-    @FieldInteger
     @FieldClip(min = "1", max = "5")
-    public Scalar leafSizeMax = RealScalar.of(5);
-    @FieldInteger
+    public Integer leafSizeMax = 5;
     @FieldSelectionArray({ "100", "200", "500", "1000", "2000", "5000", "10000" })
-    public Scalar count = RealScalar.of(1000);
-    @FieldInteger
+    public Integer count = 1000;
     @FieldClip(min = "1", max = "20")
-    public Scalar multi = RealScalar.of(10);
-    @FieldInteger
+    public Integer multi = 10;
     @FieldClip(min = "1", max = "10")
-    public Scalar limit = RealScalar.of(4);
+    public Integer limit = 4;
     public Boolean nearest = false;
     public CenterNorms centerNorms = CenterNorms._2;
     @FieldSlider
@@ -77,16 +72,16 @@ import ch.alpine.tensor.red.Max;
     Tensor xyz = center(mouse);
     // normal rendering quality
     graphics.setColor(Color.GRAY);
-    Tensor points = Tensor.of(pointsAll.stream().limit(param.count.number().intValue()));
+    Tensor points = Tensor.of(pointsAll.stream().limit(param.count));
     for (Tensor point : points) {
       Point2D point2d = geometricLayer.toPoint2D(point);
       graphics.fillRect((int) point2d.getX(), (int) point2d.getY(), 2, 2);
     }
     Scalar radius = param.radius;
     CoordinateBoundingBox actual = CoordinateBounds.of(points);
-    NdMap<Void> ndMap = NdTreeMap.of(actual, param.leafSizeMax.number().intValue());
+    NdMap<Void> ndMap = NdTreeMap.of(actual, param.leafSizeMax);
     Random random = new Random(1);
-    int multi = param.multi.number().intValue();
+    int multi = param.multi;
     for (Tensor point : points) {
       int count = 1 + random.nextInt(multi);
       for (int index = 0; index < count; ++index)
@@ -95,7 +90,7 @@ import ch.alpine.tensor.red.Max;
     Timing timing = Timing.started();
     CenterNorms centerNorms = param.centerNorms;
     NdCenterInterface ndCenterInterface = centerNorms.ndCenterInterface(xyz);
-    int limit = param.limit.number().intValue();
+    int limit = param.limit;
     final Collection<NdMatch<Void>> collection;
     if (param.nearest) {
       GraphicNearest<Void> graphicNearest = //

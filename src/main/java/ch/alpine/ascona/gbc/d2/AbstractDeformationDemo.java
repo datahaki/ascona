@@ -21,7 +21,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.dv.Biinvariants;
@@ -66,9 +65,8 @@ import ch.alpine.tensor.sca.N;
 
   @ReflectionMarker
   public static class Param1 {
-    @FieldInteger
     @FieldClip(min = "3", max = "12")
-    public Scalar length = RealScalar.of(6);
+    public Integer length = 6;
   }
 
   private final Param0 param0;
@@ -90,11 +88,11 @@ import ch.alpine.tensor.sca.N;
     fieldsEditor(1).addUniversalListener(this::shuffleSnap);
     fieldsEditor(2).addUniversalListener(this::recompute);
     // ---
-    setControlPointsSe2(shufflePointsSe2(param1.length.number().intValue()));
+    setControlPointsSe2(shufflePointsSe2(param1.length));
   }
 
   protected final void shuffleSnap() {
-    setControlPointsSe2(shufflePointsSe2(param1.length.number().intValue()));
+    setControlPointsSe2(shufflePointsSe2(param1.length));
     param0.snap = true;
     recompute();
   }

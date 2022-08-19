@@ -11,7 +11,7 @@ import ch.alpine.ascona.util.ren.SurfaceMeshRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.hs.r3.qh3.ConvexHull3D;
+import ch.alpine.sophus.hs.r3.ConvexHull3D;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -40,8 +40,8 @@ public class SymHullDemo extends AbstractDemo {
   }
 
   private void shuffle() {
-    int layers = hullParam.layers.number().intValue();
-    int n = hullParam.n.number().intValue();
+    int layers = hullParam.layers;
+    int n = hullParam.n;
     tensor = Tensors.empty();
     for (Tensor _z : Subdivide.of(-0.9, 0.9, layers)) {
       Scalar z = (Scalar) _z;

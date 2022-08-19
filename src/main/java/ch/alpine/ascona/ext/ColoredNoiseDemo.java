@@ -13,7 +13,6 @@ import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -33,8 +32,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
     @FieldPreferredWidth(250)
     public Scalar alpha = RealScalar.of(2);
     @FieldPreferredWidth(150)
-    @FieldInteger
-    public Scalar length = RealScalar.of(300);
+    public Integer length = 300;
     @FieldFuse
     public transient Boolean generate = true;
   }
@@ -58,7 +56,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
 
   private void compute() {
     ColoredNoise coloredNoise = new ColoredNoise(param.alpha.number().doubleValue());
-    Tensor values = RandomVariate.of(coloredNoise, param.length.number().intValue());
+    Tensor values = RandomVariate.of(coloredNoise, param.length);
     Tensor domain = Range.of(0, values.length());
     {
       VisualSet visualSet = new VisualSet();

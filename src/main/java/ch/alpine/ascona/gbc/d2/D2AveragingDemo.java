@@ -30,7 +30,6 @@ import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.VisualImage;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -70,9 +69,8 @@ public class D2AveragingDemo extends ControlPointsDemo {
 
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
-    @FieldInteger
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
-    public Scalar resolution = RealScalar.of(50);
+    public Integer resolution = 50;
     @FieldSlider
     @FieldClip(min = "0", max = "0.2")
     public Scalar radius = RealScalar.of(0.1);
@@ -107,7 +105,7 @@ public class D2AveragingDemo extends ControlPointsDemo {
   private final ArrayPlotImage computeImage(Tensor tensor) {
     Tensor sequence = tensor.get(0).map(N.DOUBLE);
     Tensor values = tensor.get(1).map(N.DOUBLE);
-    int resolution = param.resolution.number().intValue();
+    int resolution = param.resolution;
     if (2 < values.length())
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();

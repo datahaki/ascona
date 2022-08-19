@@ -16,7 +16,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.sophus.crv.d2.PolyclipResult;
 import ch.alpine.sophus.crv.d2.PolygonCentroid;
 import ch.alpine.sophus.crv.d2.SutherlandHodgmanAlgorithm;
@@ -43,9 +42,8 @@ public class SutherlandHodgmanAlgorithmDemo extends ControlPointsDemo {
     }
 
     public Boolean move = false;
-    @FieldInteger
     @FieldClip(min = "1", max = "10")
-    public Scalar n = RealScalar.of(4);
+    public Integer n = 4;
   }
 
   private final Param param;
@@ -71,7 +69,7 @@ public class SutherlandHodgmanAlgorithmDemo extends ControlPointsDemo {
       Se2Bijection se2Bijection = new Se2Bijection(Times.of(mouse, Tensors.vector(1, 1, 0.3)));
       Tensor sequence = Tensor.of(getGeodesicControlPoints().stream().map(se2Bijection.forward()));
       // ---
-      Tensor CIRCLE = CirclePoints.of(param.n.number().intValue()).multiply(RealScalar.of(2));
+      Tensor CIRCLE = CirclePoints.of(param.n).multiply(RealScalar.of(2));
       SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);
       // ---
       new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f).setCurve(sequence, true).render(geometricLayer, graphics);

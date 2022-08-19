@@ -14,13 +14,11 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
@@ -33,9 +31,8 @@ public final class GrassmannDemo extends ControlPointsDemo {
       manifoldDisplays = ManifoldDisplays.S2;
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "4", "6", "8", "10" })
-    public Scalar size = RealScalar.of(6);
+    public Integer size = 6;
     @FieldFuse
     public transient Boolean shuffle;
   }
@@ -63,7 +60,7 @@ public final class GrassmannDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    int n = param0.size.number().intValue();
+    int n = param0.size;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
         .map(manifoldDisplay::point2xya));

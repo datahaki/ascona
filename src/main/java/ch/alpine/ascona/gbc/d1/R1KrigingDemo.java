@@ -11,7 +11,6 @@ import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
@@ -43,9 +42,8 @@ public class R1KrigingDemo extends A1AveragingDemo {
     public LogWeightings logWeightings = LogWeightings.WEIGHTING;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;
-    @FieldInteger
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
-    public Scalar resolution = RealScalar.of(40);
+    public Integer resolution = 40;
     public ColorDataGradients cdg = ColorDataGradients.PARULA;
   }
 

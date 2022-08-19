@@ -20,7 +20,6 @@ import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.crv.clt.ClothoidDistance;
@@ -58,9 +57,8 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
     public final HermiteSubdivisionParam hsp = HermiteSubdivisionParam.GLOBAL;
     @FieldSlider
-    @FieldInteger
     @FieldClip(min = "0", max = "7")
-    public Scalar refine = RealScalar.of(6);
+    public Integer refine = 6;
     public Boolean diff = true;
   }
 
@@ -121,7 +119,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
-      int levels = param.refine.number().intValue();
+      int levels = param.refine;
       Tensor iterate = Do.of(control, tensorIteration::iterate, levels);
       Tensor curve = Tensor.of(iterate.get(Tensor.ALL, 0).stream().map(Extract2D.FUNCTION));
       Curvature2DRender.of(curve, false).render(geometricLayer, graphics);

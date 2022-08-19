@@ -16,7 +16,6 @@ import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.ascona.util.sym.SymSequence;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.crv.LagrangeInterpolation;
@@ -41,9 +40,8 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
       super(ManifoldDisplays.ALL);
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" })
-    public Scalar refine = RealScalar.of(7);
+    public Integer refine = 7;
     public Scalar ratio = RationalScalar.HALF;
   }
 
@@ -83,7 +81,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     // ---
     RenderQuality.setQuality(graphics);
     // ---
-    int levels = param.refine.number().intValue();
+    int levels = param.refine;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Interpolation interpolation = LagrangeInterpolation.of(manifoldDisplay.geodesicSpace(), getGeodesicControlPoints());
     Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).map(interpolation::at);

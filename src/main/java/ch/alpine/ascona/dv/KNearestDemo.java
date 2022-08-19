@@ -18,7 +18,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.Manifold;
@@ -26,7 +25,6 @@ import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.lie.LieGroupOps;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.math.api.TensorMapping;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -47,18 +45,16 @@ public class KNearestDemo extends ControlPointsDemo {
 
     @FieldFuse
     public transient Boolean shuffle;
-    @FieldInteger
     @FieldClip(min = "4", max = "10")
-    public Scalar length = RealScalar.of(8);
+    public Integer length = 8;
   }
 
   @ReflectionMarker
   public static class Param1 {
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public Tensor tensor = Tensors.vector(.3, 0, .6);
-    @FieldInteger
     @FieldClip(min = "2", max = "5")
-    public Scalar k = RealScalar.of(3);
+    public Integer k = 3;
   }
 
   private final Param0 param0;
@@ -79,7 +75,7 @@ public class KNearestDemo extends ControlPointsDemo {
 
   private void shuffleSnap() {
     Distribution distributionA = UniformDistribution.of(Clips.absolute(Pi.VALUE));
-    Tensor sequence = RandomVariate.of(distributionA, param0.length.number().intValue(), 3);
+    Tensor sequence = RandomVariate.of(distributionA, param0.length, 3);
     sequence.set(Scalar::zero, 0, Tensor.ALL);
     setControlPointsSe2(sequence);
   }
@@ -124,7 +120,7 @@ public class KNearestDemo extends ControlPointsDemo {
     // ---
     int[] integers = Ordering.INCREASING.of(weights);
     Tensor shape = manifoldDisplay.shape();
-    int k = param1.k.number().intValue();
+    int k = param1.k;
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor point = sequence.get(integers[index]);
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));

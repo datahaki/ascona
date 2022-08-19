@@ -14,14 +14,12 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.crv.Transition;
 import ch.alpine.sophus.crv.TransitionSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
 
@@ -32,9 +30,8 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
       super(true, ManifoldDisplays.d2Rasters());
     }
 
-    @FieldInteger
     @FieldClip(min = "1", max = "20")
-    public Scalar n = RealScalar.of(5);
+    public Integer n = 5;
     @FieldFuse
     public transient Boolean shuffle = true;
   }
@@ -56,7 +53,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
 
   private void shuffle() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    int n = param.n.number().intValue();
+    int n = param.n;
     ground = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
     Tensor tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
     Tensor xyas = Tensor.of(tensor.stream().map(manifoldDisplay::point2xya));

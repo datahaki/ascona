@@ -18,7 +18,6 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.crv.TransitionSpace;
@@ -26,7 +25,6 @@ import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.opt.ts.Tsp2OptHeuristic;
@@ -39,16 +37,14 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       manifoldDisplays = ManifoldDisplays.R2;
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "25", "50", "100", "150", "200" })
-    public Scalar numel = RealScalar.of(50);
+    public Integer numel = 50;
     public transient Boolean shuffle = false;
   }
 
   @ReflectionMarker
   public static class Param1 {
-    @FieldInteger
-    public Scalar attempts = RealScalar.of(20);
+    public Integer attempts = 20;
     public Boolean active = false;
   }
 
@@ -75,7 +71,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     if (param1.active) {
-      for (int i = 0; i < param1.attempts.number().intValue(); ++i)
+      for (int i = 0; i < param1.attempts; ++i)
         tsp2OptHeuristic.next();
       points.append(Tensors.of(RealScalar.of(points.length()), tsp2OptHeuristic.cost()));
     }
@@ -107,7 +103,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   private void shuffle() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
-    Tensor sample = RandomSample.of(randomSampleInterface, random, param0.numel.number().intValue());
+    Tensor sample = RandomSample.of(randomSampleInterface, random, param0.numel);
     setControlPointsSe2(Tensor.of(sample.stream().map(manifoldDisplay::point2xya)));
     // ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();

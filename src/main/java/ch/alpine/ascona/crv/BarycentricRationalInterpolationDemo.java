@@ -19,8 +19,6 @@ import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
-import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -29,8 +27,6 @@ import ch.alpine.sophus.itp.BarycentricRationalInterpolation;
 import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.sophus.math.win.KnotSpacing;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Last;
@@ -50,12 +46,10 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       manifoldDisplays = ManifoldDisplays.R2;
     }
 
-    @FieldSlider
     @FieldClip(min = "0", max = "1")
-    public Scalar beta = RealScalar.ZERO;
-    @FieldInteger
+    public Integer beta = 0;
     @FieldClip(min = "0", max = "7")
-    public Scalar degree = RealScalar.ONE;
+    public Integer degree = 1;
     public Boolean lagrange = false;
     public Boolean basis = true;
   }
@@ -97,7 +91,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       } catch (Exception exception) {
         System.err.println("no can do");
       }
-      Tensor basis1 = domain.map(BarycentricRationalInterpolation.of(knots, param.degree.number().intValue()));
+      Tensor basis1 = domain.map(BarycentricRationalInterpolation.of(knots, param.degree));
       try {
         Tensor curve = Tensor.of(basis1.stream().map(weights -> biinvariantMean.mean(control, weights)));
         new PathRender(Color.BLUE) //

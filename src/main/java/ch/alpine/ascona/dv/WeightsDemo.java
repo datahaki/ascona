@@ -16,7 +16,6 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariant;
@@ -24,8 +23,6 @@ import ch.alpine.sophus.dv.Biinvariants;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.ArgMin;
@@ -41,9 +38,8 @@ public class WeightsDemo extends ControlPointsDemo {
       drawControlPoints = false;
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "3", "5", "10" })
-    public Scalar size = RealScalar.of(5);
+    public Integer size = 5;
     @FieldFuse
     public transient Boolean shuffle;
   }
@@ -76,7 +72,7 @@ public class WeightsDemo extends ControlPointsDemo {
 
   private void shuffle() {
     param0.shuffle = false;
-    int n = param0.size.number().intValue();
+    int n = param0.size;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
         .map(manifoldDisplay::point2xya));

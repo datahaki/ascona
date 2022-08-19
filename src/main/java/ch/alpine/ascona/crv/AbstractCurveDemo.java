@@ -7,13 +7,11 @@ import java.util.List;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RationalScalar;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -25,12 +23,10 @@ public abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
       super(list);
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
-    public Scalar degree = RealScalar.of(3);
-    @FieldInteger
+    public Integer degree = 3;
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
-    public Scalar refine = RealScalar.of(4);
+    public Integer refine = 4;
     @FieldSlider
     @FieldPreferredWidth(300)
     @FieldClip(min = "0", max = "1")
@@ -49,7 +45,7 @@ public abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
     Tensor control = getGeodesicControlPoints();
     if (Tensors.isEmpty(control))
       return Tensors.empty();
-    return protected_render(geometricLayer, graphics, abstractCurveParam.degree.number().intValue(), abstractCurveParam.refine.number().intValue(), control);
+    return protected_render(geometricLayer, graphics, abstractCurveParam.degree, abstractCurveParam.refine, control);
   }
 
   protected abstract Tensor protected_render( //

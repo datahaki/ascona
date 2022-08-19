@@ -16,7 +16,6 @@ import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
@@ -55,9 +54,8 @@ public class MaAveragingDemo extends ControlPointsDemo {
 
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;
-    @FieldInteger
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
-    public Scalar resolution = RealScalar.of(40);
+    public Integer resolution = 40;
     public ColorDataGradients cdg = ColorDataGradients.PARULA;
   }
 
@@ -88,7 +86,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
 
   private final ArrayPlotImage computeImage(Tensor tensor) {
     Tensor sequence = tensor.map(N.DOUBLE);
-    int resolution = param.resolution.number().intValue();
+    int resolution = param.resolution;
     int n = sequence.length();
     if (2 < n)
       try {

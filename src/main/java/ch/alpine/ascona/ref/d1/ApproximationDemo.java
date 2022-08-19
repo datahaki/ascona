@@ -19,7 +19,6 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -62,14 +61,12 @@ public class ApproximationDemo extends AbstractDemo {
       super(gokartPoseData, ManifoldDisplays.SE2_R2);
     }
 
-    @FieldInteger
     @FieldSelectionArray({ "0", "2", "4", "6", "8", "10", "12", "14" })
-    public Scalar width = RealScalar.of(12);
+    public Integer width = 12;
     @FieldSelectionCallback("schemes")
     public CurveSubdivisionSchemes scheme = CurveSubdivisionSchemes.BSPLINE1;
-    @FieldInteger
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6" })
-    public Scalar level = RealScalar.of(5);
+    public Integer level = 5;
 
     public List<CurveSubdivisionSchemes> schemes() {
       return List.of(SCHEMES);
@@ -103,9 +100,9 @@ public class ApproximationDemo extends AbstractDemo {
     Tensor rawdata = param.getPoses();
     ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(manifoldDisplay.geodesicSpace(), GaussianWindow.FUNCTION);
-    TensorUnaryOperator centerFilter = new CenterFilter(tensorUnaryOperator, param.width.number().intValue());
+    TensorUnaryOperator centerFilter = new CenterFilter(tensorUnaryOperator, param.width);
     Tensor tracked = centerFilter.apply(rawdata);
-    int level = param.level.number().intValue();
+    int level = param.level;
     int steps = 1 << level;
     System.out.println(DoubleScalar.of(steps).divide(param.gpd().getSampleRate()).map(Round._3));
     Tensor control = Tensor.of(IntStream.range(0, tracked.length() / steps) //
@@ -130,7 +127,7 @@ public class ApproximationDemo extends AbstractDemo {
     }
     {
       Tensor control = container.control;
-      int level = param.level.number().intValue();
+      int level = param.level;
       final Tensor shape = manifoldDisplay.shape().multiply(MARKER_SCALE.multiply(RealScalar.of(1 + level)));
       for (Tensor point : control) {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));

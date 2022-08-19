@@ -23,7 +23,6 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.sophus.crv.clt.ClothoidBuilder;
 import ch.alpine.sophus.crv.clt.ClothoidContext;
 import ch.alpine.sophus.crv.clt.ClothoidSolutions;
@@ -55,8 +54,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
     }
 
     public Scalar lambda = RealScalar.ZERO;
-    @FieldInteger
-    public Scalar solution = RealScalar.ZERO;
+    public Integer solution = 0;
   }
 
   private final JSlider jSlider = new JSlider(0, LAMBDAS.length() - 1, LAMBDAS.length() / 2);

@@ -11,7 +11,7 @@ import ch.alpine.ascona.util.ren.SurfaceMeshRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.hs.r3.qh3.ConvexHull3D;
+import ch.alpine.sophus.hs.r3.ConvexHull3D;
 import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.sophus.srf.SurfaceMesh;
 import ch.alpine.tensor.Tensor;

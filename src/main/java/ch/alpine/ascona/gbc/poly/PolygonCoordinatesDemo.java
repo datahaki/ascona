@@ -16,7 +16,6 @@ import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.dv.Biinvariants;
@@ -24,8 +23,6 @@ import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.DoubleScalar;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
@@ -51,9 +48,8 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
   public static class Param1 {
     public PolygonCoordinates logWeightings = PolygonCoordinates.MEAN_VALUE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
-    @FieldInteger
     @FieldSelectionArray({ "20", "30", "40" })
-    public Scalar resolution = RealScalar.of(20);
+    public Integer resolution = 20;
     public ColorDataGradients cdg = ColorDataGradients.PARULA;
   }
 
@@ -82,7 +78,7 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     Tensor sequence = getGeodesicControlPoints();
     Sedarim sedarim = param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
     arrayPlotImage = manifoldDisplay.dimensions() < sequence.length() //
-        ? arrayPlotImage(sequence, param1.resolution.number().intValue(), sedarim::sunder)
+        ? arrayPlotImage(sequence, param1.resolution, sedarim::sunder)
         : null;
   }
 

@@ -14,7 +14,6 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.flt.CenterFilter;
@@ -27,7 +26,6 @@ import ch.alpine.sophus.itp.UniformResample;
 import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.UnitVector;
@@ -58,16 +56,15 @@ public class S2DeltaDemo extends AbstractDemo {
     @FieldSlider
     @FieldClip(min = "0", max = "0.1")
     public Scalar noise = RealScalar.of(0.01);
-    @FieldInteger
     @FieldClip(min = "1", max = "11")
-    public Scalar width = RealScalar.of(5);
+    public Integer width = 5;
     public WindowFunctions f_window = WindowFunctions.FLAT_TOP;
     public WindowFunctions s_window = WindowFunctions.HANN;
     public Boolean differences = false;
     public Boolean transport = false;
 
     public int getWidth() {
-      return 2 * Scalars.intValueExact(width) + 1;
+      return 2 * width + 1;
     }
   }
 

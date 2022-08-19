@@ -14,15 +14,12 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldInteger;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.crv.BezierFunction;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -37,9 +34,8 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     }
 
     @FieldSlider
-    @FieldInteger
     @FieldClip(min = "0", max = "10")
-    public Scalar refine = RealScalar.of(6);
+    public Integer refine = 6;
     public Boolean extrapolate = false;
   }
 
@@ -73,7 +69,7 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     int n = sequence.length();
     if (0 == n)
       return Tensors.empty();
-    int levels = param.refine.number().intValue();
+    int levels = param.refine;
     Tensor domain = n <= 1 //
         ? Tensors.vector(0)
         : Subdivide.of(0.0, param.extrapolate //
