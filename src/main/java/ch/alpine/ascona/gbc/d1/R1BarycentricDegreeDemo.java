@@ -27,10 +27,10 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
-import ch.alpine.tensor.itp.InterpolatingPolynomial;
 import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.N;
+import ch.alpine.tensor.sca.ply.InterpolatingPolynomial;
 
 public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //

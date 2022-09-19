@@ -34,8 +34,8 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.chq.FiniteTensorQ;
-import ch.alpine.tensor.num.Polynomial;
 import ch.alpine.tensor.sca.N;
+import ch.alpine.tensor.sca.ply.Polynomial;
 
 public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
   private static final int WIDTH = 640;
