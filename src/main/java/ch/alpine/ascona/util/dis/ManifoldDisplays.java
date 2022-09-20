@@ -91,6 +91,10 @@ public enum ManifoldDisplays {
   public static final List<ManifoldDisplays> R2_S2 = List.of( //
       R2, //
       S2);
+  public static final List<ManifoldDisplays> R2_S2_SE2C = List.of( //
+      R2, //
+      S2, //
+      Se2C);
   // ---
   public static final List<ManifoldDisplays> SE2C_R2 = List.of( //
       Se2C, //
