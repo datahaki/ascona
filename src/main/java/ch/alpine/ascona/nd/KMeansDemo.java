@@ -3,12 +3,12 @@ package ch.alpine.ascona.nd;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Point2D;
 import java.util.Random;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
+import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
@@ -41,7 +41,7 @@ public class KMeansDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.R2_S2_SE2C);
+      super(true, ManifoldDisplays.R2_H2_S2_SE2C);
     }
 
     @FieldSelectionArray({ "100", "200", "500", "1000" })
@@ -63,10 +63,6 @@ public class KMeansDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     fieldsEditor(0).addUniversalListener(() -> {
-      // if (param.shuffle) {
-      // param.shuffle = false;
-      // pointsAll = recomp();
-      // }
       pointsAll = recomp();
     });
     controlPointsRender.setMidpointIndicated(false);
@@ -79,7 +75,7 @@ public class KMeansDemo extends ControlPointsDemo {
     for (int index = 0; index < 1000; ++index) {
       Tensor point = RandomSample.of(randomSampleInterface);
       Scalar scalar = SimplexContinuousNoise.FUNCTION.apply(point);
-      Scalar p = RealScalar.of(RANDOM.nextDouble() * 2 - 1);
+      Scalar p = RealScalar.of(RANDOM.nextDouble());
       if (Scalars.lessThan(p, scalar)) {
         points.append(point);
       }
@@ -104,36 +100,34 @@ public class KMeansDemo extends ControlPointsDemo {
       for (int i = 0; i < param.depth; ++i)
         kMeans.iterate();
       Tensor partition = kMeans.partition();
-      ColorDataIndexed colorSeedIndexed = ColorDataLists._097.strict();
       ColorDataIndexed colorDataIndexed = ColorDataLists._097.strict().deriveWithAlpha(128);
       ColorDataIndexed colorFillIndexed = ColorDataLists._097.strict().deriveWithAlpha(64);
       int index = 0;
+      Tensor seeds2 = kMeans.seeds();
       for (Tensor subset : partition) {
         if (homogeneousSpace instanceof MetricManifold) {
           Tensor tensor = ConvexHull2D.of(subset.stream().map(Extract2D.FUNCTION), Tolerance.CHOP);
           graphics.setColor(colorFillIndexed.getColor(index));
           graphics.fill(geometricLayer.toPath2D(tensor, true));
         }
-        graphics.setColor(colorDataIndexed.getColor(index));
-        for (Tensor point : subset) {
-          Point2D point2d = geometricLayer.toPoint2D(point);
-          graphics.fillRect((int) point2d.getX() - 2, (int) point2d.getY() - 2, 5, 5);
+        PointsRender pointsRender = new PointsRender( //
+            colorFillIndexed.getColor(index), //
+            colorDataIndexed.getColor(index));
+        pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.2)), subset) //
+            .render(geometricLayer, graphics);
+        // ---
+        if (seeds2.length() == partition.length()) {
+          pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.5)), Tensors.of(seeds2.get(index))) //
+              .render(geometricLayer, graphics);
         }
         ++index;
       }
-      index = 0;
-      for (Tensor point : kMeans.seeds()) {
-        graphics.setColor(colorSeedIndexed.getColor(index));
-        Point2D point2d = geometricLayer.toPoint2D(point);
-        graphics.fillRect((int) point2d.getX() - 4, (int) point2d.getY() - 4, 9, 9);
-        ++index;
-      }
     } else {
-      graphics.setColor(Color.BLACK);
-      for (Tensor point : sequence) {
-        Point2D point2d = geometricLayer.toPoint2D(point);
-        graphics.fillRect((int) point2d.getX() - 2, (int) point2d.getY() - 2, 5, 5);
-      }
+      PointsRender pointsRender = new PointsRender( //
+          Color.GRAY, //
+          Color.BLACK);
+      pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.2)), sequence) //
+          .render(geometricLayer, graphics);
     }
   }
 
