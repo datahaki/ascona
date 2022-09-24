@@ -3,6 +3,7 @@ package ch.alpine.ascona.nd;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Objects;
 import java.util.Random;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -39,66 +40,87 @@ public class KMeansDemo extends ControlPointsDemo {
   private static final Random RANDOM = new Random();
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
+  public static class Param1 extends AsconaParam {
+    public Param1() {
       super(true, ManifoldDisplays.R2_H2_S2_SE2C);
     }
 
     @FieldSelectionArray({ "100", "200", "500", "1000" })
     public Integer count = 200;
-    @FieldSelectionArray({ "3", "5", "10", "20" })
-    public Integer depth = 3;
     @FieldFuse
     public transient Boolean shuffle = false;
   }
 
-  private final Param param;
+  @ReflectionMarker
+  public static class Param2 {
+    @FieldSelectionArray({ "1", "2", "3", "4", "5", "10", "20", "30" })
+    public Integer depth = 5;
+    @FieldFuse
+    public transient Boolean recomp = false;
+  }
+
+  private final Param1 param1;
+  private final Param2 param2;
   private Tensor pointsAll;
+  private KMeans kMeans;
 
   public KMeansDemo() {
-    this(new Param());
+    this(new Param1(), new Param2());
   }
 
-  public KMeansDemo(Param param) {
-    super(param);
-    this.param = param;
+  public KMeansDemo(Param1 param1, Param2 param2) {
+    super(param1, param2);
+    this.param1 = param1;
+    this.param2 = param2;
     fieldsEditor(0).addUniversalListener(() -> {
-      pointsAll = recomp();
+      pointsAll = shuffle();
+      recomp(pointsAll);
+    });
+    fieldsEditor(1).addUniversalListener(() -> {
+      recomp(pointsAll);
     });
     controlPointsRender.setMidpointIndicated(false);
-    pointsAll = recomp();
+    pointsAll = shuffle();
   }
 
-  private Tensor recomp() {
+  private Tensor shuffle() {
     Tensor points = Tensors.empty();
     RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
-    for (int index = 0; index < 1000; ++index) {
+    for (int index = 0; index < 10000; ++index) {
       Tensor point = RandomSample.of(randomSampleInterface);
       Scalar scalar = SimplexContinuousNoise.FUNCTION.apply(point);
       Scalar p = RealScalar.of(RANDOM.nextDouble());
       if (Scalars.lessThan(p, scalar)) {
         points.append(point);
       }
-      if (points.length() == param.count)
+      if (points.length() == param1.count)
         return points;
     }
     return points;
   }
 
-  @Override
-  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    graphics.setColor(Color.GRAY);
-    Tensor sequence = Tensor.of(pointsAll.stream().limit(param.count));
+  private void recomp(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(homogeneousSpace);
     BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     Tensor seeds = getGeodesicControlPoints();
     if (0 < seeds.length()) {
-      KMeans kMeans = new KMeans(biinvariant.distances(sequence), biinvariantMean, sequence);
+      kMeans = new KMeans(biinvariant.distances(sequence), biinvariantMean, sequence);
       kMeans.setSeeds(seeds);
-      for (int i = 0; i < param.depth; ++i)
+      for (int i = 0; i < param2.depth; ++i)
         kMeans.iterate();
+    } else
+      kMeans = null;
+  }
+
+  @Override
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    graphics.setColor(Color.GRAY);
+    Tensor sequence = Tensor.of(pointsAll.stream().limit(param1.count));
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    if (Objects.nonNull(kMeans)) {
       Tensor partition = kMeans.partition();
       ColorDataIndexed colorDataIndexed = ColorDataLists._097.strict().deriveWithAlpha(128);
       ColorDataIndexed colorFillIndexed = ColorDataLists._097.strict().deriveWithAlpha(64);
