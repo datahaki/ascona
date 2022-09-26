@@ -5,6 +5,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.itp.BinaryAverage;
 
 /** SymNode extends from here */
+// TODO ASCONA make interface
 public abstract class SymLink {
   public abstract boolean isNode();
 

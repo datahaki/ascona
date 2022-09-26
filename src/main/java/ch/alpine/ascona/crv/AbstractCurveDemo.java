@@ -35,7 +35,7 @@ public abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
 
   protected final AbstractCurveParam abstractCurveParam;
 
-  public AbstractCurveDemo(AbstractCurveParam abstractCurveParam) {
+  protected AbstractCurveDemo(AbstractCurveParam abstractCurveParam) {
     super(abstractCurveParam);
     this.abstractCurveParam = abstractCurveParam;
   }

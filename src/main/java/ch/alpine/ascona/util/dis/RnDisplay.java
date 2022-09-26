@@ -30,7 +30,7 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   // ---
   private final int dimensions;
 
-  /* package */ RnDisplay(int dimensions) {
+  protected RnDisplay(int dimensions) {
     this.dimensions = dimensions;
   }
 

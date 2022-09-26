@@ -38,7 +38,7 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
 
   private final AbstractCurvatureParam abstractCurvatureParam;
 
-  public AbstractCurvatureDemo(AbstractCurvatureParam abstractCurvatureParam) {
+  protected AbstractCurvatureDemo(AbstractCurvatureParam abstractCurvatureParam) {
     super(abstractCurvatureParam);
     this.abstractCurvatureParam = abstractCurvatureParam;
   }

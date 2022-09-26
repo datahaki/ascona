@@ -43,11 +43,11 @@ import ch.alpine.tensor.img.ColorDataLists;
 
   private final Param param;
 
-  public A1BarycentricCoordinateDemo() {
+  protected A1BarycentricCoordinateDemo() {
     this(new Param());
   }
 
-  public A1BarycentricCoordinateDemo(Param param) {
+  protected A1BarycentricCoordinateDemo(Param param) {
     super(param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);

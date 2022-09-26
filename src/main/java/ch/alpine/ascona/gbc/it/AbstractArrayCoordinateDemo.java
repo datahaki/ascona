@@ -18,7 +18,7 @@ import ch.alpine.tensor.Tensor;
 /* package */ abstract class AbstractArrayCoordinateDemo extends AbstractExportWeightingDemo {
   private ArrayPlotImage arrayPlotImage;
 
-  public AbstractArrayCoordinateDemo(List<LogWeighting> array) {
+  protected AbstractArrayCoordinateDemo(List<LogWeighting> array) {
     super(true, ManifoldDisplays.d2Rasters(), array);
     // ---
     addMouseRecomputation();

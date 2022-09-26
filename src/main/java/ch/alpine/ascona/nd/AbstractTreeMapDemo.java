@@ -52,11 +52,11 @@ import ch.alpine.tensor.red.Max;
   private final Param param;
   private final Tensor pointsAll;
 
-  public AbstractTreeMapDemo() {
+  protected AbstractTreeMapDemo() {
     this(new Param());
   }
 
-  public AbstractTreeMapDemo(Param param) {
+  protected AbstractTreeMapDemo(Param param) {
     super(param);
     this.param = param;
     pointsAll = pointsAll(5000);

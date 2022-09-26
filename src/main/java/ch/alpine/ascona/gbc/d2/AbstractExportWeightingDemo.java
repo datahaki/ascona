@@ -33,7 +33,7 @@ public abstract class AbstractExportWeightingDemo extends AbstractScatteredSetWe
   private static final int REFINEMENT = 120; // presentation 60
   private final JButton jButtonExport = new JButton("export");
 
-  public AbstractExportWeightingDemo( //
+  protected AbstractExportWeightingDemo( //
       boolean addRemoveControlPoints, List<ManifoldDisplays> list, List<LogWeighting> array) {
     super(addRemoveControlPoints, list, array);
     {

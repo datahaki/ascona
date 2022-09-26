@@ -40,7 +40,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
 
   /** @param name "20190701T163225_01"
    * @param levels 2 */
-  public ProxyHermiteShow(String name, int levels) {
+  protected ProxyHermiteShow(String name, int levels) {
     this.levels = levels;
     folder = HomeDirectory.Documents(name);
     folder.mkdir();

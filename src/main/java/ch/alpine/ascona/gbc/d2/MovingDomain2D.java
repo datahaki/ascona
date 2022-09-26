@@ -23,7 +23,7 @@ import ch.alpine.tensor.Unprotect;
   /** @param origin reference control points that will be associated to given targets
    * @param sedarim
    * @param domain */
-  public MovingDomain2D(Tensor origin, Sedarim sedarim, Tensor domain) {
+  protected MovingDomain2D(Tensor origin, Sedarim sedarim, Tensor domain) {
     this.origin = origin;
     this.domain = domain;
     int rows = domain.length();

@@ -38,7 +38,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
   protected final JToggleButton jToggleArrows = new JToggleButton("arrows");
   protected final List<LogWeighting> array;
 
-  public AbstractScatteredSetWeightingDemo( //
+  protected AbstractScatteredSetWeightingDemo( //
       boolean addRemoveControlPoints, //
       List<ManifoldDisplays> list, //
       List<LogWeighting> array) {

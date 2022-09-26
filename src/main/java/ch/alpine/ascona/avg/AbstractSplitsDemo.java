@@ -22,7 +22,7 @@ import ch.alpine.tensor.Tensor;
 public abstract class AbstractSplitsDemo extends ControlPointsDemo {
   private static final Font FONT = new Font(Font.DIALOG, Font.PLAIN, 13);
 
-  public AbstractSplitsDemo(AsconaParam asconaParam) {
+  protected AbstractSplitsDemo(AsconaParam asconaParam) {
     super(asconaParam);
   }
 

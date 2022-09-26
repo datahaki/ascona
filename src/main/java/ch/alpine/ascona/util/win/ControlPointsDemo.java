@@ -24,7 +24,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   private final AsconaParam asconaParam;
 
   @SafeVarargs
-  public ControlPointsDemo(Object... objects) {
+  protected ControlPointsDemo(Object... objects) {
     super(objects);
     this.asconaParam = (AsconaParam) objects[0];
     controlPointsRender = ControlPointsRender.create( //
