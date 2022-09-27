@@ -119,7 +119,7 @@ public class D2AveragingDemo extends ControlPointsDemo {
         computeTime = timing.seconds();
         // ---
         Rescale rescale = new Rescale(matrix);
-        Clip clip = rescale.scalarSummaryStatistics().getClip();
+        Clip clip = rescale.minMax().getClip();
         ColorDataGradients colorDataGradients = param.cdg;
         Tensor domain = Subdivide.increasing(clip, 50);
         Tensor rgba = Tensors.empty();

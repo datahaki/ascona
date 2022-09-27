@@ -124,7 +124,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       // ---
       { // render basis functions
         Rescale rescale = new Rescale(ImageTiling.of(wgs));
-        ArrayPlotImage.of(rescale.result(), rescale.scalarSummaryStatistics().getClip(), colorDataGradient).draw(graphics);
+        ArrayPlotImage.of(rescale.result(), rescale.minMax().getClip(), colorDataGradient).draw(graphics);
       }
       // render grid lines functions
       if (jToggleArrows.isSelected()) {
