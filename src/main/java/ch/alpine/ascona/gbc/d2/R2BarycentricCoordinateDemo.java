@@ -136,7 +136,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
       });
       { // render basis functions
         Rescale rescale = new Rescale(ImageTiling.of(wgs));
-        ArrayPlotImage arrayPlotImage = ArrayPlotImage.of(rescale.result(), rescale.minMax().getClip(), colorDataGradient);
+        ArrayPlotImage arrayPlotImage = ArrayPlotImage.of(rescale.result(), rescale.clip(), colorDataGradient);
         arrayPlotImage.draw(graphics);
         {
           // BufferedImage bufferedImage = ImageFormat.of(ArrayPlot.of(_wgs, colorDataGradient));

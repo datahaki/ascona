@@ -38,7 +38,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
     Tensor wgs = D2Raster.of(d2Raster, res, arrayFunction);
     Rescale rescale = new Rescale(ImageTiling.of(wgs));
     ArrayPlotImage arrayPlotImage = //
-        ArrayPlotImage.of(rescale.result(), rescale.minMax().getClip(), colorDataGradient);
+        ArrayPlotImage.of(rescale.result(), rescale.clip(), colorDataGradient);
     return fuseImages(manifoldDisplay, arrayPlotImage.export(), sequence_length);
   }
 

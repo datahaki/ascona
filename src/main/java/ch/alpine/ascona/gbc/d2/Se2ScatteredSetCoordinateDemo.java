@@ -73,7 +73,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
       Tensor wgs = compute(operator(origin), refinement());
       RenderQuality.setQuality(graphics);
       Rescale rescale = new Rescale(ImageTiling.of(wgs));
-      ArrayPlotImage.of(rescale.result(), rescale.minMax().getClip(), colorDataGradient).draw(graphics);
+      ArrayPlotImage.of(rescale.result(), rescale.clip(), colorDataGradient).draw(graphics);
     }
   }
 

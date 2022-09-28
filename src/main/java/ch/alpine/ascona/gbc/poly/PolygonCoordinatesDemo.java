@@ -90,7 +90,7 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     Tensor wgs = D2Raster.of(d2Raster, refinement, arrayFunction);
     Rescale rescale = new Rescale(ImageTiling.of(wgs));
     // logWeighting().equals(LogWeightings.DISTANCES)
-    return ArrayPlotImage.of(rescale.result(), rescale.minMax().getClip(), param1.cdg);
+    return ArrayPlotImage.of(rescale.result(), rescale.clip(), param1.cdg);
   }
 
   @Override
