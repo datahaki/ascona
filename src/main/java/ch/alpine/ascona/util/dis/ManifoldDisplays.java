@@ -21,6 +21,7 @@ public enum ManifoldDisplays {
   Se2(Se2Display.INSTANCE),
   Spd2(Spd2Display.INSTANCE),
   R2(R2Display.INSTANCE),
+  C1(C1Display.INSTANCE),
   S1(S1Display.INSTANCE),
   S2(S2Display.INSTANCE),
   Rp2(Rp2Display.INSTANCE),
@@ -40,6 +41,7 @@ public enum ManifoldDisplays {
     return manifoldDisplay;
   }
 
+  @Deprecated // TODO make private
   public GeodesicSpace geodesicSpace() {
     return manifoldDisplay().geodesicSpace();
   }
