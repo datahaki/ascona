@@ -7,6 +7,7 @@ import java.util.Optional;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -16,8 +17,8 @@ public interface D2Raster {
   /** @param d2Raster
    * @param resolution n
    * @param arrayFunction maps points from the manifold to a color
-   * @return a tensor with dimensions [n, n] or [n, n, 4] which can be made
-   * input to {@link ImageFormat}
+   * @return a tensor with dimensions [n, n, ?] which can be made
+   * input to {@link Rescale}, and {@link ImageFormat}.
    * @see ArrayFunction */
   static <T extends Tensor> Tensor of(D2Raster d2Raster, int resolution, ArrayFunction<T> arrayFunction) {
     CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();

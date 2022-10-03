@@ -31,8 +31,8 @@ import ch.alpine.tensor.sca.Re;
 public enum C1Display implements ManifoldDisplay, D2Raster  {
   INSTANCE;
 
-  private static final Tensor SHAPE = CirclePoints.of(9).multiply(RealScalar.of(0.12));
-  private static final Clip CLIP = Clips.absolute(1);
+  private static final Tensor SHAPE = CirclePoints.of(9).multiply(RealScalar.of(0.04));
+  private static final Clip CLIP = Clips.absolute(2.0);
 
   @Override
   public int dimensions() {
@@ -85,7 +85,7 @@ public enum C1Display implements ManifoldDisplay, D2Raster  {
   @Override
   public RandomSampleInterface randomSampleInterface() {
     // Distribution distribution = NormalDistribution.standard();
-    Distribution distribution = UniformDistribution.of(-2, 2);
+    Distribution distribution = UniformDistribution.of(CLIP);
     return random -> ComplexScalar.of( //
         RandomVariate.of(distribution, random), //
         RandomVariate.of(distribution, random));
