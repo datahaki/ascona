@@ -1,6 +1,10 @@
 // code by jph
 package ch.alpine.ascona.util.dis;
 
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -15,16 +19,20 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Im;
 import ch.alpine.tensor.sca.Re;
 
-public enum C1Display implements ManifoldDisplay {
+public enum C1Display implements ManifoldDisplay, D2Raster  {
   INSTANCE;
 
   private static final Tensor SHAPE = CirclePoints.of(9).multiply(RealScalar.of(0.12));
+  private static final Clip CLIP = Clips.absolute(1);
 
   @Override
   public int dimensions() {
@@ -86,5 +94,16 @@ public enum C1Display implements ManifoldDisplay {
   @Override
   public RenderInterface background() {
     return AxesRender.INSTANCE; // EmptyRender.INSTANCE;
+  }
+
+  @Override // from D2Raster
+  public Optional<Tensor> d2lift(Tensor pxy) {
+    return Optional.of(ComplexScalar.of(pxy.Get(0), pxy.Get(1)));
+  }
+
+  @Override // from D2Raster
+  public CoordinateBoundingBox coordinateBoundingBox() {
+    return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(2));
+
   }
 }

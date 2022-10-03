@@ -3,12 +3,16 @@ package ch.alpine.ascona.misc;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
+import ch.alpine.ascona.util.arp.ArrayFunction;
+import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.C1Display;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
+import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -24,7 +28,15 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.io.TableBuilder;
+import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.sca.Arg;
+import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.ply.AberthEhrlich;
 import ch.alpine.tensor.sca.ply.Polynomial;
 
@@ -82,6 +94,14 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor seeds = getGeodesicControlPoints();
     final int length = seeds.length();
+    {
+      Clip clip = Clips.absolute(Pi.VALUE);
+      TensorUnaryOperator tuo = t -> ColorDataGradients.HUE.apply(clip.rescale(Arg.FUNCTION.apply((Scalar) t)));
+      ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, Array.zeros(4));
+      Tensor raster = D2Raster.of(C1Display.INSTANCE, 50, arrayFunction);
+      BufferedImage bufferedImage = ImageFormat.of(raster);
+      new ImageRender(bufferedImage, C1Display.INSTANCE.coordinateBoundingBox()).render(geometricLayer, graphics);
+    }
     // if (2 <= length) {
     // }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
