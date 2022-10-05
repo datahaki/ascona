@@ -61,7 +61,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     return asconaParam.manifoldDisplays.manifoldDisplay();
   }
 
-  public synchronized final void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
+  public final synchronized void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
     asconaParam.manifoldDisplays = manifoldDisplays;
     fieldsEditor(0).updateJComponents();
   }

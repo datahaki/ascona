@@ -44,7 +44,7 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
   }
 
   @Override
-  public synchronized final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor refined = protected_render(geometricLayer, graphics);
     if (abstractCurvatureParam.graph && this instanceof BufferedImageSupplier bufferedImageSupplier)

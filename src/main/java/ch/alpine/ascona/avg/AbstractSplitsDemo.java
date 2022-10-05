@@ -27,7 +27,7 @@ public abstract class AbstractSplitsDemo extends ControlPointsDemo {
   }
 
   @Override // from RenderInterface
-  public synchronized final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     // ---
