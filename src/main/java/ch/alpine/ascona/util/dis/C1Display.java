@@ -28,7 +28,7 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Im;
 import ch.alpine.tensor.sca.Re;
 
-public enum C1Display implements ManifoldDisplay, D2Raster  {
+public enum C1Display implements ManifoldDisplay, D2Raster {
   INSTANCE;
 
   private static final Tensor SHAPE = CirclePoints.of(9).multiply(RealScalar.of(0.04));
@@ -104,6 +104,5 @@ public enum C1Display implements ManifoldDisplay, D2Raster  {
   @Override // from D2Raster
   public CoordinateBoundingBox coordinateBoundingBox() {
     return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(2));
-
   }
 }

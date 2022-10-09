@@ -35,9 +35,11 @@ import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.io.TableBuilder;
+import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.sca.Arg;
 import ch.alpine.tensor.sca.ply.AberthEhrlich;
 import ch.alpine.tensor.sca.ply.Polynomial;
+import ch.alpine.tensor.sca.ply.Roots;
 
 public class AberthEhrlichDemo extends ControlPointsDemo {
   private static final PointsRender POINTS_RENDER_0 = //
@@ -125,6 +127,12 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
     leversRender.renderSequence(POINTS_RENDER_0);
     leversRender.renderIndexP("z");
     if (1 < length) {
+      {
+        Scalar bound = bounds(zeros.extract(0, length), seeds);
+        PathRender pathRender = new PathRender(Color.RED);
+        pathRender.setCurve(CirclePoints.of(70).multiply(bound), true) //
+            .render(geometricLayer, graphics);
+      }
       Tensor table = table(zeros.extract(0, length), seeds, param.depth);
       int dimension1 = Unprotect.dimension1(table);
       for (int index = 0; index < dimension1; ++index) {
@@ -133,6 +141,18 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
         pathRender.setCurve(points, false).render(geometricLayer, graphics);
       }
     }
+  }
+
+  private static Scalar bounds(Tensor zeros, Tensor seeds) {
+    int length = Integers.requireEquals(zeros.length(), seeds.length());
+    Polynomial polynomial = zeros.stream() //
+        .limit(length) //
+        .map(Scalar.class::cast) //
+        .map(zero -> Tensors.of(zero.negate(), zero.one())) //
+        .map(Polynomial::of) //
+        .reduce(Polynomial::times) //
+        .orElseThrow();
+    return Roots.bound(polynomial.coeffs());
   }
 
   private static Tensor table(Tensor zeros, Tensor seeds, int depth) {
