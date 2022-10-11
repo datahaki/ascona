@@ -78,26 +78,41 @@ public class TimeSeriesDemo extends ControlPointsDemo {
     }
     pathRender.render(geometricLayer, graphics);
     controlPointsRender.render(geometricLayer, graphics);
-    VisualSet visualSet = new VisualSet();
-    visualSet.add(timeSeries).setLabel("wiener");
-    visualSet.add(custom).setLabel("custom");
-    visualSet.add(TsEntrywise.plus(timeSeries, custom)).setLabel("sum");
+    int row = 0;
+    {
+      VisualSet visualSet = new VisualSet();
+      visualSet.add(timeSeries).setLabel("wiener");
+      visualSet.add(custom).setLabel("custom");
+      {
+        TimeSeriesAggregate tsa = TimeSeriesAggregate.of(Entrywise.max(), ResamplingMethods.HOLD_VALUE_FROM_LEFT);
+        TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
+        visualSet.add(result.path()).setLabel("max");
+      }
+      {
+        TimeSeriesAggregate tsa = TimeSeriesAggregate.of(Entrywise.min(), ResamplingMethods.HOLD_VALUE_FROM_LEFT);
+        TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
+        visualSet.add(result.path()).setLabel("min");
+      }
+      JFreeChart jFreeChart = ListPlot.of(visualSet, true);
+      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - 500, row++ * 300, 500, 300));
+    }
     TimeSeries product = TsEntrywise.times(timeSeries, custom);
-    visualSet.add(product).setLabel("times");
-    visualSet.add(TimeSeriesIntegrate.of(product)).setLabel("prd-integral");
     {
-      TimeSeriesAggregate tsa = TimeSeriesAggregate.of(Entrywise.max(), ResamplingMethods.HOLD_VALUE_FROM_LEFT);
-      TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
-      visualSet.add(result.path()).setLabel("max");
+      VisualSet visualSet = new VisualSet();
+      visualSet.add(TsEntrywise.plus(timeSeries, custom)).setLabel("sum");
+      visualSet.add(product).setLabel("times");
+      JFreeChart jFreeChart = ListPlot.of(visualSet, true);
+      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - 500, row++ * 300, 500, 300));
     }
     {
-      TimeSeriesAggregate tsa = TimeSeriesAggregate.of(Entrywise.min(), ResamplingMethods.HOLD_VALUE_FROM_LEFT);
-      TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
-      visualSet.add(result.path()).setLabel("min");
+      VisualSet visualSet = new VisualSet();
+      visualSet.add(TimeSeriesIntegrate.of(product)).setLabel("prd-integral");
+      JFreeChart jFreeChart = ListPlot.of(visualSet, true);
+      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - 500, row++ * 300, 500, 300));
     }
-    JFreeChart jFreeChart = ListPlot.of(visualSet, true);
-    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - 500, 0, 500, 300));
   }
 
   public static void main(String[] args) {
