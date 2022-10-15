@@ -11,10 +11,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.api.RectangleAlignment;
-import org.jfree.chart.api.RectangleInsets;
-
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
@@ -27,6 +23,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.VisualImage;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -165,10 +162,11 @@ public class D2AveragingDemo extends ControlPointsDemo {
       graphics.drawImage(createImage, dimension.width - createImage.getWidth(), 0, null);
       VisualImage visualImage = new VisualImage(arrayPlotImage.bufferedImage(), coordinateBoundingBox);
       JFreeChart jFreeChart = ArrayPlot.of(visualImage);
-      jFreeChart.setBackgroundImageAlignment(RectangleAlignment.CENTER_RIGHT);
-      jFreeChart.setBackgroundImage(createImage);
-      jFreeChart.setBackgroundImageAlpha(1);
-      jFreeChart.setPadding(new RectangleInsets(0, 0, 0, createImage.getWidth()));
+      // FIXME
+      // jFreeChart.setBackgroundImageAlignment(RectangleAlignment.CENTER_RIGHT);
+      // jFreeChart.setBackgroundImage(createImage);
+      // jFreeChart.setBackgroundImageAlpha(1);
+      // jFreeChart.setPadding(new RectangleInsets(0, 0, 0, createImage.getWidth()));
       jFreeChart.draw(graphics, new Rectangle(0, 50, 320, height));
     }
     RenderQuality.setQuality(graphics);

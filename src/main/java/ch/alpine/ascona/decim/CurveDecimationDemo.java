@@ -4,10 +4,8 @@ package ch.alpine.ascona.decim;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
-
-import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
@@ -19,6 +17,7 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -146,7 +145,7 @@ public class CurveDecimationDemo extends AbstractDemo {
       // visualSet.setPlotLabel("error");
       visualSet.add(Range.of(0, control.length()), result.errors());
       JFreeChart jFreeChart = ListPlot.of(visualSet);
-      jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+      jFreeChart.draw(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }
   }
 

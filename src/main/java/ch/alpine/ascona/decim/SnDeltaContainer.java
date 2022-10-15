@@ -5,8 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import org.jfree.chart.JFreeChart;
-
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.fig.VisualSet;

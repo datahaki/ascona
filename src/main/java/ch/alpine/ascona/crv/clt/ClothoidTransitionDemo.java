@@ -4,10 +4,8 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
-
-import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.util.api.RnLineTrim;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -18,6 +16,7 @@ import ch.alpine.ascona.util.ren.ControlPointsStatic;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -108,8 +107,8 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       }
     }
     if (param.plot) {
-      JFreeChart jFreeChart = ListPlot.of(visualSet, true);
-      jFreeChart.draw(graphics, new Rectangle2D.Double(0, 0, 400, 300));
+      JFreeChart jFreeChart = ListPlot.of(visualSet.setJoined(true));
+      jFreeChart.draw(graphics, new Rectangle(0, 0, 400, 300));
     }
     if (param.ctrl) {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);

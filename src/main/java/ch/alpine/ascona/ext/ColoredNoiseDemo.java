@@ -4,9 +4,8 @@ package ch.alpine.ascona.ext;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import org.jfree.chart.JFreeChart;
-
 import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.fig.VisualSet;
@@ -62,7 +61,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
       VisualSet visualSet = new VisualSet();
       visualSet.add(domain, values);
       visualSet.getAxisX().setClip(Clips.interval(0, values.length() - 1));
-      jFreeChart = ListPlot.of(visualSet, true);
+      jFreeChart = ListPlot.of(visualSet.setJoined(true));
     }
     {
       VisualSet visualSet = new VisualSet();

@@ -3,18 +3,17 @@ package ch.alpine.ascona.dv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Random;
-
-import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -96,8 +95,8 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     }
     VisualSet visualSet = new VisualSet();
     visualSet.add(points);
-    JFreeChart jFreeChart = ListPlot.of(visualSet, true);
-    jFreeChart.draw(graphics, new Rectangle2D.Double(0, 0, 300, 200));
+    JFreeChart jFreeChart = ListPlot.of(visualSet);
+    jFreeChart.draw(graphics, new Rectangle(0, 0, 300, 200));
   }
 
   private void shuffle() {

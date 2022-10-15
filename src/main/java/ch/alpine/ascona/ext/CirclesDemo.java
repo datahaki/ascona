@@ -2,13 +2,12 @@
 package ch.alpine.ascona.ext;
 
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
-import org.jfree.chart.JFreeChart;
+import java.awt.Rectangle;
 
 import ch.alpine.ascona.util.api.RnLineTrim;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -56,11 +55,12 @@ public class CirclesDemo extends AbstractDemo {
       if (param.plot)
         visualSet.add(Subdivide.increasing(Clips.unit(), curve.length() - 1), //
             RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
-                curve));
+                curve))
+            .setJoined(true);
     }
     if (param.plot) {
-      JFreeChart jFreeChart = ListPlot.of(visualSet, true);
-      jFreeChart.draw(graphics, new Rectangle2D.Double(0, 0, 400, 300));
+      JFreeChart jFreeChart = ListPlot.of(visualSet);
+      jFreeChart.draw(graphics, new Rectangle(0, 0, 400, 300));
     }
   }
 

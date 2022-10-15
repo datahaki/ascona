@@ -3,12 +3,11 @@ package ch.alpine.ascona.gbc.it;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Deque;
 import java.util.Optional;
-
-import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.lev.PlaceWrap;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -18,6 +17,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -105,7 +105,7 @@ public class ExponentialDemo extends ControlPointsDemo {
                   .map(tensor -> tensor.Get(fi))));
             }
             JFreeChart jFreeChart = ListPlot.of(visualSet);
-            jFreeChart.draw(graphics, new Rectangle2D.Double(0 * WIDTH, 0, WIDTH, 200));
+            jFreeChart.draw(graphics, new Rectangle(0 * WIDTH, 0, WIDTH, 200));
           }
           {
             VisualSet visualSet = new VisualSet();
@@ -118,7 +118,7 @@ public class ExponentialDemo extends ControlPointsDemo {
                   .map(tensor -> tensor.Get(fi))));
             }
             JFreeChart jFreeChart = ListPlot.of(visualSet);
-            jFreeChart.draw(graphics, new Rectangle2D.Double(1 * WIDTH, 0, WIDTH, 200));
+            jFreeChart.draw(graphics, new Rectangle(1 * WIDTH, 0, WIDTH, 200));
           }
         }
       }

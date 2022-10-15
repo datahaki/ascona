@@ -5,11 +5,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-
-import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
@@ -19,6 +17,7 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.fig.VisualSet;
@@ -144,7 +143,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
         int offset_y = 0;
         for (int index = 0; index < dimensions; ++index) {
           Tensor signal = speeds.get(Tensor.ALL, index).unmodifiable();
-          visualSet.add(domain, signal);
+          visualSet.add(domain, signal).setJoined(true);
           // ---
           if (spectrogram) {
             ScalarUnaryOperator window = gokartPoseSpec.kernel.get();
@@ -156,11 +155,11 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
             offset_y += hgt + MAGNIFY;
           }
         }
-        JFreeChart jFreeChart = ListPlot.of(visualSet, true);
+        JFreeChart jFreeChart = ListPlot.of(visualSet);
         int dwidth = 80 + speeds.length();
         int height = 400;
-        jFreeChart.draw(graphics, new Rectangle2D.Double( //
-            dimension.getWidth() - dwidth, dimension.getHeight() - height, //
+        jFreeChart.draw(graphics, new Rectangle( //
+            dimension.width - dwidth, dimension.height - height, //
             80 + speeds.length(), height));
       }
     }

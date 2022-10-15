@@ -3,12 +3,10 @@ package ch.alpine.ascona.ref.d1;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-
-import org.jfree.chart.JFreeChart;
 
 import ch.alpine.ascona.util.api.CurveVisualSet;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -18,6 +16,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualRow;
 import ch.alpine.bridge.fig.VisualSet;
@@ -114,10 +113,10 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     // ---
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     if (param.curv) {
-      JFreeChart jFreeChart1 = ListPlot.of(visualSet1, true);
-      jFreeChart1.draw(graphics, new Rectangle2D.Double(dimension.width * .5, 0, dimension.width * .5, dimension.height * .5));
+      JFreeChart jFreeChart1 = ListPlot.of(visualSet1);
+      jFreeChart1.draw(graphics, new Rectangle(dimension.width / 2, 0, dimension.width / 2, dimension.height / 2));
       // ---
-      JFreeChart jFreeChart2 = ListPlot.of(visualSet2, true);
+      JFreeChart jFreeChart2 = ListPlot.of(visualSet2);
       if (!visualSet2.visualRows().isEmpty()) {
         Tensor tensorMin = Tensor.of(visualSet2.visualRows().stream() //
             .map(VisualRow::points) //
@@ -136,7 +135,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
         // if (min != max)
         // jFreeChart2.getXYPlot().getRangeAxis().setRange(1.1 * min, 1.1 * max);
       }
-      jFreeChart2.draw(graphics, new Rectangle2D.Double(dimension.width * .5, dimension.height * .5, dimension.width * .5, dimension.height * .5));
+      jFreeChart2.draw(graphics, new Rectangle(dimension.width / 2, dimension.height / 2, dimension.width / 2, dimension.height / 2));
     }
     RenderQuality.setDefault(graphics);
   }

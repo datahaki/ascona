@@ -1,13 +1,12 @@
 // code by jph
 package ch.alpine.ascona.analysis;
 
-import java.awt.Color;
+import java.awt.Dimension;
 import java.io.IOException;
 import java.util.Objects;
 
-import org.jfree.chart.ChartUtils;
-import org.jfree.chart.JFreeChart;
-
+import ch.alpine.bridge.fig.ChartUtils;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualRow;
 import ch.alpine.bridge.fig.VisualSet;
@@ -65,8 +64,8 @@ public enum BchConvergenceShow {
         visualRow.setLabel(pl);
       }
     }
-    JFreeChart jFreeChart = ListPlot.of(visualSet, true);
-    jFreeChart.setBackgroundPaint(Color.WHITE);
-    ChartUtils.saveChartAsPNG(HomeDirectory.Pictures(BchConvergenceShow.class.getSimpleName() + ".png"), jFreeChart, 400, 300);
+    JFreeChart jFreeChart = ListPlot.of(visualSet);
+    ChartUtils.saveChartAsPNG(HomeDirectory.Pictures(BchConvergenceShow.class.getSimpleName() + ".png"), jFreeChart, //
+        new Dimension(400, 300));
   }
 }

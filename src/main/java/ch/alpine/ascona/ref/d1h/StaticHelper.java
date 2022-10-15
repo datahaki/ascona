@@ -1,8 +1,7 @@
 // code by jph
 package ch.alpine.ascona.ref.d1h;
 
-import org.jfree.chart.JFreeChart;
-
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.tensor.Scalar;
@@ -19,6 +18,6 @@ import ch.alpine.tensor.sca.pow.Power;
     int dims = Unprotect.dimension1Hint(deltas);
     for (int index = 0; index < dims; ++index)
       visualSet.add(domain, deltas.get(Tensor.ALL, index));
-    return ListPlot.of(visualSet, true);
+    return ListPlot.of(visualSet);
   }
 }

@@ -4,15 +4,14 @@ package ch.alpine.ascona.misc;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
-import org.jfree.chart.JFreeChart;
+import java.awt.Rectangle;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -93,25 +92,25 @@ public class TimeSeriesDemo extends ControlPointsDemo {
         TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
         visualSet.add(result.path()).setLabel("min");
       }
-      JFreeChart jFreeChart = ListPlot.of(visualSet, true);
+      JFreeChart jFreeChart = ListPlot.of(visualSet);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - 500, row++ * 300, 500, 300));
+      jFreeChart.draw(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
     }
     TimeSeries product = TsEntrywise.times(timeSeries, custom);
     {
       VisualSet visualSet = new VisualSet();
       visualSet.add(TsEntrywise.plus(timeSeries, custom)).setLabel("sum");
       visualSet.add(product).setLabel("times");
-      JFreeChart jFreeChart = ListPlot.of(visualSet, true);
+      JFreeChart jFreeChart = ListPlot.of(visualSet);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - 500, row++ * 300, 500, 300));
+      jFreeChart.draw(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
     }
     {
       VisualSet visualSet = new VisualSet();
       visualSet.add(TimeSeriesIntegrate.of(product)).setLabel("prd-integral");
-      JFreeChart jFreeChart = ListPlot.of(visualSet, true);
+      JFreeChart jFreeChart = ListPlot.of(visualSet);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - 500, row++ * 300, 500, 300));
+      jFreeChart.draw(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
     }
   }
 

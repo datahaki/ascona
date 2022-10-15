@@ -1,13 +1,12 @@
 // code by jph
 package ch.alpine.ascona.usr;
 
-import java.awt.Color;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 
-import org.jfree.chart.ChartUtils;
-import org.jfree.chart.JFreeChart;
-
+import ch.alpine.bridge.fig.ChartUtils;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualRow;
 import ch.alpine.bridge.fig.VisualSet;
@@ -37,10 +36,9 @@ public enum VariogramFunctionsShow {
         } catch (Exception exception) {
           System.out.println(variograms);
         }
-      JFreeChart jFreeChart = ListPlot.of(visualSet, true);
-      jFreeChart.setBackgroundPaint(Color.WHITE);
+      JFreeChart jFreeChart = ListPlot.of(visualSet);
       File file = new File(folder, variograms + ".png");
-      ChartUtils.saveChartAsPNG(file, jFreeChart, 500, 300);
+      ChartUtils.saveChartAsPNG(file, jFreeChart, new Dimension(500, 300));
     }
   }
 }

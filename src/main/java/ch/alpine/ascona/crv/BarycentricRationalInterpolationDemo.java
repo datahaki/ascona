@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import org.jfree.chart.JFreeChart;
-
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -15,6 +13,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -105,7 +104,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
           VisualSet visualSet = new VisualSet();
           for (Tensor values : Transpose.of(basis2))
             visualSet.add(domain, values);
-          JFreeChart jFreeChart = ListPlot.of(visualSet, true);
+          JFreeChart jFreeChart = ListPlot.of(visualSet.setJoined(true));
           Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
           jFreeChart.draw(graphics, new Rectangle(dimension.width - WIDTH, dimension.height - HEIGHT, WIDTH, HEIGHT));
         }
@@ -113,7 +112,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
           VisualSet visualSet = new VisualSet();
           for (Tensor values : Transpose.of(basis1))
             visualSet.add(domain, values);
-          JFreeChart jFreeChart = ListPlot.of(visualSet, true);
+          JFreeChart jFreeChart = ListPlot.of(visualSet.setJoined(true));
           Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
           jFreeChart.draw(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
         }

@@ -3,9 +3,7 @@ package ch.alpine.ascona.ref.d1h;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
-import org.jfree.chart.JFreeChart;
+import java.awt.Rectangle;
 
 import ch.alpine.ascona.util.api.HermiteSubdivisions;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -14,6 +12,7 @@ import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -90,7 +89,7 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
         if (0 < deltas.length()) {
           JFreeChart jFreeChart = StaticHelper.listPlot(deltas, delta, levels);
           Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-          jFreeChart.draw(graphics, new Rectangle2D.Double(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+          jFreeChart.draw(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
         }
       }
     }

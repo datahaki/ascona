@@ -3,7 +3,7 @@ package ch.alpine.ascona.crv;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.Rectangle;
 import java.util.List;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
@@ -55,7 +55,7 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
       CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
       curveVisualSet.addCurvature(visualSet);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      ListPlot.of(visualSet, true).draw(graphics, new Rectangle2D.Double(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+      ListPlot.of(visualSet.setJoined(true)).draw(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }
   }
 
