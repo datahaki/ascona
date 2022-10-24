@@ -80,8 +80,8 @@ public class TimeSeriesDemo extends ControlPointsDemo {
     int row = 0;
     {
       Show show = new Show();
-      show.add(new Plot(timeSeries)).setLabel("wiener");
-      show.add(new Plot(custom)).setLabel("custom");
+      show.add(Plot.of(timeSeries)).setLabel("wiener");
+      show.add(Plot.of(custom)).setLabel("custom");
       {
         TimeSeriesAggregate tsa = TimeSeriesAggregate.of(Entrywise.max(), ResamplingMethods.HOLD_VALUE_FROM_LEFT);
         TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
@@ -99,15 +99,15 @@ public class TimeSeriesDemo extends ControlPointsDemo {
     TimeSeries product = TsEntrywise.times(timeSeries, custom);
     {
       Show show = new Show();
-      show.add(new Plot(TsEntrywise.plus(timeSeries, custom))).setLabel("sum");
-      show.add(new Plot(product)).setLabel("times");
+      show.add(Plot.of(TsEntrywise.plus(timeSeries, custom))).setLabel("sum");
+      show.add(Plot.of(product)).setLabel("times");
       // Showable jFreeChart = ListPlot.of(show);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       show.render(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
     }
     {
       Show show = new Show();
-      show.add(new Plot(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
+      show.add(Plot.of(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
       // Showable jFreeChart = ListPlot.of(show);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       show.render(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
