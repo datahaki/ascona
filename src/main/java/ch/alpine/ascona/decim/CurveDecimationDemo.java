@@ -17,9 +17,8 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
-import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -138,14 +137,13 @@ public class CurveDecimationDemo extends AbstractDemo {
     }
     if (param.error) {
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      VisualSet visualSet = new VisualSet(ColorDataLists._097.cyclic().deriveWithAlpha(192));
-      visualSet.setPlotLabel("Reduction from " + control.length() + " to " + simplified.length() + " samples");
-      visualSet.getAxisX().setLabel("sample no.");
-      visualSet.getAxisY().setLabel("error");
+      Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
+      show.setPlotLabel("Reduction from " + control.length() + " to " + simplified.length() + " samples");
+      // visualSet.getAxisX().setLabel("sample no.");
+      // visualSet.getAxisY().setLabel("error");
       // visualSet.setPlotLabel("error");
-      visualSet.add(Range.of(0, control.length()), result.errors());
-      JFreeChart jFreeChart = ListPlot.of(visualSet);
-      jFreeChart.draw(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+      show.add(new ListPlot(Range.of(0, control.length()), result.errors()));
+      show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }
   }
 

@@ -16,9 +16,8 @@ import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
-import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.crv.clt.Clothoid;
 import ch.alpine.sophus.crv.clt.ClothoidTransition;
@@ -55,7 +54,7 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
     Tensor mouse = control.get(1);
     // ---
     ManifoldDisplay manifoldDisplay = Se2CoveringClothoidDisplay.INSTANCE;
-    VisualSet visualSet = new VisualSet(ColorDataLists._097.cyclic().deriveWithAlpha(192));
+    Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
     for (ClothoidTransitionSpace clothoidTransitionSpace : ClothoidTransitionSpace.values()) {
       int ordinal = clothoidTransitionSpace.ordinal();
       Color color = COLOR_DATA_INDEXED.getColor(ordinal);
@@ -71,19 +70,19 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
       // ---
       Tensor tensor = Tensor.of(points.stream().map(manifoldDisplay::point2xy));
       CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
-      curveVisualSet.addCurvature(visualSet);
+      curveVisualSet.addCurvature(show);
       {
         LagrangeQuadraticD curvature = clothoid.curvature();
         Tensor domain = curveVisualSet.getArcLength1();
-        visualSet.add(domain, ConstantArray.of(curvature.head(), domain.length()));
-        visualSet.add(domain, ConstantArray.of(curvature.tail(), domain.length()));
-        visualSet.add(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(curvature));
-        visualSet.add(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(clothoid::addAngle));
+        show.add(new ListPlot(domain, ConstantArray.of(curvature.head(), domain.length())));
+        show.add(new ListPlot(domain, ConstantArray.of(curvature.tail(), domain.length())));
+        show.add(new ListPlot(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(curvature)));
+        show.add(new ListPlot(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(clothoid::addAngle)));
       }
     }
-    JFreeChart jFreeChart = ListPlot.of(visualSet.setJoined(true));
+    // Showable jFreeChart = ListPlot.of(show.setJoined(true));
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    jFreeChart.draw(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+    show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
   }
 
   public static void main(String[] args) {

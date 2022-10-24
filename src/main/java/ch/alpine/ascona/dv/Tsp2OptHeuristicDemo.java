@@ -13,9 +13,8 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
-import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -93,10 +92,9 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       Path2D line = geometricLayer.toPath2D(tensor);
       graphics.draw(line);
     }
-    VisualSet visualSet = new VisualSet();
-    visualSet.add(points);
-    JFreeChart jFreeChart = ListPlot.of(visualSet);
-    jFreeChart.draw(graphics, new Rectangle(0, 0, 300, 200));
+    Show show = new Show();
+    show.add(new ListPlot(points));
+    show.render(graphics, new Rectangle(0, 0, 300, 200));
   }
 
   private void shuffle() {

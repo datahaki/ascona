@@ -12,7 +12,7 @@ import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.JFreeChart;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -87,9 +87,9 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
       if (param.derivatives) {
         Tensor deltas = iterate.get(Tensor.ALL, 1);
         if (0 < deltas.length()) {
-          JFreeChart jFreeChart = StaticHelper.listPlot(deltas, delta, levels);
+          Show jFreeChart = StaticHelper.listPlot(deltas, delta, levels);
           Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-          jFreeChart.draw(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+          jFreeChart.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
         }
       }
     }

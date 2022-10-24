@@ -135,13 +135,13 @@ public class S2DeltaDemo extends AbstractDemo {
     int mag = 4;
     {
       int ofs = 0;
-      snDeltaRaw.jFreeChart.draw(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
+      snDeltaRaw.show.render(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
       BufferedImage bufferedImage = snDeltaRaw.bufferedImage[0];
       graphics.drawImage(bufferedImage, ofs, HEIGHT, bufferedImage.getWidth() * mag, bufferedImage.getHeight() * mag, null);
     }
     {
       int ofs = WIDTH;
-      snDeltaFil.jFreeChart.draw(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
+      snDeltaFil.show.render(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
       BufferedImage bufferedImage = snDeltaFil.bufferedImage[0];
       graphics.drawImage(bufferedImage, ofs, HEIGHT, bufferedImage.getWidth() * mag, bufferedImage.getHeight() * mag, null);
     }

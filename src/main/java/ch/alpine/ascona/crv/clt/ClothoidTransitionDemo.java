@@ -16,9 +16,8 @@ import ch.alpine.ascona.util.ren.ControlPointsStatic;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
-import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -79,7 +78,7 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     ClothoidBuilder clothoidBuilder = (ClothoidBuilder) manifoldDisplay.geodesicSpace();
-    VisualSet visualSet = new VisualSet();
+    Show show = new Show();
     for (int index = 0; index < sequence.length() - 1; index += 2) {
       Tensor cr = sequence.get(index + 0);
       Tensor l1 = sequence.get(index + 1);
@@ -93,8 +92,8 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       if (param.smpl)
         ControlPointsStatic.gray(Se2Display.INSTANCE, linearized).render(geometricLayer, graphics);
       if (param.plot)
-        visualSet.add(samples, RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
-            Tensor.of(linearized.stream().map(Extract2D.FUNCTION))));
+        show.add(new ListPlot(samples, RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
+            Tensor.of(linearized.stream().map(Extract2D.FUNCTION)))));
       if (param.shade) {
         Tensor ofs = AngleVector.of(param.angle).multiply(param.width);
         Tensor center = Tensor.of(linearized.stream().map(Extract2D.FUNCTION));
@@ -107,8 +106,8 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       }
     }
     if (param.plot) {
-      JFreeChart jFreeChart = ListPlot.of(visualSet.setJoined(true));
-      jFreeChart.draw(graphics, new Rectangle(0, 0, 400, 300));
+      // Showable jFreeChart = ListPlot.of(show.setJoined(true));
+      show.render(graphics, new Rectangle(0, 0, 400, 300));
     }
     if (param.ctrl) {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);

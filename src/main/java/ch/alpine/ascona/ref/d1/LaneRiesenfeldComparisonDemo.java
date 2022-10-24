@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.api.CurveVisualSet;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -16,10 +15,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.JFreeChart;
-import ch.alpine.bridge.fig.ListPlot;
-import ch.alpine.bridge.fig.VisualRow;
-import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -27,12 +23,8 @@ import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Differences;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.opt.nd.CoordinateBounds;
-import ch.alpine.tensor.red.Mean;
 
 /** compare different levels of smoothing in the LaneRiesenfeldCurveSubdivision */
 public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
@@ -77,52 +69,53 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    VisualSet visualSet1 = new VisualSet();
-    visualSet1.setPlotLabel("Curvature");
-    visualSet1.getAxisX().setLabel("length");
-    visualSet1.getAxisY().setLabel("curvature");
+    Show show1 = new Show();
+    show1.setPlotLabel("Curvature");
+    // visualSet1.getAxisX().setLabel("length");
+    // visualSet1.getAxisY().setLabel("curvature");
     // ---
-    VisualSet visualSet2 = new VisualSet();
-    visualSet2.setPlotLabel("Curvature d/ds");
-    visualSet2.getAxisX().setLabel("length");
-    visualSet2.getAxisY().setLabel("curvature d/ds");
+    Show show2 = new Show();
+    show2.setPlotLabel("Curvature d/ds");
+    // visualSet2.getAxisX().setLabel("length");
+    // visualSet2.getAxisY().setLabel("curvature d/ds");
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i) {
       Tensor refined = curve(geometricLayer, graphics, i);
       if (param.curv && 1 < refined.length()) {
         Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-        VisualSet visualSet = new VisualSet(ColorDataLists._097.cyclic().deriveWithAlpha(192));
+        Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
         CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
-        VisualRow visualRow = curveVisualSet.addCurvature(visualSet);
-        Tensor curvature = visualRow.points();
+        // VisualRow visualRow =
+        curveVisualSet.addCurvature(show);
+        // Tensor curvature = visualRow.points();
         // ---
-        Tensor curvatureRy = Tensor.of(Differences.of(curvature).stream().map(t -> t.Get(1).divide(t.Get(0))));
-        Tensor curvatureRx = Tensor.of(IntStream.range(1, curvature.length()).mapToObj(j -> {
-          Tensor domain = curvature.get(Tensor.ALL, 0);
-          return Mean.of(domain.extract(j - 1, j + 1));
-        }));
+        // Tensor curvatureRy = Tensor.of(Differences.of(curvature).stream().map(t -> t.Get(1).divide(t.Get(0))));
+        // Tensor curvatureRx = Tensor.of(IntStream.range(1, curvature.length()).mapToObj(j -> {
+        // Tensor domain = curvature.get(Tensor.ALL, 0);
+        // return Mean.of(domain.extract(j - 1, j + 1));
+        // }));
         // ---
-        VisualRow visualRow1 = visualSet1.add(curvature);
-        visualRow1.setLabel(CURVE_SUBDIVISION_SCHEMES.get(i).name());
-        visualRow1.setColor(COLORS.getColor(i));
+        // show1.add(new ListPlot(curvature));
+        // visualRow1.setLabel(CURVE_SUBDIVISION_SCHEMES.get(i).name());
+        // visualRow1.setColor(COLORS.getColor(i));
         // ---
-        VisualRow visualRow2 = visualSet2.add(curvatureRx, curvatureRy);
-        visualRow2.setLabel(CURVE_SUBDIVISION_SCHEMES.get(i).name());
-        visualRow2.setColor(COLORS.getColor(i));
+        // Showable visualRow2 = show2.add(new ListPlot(curvatureRx, curvatureRy));
+        // visualRow2.setLabel(CURVE_SUBDIVISION_SCHEMES.get(i).name());
+        // visualRow2.setColor(COLORS.getColor(i));
       }
     }
     // ---
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     if (param.curv) {
-      JFreeChart jFreeChart1 = ListPlot.of(visualSet1);
-      jFreeChart1.draw(graphics, new Rectangle(dimension.width / 2, 0, dimension.width / 2, dimension.height / 2));
+      // Showable jFreeChart1 = ListPlot.of(show1);
+      show1.render(graphics, new Rectangle(dimension.width / 2, 0, dimension.width / 2, dimension.height / 2));
       // ---
-      JFreeChart jFreeChart2 = ListPlot.of(visualSet2);
-      if (!visualSet2.visualRows().isEmpty()) {
-        Tensor tensorMin = Tensor.of(visualSet2.visualRows().stream() //
-            .map(VisualRow::points) //
-            .map(points -> points.get(Tensor.ALL, 1)) //
-            .map(CoordinateBounds::of) //
-            .map(CoordinateBoundingBox::min));
+      // Showable jFreeChart2 = ListPlot.of(show2);
+      if (!show2.isEmpty()) {
+        // Tensor tensorMin = Tensor.of(show2.visualRows().stream() //
+        // .map(VisualRow::points) //
+        // .map(points -> points.get(Tensor.ALL, 1)) //
+        // .map(CoordinateBounds::of) //
+        // .map(CoordinateBoundingBox::min));
         // TODO ASCONA DEMO code below is broken
         // double min = Quantile.of(tensorMin).apply(RationalScalar.of(1, CURVE_SUBDIVISION_SCHEMES.size() - 1)).number().doubleValue();
         // Tensor tensorMax = Tensor.of(visualSet2.visualRows().stream() //
@@ -135,7 +128,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
         // if (min != max)
         // jFreeChart2.getXYPlot().getRangeAxis().setRange(1.1 * min, 1.1 * max);
       }
-      jFreeChart2.draw(graphics, new Rectangle(dimension.width / 2, dimension.height / 2, dimension.width / 2, dimension.height / 2));
+      show2.render(graphics, new Rectangle(dimension.width / 2, dimension.height / 2, dimension.width / 2, dimension.height / 2));
     }
     RenderQuality.setDefault(graphics);
   }

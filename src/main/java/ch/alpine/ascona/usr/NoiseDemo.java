@@ -1,11 +1,11 @@
+// code by jph
 package ch.alpine.ascona.usr;
 
 import java.awt.Dimension;
 import java.io.IOException;
 
 import ch.alpine.bridge.fig.ArrayPlot;
-import ch.alpine.bridge.fig.ChartUtils;
-import ch.alpine.bridge.fig.JFreeChart;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -21,14 +21,16 @@ public enum NoiseDemo {
     {
       Tensor matrix = Tensors.matrix((i, j) -> //
       SimplexContinuousNoise.FUNCTION.apply(Tensors.of(x.get(i), y.get(j))), x.length(), y.length());
-      JFreeChart jFreeChart = ArrayPlot.of(matrix);
-      ChartUtils.saveChartAsPNG(HomeDirectory.Pictures(NoiseDemo.class.getSimpleName() + "2.png"), jFreeChart, new Dimension(600, 600));
+      Show show = new Show();
+      show.add(new ArrayPlot(matrix));
+      show.export(HomeDirectory.Pictures(NoiseDemo.class.getSimpleName() + "2.png"), new Dimension(600, 600));
     }
     {
       Tensor matrix = Tensors.matrix((i, j) -> //
       SimplexContinuousNoise.FUNCTION.apply(Tensors.of(x.get(i), y.get(j), RealScalar.ZERO)), x.length(), y.length());
-      JFreeChart jFreeChart = ArrayPlot.of(matrix);
-      ChartUtils.saveChartAsPNG(HomeDirectory.Pictures(NoiseDemo.class.getSimpleName() + "3.png"), jFreeChart, new Dimension(600, 600));
+      Show show = new Show();
+      show.add(new ArrayPlot(matrix));
+      show.export(HomeDirectory.Pictures(NoiseDemo.class.getSimpleName() + "3.png"), new Dimension(600, 600));
     }
   }
 }

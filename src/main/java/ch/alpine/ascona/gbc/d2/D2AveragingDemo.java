@@ -23,8 +23,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
-import ch.alpine.bridge.fig.JFreeChart;
-import ch.alpine.bridge.fig.VisualImage;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -160,14 +159,16 @@ public class D2AveragingDemo extends ControlPointsDemo {
       int height = 300;
       BufferedImage createImage = arrayPlotImage.legend().createImage(new Dimension(10, height - 40));
       graphics.drawImage(createImage, dimension.width - createImage.getWidth(), 0, null);
-      VisualImage visualImage = new VisualImage(arrayPlotImage.bufferedImage(), coordinateBoundingBox);
-      JFreeChart jFreeChart = ArrayPlot.of(visualImage);
+      // VisualImage visualImage = new VisualImage();
+      Show show = new Show();
+      show.add(new ArrayPlot(arrayPlotImage.bufferedImage(), coordinateBoundingBox));
+      // Showable jFreeChart = ArrayPlot.of(visualImage);
       // FIXME
       // jFreeChart.setBackgroundImageAlignment(RectangleAlignment.CENTER_RIGHT);
       // jFreeChart.setBackgroundImage(createImage);
       // jFreeChart.setBackgroundImageAlpha(1);
       // jFreeChart.setPadding(new RectangleInsets(0, 0, 0, createImage.getWidth()));
-      jFreeChart.draw(graphics, new Rectangle(0, 50, 320, height));
+      show.render(graphics, new Rectangle(0, 50, 320, height));
     }
     RenderQuality.setQuality(graphics);
     LeversRender leversRender = //

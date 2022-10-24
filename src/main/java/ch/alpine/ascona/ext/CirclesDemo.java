@@ -7,9 +7,8 @@ import java.awt.Rectangle;
 import ch.alpine.ascona.util.api.RnLineTrim;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
-import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
-import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -46,21 +45,19 @@ public class CirclesDemo extends AbstractDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
-    VisualSet visualSet = new VisualSet();
+    Show show = new Show();
     for (Tensor _x : Subdivide.of(0.1, 2, 20)) {
       Scalar radius = (Scalar) _x;
       int n = Math.max(2, Ceiling.intValueExact(Sqrt.FUNCTION.apply(radius).multiply(param.quality)));
       Tensor curve = CirclePoints.of(n).multiply(radius);
       graphics.draw(geometricLayer.toPath2D(curve, true));
       if (param.plot)
-        visualSet.add(Subdivide.increasing(Clips.unit(), curve.length() - 1), //
+        show.add(new ListPlot(Subdivide.increasing(Clips.unit(), curve.length() - 1), //
             RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
-                curve))
-            .setJoined(true);
+                curve)));
     }
     if (param.plot) {
-      JFreeChart jFreeChart = ListPlot.of(visualSet);
-      jFreeChart.draw(graphics, new Rectangle(0, 0, 400, 300));
+      show.render(graphics, new Rectangle(0, 0, 400, 300));
     }
   }
 

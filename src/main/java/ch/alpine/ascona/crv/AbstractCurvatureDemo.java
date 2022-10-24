@@ -12,8 +12,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
-import ch.alpine.bridge.fig.ListPlot;
-import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.Tensor;
@@ -51,11 +50,11 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
       graphics.drawImage(bufferedImageSupplier.bufferedImage(), 0, 0, null);
     if (abstractCurvatureParam.curvt && 1 < refined.length()) {
       Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-      VisualSet visualSet = new VisualSet(COLOR_DATA_INDEXED);
+      Show show = new Show(COLOR_DATA_INDEXED);
       CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
-      curveVisualSet.addCurvature(visualSet);
+      curveVisualSet.addCurvature(show);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      ListPlot.of(visualSet.setJoined(true)).draw(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+      show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }
   }
 

@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Deque;
 import java.util.Optional;
 
@@ -17,9 +16,8 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
-import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
-import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.crv.d2.OriginEnclosureQ;
@@ -95,30 +93,30 @@ public class ExponentialDemo extends ControlPointsDemo {
           }
           geometricLayer.popMatrix();
           {
-            VisualSet visualSet = new VisualSet();
-            visualSet.setPlotLabel("Weights");
+            Show show = new Show();
+            show.setPlotLabel("Weights");
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;
-              visualSet.add(domain, Tensor.of(deque.stream() //
+              show.add(new ListPlot(domain, Tensor.of(deque.stream() //
                   .map(WeightsFactors::weights) //
-                  .map(tensor -> tensor.Get(fi))));
+                  .map(tensor -> tensor.Get(fi)))));
             }
-            JFreeChart jFreeChart = ListPlot.of(visualSet);
-            jFreeChart.draw(graphics, new Rectangle(0 * WIDTH, 0, WIDTH, 200));
+            // Showable jFreeChart = ListPlot.of(show);
+            show.render(graphics, new Rectangle(0 * WIDTH, 0, WIDTH, 200));
           }
           {
-            VisualSet visualSet = new VisualSet();
-            visualSet.setPlotLabel("Factors");
+            Show show = new Show();
+            show.setPlotLabel("Factors");
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;
-              visualSet.add(domain, Tensor.of(deque.stream() //
+              show.add(new ListPlot(domain, Tensor.of(deque.stream() //
                   .map(WeightsFactors::factors) //
-                  .map(tensor -> tensor.Get(fi))));
+                  .map(tensor -> tensor.Get(fi)))));
             }
-            JFreeChart jFreeChart = ListPlot.of(visualSet);
-            jFreeChart.draw(graphics, new Rectangle(1 * WIDTH, 0, WIDTH, 200));
+            // Showable jFreeChart = ListPlot.of(visualSet);
+            show.render(graphics, new Rectangle(1 * WIDTH, 0, WIDTH, 200));
           }
         }
       }

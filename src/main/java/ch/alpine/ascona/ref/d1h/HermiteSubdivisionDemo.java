@@ -16,7 +16,7 @@ import ch.alpine.ascona.util.ren.Curvature2DRender;
 import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
-import ch.alpine.bridge.fig.JFreeChart;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -139,9 +139,9 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
       if (param.diff) {
         Tensor deltas = iterate.get(Tensor.ALL, 1);
         if (0 < deltas.length()) {
-          JFreeChart jFreeChart = StaticHelper.listPlot(deltas, delta, levels);
+          Show show = StaticHelper.listPlot(deltas, delta, levels);
           Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-          jFreeChart.draw(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+          show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
         }
       }
     }

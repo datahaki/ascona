@@ -5,10 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import ch.alpine.ascona.util.win.AbstractDemo;
-import ch.alpine.bridge.fig.JFreeChart;
 import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.Spectrogram;
-import ch.alpine.bridge.fig.VisualSet;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
@@ -19,9 +19,10 @@ import ch.alpine.sophus.math.noise.ColoredNoise;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
+import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.sca.Clips;
 
 public class ColoredNoiseDemo extends AbstractDemo {
   @ReflectionMarker
@@ -37,8 +38,8 @@ public class ColoredNoiseDemo extends AbstractDemo {
   }
 
   private final Param param;
-  private JFreeChart jFreeChart;
-  private JFreeChart spectrogra;
+  private Showable jFreeChart;
+  private Showable spectrogra;
 
   public ColoredNoiseDemo() {
     this(new Param());
@@ -58,15 +59,14 @@ public class ColoredNoiseDemo extends AbstractDemo {
     Tensor values = RandomVariate.of(coloredNoise, param.length);
     Tensor domain = Range.of(0, values.length());
     {
-      VisualSet visualSet = new VisualSet();
-      visualSet.add(domain, values);
-      visualSet.getAxisX().setClip(Clips.interval(0, values.length() - 1));
-      jFreeChart = ListPlot.of(visualSet.setJoined(true));
+      //
+      jFreeChart = new ListPlot(domain, values);
+      // visualSet.getAxisX().setClip(Clips.interval(0, values.length() - 1));
+      // jFreeChart = ListPlot.of(visualSet.setJoined(true));
     }
     {
-      VisualSet visualSet = new VisualSet();
-      visualSet.add(domain, values);
-      spectrogra = Spectrogram.of(visualSet);
+      Tensor points = Transpose.of(Tensors.of(domain, values));
+      spectrogra = Spectrogram.of(points);
     }
   }
 
@@ -75,8 +75,16 @@ public class ColoredNoiseDemo extends AbstractDemo {
     float width = geometricLayer.model2pixelWidth(RealScalar.of(15));
     int piw = (int) width;
     int pih = (int) (width * 0.4);
-    jFreeChart.draw(graphics, new Rectangle(0, 0, piw, pih));
-    spectrogra.draw(graphics, new Rectangle(0, pih, piw, pih));
+    {
+      Show show = new Show();
+      show.add(jFreeChart);
+      show.render(graphics, new Rectangle(0, 0, piw, pih));
+    }
+    {
+      Show show = new Show();
+      show.add(spectrogra);
+      show.render(graphics, new Rectangle(0, pih, piw, pih));
+    }
   }
 
   public static void main(String[] args) {

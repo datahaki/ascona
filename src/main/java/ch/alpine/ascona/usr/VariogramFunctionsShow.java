@@ -5,11 +5,8 @@ import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 
-import ch.alpine.bridge.fig.ChartUtils;
-import ch.alpine.bridge.fig.JFreeChart;
-import ch.alpine.bridge.fig.ListPlot;
-import ch.alpine.bridge.fig.VisualRow;
-import ch.alpine.bridge.fig.VisualSet;
+import ch.alpine.bridge.fig.Plot;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.sophus.math.var.VariogramFunctions;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -17,6 +14,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.ext.HomeDirectory;
+import ch.alpine.tensor.sca.Clips;
 
 public enum VariogramFunctionsShow {
   ;
@@ -26,19 +24,16 @@ public enum VariogramFunctionsShow {
     Tensor domain = Subdivide.of(0.0, 2.0, 30);
     Scalar[] params = { RealScalar.ZERO, RealScalar.of(0.1), RationalScalar.HALF, RealScalar.ONE, RealScalar.TWO };
     for (VariogramFunctions variograms : VariogramFunctions.values()) {
-      VisualSet visualSet = new VisualSet();
-      visualSet.setPlotLabel(variograms.toString());
+      Show show = new Show();
+      show.setPlotLabel(variograms.toString());
       for (Scalar param : params)
         try {
-          Tensor values = domain.map(variograms.of(param));
-          VisualRow visualRow = visualSet.add(domain, values);
-          visualRow.setLabel("" + param);
+          show.add(new Plot(variograms.of(param), Clips.positive(2)));
         } catch (Exception exception) {
           System.out.println(variograms);
         }
-      JFreeChart jFreeChart = ListPlot.of(visualSet);
       File file = new File(folder, variograms + ".png");
-      ChartUtils.saveChartAsPNG(file, jFreeChart, new Dimension(500, 300));
+      show.export(file, new Dimension(500, 300));
     }
   }
 }
