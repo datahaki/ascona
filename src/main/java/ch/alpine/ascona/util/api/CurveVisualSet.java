@@ -36,13 +36,13 @@ public class CurveVisualSet {
   }
 
   public void addCurvature(Show show) {
-    show.add(new ListPlot(getArcLength1(), curvature));
+    show.add(ListPlot.of(getArcLength1(), curvature));
   }
 
   public void addArcTan(Show show, Tensor refined) {
     Tensor arcTan2D = Tensor.of(differences.stream().map(ArcTan2D::of));
     Tensor extract = refined.get(Tensor.ALL, 2).extract(0, arcTan2D.length());
-    Showable visualRow = show.add(new ListPlot(arcLength0, arcTan2D.subtract(extract).map(So2.MOD)));
+    Showable visualRow = show.add(ListPlot.of(arcLength0, arcTan2D.subtract(extract).map(So2.MOD)));
     visualRow.setLabel("arcTan[dx, dy] - phase");
     // visualRow.setStroke(PLOT_STROKE);
   }

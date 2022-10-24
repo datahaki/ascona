@@ -52,7 +52,7 @@ public class CirclesDemo extends AbstractDemo {
       Tensor curve = CirclePoints.of(n).multiply(radius);
       graphics.draw(geometricLayer.toPath2D(curve, true));
       if (param.plot)
-        show.add(new ListPlot(Subdivide.increasing(Clips.unit(), curve.length() - 1), //
+        show.add(ListPlot.of(Subdivide.increasing(Clips.unit(), curve.length() - 1), //
             RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
                 curve)));
     }

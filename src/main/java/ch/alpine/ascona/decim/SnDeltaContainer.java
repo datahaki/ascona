@@ -39,7 +39,7 @@ public class SnDeltaContainer {
       Tensor values = t0_deltas.get(Tensor.ALL, d);
       spectrogram[d - 1] = Spectrogram.vector(values, window, ColorDataGradients.VISIBLE_SPECTRUM);
       bufferedImage[d - 1] = ImageFormat.of(spectrogram[d - 1]);
-      show.add(new ListPlot(domain, values));
+      show.add(ListPlot.of(domain, values));
     }
   }
 }

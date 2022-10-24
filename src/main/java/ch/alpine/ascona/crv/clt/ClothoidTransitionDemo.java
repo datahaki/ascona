@@ -92,7 +92,7 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       if (param.smpl)
         ControlPointsStatic.gray(Se2Display.INSTANCE, linearized).render(geometricLayer, graphics);
       if (param.plot)
-        show.add(new ListPlot(samples, RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
+        show.add(ListPlot.of(samples, RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
             Tensor.of(linearized.stream().map(Extract2D.FUNCTION)))));
       if (param.shade) {
         Tensor ofs = AngleVector.of(param.angle).multiply(param.width);

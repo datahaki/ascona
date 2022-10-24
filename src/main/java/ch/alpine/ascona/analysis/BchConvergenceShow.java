@@ -57,7 +57,7 @@ public enum BchConvergenceShow {
             Tensors.vector(+0.3, +0.23, +0.37), //
             Tensors.vector(+0.2, -0.36, +0.18));
         Tensor tensor = Tensor.of(series.stream().map(Vector2Norm::of));
-        show.add(new ListPlot(Range.of(0, tensor.length()), tensor.map(Log10.FUNCTION)));
+        show.add(ListPlot.of(Range.of(0, tensor.length()), tensor.map(Log10.FUNCTION)));
         // visualRow.setLabel(pl);
       }
     }

@@ -142,7 +142,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
         int offset_y = 0;
         for (int index = 0; index < dimensions; ++index) {
           Tensor signal = speeds.get(Tensor.ALL, index).unmodifiable();
-          show.add(new ListPlot(domain, signal));
+          show.add(ListPlot.of(domain, signal));
           // ---
           if (spectrogram) {
             ScalarUnaryOperator window = gokartPoseSpec.kernel.get();

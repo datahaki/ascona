@@ -93,7 +93,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       graphics.draw(line);
     }
     Show show = new Show();
-    show.add(new ListPlot(points));
+    show.add(ListPlot.of(points));
     show.render(graphics, new Rectangle(0, 0, 300, 200));
   }
 

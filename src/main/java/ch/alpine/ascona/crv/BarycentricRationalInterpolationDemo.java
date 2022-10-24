@@ -102,7 +102,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
         {
           Show show = new Show();
           for (Tensor values : Transpose.of(basis2))
-            show.add(new ListPlot(domain, values));
+            show.add(ListPlot.of(domain, values));
           // Showable jFreeChart = ListPlot.of(show.setJoined(true));
           Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
           show.render(graphics, new Rectangle(dimension.width - WIDTH, dimension.height - HEIGHT, WIDTH, HEIGHT));
@@ -110,7 +110,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
         {
           Show show = new Show();
           for (Tensor values : Transpose.of(basis1))
-            show.add(new ListPlot(domain, values));
+            show.add(ListPlot.of(domain, values));
           // Showable jFreeChart = .of(show.setJoined(true));
           Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
           show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));

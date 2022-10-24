@@ -142,7 +142,7 @@ public class CurveDecimationDemo extends AbstractDemo {
       // visualSet.getAxisX().setLabel("sample no.");
       // visualSet.getAxisY().setLabel("error");
       // visualSet.setPlotLabel("error");
-      show.add(new ListPlot(Range.of(0, control.length()), result.errors()));
+      show.add(ListPlot.of(Range.of(0, control.length()), result.errors()));
       show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }
   }

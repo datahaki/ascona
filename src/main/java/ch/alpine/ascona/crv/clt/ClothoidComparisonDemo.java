@@ -74,10 +74,10 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
       {
         LagrangeQuadraticD curvature = clothoid.curvature();
         Tensor domain = curveVisualSet.getArcLength1();
-        show.add(new ListPlot(domain, ConstantArray.of(curvature.head(), domain.length())));
-        show.add(new ListPlot(domain, ConstantArray.of(curvature.tail(), domain.length())));
-        show.add(new ListPlot(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(curvature)));
-        show.add(new ListPlot(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(clothoid::addAngle)));
+        show.add(ListPlot.of(domain, ConstantArray.of(curvature.head(), domain.length())));
+        show.add(ListPlot.of(domain, ConstantArray.of(curvature.tail(), domain.length())));
+        show.add(ListPlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(curvature)));
+        show.add(ListPlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(clothoid::addAngle)));
       }
     }
     // Showable jFreeChart = ListPlot.of(show.setJoined(true));

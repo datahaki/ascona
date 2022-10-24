@@ -85,12 +85,12 @@ public class TimeSeriesDemo extends ControlPointsDemo {
       {
         TimeSeriesAggregate tsa = TimeSeriesAggregate.of(Entrywise.max(), ResamplingMethods.HOLD_VALUE_FROM_LEFT);
         TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
-        show.add(new ListPlot(result.path())).setLabel("max");
+        show.add(ListPlot.of(result.path())).setLabel("max");
       }
       {
         TimeSeriesAggregate tsa = TimeSeriesAggregate.of(Entrywise.min(), ResamplingMethods.HOLD_VALUE_FROM_LEFT);
         TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
-        show.add(new ListPlot(result.path())).setLabel("min");
+        show.add(ListPlot.of(result.path())).setLabel("min");
       }
       // Showable jFreeChart = ListPlot.of(show);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();

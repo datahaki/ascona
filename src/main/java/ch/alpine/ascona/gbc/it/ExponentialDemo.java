@@ -98,7 +98,7 @@ public class ExponentialDemo extends ControlPointsDemo {
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;
-              show.add(new ListPlot(domain, Tensor.of(deque.stream() //
+              show.add(ListPlot.of(domain, Tensor.of(deque.stream() //
                   .map(WeightsFactors::weights) //
                   .map(tensor -> tensor.Get(fi)))));
             }
@@ -111,7 +111,7 @@ public class ExponentialDemo extends ControlPointsDemo {
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;
-              show.add(new ListPlot(domain, Tensor.of(deque.stream() //
+              show.add(ListPlot.of(domain, Tensor.of(deque.stream() //
                   .map(WeightsFactors::factors) //
                   .map(tensor -> tensor.Get(fi)))));
             }

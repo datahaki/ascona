@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.pow.Power;
     Show show = new Show();
     int dims = Unprotect.dimension1Hint(deltas);
     for (int index = 0; index < dims; ++index)
-      show.add(new ListPlot(domain, deltas.get(Tensor.ALL, index)));
+      show.add(ListPlot.of(domain, deltas.get(Tensor.ALL, index)));
     return show;
   }
 }

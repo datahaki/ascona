@@ -60,7 +60,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
     Tensor domain = Range.of(0, values.length());
     {
       //
-      jFreeChart = new ListPlot(domain, values);
+      jFreeChart = ListPlot.of(domain, values);
       // visualSet.getAxisX().setClip(Clips.interval(0, values.length() - 1));
       // jFreeChart = ListPlot.of(visualSet.setJoined(true));
     }
