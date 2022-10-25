@@ -87,9 +87,9 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
       if (param.derivatives) {
         Tensor deltas = iterate.get(Tensor.ALL, 1);
         if (0 < deltas.length()) {
-          Show jFreeChart = StaticHelper.listPlot(deltas, delta, levels);
+          Show show = StaticHelper.listPlot(deltas, delta, levels);
           Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-          jFreeChart.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+          show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
         }
       }
     }

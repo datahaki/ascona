@@ -162,12 +162,11 @@ public class D2AveragingDemo extends ControlPointsDemo {
       // VisualImage visualImage = new VisualImage();
       Show show = new Show();
       show.add(ArrayPlot.of(arrayPlotImage.bufferedImage(), coordinateBoundingBox));
-      // Showable jFreeChart = ArrayPlot.of(visualImage);
       // FIXME
-      // jFreeChart.setBackgroundImageAlignment(RectangleAlignment.CENTER_RIGHT);
-      // jFreeChart.setBackgroundImage(createImage);
-      // jFreeChart.setBackgroundImageAlpha(1);
-      // jFreeChart.setPadding(new RectangleInsets(0, 0, 0, createImage.getWidth()));
+      // show.setBackgroundImageAlignment(RectangleAlignment.CENTER_RIGHT);
+      // show.setBackgroundImage(createImage);
+      // show.setBackgroundImageAlpha(1);
+      // show.setPadding(new RectangleInsets(0, 0, 0, createImage.getWidth()));
       show.render(graphics, new Rectangle(0, 50, 320, height));
     }
     RenderQuality.setQuality(graphics);

@@ -16,7 +16,7 @@ import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.crv.clt.Clothoid;
@@ -74,13 +74,12 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
       {
         LagrangeQuadraticD curvature = clothoid.curvature();
         Tensor domain = curveVisualSet.getArcLength1();
-        show.add(ListPlot.of(domain, ConstantArray.of(curvature.head(), domain.length())));
-        show.add(ListPlot.of(domain, ConstantArray.of(curvature.tail(), domain.length())));
-        show.add(ListPlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(curvature)));
-        show.add(ListPlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(clothoid::addAngle)));
+        show.add(ListLinePlot.of(domain, ConstantArray.of(curvature.head(), domain.length())));
+        show.add(ListLinePlot.of(domain, ConstantArray.of(curvature.tail(), domain.length())));
+        show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(curvature)));
+        show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(clothoid::addAngle)));
       }
     }
-    // Showable jFreeChart = ListPlot.of(show.setJoined(true));
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
   }

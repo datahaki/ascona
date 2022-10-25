@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.io.IOException;
 import java.util.Objects;
 
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.RationalScalar;
@@ -57,7 +57,7 @@ public enum BchConvergenceShow {
             Tensors.vector(+0.3, +0.23, +0.37), //
             Tensors.vector(+0.2, -0.36, +0.18));
         Tensor tensor = Tensor.of(series.stream().map(Vector2Norm::of));
-        show.add(ListPlot.of(Range.of(0, tensor.length()), tensor.map(Log10.FUNCTION)));
+        show.add(ListLinePlot.of(Range.of(0, tensor.length()), tensor.map(Log10.FUNCTION)));
         // visualRow.setLabel(pl);
       }
     }

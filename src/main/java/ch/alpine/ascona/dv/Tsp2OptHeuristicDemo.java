@@ -13,7 +13,7 @@ import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -93,7 +93,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       graphics.draw(line);
     }
     Show show = new Show();
-    show.add(ListPlot.of(points));
+    show.add(ListLinePlot.of(points));
     show.render(graphics, new Rectangle(0, 0, 300, 200));
   }
 

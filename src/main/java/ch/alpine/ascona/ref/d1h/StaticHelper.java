@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.ref.d1h;
 
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.pow.Power;
     Show show = new Show();
     int dims = Unprotect.dimension1Hint(deltas);
     for (int index = 0; index < dims; ++index)
-      show.add(ListPlot.of(domain, deltas.get(Tensor.ALL, index)));
+      show.add(ListLinePlot.of(domain, deltas.get(Tensor.ALL, index)));
     return show;
   }
 }

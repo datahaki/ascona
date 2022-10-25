@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.sophus.hs.HsDifferences;
@@ -39,7 +39,7 @@ public class SnDeltaContainer {
       Tensor values = t0_deltas.get(Tensor.ALL, d);
       spectrogram[d - 1] = Spectrogram.vector(values, window, ColorDataGradients.VISIBLE_SPECTRUM);
       bufferedImage[d - 1] = ImageFormat.of(spectrogram[d - 1]);
-      show.add(ListPlot.of(domain, values));
+      show.add(ListLinePlot.of(domain, values));
     }
   }
 }

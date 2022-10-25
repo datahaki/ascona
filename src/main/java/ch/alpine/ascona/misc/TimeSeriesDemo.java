@@ -11,7 +11,7 @@ import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Plot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -85,14 +85,13 @@ public class TimeSeriesDemo extends ControlPointsDemo {
       {
         TimeSeriesAggregate tsa = TimeSeriesAggregate.of(Entrywise.max(), ResamplingMethods.HOLD_VALUE_FROM_LEFT);
         TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
-        show.add(ListPlot.of(result.path())).setLabel("max");
+        show.add(ListLinePlot.of(result.path())).setLabel("max");
       }
       {
         TimeSeriesAggregate tsa = TimeSeriesAggregate.of(Entrywise.min(), ResamplingMethods.HOLD_VALUE_FROM_LEFT);
         TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
-        show.add(ListPlot.of(result.path())).setLabel("min");
+        show.add(ListLinePlot.of(result.path())).setLabel("min");
       }
-      // Showable jFreeChart = ListPlot.of(show);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       show.render(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
     }
@@ -101,14 +100,12 @@ public class TimeSeriesDemo extends ControlPointsDemo {
       Show show = new Show();
       show.add(Plot.of(TsEntrywise.plus(timeSeries, custom))).setLabel("sum");
       show.add(Plot.of(product)).setLabel("times");
-      // Showable jFreeChart = ListPlot.of(show);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       show.render(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
     }
     {
       Show show = new Show();
       show.add(Plot.of(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
-      // Showable jFreeChart = ListPlot.of(show);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       show.render(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
     }

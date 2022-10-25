@@ -16,7 +16,7 @@ import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
@@ -98,11 +98,10 @@ public class ExponentialDemo extends ControlPointsDemo {
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;
-              show.add(ListPlot.of(domain, Tensor.of(deque.stream() //
+              show.add(ListLinePlot.of(domain, Tensor.of(deque.stream() //
                   .map(WeightsFactors::weights) //
                   .map(tensor -> tensor.Get(fi)))));
             }
-            // Showable jFreeChart = ListPlot.of(show);
             show.render(graphics, new Rectangle(0 * WIDTH, 0, WIDTH, 200));
           }
           {
@@ -111,11 +110,10 @@ public class ExponentialDemo extends ControlPointsDemo {
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;
-              show.add(ListPlot.of(domain, Tensor.of(deque.stream() //
+              show.add(ListLinePlot.of(domain, Tensor.of(deque.stream() //
                   .map(WeightsFactors::factors) //
                   .map(tensor -> tensor.Get(fi)))));
             }
-            // Showable jFreeChart = ListPlot.of(visualSet);
             show.render(graphics, new Rectangle(1 * WIDTH, 0, WIDTH, 200));
           }
         }

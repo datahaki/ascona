@@ -17,7 +17,7 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -142,7 +142,7 @@ public class CurveDecimationDemo extends AbstractDemo {
       // visualSet.getAxisX().setLabel("sample no.");
       // visualSet.getAxisY().setLabel("error");
       // visualSet.setPlotLabel("error");
-      show.add(ListPlot.of(Range.of(0, control.length()), result.errors()));
+      show.add(ListLinePlot.of(Range.of(0, control.length()), result.errors()));
       show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }
   }

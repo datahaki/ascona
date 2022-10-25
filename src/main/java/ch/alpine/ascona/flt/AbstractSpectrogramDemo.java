@@ -17,7 +17,7 @@ import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -142,7 +142,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
         int offset_y = 0;
         for (int index = 0; index < dimensions; ++index) {
           Tensor signal = speeds.get(Tensor.ALL, index).unmodifiable();
-          show.add(ListPlot.of(domain, signal));
+          show.add(ListLinePlot.of(domain, signal));
           // ---
           if (spectrogram) {
             ScalarUnaryOperator window = gokartPoseSpec.kernel.get();
@@ -154,7 +154,6 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
             offset_y += hgt + MAGNIFY;
           }
         }
-        // Showable jFreeChart = ListPlot.of(show);
         int dwidth = 80 + speeds.length();
         int height = 400;
         show.render(graphics, new Rectangle( //

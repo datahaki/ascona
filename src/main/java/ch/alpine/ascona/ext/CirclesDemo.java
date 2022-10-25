@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import ch.alpine.ascona.util.api.RnLineTrim;
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.AbstractDemo;
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -52,7 +52,7 @@ public class CirclesDemo extends AbstractDemo {
       Tensor curve = CirclePoints.of(n).multiply(radius);
       graphics.draw(geometricLayer.toPath2D(curve, true));
       if (param.plot)
-        show.add(ListPlot.of(Subdivide.increasing(Clips.unit(), curve.length() - 1), //
+        show.add(ListLinePlot.of(Subdivide.increasing(Clips.unit(), curve.length() - 1), //
             RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
                 curve)));
     }

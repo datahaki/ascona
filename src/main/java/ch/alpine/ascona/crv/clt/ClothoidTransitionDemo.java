@@ -16,7 +16,7 @@ import ch.alpine.ascona.util.ren.ControlPointsStatic;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -92,7 +92,7 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       if (param.smpl)
         ControlPointsStatic.gray(Se2Display.INSTANCE, linearized).render(geometricLayer, graphics);
       if (param.plot)
-        show.add(ListPlot.of(samples, RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
+        show.add(ListLinePlot.of(samples, RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
             Tensor.of(linearized.stream().map(Extract2D.FUNCTION)))));
       if (param.shade) {
         Tensor ofs = AngleVector.of(param.angle).multiply(param.width);
@@ -106,7 +106,6 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       }
     }
     if (param.plot) {
-      // Showable jFreeChart = ListPlot.of(show.setJoined(true));
       show.render(graphics, new Rectangle(0, 0, 400, 300));
     }
     if (param.ctrl) {

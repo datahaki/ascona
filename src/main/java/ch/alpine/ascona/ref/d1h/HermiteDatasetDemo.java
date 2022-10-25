@@ -137,9 +137,9 @@ public class HermiteDatasetDemo extends AbstractDemo {
       Tensor deltas = refined.get(Tensor.ALL, 1);
       int dims = deltas.get(0).length();
       if (0 < deltas.length()) {
-        Show jFreeChart = StaticHelper.listPlot(deltas, delta, levels);
+        Show show = StaticHelper.listPlot(deltas, delta, levels);
         Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-        jFreeChart.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+        show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
       }
     }
   }

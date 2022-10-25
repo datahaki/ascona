@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import ch.alpine.ascona.util.win.AbstractDemo;
-import ch.alpine.bridge.fig.ListPlot;
+import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.Spectrogram;
@@ -38,7 +38,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
   }
 
   private final Param param;
-  private Showable jFreeChart;
+  private Showable showable;
   private Showable spectrogra;
 
   public ColoredNoiseDemo() {
@@ -60,9 +60,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
     Tensor domain = Range.of(0, values.length());
     {
       //
-      jFreeChart = ListPlot.of(domain, values);
-      // visualSet.getAxisX().setClip(Clips.interval(0, values.length() - 1));
-      // jFreeChart = ListPlot.of(visualSet.setJoined(true));
+      showable = ListLinePlot.of(domain, values);
     }
     {
       Tensor points = Transpose.of(Tensors.of(domain, values));
@@ -77,7 +75,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
     int pih = (int) (width * 0.4);
     {
       Show show = new Show();
-      show.add(jFreeChart);
+      show.add(showable);
       show.render(graphics, new Rectangle(0, 0, piw, pih));
     }
     {
