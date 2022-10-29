@@ -46,7 +46,7 @@ public class NdTreeWeighting implements LogWeighting, Serializable {
 
   @Override // from Object
   public String toString() {
-    return MathematicaFormat.concise("NdTreeWeighting",limit);
+    return MathematicaFormat.concise("NdTreeWeighting", limit);
   }
 
   private class Inner implements TensorScalarFunction {

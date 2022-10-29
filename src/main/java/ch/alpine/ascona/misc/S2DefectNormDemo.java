@@ -23,7 +23,6 @@ import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.sn.SnExponential;
 import ch.alpine.sophus.hs.sn.SnManifold;
@@ -34,7 +33,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradients;
@@ -123,15 +121,10 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
     RenderQuality.setDefault(graphics);
     int res = param.resolution;
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     BufferedImage bufferedImage = bufferedImage(res);
     new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
-    // ---
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    Tensor cp = getGeodesicControlPoints();
-    ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(cp.get(0), cp.get(1));
     graphics.setStroke(STROKE);
     // Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
     graphics.setColor(new Color(192, 192, 192));

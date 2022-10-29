@@ -22,6 +22,7 @@ class MoreTest {
   @MethodSource("objectStream")
   void test(Object object) {
     new AbstractBaseTest((AbstractDemo) object) {
+      // ---
     };
   }
 }

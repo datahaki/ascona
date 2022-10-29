@@ -33,6 +33,8 @@ enum ImageReadDemo {
       Export.of(HomeDirectory.file("testimage", "thumb2.jpg"), thumb);
       break;
     }
+    default:
+      throw new IllegalArgumentException();
     }
   }
 }

@@ -49,6 +49,7 @@ public class ApproximationDemo extends AbstractDemo {
       CurveSubdivisionSchemes.SIXPOINT };
 
   private record Container(ManifoldDisplay manifoldDisplay, Tensor tracked, Tensor control, Tensor refined) {
+    // ---
   }
 
   // ---
