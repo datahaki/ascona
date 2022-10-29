@@ -74,14 +74,17 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
       {
         LagrangeQuadraticD curvature = clothoid.curvature();
         Tensor domain = curveVisualSet.getArcLength1();
-        show.add(ListLinePlot.of(domain, ConstantArray.of(curvature.head(), domain.length())));
-        show.add(ListLinePlot.of(domain, ConstantArray.of(curvature.tail(), domain.length())));
-        show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(curvature)));
-        show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(clothoid::addAngle)));
+        show.add(ListLinePlot.of(domain, ConstantArray.of(curvature.head(), domain.length()))).setLabel("curv.@head");
+        show.add(ListLinePlot.of(domain, ConstantArray.of(curvature.tail(), domain.length()))).setLabel("curv.@tail");
+        show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(curvature))).setLabel("curv.@lagrQ");
+        show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(clothoid::addAngle))).setLabel("add angle");
       }
     }
-    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+    Dimension canvas_size = timerFrame.geometricComponent.jComponent.getSize();
+    Dimension dimension = new Dimension(WIDTH, HEIGHT);
+    Rectangle rectangle = Show.defaultInsets(dimension, graphics.getFont().getSize());
+    rectangle.x += canvas_size.width - WIDTH;
+    show.render(graphics, rectangle);
   }
 
   public static void main(String[] args) {

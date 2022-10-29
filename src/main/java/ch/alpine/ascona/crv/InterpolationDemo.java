@@ -25,6 +25,7 @@ import ch.alpine.tensor.sca.Chop;
 /** functionality attempts to compute virtual control points
  * that define a cubic subdivision curve that interpolates the
  * original control points */
+// FIXME ASCONA this does not interpolate anything
 public class InterpolationDemo extends ControlPointsDemo {
   public InterpolationDemo() {
     super(new AsconaParam(true, ManifoldDisplays.homogeneousSpaces()));

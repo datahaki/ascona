@@ -11,6 +11,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.opt.nd.NdCenters;
@@ -43,9 +44,9 @@ public class NdTreeWeighting implements LogWeighting, Serializable {
     return new Inner(ndMap, variogram);
   }
 
-  @Override
+  @Override // from Object
   public String toString() {
-    return String.format("%s[%d]", NdTreeWeighting.class.getSimpleName(), limit);
+    return MathematicaFormat.concise("NdTreeWeighting",limit);
   }
 
   private class Inner implements TensorScalarFunction {

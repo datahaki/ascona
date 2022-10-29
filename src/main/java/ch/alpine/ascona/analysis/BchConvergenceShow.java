@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.ShowDialog;
 import ch.alpine.sophus.math.bch.BakerCampbellHausdorff;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
@@ -52,7 +53,7 @@ public enum BchConvergenceShow {
       if (Objects.nonNull(ad)) {
         System.out.println("algebra=" + pl);
         ad = ad.map(N.DOUBLE);
-        BakerCampbellHausdorff bakerCampbellHausdorff = (BakerCampbellHausdorff) BakerCampbellHausdorff.of(ad, 12);
+        BakerCampbellHausdorff bakerCampbellHausdorff = (BakerCampbellHausdorff) BakerCampbellHausdorff.of(ad, 7);
         Tensor series = bakerCampbellHausdorff.series( //
             Tensors.vector(+0.3, +0.23, +0.37), //
             Tensors.vector(+0.2, -0.36, +0.18));
@@ -63,5 +64,7 @@ public enum BchConvergenceShow {
     }
     show.export(HomeDirectory.Pictures(BchConvergenceShow.class.getSimpleName() + ".png"), //
         new Dimension(400, 300));
+    ShowDialog dialogShow = new ShowDialog(null, show);
+    dialogShow.setVisible(true);
   }
 }

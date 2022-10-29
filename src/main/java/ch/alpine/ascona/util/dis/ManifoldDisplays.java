@@ -41,7 +41,7 @@ public enum ManifoldDisplays {
     return manifoldDisplay;
   }
 
-  @Deprecated // TODO make private
+  @Deprecated // TODO ASCONA make private
   public GeodesicSpace geodesicSpace() {
     return manifoldDisplay().geodesicSpace();
   }

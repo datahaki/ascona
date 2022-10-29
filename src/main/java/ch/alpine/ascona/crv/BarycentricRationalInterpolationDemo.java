@@ -99,19 +99,25 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
         System.err.println("no can do");
       }
       if (param.basis) {
+        Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
         {
           Show show = new Show();
-          for (Tensor values : Transpose.of(basis2))
+          show.setPlotLabel("Basis 1");
+          for (Tensor values : Transpose.of(basis1))
             show.add(ListLinePlot.of(domain, values));
-          Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-          show.render(graphics, new Rectangle(dimension.width - WIDTH, dimension.height - HEIGHT, WIDTH, HEIGHT));
+          Rectangle rectangle = Show.defaultInsets(new Dimension(WIDTH, HEIGHT), graphics.getFont().getSize());
+          rectangle.x += dimension.width - WIDTH;
+          show.render(graphics, rectangle);
         }
         {
           Show show = new Show();
-          for (Tensor values : Transpose.of(basis1))
+          show.setPlotLabel("Basis 2");
+          for (Tensor values : Transpose.of(basis2))
             show.add(ListLinePlot.of(domain, values));
-          Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-          show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+          Rectangle rectangle = Show.defaultInsets(new Dimension(WIDTH, HEIGHT), graphics.getFont().getSize());
+          rectangle.x += dimension.width - WIDTH;
+          rectangle.y += HEIGHT;
+          show.render(graphics, rectangle);
         }
       }
     }
