@@ -12,8 +12,8 @@ import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
-import ch.alpine.bridge.fig.Plot;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.TsPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
@@ -80,8 +80,8 @@ public class TimeSeriesDemo extends ControlPointsDemo {
     int row = 0;
     {
       Show show = new Show();
-      show.add(Plot.of(timeSeries)).setLabel("wiener");
-      show.add(Plot.of(custom)).setLabel("custom");
+      show.add(TsPlot.of(timeSeries)).setLabel("wiener");
+      show.add(TsPlot.of(custom)).setLabel("custom");
       {
         TimeSeriesAggregate tsa = TimeSeriesAggregate.of(Entrywise.max(), ResamplingMethods.HOLD_VALUE_FROM_LEFT);
         TimeSeries result = tsa.of(timeSeries, RealScalar.of(0), RealScalar.ONE);
@@ -98,14 +98,14 @@ public class TimeSeriesDemo extends ControlPointsDemo {
     TimeSeries product = TsEntrywise.times(timeSeries, custom);
     {
       Show show = new Show();
-      show.add(Plot.of(TsEntrywise.plus(timeSeries, custom))).setLabel("sum");
-      show.add(Plot.of(product)).setLabel("times");
+      show.add(TsPlot.of(TsEntrywise.plus(timeSeries, custom))).setLabel("sum");
+      show.add(TsPlot.of(product)).setLabel("times");
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       show.render(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
     }
     {
       Show show = new Show();
-      show.add(Plot.of(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
+      show.add(TsPlot.of(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       show.render(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
     }

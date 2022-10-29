@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Set;
 
-import ch.alpine.bridge.fig.BarLegend;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Rescale;
@@ -16,6 +15,7 @@ import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Round;
 
+// @Deprecated
 public class ArrayPlotImage {
   private static final int COLOR_WIDTH = 10;
   private static final int IMAGE_LEGEND_SPACE = 10;

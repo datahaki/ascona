@@ -2,23 +2,20 @@
 package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.ArrayPlotImage;
+import ch.alpine.ascona.util.arp.ArrayPlotRecord;
 import ch.alpine.ascona.util.arp.D2Raster;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.ImageRender;
 import ch.alpine.ascona.util.ren.LeversRender;
 import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -40,14 +37,11 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Rescale;
-import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.img.LinearColorDataGradient;
-import ch.alpine.tensor.itp.LinearBinaryAverage;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Ceiling;
 import ch.alpine.tensor.sca.Clip;
@@ -55,7 +49,7 @@ import ch.alpine.tensor.sca.Floor;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
 
-public class D2AveragingDemo extends ControlPointsDemo {
+public final class D2AveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
@@ -90,7 +84,7 @@ public class D2AveragingDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setOffset(400, 400);
   }
 
-  private final Cache<Tensor, ArrayPlotImage> cache = Cache.of(this::computeImage, 1);
+  private final Cache<Tensor, ArrayPlotRecord> cache = Cache.of(this::computeImage, 1);
   private double computeTime = 0;
 
   protected void recompute() {
@@ -98,7 +92,7 @@ public class D2AveragingDemo extends ControlPointsDemo {
     cache.clear();
   }
 
-  private final ArrayPlotImage computeImage(Tensor tensor) {
+  private final ArrayPlotRecord computeImage(Tensor tensor) {
     Tensor sequence = tensor.get(0).map(N.DOUBLE);
     Tensor values = tensor.get(1).map(N.DOUBLE);
     int resolution = param.resolution;
@@ -106,8 +100,9 @@ public class D2AveragingDemo extends ControlPointsDemo {
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
         Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
-        TensorScalarFunction tensorScalarFunction = //
-            param.logWeightings.function(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence, values);
+        TensorScalarFunction tensorScalarFunction = param.logWeightings.function( //
+            param.biinvariants.ofSafe(manifold), //
+            InversePowerVariogram.of(2), sequence, values);
         D2Raster d2Raster = (D2Raster) manifoldDisplay;
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(t -> Round._1.apply(tensorScalarFunction.apply(t)), DoubleScalar.INDETERMINATE);
@@ -116,24 +111,12 @@ public class D2AveragingDemo extends ControlPointsDemo {
         // ---
         Rescale rescale = new Rescale(matrix);
         Clip clip = rescale.clip();
-        ColorDataGradients colorDataGradients = param.cdg;
-        Tensor domain = Subdivide.increasing(clip, 50);
-        Tensor rgba = Tensors.empty();
-        IntBlend intBlend = new IntBlend(param.radius);
-        Tensor c_blck = Tensors.vector(0, 0, 0, 255);
-        for (int index = 0; index < domain.length(); ++index) {
-          Scalar x = domain.Get(index);
-          Tensor c_rgba = clip.rescale(x).map(colorDataGradients);
-          Scalar weight = intBlend.apply(x);
-          Tensor split = LinearBinaryAverage.INSTANCE.split(c_blck, c_rgba, weight);
-          rgba.append(split);
-        }
-        ColorDataGradient colorDataGradient = LinearColorDataGradient.of(rgba);
+        ColorDataGradient colorDataGradient = StaticHelper.custom(param.cdg, clip, param.radius);
         Set<Scalar> set = new HashSet<>();
         Range.of(Ceiling.intValueExact(clip.min()), Floor.intValueExact(clip.max()) + 1).stream() //
             .map(Scalar.class::cast) //
             .forEach(set::add);
-        return new ArrayPlotImage(rescale.result(), clip, colorDataGradient, set);
+        return new ArrayPlotRecord(matrix, colorDataGradient);
       } catch (Exception exception) {
         exception.printStackTrace();
       }
@@ -142,32 +125,17 @@ public class D2AveragingDemo extends ControlPointsDemo {
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    RenderQuality.setQuality(graphics);
-    prepare();
-    // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     D2Raster d2Raster = (D2Raster) manifoldDisplay;
     CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
     Tensor sequence = getGeodesicControlPoints();
     Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
-    ArrayPlotImage arrayPlotImage = cache.apply(Unprotect.byRef(sequence, values));
-    if (Objects.nonNull(arrayPlotImage)) {
-      RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      new ImageRender(arrayPlotImage.bufferedImage(), coordinateBoundingBox) //
-          .render(geometricLayer, graphics);
+    ArrayPlotRecord arrayPlotRecord = cache.apply(Unprotect.byRef(sequence, values));
+    if (Objects.nonNull(arrayPlotRecord)) {
       int height = 300;
-      BufferedImage createImage = arrayPlotImage.legend().createImage(new Dimension(10, height - 40));
-      graphics.drawImage(createImage, dimension.width - createImage.getWidth(), 0, null);
-      // VisualImage visualImage = new VisualImage();
       Show show = new Show();
-      show.add(ArrayPlot.of(arrayPlotImage.bufferedImage(), coordinateBoundingBox));
-      // FIXME
-      // show.setBackgroundImageAlignment(RectangleAlignment.CENTER_RIGHT);
-      // show.setBackgroundImage(createImage);
-      // show.setBackgroundImageAlpha(1);
-      // show.setPadding(new RectangleInsets(0, 0, 0, createImage.getWidth()));
-      show.render(graphics, new Rectangle(0, 50, 320, height));
+      show.add(ArrayPlot.of(arrayPlotRecord.matrix(), coordinateBoundingBox, arrayPlotRecord.cdg()));
+      show.render(graphics, new Rectangle(70, 50, height, height));
     }
     RenderQuality.setQuality(graphics);
     LeversRender leversRender = //
@@ -176,10 +144,6 @@ public class D2AveragingDemo extends ControlPointsDemo {
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);
     graphics.drawString("compute: " + RealScalar.of(computeTime).map(Round._3), 0, 30);
-  }
-
-  void prepare() {
-    // ---
   }
 
   public static void main(String[] args) {
