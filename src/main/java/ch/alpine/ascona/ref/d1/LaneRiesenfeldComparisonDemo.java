@@ -106,7 +106,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     // ---
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     if (param.curv) {
-      show1.render(graphics, new Rectangle(dimension.width / 2, 0, dimension.width / 2, dimension.height / 2));
+      show1.render_autoIndent(graphics, new Rectangle(dimension.width / 2, 0, dimension.width / 2, dimension.height / 2));
       // ---
       if (!show2.isEmpty()) {
         // Tensor tensorMin = Tensor.of(show2.visualRows().stream() //
@@ -125,7 +125,7 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
         // .apply(RationalScalar.of(CURVE_SUBDIVISION_SCHEMES.size() - 1, CurveSubdivisionHelper.LANE_RIESENFELD.size() - 1)).number().doubleValue();
         // if (min != max)
       }
-      show2.render(graphics, new Rectangle(dimension.width / 2, dimension.height / 2, dimension.width / 2, dimension.height / 2));
+      show2.render_autoIndent(graphics, new Rectangle(dimension.width / 2, dimension.height / 2, dimension.width / 2, dimension.height / 2));
     }
     RenderQuality.setDefault(graphics);
   }

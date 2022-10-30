@@ -93,7 +93,7 @@ public class TimeSeriesDemo extends ControlPointsDemo {
         show.add(ListLinePlot.of(result.path())).setLabel("min");
       }
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      show.render(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
+      show.render_autoIndent(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 300));
     }
     TimeSeries product = TsEntrywise.times(timeSeries, custom);
     {
@@ -101,13 +101,13 @@ public class TimeSeriesDemo extends ControlPointsDemo {
       show.add(TsPlot.of(TsEntrywise.plus(timeSeries, custom))).setLabel("sum");
       show.add(TsPlot.of(product)).setLabel("times");
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      show.render(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
+      show.render_autoIndent(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 300));
     }
     {
       Show show = new Show();
       show.add(TsPlot.of(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      show.render(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 270));
+      show.render_autoIndent(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 300));
     }
   }
 

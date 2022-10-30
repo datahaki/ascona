@@ -102,7 +102,7 @@ public class ExponentialDemo extends ControlPointsDemo {
                   .map(WeightsFactors::weights) //
                   .map(tensor -> tensor.Get(fi)))));
             }
-            show.render(graphics, new Rectangle(0 * WIDTH, 0, WIDTH, 200));
+            show.render_autoIndent(graphics, new Rectangle(0 * WIDTH, 0, WIDTH, 200));
           }
           {
             Show show = new Show();
@@ -114,7 +114,7 @@ public class ExponentialDemo extends ControlPointsDemo {
                   .map(WeightsFactors::factors) //
                   .map(tensor -> tensor.Get(fi)))));
             }
-            show.render(graphics, new Rectangle(1 * WIDTH, 0, WIDTH, 200));
+            show.render_autoIndent(graphics, new Rectangle(1 * WIDTH, 0, WIDTH, 200));
           }
         }
       }

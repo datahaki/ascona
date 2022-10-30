@@ -54,10 +54,7 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
       CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
       curveVisualSet.addCurvature(show);
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      Dimension dimension2 = new Dimension(WIDTH, HEIGHT);
-      Rectangle rectangle = Show.defaultInsets(dimension2, graphics.getFont().getSize());
-      rectangle.x += dimension.width - WIDTH;
-      show.render(graphics, rectangle);
+      show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }
   }
 

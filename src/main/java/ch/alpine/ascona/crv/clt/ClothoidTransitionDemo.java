@@ -106,7 +106,7 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       }
     }
     if (param.plot) {
-      show.render(graphics, new Rectangle(0, 0, 400, 300));
+      show.render_autoIndent(graphics, new Rectangle(0, 0, 400, 300));
     }
     if (param.ctrl) {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);

@@ -81,10 +81,7 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
       }
     }
     Dimension canvas_size = timerFrame.geometricComponent.jComponent.getSize();
-    Dimension dimension = new Dimension(WIDTH, HEIGHT);
-    Rectangle rectangle = Show.defaultInsets(dimension, graphics.getFont().getSize());
-    rectangle.x += canvas_size.width - WIDTH;
-    show.render(graphics, rectangle);
+    show.render_autoIndent(graphics, new Rectangle(canvas_size.width - WIDTH, 0, WIDTH, HEIGHT));
   }
 
   public static void main(String[] args) {

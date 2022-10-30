@@ -94,7 +94,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     }
     Show show = new Show();
     show.add(ListLinePlot.of(points));
-    show.render(graphics, new Rectangle(0, 0, 300, 200));
+    show.render_autoIndent(graphics, new Rectangle(0, 0, 300, 200));
   }
 
   private void shuffle() {

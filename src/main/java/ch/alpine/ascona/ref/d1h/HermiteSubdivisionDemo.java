@@ -141,7 +141,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
         if (0 < deltas.length()) {
           Show show = StaticHelper.listPlot(deltas, delta, levels);
           Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-          show.render(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+          show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
         }
       }
     }

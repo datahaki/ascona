@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.ext;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -19,9 +20,7 @@ import ch.alpine.sophus.math.noise.ColoredNoise;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
-import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.pdf.RandomVariate;
 
 public class ColoredNoiseDemo extends AbstractDemo {
@@ -63,25 +62,25 @@ public class ColoredNoiseDemo extends AbstractDemo {
       showable = ListLinePlot.of(domain, values);
     }
     {
-      Tensor points = Transpose.of(Tensors.of(domain, values));
-      spectrogra = Spectrogram.of(points);
+      spectrogra = Spectrogram.of(values, RealScalar.ONE);
     }
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    float width = geometricLayer.model2pixelWidth(RealScalar.of(15));
-    int piw = (int) width;
-    int pih = (int) (width * 0.4);
+    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+    int height = dimension.height / 2;
     {
       Show show = new Show();
+      show.setPlotLabel("Signal");
       show.add(showable);
-      show.render(graphics, new Rectangle(0, 0, piw, pih));
+      show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width, height));
     }
     {
       Show show = new Show();
+      show.setPlotLabel("Spectrogram");
       show.add(spectrogra);
-      show.render(graphics, new Rectangle(0, pih, piw, pih));
+      show.render_autoIndent(graphics, new Rectangle(0, height, dimension.width, height));
     }
   }
 

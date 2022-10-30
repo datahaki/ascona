@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
-import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
@@ -32,7 +31,6 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 
 // @ReflectionMarker
@@ -121,7 +119,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
 
   private static final ColorDataGradient COLOR_DATA_GRADIENT = //
       ColorDataGradients.VISIBLE_SPECTRUM.deriveWithOpacity(RealScalar.of(0.75));
-  private static final int MAGNIFY = 4;
+  // private static final int MAGNIFY = 4;
 
   // @Override
   protected final void differences_render( //
@@ -146,17 +144,16 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
           // ---
           if (spectrogram) {
             ScalarUnaryOperator window = gokartPoseSpec.kernel.get();
-            Tensor image = Spectrogram.vector(signal, window, COLOR_DATA_GRADIENT);
-            BufferedImage bufferedImage = ImageFormat.of(image);
-            int wid = bufferedImage.getWidth() * MAGNIFY;
-            int hgt = bufferedImage.getHeight() * MAGNIFY;
-            graphics.drawImage(bufferedImage, width - wid, offset_y, wid, hgt, null);
-            offset_y += hgt + MAGNIFY;
+            Show show2 = new Show();
+            show2.add(Spectrogram.of(signal, sampleRate, window, COLOR_DATA_GRADIENT));
+            show2.render_autoIndent(graphics, new Rectangle(width - 400, 30 + offset_y, 380, 170));
+            offset_y += 200;
           }
         }
         int dwidth = 80 + speeds.length();
         int height = 400;
-        show.render(graphics, new Rectangle( //
+        // Show.defaultInsets(dimension, height);
+        show.render_autoIndent(graphics, new Rectangle( //
             dimension.width - dwidth, dimension.height - height, //
             80 + speeds.length(), height));
       }

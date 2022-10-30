@@ -57,7 +57,7 @@ public class CirclesDemo extends AbstractDemo {
                 curve)));
     }
     if (param.plot) {
-      show.render(graphics, new Rectangle(0, 0, 400, 300));
+      show.render_autoIndent(graphics, new Rectangle(0, 0, 400, 300));
     }
   }
 

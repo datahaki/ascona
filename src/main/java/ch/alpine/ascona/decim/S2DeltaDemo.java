@@ -5,7 +5,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.S2Display;
@@ -132,18 +131,15 @@ public class S2DeltaDemo extends AbstractDemo {
         v0 = SnRotationMatrix.of(p, q).dot(v0);
       }
     }
-    int mag = 4;
     {
       int ofs = 0;
-      snDeltaRaw.show.render(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
-      BufferedImage bufferedImage = snDeltaRaw.bufferedImage[0];
-      graphics.drawImage(bufferedImage, ofs, HEIGHT, bufferedImage.getWidth() * mag, bufferedImage.getHeight() * mag, null);
+      snDeltaRaw.show1.render_autoIndent(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
+      snDeltaRaw.shows[0].render_autoIndent(graphics, new Rectangle(ofs, HEIGHT, WIDTH, HEIGHT));
     }
     {
       int ofs = WIDTH;
-      snDeltaFil.show.render(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
-      BufferedImage bufferedImage = snDeltaFil.bufferedImage[0];
-      graphics.drawImage(bufferedImage, ofs, HEIGHT, bufferedImage.getWidth() * mag, bufferedImage.getHeight() * mag, null);
+      snDeltaFil.show1.render_autoIndent(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
+      snDeltaFil.shows[0].render_autoIndent(graphics, new Rectangle(ofs, HEIGHT, WIDTH, HEIGHT));
     }
   }
 
