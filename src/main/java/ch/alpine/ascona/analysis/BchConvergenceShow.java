@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascona.analysis;
 
-import java.awt.Dimension;
-import java.io.IOException;
 import java.util.Objects;
 
 import ch.alpine.bridge.fig.ListLinePlot;
@@ -13,7 +11,6 @@ import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
-import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.lie.LeviCivitaTensor;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.N;
@@ -27,7 +24,7 @@ public enum BchConvergenceShow {
   private static final Tensor SL2 = Tensors.fromString( //
       "{{{0, 0, 0}, {0, 0, -2}, {0, 2, 0}}, {{0, 0, -2}, {0, 0, 0}, {2, 0, 0}}, {{0, -2, 0}, {2, 0, 0}, {0, 0, 0}}}").multiply(RationalScalar.HALF);
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) {
     Show show = new Show();
     show.setPlotLabel("bch convergence");
     // show.getAxisY().setLabel("log");
@@ -62,9 +59,6 @@ public enum BchConvergenceShow {
         // visualRow.setLabel(pl);
       }
     }
-    show.export(HomeDirectory.Pictures(BchConvergenceShow.class.getSimpleName() + ".png"), //
-        new Dimension(400, 300));
-    ShowDialog dialogShow = new ShowDialog(null, show);
-    dialogShow.setVisible(true);
+    ShowDialog.of(show);
   }
 }

@@ -1,36 +1,32 @@
 // code by jph
 package ch.alpine.ascona.usr;
 
-import java.awt.Dimension;
 import java.io.IOException;
 
-import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.DensityPlot;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.ShowDialog;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.ext.HomeDirectory;
+import ch.alpine.tensor.DoubleScalar;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.sca.Clips;
 
 public enum NoiseDemo {
   ;
   public static void main(String[] args) throws IOException {
-    Tensor x = Subdivide.of(-1, 1, 30);
-    Tensor y = Subdivide.of(-1, 1, 30);
-    {
-      Tensor matrix = Tensors.matrix((i, j) -> //
-      SimplexContinuousNoise.FUNCTION.apply(Tensors.of(x.get(i), y.get(j))), x.length(), y.length());
-      Show show = new Show();
-      show.add(ArrayPlot.of(matrix));
-      show.export(HomeDirectory.Pictures(NoiseDemo.class.getSimpleName() + "2.png"), new Dimension(600, 600));
-    }
-    {
-      Tensor matrix = Tensors.matrix((i, j) -> //
-      SimplexContinuousNoise.FUNCTION.apply(Tensors.of(x.get(i), y.get(j), RealScalar.ZERO)), x.length(), y.length());
-      Show show = new Show();
-      show.add(ArrayPlot.of(matrix));
-      show.export(HomeDirectory.Pictures(NoiseDemo.class.getSimpleName() + "3.png"), new Dimension(600, 600));
-    }
+    CoordinateBoundingBox cbb = CoordinateBoundingBox.of(Clips.absoluteOne(), Clips.absoluteOne());
+    Show show1 = new Show();
+    show1.setPlotLabel("SimplexContinuousNoise[x,y]");
+    show1.add(DensityPlot.of( //
+        (x, y) -> DoubleScalar.of(SimplexContinuousNoise.FUNCTION.at(x.number().doubleValue(), y.number().doubleValue())), //
+        cbb));
+    Show show2 = new Show();
+    show2.setPlotLabel("SimplexContinuousNoise[x,y,0]");
+    show2.add(DensityPlot.of( //
+        (x, y) -> DoubleScalar.of(SimplexContinuousNoise.FUNCTION.at(x.number().doubleValue(), y.number().doubleValue(), 0.0)), //
+        cbb));
+    Show show3 = new Show();
+    show3.setPlotLabel("Empty");
+    ShowDialog.of(show1, show2, show3);
   }
 }
