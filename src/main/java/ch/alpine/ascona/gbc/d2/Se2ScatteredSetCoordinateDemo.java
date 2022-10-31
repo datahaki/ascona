@@ -31,7 +31,7 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class Se2ScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
+public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final Clip RANGE_X = Clips.absolute(3);
   private static final Clip RANGE_A = Clips.absolute(Pi.VALUE);
   // ---
