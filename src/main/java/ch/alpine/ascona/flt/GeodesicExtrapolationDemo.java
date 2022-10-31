@@ -20,7 +20,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo implements BufferedImageSupplier {
+public class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
   private Tensor refined = Tensors.empty();
 
   public GeodesicExtrapolationDemo() {
@@ -35,7 +35,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
     ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = //
         GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), gokartPoseSpec.kernel.get());
-    refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesicSpace(), spinnerRadius.getValue()).apply(control());
+    refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesicSpace(), param.radius).apply(control());
   }
 
   @Override // from RenderInterface
@@ -46,7 +46,7 @@ public class GeodesicExtrapolationDemo extends AbstractDatasetKernelDemo impleme
   @Override // from BufferedImageSupplier
   public BufferedImage bufferedImage() {
     ScalarUnaryOperator smoothingKernel = gokartPoseSpec.kernel.get();
-    int radius = spinnerRadius.getValue();
+    int radius = param.radius;
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(SymGeodesic.INSTANCE, smoothingKernel);
     Tensor vector = SymSequence.of(radius + 1);
     Tensor tensor = tensorUnaryOperator.apply(vector);

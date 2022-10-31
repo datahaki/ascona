@@ -19,7 +19,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Nest;
 
-public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implements BufferedImageSupplier {
+public class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
   private final SpinnerLabel<GeodesicFilters> spinnerFilters = SpinnerLabel.of(GeodesicFilters.class);
   private final SpinnerLabel<Integer> spinnerConvolution = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8);
 
@@ -51,7 +51,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
     GeodesicFilters geodesicFilters = spinnerFilters.getValue();
     TensorUnaryOperator tensorUnaryOperator = geodesicFilters.supply(manifoldDisplay.geodesicSpace(), smoothingKernel);
     return Nest.of( //
-        new CenterFilter(tensorUnaryOperator, spinnerRadius.getValue()), //
+        new CenterFilter(tensorUnaryOperator, param.radius), //
         control(), spinnerConvolution.getValue());
   }
 
@@ -60,7 +60,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractDatasetKernelDemo implem
     GeodesicFilters geodesicFilters = spinnerFilters.getValue();
     switch (geodesicFilters) {
     case GEODESIC:
-      return SymLinkImages.ofGC(gokartPoseSpec.kernel.get(), spinnerRadius.getValue()).bufferedImage();
+      return SymLinkImages.ofGC(gokartPoseSpec.kernel.get(), param.radius).bufferedImage();
     default:
       return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     }

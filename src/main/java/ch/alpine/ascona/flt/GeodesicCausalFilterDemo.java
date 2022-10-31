@@ -26,7 +26,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
+public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
   protected final SpinnerLabel<GeodesicCausalFilters> spinnerCausalFilter = SpinnerLabel.of(GeodesicCausalFilters.class);
   /** parameter to blend extrapolation with measurement */
   private final JSlider jSlider = new JSlider(1, 999, 500);
@@ -47,7 +47,7 @@ public class GeodesicCausalFilterDemo extends AbstractDatasetKernelDemo {
 
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    final int radius = spinnerRadius.getValue();
+    final int radius = param.radius;
     if (0 < radius) {
       ScalarUnaryOperator windowFunctions = gokartPoseSpec.kernel.get();
       Se2BiinvariantMeans se2BiinvariantMean = Se2BiinvariantMeans.FILTER;

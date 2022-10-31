@@ -78,7 +78,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ColorDataGradient colorDataGradient = colorDataGradient();
+    ColorDataGradient colorDataGradient = scatteredSetParam.spinnerColorData;
     if (jToggleAnimate.isSelected()) {
       double toc = timing.seconds() * 0.3;
       int n = snapshot.length();
@@ -99,8 +99,8 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       // ---
       Sedarim sedarim = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), domain);
       // operator(domain);
-      Tensor sX = Subdivide.increasing(coordinateBoundingBox.getClip(0), refinement());
-      Tensor sY = Subdivide.decreasing(coordinateBoundingBox.getClip(1), refinement());
+      Tensor sX = Subdivide.increasing(coordinateBoundingBox.getClip(0), scatteredSetParam.refine);
+      Tensor sY = Subdivide.decreasing(coordinateBoundingBox.getClip(1), scatteredSetParam.refine);
       int n = sX.length();
       Tensor[][] array = new Tensor[n][n];
       Tensor[][] point = new Tensor[n][n];
@@ -129,7 +129,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       // render grid lines functions
       if (scatteredSetParam.arrows) {
         graphics.setColor(Color.LIGHT_GRAY);
-        Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(Math.min(1, 3.0 / Math.sqrt(refinement()))));
+        Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(Math.min(1, 3.0 / Math.sqrt(scatteredSetParam.refine))));
         for (Tensor[] tensors : array)
           for (int i1 = 0; i1 < array.length; ++i1) {
             Tensor mean = tensors[i1];

@@ -27,73 +27,10 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.img.ColorDataGradient;
 
 public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDemo {
-  // protected final SpinnerLabel<Integer> spinnerRefine;
-  // private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
-  // protected final JToggleButton jToggleArrows = new JToggleButton("arrows");
-  protected final List<LogWeighting> array;
   protected final ScatteredSetParam scatteredSetParam;
-
-  protected AbstractScatteredSetWeightingDemo( //
-      List<ManifoldDisplays> list, //
-      List<LogWeighting> array) {
-    this(list, array, new ScatteredSetParam());
-  }
-
-  protected AbstractScatteredSetWeightingDemo( //
-      List<ManifoldDisplays> list, //
-      List<LogWeighting> array, ScatteredSetParam scatteredSetParam) {
-    super(new AsconaParam(true, list), scatteredSetParam);
-    fieldsEditor(1).addUniversalListener(this::recompute);
-    this.scatteredSetParam = scatteredSetParam;
-    {
-      spinnerLogWeighting = SpinnerLabel.of(array);
-      if (array.contains(LogWeightings.COORDINATE))
-        spinnerLogWeighting.setValue(LogWeightings.COORDINATE);
-      else
-        spinnerLogWeighting.setValue(array.get(0));
-      if (1 < array.size())
-        spinnerLogWeighting.addToComponentReduced(timerFrame.jToolBar, new Dimension(150, 28), "weights");
-    }
-    timerFrame.jToolBar.addSeparator();
-    spinnerLogWeighting.addSpinnerListener(spinnerListener);
-    {
-      spinnerBiinvariant.setValue(Biinvariants.LEVERAGES);
-      spinnerBiinvariant.addToComponentReduced(timerFrame.jToolBar, new Dimension(100, 28), "distance");
-      spinnerBiinvariant.addSpinnerListener(v -> recompute());
-    }
-    spinnerVariogram.setValue(VariogramFunctions.INVERSE_POWER);
-    spinnerVariogram.addToComponentReduced(timerFrame.jToolBar, new Dimension(230, 28), "variograms");
-    spinnerVariogram.addSpinnerListener(v -> recompute());
-    {
-      spinnerBeta = SpinnerLabel.of(BETAS.stream().map(Scalar.class::cast).toList());
-      spinnerBeta.setValue(RealScalar.of(2));
-      spinnerBeta.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "beta");
-      spinnerBeta.addSpinnerListener(v -> recompute());
-    }
-    timerFrame.jToolBar.addSeparator();
-    this.array = array;
-    controlPointsRender.setMidpointIndicated(false);
-    spinnerLogWeighting.addSpinnerListener(v -> recompute());
-    // ---
-    timerFrame.jToolBar.addSeparator();
-  }
-
-  protected final int refinement() {
-    return scatteredSetParam.refine;
-  }
-
-  protected final ColorDataGradient colorDataGradient() {
-    return scatteredSetParam.spinnerColorData;
-  }
-
-  private static final Tensor BETAS = Tensors.fromString("{0, 1/2, 1, 3/2, 7/4, 2, 5/2, 3}");
-  // ---
-  // TODO ASCONA DEMO manage by reflection and simplify class structure
   protected final SpinnerLabel<LogWeighting> spinnerLogWeighting;
-  private final SpinnerLabel<Biinvariants> spinnerBiinvariant = SpinnerLabel.of(Biinvariants.class);
   private final SpinnerLabel<VariogramFunctions> spinnerVariogram = SpinnerLabel.of(VariogramFunctions.class);
   private final SpinnerLabel<Scalar> spinnerBeta;
   private final SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
@@ -119,26 +56,55 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
       logWeighting.equals(LogWeightings.KRIGING) || //
           logWeighting.equals(LogWeightings.KRIGING_COORDINATE)) {
         spinnerVariogram.setValue(VariogramFunctions.POWER);
-        setBitype(Biinvariants.HARBOR);
+        scatteredSetParam.biinvariants = Biinvariants.HARBOR;
         spinnerBeta.setValue(RationalScalar.of(3, 2));
       }
     }
   };
 
-  protected final void setBitype(Biinvariants bitype) {
-    spinnerBiinvariant.setValue(bitype);
+  protected AbstractScatteredSetWeightingDemo( //
+      List<ManifoldDisplays> list, //
+      List<LogWeighting> array) {
+    this(list, array, new ScatteredSetParam());
   }
+
+  protected AbstractScatteredSetWeightingDemo( //
+      List<ManifoldDisplays> list, //
+      List<LogWeighting> array, ScatteredSetParam scatteredSetParam) {
+    super(new AsconaParam(true, list), scatteredSetParam);
+    fieldsEditor(1).addUniversalListener(this::recompute);
+    this.scatteredSetParam = scatteredSetParam;
+    {
+      spinnerLogWeighting = SpinnerLabel.of(array);
+      if (array.contains(LogWeightings.COORDINATE))
+        spinnerLogWeighting.setValue(LogWeightings.COORDINATE);
+      else
+        spinnerLogWeighting.setValue(array.get(0));
+      if (1 < array.size())
+        spinnerLogWeighting.addToComponentReduced(timerFrame.jToolBar, new Dimension(150, 28), "weights");
+    }
+    spinnerLogWeighting.addSpinnerListener(spinnerListener);
+    spinnerVariogram.setValue(VariogramFunctions.INVERSE_POWER);
+    spinnerVariogram.addToComponentReduced(timerFrame.jToolBar, new Dimension(230, 28), "variograms");
+    spinnerVariogram.addSpinnerListener(v -> recompute());
+    {
+      spinnerBeta = SpinnerLabel.of(BETAS.stream().map(Scalar.class::cast).toList());
+      spinnerBeta.setValue(RealScalar.of(2));
+      spinnerBeta.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "beta");
+      spinnerBeta.addSpinnerListener(v -> recompute());
+    }
+    controlPointsRender.setMidpointIndicated(false);
+    spinnerLogWeighting.addSpinnerListener(v -> recompute());
+  }
+
+  private static final Tensor BETAS = Tensors.fromString("{0, 1/2, 1, 3/2, 7/4, 2, 5/2, 3}");
+  // ---
 
   protected final Biinvariant biinvariant() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(manifold);
-    Biinvariants biinvariants = bitype();
-    return map.getOrDefault(biinvariants, Biinvariants.LEVERAGES.ofSafe(manifold));
-  }
-
-  protected final Biinvariants bitype() {
-    return spinnerBiinvariant.getValue();
+    return map.getOrDefault(scatteredSetParam.biinvariants, Biinvariants.LEVERAGES.ofSafe(manifold));
   }
 
   protected final Sedarim operator(Tensor sequence) {

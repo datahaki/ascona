@@ -55,7 +55,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    ColorDataGradient colorDataGradient = colorDataGradient();
+    ColorDataGradient colorDataGradient = scatteredSetParam.spinnerColorData;
     Tensor controlPoints = getGeodesicControlPoints();
     {
       Tensor box = Box2D.polygon(Box2D.xy(RANGE_X));
@@ -70,7 +70,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
     if (manifoldDisplay.dimensions() < controlPoints.length()) { // render basis functions
       Tensor origin = getGeodesicControlPoints();
       // TODO ASCONA use cache
-      Tensor wgs = compute(operator(origin), refinement());
+      Tensor wgs = compute(operator(origin), scatteredSetParam.refine);
       RenderQuality.setQuality(graphics);
       Rescale rescale = new Rescale(ImageTiling.of(wgs));
       ArrayPlotImage.of(rescale.result(), rescale.clip(), colorDataGradient).draw(graphics);

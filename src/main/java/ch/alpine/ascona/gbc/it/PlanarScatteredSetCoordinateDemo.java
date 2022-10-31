@@ -88,7 +88,7 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     arrayPlotImage = manifoldDisplay.dimensions() < sequence.length() //
-        ? arrayPlotImage(manifoldDisplay, colorDataGradient(), sequence, refinement(), operator(sequence)::sunder)
+        ? arrayPlotImage(manifoldDisplay, scatteredSetParam.spinnerColorData, sequence, scatteredSetParam.refine, operator(sequence)::sunder)
         : null;
   }
 

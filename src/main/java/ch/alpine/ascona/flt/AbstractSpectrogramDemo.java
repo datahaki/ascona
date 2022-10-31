@@ -7,10 +7,13 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
+import java.util.List;
 
 import ch.alpine.ascona.util.api.BufferedImageSupplier;
+import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDatas;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ren.GridRender;
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.PointsRender;
@@ -32,8 +35,8 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.qty.QuantityMagnitude;
+import ch.alpine.tensor.sca.win.WindowFunctions;
 
-// @ReflectionMarker
 /* package */ abstract class AbstractSpectrogramDemo extends AbstractDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
@@ -47,9 +50,30 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   protected final GokartPoseSpec gokartPoseSpec;
   protected Tensor _control = null;
 
+  public static class Param {
+    public Integer radius = 1;
+  }
+
+  protected final Param param;
+
+  protected AbstractSpectrogramDemo(List<ManifoldDisplays> list, GokartPoseData gokartPoseData) {
+    this(new GokartPoseSpec(gokartPoseData, list), new Param());
+  }
+
   protected AbstractSpectrogramDemo(GokartPoseSpec gokartPoseSpec, Object object) {
-    super(gokartPoseSpec, object);
+    this(gokartPoseSpec, new Param(), object);
+  }
+
+  protected String plotLabel() {
+    WindowFunctions windowFunctions = gokartPoseSpec.kernel;
+    int radius = param.radius;
+    return windowFunctions + " [" + (2 * radius + 1) + "]";
+  }
+
+  protected AbstractSpectrogramDemo(GokartPoseSpec gokartPoseSpec, Param param, Object object) {
+    super(gokartPoseSpec, param, object);
     this.gokartPoseSpec = gokartPoseSpec;
+    this.param = param;
     gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
     fieldsEditor(0).addUniversalListener(this::updateState);
     timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
@@ -113,9 +137,8 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   protected final Tensor control() {
     return Tensor.of(_control.stream().map(gokartPoseSpec.manifoldDisplays.manifoldDisplay()::xya2point)).unmodifiable();
   }
-
-  /** @return */
-  protected abstract String plotLabel();
+  // /** @return */
+  // protected abstract String plotLabel();
 
   private static final ColorDataGradient COLOR_DATA_GRADIENT = //
       ColorDataGradients.VISIBLE_SPECTRUM.deriveWithOpacity(RealScalar.of(0.75));
@@ -146,7 +169,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
             ScalarUnaryOperator window = gokartPoseSpec.kernel.get();
             Show show2 = new Show();
             show2.add(Spectrogram.of(signal, sampleRate, window, COLOR_DATA_GRADIENT));
-            show2.render_autoIndent(graphics, new Rectangle(width - 400, 30 + offset_y, 380, 170));
+            show2.render_autoIndent(graphics, new Rectangle(width - 400, offset_y, 400, 200));
             offset_y += 200;
           }
         }

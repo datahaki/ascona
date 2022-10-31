@@ -25,7 +25,7 @@ import ch.alpine.tensor.red.Nest;
  * {@link So2LinearBiinvariantMean}
  * {@link So2FilterBiinvariantMean}
  * {@link So2PhongBiinvariantMean} */
-public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
+public class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
   private final SpinnerLabel<Se2BiinvariantMeans> spinnerFilters = SpinnerLabel.of(Se2BiinvariantMeans.class);
   private final SpinnerLabel<Integer> spinnerConvolution;
 
@@ -57,7 +57,7 @@ public class Se2BiinvariantMeanDemo extends AbstractDatasetKernelDemo {
     Se2BiinvariantMeans se2BiinvariantMean = spinnerFilters.getValue();
     TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(se2BiinvariantMean, smoothingKernel);
     return Nest.of( //
-        new CenterFilter(tensorUnaryOperator, spinnerRadius.getValue()), //
+        new CenterFilter(tensorUnaryOperator, param.radius), //
         control(), spinnerConvolution.getValue());
   }
 
