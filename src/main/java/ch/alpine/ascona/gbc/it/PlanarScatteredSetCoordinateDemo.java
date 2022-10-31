@@ -4,13 +4,21 @@ package ch.alpine.ascona.gbc.it;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.List;
+import java.util.Objects;
 
+import ch.alpine.ascona.gbc.d2.AbstractExportWeightingDemo;
 import ch.alpine.ascona.util.api.Box2D;
 import ch.alpine.ascona.util.api.InsideConvexHullLogWeighting;
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
+import ch.alpine.ascona.util.arp.ArrayPlotImage;
+import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.PanelFieldsEditor;
 import ch.alpine.tensor.RealScalar;
@@ -22,12 +30,12 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 // FIXME ASCONA SPIN
-/* package */ class PlanarScatteredSetCoordinateDemo extends AbstractArrayCoordinateDemo {
+public class PlanarScatteredSetCoordinateDemo extends AbstractExportWeightingDemo {
   private final GenesisDequeProperties dequeGenesisProperties = new GenesisDequeProperties();
 
   // FIXME ASCONA the class structure is not correct, since log weighting is empty and not visible
   public PlanarScatteredSetCoordinateDemo() {
-    super(List.of(LogWeightings.WEIGHTING)); //
+    super(true, ManifoldDisplays.d2Rasters(), List.of(LogWeightings.WEIGHTING));
     spinnerLogWeighting.setVisible(false);
     Container container = timerFrame.jFrame.getContentPane();
     PanelFieldsEditor fieldsPanel = new PanelFieldsEditor(dequeGenesisProperties);
@@ -40,13 +48,46 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
     // addManifoldListener(this);
     addManifoldListener(l -> recompute());
     recompute();
+    addMouseRecomputation();
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));
-    super.render(geometricLayer, graphics);
+    RenderQuality.setQuality(graphics);
+    {
+      LeversRender leversRender = //
+          LeversRender.of(manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderIndexX();
+      leversRender.renderIndexP();
+    }
+    // ---
+    if (Objects.isNull(arrayPlotImage))
+      recompute();
+    if (Objects.nonNull(arrayPlotImage)) {
+      Dimension dimension = arrayPlotImage.getDimension();
+      dimension.width*=3;
+      dimension.height*=3;
+      arrayPlotImage.draw(graphics, dimension);
+    }
+  }
+
+  private ArrayPlotImage arrayPlotImage;
+
+  @Override
+  protected final void recompute() {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Tensor sequence = getGeodesicControlPoints();
+    arrayPlotImage = manifoldDisplay.dimensions() < sequence.length() //
+        ? arrayPlotImage(sequence, refinement(), operator(sequence)::sunder)
+        : null;
+  }
+
+  @Override
+  protected LogWeighting logWeighting() {
+    return new InsideConvexHullLogWeighting(dequeGenesisProperties.genesis());
   }
   // @Override
   // public void spun(ManifoldDisplays manifoldDisplay) {
@@ -70,11 +111,6 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
   // -0.667, 0.000}, {-1.450, -1.650, 0.000}}"));
   // }
   // }
-
-  @Override
-  protected LogWeighting logWeighting() {
-    return new InsideConvexHullLogWeighting(dequeGenesisProperties.genesis());
-  }
 
   public static void main(String[] args) {
     launch();
