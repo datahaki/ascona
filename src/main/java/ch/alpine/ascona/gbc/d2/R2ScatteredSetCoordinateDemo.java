@@ -52,7 +52,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   private Tensor snapshot;
 
   public R2ScatteredSetCoordinateDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2, LogWeightings.list());
+    super(ManifoldDisplays.SE2C_SE2, LogWeightings.list());
     {
       jToggleAnimate.addActionListener(e -> {
         if (jToggleAnimate.isSelected())

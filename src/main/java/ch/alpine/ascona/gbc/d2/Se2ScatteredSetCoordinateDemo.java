@@ -38,7 +38,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
   private final JToggleButton jToggleAxes = new JToggleButton("axes");
 
   public Se2ScatteredSetCoordinateDemo() {
-    super(true, ManifoldDisplays.SE2C_SE2, LogWeightings.list());
+    super(ManifoldDisplays.SE2C_SE2, LogWeightings.list());
     spinnerRefine.setValue(15);
     {
       jToggleAxes.setSelected(true);

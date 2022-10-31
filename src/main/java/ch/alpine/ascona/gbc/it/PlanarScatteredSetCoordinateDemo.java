@@ -42,7 +42,7 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
 
   // FIXME ASCONA the class structure is not correct, since log weighting is empty and not visible
   public PlanarScatteredSetCoordinateDemo() {
-    super(true, ManifoldDisplays.d2Rasters(), List.of(LogWeightings.WEIGHTING));
+    super(ManifoldDisplays.d2Rasters(), List.of(LogWeightings.WEIGHTING));
     spinnerLogWeighting.setVisible(false);
     Container container = timerFrame.jFrame.getContentPane();
     PanelFieldsEditor fieldsPanel = new PanelFieldsEditor(dequeGenesisProperties);

@@ -39,10 +39,9 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
   protected final List<LogWeighting> array;
 
   protected AbstractScatteredSetWeightingDemo( //
-      boolean addRemoveControlPoints, //
       List<ManifoldDisplays> list, //
       List<LogWeighting> array) {
-    super(new AsconaParam(addRemoveControlPoints, list));
+    super(new AsconaParam(true, list));
     {
       spinnerLogWeighting = SpinnerLabel.of(array);
       if (array.contains(LogWeightings.COORDINATE))
