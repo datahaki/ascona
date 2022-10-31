@@ -178,7 +178,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
               graphics.draw(geometricLayer.toPath2D(Tensors.of(manifoldDisplay.point2xy(a1), po)));
           }
         }
-      if (jToggleArrows.isSelected()) {
+      if (scatteredSetParam.arrows) {
         Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
         for (int i0 = 0; i0 < n; ++i0)
           for (int i1 = 0; i1 < n; ++i1) {

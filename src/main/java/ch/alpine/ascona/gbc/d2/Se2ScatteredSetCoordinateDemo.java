@@ -39,7 +39,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
 
   public Se2ScatteredSetCoordinateDemo() {
     super(ManifoldDisplays.SE2C_SE2, LogWeightings.list());
-    spinnerRefine.setValue(15);
+    scatteredSetParam.refine = 15;
     {
       jToggleAxes.setSelected(true);
       timerFrame.jToolBar.add(jToggleAxes);

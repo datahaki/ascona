@@ -7,8 +7,6 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JToggleButton;
-
 import ch.alpine.ascona.util.api.LogWeighting;
 import ch.alpine.ascona.util.api.LogWeightings;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -30,18 +28,26 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.img.ColorDataGradient;
-import ch.alpine.tensor.img.ColorDataGradients;
 
 public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDemo {
-  protected final SpinnerLabel<Integer> spinnerRefine;
-  private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
-  protected final JToggleButton jToggleArrows = new JToggleButton("arrows");
+  // protected final SpinnerLabel<Integer> spinnerRefine;
+  // private final SpinnerLabel<ColorDataGradients> spinnerColorData = SpinnerLabel.of(ColorDataGradients.class);
+  // protected final JToggleButton jToggleArrows = new JToggleButton("arrows");
   protected final List<LogWeighting> array;
+  protected final ScatteredSetParam scatteredSetParam;
 
   protected AbstractScatteredSetWeightingDemo( //
       List<ManifoldDisplays> list, //
       List<LogWeighting> array) {
-    super(new AsconaParam(true, list));
+    this(list, array, new ScatteredSetParam());
+  }
+
+  protected AbstractScatteredSetWeightingDemo( //
+      List<ManifoldDisplays> list, //
+      List<LogWeighting> array, ScatteredSetParam scatteredSetParam) {
+    super(new AsconaParam(true, list), scatteredSetParam);
+    fieldsEditor(1).addUniversalListener(this::recompute);
+    this.scatteredSetParam = scatteredSetParam;
     {
       spinnerLogWeighting = SpinnerLabel.of(array);
       if (array.contains(LogWeightings.COORDINATE))
@@ -71,29 +77,16 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     this.array = array;
     controlPointsRender.setMidpointIndicated(false);
     spinnerLogWeighting.addSpinnerListener(v -> recompute());
-    {
-      spinnerRefine = SpinnerLabel.of(3, 5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 120, 160);
-      spinnerRefine.setValue(20);
-      spinnerRefine.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "refinement");
-      spinnerRefine.addSpinnerListener(v -> recompute());
-    }
-    spinnerColorData.setValue(ColorDataGradients.CLASSIC);
-    spinnerColorData.addToComponentReduced(timerFrame.jToolBar, new Dimension(120, 28), "color scheme");
-    spinnerColorData.addSpinnerListener(v -> recompute());
-    {
-      jToggleArrows.setSelected(false);
-      timerFrame.jToolBar.add(jToggleArrows);
-    }
     // ---
     timerFrame.jToolBar.addSeparator();
   }
 
   protected final int refinement() {
-    return spinnerRefine.getValue();
+    return scatteredSetParam.refine;
   }
 
   protected final ColorDataGradient colorDataGradient() {
-    return spinnerColorData.getValue();
+    return scatteredSetParam.spinnerColorData;
   }
 
   private static final Tensor BETAS = Tensors.fromString("{0, 1/2, 1, 3/2, 7/4, 2, 5/2, 3}");

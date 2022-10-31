@@ -127,7 +127,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
         ArrayPlotImage.of(rescale.result(), rescale.clip(), colorDataGradient).draw(graphics);
       }
       // render grid lines functions
-      if (jToggleArrows.isSelected()) {
+      if (scatteredSetParam.arrows) {
         graphics.setColor(Color.LIGHT_GRAY);
         Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(Math.min(1, 3.0 / Math.sqrt(refinement()))));
         for (Tensor[] tensors : array)
