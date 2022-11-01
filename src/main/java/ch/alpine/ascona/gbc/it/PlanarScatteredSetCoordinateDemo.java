@@ -51,9 +51,7 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
     // ---
     TensorUnaryOperator tuo = PadRight.zeros(3);
     setControlPointsSe2(Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(0.6)).stream().map(tuo)));
-    // spun(ManifoldDisplays.R2);
-    // addManifoldListener(this);
-    addManifoldListener(l -> recompute());
+    fieldsEditor(0).addUniversalListener(this::recompute);
     recompute();
     addMouseRecomputation();
   }

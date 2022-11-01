@@ -23,6 +23,7 @@ import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.LieGroup;
@@ -50,6 +51,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   protected final GokartPoseSpec gokartPoseSpec;
   protected Tensor _control = null;
 
+  @ReflectionMarker
   public static class Param {
     public Integer radius = 1;
   }

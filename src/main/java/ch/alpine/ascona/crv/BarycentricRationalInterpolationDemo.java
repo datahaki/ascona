@@ -112,10 +112,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
           show.setPlotLabel("Basis 2");
           for (Tensor values : Transpose.of(basis2))
             show.add(ListLinePlot.of(domain, values));
-          Rectangle rectangle = Show.defaultInsets(new Dimension(WIDTH, HEIGHT), graphics.getFont().getSize());
-          rectangle.x += dimension.width - WIDTH;
-          rectangle.y += HEIGHT;
-          show.render(graphics, rectangle);
+          show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH,HEIGHT,WIDTH, HEIGHT));
         }
       }
     }

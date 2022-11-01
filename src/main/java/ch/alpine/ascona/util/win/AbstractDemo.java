@@ -69,12 +69,10 @@ public abstract class AbstractDemo implements RenderInterface {
 
   /** @param width
    * @param height */
-  @Deprecated
   public final void setVisible(int width, int height) {
     setVisible(100, 100, width, height);
   }
 
-  @Deprecated
   public final void setVisible(int x, int y, int width, int height) {
     timerFrame.jFrame.setBounds(x, y, width, height);
     timerFrame.jFrame.setVisible(true);

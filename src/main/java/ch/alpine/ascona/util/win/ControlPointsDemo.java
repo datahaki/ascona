@@ -12,7 +12,6 @@ import ch.alpine.ascona.util.ref.AsconaParam;
 import ch.alpine.ascona.util.ren.ControlPointsRender;
 import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerListener;
 import ch.alpine.sophus.crv.dub.DubinsGenerator;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -64,11 +63,6 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   public final synchronized void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
     asconaParam.manifoldDisplays = manifoldDisplays;
     fieldsEditor(0).updateJComponents();
-  }
-
-  @Deprecated
-  public void addManifoldListener(SpinnerListener<ManifoldDisplays> spinnerListener) {
-    fieldsEditor(0).addUniversalListener(() -> spinnerListener.spun(asconaParam.manifoldDisplays));
   }
 
   /** @return */

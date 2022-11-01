@@ -66,7 +66,7 @@ import ch.alpine.tensor.img.ColorDataLists;
       Tensor domain = domain(support);
       // ---
       Tensor sequence = support.map(this::lift);
-      Manifold manifold = (Manifold) param.manifoldDisplays.geodesicSpace();
+      Manifold manifold = (Manifold) param.manifoldDisplays.manifoldDisplay().geodesicSpace();
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
       ScalarTensorFunction scalarTensorFunction = //
           point -> sedarim.sunder(lift(point));

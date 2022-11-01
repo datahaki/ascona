@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.hs.MetricManifold;
@@ -41,18 +40,13 @@ public enum ManifoldDisplays {
     return manifoldDisplay;
   }
 
-  @Deprecated // TODO ASCONA make private
-  public GeodesicSpace geodesicSpace() {
-    return manifoldDisplay().geodesicSpace();
-  }
-
   public static final List<ManifoldDisplays> ALL = List.of(values());
 
   // ---
   /** requires biinvariant() */
   public static List<ManifoldDisplays> metricManifolds() {
     return Arrays.stream(values()) //
-        .filter(md -> md.geodesicSpace() instanceof MetricManifold) //
+        .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof MetricManifold) //
         .toList();
   }
 
@@ -60,14 +54,14 @@ public enum ManifoldDisplays {
   /** manifolds */
   public static List<ManifoldDisplays> manifolds() {
     return Arrays.stream(values()) //
-        .filter(md -> md.geodesicSpace() instanceof Manifold) //
+        .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof Manifold) //
         .toList();
   }
 
   /** homogeneous spaces (have biinvariant mean) */
   public static List<ManifoldDisplays> homogeneousSpaces() {
     return Arrays.stream(values()) //
-        .filter(md -> md.geodesicSpace() instanceof HomogeneousSpace) //
+        .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof HomogeneousSpace) //
         .toList();
   }
 
@@ -83,7 +77,7 @@ public enum ManifoldDisplays {
   public static List<ManifoldDisplays> metricD2Rasters() {
     return Arrays.stream(values()) //
         .filter(md -> md.manifoldDisplay() instanceof D2Raster) //
-        .filter(md -> md.geodesicSpace() instanceof MetricManifold) //
+        .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof MetricManifold) //
         .toList();
   }
 
