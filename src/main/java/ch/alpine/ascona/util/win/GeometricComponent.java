@@ -8,9 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.InputEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -150,16 +148,6 @@ public final class GeometricComponent {
       jComponent.addMouseMotionListener(mouseInputListener);
       jComponent.addMouseListener(mouseInputListener);
     }
-    {
-      MouseListener mouseListener = new MouseAdapter() {
-        @Override
-        public void mousePressed(MouseEvent mouseEvent) {
-          // if (printPositionOnClick)
-          // System.out.println(getMouseSe2CState().map(Round._3));
-        }
-      };
-      jComponent.addMouseListener(mouseListener);
-    }
   }
 
   /** determines if mouseDragged + ctrl allows rotation
@@ -175,13 +163,6 @@ public final class GeometricComponent {
   public void setZoomable(boolean isZoomable) {
     this.isZoomable = isZoomable;
   }
-  /** the Position of the mouse should be printed to the console when the right
-   * mouse button is clicked
-   * 
-   * @param printPositionOnClick */
-  // public void setPrintPositionOnClick(boolean printPositionOnClick) {
-  // this.printPositionOnClick = printPositionOnClick;
-  // }
 
   /** @param button for instance MouseEvent.BUTTON1 */
   public void setButtonDrag(int button) {
@@ -238,7 +219,6 @@ public final class GeometricComponent {
     graphics.setColor(Color.WHITE);
     graphics.fillRect(0, 0, dimension.width, dimension.height);
     // ---
-    // , getMouseSe2CState()
     GeometricLayer geometricLayer = new GeometricLayer(model2pixel);
     renderBackground.forEach(renderInterface -> renderInterface.render(geometricLayer, graphics));
     renderInterfaces.forEach(renderInterface -> renderInterface.render(geometricLayer, graphics));

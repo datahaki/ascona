@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -27,7 +28,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 /* package */ enum SphereFitShow {
   ;
   private static Tensor image(int seed) {
-    Random random = new Random(seed);
+    RandomGenerator random = new Random(seed);
     Tensor points = RandomVariate.of(UniformDistribution.unit(), random, 10, 2);
     Optional<SphereFit> optional = SphereFit.of(points);
     Tensor center = optional.get().center();

@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -46,7 +47,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     public Boolean active = false;
   }
 
-  private final Random random = new Random();
+  private final RandomGenerator random = new Random();
   private final Param0 param0;
   private final Param1 param1;
   private Tsp2OptHeuristic tsp2OptHeuristic;

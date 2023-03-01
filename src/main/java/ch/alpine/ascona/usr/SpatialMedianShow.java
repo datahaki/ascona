@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -44,7 +45,7 @@ import ch.alpine.tensor.sca.Chop;
   }
 
   private static Tensor image(int seed) {
-    Random random = new Random(seed);
+    RandomGenerator random = new Random(seed);
     Tensor points = RandomVariate.of(UniformDistribution.unit(), random, 15, 2);
     Optional<Tensor> optional = new WeiszfeldMethod(Chop._10).uniform(points);
     GeometricLayer geometricLayer = new GeometricLayer(StaticHelper.SE2);

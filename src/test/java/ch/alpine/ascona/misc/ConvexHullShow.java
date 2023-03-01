@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -25,7 +26,7 @@ import ch.alpine.tensor.sca.Clips;
 /* package */ enum ConvexHullShow {
   ;
   private static Tensor image(int seed) {
-    Random random = new Random(seed);
+    RandomGenerator random = new Random(seed);
     Tensor points = RandomVariate.of(NormalDistribution.of(0.5, .28), random, 30, 2).map(Clips.unit());
     Tensor hull = CirclePoints.of(17); // TODO SOPHUS demo is placed incorrectly
     // ConvexHull2D.of(points);

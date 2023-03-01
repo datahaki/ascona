@@ -7,6 +7,7 @@ import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.win.AbstractDemo;
@@ -80,7 +81,7 @@ import ch.alpine.tensor.red.Max;
     Scalar radius = param.radius;
     CoordinateBoundingBox actual = CoordinateBounds.of(points);
     NdMap<Void> ndMap = NdTreeMap.of(actual, param.leafSizeMax);
-    Random random = new Random(1);
+    RandomGenerator random = new Random(1);
     int multi = param.multi;
     for (Tensor point : points) {
       int count = 1 + random.nextInt(multi);

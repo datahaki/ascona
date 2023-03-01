@@ -3,6 +3,7 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 class HnMeansTest {
   @Test
   void testSimple() throws ClassNotFoundException, IOException {
-    Random random = new Random(3);
+    RandomGenerator random = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     for (HnMeans hnMeans : HnMeans.values()) {
       BiinvariantMean biinvariantMean = Serialization.copy(hnMeans).get();

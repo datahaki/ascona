@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -37,7 +38,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Chop;
 
 public class KMeansDemo extends ControlPointsDemo {
-  private static final Random RANDOM = new Random();
+  private static final RandomGenerator RANDOM = new Random();
 
   @ReflectionMarker
   public static class Param1 extends AsconaParam {
