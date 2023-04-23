@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.sophus.crv.BezierFunction;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.itp.BezierFunction;
 
 class SymLinkBuilderTest {
   @Test

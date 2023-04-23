@@ -8,12 +8,12 @@ import ch.alpine.ascona.util.sym.SymScalar;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.BezierFunction;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.itp.BezierFunction;
 
 /** visualization of geodesic average along geodesics */
 public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {

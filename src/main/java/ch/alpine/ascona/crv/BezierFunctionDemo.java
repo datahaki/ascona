@@ -17,12 +17,13 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.crv.BezierFunction;
+import ch.alpine.sophus.crv.BezierMean;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
+import ch.alpine.tensor.itp.BezierFunction;
 import ch.alpine.tensor.sca.Chop;
 
 /** Bezier function with extrapolation */
@@ -79,7 +80,7 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     if (geodesicSpace instanceof HomogeneousSpace homogeneousSpace) {
       BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
       if (Objects.nonNull(biinvariantMean)) {
-        Tensor refined = domain.map(BezierFunction.of(biinvariantMean, sequence));
+        Tensor refined = domain.map(BezierMean.of(biinvariantMean, sequence));
         Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
         new PathRender(Color.RED, 1.25f).setCurve(render, false).render(geometricLayer, graphics);
       }
