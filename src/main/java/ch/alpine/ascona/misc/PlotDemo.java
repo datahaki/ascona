@@ -10,9 +10,9 @@ import ch.alpine.ascona.util.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.tmp.ResamplingMethod;
-import ch.alpine.tensor.tmp.ResamplingMethods;
 
 /** split interface and biinvariant mean based curve subdivision */
+// TODO ASCONA REV this does not do anything
 public class PlotDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
@@ -20,7 +20,7 @@ public class PlotDemo extends ControlPointsDemo {
       super(true, ManifoldDisplays.R2_ONLY);
     }
 
-    public ResamplingMethod rm = ResamplingMethods.LINEAR_INTERPOLATION;
+    public ResamplingMethod rm = ResamplingMethod.LINEAR_INTERPOLATION;
     public Integer refine = 5;
   }
 

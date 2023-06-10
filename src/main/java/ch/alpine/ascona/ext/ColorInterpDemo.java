@@ -19,6 +19,7 @@ import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.red.Times;
 
 /** uses ColorSpace.CS_CIEXYZ to interpolate colors */
+// TODO ASCONA add labels for each method, perhaps use graphs!
 public class ColorInterpDemo extends AbstractDemo {
   private static final ColorSpace COLOR_SPACE = ColorSpace.getInstance(ColorSpace.CS_CIEXYZ);
   private static final int HEIGHT = 100;

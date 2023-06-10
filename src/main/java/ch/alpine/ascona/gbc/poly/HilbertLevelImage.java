@@ -52,7 +52,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
     CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
     Tensor matrix = ImageRender.pixel2model(coordinateBoundingBox, height, height);
     GeometricLayer geometricLayer = new GeometricLayer(Inverse.of(matrix));
-    Scalar width = coordinateBoundingBox.getClip(0).width();
+    Scalar width = coordinateBoundingBox.clip(0).width();
     for (int count = 0; count < sequence_length; ++count) {
       Tensor xy = Tensors.of(width.multiply(RealScalar.of(count)), width.zero());
       geometricLayer.pushMatrix(GfxMatrix.translation(xy));

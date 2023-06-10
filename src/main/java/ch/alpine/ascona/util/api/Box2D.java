@@ -25,8 +25,8 @@ public enum Box2D {
    * coordinateBoundingBox starting with the min,min corner and visiting ccw
    * so that {@link PolygonArea} gives a non-negative number */
   public static Tensor polygon(CoordinateBoundingBox coordinateBoundingBox) {
-    Clip clipX = coordinateBoundingBox.getClip(0);
-    Clip clipY = coordinateBoundingBox.getClip(1);
+    Clip clipX = coordinateBoundingBox.clip(0);
+    Clip clipY = coordinateBoundingBox.clip(1);
     Tensor c00 = Tensors.of(clipX.min(), clipY.min());
     Tensor c10 = Tensors.of(clipX.max(), clipY.min());
     Tensor c11 = Tensors.of(clipX.max(), clipY.max());

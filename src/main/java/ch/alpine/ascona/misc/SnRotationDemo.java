@@ -28,6 +28,7 @@ import ch.alpine.tensor.lie.TensorWedge;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.sca.Mod;
 
+// TODO ASCONA REV add more parameters
 public class SnRotationDemo extends AbstractDemo {
   private static class SnRotationChunk implements RenderInterface {
     private final ColorDataGradient colorDataGradient;
@@ -80,7 +81,7 @@ public class SnRotationDemo extends AbstractDemo {
   public SnRotationDemo(Param param) {
     super(param);
     this.param = param;
-    list.add(new SnRotationChunk(3, 200, 3, 0.3, ColorDataGradients.PARULA.deriveWithOpacity(RealScalar.of(0.3))));
+    list.add(new SnRotationChunk(3, 200, 3, 0.1, ColorDataGradients.PARULA.deriveWithOpacity(RealScalar.of(0.3))));
     // list.add(new SnRotationChunk(3, 50, 20, 0.02, ColorDataGradients.SOLAR.deriveWithOpacity(RealScalar.of(0.5))));
   }
 

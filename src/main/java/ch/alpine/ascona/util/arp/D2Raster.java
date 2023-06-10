@@ -22,8 +22,8 @@ public interface D2Raster {
    * @see ArrayFunction */
   static <T extends Tensor> Tensor of(D2Raster d2Raster, int resolution, ArrayFunction<T> arrayFunction) {
     CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
-    Tensor dx = Subdivide.increasing(coordinateBoundingBox.getClip(0), resolution - 1).map(N.DOUBLE);
-    Tensor dy = Subdivide.decreasing(coordinateBoundingBox.getClip(1), resolution - 1).map(N.DOUBLE);
+    Tensor dx = Subdivide.increasing(coordinateBoundingBox.clip(0), resolution - 1).map(N.DOUBLE);
+    Tensor dy = Subdivide.decreasing(coordinateBoundingBox.clip(1), resolution - 1).map(N.DOUBLE);
     return Tensor.of(dy.stream().map(Scalar.class::cast).parallel() //
         .map(py -> Tensor.of(dx.stream().map(Scalar.class::cast) //
             .map(px -> Unprotect.using(List.of(px, py))) //

@@ -25,8 +25,8 @@ public class ImageRender implements RenderInterface {
    * @param h
    * @return */
   public static Tensor pixel2model(CoordinateBoundingBox coordinateBoundingBox, int w, int h) {
-    Clip clipX = coordinateBoundingBox.getClip(0);
-    Clip clipY = coordinateBoundingBox.getClip(1);
+    Clip clipX = coordinateBoundingBox.clip(0);
+    Clip clipY = coordinateBoundingBox.clip(1);
     Tensor range = Tensors.of(clipX.width(), clipY.width());
     Tensor scale = Times.of(Tensors.vector(w, h), range.map(Scalar::reciprocal));
     Tensor mat = GfxMatrix.translation(Tensors.of(clipX.min(), clipY.min()));

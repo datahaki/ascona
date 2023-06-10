@@ -23,6 +23,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.pdf.RandomVariate;
 
+// TODO ASCONA why is there animation storage icon here?
 public class ColoredNoiseDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {

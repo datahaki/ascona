@@ -26,6 +26,7 @@ import ch.alpine.tensor.lie.r2.CirclePoints;
 import ch.alpine.tensor.mat.pi.LeastSquares;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
+// TODO ASCONA misnomer
 public class CirclePointDemo extends ControlPointsDemo {
   public CirclePointDemo() {
     super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));

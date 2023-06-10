@@ -9,6 +9,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
+// TODO ASCONA API misnomer && code not effective
 public record AreaRender(Color color_fill, TensorUnaryOperator matrixLift, Tensor shape, Tensor points) implements RenderInterface {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {

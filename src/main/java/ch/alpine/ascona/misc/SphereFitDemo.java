@@ -40,6 +40,8 @@ import ch.alpine.tensor.opt.hun.BipartiteMatching;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 
+// TODO ASCONA REV name of demo !?
+// ... toggle convex hull, matching, median ...
 public class SphereFitDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
   private static final Tensor CIRCLE = CirclePoints.of(10).multiply(RealScalar.of(3));

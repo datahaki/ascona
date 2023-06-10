@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Ceiling;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-public class CirclesDemo extends AbstractDemo {
+public class CircleQualityDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     @FieldSlider
@@ -33,11 +33,11 @@ public class CirclesDemo extends AbstractDemo {
 
   private final Param param;
 
-  public CirclesDemo() {
+  public CircleQualityDemo() {
     this(new Param());
   }
 
-  public CirclesDemo(Param param) {
+  public CircleQualityDemo(Param param) {
     super(param);
     this.param = param;
   }

@@ -99,8 +99,8 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       // ---
       Sedarim sedarim = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), domain);
       // operator(domain);
-      Tensor sX = Subdivide.increasing(coordinateBoundingBox.getClip(0), scatteredSetParam.refine);
-      Tensor sY = Subdivide.decreasing(coordinateBoundingBox.getClip(1), scatteredSetParam.refine);
+      Tensor sX = Subdivide.increasing(coordinateBoundingBox.clip(0), scatteredSetParam.refine);
+      Tensor sY = Subdivide.decreasing(coordinateBoundingBox.clip(1), scatteredSetParam.refine);
       int n = sX.length();
       Tensor[][] array = new Tensor[n][n];
       Tensor[][] point = new Tensor[n][n];
