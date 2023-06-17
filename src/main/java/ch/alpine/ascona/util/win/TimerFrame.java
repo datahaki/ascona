@@ -56,7 +56,8 @@ public class TimerFrame extends BaseFrame {
             jToggleButton.setSelected(false);
           }
         }
-        if (!jToggleButton.isSelected() && _animationWriter != null) {
+        
+        if (!jToggleButton.isSelected() && Objects.nonNull(_animationWriter)) {
           synchronized (_animationWriter) {
             try {
               _animationWriter.close();
