@@ -8,9 +8,8 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 public enum SpiralParam {
-  EULER(EulerSpiral.FUNCTION), //
-  LOGARITHMIC(LogarithmicSpiral.of(1, 0.2)), //
-  ;
+  EULER(EulerSpiral.FUNCTION),
+  LOGARITHMIC(LogarithmicSpiral.of(1, 0.2));
 
   public final ScalarTensorFunction scalarTensorFunction;
   public final Tensor points;

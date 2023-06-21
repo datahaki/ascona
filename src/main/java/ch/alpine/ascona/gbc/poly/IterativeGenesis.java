@@ -16,9 +16,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.Chop;
 
 public enum IterativeGenesis {
-  MEAN_VALUE(new ThreePointWeighting(Barycenter.MEAN_VALUE)), //
-  INVERSE_DISTANCE(AffineCoordinate.INSTANCE), //
-  ;
+  MEAN_VALUE(new ThreePointWeighting(Barycenter.MEAN_VALUE)),
+  INVERSE_DISTANCE(AffineCoordinate.INSTANCE);
 
   private final Genesis genesis;
 

@@ -10,10 +10,9 @@ import ch.alpine.sophus.ref.d2.SurfaceMeshRefinement;
 import ch.alpine.sophus.ref.d2.TriQuadLinearRefinement;
 
 public enum SurfaceMeshRefinements {
-  LINEAR(TriQuadLinearRefinement::new), //
-  DOO_SABIN(DooSabinRefinement::new), //
-  CATMULL_CLARK(CatmullClarkRefinement::new), //
-  ;
+  LINEAR(TriQuadLinearRefinement::new),
+  DOO_SABIN(DooSabinRefinement::new),
+  CATMULL_CLARK(CatmullClarkRefinement::new);
 
   private final Function<BiinvariantMean, SurfaceMeshRefinement> function;
 
