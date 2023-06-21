@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 import ch.alpine.tensor.Tensor;
 
-public record ArrayFunction<T extends Tensor> (Function<Tensor, T> function, T fallback) //
+public record ArrayFunction<T extends Tensor>(Function<Tensor, T> function, T fallback) //
     implements Function<Optional<Tensor>, T> {
   /** @param optional
    * @return */

@@ -212,7 +212,7 @@ public class ControlPointsRender implements RenderInterface {
   }
 
   public final Scalar getPositioningThreshold() {
-    return PIXEL_THRESHOLD.divide(Sqrt.FUNCTION.apply(Abs.of(Det.of(model2Pixel.get()))));
+    return PIXEL_THRESHOLD.divide(Sqrt.FUNCTION.apply(Abs.FUNCTION.apply(Det.of(model2Pixel.get()))));
   }
 
   /** @param control points as matrix of dimensions N x 3 */

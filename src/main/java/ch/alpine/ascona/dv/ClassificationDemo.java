@@ -116,7 +116,7 @@ public class ClassificationDemo extends ControlPointsDemo {
     LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
     if (param1.connect)
       leversRender.renderLevers(param1.labels.equals(Labels.ARG_MIN) //
-          ? Sqrt.of(weights).negate()
+          ? weights.map(Sqrt.FUNCTION).negate()
           : weights);
     if (param1.weights)
       leversRender.renderWeights(weights);
