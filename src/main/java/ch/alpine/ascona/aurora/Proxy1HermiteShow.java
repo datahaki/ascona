@@ -27,8 +27,8 @@ import ch.alpine.tensor.sca.exp.Log;
 
   @Override // from HermiteArray
   Tensor compute(int rows, int cols) {
-    Tensor lambda = N.DOUBLE.of(Subdivide.of(RationalScalar.of(-3, 4), RationalScalar.of(-1, 6), rows - 1));
-    Tensor mu = N.DOUBLE.of(Subdivide.of(RationalScalar.of(-2, 1), RationalScalar.of(+5, 2), cols - 1));
+    Tensor lambda = Subdivide.of(RationalScalar.of(-3, 4), RationalScalar.of(-1, 6), rows - 1).map(N.DOUBLE);
+    Tensor mu = Subdivide.of(RationalScalar.of(-2, 1), RationalScalar.of(+5, 2), cols - 1).map(N.DOUBLE);
     return Parallelize.matrix((i, j) -> h1(lambda.Get(i), mu.Get(j)), rows, cols);
     // return Parallelize.matrix((i, j) -> lambda.Get(i), rows, cols);
   }

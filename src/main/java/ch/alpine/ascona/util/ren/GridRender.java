@@ -38,10 +38,10 @@ public class GridRender implements RenderInterface, Serializable {
    * @param y vector of coordinates along the y axis
    * @param color of grid lines */
   public GridRender(Tensor x, Tensor y, Color color) {
-    this.x_grid = N.DOUBLE.of(x);
+    this.x_grid = x.map(N.DOUBLE);
     x_lo = (Scalar) x_grid.stream().reduce(Min::of).get();
     x_hi = (Scalar) x_grid.stream().reduce(Max::of).get();
-    this.y_grid = N.DOUBLE.of(y);
+    this.y_grid = y.map(N.DOUBLE);
     y_lo = (Scalar) y_grid.stream().reduce(Min::of).get();
     y_hi = (Scalar) y_grid.stream().reduce(Max::of).get();
     this.color = Objects.requireNonNull(color);

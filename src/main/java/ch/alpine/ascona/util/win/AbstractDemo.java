@@ -26,6 +26,7 @@ public abstract class AbstractDemo implements RenderInterface {
       Class<?> cls = Class.forName(clsName);
       Constructor<?> constructor = cls.getConstructor();
       AbstractDemo abstractDemo = (AbstractDemo) constructor.newInstance();
+      // TODO ASCONA use ResourceLocator
       File folder = HomeDirectory.file(".config", "ascona", "window");
       folder.mkdirs();
       File file = new File(folder, clsName + "_WindowBounds.properties");

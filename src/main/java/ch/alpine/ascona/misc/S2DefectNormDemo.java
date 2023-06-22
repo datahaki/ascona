@@ -92,7 +92,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     public TSF() {
       sequence = getGeodesicControlPoints();
       int n = sequence.length();
-      weights = NormalizeTotal.FUNCTION.apply(N.DOUBLE.of(param.user_weights.extract(0, n)));
+      weights = NormalizeTotal.FUNCTION.apply(param.user_weights.extract(0, n).map(N.DOUBLE));
     }
 
     @Override

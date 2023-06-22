@@ -76,7 +76,7 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
     if (1 < _control.length()) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
-      Tensor control = N.DOUBLE.of(_control);
+      Tensor control = _control.map(N.DOUBLE);
       Scalar delta = RealScalar.ONE;
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
       int levels = param.refine;

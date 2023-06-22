@@ -240,7 +240,7 @@ public class ControlPointsRender implements RenderInterface {
         .skip(skip) //
         .limit(maxSize) //
         .map(manifoldDisplay()::xya2point) //
-        .map(N.DOUBLE::of));
+        .map(tensor -> tensor.map(N.DOUBLE)));
   }
 
   public final ManifoldDisplay manifoldDisplay() {
