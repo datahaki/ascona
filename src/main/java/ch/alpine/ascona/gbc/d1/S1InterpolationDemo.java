@@ -116,7 +116,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
         Tensor curve = Times.of(basis.dot(values), spherics);
         new PathRender(Color.BLUE, 1.25f).setCurve(curve, true).render(geometricLayer, graphics);
         // ---
-        Reverse.of(spherics).stream().forEach(curve::append);
+        Reverse.of(spherics).forEach(curve::append);
         graphics.setColor(new Color(0, 0, 255, 32));
         graphics.fill(geometricLayer.toPath2D(curve));
       } catch (Exception exception) {

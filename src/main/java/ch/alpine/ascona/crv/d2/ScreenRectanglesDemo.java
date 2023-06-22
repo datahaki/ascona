@@ -25,11 +25,7 @@ public class ScreenRectanglesDemo extends ControlPointsDemo {
     public Param() {
       super(true, ManifoldDisplays.R2_ONLY);
     }
-
-    public Boolean show = true;
   }
-
-  private final Param param;
 
   public ScreenRectanglesDemo() {
     this(new Param());
@@ -37,7 +33,6 @@ public class ScreenRectanglesDemo extends ControlPointsDemo {
 
   public ScreenRectanglesDemo(Param param) {
     super(param);
-    this.param = param;
   }
 
   private static Rectangle here(Point2D p, Point2D q) {

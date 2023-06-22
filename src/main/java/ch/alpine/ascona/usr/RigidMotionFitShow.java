@@ -34,7 +34,7 @@ import ch.alpine.tensor.sca.tri.ArcTan;
   public static void main(String[] args) throws IOException {
     Tensor target = Array.zeros(1, 2);
     Tensor shuffl = shufflePoints(2);
-    shuffl.stream().forEach(target::append);
+    shuffl.forEach(target::append);
     System.out.println(Pretty.of(target));
     Tensor points = target.copy();
     int RES = 128;
