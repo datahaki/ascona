@@ -2,7 +2,7 @@
 package ch.alpine.ascona.util.dat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,11 +16,6 @@ class GokartPoseDataV1Test {
 
   @Test
   void testListUnmodifiable() {
-    try {
-      GokartPoseDataV1.INSTANCE.list().clear();
-      fail();
-    } catch (Exception exception) {
-      // ---
-    }
+    assertThrows(Exception.class, () -> GokartPoseDataV1.INSTANCE.list().clear());
   }
 }
