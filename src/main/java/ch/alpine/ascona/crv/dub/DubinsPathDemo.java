@@ -127,7 +127,7 @@ public class DubinsPathDemo extends ControlPointsDemo {
           ClothoidTransition.of(CLOTHOID_BUILDER, START, mouse);
       Tensor tensor = clothoidTransition.linearized(RealScalar.of(0.1));
       pathRenderClothoid.setCurve(tensor, false).render(geometricLayer, graphics);
-      // TODO OWL ALG
+      // TODO ASCONA ALG
     }
     { // draw least curved path
       graphics.setColor(COLOR_DATA_INDEXED.getColor(2));

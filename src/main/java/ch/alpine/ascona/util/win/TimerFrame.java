@@ -38,8 +38,9 @@ public class TimerFrame extends BaseFrame {
       }
       JToggleButton jToggleButton = _jToggleButton;
       jToggleButton.setToolTipText("animation is stored in ~/Videos/...");
+      
       jToggleButton.addActionListener(actionEvent -> {
-        if (jToggleButton.isSelected() && _animationWriter == null) {
+        if (jToggleButton.isSelected() && Objects.isNull(_animationWriter)) {
           try {
             File file = HomeDirectory.Videos(String.format("ascona_%d_%s.%s", //
                 System.currentTimeMillis(), //
