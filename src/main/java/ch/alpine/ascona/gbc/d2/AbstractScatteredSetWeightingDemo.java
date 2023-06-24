@@ -81,16 +81,16 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
       else
         spinnerLogWeighting.setValue(array.get(0));
       if (1 < array.size())
-        spinnerLogWeighting.addToComponentReduced(timerFrame.jToolBar, new Dimension(150, 28), "weights");
+        spinnerLogWeighting.addToComponent(timerFrame.jToolBar, "weights");
     }
     spinnerLogWeighting.addSpinnerListener(spinnerListener);
     spinnerVariogram.setValue(VariogramFunctions.INVERSE_POWER);
-    spinnerVariogram.addToComponentReduced(timerFrame.jToolBar, new Dimension(230, 28), "variograms");
+    spinnerVariogram.addToComponent(timerFrame.jToolBar, "variograms");
     spinnerVariogram.addSpinnerListener(v -> recompute());
     {
       spinnerBeta = SpinnerLabel.of(BETAS.stream().map(Scalar.class::cast).toList());
       spinnerBeta.setValue(RealScalar.of(2));
-      spinnerBeta.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "beta");
+      spinnerBeta.addToComponent(timerFrame.jToolBar, "beta");
       spinnerBeta.addSpinnerListener(v -> recompute());
     }
     controlPointsRender.setMidpointIndicated(false);

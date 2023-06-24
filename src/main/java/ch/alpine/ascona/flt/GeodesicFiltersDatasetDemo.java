@@ -1,7 +1,6 @@
 // code by jph, ob
 package ch.alpine.ascona.flt;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -27,12 +26,12 @@ public class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implemen
     super(ManifoldDisplays.SE2_R2, GokartPoseDataV1.INSTANCE);
     {
       spinnerFilters.setValue(GeodesicFilters.GEODESIC);
-      spinnerFilters.addToComponentReduced(timerFrame.jToolBar, new Dimension(170, 28), "filter type");
+      spinnerFilters.addToComponent(timerFrame.jToolBar, "filter type");
       spinnerFilters.addSpinnerListener(type -> updateState());
     }
     {
       spinnerConvolution.setValue(3);
-      spinnerConvolution.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "convolution");
+      spinnerConvolution.addToComponent(timerFrame.jToolBar, "convolution");
       spinnerConvolution.addSpinnerListener(type -> updateState());
     }
     // ---

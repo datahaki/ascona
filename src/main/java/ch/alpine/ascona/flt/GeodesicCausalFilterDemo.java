@@ -36,7 +36,7 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
     super(ManifoldDisplays.SE2_ONLY, GokartPoseDataV2.INSTANCE);
     {
       spinnerCausalFilter.setValue(GeodesicCausalFilters.BIINVARIANT_MEAN_IIR);
-      spinnerCausalFilter.addToComponentReduced(timerFrame.jToolBar, new Dimension(180, 28), "smoothing kernel");
+      spinnerCausalFilter.addToComponent(timerFrame.jToolBar, "smoothing kernel");
       spinnerCausalFilter.addSpinnerListener(value -> updateState());
     }
     jSlider.setPreferredSize(new Dimension(500, 28));

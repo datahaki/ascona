@@ -33,13 +33,13 @@ public class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
     super(ManifoldDisplays.SE2_ONLY, GokartPoseDataV2.INSTANCE);
     {
       spinnerFilters.setValue(Se2BiinvariantMeans.LINEAR);
-      spinnerFilters.addToComponentReduced(timerFrame.jToolBar, new Dimension(90, 28), "se2 biinvariant mean");
+      spinnerFilters.addToComponent(timerFrame.jToolBar, "se2 biinvariant mean");
       spinnerFilters.addSpinnerListener(type -> updateState());
     }
     {
       spinnerConvolution = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
       spinnerConvolution.setValue(1);
-      spinnerConvolution.addToComponentReduced(timerFrame.jToolBar, new Dimension(60, 28), "convolution");
+      spinnerConvolution.addToComponent(timerFrame.jToolBar, "convolution");
       spinnerConvolution.addSpinnerListener(type -> updateState());
     }
     // ---
