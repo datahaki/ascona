@@ -1,7 +1,6 @@
 // code by jph, ob
 package ch.alpine.ascona.flt;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;

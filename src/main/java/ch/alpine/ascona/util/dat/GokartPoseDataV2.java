@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import ch.alpine.bridge.lang.SI;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.io.ResourceData;
-import ch.alpine.tensor.qty.Quantity;
 
 /** Columns:
  * time
@@ -55,7 +55,7 @@ public class GokartPoseDataV2 implements GokartPoseData {
 
   @Override // from GokartPoseData
   public Scalar getSampleRate() {
-    return Quantity.of(50, "s^-1");
+    return SI.PER_SECOND.quantity(50);
   }
 
   /** @param name

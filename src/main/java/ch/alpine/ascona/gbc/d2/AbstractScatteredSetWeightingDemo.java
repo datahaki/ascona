@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;

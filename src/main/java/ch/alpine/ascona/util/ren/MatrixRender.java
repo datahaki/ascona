@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataIndexed;
@@ -49,7 +50,7 @@ public class MatrixRender {
     Tensor rounded = matrix.map(round);
     FontMetrics fontMetrics = graphics.getFontMetrics();
     int fheight = fontMetrics.getAscent();
-    int max = rounded.flatten(-1) //
+    int max = Flatten.stream(rounded, -1) //
         .map(Object::toString) //
         .mapToInt(fontMetrics::stringWidth) //
         .max() //

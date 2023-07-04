@@ -4,10 +4,10 @@ package ch.alpine.ascona.util.dat;
 import java.util.Collections;
 import java.util.List;
 
+import ch.alpine.bridge.lang.SI;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.io.ResourceData;
-import ch.alpine.tensor.qty.Quantity;
 
 public enum GokartPoseDataV1 implements GokartPoseData {
   INSTANCE;
@@ -28,6 +28,6 @@ public enum GokartPoseDataV1 implements GokartPoseData {
 
   @Override // from GokartPoseData
   public Scalar getSampleRate() {
-    return Quantity.of(20, "s^-1");
+    return SI.PER_SECOND.quantity(20);
   }
 }

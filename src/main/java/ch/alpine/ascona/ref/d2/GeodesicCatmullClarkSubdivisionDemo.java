@@ -21,6 +21,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ArrayReshape;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.red.Nest;
 
 public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
@@ -63,7 +64,7 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         param.refine);
     RenderQuality.setQuality(graphics);
     // TODO ASCONA LR
-    for (Tensor point : Tensor.of(refined.flatten(1))) {
+    for (Tensor point : Flatten.of(refined, 1)) {
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
       Path2D path2d = geometricLayer.toPath2D(ARROWHEAD_LO);
       geometricLayer.popMatrix();

@@ -38,7 +38,6 @@ public class TimerFrame extends BaseFrame {
       }
       JToggleButton jToggleButton = _jToggleButton;
       jToggleButton.setToolTipText("animation is stored in ~/Videos/...");
-      
       jToggleButton.addActionListener(actionEvent -> {
         if (jToggleButton.isSelected() && Objects.isNull(_animationWriter)) {
           try {
