@@ -30,7 +30,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.io.ResourceData;
+import ch.alpine.tensor.io.Import;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.red.Times;
@@ -80,7 +80,7 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       jButton.addActionListener(e -> {
         SpinnerMenu<String> spinnerMenu = new SpinnerMenu<>(list, null, Object::toString, false);
         spinnerMenu.addSpinnerListener(string -> {
-          Tensor tensor = ResourceData.of("/dubilab/controlpoints/" + string);
+          Tensor tensor = Import.of("/dubilab/controlpoints/" + string);
           tensor = Tensor.of(tensor.stream().map(Times.operator(Tensors.vector(0.5, 0.5, 1))));
           Tensor center = Mean.of(tensor);
           center.set(RealScalar.ZERO, 2);

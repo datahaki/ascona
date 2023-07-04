@@ -11,14 +11,14 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
+import ch.alpine.tensor.io.Import;
 import ch.alpine.tensor.io.Put;
-import ch.alpine.tensor.io.ResourceData;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 /* package */ enum EugocData {
   ;
   public static void main(String[] args) throws IOException {
-    Tensor tensor = ResourceData.of("/dubilab/app/pose/2r/20180820T165637_2.csv");
+    Tensor tensor = Import.of("/dubilab/app/pose/2r/20180820T165637_2.csv");
     // System.out.println(Dimensions.of(tensor));
     Tensor poses = Tensor.of(tensor.stream() //
         .map(row -> row.extract(1, 4)));

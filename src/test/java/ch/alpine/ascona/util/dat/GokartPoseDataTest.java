@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ArrayQ;
-import ch.alpine.tensor.io.ResourceData;
+import ch.alpine.tensor.io.Import;
 
 class GokartPoseDataTest {
   @Test
@@ -21,7 +21,7 @@ class GokartPoseDataTest {
 
   @Test
   void testResourceTensor() {
-    Tensor tensor = ResourceData.of("/ch/alpine/tensor/img/colorscheme/aurora.csv"); // resource in tensor
+    Tensor tensor = Import.of("/ch/alpine/tensor/img/colorscheme/aurora.csv"); // resource in tensor
     Objects.requireNonNull(tensor);
     assertTrue(ArrayQ.of(tensor));
   }

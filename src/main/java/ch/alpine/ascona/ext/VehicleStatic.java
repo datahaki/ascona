@@ -3,7 +3,7 @@ package ch.alpine.ascona.ext;
 
 import java.awt.image.BufferedImage;
 
-import ch.alpine.tensor.io.ResourceData;
+import ch.alpine.tensor.ext.ResourceData;
 
 public enum VehicleStatic {
   INSTANCE;

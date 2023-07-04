@@ -12,9 +12,9 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.tensor.ext.HomeDirectory;
+import ch.alpine.tensor.ext.ResourceData;
 import ch.alpine.tensor.io.AnimationWriter;
 import ch.alpine.tensor.io.GifAnimationWriter;
-import ch.alpine.tensor.io.ResourceData;
 
 public class TimerFrame extends BaseFrame {
   protected static final String VIDEO_FORMAT = "gif";

@@ -13,8 +13,8 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.Export;
+import ch.alpine.tensor.io.Import;
 import ch.alpine.tensor.io.Put;
-import ch.alpine.tensor.io.ResourceData;
 import ch.alpine.tensor.lie.Quaternion;
 import ch.alpine.tensor.lie.QuaternionToRotationMatrix;
 import ch.alpine.tensor.sca.win.WindowFunctions;
@@ -35,7 +35,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   public static void main(String[] args) throws IOException {
-    Tensor tensor = ResourceData.of("/3rdparty/app/pose/euroc/MH_04_difficult.csv");
+    Tensor tensor = Import.of("/3rdparty/app/pose/euroc/MH_04_difficult.csv");
     System.out.println(Dimensions.of(tensor));
     Export.of(HomeDirectory.file("MH_04_difficult_time.csv"), tensor.get(Tensor.ALL, 0));
     Tensor poses = Tensor.of(tensor.stream().limit(12500).map(EurocData::rowmap));

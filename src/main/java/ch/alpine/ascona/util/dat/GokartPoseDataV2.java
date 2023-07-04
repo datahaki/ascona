@@ -9,7 +9,8 @@ import ch.alpine.bridge.lang.SI;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.io.ResourceData;
+import ch.alpine.tensor.ext.ResourceData;
+import ch.alpine.tensor.io.Import;
 
 /** Columns:
  * time
@@ -48,7 +49,7 @@ public class GokartPoseDataV2 implements GokartPoseData {
     Objects.requireNonNull(name);
     // String string = PATH_FOLDER + "/" + name + ".csv";
     // System.out.println(string);
-    return Tensor.of(ResourceData.of(PATH_FOLDER + "/" + name + ".csv").stream() //
+    return Tensor.of(Import.of(PATH_FOLDER + "/" + name + ".csv").stream() //
         .limit(limit) //
         .map(row -> row.extract(1, 4)));
   }
@@ -62,7 +63,7 @@ public class GokartPoseDataV2 implements GokartPoseData {
    * @param limit
    * @return tensor with at most given limit entries of the form {{px, py, pangle}, {vx, vy, omega}} */
   public Tensor getPoseVel(String name, int limit) {
-    return Tensor.of(ResourceData.of(PATH_FOLDER + "/" + name + ".csv").stream() //
+    return Tensor.of(Import.of(PATH_FOLDER + "/" + name + ".csv").stream() //
         .limit(limit) //
         .map(row -> Tensors.of(row.extract(1, 4), row.extract(5, 8))));
   }

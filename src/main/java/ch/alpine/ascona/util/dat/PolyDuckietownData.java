@@ -6,11 +6,11 @@ import java.util.Objects;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.io.ResourceData;
+import ch.alpine.tensor.io.Import;
 
 public class PolyDuckietownData {
   public static PolyDuckietownData of(String string) {
-    return new PolyDuckietownData(ResourceData.of(string));
+    return new PolyDuckietownData(Import.of(string));
   }
 
   // ---

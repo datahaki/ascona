@@ -18,7 +18,7 @@ import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
 import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.io.ResourceData;
+import ch.alpine.tensor.ext.ResourceData;
 
 public class BaseFrame {
   protected static final String IMAGE_FORMAT = "png";
