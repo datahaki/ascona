@@ -45,7 +45,7 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
     super(ManifoldDisplays.d2Rasters(), List.of(LogWeightings.WEIGHTING));
     spinnerLogWeighting.setVisible(false);
     Container container = timerFrame.jFrame.getContentPane();
-    PanelFieldsEditor fieldsPanel = new PanelFieldsEditor(dequeGenesisProperties);
+    PanelFieldsEditor fieldsPanel = PanelFieldsEditor.splits(dequeGenesisProperties);
     fieldsPanel.addUniversalListener(this::recompute);
     container.add(fieldsPanel.createJScrollPane(), BorderLayout.WEST);
     // ---
