@@ -174,7 +174,7 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
         tableBuilder.appendRow(iterate);
       }
     } catch (Exception exception) {
-      System.out.println(exception.getMessage());
+      throw new RuntimeException(exception);
     }
     return tableBuilder.getTable();
   }
