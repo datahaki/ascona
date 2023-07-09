@@ -57,7 +57,7 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
     ClothoidContext clothoidContext = new ClothoidContext(start, mouse);
     try {
       Search search = CLOTHOID_SOLUTIONS.new Search(clothoidContext.s1(), clothoidContext.s2());
-      list = ClothoidEmit.stream(clothoidContext, search.lambdas()).collect(Collectors.toList());
+      list = ClothoidEmit.stream(clothoidContext, search.lambdas()).toList();
       int index = 0;
       for (Clothoid clothoid : list) {
         ClothoidTransition clothoidTransition = ClothoidTransition.of(start, mouse, clothoid);

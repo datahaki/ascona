@@ -37,7 +37,7 @@ public class DubinsTransitionDemo extends AbstractDemo {
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     // ---
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(START, mouse, RealScalar.of(1));
-    List<DubinsPath> list = dubinsPathGenerator.stream().collect(Collectors.toList());
+    List<DubinsPath> list = dubinsPathGenerator.stream().toList();
     Scalar minResolution = RealScalar.of(geometricLayer.pixel2modelWidth(5));
     {
       graphics.setColor(COLOR_DATA_INDEXED.getColor(0));

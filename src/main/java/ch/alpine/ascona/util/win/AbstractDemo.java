@@ -49,7 +49,7 @@ public abstract class AbstractDemo implements RenderInterface {
     timerFrame.jFrame.setTitle(getClass().getSimpleName());
     int index = 0;
     for (Object object : objects) {
-      FieldsEditor fieldsEditor = ToolbarFieldsEditor.add(object, timerFrame.jToolBar);
+      FieldsEditor fieldsEditor = ToolbarFieldsEditor.addToComponent(object, timerFrame.jToolBar);
       fieldsEditors.add(fieldsEditor);
       if (++index < objects.length)
         timerFrame.jToolBar.addSeparator();

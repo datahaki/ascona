@@ -40,7 +40,7 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
   public GeodesicDeBoorDemo() {
     super(new AbstractCurveParam(ManifoldDisplays.ALL));
     addButtonDubins();
-    ToolbarFieldsEditor.add(this, timerFrame.jToolBar);
+    ToolbarFieldsEditor.addToComponent(this, timerFrame.jToolBar);
     // ---
     setManifoldDisplay(ManifoldDisplays.Se2C);
     // ---

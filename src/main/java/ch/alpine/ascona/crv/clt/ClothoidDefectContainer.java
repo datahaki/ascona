@@ -48,7 +48,7 @@ public class ClothoidDefectContainer implements RenderInterface {
     pathRender.setCurve(tensor, false);
     pathRender.render(geometricLayer, graphics);
     Tensor lambdas = search.lambdas();
-    List<Clothoid> clothoids = ClothoidEmit.stream(clothoidContext, lambdas).collect(Collectors.toList());
+    List<Clothoid> clothoids = ClothoidEmit.stream(clothoidContext, lambdas).toList();
     for (int index = 0; index < lambdas.length(); ++index) {
       Scalar lambda = lambdas.Get(index);
       Clothoid clothoid = clothoids.get(index);

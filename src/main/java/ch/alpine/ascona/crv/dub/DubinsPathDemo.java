@@ -80,7 +80,7 @@ public class DubinsPathDemo extends ControlPointsDemo {
     Tensor mouse = controlPointsSe2.get(1);
     // ---
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(START, mouse, RealScalar.of(1));
-    List<DubinsPath> list = dubinsPathGenerator.stream().collect(Collectors.toList());
+    List<DubinsPath> list = dubinsPathGenerator.stream().toList();
     if (param.allDubins) {
       graphics.setColor(COLOR_DATA_INDEXED.getColor(0));
       graphics.setStroke(new BasicStroke(1f));
