@@ -21,6 +21,7 @@ import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.ext.ResourceData;
 
 public class BaseFrame {
+  private static final int SIZE = 800; 
   protected static final String IMAGE_FORMAT = "png";
   // ---
   public final JFrame jFrame = new JFrame();
@@ -30,7 +31,8 @@ public class BaseFrame {
   protected final JLabel jStatusLabel = new JLabel();
 
   protected BaseFrame() {
-    jFrame.setBounds(100, 50, 800, 800);
+    jFrame.setSize(SIZE, SIZE);
+    jFrame.setLocationRelativeTo(null);
     jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     jToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
     jToolBar.setFloatable(false);

@@ -36,7 +36,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.red.Times;
 
 /** split interface and biinvariant mean based curve subdivision */
-public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
+public class CurveSubdivisionDemo2 extends AbstractCurvatureDemo {
   private static final PathRender pathRender = new PathRender(new Color(0, 255, 0, 128));
 
   @ReflectionMarker
@@ -57,11 +57,11 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
 
   private final Param param;
 
-  public CurveSubdivisionDemo() {
+  public CurveSubdivisionDemo2() {
     this(new Param());
   }
 
-  public CurveSubdivisionDemo(Param param) {
+  public CurveSubdivisionDemo2(Param param) {
     super(param);
     this.param = param;
     Tensor control = null;

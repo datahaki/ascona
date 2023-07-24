@@ -14,7 +14,7 @@ import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.sca.Clips;
 
 public class ArgMaxClassifier extends Classifier {
-  /** @param labels */
+  /** @param labels vector */
   public ArgMaxClassifier(Tensor labels) {
     super(Primitives.toIntArray(labels));
   }

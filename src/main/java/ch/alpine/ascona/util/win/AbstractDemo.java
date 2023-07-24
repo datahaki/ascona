@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.ascona.util.win;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
 import ch.alpine.ascona.util.ren.RenderInterface;
 import ch.alpine.bridge.awt.WindowBounds;
+import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ReflectionMarkers;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
@@ -15,6 +15,10 @@ import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.ext.HomeDirectory;
 
 public abstract class AbstractDemo implements RenderInterface {
+  public static final ResourceLocator RESOURCE_LOCATOR = new ResourceLocator(HomeDirectory.Documents("ascona"));
+  private static final ResourceLocator WINDOW = RESOURCE_LOCATOR.sub(WindowBounds.class.getSimpleName());
+  
+
   public static AbstractDemo launch() {
     ReflectionMarkers.INSTANCE.enableDebugPrint();
     LookAndFeels.LIGHT.updateComponentTreeUI();
@@ -26,11 +30,7 @@ public abstract class AbstractDemo implements RenderInterface {
       Class<?> cls = Class.forName(clsName);
       Constructor<?> constructor = cls.getConstructor();
       AbstractDemo abstractDemo = (AbstractDemo) constructor.newInstance();
-      // TODO ASCONA use ResourceLocator
-      File folder = HomeDirectory.file(".config", "ascona", "window");
-      folder.mkdirs();
-      File file = new File(folder, clsName + "_WindowBounds.properties");
-      WindowBounds.persistent(abstractDemo.timerFrame.jFrame, file);
+      WindowBounds.persistent(abstractDemo.timerFrame.jFrame, WINDOW.properties(cls));
       abstractDemo.timerFrame.jFrame.setVisible(true);
       return abstractDemo;
     } catch (Exception exception) {

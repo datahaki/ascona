@@ -14,7 +14,7 @@ import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Clips;
 
 public class ArgMinClassifier extends Classifier {
-  /** @param labels */
+  /** @param labels vector */
   public ArgMinClassifier(Tensor labels) {
     super(Primitives.toIntArray(labels));
   }

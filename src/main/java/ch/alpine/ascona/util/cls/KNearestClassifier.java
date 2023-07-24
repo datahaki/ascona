@@ -15,7 +15,7 @@ import ch.alpine.tensor.red.Tally;
 public class KNearestClassifier extends Classifier {
   private final int k;
 
-  /** @param labels
+  /** @param labels vector
    * @param k */
   public KNearestClassifier(Tensor labels, int k) {
     super(Primitives.toIntArray(labels));

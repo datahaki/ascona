@@ -13,7 +13,7 @@ import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Clips;
 
 public class AccMaxClassifier extends Classifier {
-  /** @param labels */
+  /** @param labels vector */
   public AccMaxClassifier(Tensor labels) {
     super(Primitives.toIntArray(labels));
   }
