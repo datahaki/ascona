@@ -21,7 +21,7 @@ import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.ext.ResourceData;
 
 public class BaseFrame {
-  private static final int SIZE = 800; 
+  private static final int SIZE = 800;
   protected static final String IMAGE_FORMAT = "png";
   // ---
   public final JFrame jFrame = new JFrame();

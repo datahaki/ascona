@@ -4,7 +4,6 @@ package ch.alpine.ascona.crv.dub;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import ch.alpine.ascona.util.ren.AxesRender;
 import ch.alpine.ascona.util.win.AbstractDemo;

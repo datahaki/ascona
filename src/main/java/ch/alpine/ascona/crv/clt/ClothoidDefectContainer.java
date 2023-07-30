@@ -5,7 +5,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import ch.alpine.ascona.util.ren.PathRender;
 import ch.alpine.ascona.util.ren.RenderInterface;
