@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import ch.alpine.bridge.io.DeleteDirectory;
 import ch.alpine.bridge.util.DisjointSets;
 import ch.alpine.sophus.crv.clt.ClothoidSolutions;
 import ch.alpine.sophus.crv.clt.ClothoidSolutions.Search;
@@ -13,7 +14,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.ext.DeleteDirectory;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.io.TableBuilder;

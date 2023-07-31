@@ -16,21 +16,19 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.UnitStep;
 
-enum R2NoisePlot {
+/* package */ enum R2NoisePlot {
   ;
-  // ---
   private static final NativeContinuousNoise NOISE = SimplexContinuousNoise.FUNCTION;
-  // PolyNoise.of(SimplexNoise.FUNCTION, new double[] { 1, 0 }, new double[] { .3, 3 });
   private static final int RES = 512;
-  private static final Tensor RE = Subdivide.of(0, 25, RES - 1);
-  private static final Tensor IM = Subdivide.of(0, 25, RES - 1);
+  private static final Tensor RE = Subdivide.of(0, 5, RES - 1);
+  private static final Tensor IM = Subdivide.of(0, 5, RES - 1);
   @SuppressWarnings("unused")
   private static final Clip CLIP = Clips.unit();
 
   private static Scalar function(int x, int y) {
     return UnitStep.FUNCTION.apply(DoubleScalar.of(NOISE.at( //
         RE.Get(x).number().doubleValue(), //
-        IM.Get(y).number().doubleValue())).subtract(RealScalar.of(0.9)));
+        IM.Get(y).number().doubleValue())).subtract(RealScalar.of(0.0)));
   }
 
   public static void main(String[] args) {
