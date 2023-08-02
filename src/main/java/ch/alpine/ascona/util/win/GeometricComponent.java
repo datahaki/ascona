@@ -58,6 +58,7 @@ public final class GeometricComponent {
       // display frame rate only when rendering in component
       graphics.setFont(FONT_DEFAULT);
       graphics.setColor(Color.LIGHT_GRAY);
+      graphics.setClip(null);
       graphics.drawString(String.format("%3.1f Hz", intervalClock.hertz()), 0, 10);
     }
   };

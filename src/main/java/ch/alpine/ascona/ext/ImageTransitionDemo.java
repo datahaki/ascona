@@ -28,12 +28,11 @@ public class ImageTransitionDemo extends AbstractDemo {
     @FieldClip(min = "0", max = "1")
     @FieldSlider
     public Scalar c1 = RealScalar.of(0.3);
-    // public Rectangle rectangle
   }
 
   private final Param param;
-  private ScalableImage page1 = null;
-  private ScalableImage page2 = null;
+  private ScalableImage im1 = null;
+  private ScalableImage im2 = null;
 
   public ImageTransitionDemo() {
     this(new Param());
@@ -43,8 +42,8 @@ public class ImageTransitionDemo extends AbstractDemo {
     super(param);
     this.param = param;
     try {
-      page1 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_c(), Image.SCALE_SMOOTH);
-      page2 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_g(), Image.SCALE_AREA_AVERAGING);
+      im1 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_c(), Image.SCALE_SMOOTH);
+      im2 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_g(), Image.SCALE_AREA_AVERAGING);
     } catch (Exception exception) {
       throw new RuntimeException();
     }
@@ -52,16 +51,17 @@ public class ImageTransitionDemo extends AbstractDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (Objects.isNull(page1) || Objects.isNull(page2))
+    if (Objects.isNull(im1) || Objects.isNull(im2))
       return;
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     Rectangle rectangle = new Rectangle(100, 50, dimension.width - 200, dimension.height - 100);
-    graphics.drawImage(page2.getScaledInstance(rectangle.width, rectangle.height), rectangle.x, rectangle.y, null);
+    // ---
+    graphics.drawImage(im2.getScaledInstance(rectangle.width, rectangle.height), rectangle.x, rectangle.y, null);
     int ext = (int) (rectangle.width * param.ex.number().floatValue());
     int x = (int) ((rectangle.width + 2 * ext) * param.c1.number().floatValue()) - ext;
     int _x = Math.max(0, x);
     graphics.setClip(rectangle.x + _x, rectangle.y, rectangle.width - _x, rectangle.height);
-    graphics.drawImage(page1.getScaledInstance(rectangle.width, rectangle.height), rectangle.x, rectangle.y, null);
+    graphics.drawImage(im1.getScaledInstance(rectangle.width, rectangle.height), rectangle.x, rectangle.y, null);
     graphics.setClip(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     Color color_lo = new Color(255, 255, 255, 0);
     Color color_hi = new Color(0, 0, 0, 192);
@@ -69,7 +69,6 @@ public class ImageTransitionDemo extends AbstractDemo {
         new Color[] { color_lo, color_hi, color_lo });
     graphics.setPaint(paint);
     graphics.fillRect(rectangle.x + x - ext, rectangle.y, 2 * ext, rectangle.height);
-    graphics.setClip(null);
   }
 
   public static void main(String[] args) {
