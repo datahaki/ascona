@@ -8,10 +8,12 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.LookAndFeels;
 
-/* package */ class UbongoViewer extends AbstractDemo {
+public class UbongoViewer extends AbstractDemo {
+  private static final int SCALE = 46;
+
   @ReflectionMarker
   public static class Param {
-    public UbongoPublish ubongoPublish = UbongoPublish.FINALBOS;
+    public UbongoPublish ubongoPublish = UbongoPublish.LETTERH1;
   }
 
   private final Param param;
@@ -27,12 +29,11 @@ import ch.alpine.bridge.swing.LookAndFeels;
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    StaticHelper.draw(graphics, param.ubongoPublish, StaticHelper.SCALE);
+    StaticHelper.draw(graphics, param.ubongoPublish, SCALE);
   }
 
   public static void main(String[] args) {
     LookAndFeels.LIGHT.updateComponentTreeUI();
-    UbongoViewer ubongoViewer = new UbongoViewer();
-    ubongoViewer.setVisible(700, 900);
+    launch();
   }
 }

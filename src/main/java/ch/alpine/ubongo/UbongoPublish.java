@@ -170,6 +170,9 @@ import java.util.List;
   SWITZERB(UbongoBoards.SWITZERB, List.of(0, 1, 2, 3, 4)),
   // ---
   FINALBOS(UbongoBoards.FINALBOS, List.of(0)),
+  FELIX_F2(UbongoBoards.FELIX_F2, List.of(0, 1, 2, 3, 4, 6)),
+  LETTERH1(UbongoBoards.LETTERH1, List.of(0, 11, 4, 15, 7, 8)),
+  LETTERH2(UbongoBoards.LETTERH1, List.of(10, 2, 14, 6, 16, 17)),
   ///
   ;
 

@@ -39,12 +39,14 @@ public class UbongoPrintable implements Printable {
   }
 
   public static void main(String[] args) {
-    List<UbongoPublish> list2 = List.of(UbongoPublish.FINALBOS);
+    List<UbongoPublish> list2 = List.of(UbongoPublish.FELIX_F2);
     for (double factor : new double[] { 1.0 }) // , 0.995, 0.990943
       for (int scale : new int[] { 45 }) { // , 46, 47, 48
         PrinterJob printerJob = PrinterJob.getPrinterJob();
         PageFormat pageFormat = printerJob.defaultPage();
+        System.out.println(pageFormat);
         Paper paper = pageFormat.getPaper();
+        System.out.println(paper);
         paper.setImageableArea(0.5 * 72, 0.5 * 72, 7 * 72, 10.5 * 72);
         // paper.setSize(11.7 * 72, 8.3 * 72);
         pageFormat.setPaper(paper);

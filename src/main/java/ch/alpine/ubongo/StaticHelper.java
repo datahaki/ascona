@@ -2,8 +2,8 @@
 package ch.alpine.ubongo;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 import ch.alpine.bridge.awt.RenderQuality;
@@ -11,41 +11,31 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
+import ch.alpine.tensor.ext.ResourceData;
 import ch.alpine.tensor.img.ImageRotate;
 
 /* package */ enum StaticHelper {
   ;
-  private static final int MARGIN_X = 320;
   private static final int MARGIN_Y = 13;
   // 61.1465
-  static final int SCALE = 46;
-  private static final int ZCALE = 10;
-  private static final int MAX_X = 10;
-  private static final int MAX_Y = 8;
+  private static final int ZCALE = 7;
   private static final Color FILL = Color.LIGHT_GRAY;
-
-  public static int maxWidth() {
-    return MARGIN_X + MAX_X * SCALE + 1;
-  }
-
-  public static int maxHeight() {
-    return MAX_Y * SCALE + MARGIN_Y * 2;
-  }
 
   public static void draw(Graphics2D graphics, UbongoPublish ubongoPublish, int SCALE) {
     int piy = MARGIN_Y;
     {
       List<List<UbongoEntry>> solutions = UbongoLoader.INSTANCE.load(ubongoPublish.ubongoBoards);
       int count = 0;
-      graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
       for (int index : ubongoPublish.list) {
+        BufferedImage bufferedImage = ResourceData.bufferedImage("/ch/alpine/ubongo/dice" + count + ".png");
         ++count;
         graphics.setColor(Color.DARK_GRAY);
-        int pix = 50;
+        int pix = 60;
         {
           Graphics2D g = (Graphics2D) graphics.create();
           RenderQuality.setQuality(g);
-          g.drawString("" + count, 2, piy + 20);
+          int piw = 5 * ZCALE;
+          g.drawImage(bufferedImage, 2, piy - 5, piw, piw, null);
           g.dispose();
         }
         List<UbongoEntry> solution = solutions.get(index);
