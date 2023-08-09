@@ -29,7 +29,7 @@ public enum UbongoImaging {
       // 61 was tested to work well
       StaticHelper.draw(graphics, ubongoPublish, 61);
       graphics.dispose();
-      File folder = HomeDirectory.Pictures("ubongo8");
+      File folder = HomeDirectory.Pictures("ubongo");
       folder.mkdir();
       File file = new File(folder, ubongoPublish.name() + ".png");
       ImageIO.write(bufferedImage, "png", file);

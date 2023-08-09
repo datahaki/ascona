@@ -53,13 +53,15 @@ public final class GeometricComponent {
     private final IntervalClock intervalClock = new IntervalClock();
 
     @Override
-    protected void paintComponent(Graphics graphics) {
-      render((Graphics2D) graphics, getSize());
+    protected void paintComponent(Graphics _g) {
+      render((Graphics2D) _g, getSize());
       // display frame rate only when rendering in component
+      Graphics graphics = _g.create();
       graphics.setFont(FONT_DEFAULT);
       graphics.setColor(Color.LIGHT_GRAY);
       graphics.setClip(null);
       graphics.drawString(String.format("%3.1f Hz", intervalClock.hertz()), 0, 10);
+      graphics.dispose();
     }
   };
   // TODO ASCONA possibly use EnumMultimap with background... main .. hud

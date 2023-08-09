@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.zip.DataFormatException;
 
-import ch.alpine.sophus.math.MatrixArray;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

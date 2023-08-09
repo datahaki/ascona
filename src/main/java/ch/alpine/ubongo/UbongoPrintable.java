@@ -22,15 +22,17 @@ public class UbongoPrintable implements Printable {
   }
 
   @Override
-  public int print(Graphics g, PageFormat pageFormat, int pageIndex) throws PrinterException {
-    Graphics2D graphics = (Graphics2D) g;
+  public int print(Graphics _g, PageFormat pageFormat, int pageIndex) throws PrinterException {
+    Graphics2D graphics = (Graphics2D) _g.create();
     graphics.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
     graphics.scale(factor, factor);
-    if (pageIndex < Math.min(list.size(), 200)) {
+    boolean exists = pageIndex < Math.min(list.size(), 200);
+    if (exists)
       StaticHelper.draw(graphics, list.get(pageIndex), scale);
-      return Printable.PAGE_EXISTS;
-    }
-    return Printable.NO_SUCH_PAGE;
+    graphics.dispose();
+    return exists //
+        ? Printable.PAGE_EXISTS
+        : Printable.NO_SUCH_PAGE;
   }
 
   @Override
