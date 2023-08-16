@@ -5,6 +5,9 @@ import java.io.IOException;
 
 import ch.alpine.ascona.util.dat.GokartPoseData;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
+import ch.alpine.bridge.fig.MatrixPlot;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.ShowDialog;
 import ch.alpine.sophus.bm.BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.so2.So2;
@@ -74,15 +77,21 @@ import ch.alpine.tensor.sca.Abs;
       Put.of(HomeDirectory.file("lp3_xy.mathematica"), lp3_xy);
       Put.of(HomeDirectory.file("lp3_hd.mathematica"), lp3_hd);
     }
+    Show show1 = new Show();
+    // FIXME
     {
-      Tensor image = Raster.of(err_xy, ColorDataGradients.CLASSIC);
+      show1.add(MatrixPlot.of(err_xy, ColorDataGradients.CLASSIC));
       Export.of(HomeDirectory.file("err_xy.csv"), err_xy);
+      Tensor image = Raster.of(err_xy, ColorDataGradients.CLASSIC);
       Export.of(HomeDirectory.Pictures(Se2PredictionShow.class.getSimpleName() + "_xy.png"), image);
     }
+    Show show2 = new Show();
     {
-      Tensor image = Raster.of(err_hd, ColorDataGradients.CLASSIC);
+      show2.add(MatrixPlot.of(err_hd, ColorDataGradients.CLASSIC));
       Export.of(HomeDirectory.file("err_hd.csv"), err_hd);
+      Tensor image = Raster.of(err_hd, ColorDataGradients.CLASSIC);
       Export.of(HomeDirectory.Pictures(Se2PredictionShow.class.getSimpleName() + "_hd.png"), image);
     }
+    ShowDialog.of(show1, show2);
   }
 }

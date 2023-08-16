@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.usr;
 
-import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.MatrixPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowDialog;
 import ch.alpine.sophus.math.noise.NativeContinuousNoise;
@@ -28,13 +28,13 @@ import ch.alpine.tensor.sca.UnitStep;
   private static Scalar function(int x, int y) {
     return UnitStep.FUNCTION.apply(DoubleScalar.of(NOISE.at( //
         RE.Get(x).number().doubleValue(), //
-        IM.Get(y).number().doubleValue())).subtract(RealScalar.of(0.0)));
+        IM.Get(y).number().doubleValue())).subtract(RealScalar.of(0.3)));
   }
 
   public static void main(String[] args) {
     Tensor matrix = Tensors.matrix(R2NoisePlot::function, RES, RES);
     Show show = new Show();
-    show.add(ArrayPlot.of(matrix));
+    show.add(MatrixPlot.of(matrix));
     ShowDialog.of(show);
   }
 }

@@ -27,7 +27,6 @@ import ch.alpine.tensor.red.Times;
 
 public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-  private final AbstractCurveParam abstractCurveParam;
 
   public GeodesicBSplineFunctionDemo() {
     this(new AbstractCurveParam(ManifoldDisplays.ALL));
@@ -35,7 +34,6 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
 
   public GeodesicBSplineFunctionDemo(AbstractCurveParam abstractCurveParam) {
     super(abstractCurveParam);
-    this.abstractCurveParam = abstractCurveParam;
     addButtonDubins();
     // ---
     Tensor dubins = Tensors.fromString(

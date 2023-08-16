@@ -32,7 +32,6 @@ public class Se2AnimationDemo extends ControlPointsDemo {
     }
   }
 
-  private final Param param;
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();
   // ---
@@ -45,7 +44,6 @@ public class Se2AnimationDemo extends ControlPointsDemo {
 
   public Se2AnimationDemo(Param param) {
     super(param);
-    this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     {
       jToggleAnimate.addActionListener(e -> {

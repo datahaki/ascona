@@ -12,7 +12,6 @@ import ch.alpine.ascona.util.dat.GokartPoseDataV1;
 import ch.alpine.ascona.util.dat.GokartPoseDataV2;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.Se2Display;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.flt.CenterFilter;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.so2.So2;
@@ -32,7 +31,6 @@ class GeodesicFiltersTest {
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     ScalarUnaryOperator smoothingKernel = WindowFunctions.GAUSSIAN.get();
-    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     int radius = 7;
     Map<GeodesicFilters, Tensor> map = new EnumMap<>(GeodesicFilters.class);
     for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
@@ -62,7 +60,6 @@ class GeodesicFiltersTest {
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     ScalarUnaryOperator smoothingKernel = WindowFunctions.GAUSSIAN.get();
-    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     for (int radius : new int[] { 0, 10 }) {
       for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
         TensorUnaryOperator tensorUnaryOperator = //

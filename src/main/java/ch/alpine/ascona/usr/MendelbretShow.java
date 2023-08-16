@@ -3,6 +3,9 @@ package ch.alpine.ascona.usr;
 
 import java.io.IOException;
 
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.ShowDialog;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.se2.Se2GroupElement;
 import ch.alpine.tensor.RealScalar;
@@ -49,5 +52,8 @@ import ch.alpine.tensor.red.Nest;
     }
     Tensor tensor = Raster.of(image, ColorDataGradients.CLASSIC);
     Export.of(HomeDirectory.Pictures(MendelbretShow.class.getSimpleName() + ".png"), tensor);
+    Show show = new Show();
+    show.add(ArrayPlot.of(image, ColorDataGradients.CLASSIC));
+    ShowDialog.of(show);
   }
 }

@@ -9,7 +9,6 @@ import ch.alpine.ascona.util.api.PolygonCoordinates;
 import ch.alpine.ascona.util.arp.ArrayFunction;
 import ch.alpine.ascona.util.arp.ArrayPlotImage;
 import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.col.HueColorData;
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
 import ch.alpine.ascona.util.ref.AsconaParam;
@@ -29,13 +28,10 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.img.ColorDataIndexed;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 public class PolygonCoordinatesDemo extends ControlPointsDemo {
-  public static final ColorDataIndexed COLOR_DATA_INDEXED = HueColorData.of(6, 3);
-
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {

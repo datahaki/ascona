@@ -152,6 +152,14 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
               bufferedImage.getWidth() * 1, //
               bufferedImage.getHeight() * 1, null);
         }
+        {
+          // TODO ASCONA occurrences of raster replace with matrix/arrayplot
+          // Show show = new Show();
+          // show.add(MatrixPlot.of(neg, ColorDataGradients.TEMPERATURE));
+          // List<Integer> list = Dimensions.of(neg);
+          // System.out.println();
+          // show.render(graphics, new Rectangle(0,0,2*list.get(1),2*list.get(0)));
+        }
       }
       // render grid lines functions
       ColorDataGradient cdg = colorDataGradient.deriveWithOpacity(RationalScalar.HALF);

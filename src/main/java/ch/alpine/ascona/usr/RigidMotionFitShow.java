@@ -1,19 +1,17 @@
 // code by jph
 package ch.alpine.ascona.usr;
 
-import java.io.IOException;
-
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.ShowDialog;
 import ch.alpine.sophus.lie.se.RigidMotionFit;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.img.Raster;
-import ch.alpine.tensor.io.Export;
-import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -23,7 +21,8 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.tri.ArcTan;
 
-/* package */ class RigidMotionFitShow {
+/* package */ enum RigidMotionFitShow {
+  ;
   private static Tensor shufflePoints(int n) {
     Distribution distribution = NormalDistribution.standard();
     Tensor random = RandomVariate.of(distribution, n, 2);
@@ -31,11 +30,10 @@ import ch.alpine.tensor.sca.tri.ArcTan;
     return Tensor.of(random.stream().map(mean::add));
   }
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) {
     Tensor target = Array.zeros(1, 2);
     Tensor shuffl = shufflePoints(2);
     shuffl.forEach(target::append);
-    System.out.println(Pretty.of(target));
     Tensor points = target.copy();
     int RES = 128;
     Tensor param = Subdivide.of(-10, 10, RES);
@@ -49,7 +47,10 @@ import ch.alpine.tensor.sca.tri.ArcTan;
         Scalar angle = ArcTan.of(rotation.Get(0, 0), rotation.Get(1, 0));
         array[x][y] = clip.rescale(angle);
       }
-    Tensor image = Raster.of(Tensors.matrix(array), ColorDataGradients.HUE);
-    Export.of(HomeDirectory.Pictures("some.png"), image);
+    // FIXME
+    Show show = new Show();
+    show.setAspectRatio(RealScalar.ONE);
+    show.add(ArrayPlot.of(Tensors.matrix(array), ColorDataGradients.HUE));
+    ShowDialog.of(show);
   }
 }

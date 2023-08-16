@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.util.col;
+package ch.alpine.ascona.usr;
 
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -14,7 +14,7 @@ import ch.alpine.tensor.img.Hue;
 import ch.alpine.tensor.img.StrictColorDataIndexed;
 import ch.alpine.tensor.sca.Mod;
 
-public enum HueColorData {
+/* package */ enum HueColorBlocks {
   ;
   private static final Mod MOD = Mod.function(1);
   @PackageTestAccess

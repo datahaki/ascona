@@ -31,7 +31,10 @@ public abstract class AbstractBaseTest {
 
   @ParameterizedTest
   @MethodSource("objectStream")
-  void test(Object object) {
+  void test(@SuppressWarnings("unused") Object object) {
+    // changes happen via random fields assignment
+    // System.out.println("---");
+    // ObjectProperties.list(holder).forEach(System.out::println);
     abstractDemo.fieldsEditor(0).notifyUniversalListeners();
     GeometricLayer geometricLayer = new GeometricLayer(abstractDemo.timerFrame.geometricComponent.getModel2Pixel());
     BufferedImage bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);

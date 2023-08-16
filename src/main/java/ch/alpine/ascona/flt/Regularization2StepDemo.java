@@ -23,22 +23,22 @@ import ch.alpine.tensor.sca.N;
 @ReflectionMarker
 public class Regularization2StepDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
   @ReflectionMarker
-  public static class Param {
+  public static class Ratio {
     /** regularization parameter in the interval [0, 1] */
     @FieldSlider
     @FieldClip(min = "0.0", max = "1.0")
     public Scalar ratio = RealScalar.of(0.6);
   }
 
-  private final Param param;
+  private final Ratio ratio;
 
   public Regularization2StepDemo() {
-    this(new Param());
+    this(new Ratio());
   }
 
-  public Regularization2StepDemo(Param param2) {
-    super(GokartPoseSpecV2.INSTANCE, param2);
-    this.param = param2;
+  public Regularization2StepDemo(Ratio ratio) {
+    super(GokartPoseSpecV2.INSTANCE, ratio);
+    this.ratio = ratio;
     // ---
     updateState();
   }
@@ -47,17 +47,17 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     return Regularization2Step.string( //
         gokartPoseSpec.manifoldDisplays.manifoldDisplay().geodesicSpace(), //
-        N.DOUBLE.apply(param.ratio)).apply(control());
+        N.DOUBLE.apply(ratio.ratio)).apply(control());
   }
 
   @Override // from UniformDatasetFilterDemo
   protected String plotLabel() {
-    return "Regularization2Step " + param.ratio;
+    return "Regularization2Step " + ratio.ratio;
   }
 
   @Override // from BufferedImageSupplier
   public BufferedImage bufferedImage() {
-    Scalar factor = param.ratio;
+    Scalar factor = ratio.ratio;
     TensorUnaryOperator tensorUnaryOperator = Regularization2Step.string(SymGeodesic.INSTANCE, factor);
     Tensor vector = SymSequence.of(3);
     Tensor tensor = tensorUnaryOperator.apply(vector);

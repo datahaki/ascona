@@ -1,10 +1,8 @@
 // code by jph
 package ch.alpine.ascona.decim;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
 import ch.alpine.ascona.util.dis.ManifoldDisplays;
@@ -33,8 +31,6 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 // TODO ASCONA DEMO init properly, draw better, offer configuration of parameters
 public class BulkDecimationDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
-  private static final Stroke STROKE = //
-      new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
 
   public BulkDecimationDemo() {
     super(new AsconaParam(true, ManifoldDisplays.SE2_R2));
