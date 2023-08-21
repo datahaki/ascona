@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ubongo;
+package ch.alpine.ubongo.gui;
 
 import java.awt.Graphics2D;
 import java.util.List;
@@ -17,6 +17,10 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.img.ImageRotate;
 import ch.alpine.tensor.io.ImageFormat;
+import ch.alpine.ubongo.UbongoBoard;
+import ch.alpine.ubongo.UbongoBoards;
+import ch.alpine.ubongo.UbongoEntry;
+import ch.alpine.ubongo.UbongoLoader;
 
 public class UbongoBrowser extends AbstractDemo {
   private final UbongoBoard ubongoBoard;
@@ -65,10 +69,8 @@ public class UbongoBrowser extends AbstractDemo {
     }
     int pix = 0;
     for (UbongoEntry ubongoEntry : solution) {
-      UbongoEntry ubongoPiece = new UbongoEntry();
-      ubongoPiece.stamp = ImageRotate.cw(ubongoEntry.ubongo.mask());
-      ubongoPiece.ubongo = ubongoEntry.ubongo;
-      List<Integer> size = Dimensions.of(ubongoPiece.stamp);
+      UbongoEntry ubongoPiece = new UbongoEntry(0, 0, ubongoEntry.ubongo(), ImageRotate.cw(ubongoEntry.ubongo().mask()));
+      List<Integer> size = Dimensions.of(ubongoPiece.stamp());
       Tensor tensor = UbongoRender.of(size, List.of(ubongoPiece));
       // List<Integer> size2 = Dimensions.of(tensor);
       int scale = 15;

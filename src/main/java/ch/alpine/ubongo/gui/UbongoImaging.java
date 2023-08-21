@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ubongo;
+package ch.alpine.ubongo.gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -12,8 +12,9 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import ch.alpine.tensor.ext.HomeDirectory;
+import ch.alpine.ubongo.UbongoPublish;
 
-public enum UbongoImaging {
+/* package */ enum UbongoImaging {
   ;
   public static void main(String[] args) throws IOException {
     List<UbongoPublish> list2 = Arrays.stream(UbongoPublish.values()) //

@@ -3,61 +3,61 @@ package ch.alpine.ubongo;
 
 import java.util.List;
 
-/* package */ enum UbongoBoards {
+public enum UbongoBoards {
   /***************************************************/
   /************ BATCH 1 ******************************/
-  STANDARD(3, "oooo", "oooo", "ooo", " o"),
+  STANDARD(3, "oooo", "oooo", "ooo ", " o  "),
   /** 2,5,6,7,9,10,12,15,16,17,19,20 */
   CARPET_1(5, "o oo ", "ooooo", " oooo", " oooo", "ooooo"),
   /** 0,1,3,5,9,12,14 */
   CARPET_2(5, "oooo ", "ooooo", " oooo", " oooo", "ooooo"),
   /** 0,1,4,5,6,8 */
-  CARPET_3(5, "oooo  ", "oooooo", " oooo", " oooo", "ooooo"),
+  CARPET_3(5, "oooo  ", "oooooo", " oooo ", " oooo ", "ooooo "),
   /** only 1 unique solution */
-  CARPET_4(5, "oooo  ", "ooooo ", " ooooo", " ooooo", "ooooo"),
+  CARPET_4(5, "oooo  ", "ooooo ", " ooooo", " ooooo", "ooooo "),
   // CARPET5(6, "oooo ", "oooooo", " ooooo", " ooooo", "ooooo"),
   DOTTED_1(5, "oooo ", "ooooo", " oooo", " oo o", "ooooo"),
   /** 2,3,4,5,7,13,14,15,16,20,21,23 */
   BULLET_1(5, "oooo ", "ooooo", "oo  o", "oo  o", "ooooo"),
   /** 0,1,3,5,10,11 */
-  HORSES_1(5, "oooooo", "oo  oo", "o   ", "oo  oo", "ooooo"),
+  HORSES_1(5, "oooooo", "oo  oo", "o     ", "oo  oo", "ooooo "),
   /** 0,2,8,9,14,16 */
-  PYRAMID3(5, "   o   ", "  oooo ", " oooo", "ooooo", " ooo", " oo"),
+  PYRAMID3(5, "   o   ", "  oooo ", " oooo  ", "ooooo  ", " ooo   ", " oo    "),
   /** 0,2,3,5,6,7, 12,15,16,18,19,20 */
-  PYRAMID4(5, "   o   ", "  oooo ", " oooo", "ooooo", " oooo", " oo"),
+  PYRAMID4(5, "   o   ", "  oooo ", " oooo  ", "ooooo  ", " oooo  ", " oo    "),
   /**  */
-  PIGGIES1(5, " oooo ", "oooooo", "oooo", " o o", " o o"),
+  PIGGIES1(5, " oooo ", "oooooo", "oooo  ", " o o  ", " o o  "),
   /**  */
-  PIGGIES2(5, " oooo ", "oooooo", "ooooo", " ooo", " o o"),
-  MICKEY_1(5, "oo  oo", "oo  oo", " oooo", " oooo", " o oo", "  oo  "),
-  MICKEY_2(6, "oo  oo", "oo  oo", " oooo", " oooo", " o oo", "  oo  "),
+  PIGGIES2(5, " oooo ", "oooooo", "ooooo ", " ooo  ", " o o  "),
+  MICKEY_1(5, "oo  oo", "oo  oo", " oooo ", " oooo ", " o oo ", "  oo  "),
+  MICKEY_2(6, "oo  oo", "oo  oo", " oooo ", " oooo ", " o oo ", "  oo  "),
   /***************************************************/
   /************ BATCH 2 ******************************/
-  RAYRAC_1(5, "  oooo ", " oo oo", "ooo ", " oooo", " ooo"),
+  RAYRAC_1(5, "  oooo ", " oo oo ", "ooo    ", " oooo  ", " ooo   "),
   /**  */
-  CRANED_1(5, "  oooo ", " oo oo", "ooo ", " oooo", " oooo"),
+  CRANED_1(5, "  oooo ", " oo oo ", "ooo    ", " oooo  ", " oooo  "),
   /**  */
-  BARCODE1(5, "  oooo ", " oo o ", "ooo o", " oo oo", " ooooo"),
+  BARCODE1(5, "  oooo ", " oo o  ", "ooo o  ", " oo oo ", " ooooo "),
   // interesting
-  BOTTLE_1(5, "  oooo ", " oo o ", "ooooo", " oo oo", " ooooo"),
+  BOTTLE_1(5, "  oooo ", " oo o  ", "ooooo  ", " oo oo ", " ooooo "),
   // interesting
-  PLANET_1(5, "  oooo ", " oo o ", "o ooo", "ooo oo", " ooooo"),
+  PLANET_1(5, "  oooo ", " oo o  ", "o ooo  ", "ooo oo ", " ooooo "),
   // very nice with 6
-  CHEESE_1(6, "o oooo ", "ooo oo", "ooooo", "ooo oo", " oooo "),
+  CHEESE_1(6, "o oooo ", "ooo oo ", "ooooo  ", "ooo oo ", " oooo  "),
   /***************************************************/
   /************ BATCH 3 ******************************/
   // interesting
-  SPIRAL_1(5, "oooooo ", "  oooo", "  ooo ", "  oooo", "   oooo"),
+  SPIRAL_1(5, "oooooo ", "  oooo ", "  ooo  ", "  oooo ", "   oooo"),
   // interesting
-  SPIRAL_2(6, "oooooo  ", " ooooo", "  ooo ", "  oooo", "   ooooo"),
+  SPIRAL_2(6, "oooooo  ", " ooooo  ", "  ooo   ", "  oooo  ", "   ooooo"),
   // interesting
-  SPIRAL_3(5, "ooooo  ", "  oooo", "  ooo ", "  oooo", "   oooo"),
+  SPIRAL_3(5, "ooooo  ", "  oooo ", "  ooo  ", "  oooo ", "   oooo"),
   // interesting
-  SPIRAL_4(5, "ooooo  ", "oooooo", "  ooo ", "  oooo", "   oooo"),
+  SPIRAL_4(5, "ooooo  ", "oooooo ", "  ooo  ", "  oooo ", "   oooo"),
   // 7 solutions
-  SHOTGUN1(4, "oooooo", "ooooo", "ooooo", "oo"),
+  SHOTGUN1(4, "oooooo", "ooooo ", "ooooo ", "oo    "),
   // interesting
-  SHOTGUN2(5, "ooooooo", "oooooo", "oooooo", "oo"),
+  SHOTGUN2(5, "ooooooo", "oooooo ", "oooooo ", "oo     "),
   // 6 solutions
   SHOTGUN3(6, "oooooooo", " ooooooo", " oooooo", " oo"),
   // one solution
@@ -271,6 +271,8 @@ import java.util.List;
 
   private UbongoBoards(int use, String... strings) {
     this.use = use;
+    // System.out.println("========================");
+    // System.out.println("NAME = "+name());
     ubongoBoard = UbongoBoard.of(strings);
   }
 

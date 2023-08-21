@@ -3,8 +3,8 @@ package ch.alpine.ascona.nd;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.security.SecureRandom;
 import java.util.Objects;
-import java.util.Random;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -38,7 +38,7 @@ import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.sca.Chop;
 
 public class KMeansDemo extends ControlPointsDemo {
-  private static final RandomGenerator RANDOM = new Random();
+  private static final RandomGenerator RANDOM = new SecureRandom();
 
   @ReflectionMarker
   public static class Param1 extends AsconaParam {

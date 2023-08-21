@@ -2,6 +2,7 @@
 package ch.alpine.ascona.ext;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
@@ -22,8 +23,6 @@ import ch.alpine.tensor.red.Times;
 // TODO ASCONA add labels for each method, perhaps use graphs!
 public class ColorInterpDemo extends AbstractDemo {
   private static final ColorSpace COLOR_SPACE = ColorSpace.getInstance(ColorSpace.CS_CIEXYZ);
-  private static final int HEIGHT = 100;
-  private static final int HEIGHT_INCR = 110;
 
   @ReflectionMarker
   public static class Param {
@@ -51,11 +50,15 @@ public class ColorInterpDemo extends AbstractDemo {
     float[] rgba2 = new float[4];
     param.c2.getComponents(rgba2);
     // ---
+    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+    final int width = dimension.width;
+    final int HEIGHT_INCR = dimension.height / 4;
+    final int height = HEIGHT_INCR - 10;
     {
-      Tensor tensor = Tensors.of(Subdivide.of(Tensors.vectorFloat(rgba1), Tensors.vectorFloat(rgba2), 255));
+      Tensor tensor = Tensors.of(Subdivide.of(Tensors.vectorFloat(rgba1), Tensors.vectorFloat(rgba2), width));
       tensor = tensor.multiply(RealScalar.of(255));
       BufferedImage bufferedImage = ImageFormat.of(tensor);
-      graphics.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth() * 2, HEIGHT, null);
+      graphics.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth(), height, null);
     }
     // ---
     int piy = HEIGHT_INCR;
@@ -66,13 +69,13 @@ public class ColorInterpDemo extends AbstractDemo {
       for (Tensor xyz : Subdivide.of( //
           Times.of(Tensors.vectorFloat(xyz1), param.weights).add(param.offset), //
           Times.of(Tensors.vectorFloat(xyz2), param.weights).add(param.offset), //
-          255)) {
+          width)) {
         float[] rgb = COLOR_SPACE.toRGB(Primitives.toFloatArray(xyz));
         Tensor append = Tensors.vectorFloat(rgb);
         result.append(append.multiply(RealScalar.of(255)).append(RealScalar.of(255)));
       }
       BufferedImage bufferedImage = ImageFormat.of(Tensors.of(result));
-      graphics.drawImage(bufferedImage, 0, piy, bufferedImage.getWidth() * 2, HEIGHT, null);
+      graphics.drawImage(bufferedImage, 0, piy, bufferedImage.getWidth(), height, null);
       piy += HEIGHT_INCR;
     }
     for (Cielab cielab : Cielab.values()) {
@@ -84,14 +87,14 @@ public class ColorInterpDemo extends AbstractDemo {
       for (Tensor lab : Subdivide.of( //
           Times.of(lab1, param.weights).add(param.offset), //
           Times.of(lab2, param.weights).add(param.offset), //
-          255)) {
+          width)) {
         Tensor xyz = cielab.lab2xyz(lab);
         float[] rgb = COLOR_SPACE.toRGB(Primitives.toFloatArray(xyz));
         Tensor append = Tensors.vectorFloat(rgb);
         result.append(append.multiply(RealScalar.of(255)).append(RealScalar.of(255)));
       }
       BufferedImage bufferedImage = ImageFormat.of(Tensors.of(result));
-      graphics.drawImage(bufferedImage, 0, piy, bufferedImage.getWidth() * 2, HEIGHT, null);
+      graphics.drawImage(bufferedImage, 0, piy, bufferedImage.getWidth(), height, null);
       piy += HEIGHT_INCR;
     }
   }

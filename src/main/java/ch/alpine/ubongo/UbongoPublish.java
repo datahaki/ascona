@@ -3,7 +3,7 @@ package ch.alpine.ubongo;
 
 import java.util.List;
 
-/* package */ enum UbongoPublish {
+public enum UbongoPublish {
   /** BATCH 1 2020 October */
   STANDARD(UbongoBoards.STANDARD, List.of(0, 1, 2, 3, 10, 12)),
   CARPET_1(UbongoBoards.CARPET_1, List.of(2, 6, 9, 12, 16, 19)),

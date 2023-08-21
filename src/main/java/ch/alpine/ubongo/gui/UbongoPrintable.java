@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ubongo;
+package ch.alpine.ubongo.gui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,7 +10,9 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.List;
 
-public class UbongoPrintable implements Printable {
+import ch.alpine.ubongo.UbongoPublish;
+
+/* package */ class UbongoPrintable implements Printable {
   private final int scale;
   private final double factor;
   private final List<UbongoPublish> list;

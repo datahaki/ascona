@@ -10,7 +10,7 @@ import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.io.Import;
 
-/* package */ enum UbongoLoader {
+public enum UbongoLoader {
   INSTANCE;
 
   private final Function<UbongoBoards, List<List<UbongoEntry>>> cache = Cache.of(this::of, 164);

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ubongo;
+package ch.alpine.ubongo.gui;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,11 +9,13 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.ConstantArray;
+import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.CyclicColorDataIndexed;
 import ch.alpine.tensor.img.StrictColorDataIndexed;
+import ch.alpine.ubongo.Ubongo;
+import ch.alpine.ubongo.UbongoEntry;
 
 /* package */ enum UbongoRender {
   ;
@@ -24,13 +26,13 @@ import ch.alpine.tensor.img.StrictColorDataIndexed;
    * @param solution
    * @return */
   public static Tensor matrix(List<Integer> list, List<UbongoEntry> solution) {
-    Tensor image = ConstantArray.of(DoubleScalar.INDETERMINATE, list).copy();
+    Tensor image = Array.same(DoubleScalar.INDETERMINATE, list);
     for (UbongoEntry ubongoEntry : solution) {
-      List<Integer> size = Dimensions.of(ubongoEntry.stamp);
+      List<Integer> size = Dimensions.of(ubongoEntry.stamp());
       for (int si = 0; si < size.get(0); ++si)
         for (int sj = 0; sj < size.get(1); ++sj)
-          if (Scalars.nonZero(ubongoEntry.stamp.Get(si, sj)))
-            image.set(RealScalar.of(ubongoEntry.ubongo.ordinal()), ubongoEntry.i + si, ubongoEntry.j + sj);
+          if (Scalars.nonZero(ubongoEntry.stamp().Get(si, sj)))
+            image.set(RealScalar.of(ubongoEntry.ubongo().ordinal()), ubongoEntry.i() + si, ubongoEntry.j() + sj);
     }
     return image;
   }

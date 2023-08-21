@@ -2,8 +2,8 @@
 package ch.alpine.ascona.hull;
 
 import java.awt.Graphics2D;
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 import java.util.random.RandomGenerator;
 
 import ch.alpine.ascona.util.dis.ManifoldDisplay;
@@ -47,7 +47,7 @@ public class R3HullDemo extends AbstractDemo {
       if (hullParam.cuboid) {
         Clip[] clips = { Clips.absoluteOne(), Clips.absoluteOne(), Clips.absoluteOne() };
         CoordinateBoundingBox ccb = CoordinateBoundingBox.of(clips);
-        RandomGenerator random = new Random();
+        RandomGenerator random = new SecureRandom();
         tensor = RandomSample.of(BoxRandomSample.of(ccb), random, n);
         for (int index = 0; index < tensor.length(); ++index) {
           int i = random.nextInt(3);

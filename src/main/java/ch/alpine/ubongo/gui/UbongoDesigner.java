@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ubongo;
+package ch.alpine.ubongo.gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -30,15 +30,18 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ImageCrop;
 import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.io.Import;
 import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.sca.Floor;
+import ch.alpine.ubongo.Candidates;
+import ch.alpine.ubongo.Ubongo;
+import ch.alpine.ubongo.UbongoBoard;
+import ch.alpine.ubongo.UbongoEntry;
 
 public class UbongoDesigner extends AbstractDemo implements Runnable {
-  private static final File FILE = HomeDirectory.Downloads("ubongo_design.csv");
+  private static final File FILE = RESOURCE_LOCATOR.file(UbongoDesigner.class.getSimpleName() + ".csv");
   public static final Scalar FREE = UbongoBoard.FREE;
 
   @ReflectionMarker
@@ -67,7 +70,7 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
       try {
         template = Import.of(FILE);
       } catch (Exception e) {
-        e.printStackTrace();
+        System.err.println("does not exist: " + FILE);
       }
     }
     // ---
@@ -117,8 +120,13 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
       int count = (int) Flatten.stream(template, -1).filter(FREE::equals).count();
       graphics.setColor(Color.DARK_GRAY);
       graphics.drawString("free=" + count, 0, 30);
-      List<List<Ubongo>> candidates = Ubongo.candidates(param.num, count);
-      graphics.drawString("comb=" + candidates.size(), 0, 50);
+      List<List<Ubongo>> candidates = Candidates.candidates(param.num, count);
+      if (candidates.size() == 0) {
+        graphics.setColor(Color.RED);
+        graphics.drawString("CANDIDATE SET EMPTY", 0, 50);
+      } else {
+        graphics.drawString("comb=" + candidates.size(), 0, 50);
+      }
     }
   }
 

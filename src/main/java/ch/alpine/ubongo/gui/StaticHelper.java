@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ubongo;
+package ch.alpine.ubongo.gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,15 +7,24 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
+import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.ext.ResourceData;
 import ch.alpine.tensor.img.ImageRotate;
+import ch.alpine.ubongo.Ubongo;
+import ch.alpine.ubongo.UbongoBoard;
+import ch.alpine.ubongo.UbongoEntry;
+import ch.alpine.ubongo.UbongoLoader;
+import ch.alpine.ubongo.UbongoPublish;
 
 /* package */ enum StaticHelper {
   ;
+  public static final ResourceLocator RESOURCE_LOCATOR = //
+      new ResourceLocator(HomeDirectory.Documents(Ubongo.class.getSimpleName()));
   private static final int MARGIN_Y = 13;
   // 61.1465
   private static final int ZCALE = 7;
@@ -40,13 +49,11 @@ import ch.alpine.tensor.img.ImageRotate;
         }
         List<UbongoEntry> solution = solutions.get(index);
         for (UbongoEntry ubongoEntry : solution) {
-          UbongoEntry ubongoPiece = new UbongoEntry();
-          ubongoPiece.stamp = ImageRotate.cw(ubongoEntry.ubongo.mask());
-          ubongoPiece.ubongo = ubongoEntry.ubongo;
-          List<Integer> size = Dimensions.of(ubongoPiece.stamp);
+          UbongoEntry ubongoPiece = new UbongoEntry(0, 0, ubongoEntry.ubongo(), ImageRotate.cw(ubongoEntry.ubongo().mask()));
+          List<Integer> size = Dimensions.of(ubongoPiece.stamp());
           int piw = size.get(1) * ZCALE;
           int scale = ZCALE;
-          Tensor mask = ubongoPiece.stamp;
+          Tensor mask = ubongoPiece.stamp();
           graphics.setColor(FILL);
           for (int row = 0; row < size.get(0); ++row)
             for (int col = 0; col < size.get(1); ++col) {
