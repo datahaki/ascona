@@ -15,12 +15,12 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
-import ch.alpine.tensor.img.ImageRotate;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.ubongo.UbongoBoard;
 import ch.alpine.ubongo.UbongoBoards;
 import ch.alpine.ubongo.UbongoEntry;
 import ch.alpine.ubongo.UbongoLoader;
+import ch.alpine.ubongo.UbongoPiece;
 
 public class UbongoBrowser extends AbstractDemo {
   private final UbongoBoard ubongoBoard;
@@ -69,10 +69,9 @@ public class UbongoBrowser extends AbstractDemo {
     }
     int pix = 0;
     for (UbongoEntry ubongoEntry : solution) {
-      UbongoEntry ubongoPiece = new UbongoEntry(0, 0, ubongoEntry.ubongo(), ImageRotate.cw(ubongoEntry.ubongo().mask()));
-      List<Integer> size = Dimensions.of(ubongoPiece.stamp());
-      Tensor tensor = UbongoRender.of(size, List.of(ubongoPiece));
-      // List<Integer> size2 = Dimensions.of(tensor);
+      UbongoPiece ubongoPiece = ubongoEntry.ubongo();
+      Tensor tensor = UbongoRender.of(ubongoPiece);
+      List<Integer> size = Dimensions.of(tensor);
       int scale = 15;
       int piw = size.get(1) * scale;
       graphics.drawImage(ImageFormat.of(tensor), 30 + pix, 30, piw, size.get(0) * scale, null);

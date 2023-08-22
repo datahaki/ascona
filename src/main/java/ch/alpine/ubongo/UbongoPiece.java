@@ -18,7 +18,7 @@ import ch.alpine.tensor.img.ColorFormat;
 import ch.alpine.tensor.img.ImageRotate;
 
 /** 12 different pieces */
-public enum Ubongo {
+public enum UbongoPiece {
   A0(new Color(154, 68, 41), "xx"),
   A1(new Color(62, 121, 87), "xx", "x"),
   A2(new Color(219, 96, 28), "xx", "xx"),
@@ -37,7 +37,7 @@ public enum Ubongo {
   private final int count;
   private final Set<UbongoStamp> set;
 
-  private Ubongo(Color color, String... strings) {
+  private UbongoPiece(Color color, String... strings) {
     this.color = color;
     final int n = strings[0].length();
     Tensor prep = Tensors.empty();

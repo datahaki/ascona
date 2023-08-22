@@ -23,6 +23,9 @@ public class UbongoBoard {
   public static final Scalar FREE = RealScalar.ONE.negate();
   public static final int free = -1;
 
+  private static record Pnt(int i, int j) {
+  }
+
   public static UbongoBoard of(String... strings) {
     // System.out.println("---");
     final int n = strings[0].length();
@@ -57,7 +60,7 @@ public class UbongoBoard {
     count = (int) Flatten.stream(mask, -1).filter(FREE::equals).count();
     _mask = Primitives.toIntArray(Flatten.of(mask));
     // ---
-    for (Ubongo ubongo : Ubongo.values())
+    for (UbongoPiece ubongo : UbongoPiece.values())
       for (UbongoStamp ubongoStamp : ubongo.stamps()) {
         map.put(ubongoStamp, new ArrayList<>());
         Tensor stamp = ubongoStamp.stamp;
@@ -82,10 +85,10 @@ public class UbongoBoard {
   }
 
   public List<List<UbongoEntry>> filter0(int use) {
-    List<List<Ubongo>> values = Candidates.candidates(use, count);
+    List<List<UbongoPiece>> values = Candidates.candidates(use, count);
     List<List<UbongoEntry>> solutions = new LinkedList<>();
-    for (List<Ubongo> list : values) {
-      List<Ubongo> _list = new ArrayList<>(list);
+    for (List<UbongoPiece> list : values) {
+      List<UbongoPiece> _list = new ArrayList<>(list);
       Collections.sort(_list, (u1, u2) -> Integer.compare(u2.count(), u1.count()));
       System.out.println(_list);
       Solve solve = new Solve(_list);
@@ -101,15 +104,15 @@ public class UbongoBoard {
   class Solve {
     private final List<List<UbongoEntry>> solutions = new LinkedList<>();
 
-    public Solve(List<Ubongo> list) {
+    public Solve(List<UbongoPiece> list) {
       solve(_mask.clone(), list, Collections.emptyList());
     }
 
-    private void solve(int[] board, List<Ubongo> list, List<UbongoEntry> entries) {
+    private void solve(int[] board, List<UbongoPiece> list, List<UbongoEntry> entries) {
       if (list.isEmpty()) {
         solutions.add(entries);
       } else {
-        final Ubongo ubongo = list.get(0); // piece
+        final UbongoPiece ubongo = list.get(0); // piece
         for (UbongoStamp ubongoStamp : ubongo.stamps()) {
           List<Pnt> points = map.get(ubongoStamp);
           Tensor stamp = ubongoStamp.stamp;

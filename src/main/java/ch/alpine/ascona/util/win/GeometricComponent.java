@@ -19,6 +19,7 @@ import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
 
 import ch.alpine.ascona.util.ren.RenderInterface;
+import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.tensor.RealScalar;
@@ -111,7 +112,7 @@ public final class GeometricComponent {
           if (mouseEvent.getButton() == buttonDrag) {
             down = mouseEvent.getPoint();
             Dimension dimension = jComponent.getSize();
-            center = toModel(new Point(dimension.width / 2, dimension.height / 2)).unmodifiable();
+            center = toModel(AwtUtil.center(dimension)).unmodifiable();
           }
         }
 

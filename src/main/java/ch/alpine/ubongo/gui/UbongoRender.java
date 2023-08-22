@@ -6,6 +6,7 @@ import java.util.List;
 
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -13,13 +14,14 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.CyclicColorDataIndexed;
+import ch.alpine.tensor.img.ImageRotate;
 import ch.alpine.tensor.img.StrictColorDataIndexed;
-import ch.alpine.ubongo.Ubongo;
 import ch.alpine.ubongo.UbongoEntry;
+import ch.alpine.ubongo.UbongoPiece;
 
 /* package */ enum UbongoRender {
   ;
-  private static final ColorDataIndexed INSTANCE = StrictColorDataIndexed.of(Tensor.of(Arrays.stream(Ubongo.values()).map(Ubongo::colorVector)));
+  private static final ColorDataIndexed INSTANCE = StrictColorDataIndexed.of(Tensor.of(Arrays.stream(UbongoPiece.values()).map(UbongoPiece::colorVector)));
   private static final ColorDataIndexed MONOCHROME = CyclicColorDataIndexed.of(Tensors.of(Tensors.vector(160, 160, 160, 255)));
 
   /** @param list
@@ -49,5 +51,18 @@ import ch.alpine.ubongo.UbongoEntry;
    * @return */
   public static Tensor gray(List<Integer> list, List<UbongoEntry> solution) {
     return matrix(list, solution).map(MONOCHROME);
+  }
+
+  // ---
+  public static Tensor matrix(UbongoPiece ubongoPiece) {
+    Scalar ord = RealScalar.of(ubongoPiece.ordinal());
+    return ImageRotate.cw(ubongoPiece.mask()) //
+        .map(s -> Scalars.isZero(s) //
+            ? DoubleScalar.INDETERMINATE
+            : ord);
+  }
+
+  public static Tensor of(UbongoPiece ubongoPiece) {
+    return matrix(ubongoPiece).map(INSTANCE);
   }
 }

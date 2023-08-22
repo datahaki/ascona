@@ -36,9 +36,9 @@ import ch.alpine.tensor.io.Import;
 import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.sca.Floor;
 import ch.alpine.ubongo.Candidates;
-import ch.alpine.ubongo.Ubongo;
 import ch.alpine.ubongo.UbongoBoard;
 import ch.alpine.ubongo.UbongoEntry;
+import ch.alpine.ubongo.UbongoPiece;
 
 public class UbongoDesigner extends AbstractDemo implements Runnable {
   private static final File FILE = RESOURCE_LOCATOR.file(UbongoDesigner.class.getSimpleName() + ".csv");
@@ -120,7 +120,7 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
       int count = (int) Flatten.stream(template, -1).filter(FREE::equals).count();
       graphics.setColor(Color.DARK_GRAY);
       graphics.drawString("free=" + count, 0, 30);
-      List<List<Ubongo>> candidates = Candidates.candidates(param.num, count);
+      List<List<UbongoPiece>> candidates = Candidates.candidates(param.num, count);
       if (candidates.size() == 0) {
         graphics.setColor(Color.RED);
         graphics.drawString("CANDIDATE SET EMPTY", 0, 50);
