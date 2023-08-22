@@ -12,9 +12,6 @@ import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Dimensions;
-import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.ubongo.UbongoBoards;
 import ch.alpine.ubongo.UbongoEntry;
 import ch.alpine.ubongo.UbongoLoader;
@@ -58,28 +55,10 @@ public class UbongoTree extends AbstractDemo implements Runnable {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     if (param.list.size() <= param.index) {
-      // System.err.println("TRUNC " + param.index);
       param.index = 0;
       fieldsEditor(0).updateJComponents();
     }
-    List<UbongoEntry> solution = param.getSolution();
-    {
-      int scale = 30;
-      List<Integer> size = Dimensions.of(param.ubongoBoards.board().mask());
-      Tensor tensor = UbongoRender.of(size, solution);
-      int pix = 50;
-      int piy = 120;
-      graphics.drawImage(ImageFormat.of(tensor), pix, piy, size.get(1) * scale, size.get(0) * scale, null);
-    }
-    int pix = 0;
-    for (UbongoEntry ubongoEntry : solution) {
-      Tensor tensor = UbongoRender.of(ubongoEntry.ubongoPiece());
-      List<Integer> size = Dimensions.of(tensor);
-      int scale = 15;
-      int piw = size.get(1) * scale;
-      graphics.drawImage(ImageFormat.of(tensor), 30 + pix, 30, piw, size.get(0) * scale, null);
-      pix += piw + 20;
-    }
+    StaticHelper.drawBoard(graphics, param.ubongoBoards.board(), param.getSolution());
   }
 
   @Override

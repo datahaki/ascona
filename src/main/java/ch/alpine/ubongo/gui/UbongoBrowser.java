@@ -13,14 +13,10 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Dimensions;
-import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.ubongo.UbongoBoard;
 import ch.alpine.ubongo.UbongoBoards;
 import ch.alpine.ubongo.UbongoEntry;
 import ch.alpine.ubongo.UbongoLoader;
-import ch.alpine.ubongo.UbongoPiece;
 
 public class UbongoBrowser extends AbstractDemo {
   private final UbongoBoard ubongoBoard;
@@ -57,26 +53,7 @@ public class UbongoBrowser extends AbstractDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    int index = param.index;
-    List<UbongoEntry> solution = list.get(index);
-    {
-      int scale = 30;
-      List<Integer> size = Dimensions.of(ubongoBoard.mask());
-      Tensor tensor = UbongoRender.of(size, solution);
-      int pix = 50;
-      int piy = 120;
-      graphics.drawImage(ImageFormat.of(tensor), pix, piy, size.get(1) * scale, size.get(0) * scale, null);
-    }
-    int pix = 0;
-    for (UbongoEntry ubongoEntry : solution) {
-      UbongoPiece ubongoPiece = ubongoEntry.ubongoPiece();
-      Tensor tensor = UbongoRender.of(ubongoPiece);
-      List<Integer> size = Dimensions.of(tensor);
-      int scale = 15;
-      int piw = size.get(1) * scale;
-      graphics.drawImage(ImageFormat.of(tensor), 30 + pix, 30, piw, size.get(0) * scale, null);
-      pix += piw + 20;
-    }
+    StaticHelper.drawBoard(graphics, ubongoBoard, list.get(param.index));
   }
 
   public static void main(String[] args) {
