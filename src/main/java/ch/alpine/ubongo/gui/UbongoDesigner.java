@@ -84,8 +84,8 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
         System.err.println("does not exist: " + FILE);
       }
     }
-    if (false) {
-      Tensor temp = UbongoBoards.FINALBOS.board().mask();
+    if (true) {
+      Tensor temp = UbongoBoards.ELEVEN07.board().mask();
       List<Integer> list = Dimensions.of(temp);
       template = ArrayPad.of(temp, List.of(0, 0), List.of(10 - list.get(0), 11 - list.get(1)));
     }

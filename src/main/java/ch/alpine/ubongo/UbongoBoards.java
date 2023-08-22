@@ -279,11 +279,14 @@ public enum UbongoBoards {
   ELEVEN04(11, "      o   ", " o    ooo ", " ooo oo oo", "oo ooo oo ", " oo oooooo", "oooooooo o", "   ooo oo ", "       o  ", "      oo  "),
   ELEVEN05(11, "   o o oo ", " oooooo o ", "ooo  oooo ", " o  oo ooo", " ooooooo o", " o ooo ooo", "   o oooo "),
   ELEVEN06(11, "  o    o  ", " ooooo oo ", "oo  oooo  ", "ooooo oooo", "ooooooo o ", " oooo oo  ", "  o ooo   ", "    o o   "),
+  ELEVEN07(11, "   o     ", "  oo o o ", " ooo ooo ", "oooooo oo", " o oooooo", "oooooo oo", "  oo ooo ", "   o o oo"),
   TWELVE01(12, "       oo", "  o oo oo", "  oooooo ", " oooo oo ", "ooo oo o ", " o ooo oo", " ooo  oo ", "ooooooooo", "  o  o o "),
   TWELVE02(12, "  o   o   ", "  o ooooo ", " oooooo oo", "oo ooo oo ", " oo ooooo ", "oooo oo o ", " oooooo   ", "oo  o     ", "   oo     "),
   TWELVE03(12, "      o    ", " o o  ooo  ", " oooooo oo ", "oo oo  oo  ", " oo oo ooo ", " ooooooo oo", " o ooo ooo ", "   oo   oo ", "   o       "),
+  TWELVE04(12, "   o     ", "  oo o o ", " ooo ooo ", "oooooo oo", " o oooooo", "oooooo oo", "  oo ooo ", "   o o oo", "    oo   ", "   ooo   "),
   TWELVE05(12, " o o o oo ", " oooooo oo", "oo oooooo ", " oo oo ooo", " ooooooo o", " o ooo ooo", "   o oooo "),
   TWELVE06(12, "   o o oo  ", " oooooo oo ", "ooo  oooo  ", "oo  oo oooo", " ooooooo o ", " oo oo ooo ", "  o  oooo  ", "       o   "),
+  TWELVE07(12, "   o       ", "  oo o o   ", " ooo ooo   ", "oooooo oo o", " o oooooooo", "oooooo ooo ", "  oooooo   ", "   o o oo  "),
   FINALBOS(12, "  o   o   ", "  o ooooo ", " oooooo   ", "oooooo ooo", "ooo o ooo ", " ooooooooo", "oo oo o o ", " o o  o   "),
   ///
   ;
@@ -306,7 +309,7 @@ public enum UbongoBoards {
     return ubongoBoard;
   }
 
-  public List<List<UbongoEntry>> solve() {
+  public List<UbongoSolution> solve() {
     return ubongoBoard.filter0(use);
   }
 }

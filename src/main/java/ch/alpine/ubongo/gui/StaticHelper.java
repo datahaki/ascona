@@ -19,6 +19,7 @@ import ch.alpine.ubongo.UbongoEntry;
 import ch.alpine.ubongo.UbongoLoader;
 import ch.alpine.ubongo.UbongoPiece;
 import ch.alpine.ubongo.UbongoPublish;
+import ch.alpine.ubongo.UbongoSolution;
 
 /* package */ enum StaticHelper {
   ;
@@ -30,7 +31,7 @@ import ch.alpine.ubongo.UbongoPublish;
   public static void draw(Graphics2D graphics, UbongoPublish ubongoPublish, int SCALE) {
     int piy = MARGIN_Y;
     {
-      List<List<UbongoEntry>> solutions = UbongoLoader.INSTANCE.load(ubongoPublish.ubongoBoards);
+      List<UbongoSolution> solutions = UbongoLoader.INSTANCE.load(ubongoPublish.ubongoBoards);
       int count = 0;
       for (int index : ubongoPublish.list) {
         BufferedImage bufferedImage = ResourceData.bufferedImage("/ch/alpine/ubongo/dice" + count + ".png");
@@ -44,7 +45,7 @@ import ch.alpine.ubongo.UbongoPublish;
           g.drawImage(bufferedImage, 2, piy - 5, piw, piw, null);
           g.dispose();
         }
-        List<UbongoEntry> solution = solutions.get(index);
+        List<UbongoEntry> solution = solutions.get(index).list();
         for (UbongoEntry ubongoEntry : solution) {
           Tensor mask = ImageRotate.cw(ubongoEntry.ubongoPiece().mask());
           List<Integer> size = Dimensions.of(mask);

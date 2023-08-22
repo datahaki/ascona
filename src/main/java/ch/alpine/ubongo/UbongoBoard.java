@@ -81,7 +81,6 @@ public class UbongoBoard {
               Tensor piece = ArrayPad.of(stamp, List.of(bi, bj), List.of( //
                   board_size.get(0) - size.get(0) - bi, //
                   board_size.get(1) - size.get(1) - bj));
-              // TODO USE CONNECTED COMPONENTS also in solve
               if (StaticHelper.isSingleFree(board.add(piece)))
                 map.get(ubongoStamp).add(new Pnt(bi, bj));
             }
@@ -95,14 +94,13 @@ public class UbongoBoard {
 
   public boolean isRunning = true;
 
-  public List<List<UbongoEntry>> filter0(int use) {
+  public List<UbongoSolution> filter0(int use) {
     List<List<UbongoPiece>> values = Candidates.candidates(use, count);
-    List<List<UbongoEntry>> solutions = new LinkedList<>();
+    List<UbongoSolution> solutions = new LinkedList<>();
     for (List<UbongoPiece> list : values) {
       List<UbongoPiece> _list = new ArrayList<>(list);
       Collections.sort(_list, (u1, u2) -> Integer.compare(u2.count(), u1.count()));
       Solve solve = new Solve(_list);
-      // List<List<UbongoEntry>> solutions = solve.solutions;
       int size = solve.solutions.size();
       switch (size) {
       case 0: {
@@ -110,14 +108,12 @@ public class UbongoBoard {
         break;
       }
       case 1: {
-        List<UbongoEntry> list2 = solve.solutions.get(0);
-        solutions.add(list2);
+        solutions.add(new UbongoSolution(solve.solutions.get(0), solve.search));
         message = _list + " FOUND!";
         break;
       }
       default:
         message = _list + " TOO MANY solutions";
-        // System.out.println(" \\- TOO many solutions");
       }
       if (!isRunning)
         break;
@@ -127,12 +123,14 @@ public class UbongoBoard {
 
   class Solve {
     private final List<List<UbongoEntry>> solutions = new LinkedList<>();
+    private int search = 0;
 
     public Solve(List<UbongoPiece> list) {
       solve(_mask.clone(), list, Collections.emptyList());
     }
 
     private void solve(int[] board, List<UbongoPiece> list, List<UbongoEntry> entries) {
+      ++search;
       if (list.isEmpty()) {
         solutions.add(entries);
       } else {

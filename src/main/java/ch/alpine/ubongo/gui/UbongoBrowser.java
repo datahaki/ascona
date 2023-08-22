@@ -15,12 +15,12 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.ubongo.UbongoBoard;
 import ch.alpine.ubongo.UbongoBoards;
-import ch.alpine.ubongo.UbongoEntry;
 import ch.alpine.ubongo.UbongoLoader;
+import ch.alpine.ubongo.UbongoSolution;
 
 public class UbongoBrowser extends AbstractDemo {
   private final UbongoBoard ubongoBoard;
-  private final List<List<UbongoEntry>> list;
+  private final List<UbongoSolution> list;
 
   @ReflectionMarker
   public static class Param {
@@ -40,11 +40,11 @@ public class UbongoBrowser extends AbstractDemo {
 
   private final Param param;
 
-  public UbongoBrowser(UbongoBoard ubongoBoard, List<List<UbongoEntry>> list) {
+  public UbongoBrowser(UbongoBoard ubongoBoard, List<UbongoSolution> list) {
     this(new Param(list.size()), ubongoBoard, list);
   }
 
-  public UbongoBrowser(Param param, UbongoBoard ubongoBoard, List<List<UbongoEntry>> list) {
+  public UbongoBrowser(Param param, UbongoBoard ubongoBoard, List<UbongoSolution> list) {
     super(param);
     this.param = param;
     this.ubongoBoard = Objects.requireNonNull(ubongoBoard);
@@ -53,13 +53,13 @@ public class UbongoBrowser extends AbstractDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    StaticHelper.drawBoard(graphics, ubongoBoard, list.get(param.index));
+    StaticHelper.drawBoard(graphics, ubongoBoard, list.get(param.index).list());
   }
 
   public static void main(String[] args) {
     LookAndFeels.LIGHT.updateComponentTreeUI();
     UbongoBoards ubongoBoards = UbongoBoards.LETTERH1;
-    List<List<UbongoEntry>> list = // ubongoBoards.solve();
+    List<UbongoSolution> list = // ubongoBoards.solve();
         UbongoLoader.INSTANCE.load(ubongoBoards);
     if (list.isEmpty()) {
       System.err.println("no solutions");

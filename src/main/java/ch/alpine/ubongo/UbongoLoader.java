@@ -15,13 +15,13 @@ public enum UbongoLoader {
   INSTANCE;
 
   private final ResourceLocator resourceLocator = new ResourceLocator(HomeDirectory.Documents("ubongo"));
-  private final Function<UbongoBoards, List<List<UbongoEntry>>> cache = Cache.of(this::of, 200);
+  private final Function<UbongoBoards, List<UbongoSolution>> cache = Cache.of(this::of, 200);
 
-  public List<List<UbongoEntry>> load(UbongoBoards ubongoBoards) {
+  public List<UbongoSolution> load(UbongoBoards ubongoBoards) {
     return cache.apply(ubongoBoards);
   }
 
-  private List<List<UbongoEntry>> of(UbongoBoards ubongoBoards) {
+  private List<UbongoSolution> of(UbongoBoards ubongoBoards) {
     File file = resourceLocator.file(ubongoBoards.name());
     if (file.isFile())
       try {
@@ -30,7 +30,7 @@ public enum UbongoLoader {
         exception.printStackTrace();
       }
     System.out.println("compute");
-    List<List<UbongoEntry>> list = ubongoBoards.solve();
+    List<UbongoSolution> list = ubongoBoards.solve();
     try {
       if (!list.isEmpty())
         Export.object(file, list);

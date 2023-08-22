@@ -3,14 +3,14 @@ package ch.alpine.ubongo.gui;
 import java.util.List;
 
 import ch.alpine.ubongo.UbongoBoard;
-import ch.alpine.ubongo.UbongoEntry;
+import ch.alpine.ubongo.UbongoSolution;
 
 class SolveThread extends Thread {
   public final UbongoBoard ubongoBoard;
 
   public SolveThread(UbongoBoard ubongoBoard, int use) {
     super(() -> {
-      List<List<UbongoEntry>> list = ubongoBoard.filter0(use);
+      List<UbongoSolution> list = ubongoBoard.filter0(use);
       if (list.isEmpty()) {
         System.err.println("no solutions");
       } else {

@@ -13,14 +13,14 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.ubongo.UbongoBoards;
-import ch.alpine.ubongo.UbongoEntry;
 import ch.alpine.ubongo.UbongoLoader;
+import ch.alpine.ubongo.UbongoSolution;
 
 public class UbongoTree extends AbstractDemo implements Runnable {
   @ReflectionMarker
   public static class Param {
     public UbongoBoards ubongoBoards = UbongoBoards.AIRPLAN1;
-    private List<List<UbongoEntry>> list;
+    private List<UbongoSolution> list;
     @FieldSelectionCallback("index")
     public Integer index = 0;
 
@@ -34,7 +34,7 @@ public class UbongoTree extends AbstractDemo implements Runnable {
       list = UbongoLoader.INSTANCE.load(ubongoBoards);
     }
 
-    public List<UbongoEntry> getSolution() {
+    public UbongoSolution getSolution() {
       return list.get(index);
     }
   }
@@ -58,7 +58,7 @@ public class UbongoTree extends AbstractDemo implements Runnable {
       param.index = 0;
       fieldsEditor(0).updateJComponents();
     }
-    StaticHelper.drawBoard(graphics, param.ubongoBoards.board(), param.getSolution());
+    StaticHelper.drawBoard(graphics, param.ubongoBoards.board(), param.getSolution().list());
   }
 
   @Override
