@@ -5,5 +5,5 @@ import java.io.Serializable;
 
 import ch.alpine.tensor.Tensor;
 
-public record UbongoEntry(int i, int j, UbongoPiece ubongo, Tensor stamp) implements Serializable {
+public record UbongoEntry(int i, int j, UbongoPiece ubongoPiece, Tensor stamp) implements Serializable {
 }

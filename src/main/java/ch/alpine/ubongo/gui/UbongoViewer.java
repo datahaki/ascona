@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.ubongo.UbongoPublish;
 
 public class UbongoViewer extends AbstractDemo {
@@ -34,7 +33,6 @@ public class UbongoViewer extends AbstractDemo {
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
     launch();
   }
 }

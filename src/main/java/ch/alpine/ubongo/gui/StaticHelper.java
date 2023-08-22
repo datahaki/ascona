@@ -7,24 +7,19 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
-import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.ext.ResourceData;
 import ch.alpine.tensor.img.ImageRotate;
 import ch.alpine.ubongo.UbongoBoard;
 import ch.alpine.ubongo.UbongoEntry;
 import ch.alpine.ubongo.UbongoLoader;
-import ch.alpine.ubongo.UbongoPiece;
 import ch.alpine.ubongo.UbongoPublish;
 
 /* package */ enum StaticHelper {
   ;
-  public static final ResourceLocator RESOURCE_LOCATOR = //
-      new ResourceLocator(HomeDirectory.Documents(UbongoPiece.class.getSimpleName()));
   private static final int MARGIN_Y = 13;
   // 61.1465
   private static final int ZCALE = 7;
@@ -49,7 +44,7 @@ import ch.alpine.ubongo.UbongoPublish;
         }
         List<UbongoEntry> solution = solutions.get(index);
         for (UbongoEntry ubongoEntry : solution) {
-          Tensor mask = ImageRotate.cw(ubongoEntry.ubongo().mask());
+          Tensor mask = ImageRotate.cw(ubongoEntry.ubongoPiece().mask());
           List<Integer> size = Dimensions.of(mask);
           int piw = size.get(1) * ZCALE;
           int scale = ZCALE;

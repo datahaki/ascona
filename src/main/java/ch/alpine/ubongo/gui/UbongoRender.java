@@ -21,8 +21,10 @@ import ch.alpine.ubongo.UbongoPiece;
 
 /* package */ enum UbongoRender {
   ;
-  private static final ColorDataIndexed INSTANCE = StrictColorDataIndexed.of(Tensor.of(Arrays.stream(UbongoPiece.values()).map(UbongoPiece::colorVector)));
-  private static final ColorDataIndexed MONOCHROME = CyclicColorDataIndexed.of(Tensors.of(Tensors.vector(160, 160, 160, 255)));
+  private static final ColorDataIndexed INSTANCE = //
+      StrictColorDataIndexed.of(Tensor.of(Arrays.stream(UbongoPiece.values()).map(UbongoPiece::colorVector)));
+  private static final ColorDataIndexed MONOCHROME = //
+      CyclicColorDataIndexed.of(Tensors.of(Tensors.vector(160, 160, 160, 255)));
 
   /** @param list
    * @param solution
@@ -34,7 +36,7 @@ import ch.alpine.ubongo.UbongoPiece;
       for (int si = 0; si < size.get(0); ++si)
         for (int sj = 0; sj < size.get(1); ++sj)
           if (Scalars.nonZero(ubongoEntry.stamp().Get(si, sj)))
-            image.set(RealScalar.of(ubongoEntry.ubongo().ordinal()), ubongoEntry.i() + si, ubongoEntry.j() + sj);
+            image.set(RealScalar.of(ubongoEntry.ubongoPiece().ordinal()), ubongoEntry.i() + si, ubongoEntry.j() + sj);
     }
     return image;
   }

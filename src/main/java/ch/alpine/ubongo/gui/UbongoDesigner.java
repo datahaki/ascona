@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Path2D;
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -21,13 +22,14 @@ import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.ArrayPad;
+import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ImageCrop;
@@ -37,12 +39,20 @@ import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.sca.Floor;
 import ch.alpine.ubongo.Candidates;
 import ch.alpine.ubongo.UbongoBoard;
-import ch.alpine.ubongo.UbongoEntry;
+import ch.alpine.ubongo.UbongoBoards;
 import ch.alpine.ubongo.UbongoPiece;
 
 public class UbongoDesigner extends AbstractDemo implements Runnable {
   private static final File FILE = RESOURCE_LOCATOR.file(UbongoDesigner.class.getSimpleName() + ".csv");
   public static final Scalar FREE = UbongoBoard.FREE;
+  static final Collector<CharSequence, ?, String> EMBRACE = //
+      Collectors.joining("", "\"", "\"");
+  static final Collector<CharSequence, ?, String> EMBRACE2 = //
+      Collectors.joining(", ", "", "");
+
+  private static String rowToString(Tensor row) {
+    return row.stream().map(s -> s.equals(FREE) ? "o" : " ").collect(EMBRACE);
+  }
 
   @ReflectionMarker
   public static class Param {
@@ -57,6 +67,7 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
   private final Param param;
   private final GridRender gridRender;
   private Tensor template = Array.zeros(10, 11);
+  private SolveThread solveThread = null;
 
   public UbongoDesigner() {
     this(new Param());
@@ -72,6 +83,11 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
       } catch (Exception e) {
         System.err.println("does not exist: " + FILE);
       }
+    }
+    if (false) {
+      Tensor temp = UbongoBoards.FINALBOS.board().mask();
+      List<Integer> list = Dimensions.of(temp);
+      template = ArrayPad.of(temp, List.of(0, 0), List.of(10 - list.get(0), 11 - list.get(1)));
     }
     // ---
     Tensor matrix = Tensors.fromString("{{30, 0, 100}, {0, -30, 500}, {0, 0, 1}}");
@@ -128,15 +144,15 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
         graphics.drawString("comb=" + candidates.size(), 0, 50);
       }
     }
-  }
-
-  static final Collector<CharSequence, ?, String> EMBRACE = //
-      Collectors.joining("", "\"", "\"");
-  static final Collector<CharSequence, ?, String> EMBRACE2 = //
-      Collectors.joining(", ", "", "");
-
-  private static String rowToString(Tensor row) {
-    return row.stream().map(s -> s.equals(FREE) ? "o" : " ").collect(EMBRACE);
+    SolveThread _solveThread = solveThread;
+    if (Objects.nonNull(_solveThread)) {
+      if (_solveThread.isAlive()) {
+        graphics.drawString("computing: " + _solveThread.getMessage(), 0, 80);
+      } else {
+        // System.out.println("finished thread");
+        solveThread = null;
+      }
+    }
   }
 
   @Override
@@ -147,32 +163,23 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
     }
     if (param.solve) {
       param.solve = false;
-      try {
-        Export.of(FILE, template);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-      Tensor result = ImageCrop.eq(RealScalar.ZERO).apply(template);
-      int use = param.num;
-      String collect = result.stream().map(UbongoDesigner::rowToString).collect(EMBRACE2);
-      System.out.printf("UNTITLED(%d, %s),\n", use, collect);
-      System.out.println(Pretty.of(result));
-      UbongoBoard ubongoBoard = UbongoBoard.of(result);
-      List<List<UbongoEntry>> list = ubongoBoard.filter0(use);
-      if (list.isEmpty()) {
-        System.err.println("no solutions");
+      if (Objects.isNull(solveThread)) {
+        Export.wrap(FILE, template);
+        Tensor result = ImageCrop.eq(RealScalar.ZERO).apply(template);
+        int use = param.num;
+        String collect = result.stream().map(UbongoDesigner::rowToString).collect(EMBRACE2);
+        System.out.println("=".repeat(32));
+        System.out.printf("UNTITLED(%d, %s),\n", use, collect);
+        System.out.println(Pretty.of(result));
+        solveThread = new SolveThread(UbongoBoard.of(result), use);
       } else {
-        UbongoBrowser ubongoBrowser = new UbongoBrowser(ubongoBoard, list);
-        ubongoBrowser.setVisible(800, 600);
+        solveThread.cancel();
+        System.out.println("cancel issued");
       }
     }
   }
 
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
     launch();
-    // UbongoDesigner ubongoDesigner = new UbongoDesigner();
-    // ubongoDesigner.timerFrame.configCoordinateOffset(100, 700);
-    // ubongoDesigner.setVisible(800, 600);
   }
 }

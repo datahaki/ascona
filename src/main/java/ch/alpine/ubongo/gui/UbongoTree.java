@@ -10,58 +10,62 @@ import ch.alpine.ascona.util.win.AbstractDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.LookAndFeels;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.io.ImageFormat;
-import ch.alpine.ubongo.UbongoBoard;
 import ch.alpine.ubongo.UbongoBoards;
 import ch.alpine.ubongo.UbongoEntry;
 import ch.alpine.ubongo.UbongoLoader;
-import ch.alpine.ubongo.UbongoPiece;
 
-public class UbongoBrowser extends AbstractDemo {
-  private final UbongoBoard ubongoBoard;
-  private final List<List<UbongoEntry>> list;
-
+public class UbongoTree extends AbstractDemo implements Runnable {
   @ReflectionMarker
   public static class Param {
-    private final int limit;
-
-    public Param(int limit) {
-      this.limit = limit;
-    }
-
+    public UbongoBoards ubongoBoards = UbongoBoards.AIRPLAN1;
+    private List<List<UbongoEntry>> list;
     @FieldSelectionCallback("index")
     public Integer index = 0;
 
     public List<Scalar> index() {
-      return IntStream.range(0, limit).mapToObj(RealScalar::of).toList();
+      return Objects.isNull(list) //
+          ? List.of()
+          : IntStream.range(0, list.size()).mapToObj(RealScalar::of).toList();
+    }
+
+    public void update() {
+      list = UbongoLoader.INSTANCE.load(ubongoBoards);
+    }
+
+    public List<UbongoEntry> getSolution() {
+      return list.get(index);
     }
   }
 
   private final Param param;
 
-  public UbongoBrowser(UbongoBoard ubongoBoard, List<List<UbongoEntry>> list) {
-    this(new Param(list.size()), ubongoBoard, list);
+  public UbongoTree() {
+    this(new Param());
   }
 
-  public UbongoBrowser(Param param, UbongoBoard ubongoBoard, List<List<UbongoEntry>> list) {
+  public UbongoTree(Param param) {
     super(param);
     this.param = param;
-    this.ubongoBoard = Objects.requireNonNull(ubongoBoard);
-    this.list = Objects.requireNonNull(list);
+    param.update();
+    fieldsEditor(0).addUniversalListener(this);
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    int index = param.index;
-    List<UbongoEntry> solution = list.get(index);
+    if (param.list.size() <= param.index) {
+      // System.err.println("TRUNC " + param.index);
+      param.index = 0;
+      fieldsEditor(0).updateJComponents();
+    }
+    List<UbongoEntry> solution = param.getSolution();
     {
       int scale = 30;
-      List<Integer> size = Dimensions.of(ubongoBoard.mask());
+      List<Integer> size = Dimensions.of(param.ubongoBoards.board().mask());
       Tensor tensor = UbongoRender.of(size, solution);
       int pix = 50;
       int piy = 120;
@@ -69,8 +73,7 @@ public class UbongoBrowser extends AbstractDemo {
     }
     int pix = 0;
     for (UbongoEntry ubongoEntry : solution) {
-      UbongoPiece ubongoPiece = ubongoEntry.ubongoPiece();
-      Tensor tensor = UbongoRender.of(ubongoPiece);
+      Tensor tensor = UbongoRender.of(ubongoEntry.ubongoPiece());
       List<Integer> size = Dimensions.of(tensor);
       int scale = 15;
       int piw = size.get(1) * scale;
@@ -79,16 +82,12 @@ public class UbongoBrowser extends AbstractDemo {
     }
   }
 
+  @Override
+  public void run() {
+    param.update();
+  }
+
   public static void main(String[] args) {
-    LookAndFeels.LIGHT.updateComponentTreeUI();
-    UbongoBoards ubongoBoards = UbongoBoards.LETTERH1;
-    List<List<UbongoEntry>> list = // ubongoBoards.solve();
-        UbongoLoader.INSTANCE.load(ubongoBoards);
-    if (list.isEmpty()) {
-      System.err.println("no solutions");
-    } else {
-      UbongoBrowser ubongoBrowser = new UbongoBrowser(ubongoBoards.board(), list);
-      ubongoBrowser.setVisible(800, 600);
-    }
+    launch();
   }
 }

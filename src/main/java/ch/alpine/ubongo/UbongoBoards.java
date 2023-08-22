@@ -204,6 +204,15 @@ public enum UbongoBoards {
   FELIX_F1(7, "ooooooo", " ooooo ", "ooo    ", "ooooo  ", " ooo   ", " o     ", "ooo    ", "ooo    "),
   FELIX_F2(7, "ooooooo", " ooooo ", " ooo   ", " oooo  ", " ooo   ", " oo    ", " oo    ", "ooo    "),
   LETTERH1(7, "ooo    ", " oo    ", " ooo   ", " oooo  ", " ooooo ", " oo oo ", " oo oo ", " oo ooo"),
+  // ---
+  // --- AT CHILLY's
+  SIMSONSB(7, "   o   ", "  oooo ", " oooooo", " ooooo ", "o oooo ", "ooooo  ", " oooo  "),
+  SIMSONSH(7, "   o  ", "  oooo", " ooooo", " oo oo", "oo ooo", "ooooo ", " oooo "),
+  SIMSONSM(7, "   o  ", "  oooo", " ooooo", " o ooo", "ooo oo", "ooooo ", " oooo "),
+  SIMSONSG(7, "  o  ", " oooo", "ooooo", "o o o", "ooooo", "ooooo", "ooooo"),
+  SIMSONSC(7, "   o ", "  oo ", " ooo ", "ooooo", "o o o", "ooooo", "ooooo", "ooooo"),
+  SIMSONSS(8, "ooooo ", " ooooo", "ooooo ", " oo oo", "oooooo", "o ooo ", "oooo  "),
+  SIMSONSY(8, "   ooo ", "  oo oo", "ooooooo", "oooo oo", " ooooo ", "oo o oo"),
   /***************************************************/
   /************ BATCH 8 ******************************/
   LONGHALL(8, " oooo ooo ", "oooo ooooo", "o  oooo oo", "oooo oooo "),
@@ -262,6 +271,20 @@ public enum UbongoBoards {
   SWITZERA(10, "  oo o  ", " ooooooo", "ooo oo  ", "oo   oo ", " oo oooo", "oooooooo", "oo o oo "),
   /** 5 solutions */
   SWITZERB(10, " ooo o  ", " ooooooo", "ooo oo  ", "oo   oo ", "ooo oooo", "oooooo  ", " o ooooo"),
+  // --- AT CHILLY's
+  TENNER01(10, "    o o ", "oo ooooo", " ooooooo", "oo oo oo", "o oo ooo", "ooooooo ", "oo  oo  "),
+  ELEVEN01(11, "    o oo ", "oo oooooo", " ooooo o ", "oo oo ooo", "o oo oooo", "oooooooo ", "oo  ooo  "),
+  ELEVEN02(11, "  ooo  oo", " oo ooooo", "  oooo  o", " oo oo oo", "oo oo ooo", " oooooooo", "ooo  ooo "),
+  ELEVEN03(11, "  o oo   ", "  oooooo ", " oooo oo ", "ooo oo o ", " o ooo oo", " ooo  oo ", "ooooooooo", "  o  o o "),
+  ELEVEN04(11, "      o   ", " o    ooo ", " ooo oo oo", "oo ooo oo ", " oo oooooo", "oooooooo o", "   ooo oo ", "       o  ", "      oo  "),
+  ELEVEN05(11, "   o o oo ", " oooooo o ", "ooo  oooo ", " o  oo ooo", " ooooooo o", " o ooo ooo", "   o oooo "),
+  ELEVEN06(11, "  o    o  ", " ooooo oo ", "oo  oooo  ", "ooooo oooo", "ooooooo o ", " oooo oo  ", "  o ooo   ", "    o o   "),
+  TWELVE01(12, "       oo", "  o oo oo", "  oooooo ", " oooo oo ", "ooo oo o ", " o ooo oo", " ooo  oo ", "ooooooooo", "  o  o o "),
+  TWELVE02(12, "  o   o   ", "  o ooooo ", " oooooo oo", "oo ooo oo ", " oo ooooo ", "oooo oo o ", " oooooo   ", "oo  o     ", "   oo     "),
+  TWELVE03(12, "      o    ", " o o  ooo  ", " oooooo oo ", "oo oo  oo  ", " oo oo ooo ", " ooooooo oo", " o ooo ooo ", "   oo   oo ", "   o       "),
+  TWELVE04(12, "      o   ", " o o oooo ", " oooooo oo", "oo oo  oo ", " oo oo ooo", " ooooooo o", " o ooo ooo", "   o oooo "),
+  TWELVE05(12, " o o o oo ", " oooooo oo", "oo oooooo ", " oo oo ooo", " ooooooo o", " o ooo ooo", "   o oooo "),
+  TWELVE06(12, "   o o oo  ", " oooooo oo ", "ooo  oooo  ", "oo  oo oooo", " ooooooo o ", " oo oo ooo ", "  o  oooo  ", "       o   "),
   FINALBOS(12, "  o   o   ", "  o ooooo ", " oooooo   ", "oooooo ooo", "ooo o ooo ", " ooooooooo", "oo oo o o ", " o o  o   "),
   ///
   ;

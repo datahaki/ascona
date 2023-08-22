@@ -13,6 +13,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.ArrayPad;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.ext.Lists;
@@ -52,6 +53,7 @@ public class UbongoBoard {
   private final List<Integer> board_size;
   private final int count;
   private final Map<UbongoStamp, List<Pnt>> map = new HashMap<>();
+  public String message = "";
 
   private UbongoBoard(Tensor prep) {
     mask = MatrixQ.require(prep).unmodifiable();
@@ -74,8 +76,15 @@ public class UbongoBoard {
                 if (occupied)
                   status &= prep.get(bi + si, bj + sj).equals(FREE);
               }
-            if (status)
-              map.get(ubongoStamp).add(new Pnt(bi, bj));
+            if (status) {
+              Tensor board = mask.copy();
+              Tensor piece = ArrayPad.of(stamp, List.of(bi, bj), List.of( //
+                  board_size.get(0) - size.get(0) - bi, //
+                  board_size.get(1) - size.get(1) - bj));
+              // TODO USE CONNECTED COMPONENTS also in solve
+              if (StaticHelper.isSingleFree(board.add(piece)))
+                map.get(ubongoStamp).add(new Pnt(bi, bj));
+            }
           }
       }
   }
@@ -84,19 +93,34 @@ public class UbongoBoard {
     return mask;
   }
 
+  public boolean isRunning = true;
+
   public List<List<UbongoEntry>> filter0(int use) {
     List<List<UbongoPiece>> values = Candidates.candidates(use, count);
     List<List<UbongoEntry>> solutions = new LinkedList<>();
     for (List<UbongoPiece> list : values) {
       List<UbongoPiece> _list = new ArrayList<>(list);
       Collections.sort(_list, (u1, u2) -> Integer.compare(u2.count(), u1.count()));
-      System.out.println(_list);
       Solve solve = new Solve(_list);
-      if (solve.solutions.size() == 1) {
+      // List<List<UbongoEntry>> solutions = solve.solutions;
+      int size = solve.solutions.size();
+      switch (size) {
+      case 0: {
+        message = _list + " ZERO solutions";
+        break;
+      }
+      case 1: {
         List<UbongoEntry> list2 = solve.solutions.get(0);
         solutions.add(list2);
-        System.out.println(list2);
+        message = _list + " FOUND!";
+        break;
       }
+      default:
+        message = _list + " TOO MANY solutions";
+        // System.out.println(" \\- TOO many solutions");
+      }
+      if (!isRunning)
+        break;
     }
     return solutions;
   }
@@ -112,8 +136,8 @@ public class UbongoBoard {
       if (list.isEmpty()) {
         solutions.add(entries);
       } else {
-        final UbongoPiece ubongo = list.get(0); // piece
-        for (UbongoStamp ubongoStamp : ubongo.stamps()) {
+        final UbongoPiece ubongoPiece = list.get(0); // piece
+        for (UbongoStamp ubongoStamp : ubongoPiece.stamps()) {
           List<Pnt> points = map.get(ubongoStamp);
           Tensor stamp = ubongoStamp.stamp;
           for (Pnt point : points) {
@@ -136,7 +160,7 @@ public class UbongoBoard {
               }
             // ---
             if (status) {
-              UbongoEntry ubongoEntry = new UbongoEntry(bi, bj, ubongo, stamp);
+              UbongoEntry ubongoEntry = new UbongoEntry(bi, bj, ubongoPiece, stamp);
               List<UbongoEntry> arrayList = new ArrayList<>(entries);
               arrayList.add(ubongoEntry);
               solve(nubrd, Lists.rest(list), arrayList);
