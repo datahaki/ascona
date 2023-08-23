@@ -2,6 +2,8 @@
 package ch.alpine.ubongo.gui;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -27,6 +29,7 @@ import ch.alpine.ubongo.UbongoSolution;
   // 61.1465
   private static final int ZCALE = 7;
   private static final Color FILL = Color.LIGHT_GRAY;
+  private static final String[] STARS = { "\u2729", "\u272a", "\u272b", "\u272c", "\u272d", "\u272e", "\u272f", "\u2730" };
 
   public static void draw(Graphics2D graphics, UbongoPublish ubongoPublish, int SCALE) {
     int piy = MARGIN_Y;
@@ -38,6 +41,7 @@ import ch.alpine.ubongo.UbongoSolution;
         ++count;
         graphics.setColor(Color.DARK_GRAY);
         int pix = 60;
+        String star = STARS[Math.floorMod(ubongoPublish.hashCode(), STARS.length)];
         {
           Graphics2D g = (Graphics2D) graphics.create();
           RenderQuality.setQuality(g);
@@ -45,8 +49,8 @@ import ch.alpine.ubongo.UbongoSolution;
           g.drawImage(bufferedImage, 2, piy - 5, piw, piw, null);
           g.dispose();
         }
-        List<UbongoEntry> solution = solutions.get(index).list();
-        for (UbongoEntry ubongoEntry : solution) {
+        UbongoSolution ubongoSolution = solutions.get(index);
+        for (UbongoEntry ubongoEntry : ubongoSolution.list()) {
           Tensor mask = ImageRotate.cw(ubongoEntry.ubongoPiece().mask());
           List<Integer> size = Dimensions.of(mask);
           int piw = size.get(1) * ZCALE;
@@ -59,6 +63,29 @@ import ch.alpine.ubongo.UbongoSolution;
                 graphics.fillRect(pix + col * scale, piy + row * scale, scale, scale);
             }
           pix += piw + 2 * ZCALE;
+        }
+        {
+          Graphics2D g = (Graphics2D) graphics.create();
+          RenderQuality.setQuality(g);
+          int pjx = 60 + (ubongoSolution.list().size() * 4 + 2) * ZCALE;
+          int size = 3 * ZCALE;
+          int pjy = piy + size - (int) (0.5 * ZCALE);
+          g.setFont(new Font(Font.DIALOG, Font.PLAIN, size));
+          double log10 = Math.log10(ubongoSolution.search());
+          FontMetrics fontMetrics = g.getFontMetrics();
+          int width = fontMetrics.stringWidth(star);
+          {
+            int a = 192 + 32 + 16;
+            g.setColor(new Color(a, a, a));
+          }
+          g.drawString(star.repeat(5), pjx, pjy);
+          g.setClip(pjx, piy, (int) (log10 * width), 5 * ZCALE);
+          {
+            int a = 192 - 16;
+            g.setColor(new Color(a, a, a));
+          }
+          g.drawString(star.repeat(5), pjx, pjy);
+          g.dispose();
         }
         piy += 4 * ZCALE + 2 * ZCALE;
       }

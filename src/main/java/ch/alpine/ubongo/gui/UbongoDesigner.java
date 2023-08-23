@@ -82,17 +82,6 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
     this(new Param(), new Paran());
   }
 
-  private void center(Tensor mask) {
-    List<Integer> list = Dimensions.of(mask);
-    final int def0 = 11 - list.get(0);
-    final int def1 = 11 - list.get(1);
-    final int beg0 = def0 / 2;
-    final int beg1 = def1 / 2;
-    final int end0 = def0 - beg0;
-    final int end1 = def1 - beg1;
-    template = ArrayPad.of(mask, List.of(beg0, beg1), List.of(end0, end1));
-  }
-
   public UbongoDesigner(Param param, Paran paran) {
     super(param, paran);
     this.param = param;
@@ -210,6 +199,17 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
       String collect = result.stream().map(UbongoDesigner::rowToString).collect(EMBRACE2);
       System.out.printf("%s(%d, %s),\n", param.string, use, collect);
     }
+  }
+
+  private void center(Tensor mask) {
+    List<Integer> list = Dimensions.of(mask);
+    final int def0 = 11 - list.get(0);
+    final int def1 = 11 - list.get(1);
+    final int beg0 = def0 / 2;
+    final int beg1 = def1 / 2;
+    final int end0 = def0 - beg0;
+    final int end1 = def1 - beg1;
+    template = ArrayPad.of(mask, List.of(beg0, beg1), List.of(end0, end1));
   }
 
   public static void main(String[] args) {
