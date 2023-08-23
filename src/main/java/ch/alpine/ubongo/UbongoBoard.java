@@ -16,6 +16,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.ArrayPad;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.alg.Partition;
 import ch.alpine.tensor.ext.Lists;
 import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.mat.MatrixQ;
@@ -59,8 +60,8 @@ public class UbongoBoard {
     mask = MatrixQ.require(prep).unmodifiable();
     board_size = Dimensions.of(prep);
     dim1 = board_size.get(1);
-    count = (int) Flatten.stream(mask, -1).filter(FREE::equals).count();
-    _mask = Primitives.toIntArray(Flatten.of(mask));
+    count = (int) Flatten.stream(mask, 1).filter(FREE::equals).count();
+    _mask = Primitives.toIntArray(Flatten.of(mask, 1));
     // ---
     for (UbongoPiece ubongo : UbongoPiece.values())
       for (UbongoStamp ubongoStamp : ubongo.stamps()) {
@@ -109,6 +110,7 @@ public class UbongoBoard {
       }
       case 1: {
         solutions.add(new UbongoSolution(solve.solutions.get(0), solve.search));
+        // System.out.println("discard=" + solve.discard);
         message = _list + " FOUND!";
         break;
       }
@@ -124,6 +126,7 @@ public class UbongoBoard {
   class Solve {
     private final List<List<UbongoEntry>> solutions = new LinkedList<>();
     private int search = 0;
+    private int discard = 0;
 
     public Solve(List<UbongoPiece> list) {
       solve(_mask.clone(), list, Collections.emptyList());
@@ -134,6 +137,10 @@ public class UbongoBoard {
       if (list.isEmpty()) {
         solutions.add(entries);
       } else {
+        if (!StaticHelper.isSingleFree(Partition.of(Tensors.vectorInt(board), dim1))) {
+          ++discard;
+          return;
+        }
         final UbongoPiece ubongoPiece = list.get(0); // piece
         for (UbongoStamp ubongoStamp : ubongoPiece.stamps()) {
           List<Pnt> points = map.get(ubongoStamp);

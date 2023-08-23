@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.tensor.ext.Integers;
+
 class UbongoBoardTest {
   @Test
   void testSimple() {
@@ -15,7 +17,7 @@ class UbongoBoardTest {
     // list.stream().mapToInt(s -> s.search()).forEach(System.out::println);
     // System.out.println(list);
     UbongoSolution ubongoSolution = list.get(0);
-    // System.out.println(ubongoSolution.search());
+    Integers.requireLessEquals(ubongoSolution.search(), 13);
   }
 
   @Test
@@ -25,20 +27,20 @@ class UbongoBoardTest {
 
   @Test
   void testEleven() {
-    for (UbongoBoards ubongoBoards : UbongoBoards.values())
-      if (ubongoBoards.use() == 7) {
-        // System.out.println(ubongoBoards);
-        List<UbongoSolution> list = UbongoLoader.INSTANCE.load(ubongoBoards);
-        // list.stream().mapToInt(s -> s.search()).forEach(System.out::println);
-      }
+    UbongoBoards ubongoBoards = UbongoBoards.SIMSONSB;
+    assertEquals(ubongoBoards.use(), 7);
+    List<UbongoSolution> list = UbongoLoader.INSTANCE.load(ubongoBoards);
+    assertEquals(list.size(), 9);
   }
 
   @Test
   void testTwelve() {
-    for (UbongoBoards ubongoBoards : UbongoBoards.values())
-      if (ubongoBoards.use() == 12) {
-        List<UbongoSolution> list = UbongoLoader.INSTANCE.load(ubongoBoards);
-        // list.stream().mapToInt(s -> s.search()).forEach(System.out::println);
-      }
+    UbongoBoards ubongoBoards = UbongoBoards.FINALBOS;
+    assertEquals(ubongoBoards.use(), 12);
+    List<UbongoSolution> list = UbongoLoader.INSTANCE.load(ubongoBoards);
+    assertEquals(list.size(), 1);
+    UbongoSolution ubongoSolution = list.get(0);
+    assertEquals(ubongoSolution.list().size(), 12);
+    Integers.requireLessEquals(ubongoSolution.search(), 9000);
   }
 }

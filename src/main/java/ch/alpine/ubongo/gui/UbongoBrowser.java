@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.ubongo.gui;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -53,7 +55,11 @@ public class UbongoBrowser extends AbstractDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    StaticHelper.drawBoard(graphics, ubongoBoard, list.get(param.index).list());
+    UbongoSolution ubongoSolution = list.get(param.index);
+    StaticHelper.drawBoard(graphics, ubongoBoard, ubongoSolution.list());
+    RenderQuality.setQuality(graphics);
+    graphics.setColor(Color.DARK_GRAY);
+    graphics.drawString("depth=" + ubongoSolution.search(), 100, 12);
   }
 
   public static void main(String[] args) {

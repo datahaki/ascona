@@ -33,9 +33,8 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ImageCrop;
-import ch.alpine.tensor.io.Export;
+import ch.alpine.tensor.img.ImageRotate;
 import ch.alpine.tensor.io.Import;
-import ch.alpine.tensor.io.Pretty;
 import ch.alpine.tensor.sca.Floor;
 import ch.alpine.ubongo.Candidates;
 import ch.alpine.ubongo.UbongoBoard;
@@ -61,22 +60,48 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
     @FieldFuse
     public Boolean solve = false;
     @FieldFuse
+    public Boolean rotCw = false;
+    @FieldFuse
     public Boolean reset = false;
+    public String string = "UNTITLED";
+    @FieldFuse
+    public Boolean print = false;
+  }
+
+  @ReflectionMarker
+  public static class Paran {
+    public UbongoBoards ubongoBoards = UbongoBoards.STANDARD;
   }
 
   private final Param param;
   private final GridRender gridRender;
-  private Tensor template = Array.zeros(10, 11);
+  private Tensor template = Array.zeros(11, 11);
   private SolveThread solveThread = null;
 
   public UbongoDesigner() {
-    this(new Param());
+    this(new Param(), new Paran());
   }
 
-  public UbongoDesigner(Param param) {
-    super(param);
+  private void center(Tensor mask) {
+    List<Integer> list = Dimensions.of(mask);
+    final int def0 = 11 - list.get(0);
+    final int def1 = 11 - list.get(1);
+    final int beg0 = def0 / 2;
+    final int beg1 = def1 / 2;
+    final int end0 = def0 - beg0;
+    final int end1 = def1 - beg1;
+    template = ArrayPad.of(mask, List.of(beg0, beg1), List.of(end0, end1));
+  }
+
+  public UbongoDesigner(Param param, Paran paran) {
+    super(param, paran);
     this.param = param;
     fieldsEditor(0).addUniversalListener(this);
+    fieldsEditor(1).addUniversalListener(() -> {
+      center(paran.ubongoBoards.board().mask());
+      param.num = paran.ubongoBoards.use();
+      fieldsEditor(0).updateJComponents();
+    });
     {
       try {
         template = Import.of(FILE);
@@ -84,11 +109,12 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
         System.err.println("does not exist: " + FILE);
       }
     }
-    if (true) {
-      Tensor temp = UbongoBoards.ELEVEN07.board().mask();
-      List<Integer> list = Dimensions.of(temp);
-      template = ArrayPad.of(temp, List.of(0, 0), List.of(10 - list.get(0), 11 - list.get(1)));
+    if (false) {
+      template = UbongoBoards.ELEVEN07.board().mask();
+      // List<Integer> list = Dimensions.of(temp);
+      // template = ArrayPad.of(temp, List.of(0, 0), List.of(11 - list.get(0), 11 - list.get(1)));
     }
+    center(template);
     // ---
     Tensor matrix = Tensors.fromString("{{30, 0, 100}, {0, -30, 500}, {0, 0, 1}}");
     matrix = matrix.dot(GfxMatrix.of(Tensors.vector(0, 0, -Math.PI / 2)));
@@ -161,21 +187,28 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
       param.reset = false;
       template.set(Scalar::zero, Tensor.ALL, Tensor.ALL);
     }
+    if (param.rotCw) {
+      param.rotCw = false;
+      template = ImageRotate.cw(template);
+    }
     if (param.solve) {
       param.solve = false;
       if (Objects.isNull(solveThread)) {
-        Export.wrap(FILE, template);
+        Unprotect._export(FILE, template);
         Tensor result = ImageCrop.eq(RealScalar.ZERO).apply(template);
-        int use = param.num;
-        String collect = result.stream().map(UbongoDesigner::rowToString).collect(EMBRACE2);
-        System.out.println("=".repeat(32));
-        System.out.printf("UNTITLED(%d, %s),\n", use, collect);
-        System.out.println(Pretty.of(result));
-        solveThread = new SolveThread(UbongoBoard.of(result), use);
+        solveThread = new SolveThread(UbongoBoard.of(result), param.num);
       } else {
         solveThread.cancel();
         System.out.println("cancel issued");
       }
+    }
+    if (param.print) {
+      param.print = false;
+      System.out.println("=".repeat(32));
+      int use = param.num;
+      Tensor result = ImageCrop.eq(RealScalar.ZERO).apply(template);
+      String collect = result.stream().map(UbongoDesigner::rowToString).collect(EMBRACE2);
+      System.out.printf("%s(%d, %s),\n", param.string, use, collect);
     }
   }
 
