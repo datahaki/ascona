@@ -14,8 +14,8 @@ public class UnicodeViewer extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     public String hex = "27";
-    @FieldClip(min = "1", max = "60")
-    public Integer size = 25;
+    @FieldClip(min = "30", max = "50")
+    public Integer size = 40;
   }
 
   private final Param param;

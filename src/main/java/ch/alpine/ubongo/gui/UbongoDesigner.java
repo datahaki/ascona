@@ -43,6 +43,7 @@ import ch.alpine.ubongo.UbongoPiece;
 
 public class UbongoDesigner extends AbstractDemo implements Runnable {
   private static final File FILE = RESOURCE_LOCATOR.file(UbongoDesigner.class.getSimpleName() + ".csv");
+  private static final int EXT = 11;
   public static final Scalar FREE = UbongoBoard.FREE;
   static final Collector<CharSequence, ?, String> EMBRACE = //
       Collectors.joining("", "\"", "\"");
@@ -75,7 +76,7 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
 
   private final Param param;
   private final GridRender gridRender;
-  private Tensor template = Array.zeros(11, 11);
+  private Tensor template = Array.zeros(EXT, EXT);
   private SolveThread solveThread = null;
 
   public UbongoDesigner() {
@@ -97,11 +98,6 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
       } catch (Exception e) {
         System.err.println("does not exist: " + FILE);
       }
-    }
-    if (false) {
-      template = UbongoBoards.ELEVEN07.board().mask();
-      // List<Integer> list = Dimensions.of(temp);
-      // template = ArrayPad.of(temp, List.of(0, 0), List.of(11 - list.get(0), 11 - list.get(1)));
     }
     center(template);
     // ---
@@ -203,8 +199,8 @@ public class UbongoDesigner extends AbstractDemo implements Runnable {
 
   private void center(Tensor mask) {
     List<Integer> list = Dimensions.of(mask);
-    final int def0 = 11 - list.get(0);
-    final int def1 = 11 - list.get(1);
+    final int def0 = EXT - list.get(0);
+    final int def1 = EXT - list.get(1);
     final int beg0 = def0 / 2;
     final int beg1 = def1 / 2;
     final int end0 = def0 - beg0;
