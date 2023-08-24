@@ -7,6 +7,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.tensor.Scalar;
@@ -30,6 +31,9 @@ import ch.alpine.ubongo.UbongoSolution;
   private static final int ZCALE = 7;
   private static final Color FILL = Color.LIGHT_GRAY;
   private static final String[] STARS = { "\u2729", "\u272a", "\u272b", "\u272c", "\u272d", "\u272e", "\u272f", "\u2730" };
+  private static final List<BufferedImage> DICE = IntStream.range(0, 6) //
+      .mapToObj(count -> ResourceData.bufferedImage("/ch/alpine/ubongo/dice" + count + ".png")) //
+      .toList();
 
   public static void draw(Graphics2D graphics, UbongoPublish ubongoPublish, int SCALE) {
     int piy = MARGIN_Y;
@@ -37,11 +41,10 @@ import ch.alpine.ubongo.UbongoSolution;
       List<UbongoSolution> solutions = UbongoLoader.INSTANCE.load(ubongoPublish.ubongoBoards);
       int count = 0;
       for (int index : ubongoPublish.list) {
-        BufferedImage bufferedImage = ResourceData.bufferedImage("/ch/alpine/ubongo/dice" + count + ".png");
+        BufferedImage bufferedImage = DICE.get(count);
         ++count;
         graphics.setColor(Color.DARK_GRAY);
         int pix = 60;
-        String star = STARS[Math.floorMod(ubongoPublish.hashCode(), STARS.length)];
         {
           Graphics2D g = (Graphics2D) graphics.create();
           RenderQuality.setQuality(g);
@@ -73,6 +76,7 @@ import ch.alpine.ubongo.UbongoSolution;
           g.setFont(new Font(Font.DIALOG, Font.PLAIN, size));
           double log10 = Math.log10(ubongoSolution.search());
           FontMetrics fontMetrics = g.getFontMetrics();
+          String star = STARS[Math.floorMod(ubongoPublish.hashCode(), STARS.length)];
           int width = fontMetrics.stringWidth(star);
           {
             int a = 192 + 32 + 16;
@@ -94,7 +98,7 @@ import ch.alpine.ubongo.UbongoSolution;
       UbongoBoard ubongoBoard = ubongoPublish.ubongoBoards.board();
       Tensor mask = ubongoBoard.mask();
       int scale = SCALE;
-      int marginX = 0;
+      int marginX = ZCALE;
       int marginY = piy + scale;
       graphics.setColor(FILL);
       List<Integer> size = Dimensions.of(mask);

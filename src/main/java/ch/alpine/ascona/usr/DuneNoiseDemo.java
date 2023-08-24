@@ -27,26 +27,25 @@ public enum DuneNoiseDemo {
     return a1.multiply(a2);
   }
 
-  public static Show show() {
+  public static DensityPlot densityPlot() {
     int w = 2;
     CoordinateBoundingBox cbb = CoordinateBoundingBox.of(Clips.absolute(w), Clips.absolute(w));
     Show show = new Show();
     show.setPlotLabel("SimplexContinuousNoise[x,y]");
     show.setAspectRatio(RealScalar.ONE);
-    int co1 = 192;
-    int co2 = (192 + 255) / 2;
+    int co1 = 192 + 32 + 8;
     Tensor colors = Tensors.of( //
         Tensors.vector(co1, co1, co1, 255), //
-        Tensors.vector(co2, co2, co2, 255), //
         Tensors.vector(255, 255, 255, 255));
     ColorDataGradient colorDataGradient = LinearColorDataGradient.of(colors);
-    DensityPlot densityPlot = DensityPlot.of(DuneNoiseDemo::binOp, cbb, colorDataGradient);
-    densityPlot.setPlotPoints(300);
-    show.add(densityPlot);
-    return show;
+    return DensityPlot.of(DuneNoiseDemo::binOp, cbb, colorDataGradient);
   }
 
   public static void main(String[] args) {
-    ShowDialog.of(show());
+    DensityPlot densityPlot = densityPlot();
+    densityPlot.setPlotPoints(200);
+    Show show = new Show();
+    show.add(densityPlot);
+    ShowDialog.of(show);
   }
 }
