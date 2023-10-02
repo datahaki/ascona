@@ -175,6 +175,16 @@ public enum UbongoPublish {
   FELIX_F2(UbongoBoards.FELIX_F2, 0, 1, 2, 3, 4, 6),
   LETTERH1(UbongoBoards.LETTERH1, 0, 11, 4, 15, 7, 8),
   LETTERH2(UbongoBoards.LETTERH1, 10, 2, 14, 6, 16, 17),
+  TWELVE01(UbongoBoards.TWELVE01, 0),
+  //
+  KIRCH05(UbongoBoards.KIRCH05, 0, 1, 2, 4, 5, 7),
+  KIRCH06(UbongoBoards.KIRCH06, 0, 2, 5, 6, 7, 10),
+  KIRCH07(UbongoBoards.KIRCH07, 0, 1, 3, 5, 7, 9),
+  KIRCH08(UbongoBoards.KIRCH08, 0, 1, 3, 6, 7, 8),
+  KIRCH09(UbongoBoards.KIRCH09, 0, 1, 2, 3, 4, 5),
+  KIRCH10(UbongoBoards.KIRCH10, 0),
+  KIRCH11(UbongoBoards.KIRCH11, 0, 1),
+  KIRCH12(UbongoBoards.KIRCH12, 0),
   //
   ;
 

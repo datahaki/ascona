@@ -288,7 +288,15 @@ public enum UbongoBoards {
   TWELVE06(12, "   o o oo  ", " oooooo oo ", "ooo  oooo  ", "oo  oo oooo", " ooooooo o ", " oo oo ooo ", "  o  oooo  ", "       o   "),
   TWELVE07(12, "   o       ", "  oo o o   ", " ooo ooo   ", "oooooo oo o", " o oooooooo", "oooooo ooo ", "  oooooo   ", "   o o oo  "),
   FINALBOS(12, "  o   o   ", "  o ooooo ", " oooooo   ", "oooooo ooo", "ooo o ooo ", " ooooooooo", "oo oo o o ", " o o  o   "),
-  ///
+  // --- BIRTHDAY
+  KIRCH05(5, " oo ", "oooo", "ooo ", "oo  ", " oo ", "oooo", "  o "),
+  KIRCH06(6, "   o ", "o ooo", "ooooo", "oooo ", " oo  ", "  oo ", " oooo", "   o "),
+  KIRCH07(7, "   o  ", "o ooo ", "ooooo ", "oooo  ", " oo   ", "  oo  ", " ooooo", " o oo "),
+  KIRCH08(8, "   o   ", "o ooo  ", "ooooo  ", "oooo   ", " oo    ", "  oo o ", " oooooo", " o oooo"),
+  KIRCH09(9, "   o   ", "o ooo  ", "ooooooo", "oooo  o", " oo  oo", "  oo o ", " oooooo", " o oooo"),
+  KIRCH10(10, "   o    ", "o ooo o ", "ooooooo ", "oooo  oo", " oo  ooo", " ooo o  ", " oooooo ", "oo o ooo", "     o  "),
+  KIRCH11(11, "   o    ", "o ooo o ", "ooooooo ", "oooo  oo", " o   ooo", "oooo o  ", " oooooo ", "oooooooo", " o   o  "),
+  KIRCH12(12, "    o    ", " o ooo oo", "oooooooo ", "ooooo  oo", "  o   ooo", " ooo  oo ", "  oo ooo ", " oooooooo", "  o o oo "), //
   ;
 
   private final int use;

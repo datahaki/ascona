@@ -64,7 +64,7 @@ public class UbongoBrowser extends AbstractDemo {
 
   public static void main(String[] args) {
     LookAndFeels.LIGHT.updateComponentTreeUI();
-    UbongoBoards ubongoBoards = UbongoBoards.LETTERH1;
+    UbongoBoards ubongoBoards = UbongoBoards.KIRCH12;
     List<UbongoSolution> list = // ubongoBoards.solve();
         UbongoLoader.INSTANCE.load(ubongoBoards);
     if (list.isEmpty()) {

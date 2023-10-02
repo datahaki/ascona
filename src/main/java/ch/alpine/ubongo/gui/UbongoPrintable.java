@@ -43,7 +43,7 @@ import ch.alpine.ubongo.UbongoPublish;
   }
 
   public static void main(String[] args) {
-    List<UbongoPublish> list2 = List.of(UbongoPublish.FELIX_F2);
+    List<UbongoPublish> list2 = List.of(UbongoPublish.KIRCH12);
     for (double factor : new double[] { 1.0 }) // , 0.995, 0.990943
       for (int scale : new int[] { 45 }) { // , 46, 47, 48
         PrinterJob printerJob = PrinterJob.getPrinterJob();

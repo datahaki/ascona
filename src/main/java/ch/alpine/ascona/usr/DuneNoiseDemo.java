@@ -33,7 +33,7 @@ public enum DuneNoiseDemo {
     Show show = new Show();
     show.setPlotLabel("SimplexContinuousNoise[x,y]");
     show.setAspectRatio(RealScalar.ONE);
-    int co1 = 192 + 32 + 8;
+    int co1 = 192 + 32;
     Tensor colors = Tensors.of( //
         Tensors.vector(co1, co1, co1, 255), //
         Tensors.vector(255, 255, 255, 255));
