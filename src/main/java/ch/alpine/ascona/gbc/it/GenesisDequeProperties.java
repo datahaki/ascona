@@ -2,16 +2,16 @@
 package ch.alpine.ascona.gbc.it;
 
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.MetricBiinvariant;
-import ch.alpine.sophus.gbc.amp.Amplifiers;
-import ch.alpine.sophus.gbc.it.IterativeAffineCoordinate;
-import ch.alpine.sophus.gbc.it.IterativeTargetCoordinate;
-import ch.alpine.sophus.hs.Genesis;
-import ch.alpine.sophus.lie.rn.RnGroup;
-import ch.alpine.sophus.math.var.InversePowerVariogram;
+import ch.alpine.sophis.dv.MetricBiinvariant;
+import ch.alpine.sophis.gbc.amp.Amplifiers;
+import ch.alpine.sophis.gbc.it.IterativeAffineCoordinate;
+import ch.alpine.sophis.gbc.it.IterativeTargetCoordinate;
+import ch.alpine.sophus.lie.rn.RGroup;
+import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 @ReflectionMarker
 public class GenesisDequeProperties {
@@ -25,7 +25,7 @@ public class GenesisDequeProperties {
     TensorUnaryOperator tensorUnaryOperator = amplifiers.supply(beta);
     return lagrange //
         ? new IterativeTargetCoordinate( //
-            new MetricBiinvariant(RnGroup.INSTANCE).weighting(InversePowerVariogram.of(2)), //
+            new MetricBiinvariant(RGroup.INSTANCE).weighting(InversePowerVariogram.of(2)), //
             beta, resolution)
         : new IterativeAffineCoordinate(tensorUnaryOperator, resolution);
   }

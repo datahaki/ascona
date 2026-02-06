@@ -6,20 +6,20 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Optional;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.crv.clt.Clothoid;
-import ch.alpine.sophus.crv.clt.ClothoidComparators;
-import ch.alpine.sophus.crv.clt.ClothoidContext;
-import ch.alpine.sophus.crv.clt.ClothoidEmit;
-import ch.alpine.sophus.crv.clt.ClothoidSolutions;
-import ch.alpine.sophus.crv.clt.ClothoidSolutions.Search;
-import ch.alpine.sophus.crv.clt.ClothoidTransition;
+import ch.alpine.sophis.crv.clt.Clothoid;
+import ch.alpine.sophis.crv.clt.ClothoidComparators;
+import ch.alpine.sophis.crv.clt.ClothoidContext;
+import ch.alpine.sophis.crv.clt.ClothoidEmit;
+import ch.alpine.sophis.crv.clt.ClothoidSolutions;
+import ch.alpine.sophis.crv.clt.ClothoidSolutions.Search;
+import ch.alpine.sophis.ts.ClothoidTransition;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -83,7 +83,7 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

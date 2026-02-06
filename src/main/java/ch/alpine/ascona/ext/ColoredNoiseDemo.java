@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
@@ -85,7 +85,7 @@ public class ColoredNoiseDemo extends AbstractDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

@@ -8,14 +8,12 @@ import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.alpine.ascona.util.ren.RenderInterface;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.hs.sn.SnRandomSample;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
+import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -26,6 +24,8 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.ColorFormat;
 import ch.alpine.tensor.lie.TensorWedge;
 import ch.alpine.tensor.mat.ex.MatrixExp;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Mod;
 
 // TODO ASCONA REV add more parameters
@@ -39,7 +39,7 @@ public class SnRotationDemo extends AbstractDemo {
     public SnRotationChunk(int dimension, int numel, int max_size, double speed, ColorDataGradient colorDataGradient) {
       this.colorDataGradient = colorDataGradient;
       boundedLinkedList = new BoundedLinkedList<>(max_size);
-      RandomSampleInterface randomSampleInterface = SnRandomSample.of(dimension);
+      RandomSampleInterface randomSampleInterface = new Sphere(dimension);
       samples = RandomSample.of(randomSampleInterface, numel);
       Tensor angle = RandomSample.of(randomSampleInterface).multiply(RealScalar.of(speed));
       rotation = MatrixExp.of(TensorWedge.of(angle, ConstantArray.of(RealScalar.ONE, dimension + 1)));
@@ -90,12 +90,12 @@ public class SnRotationDemo extends AbstractDemo {
     // graphics.setColor(new Color(128, 128, 128, 64));
     list.forEach(SnRotationChunk::integrate);
     graphics.setStroke(new BasicStroke(1.5f));
-    list.get(0).render(geometricLayer, graphics);
+    list.getFirst().render(geometricLayer, graphics);
     // graphics.setStroke(new BasicStroke(2.5f));
     // list.get(1).render(geometricLayer, graphics);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

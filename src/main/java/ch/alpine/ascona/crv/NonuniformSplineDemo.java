@@ -4,20 +4,20 @@ package ch.alpine.ascona.crv;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.Curvature2DRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.GeodesicBSplineFunction;
-import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophis.crv.GeodesicBSplineFunction;
+import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Last;
@@ -69,7 +69,7 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
       Tensor x = Tensor.of(Arrays.stream(array).mapToObj(i -> _effective.get(i, 0)));
       Tensor y = Tensor.of(Arrays.stream(array).mapToObj(i -> _effective.get(i, 1)));
       ScalarTensorFunction scalarTensorFunction = //
-          GeodesicBSplineFunction.of(RnGroup.INSTANCE, _degree, x, y);
+          GeodesicBSplineFunction.of(RGroup.INSTANCE, _degree, x, y);
       Clip clip = Clips.interval(x.Get(0), Last.of(x));
       Tensor domain = Subdivide.increasing(clip, 4 << _levels);
       Tensor values = domain.map(scalarTensorFunction);
@@ -79,7 +79,7 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
     leversRender.renderIndexP();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

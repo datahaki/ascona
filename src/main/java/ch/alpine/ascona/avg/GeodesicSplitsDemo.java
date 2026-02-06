@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.ascona.avg;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.sym.SymGeodesic;
-import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.sym.SymGeodesic;
+import ch.alpine.ascony.sym.SymScalar;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
+import ch.alpine.sophis.flt.ga.GeodesicCenter;
+import ch.alpine.sophis.flt.ga.GeodesicExtrapolation;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Integers;
@@ -43,12 +43,12 @@ public class GeodesicSplitsDemo extends AbstractSplitsDemo {
       return 0 < vector.length() //
           ? (SymScalar) GeodesicExtrapolation.of(SymGeodesic.INSTANCE, param.kernel.get()).apply(vector)
           : null;
-    if (!Integers.isEven(vector.length()))
+    if (Integers.isOdd(vector.length()))
       return (SymScalar) GeodesicCenter.of(SymGeodesic.INSTANCE, param.kernel.get()).apply(vector);
     return null;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

@@ -3,43 +3,43 @@ package ch.alpine.ascona.nd;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.security.SecureRandom;
 import java.util.Objects;
-import java.util.random.RandomGenerator;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.dv.Biinvariant;
-import ch.alpine.sophus.dv.Biinvariants;
-import ch.alpine.sophus.fit.KMeans;
+import ch.alpine.sophis.crv.d2.Extract2D;
+import ch.alpine.sophis.crv.d2.alg.ConvexHull2D;
+import ch.alpine.sophis.dv.Biinvariant;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.fit.KMeans;
+import ch.alpine.sophus.bm.CenterMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.MetricManifold;
-import ch.alpine.sophus.hs.r2.ConvexHull2D;
-import ch.alpine.sophus.hs.r2.Extract2D;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.mat.Tolerance;
-import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Clips;
 
 public class KMeansDemo extends ControlPointsDemo {
-  private static final RandomGenerator RANDOM = new SecureRandom();
-
   @ReflectionMarker
   public static class Param1 extends AsconaParam {
     public Param1() {
@@ -87,10 +87,11 @@ public class KMeansDemo extends ControlPointsDemo {
   private Tensor shuffle() {
     Tensor points = Tensors.empty();
     RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
+    Distribution distribution = UniformDistribution.of(Clips.interval(-0.5, 1));
     for (int index = 0; index < 10000; ++index) {
       Tensor point = RandomSample.of(randomSampleInterface);
       Scalar scalar = SimplexContinuousNoise.FUNCTION.apply(point);
-      Scalar p = RealScalar.of(RANDOM.nextDouble());
+      Scalar p = RandomVariate.of(distribution);
       if (Scalars.lessThan(p, scalar)) {
         points.append(point);
       }
@@ -104,13 +105,14 @@ public class KMeansDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(homogeneousSpace);
-    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+    // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     Tensor seeds = getGeodesicControlPoints();
     if (0 < seeds.length()) {
-      kMeans = new KMeans(biinvariant.distances(sequence), biinvariantMean, sequence);
+      kMeans = new KMeans(biinvariant.distances(sequence), new CenterMean(homogeneousSpace.biinvariantMean()), sequence);
       kMeans.setSeeds(seeds);
-      for (int i = 0; i < param2.depth; ++i)
-        kMeans.iterate();
+      Timing timing = Timing.started();
+      int iterations = kMeans.complete();
+      IO.println(iterations + " steps in " + timing.seconds());
     } else
       kMeans = null;
   }
@@ -154,7 +156,7 @@ public class KMeansDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

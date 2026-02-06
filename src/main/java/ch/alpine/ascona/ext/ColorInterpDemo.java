@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.col.Cielab;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -99,7 +99,7 @@ public class ColorInterpDemo extends AbstractDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

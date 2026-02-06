@@ -3,8 +3,8 @@ package ch.alpine.ascona.usr;
 
 import java.io.IOException;
 
+import ch.alpine.sophis.ref.d2.GeodesicCatmullClarkSubdivision;
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
-import ch.alpine.sophus.ref.d2.GeodesicCatmullClarkSubdivision;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -14,7 +14,7 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.Put;
-import ch.alpine.tensor.lie.Cross;
+import ch.alpine.tensor.lie.rot.Cross;
 import ch.alpine.tensor.nrm.Normalize;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Nest;
@@ -50,7 +50,7 @@ import ch.alpine.tensor.sca.tri.Sin;
     return Sin.FUNCTION.apply(xy.Get(0).add(AbsSquared.FUNCTION.apply(xy.Get(1))));
   }
 
-  public static void main(String[] args) throws IOException {
+  static void main() throws IOException {
     Plot3DDesign plot3dDesign = new Plot3DDesign(Plot3DDesign::sin_xy2);
     Tensor matrix = Tensors.empty();
     for (Tensor x : Subdivide.of(0, 4, 12)) {

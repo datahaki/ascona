@@ -7,14 +7,14 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -71,7 +71,7 @@ public class DeBoorCustomDemo extends AbstractDemo {
           ColorDataIndexed colorDataIndexed = param.cdl.cyclic().deriveWithAlpha(192);
           for (int k_th = 0; k_th < length; ++k_th) {
             graphics.setColor(colorDataIndexed.getColor(k_th));
-            DeBoor deBoor = DeBoor.of(RnGroup.INSTANCE, _knots, UnitVector.of(length, k_th));
+            DeBoor deBoor = DeBoor.of(RGroup.INSTANCE, _knots, UnitVector.of(length, k_th));
             {
               graphics.setStroke(new BasicStroke(1.25f));
               Tensor values = domain.map(deBoor);
@@ -93,7 +93,7 @@ public class DeBoorCustomDemo extends AbstractDemo {
     graphics.setStroke(new BasicStroke(1f));
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

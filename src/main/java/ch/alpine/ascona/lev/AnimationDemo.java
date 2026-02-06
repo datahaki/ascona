@@ -4,22 +4,22 @@ package ch.alpine.ascona.lev;
 import java.awt.Graphics2D;
 import java.util.Optional;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
-import ch.alpine.sophus.lie.so3.Rodrigues;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophus.lie.so.Rodrigues;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Timing;
-import ch.alpine.tensor.lie.r2.RotationMatrix;
+import ch.alpine.tensor.lie.rot.RotationMatrix;
 
 public class AnimationDemo extends ControlPointsDemo {
   @ReflectionMarker
@@ -114,7 +114,7 @@ public class AnimationDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

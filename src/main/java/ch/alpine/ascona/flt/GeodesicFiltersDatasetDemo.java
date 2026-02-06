@@ -4,35 +4,37 @@ package ch.alpine.ascona.flt;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.api.BufferedImageSupplier;
-import ch.alpine.ascona.util.api.GeodesicFilters;
-import ch.alpine.ascona.util.dat.GokartPoseDataV1;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.sym.SymLinkImages;
+import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.ascony.api.BufferedImageSupplier;
+import ch.alpine.ascony.api.GeodesicFilters;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.sym.SymLinkImages;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.sophus.flt.CenterFilter;
+import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Nest;
 
+//
 public class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
   private final SpinnerLabel<GeodesicFilters> spinnerFilters = SpinnerLabel.of(GeodesicFilters.class);
   private final SpinnerLabel<Integer> spinnerConvolution = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8);
 
   public GeodesicFiltersDatasetDemo() {
-    super(ManifoldDisplays.SE2_R2, GokartPoseDataV1.INSTANCE);
+    super(ManifoldDisplays.SE2_R2, new GokartPos());
+    gokartPoseSpec.string = "20190215/20190215T144349_01";
     {
       spinnerFilters.setValue(GeodesicFilters.GEODESIC);
       spinnerFilters.addToComponent(timerFrame.jToolBar, "filter type");
-      spinnerFilters.addSpinnerListener(type -> updateState());
+      spinnerFilters.addSpinnerListener(_ -> updateState());
     }
     {
       spinnerConvolution.setValue(3);
       spinnerConvolution.addToComponent(timerFrame.jToolBar, "convolution");
-      spinnerConvolution.addSpinnerListener(type -> updateState());
+      spinnerConvolution.addSpinnerListener(_ -> updateState());
     }
     // ---
     updateState();
@@ -65,7 +67,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implemen
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

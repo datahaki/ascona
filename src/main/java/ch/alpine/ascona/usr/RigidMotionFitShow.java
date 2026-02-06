@@ -4,7 +4,7 @@ package ch.alpine.ascona.usr;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowDialog;
-import ch.alpine.sophus.lie.se.RigidMotionFit;
+import ch.alpine.sophis.fit.RigidMotionFit;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.tri.ArcTan;
     return Tensor.of(random.stream().map(mean::add));
   }
 
-  public static void main(String[] args) {
+  static void main() {
     Tensor target = Array.zeros(1, 2);
     Tensor shuffl = shufflePoints(2);
     shuffl.forEach(target::append);

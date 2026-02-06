@@ -6,24 +6,22 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.dis.C1Display;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.ImageRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.arp.ArrayFunction;
+import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.dis.C1Display;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.ImageRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -35,7 +33,9 @@ import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.io.TableBuilder;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.lie.rot.CirclePoints;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Arg;
 import ch.alpine.tensor.sca.ply.AberthEhrlich;
 import ch.alpine.tensor.sca.ply.Polynomial;
@@ -179,7 +179,7 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
     return tableBuilder.getTable();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

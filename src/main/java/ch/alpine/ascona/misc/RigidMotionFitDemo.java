@@ -4,30 +4,29 @@ package ch.alpine.ascona.misc;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.dis.Se2Display;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.R2Display;
+import ch.alpine.ascony.dis.Se2Display;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.hs.r2.Se2Bijection;
-import ch.alpine.sophus.hs.r2.Se2RigidMotionFit;
-import ch.alpine.sophus.lie.LieGroupElement;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
+import ch.alpine.sophis.fit.Se2RigidMotionFit;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
+import ch.alpine.sophus.lie.se2.Se2ForwardAction;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
@@ -74,7 +73,7 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
     points = RandomVariate.of(distribution, n, 2);
     Tensor xya = RandomVariate.of(distribution, 3);
     setControlPointsSe2(Tensor.of(points.stream() //
-        .map(new Se2Bijection(xya).forward()) //
+        .map(new Se2ForwardAction(xya)) //
         .map(row -> row.append(RealScalar.ZERO))));
   }
 
@@ -91,10 +90,10 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
           .render(geometricLayer, graphics);
       {
         Tensor domain = Subdivide.increasing(Clips.unit(), 10);
-        LieGroupElement lieGroupElement = Se2CoveringGroup.INSTANCE.element(solve);
+        // LieGroupElement lieGroupElement =
         for (Tensor p : points) {
           Tensor xya_0 = Append.of(p, RealScalar.ZERO);
-          Tensor xya_1 = lieGroupElement.combine(xya_0);
+          Tensor xya_1 = Se2CoveringGroup.INSTANCE.combine(solve, xya_0);
           ScalarTensorFunction scalarTensorFunction = Se2CoveringGroup.INSTANCE.curve(xya_0, xya_1);
           Tensor tensor = domain.map(scalarTensorFunction);
           new PathRender(Color.CYAN, 1.5f).setCurve(tensor, false).render(geometricLayer, graphics);
@@ -113,7 +112,7 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
         .render(geometricLayer, graphics);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

@@ -3,22 +3,22 @@ package ch.alpine.ascona.crv.d2;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.crv.d2.PolygonCentroid;
-import ch.alpine.sophus.crv.dub.DubinsGenerator;
-import ch.alpine.sophus.hs.r3.MinTriangleAreaSquared;
-import ch.alpine.sophus.math.AppendOne;
+import ch.alpine.sophis.crv.d2.PolygonCentroid;
+import ch.alpine.sophis.crv.dub.DubinsGenerator;
+import ch.alpine.sophis.fit.MinTriangleAreaSquared;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.jet.AppendOne;
 import ch.alpine.tensor.red.Times;
 
 /** Reference:
@@ -67,7 +67,7 @@ public class MinTriangleAreaSquaredDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

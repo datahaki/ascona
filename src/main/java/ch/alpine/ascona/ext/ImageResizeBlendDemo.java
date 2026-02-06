@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.TensorMap;
@@ -44,7 +44,7 @@ public class ImageResizeBlendDemo extends AbstractDemo {
     return result;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

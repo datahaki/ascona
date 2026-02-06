@@ -5,14 +5,14 @@ import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.util.List;
 
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.crv.dub.DubinsPath;
-import ch.alpine.sophus.crv.dub.DubinsPathGenerator;
-import ch.alpine.sophus.crv.dub.DubinsTransition;
-import ch.alpine.sophus.crv.dub.FixedRadiusDubins;
+import ch.alpine.sophis.crv.dub.DubinsPath;
+import ch.alpine.sophis.crv.dub.DubinsPathGenerator;
+import ch.alpine.sophis.crv.dub.FixedRadiusDubins;
+import ch.alpine.sophis.ts.DubinsTransition;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -48,7 +48,7 @@ public class DubinsTransitionDemo extends AbstractDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

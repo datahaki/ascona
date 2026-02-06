@@ -4,20 +4,20 @@ package ch.alpine.ascona.crv.d2;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.crv.d2.CogPoints;
-import ch.alpine.sophus.crv.d2.PolyclipResult;
-import ch.alpine.sophus.crv.d2.PolygonCentroid;
-import ch.alpine.sophus.crv.d2.SutherlandHodgmanAlgorithm;
+import ch.alpine.sophis.crv.d2.PolyclipResult;
+import ch.alpine.sophis.crv.d2.PolygonCentroid;
+import ch.alpine.sophis.crv.d2.alg.SutherlandHodgmanAlgorithm;
+import ch.alpine.sophis.crv.d2.ex.CogPoints;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -26,8 +26,8 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.io.ScalarArray;
-import ch.alpine.tensor.lie.Cross;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.lie.rot.CirclePoints;
+import ch.alpine.tensor.lie.rot.Cross;
 import ch.alpine.tensor.red.Mean;
 
 public class PolygonClipDemo extends ControlPointsDemo {
@@ -83,14 +83,14 @@ public class PolygonClipDemo extends ControlPointsDemo {
         if (ap == 1 && bp == 1)
           norma = norma.negate();
         nsum = nsum.add(norma);
-        geometricLayer.pushMatrix(GfxMatrix.translation(point));
+        geometricLayer.pushMatrix(Se2Matrix.translation(point));
         graphics.draw(geometricLayer.toLine2D(norma));
         geometricLayer.popMatrix();
       }
     }
     if (0 < result.length()) {
       Tensor centroid = PolygonCentroid.of(result);
-      geometricLayer.pushMatrix(GfxMatrix.translation(centroid));
+      geometricLayer.pushMatrix(Se2Matrix.translation(centroid));
       graphics.draw(geometricLayer.toLine2D(nsum));
       geometricLayer.popMatrix();
     }
@@ -100,7 +100,7 @@ public class PolygonClipDemo extends ControlPointsDemo {
     // new PathRender(COLOR_DATA_INDEXED.getColor(1), 2.5f).setCurve(HILBERT, false).render(geometricLayer, graphics);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

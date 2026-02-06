@@ -4,8 +4,8 @@ package ch.alpine.ascona.aurora;
 import java.io.File;
 import java.io.IOException;
 
-import ch.alpine.sophus.ref.d1h.Hermite3Subdivisions;
-import ch.alpine.sophus.ref.d1h.HermiteHiConfig;
+import ch.alpine.sophis.ref.d1h.Hermite3Subdivisions;
+import ch.alpine.sophis.ref.d1h.HermiteHiConfig;
 import ch.alpine.tensor.Parallelize;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.exp.Log;
     return Parallelize.matrix((i, j) -> h3(theta.Get(i), omega.Get(j)), rows, cols);
   }
 
-  public static void main(String[] args) throws IOException {
+  static void main() throws IOException {
     int levels = 4;
     HermiteArrayShow hermiteArray = //
         new Hermite3ArrayShow("20190701T163225_01", Quantity.of(RationalScalar.of(1, 1), "s"), levels);

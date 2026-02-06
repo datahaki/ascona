@@ -4,15 +4,15 @@ package ch.alpine.ascona.gbc.poly;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.api.ImageTiling;
-import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.ArrayPlotImage;
-import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.ren.ImageRender;
+import ch.alpine.ascony.api.ImageTiling;
+import ch.alpine.ascony.arp.ArrayFunction;
+import ch.alpine.ascony.arp.ArrayPlotImage;
+import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -55,7 +55,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
     Scalar width = coordinateBoundingBox.clip(0).width();
     for (int count = 0; count < sequence_length; ++count) {
       Tensor xy = Tensors.of(width.multiply(RealScalar.of(count)), width.zero());
-      geometricLayer.pushMatrix(GfxMatrix.translation(xy));
+      geometricLayer.pushMatrix(Se2Matrix.translation(xy));
       manifoldDisplay.background().render(geometricLayer, graphics);
       geometricLayer.popMatrix();
     }

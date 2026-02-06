@@ -6,30 +6,30 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.List;
 
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.cls.Classification;
-import ch.alpine.ascona.util.cls.Labels;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.cls.Classification;
+import ch.alpine.ascony.cls.Labels;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.pow.Sqrt;
@@ -87,7 +87,7 @@ public class ClassificationDemo extends ControlPointsDemo {
     // assignment of random labels to points
     int n = param0.size;
     sequence = RandomSample.of(manifoldDisplay().randomSampleInterface(), n);
-    vector = RandomVariate.of(DiscreteUniformDistribution.of(0, 3), n);
+    vector = RandomVariate.of(DiscreteUniformDistribution.forArray(3), n);
   }
 
   @Override // from RenderInterface
@@ -146,7 +146,7 @@ public class ClassificationDemo extends ControlPointsDemo {
     geometricLayer.popMatrix();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

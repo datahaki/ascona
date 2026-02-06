@@ -5,16 +5,18 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AreaRender;
-import ch.alpine.ascona.util.ren.Curvature2DRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AreaRender;
+import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
@@ -25,7 +27,6 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 
 public class GeodesicDemo extends ControlPointsDemo {
   private static final Color COLOR = new Color(128, 128, 128, 128);
-  private static final int SPLITS = 20;
   // ---
   private final PathRender pathRender = new PathRender(new Color(128, 128, 255), //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0));
@@ -36,8 +37,11 @@ public class GeodesicDemo extends ControlPointsDemo {
       super(false, ManifoldDisplays.ALL);
     }
 
-    public Boolean comb = true;
-    public Boolean extra = false;
+    @FieldSlider
+    @FieldClip(min = "5", max = "20")
+    public Integer splits = 10;
+    public Boolean comb = false;
+    public Boolean extrapolation = false;
   }
 
   private final Param param;
@@ -63,7 +67,7 @@ public class GeodesicDemo extends ControlPointsDemo {
     ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(p, q);
     new AreaRender( //
         COLOR, //
-        manifoldDisplay::matrixLift, manifoldDisplay.shape(), Subdivide.of(0, 1, SPLITS).map(scalarTensorFunction)) //
+        manifoldDisplay::matrixLift, manifoldDisplay.shape(), Subdivide.of(0, 1, param.splits).map(scalarTensorFunction)) //
             .render(geometricLayer, graphics);
     {
       Tensor sequence = Subdivide.of(0, 1, 1).map(scalarTensorFunction);
@@ -71,13 +75,13 @@ public class GeodesicDemo extends ControlPointsDemo {
       leversRender.renderIndexP();
     }
     if (param.comb) {
-      Tensor refined = Subdivide.of(0, 1, SPLITS * 6).map(scalarTensorFunction);
+      Tensor refined = Subdivide.of(0, 1, param.splits * 6).map(scalarTensorFunction);
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     }
-    if (param.extra) {
+    if (param.extrapolation) {
       {
-        Tensor refined = Subdivide.of(1, 1.5, SPLITS * 3).map(scalarTensorFunction);
+        Tensor refined = Subdivide.of(1, 1.5, param.splits * 3).map(scalarTensorFunction);
         Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
         // CurveCurvatureRender.of(render, false, geometricLayer, graphics);
         pathRender.setCurve(render, false);
@@ -85,12 +89,12 @@ public class GeodesicDemo extends ControlPointsDemo {
       }
       new AreaRender( //
           new Color(255, 128, 128), //
-          manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.3)), Subdivide.of(1, 1.5, SPLITS).map(scalarTensorFunction)) //
+          manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.3)), Subdivide.of(1, 1.5, param.splits).map(scalarTensorFunction)) //
               .render(geometricLayer, graphics);
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

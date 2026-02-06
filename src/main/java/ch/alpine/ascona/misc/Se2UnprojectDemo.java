@@ -5,14 +5,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.crv.d2.Arrowhead;
+import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -83,7 +83,7 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

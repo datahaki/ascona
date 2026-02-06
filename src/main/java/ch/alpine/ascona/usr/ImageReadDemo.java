@@ -16,7 +16,8 @@ import ch.alpine.tensor.io.Import;
 
 enum ImageReadDemo {
   ;
-  public static void main(String[] args) throws IOException {
+  static void main() throws IOException {
+    // FIXME
     File file = HomeDirectory.file("testimage", "COPY_P1150723_a.JPG");
     switch (2) {
     case 1: {

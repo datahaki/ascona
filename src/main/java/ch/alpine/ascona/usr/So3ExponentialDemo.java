@@ -3,7 +3,7 @@ package ch.alpine.ascona.usr;
 
 import java.util.concurrent.TimeUnit;
 
-import ch.alpine.sophus.lie.so3.Rodrigues;
+import ch.alpine.sophus.lie.so.Rodrigues;
 import ch.alpine.tensor.Parallelize;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -27,7 +27,7 @@ import ch.alpine.tensor.io.GifAnimationWriter;
     return mat.Get(0, 2);
   }
 
-  public static void main(String[] args) throws Exception {
+  static void main() throws Exception {
     try (AnimationWriter animationWriter = //
         new GifAnimationWriter(HomeDirectory.Pictures("rodriquez.gif"), 100, TimeUnit.MILLISECONDS)) {
       for (Tensor _z : Subdivide.of(-4 * Math.PI, 4 * Math.PI, 40)) {

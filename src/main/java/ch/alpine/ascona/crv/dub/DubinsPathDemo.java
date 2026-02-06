@@ -7,26 +7,26 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Optional;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2CoveringDisplay;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.Se2CoveringDisplay;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.clt.ClothoidBuilder;
-import ch.alpine.sophus.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.crv.clt.ClothoidTransition;
-import ch.alpine.sophus.crv.dub.DubinsPath;
-import ch.alpine.sophus.crv.dub.DubinsPathComparators;
-import ch.alpine.sophus.crv.dub.DubinsPathGenerator;
-import ch.alpine.sophus.crv.dub.DubinsRadius;
-import ch.alpine.sophus.crv.dub.DubinsType;
-import ch.alpine.sophus.crv.dub.FixedRadiusDubins;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
+import ch.alpine.sophis.crv.clt.ClothoidBuilder;
+import ch.alpine.sophis.crv.clt.ClothoidBuilders;
+import ch.alpine.sophis.crv.dub.DubinsPath;
+import ch.alpine.sophis.crv.dub.DubinsPathComparators;
+import ch.alpine.sophis.crv.dub.DubinsPathGenerator;
+import ch.alpine.sophis.crv.dub.DubinsRadius;
+import ch.alpine.sophis.crv.dub.DubinsType;
+import ch.alpine.sophis.crv.dub.FixedRadiusDubins;
+import ch.alpine.sophis.ref.d1.BSpline3CurveSubdivision;
+import ch.alpine.sophis.ts.ClothoidTransition;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -51,7 +51,7 @@ public class DubinsPathDemo extends ControlPointsDemo {
       super(false, ManifoldDisplays.SE2_ONLY);
     }
 
-    public Boolean allDubins = true;
+    public Boolean allDubins = false;
     public Boolean relax = true;
     public Boolean shortest = true;
     public Boolean clothoid = true;
@@ -142,7 +142,7 @@ public class DubinsPathDemo extends ControlPointsDemo {
     return Subdivide.of(0.0, 1.0, POINTS).map(dubinsPath.unit(START));
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

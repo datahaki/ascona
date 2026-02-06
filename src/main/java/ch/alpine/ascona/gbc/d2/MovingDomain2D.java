@@ -3,9 +3,9 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.util.Objects;
 
-import ch.alpine.ascona.util.api.ImageTiling;
+import ch.alpine.ascony.api.ImageTiling;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;

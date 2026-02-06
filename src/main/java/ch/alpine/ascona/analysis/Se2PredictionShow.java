@@ -3,12 +3,10 @@ package ch.alpine.ascona.analysis;
 
 import java.io.IOException;
 
-import ch.alpine.ascona.util.dat.GokartPoseData;
-import ch.alpine.ascona.util.dat.GokartPoseDataV2;
+import ch.alpine.ascona.dat.GokartPos;
 import ch.alpine.bridge.fig.MatrixPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowDialog;
-import ch.alpine.sophus.bm.BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.RealScalar;
@@ -18,7 +16,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Partition;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.Raster;
@@ -30,10 +27,10 @@ import ch.alpine.tensor.sca.Abs;
 
 /* package */ enum Se2PredictionShow {
   ;
-  public static void main(String[] args) throws IOException {
-    GokartPoseData gokartPoseData = GokartPoseDataV2.INSTANCE;
+  static void main() throws IOException {
+    GokartPos gokartPoseData = new GokartPos();
     String name = gokartPoseData.list().get(1);
-    Tensor pqr_t = Partition.of(gokartPoseData.getPose(name, 4 * 500), 4);
+    Tensor pqr_t = Partition.of(gokartPoseData.getData(name), 4); // limit , 4 * 500
     Tensor Wp = Subdivide.of(-1.5, 0.0, 25);
     Tensor Wq = Subdivide.of(-1.0, 1.0, 25);
     Tensor err_xy = Array.zeros(Wp.length(), Wq.length());
@@ -49,10 +46,9 @@ import ch.alpine.tensor.sca.Abs;
         Tensor wpq = Tensors.of(wp, wq);
         Scalar wr = RealScalar.ONE.subtract(Total.ofVector(wpq));
         Tensor weights = wpq.append(wr);
-        TensorUnaryOperator tensorUnaryOperator = BiinvariantMeans.of(Se2BiinvariantMeans.FILTER, weights);
         for (Tensor sequence : pqr_t) {
           Tensor pqr = sequence.extract(0, 3);
-          Tensor t_prediction = tensorUnaryOperator.apply(pqr);
+          Tensor t_prediction = Se2BiinvariantMeans.FILTER.mean(pqr, weights);
           Tensor t_measured = sequence.get(3);
           {
             Scalar err = Vector2Norm.between(t_prediction.extract(0, 2), t_measured.extract(0, 2));

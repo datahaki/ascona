@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.ascona.ref.d2;
 
-import ch.alpine.sophus.srf.SurfaceMesh;
+import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.lie.rot.CirclePoints;
 
 /** Hint:
  * implementation exists only for evaluation purposes

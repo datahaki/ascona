@@ -2,14 +2,15 @@
 package ch.alpine.ascona.ext;
 
 import java.awt.Graphics2D;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.ImageRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.ImageRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.TensorMap;
@@ -29,11 +30,11 @@ public class ImageRenderDemo extends AbstractDemo {
 
   public ImageRenderDemo() {
     bufferedImage = VehicleStatic.INSTANCE.bufferedImage_c();
-    bufferedImag2 = ImageResize.of(bufferedImage, bufferedImage.getWidth(), bufferedImage.getHeight());
+    bufferedImag2 = ImageResize.of(bufferedImage, bufferedImage.getWidth(), bufferedImage.getHeight(), AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
     Tensor tensor = ImageFormat.from(bufferedImage);
     Tensor graysc = TensorMap.of(rgba -> Mean.of(rgba.extract(0, 3)), tensor, 2);
     grayscale = ImageFormat.of(graysc);
-    grayscal2 = ImageResize.of(grayscale, grayscale.getWidth() + 10, grayscale.getHeight() + 10);
+    grayscal2 = ImageResize.of(grayscale, grayscale.getWidth() + 10, grayscale.getHeight() + 10, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
   }
 
   @Override // from RenderInterface
@@ -42,7 +43,7 @@ public class ImageRenderDemo extends AbstractDemo {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     {
-      geometricLayer.pushMatrix(GfxMatrix.of(mouse));
+      geometricLayer.pushMatrix(Se2Matrix.of(mouse));
       new ImageRender( //
           bufferedImage, //
           COORDINATE_BOUNDING_BOX).render(geometricLayer, graphics);
@@ -50,7 +51,7 @@ public class ImageRenderDemo extends AbstractDemo {
     }
     mouse.set(RealScalar.TWO::add, 0);
     {
-      geometricLayer.pushMatrix(GfxMatrix.of(mouse));
+      geometricLayer.pushMatrix(Se2Matrix.of(mouse));
       new ImageRender( //
           bufferedImag2, //
           COORDINATE_BOUNDING_BOX).render(geometricLayer, graphics);
@@ -58,7 +59,7 @@ public class ImageRenderDemo extends AbstractDemo {
     }
     mouse.set(RealScalar.TWO::add, 0);
     {
-      geometricLayer.pushMatrix(GfxMatrix.of(mouse));
+      geometricLayer.pushMatrix(Se2Matrix.of(mouse));
       new ImageRender( //
           grayscale, //
           COORDINATE_BOUNDING_BOX).render(geometricLayer, graphics);
@@ -66,7 +67,7 @@ public class ImageRenderDemo extends AbstractDemo {
     }
     mouse.set(RealScalar.TWO::add, 0);
     {
-      geometricLayer.pushMatrix(GfxMatrix.of(mouse));
+      geometricLayer.pushMatrix(Se2Matrix.of(mouse));
       new ImageRender( //
           grayscal2, //
           COORDINATE_BOUNDING_BOX).render(geometricLayer, graphics);
@@ -74,7 +75,7 @@ public class ImageRenderDemo extends AbstractDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

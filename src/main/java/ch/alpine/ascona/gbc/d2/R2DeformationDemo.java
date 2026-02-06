@@ -1,19 +1,18 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.pdf.RandomSample;
 
 /** moving least squares */
 public class R2DeformationDemo extends AbstractDeformationDemo {
@@ -63,10 +62,10 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   @Override
   protected BiinvariantMean biinvariantMean() {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
-    return homogeneousSpace.biinvariantMean(Chop._08);
+    return homogeneousSpace.biinvariantMean();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

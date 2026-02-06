@@ -6,14 +6,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascony.dis.R2Display;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataGradients;
 
 /* package */ enum HilbertCoordinateShow {
   ;
-  public static void main(String[] args) throws IOException {
+  static void main() throws IOException {
     for (int n = 2; n < 5; ++n) {
       System.out.println(n);
       Tensor sequence = HilbertBenchmarkDemo.unit(n);

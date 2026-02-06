@@ -8,33 +8,34 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.util.dat.GokartPoseData;
-import ch.alpine.ascona.util.dat.GokartPoseDataV2;
-import ch.alpine.ascona.util.dat.GokartPoseDatas;
-import ch.alpine.ascona.util.dat.GokartPoseParam;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.GridRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.ascona.dat.GokartPosParam;
+import ch.alpine.ascona.dat.GokartPoseDatas;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.GridRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.flt.CenterFilter;
-import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.ref.d1.CurveSubdivision;
+import ch.alpine.sophis.flt.CenterFilter;
+import ch.alpine.sophis.flt.ga.GeodesicCenter;
+import ch.alpine.sophis.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 
+// FIXME ASCONA this demo crashes gloriously
 public class ApproximationDemo extends AbstractDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
@@ -57,8 +58,8 @@ public class ApproximationDemo extends AbstractDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
 
   @ReflectionMarker
-  public static class Param extends GokartPoseParam {
-    public Param(GokartPoseData gokartPoseData) {
+  public static class Param extends GokartPosParam {
+    public Param(GokartPos gokartPoseData) {
       super(gokartPoseData, ManifoldDisplays.SE2_R2);
     }
 
@@ -79,10 +80,10 @@ public class ApproximationDemo extends AbstractDemo {
   private final Param param;
 
   public ApproximationDemo() {
-    this(GokartPoseDataV2.RACING_DAY);
+    this(new GokartPos());
   }
 
-  public ApproximationDemo(GokartPoseData gokartPoseData) {
+  public ApproximationDemo(GokartPos gokartPoseData) {
     this(new Param(gokartPoseData));
   }
 
@@ -91,7 +92,7 @@ public class ApproximationDemo extends AbstractDemo {
     this.param = param;
     timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
-    param.string = param.gpd().list().get(0);
+    param.string = param.gpd().list().getFirst();
     fieldsEditor(0).addUniversalListener(this::updateState);
     updateState();
   }
@@ -105,7 +106,7 @@ public class ApproximationDemo extends AbstractDemo {
     Tensor tracked = centerFilter.apply(rawdata);
     int level = param.level;
     int steps = 1 << level;
-    System.out.println(DoubleScalar.of(steps).divide(param.gpd().getSampleRate()).map(Round._3));
+    System.out.println(DoubleScalar.of(steps).divide(Quantity.of(50, "Hz")).map(Round._3)); // param.gpd().getSampleRate()
     Tensor control = Tensor.of(IntStream.range(0, tracked.length() / steps) //
         .map(i -> i * steps) //
         .mapToObj(tracked::get));
@@ -159,7 +160,7 @@ public class ApproximationDemo extends AbstractDemo {
     RenderQuality.setDefault(graphics);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

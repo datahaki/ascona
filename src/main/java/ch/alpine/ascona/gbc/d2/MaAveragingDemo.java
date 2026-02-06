@@ -6,24 +6,23 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
-import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.ArrayPlotImage;
-import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.ImageRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.arp.ArrayFunction;
+import ch.alpine.ascony.arp.ArrayPlotImage;
+import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.ImageRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.math.DistanceMatrix;
+import ch.alpine.sophus.math.api.DistanceMatrix;
 import ch.alpine.sophus.math.api.TensorMetric;
-import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -41,6 +40,7 @@ import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.AbsSquared;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
+import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** Reference:
  * "Circumscribed Quadrics in Barycentric Coordinates"
@@ -84,7 +84,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
     cache.clear();
   }
 
-  private final ArrayPlotImage computeImage(Tensor tensor) {
+  private ArrayPlotImage computeImage(Tensor tensor) {
     Tensor sequence = tensor.map(N.DOUBLE);
     int resolution = param.resolution;
     int n = sequence.length();
@@ -147,7 +147,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
     // ---
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

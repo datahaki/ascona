@@ -9,15 +9,15 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.ArrayPlotRecord;
-import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.arp.ArrayFunction;
+import ch.alpine.ascony.arp.ArrayPlotRecord;
+import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -26,9 +26,8 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -48,6 +47,7 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Floor;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
+import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 public final class D2AveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
@@ -92,7 +92,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     cache.clear();
   }
 
-  private final ArrayPlotRecord computeImage(Tensor tensor) {
+  private ArrayPlotRecord computeImage(Tensor tensor) {
     Tensor sequence = tensor.get(0).map(N.DOUBLE);
     Tensor values = tensor.get(1).map(N.DOUBLE);
     int resolution = param.resolution;
@@ -146,7 +146,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     graphics.drawString("compute: " + RealScalar.of(computeTime).map(Round._3), 0, 30);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

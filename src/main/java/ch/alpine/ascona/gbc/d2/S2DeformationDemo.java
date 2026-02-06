@@ -1,19 +1,19 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -68,7 +68,7 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
     return TRIANGLE;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

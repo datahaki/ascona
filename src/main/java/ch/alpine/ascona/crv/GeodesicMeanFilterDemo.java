@@ -3,20 +3,20 @@ package ch.alpine.ascona.crv;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.ControlPointsStatic;
-import ch.alpine.ascona.util.ren.Curvature2DRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.dub.DubinsGenerator;
-import ch.alpine.sophus.flt.ga.GeodesicMeanFilter;
-import ch.alpine.sophus.ref.d1.BSpline4CurveSubdivision;
+import ch.alpine.sophis.crv.dub.DubinsGenerator;
+import ch.alpine.sophis.flt.ga.GeodesicMeanFilter;
+import ch.alpine.sophis.ref.d1.BSpline4CurveSubdivision;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -69,7 +69,7 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

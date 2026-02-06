@@ -7,26 +7,25 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.util.Optional;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.GridRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.R2Display;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.GridRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.itp.ArcLengthParameterization;
+import ch.alpine.sophis.ref.d1.CurveSubdivision;
+import ch.alpine.sophis.ref.d1.FourPointCurveSubdivision;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.HsDesign;
-import ch.alpine.sophus.hs.r2.ArcTan2D;
-import ch.alpine.sophus.itp.ArcLengthParameterization;
-import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.rn.RGroup;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.sophus.lie.so2.So2;
-import ch.alpine.sophus.ref.d1.CurveSubdivision;
-import ch.alpine.sophus.ref.d1.FourPointCurveSubdivision;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Differences;
@@ -102,10 +101,9 @@ public class LogarithmDemo extends ControlPointsDemo {
           graphics.draw(path2d);
         }
         final Tensor domain = Drop.tail(Subdivide.of(0.0, 1.0, param.length), 1);
-        geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(10, 0)));
+        geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(10, 0)));
         GRID_RENDER.render(geometricLayer, graphics);
-        HsDesign hsDesign = new HsDesign(homogeneousSpace);
-        Tensor planar = hsDesign.matrix(refined, origin);
+        Tensor planar = homogeneousSpace.exponential(origin).log().slash(refined);
         {
           RenderQuality.setQuality(graphics);
           Path2D path2d = geometricLayer.toPath2D(planar, true);
@@ -117,7 +115,7 @@ public class LogarithmDemo extends ControlPointsDemo {
         Tensor angles_acc = Tensor.of(planar.stream().map(ArcTan2D::of));
         Tensor distances = Differences.of(angles_acc).map(So2.MOD);
         try {
-          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, RnGroup.INSTANCE, planar);
+          ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, RGroup.INSTANCE, planar);
           Tensor border = domain.map(scalarTensorFunction);
           RenderQuality.setQuality(graphics);
           graphics.setColor(Color.BLUE);
@@ -167,7 +165,7 @@ public class LogarithmDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

@@ -3,9 +3,9 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.util.stream.IntStream;
 
+import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.fit.RigidMotionFit;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.lie.se.RigidMotionFit;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 

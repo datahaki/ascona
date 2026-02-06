@@ -3,18 +3,17 @@ package ch.alpine.ascona.decim;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascona.util.dat.GokartPoseDataV1;
-import ch.alpine.ascona.util.dat.GokartPoseDataV2;
-import ch.alpine.ascona.util.win.AbstractDemoHelper;
+import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.ascony.win.AbstractDemoHelper;
 
 class CurveDecimationDemoTest {
   @Test
   void testSimpleV1() {
-    AbstractDemoHelper.offscreen(new CurveDecimationDemo(GokartPoseDataV1.INSTANCE));
+    AbstractDemoHelper.offscreen(new CurveDecimationDemo(new GokartPos()));
   }
 
   @Test
   void testSimpleV2() {
-    AbstractDemoHelper.offscreen(new CurveDecimationDemo(GokartPoseDataV2.INSTANCE));
+    AbstractDemoHelper.offscreen(new CurveDecimationDemo(new GokartPos()));
   }
 }

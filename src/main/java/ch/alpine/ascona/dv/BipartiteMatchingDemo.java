@@ -5,23 +5,23 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.ControlPointsStatic;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.Transition;
-import ch.alpine.sophus.crv.TransitionSpace;
+import ch.alpine.sophis.ts.Transition;
+import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
+import ch.alpine.tensor.pdf.RandomSample;
 
 public class BipartiteMatchingDemo extends ControlPointsDemo {
   @ReflectionMarker
@@ -30,7 +30,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
       super(true, ManifoldDisplays.d2Rasters());
     }
 
-    @FieldClip(min = "1", max = "20")
+    @FieldClip(min = "1", max = "200")
     public Integer n = 5;
     @FieldFuse
     public transient Boolean shuffle = true;
@@ -84,7 +84,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
     ControlPointsStatic.gray(manifoldDisplay(), ground).render(geometricLayer, graphics);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

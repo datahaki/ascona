@@ -3,7 +3,7 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.util.List;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

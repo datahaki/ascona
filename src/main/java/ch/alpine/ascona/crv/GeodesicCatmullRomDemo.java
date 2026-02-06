@@ -5,10 +5,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.Curvature2DRender;
-import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -16,11 +16,11 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.GeodesicCatmullRom;
-import ch.alpine.sophus.crv.dub.DubinsGenerator;
+import ch.alpine.sophis.crv.GeodesicCatmullRom;
+import ch.alpine.sophis.crv.dub.DubinsGenerator;
+import ch.alpine.sophis.math.win.KnotSpacing;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.math.api.TensorMetric;
-import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -113,7 +113,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
     return control;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

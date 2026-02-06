@@ -9,22 +9,21 @@ import java.awt.geom.Path2D;
 import java.io.File;
 import java.util.Objects;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
-import ch.alpine.sophus.crv.clt.ClothoidBuilder;
-import ch.alpine.sophus.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.crv.clt.ClothoidSampler;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroupElement;
+import ch.alpine.sophis.crv.clt.ClothoidBuilder;
+import ch.alpine.sophis.crv.clt.ClothoidBuilders;
+import ch.alpine.sophis.crv.clt.ClothoidSampler;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -103,9 +102,9 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
     for (int index = 1; index < sequence.length(); ++index) {
       Tensor beg0 = sequence.get(index - 1);
       Tensor end0 = sequence.get(index + 0);
-      Se2CoveringGroupElement shL = Se2CoveringGroup.INSTANCE.element(param.shiftL);
-      Tensor beg1 = Se2CoveringGroup.INSTANCE.element(shL.combine(beg0)).combine(param.shiftR);
-      Tensor end1 = Se2CoveringGroup.INSTANCE.element(shL.combine(end0)).combine(param.shiftR);
+      // Se2CoveringGroupElement shL = Se2CoveringGroup.INSTANCE.element();
+      Tensor beg1 = Se2CoveringGroup.INSTANCE.combine(Se2CoveringGroup.INSTANCE.combine(param.shiftL, beg0), param.shiftR);
+      Tensor end1 = Se2CoveringGroup.INSTANCE.combine(Se2CoveringGroup.INSTANCE.combine(param.shiftL, end0), param.shiftR);
       Tensor crv0 = cache.apply(Tensors.of(beg0, end0));
       Tensor crv1 = cache.apply(Tensors.of(beg1, end1));
       {
@@ -118,7 +117,7 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
           graphics.draw(path2d);
           graphics.fill(path2d);
         }
-        geometricLayer.pushMatrix(GfxMatrix.translation(11, 0));
+        geometricLayer.pushMatrix(Se2Matrix.translation(11, 0));
         graphics.setColor(new Color(64, 64, 64));
         {
           Path2D path2d = geometricLayer.toPath2D(polygon, true);
@@ -142,7 +141,7 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
     return ClothoidSampler.of(clothoidBuilder.curve(beg0, end0), BETA);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

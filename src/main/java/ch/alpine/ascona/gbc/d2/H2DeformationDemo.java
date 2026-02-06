@@ -1,17 +1,16 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascony.api.Box2D;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.Clips;
 
-// TODO ASCONA ugly when computation fails (probably for accuracy reasons)
 public class H2DeformationDemo extends AbstractDeformationDemo {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.05));
 
@@ -53,7 +52,7 @@ public class H2DeformationDemo extends AbstractDeformationDemo {
     return TRIANGLE;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

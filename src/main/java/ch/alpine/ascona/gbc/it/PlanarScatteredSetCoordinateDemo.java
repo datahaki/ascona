@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascona.gbc.d2.AbstractScatteredSetWeightingDemo;
-import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.api.ImageTiling;
-import ch.alpine.ascona.util.api.InsideConvexHullLogWeighting;
-import ch.alpine.ascona.util.api.LogWeighting;
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.ArrayPlotImage;
-import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascony.api.Box2D;
+import ch.alpine.ascony.api.ImageTiling;
+import ch.alpine.ascony.api.InsideConvexHullLogWeighting;
+import ch.alpine.ascony.api.LogWeighting;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.arp.ArrayFunction;
+import ch.alpine.ascony.arp.ArrayPlotImage;
+import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.PanelFieldsEditor;
@@ -32,7 +32,7 @@ import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.lie.rot.CirclePoints;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
@@ -130,7 +130,7 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
     return ArrayPlotImage.of(rescale.result(), rescale.clip(), colorDataGradient);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

@@ -3,8 +3,8 @@ package ch.alpine.ascona.crv.clt;
 
 import java.io.Serializable;
 
-import ch.alpine.sophus.crv.clt.LagrangeQuadratic;
-import ch.alpine.sophus.crv.clt.mid.ClothoidQuadratic;
+import ch.alpine.sophis.crv.clt.LagrangeQuadratic;
+import ch.alpine.sophis.crv.clt.mid.ClothoidQuadratic;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.ScalarBinaryOperator;
@@ -13,7 +13,7 @@ import ch.alpine.tensor.api.ScalarBinaryOperator;
   private static final Scalar HALF = RealScalar.of(0.5);
 
   public static ClothoidQuadratic of(Scalar lambda) {
-    return new CustomClothoidQuadratic((s1, s2) -> lambda);
+    return new CustomClothoidQuadratic((_, _) -> lambda);
   }
 
   // ---

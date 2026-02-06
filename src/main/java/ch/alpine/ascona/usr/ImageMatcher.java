@@ -52,7 +52,7 @@ public enum ImageMatcher {
     return ArrayFlatten.of(tensors);
   }
 
-  public static void main(String[] args) throws IOException, ClassNotFoundException, DataFormatException {
+  static void main() throws IOException, ClassNotFoundException, DataFormatException {
     File folder = HomeDirectory.file("Public", "wa01");
     System.out.println(folder.getName());
     String n1 = "a";

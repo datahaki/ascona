@@ -4,9 +4,9 @@ package ch.alpine.ascona.ext;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascona.util.api.RnLineTrim;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.api.RnLineTrim;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -17,7 +17,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.Ceiling;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.pow.Sqrt;
@@ -61,7 +61,7 @@ public class CircleQualityDemo extends AbstractDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

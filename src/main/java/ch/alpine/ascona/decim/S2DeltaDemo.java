@@ -6,23 +6,22 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.S2Display;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.S2Display;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.flt.CenterFilter;
-import ch.alpine.sophus.flt.ga.GeodesicCenter;
-import ch.alpine.sophus.hs.sn.S2Loxodrome;
-import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.hs.sn.SnPerturbation;
-import ch.alpine.sophus.hs.sn.SnRotationMatrix;
-import ch.alpine.sophus.itp.UniformResample;
-import ch.alpine.sophus.ref.d1.CurveSubdivision;
+import ch.alpine.sophis.flt.CenterFilter;
+import ch.alpine.sophis.flt.ga.GeodesicCenter;
+import ch.alpine.sophis.itp.UniformResample;
+import ch.alpine.sophis.ref.d1.CurveSubdivision;
+import ch.alpine.sophus.hs.s.S2Loxodrome;
+import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.sophus.hs.s.SnRotationMatrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -31,7 +30,6 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 public class S2DeltaDemo extends AbstractDemo {
@@ -88,7 +86,7 @@ public class S2DeltaDemo extends AbstractDemo {
     CurveSubdivision curveSubdivision = UniformResample.of(SnManifold.INSTANCE, SnManifold.INSTANCE, param.delta);
     Tensor sequence = domain.map(stf);
     sequence = curveSubdivision.string(sequence);
-    TensorUnaryOperator tuo = SnPerturbation.of(NormalDistribution.of(param.noise.zero(), param.noise));
+    TensorUnaryOperator tuo = t -> t; // SnPerturbation.of(NormalDistribution.of(param.noise.zero(), param.noise));
     sequence = Tensor.of(sequence.stream().map(tuo));
     ScalarUnaryOperator s_window = param.s_window.get();
     snDeltaRaw = new SnDeltaContainer(sequence, s_window);
@@ -143,7 +141,7 @@ public class S2DeltaDemo extends AbstractDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.N;
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final Scalar MARGIN = RealScalar.of(2);
 
-  public static final Tensor domain(Tensor ctrlPointsSe2) {
+  public static Tensor domain(Tensor ctrlPointsSe2) {
     Tensor support = ctrlPointsSe2.get(Tensor.ALL, 0).map(N.DOUBLE);
     Tensor subdiv = Subdivide.of( //
         support.stream().reduce(Min::of).orElseThrow().add(MARGIN.negate()), //

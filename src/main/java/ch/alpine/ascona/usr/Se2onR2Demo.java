@@ -4,7 +4,7 @@ package ch.alpine.ascona.usr;
 import java.io.File;
 import java.io.IOException;
 
-import ch.alpine.sophus.lie.se2.Se2GroupElement;
+import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Parallelize;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -40,10 +40,10 @@ import ch.alpine.tensor.red.Min;
   }
 
   private static Tensor action(Tensor xya, Tensor uv) {
-    return new Se2GroupElement(xya).combine(uv.copy().append(RealScalar.ZERO)).extract(0, 2);
+    return Se2Group.INSTANCE.combine(xya, uv.copy().append(RealScalar.ZERO)).extract(0, 2);
   }
 
-  public static void main(String[] args) throws IOException {
+  static void main() throws IOException {
     File folder = HomeDirectory.Pictures(Se2onR2Demo.class.getSimpleName());
     folder.mkdir();
     if (!folder.isDirectory())

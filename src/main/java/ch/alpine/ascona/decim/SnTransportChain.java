@@ -4,7 +4,7 @@ package ch.alpine.ascona.decim;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.alpine.sophus.hs.sn.SnRotationMatrix;
+import ch.alpine.sophus.hs.s.SnRotationMatrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.mat.IdentityMatrix;

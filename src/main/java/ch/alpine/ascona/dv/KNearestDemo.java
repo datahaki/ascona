@@ -7,28 +7,28 @@ import java.awt.geom.Path2D;
 import java.util.Optional;
 
 import ch.alpine.ascona.lev.PlaceWrap;
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.lie.LieGroupOps;
+import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.math.api.TensorMapping;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Ordering;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -90,20 +90,20 @@ public class KNearestDemo extends ControlPointsDemo {
       Tensor origin = optional.get();
       // ---
       render(geometricLayer, graphics, sequence, origin, "");
-      LieGroupOps lieGroupOps = new LieGroupOps(Se2Group.INSTANCE);
+      LieGroup lieGroup = Se2Group.INSTANCE;
       try {
         Tensor shift = param1.tensor;
         {
-          geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(8, 0)));
-          TensorMapping lieGroupOp = lieGroupOps.conjugation(shift);
-          render(geometricLayer, graphics, lieGroupOp.slash(sequence), lieGroupOp.apply(origin), "'");
+          geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(8, 0)));
+          TensorUnaryOperator lieGroupOp = lieGroup.conjugation(shift);
+          render(geometricLayer, graphics, Tensor.of(sequence.stream().map(lieGroupOp)), lieGroupOp.apply(origin), "'");
           geometricLayer.popMatrix();
         }
         {
-          Tensor invert = lieGroupOps.inversion().apply(shift);
-          geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(16, 0)));
-          TensorMapping lieGroupOp = lieGroupOps.conjugation(invert);
-          render(geometricLayer, graphics, lieGroupOp.slash(sequence), lieGroupOp.apply(origin), "\"");
+          Tensor invert = Se2Group.INSTANCE.invert(shift);
+          geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(16, 0)));
+          TensorUnaryOperator lieGroupOp = lieGroup.conjugation(invert);
+          render(geometricLayer, graphics, Tensor.of(sequence.stream().map(lieGroupOp)), lieGroupOp.apply(origin), "\"");
           geometricLayer.popMatrix();
         }
       } catch (Exception exception) {
@@ -146,7 +146,7 @@ public class KNearestDemo extends ControlPointsDemo {
     leversRender.renderIndexP("p" + p);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

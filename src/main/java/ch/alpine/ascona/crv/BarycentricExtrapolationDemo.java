@@ -7,26 +7,24 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.sca.Chop;
 
 public class BarycentricExtrapolationDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
@@ -73,11 +71,10 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke());
     if (1 < length) {
       Tensor samples = Subdivide.of(-length, 0, 127).map(Tensors::of);
-      BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(homogeneousSpace), s -> s, domain);
       Tensor curve = Tensor.of(samples.stream() //
           .map(sedarim::sunder) //
-          .map(weights -> biinvariantMean.mean(sequence, weights)));
+          .map(weights -> homogeneousSpace.biinvariantMean().mean(sequence, weights)));
       new PathRender(Color.BLUE, 1.5f) //
           .setCurve(curve, false) //
           .render(geometricLayer, graphics);
@@ -88,7 +85,7 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

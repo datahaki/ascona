@@ -4,19 +4,18 @@ package ch.alpine.ascona.lev;
 import java.awt.Graphics2D;
 import java.util.Optional;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
-import ch.alpine.sophus.gbc.d2.IterativeCoordinateMatrix;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.gbc.d2.IterativeCoordinateMatrix;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.Tensor;
 
@@ -61,9 +60,9 @@ public class IterativeCoordinateDemo extends ControlPointsDemo {
       LeversHud.render(Biinvariants.LEVERAGES, leversRender, null);
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       Manifold manifold = homogeneousSpace;
-      HsDesign hsDesign = new HsDesign(manifold);
       try {
-        Tensor matrix = new IterativeCoordinateMatrix(param.total).origin(hsDesign.matrix(sequence, origin));
+        Tensor matrix = new IterativeCoordinateMatrix(param.total).origin( //
+            manifold.exponential(origin).log().slash(sequence));
         Tensor circum = matrix.dot(sequence);
         // new PointsRender(color_fill, color_draw).show(matrixLift, shape, points);
         // new PointsRender(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255)) //
@@ -83,7 +82,7 @@ public class IterativeCoordinateDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

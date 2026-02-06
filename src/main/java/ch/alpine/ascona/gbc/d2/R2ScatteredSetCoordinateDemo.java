@@ -7,24 +7,22 @@ import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.api.ImageTiling;
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.arp.ArrayPlotImage;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.BoundingBoxRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.MeshRender;
+import ch.alpine.ascony.api.Box2D;
+import ch.alpine.ascony.api.ImageTiling;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.arp.ArrayPlotImage;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.BoundingBoxRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
-import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -36,8 +34,8 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
@@ -54,7 +52,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   public R2ScatteredSetCoordinateDemo() {
     super(ManifoldDisplays.SE2C_SE2, LogWeightings.list());
     {
-      jToggleAnimate.addActionListener(e -> {
+      jToggleAnimate.addActionListener(_ -> {
         if (jToggleAnimate.isSelected())
           snapshot = getControlPointsSe2();
         else
@@ -92,19 +90,19 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+    // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       RenderQuality.setQuality(graphics);
       // ---
-      Sedarim sedarim = Biinvariants.METRIC.ofSafe(RnGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), domain);
+      Sedarim sedarim = Biinvariants.METRIC.ofSafe(RGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), domain);
       // operator(domain);
       Tensor sX = Subdivide.increasing(coordinateBoundingBox.clip(0), scatteredSetParam.refine);
       Tensor sY = Subdivide.decreasing(coordinateBoundingBox.clip(1), scatteredSetParam.refine);
       int n = sX.length();
       Tensor[][] array = new Tensor[n][n];
       Tensor[][] point = new Tensor[n][n];
-      Tensor wgs = Array.of(l -> DoubleScalar.INDETERMINATE, n, n, domain.length());
+      Tensor wgs = Array.of(_ -> DoubleScalar.INDETERMINATE, n, n, domain.length());
       IntStream.range(0, sX.length()).parallel().forEach(c0 -> {
         Tensor x = sX.get(c0);
         int c1 = 0;
@@ -112,7 +110,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
           Tensor px = Tensors.of(x, y);
           Tensor weights = sedarim.sunder(px);
           wgs.set(weights, c1, c0);
-          Tensor mean = biinvariantMean.mean(controlPoints, weights);
+          Tensor mean = homogeneousSpace.biinvariantMean().mean(controlPoints, weights);
           array[c0][c1] = mean;
           point[c0][c1] = manifoldDisplay.point2xy(mean);
           ++c1;
@@ -145,7 +143,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     leversRender.renderIndexP("q");
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

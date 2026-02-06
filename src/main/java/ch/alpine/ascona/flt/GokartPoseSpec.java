@@ -3,20 +3,20 @@ package ch.alpine.ascona.flt;
 
 import java.util.List;
 
-import ch.alpine.ascona.util.dat.GokartPoseData;
-import ch.alpine.ascona.util.dat.GokartPoseParam;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.ascona.dat.GokartPosParam;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 @ReflectionMarker
-public class GokartPoseSpec extends GokartPoseParam {
-  public GokartPoseSpec(GokartPoseData gokartPoseData, List<ManifoldDisplays> list) {
+public class GokartPoseSpec extends GokartPosParam {
+  public GokartPoseSpec(GokartPos gokartPoseData, List<ManifoldDisplays> list) {
     super(gokartPoseData, list);
   }
 
   public Boolean diff = true;
-  public Boolean spec = true;
+  public Boolean spec = false;
   public Boolean data = true;
   public Boolean conv = true;
   public Boolean symi = false;

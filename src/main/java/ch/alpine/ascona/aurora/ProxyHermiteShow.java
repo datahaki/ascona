@@ -5,14 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.function.Function;
 
-import ch.alpine.ascona.util.dat.GokartPoseDataV2;
+import ch.alpine.ascona.dat.GokartPosVel;
+import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
+import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.r2.Se2Parametric;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
-import ch.alpine.sophus.math.api.TensorIteration;
-import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -22,6 +21,8 @@ import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.Export;
+import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 
 /* package */ abstract class ProxyHermiteShow {
@@ -44,7 +45,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
     this.levels = levels;
     folder = HomeDirectory.Documents(name);
     folder.mkdir();
-    Scalar rate = GokartPoseDataV2.INSTANCE.getSampleRate();
+    Scalar rate = Quantity.of(50, "Hz");
     int delta2 = 1;
     for (int level = 0; level < levels; ++level) {
       delta2 *= 2;
@@ -52,7 +53,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
     }
     delta = QuantityMagnitude.SI().in("s").apply(rate.reciprocal());
     System.out.println("delta=" + delta);
-    data = GokartPoseDataV2.INSTANCE.getPoseVel(name, delta2 * 20 + 1);
+    data = new GokartPosVel().getData(name); // limit , delta2 * 20 + 1
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     System.out.println(Dimensions.of(data));
     control = Thinning.of(data, delta2);
@@ -70,7 +71,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
     for (int index = 0; index < refined.length(); ++index) {
       Tensor p = refined.get(index, 0);
       Tensor q = data.get(index, 0);
-      total = total.add(Se2Parametric.INSTANCE.distance(p, q));
+      total = total.add(Vector2Norm.between(p.extract(0, 2), q.extract(0, 2)));
     }
     return total;
   }

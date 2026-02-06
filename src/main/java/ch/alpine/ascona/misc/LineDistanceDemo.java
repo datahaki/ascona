@@ -7,20 +7,20 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.ImageRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.arp.ArrayFunction;
+import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.ImageRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.decim.LineDistance;
+import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.api.TensorNorm;
 import ch.alpine.tensor.DoubleScalar;
@@ -77,7 +77,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
     Tensor cp = getGeodesicControlPoints();
     return 1 < cp.length() //
         ? lineDistance.tensorNorm(cp.get(0), cp.get(1))
-        : t -> RealScalar.ZERO;
+        : _ -> RealScalar.ZERO;
   }
 
   private BufferedImage bufferedImage(int resolution) {
@@ -119,7 +119,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

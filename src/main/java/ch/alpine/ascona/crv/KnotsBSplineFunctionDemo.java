@@ -5,24 +5,24 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.api.BufferedImageSupplier;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AreaRender;
-import ch.alpine.ascona.util.ren.ControlPointsStatic;
-import ch.alpine.ascona.util.ren.Curvature2DRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.sym.SymLinkImage;
-import ch.alpine.ascona.util.sym.SymLinkImages;
+import ch.alpine.ascony.api.BufferedImageSupplier;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.AreaRender;
+import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.sym.SymLinkImage;
+import ch.alpine.ascony.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.GeodesicBSplineFunction;
-import ch.alpine.sophus.crv.dub.DubinsGenerator;
+import ch.alpine.sophis.crv.GeodesicBSplineFunction;
+import ch.alpine.sophis.crv.dub.DubinsGenerator;
+import ch.alpine.sophis.math.win.KnotSpacing;
 import ch.alpine.sophus.math.api.TensorMetric;
-import ch.alpine.sophus.math.win.KnotSpacing;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -105,7 +105,7 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     return bufferedImage;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

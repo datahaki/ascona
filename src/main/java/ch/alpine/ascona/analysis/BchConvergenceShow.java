@@ -24,10 +24,11 @@ public enum BchConvergenceShow {
   private static final Tensor SL2 = Tensors.fromString( //
       "{{{0, 0, 0}, {0, 0, -2}, {0, 2, 0}}, {{0, 0, -2}, {0, 0, 0}, {2, 0, 0}}, {{0, -2, 0}, {2, 0, 0}, {0, 0, 0}}}").multiply(RationalScalar.HALF);
 
-  public static void main(String[] args) {
+  static void main() {
     Show show = new Show();
     show.setPlotLabel("bch convergence");
     // show.getAxisY().setLabel("log");
+    int depth = 11;
     for (int index = 0; index < 3; ++index) {
       Tensor ad = null;
       String pl = "";
@@ -50,7 +51,7 @@ public enum BchConvergenceShow {
       if (Objects.nonNull(ad)) {
         System.out.println("algebra=" + pl);
         ad = ad.map(N.DOUBLE);
-        BakerCampbellHausdorff bakerCampbellHausdorff = (BakerCampbellHausdorff) BakerCampbellHausdorff.of(ad, 7);
+        BakerCampbellHausdorff bakerCampbellHausdorff = (BakerCampbellHausdorff) BakerCampbellHausdorff.of(ad, depth);
         Tensor series = bakerCampbellHausdorff.series( //
             Tensors.vector(+0.3, +0.23, +0.37), //
             Tensors.vector(+0.2, -0.36, +0.18));

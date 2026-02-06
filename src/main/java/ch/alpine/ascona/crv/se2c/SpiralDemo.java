@@ -4,14 +4,14 @@ package ch.alpine.ascona.crv.se2c;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.dis.Se2ClothoidDisplay;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.d2.Arrowhead;
+import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 
@@ -46,7 +46,7 @@ public class SpiralDemo extends AbstractDemo {
         .render(geometricLayer, graphics);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

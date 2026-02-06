@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.nd;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.R2Display;
 import ch.alpine.tensor.Tensor;
 
 public class R2TreeMapDemo extends AbstractTreeMapDemo {
@@ -16,7 +16,7 @@ public class R2TreeMapDemo extends AbstractTreeMapDemo {
     return xya.extract(0, 2);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

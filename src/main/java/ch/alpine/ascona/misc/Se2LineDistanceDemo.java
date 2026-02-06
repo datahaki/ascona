@@ -6,21 +6,21 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.crv.d2.Arrowhead;
-import ch.alpine.sophus.decim.HsLineDistance;
-import ch.alpine.sophus.decim.HsLineDistanceLocal;
-import ch.alpine.sophus.decim.HsLineProjection;
+import ch.alpine.sophis.crv.d2.ex.Arrowhead;
+import ch.alpine.sophis.decim.HsLineDistance;
+import ch.alpine.sophis.decim.HsLineDistanceLocal;
+import ch.alpine.sophis.decim.HsLineProjection;
 import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -48,12 +48,12 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
-    Exponential exponential = Se2CoveringGroup.INSTANCE; // TODO ASCONA check
     // ---
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    Tensor beg = sequence.get(0);
+    final Tensor beg = sequence.get(0);
     Tensor end = sequence.get(1);
     ScalarTensorFunction curve = geodesicSpace.curve(beg, end);
+    Exponential exponential = Se2CoveringGroup.INSTANCE.exponential(beg);
     {
       Tensor tensor = Subdivide.of(-0.5, 1.5, 55).map(curve);
       Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::point2xy)));
@@ -66,8 +66,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
       HsLineDistanceLocal normImpl = hsLineDistance.tensorNorm(beg, end);
       {
         Tensor project = normImpl.project(mouse);
-        Tensor exp = exponential.exp(project);
-        Tensor glb = lieGroup.element(beg).combine(exp);
+        Tensor glb = exponential.exp(project);
         {
           geometricLayer.pushMatrix(manifoldDisplay.matrixLift(glb));
           Path2D path2d = geometricLayer.toPath2D(Arrowhead.of(0.4));
@@ -81,8 +80,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
       }
       {
         Tensor orthogonal = normImpl.orthogonal(mouse);
-        Tensor exp = exponential.exp(orthogonal);
-        Tensor glb = lieGroup.element(beg).combine(exp);
+        Tensor glb = exponential.exp(orthogonal);
         {
           graphics.setColor(Color.DARK_GRAY);
           graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
@@ -132,7 +130,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

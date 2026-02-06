@@ -6,17 +6,17 @@ import java.awt.Graphics2D;
 
 import javax.swing.JSlider;
 
-import ch.alpine.ascona.util.api.GeodesicCausalFilters;
-import ch.alpine.ascona.util.dat.GokartPoseDataV2;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.ascony.api.GeodesicCausalFilters;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.sophus.flt.WindowSideExtrapolation;
-import ch.alpine.sophus.flt.bm.BiinvariantMeanFIRnFilter;
-import ch.alpine.sophus.flt.bm.BiinvariantMeanIIRnFilter;
-import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
-import ch.alpine.sophus.flt.ga.GeodesicFIRnFilter;
-import ch.alpine.sophus.flt.ga.GeodesicIIRnFilter;
+import ch.alpine.sophis.flt.WindowSideExtrapolation;
+import ch.alpine.sophis.flt.bm.BiinvariantMeanFIRnFilter;
+import ch.alpine.sophis.flt.bm.BiinvariantMeanIIRnFilter;
+import ch.alpine.sophis.flt.ga.GeodesicExtrapolation;
+import ch.alpine.sophis.flt.ga.GeodesicFIRnFilter;
+import ch.alpine.sophis.flt.ga.GeodesicIIRnFilter;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
@@ -33,11 +33,11 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
   private final JSlider jSlider = new JSlider(1, 999, 500);
 
   public GeodesicCausalFilterDemo() {
-    super(ManifoldDisplays.SE2_ONLY, GokartPoseDataV2.INSTANCE);
+    super(ManifoldDisplays.SE2_ONLY, new GokartPos());
     {
       spinnerCausalFilter.setValue(GeodesicCausalFilters.BIINVARIANT_MEAN_IIR);
       spinnerCausalFilter.addToComponent(timerFrame.jToolBar, "smoothing kernel");
-      spinnerCausalFilter.addSpinnerListener(value -> updateState());
+      spinnerCausalFilter.addSpinnerListener(_ -> updateState());
     }
     jSlider.setPreferredSize(new Dimension(500, 28));
     // ---
@@ -82,7 +82,7 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
     return super.plotLabel() + " " + alpha();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

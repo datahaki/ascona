@@ -25,7 +25,7 @@ public class R1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
     return Tensors.of(x);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

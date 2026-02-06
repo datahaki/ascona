@@ -9,20 +9,21 @@ import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.util.List;
 
-import ch.alpine.ascona.util.api.BufferedImageSupplier;
-import ch.alpine.ascona.util.dat.GokartPoseData;
-import ch.alpine.ascona.util.dat.GokartPoseDatas;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.GridRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.ascona.dat.GokartPoseDatas;
+import ch.alpine.ascony.api.BufferedImageSupplier;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.GridRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.LieDifferences;
@@ -33,8 +34,10 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
@@ -53,12 +56,13 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
   @ReflectionMarker
   public static class Param {
-    public Integer radius = 1;
+    @FieldClip(min = "0", max = "10")
+    public Integer radius = 0;
   }
 
   protected final Param param;
 
-  protected AbstractSpectrogramDemo(List<ManifoldDisplays> list, GokartPoseData gokartPoseData) {
+  protected AbstractSpectrogramDemo(List<ManifoldDisplays> list, GokartPos gokartPoseData) {
     this(new GokartPoseSpec(gokartPoseData, list), new Param());
   }
 
@@ -76,7 +80,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     super(gokartPoseSpec, param, object);
     this.gokartPoseSpec = gokartPoseSpec;
     this.param = param;
-    gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
+    // gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
     fieldsEditor(0).addUniversalListener(this::updateState);
     timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
     // ---
@@ -152,8 +156,8 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     if (geodesicSpace instanceof LieGroup lieGroup) {
-      LieDifferences lieDifferences = new LieDifferences(lieGroup);
-      Scalar sampleRate = MAGNITUDE_PER_SECONDS.apply(gokartPoseSpec.gpd().getSampleRate());
+      TensorUnaryOperator lieDifferences = LieDifferences.of(lieGroup);
+      Scalar sampleRate = MAGNITUDE_PER_SECONDS.apply(Quantity.of(50, "Hz")); // FIXME gokartPoseSpec.gpd().getSampleRate()
       Tensor speeds = lieDifferences.apply(refined).multiply(sampleRate);
       if (0 < speeds.length()) {
         int dimensions = speeds.get(0).length();

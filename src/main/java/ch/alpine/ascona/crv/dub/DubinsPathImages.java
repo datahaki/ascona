@@ -4,9 +4,9 @@ package ch.alpine.ascona.crv.dub;
 import java.io.File;
 import java.io.IOException;
 
-import ch.alpine.sophus.crv.dub.DubinsPath;
-import ch.alpine.sophus.crv.dub.DubinsPathComparators;
-import ch.alpine.sophus.crv.dub.FixedRadiusDubins;
+import ch.alpine.sophis.crv.dub.DubinsPath;
+import ch.alpine.sophis.crv.dub.DubinsPathComparators;
+import ch.alpine.sophis.crv.dub.FixedRadiusDubins;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -38,10 +38,11 @@ import ch.alpine.tensor.io.Export;
     return dubinsPath.totalCurvature().add(RealScalar.of(ordinal));
   }
 
-  public static void main(String[] args) throws IOException {
+  static void main() throws IOException {
     Tensor matrix = Tensors.matrix(DubinsPathImages::type, RES, RES);
     File directory = HomeDirectory.Pictures(DubinsPathImages.class.getSimpleName());
     directory.mkdir();
+    // FIXME ASCONA this does not make sense
     for (ColorDataLists colorDataLists : ColorDataLists.values()) {
       Tensor image = matrix.map(colorDataLists.strict());
       Export.of(new File(directory, colorDataLists.name() + ".png"), image);

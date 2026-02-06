@@ -7,10 +7,10 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
+import ch.alpine.tensor.ext.Hue;
 import ch.alpine.tensor.ext.PackageTestAccess;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorFormat;
-import ch.alpine.tensor.img.Hue;
 import ch.alpine.tensor.img.StrictColorDataIndexed;
 import ch.alpine.tensor.sca.Mod;
 
@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Mod;
   ;
   private static final Mod MOD = Mod.function(1);
   @PackageTestAccess
-  /* package */ static final Scalar GOLDEN_ANGLE = RealScalar.of(0.38196601125010515180);
+  static final Scalar GOLDEN_ANGLE = RealScalar.of(0.38196601125010515180);
 
   public static ColorDataIndexed of(int max, int sep) {
     Tensor tensor = Tensors.reserve(max * sep);

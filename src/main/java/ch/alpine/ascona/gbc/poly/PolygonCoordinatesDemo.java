@@ -4,23 +4,22 @@ package ch.alpine.ascona.gbc.poly;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
-import ch.alpine.ascona.util.api.ImageTiling;
-import ch.alpine.ascona.util.api.PolygonCoordinates;
-import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.ArrayPlotImage;
-import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.ImageTiling;
+import ch.alpine.ascony.api.PolygonCoordinates;
+import ch.alpine.ascony.arp.ArrayFunction;
+import ch.alpine.ascony.arp.ArrayPlotImage;
+import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -28,6 +27,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
@@ -118,7 +118,7 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     recompute();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

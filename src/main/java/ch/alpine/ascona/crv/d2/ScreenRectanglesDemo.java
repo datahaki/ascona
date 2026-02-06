@@ -9,10 +9,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.awt.ScreenRectangles;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -38,8 +38,8 @@ public class ScreenRectanglesDemo extends ControlPointsDemo {
   private static Rectangle here(Point2D p, Point2D q) {
     int x = (int) p.getX();
     int y = (int) p.getY();
-    int width = (int) (q.getX() - p.getX());
-    int height = (int) (q.getY() - p.getY());
+    int width = Math.max(0, (int) (q.getX() - p.getX()));
+    int height = Math.max(0, (int) (q.getY() - p.getY()));
     return new Rectangle(x, y, width, height);
   }
 
@@ -74,7 +74,7 @@ public class ScreenRectanglesDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

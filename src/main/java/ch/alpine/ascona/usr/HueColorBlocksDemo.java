@@ -12,7 +12,7 @@ import ch.alpine.tensor.io.ImageFormat;
 
 public enum HueColorBlocksDemo {
   ;
-  public static void main(String[] args) {
+  static void main() {
     ColorDataIndexed colorDataIndexed = HueColorBlocks.of(10, 5);
     Tensor tensor = Tensors.of(Range.of(0, colorDataIndexed.length())).map(colorDataIndexed);
     Show show = new Show();

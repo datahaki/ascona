@@ -7,22 +7,22 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascona.util.api.CurveVisualSet;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2CoveringClothoidDisplay;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.CurveVisualSet;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.Se2CoveringClothoidDisplay;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.crv.clt.Clothoid;
-import ch.alpine.sophus.crv.clt.ClothoidTransition;
-import ch.alpine.sophus.crv.clt.ClothoidTransitionSpace;
-import ch.alpine.sophus.crv.clt.LagrangeQuadraticD;
+import ch.alpine.sophis.crv.clt.Clothoid;
+import ch.alpine.sophis.crv.clt.LagrangeQuadraticD;
+import ch.alpine.sophis.ts.ClothoidTransition;
+import ch.alpine.sophis.ts.ClothoidTransitionSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -84,7 +84,7 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
     show.render_autoIndent(graphics, new Rectangle(canvas_size.width - WIDTH, 0, WIDTH, HEIGHT));
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

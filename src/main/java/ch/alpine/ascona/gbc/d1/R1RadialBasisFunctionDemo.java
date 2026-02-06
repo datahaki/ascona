@@ -4,27 +4,27 @@ package ch.alpine.ascona.gbc.d1;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.itp.CrossAveraging;
+import ch.alpine.sophis.itp.RadialBasisFunctionInterpolation;
+import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.itp.CrossAveraging;
-import ch.alpine.sophus.itp.RadialBasisFunctionInterpolation;
-import ch.alpine.sophus.lie.rn.RnBiinvariantMean;
-import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** TODO ASCONA ALG investigate, this produces some nice results for kriging+metric+power */
 public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
@@ -81,7 +81,7 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
       // if (!isDeterminate())
       try {
         TensorUnaryOperator operator = //
-            new CrossAveraging(sedarim, RnBiinvariantMean.INSTANCE, funceva);
+            new CrossAveraging(sedarim, LinearBiinvariantMean.INSTANCE, funceva);
         Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(operator));
         new PathRender(Color.RED, 1.25f) //
             .setCurve(Transpose.of(Tensors.of(domain, result)), false) //
@@ -92,7 +92,7 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

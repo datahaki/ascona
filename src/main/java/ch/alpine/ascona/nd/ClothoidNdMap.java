@@ -6,9 +6,9 @@ import java.util.Queue;
 import java.util.function.Function;
 
 import ch.alpine.bridge.util.BoundedPriorityQueue;
-import ch.alpine.sophus.crv.clt.Clothoid;
-import ch.alpine.sophus.crv.clt.ClothoidBuilder;
-import ch.alpine.sophus.crv.clt.ClothoidComparators;
+import ch.alpine.sophis.crv.clt.Clothoid;
+import ch.alpine.sophis.crv.clt.ClothoidBuilder;
+import ch.alpine.sophis.crv.clt.ClothoidComparators;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;

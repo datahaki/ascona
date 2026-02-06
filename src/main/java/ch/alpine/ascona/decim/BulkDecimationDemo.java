@@ -4,18 +4,18 @@ package ch.alpine.ascona.decim;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.decim.CurveDecimation;
-import ch.alpine.sophus.decim.LineDistances;
+import ch.alpine.sophis.decim.CurveDecimation;
+import ch.alpine.sophis.decim.LineDistances;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -37,9 +37,9 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     Distribution dX = UniformDistribution.of(-3, 3);
     Distribution dY = NormalDistribution.of(0, .3);
     Distribution dA = NormalDistribution.of(1, .5);
-    Tensor tensor = Tensor.of(Array.of(l -> Tensors.of( //
+    Tensor tensor = Tensor.of(Array.of(_ -> Tensors.of( //
         RandomVariate.of(dX), RandomVariate.of(dY), RandomVariate.of(dA)), 4).stream() //
-        .map(Se2CoveringGroup.INSTANCE::exp));
+        .map(Se2CoveringGroup.INSTANCE.exponential0()::exp));
     setControlPointsSe2(tensor);
   }
 
@@ -83,7 +83,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

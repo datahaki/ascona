@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.ref.d1;
 
+import ch.alpine.sophis.ref.d1.CurveSubdivision;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Join;
@@ -34,7 +34,7 @@ import ch.alpine.tensor.ext.Integers;
       Tensor prev = refined;
       refined = tensorUnaryOperator.apply(refined);
       if (isDual && //
-          !Integers.isEven(level) && //
+          Integers.isOdd(level) && //
           !cyclic && //
           1 < control.length())
         refined = Join.of( //

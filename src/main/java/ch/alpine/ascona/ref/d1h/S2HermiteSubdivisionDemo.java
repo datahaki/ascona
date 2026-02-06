@@ -6,15 +6,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 
-import ch.alpine.ascona.util.api.HermiteSubdivisionParam;
-import ch.alpine.ascona.util.api.HermiteSubdivisions;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.S2Display;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.HermiteSubdivisionParam;
+import ch.alpine.ascony.api.HermiteSubdivisions;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.S2Display;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -22,11 +22,11 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
+import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.sn.SnExponential;
+import ch.alpine.sophus.hs.s.SnExponential;
 import ch.alpine.sophus.math.Do;
-import ch.alpine.sophus.math.api.TensorIteration;
-import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -150,7 +150,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

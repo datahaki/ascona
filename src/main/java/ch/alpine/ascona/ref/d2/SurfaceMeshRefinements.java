@@ -3,11 +3,11 @@ package ch.alpine.ascona.ref.d2;
 
 import java.util.function.Function;
 
+import ch.alpine.sophis.ref.d2.CatmullClarkRefinement;
+import ch.alpine.sophis.ref.d2.DooSabinRefinement;
+import ch.alpine.sophis.ref.d2.SurfaceMeshRefinement;
+import ch.alpine.sophis.ref.d2.TriQuadLinearRefinement;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.ref.d2.CatmullClarkRefinement;
-import ch.alpine.sophus.ref.d2.DooSabinRefinement;
-import ch.alpine.sophus.ref.d2.SurfaceMeshRefinement;
-import ch.alpine.sophus.ref.d2.TriQuadLinearRefinement;
 
 public enum SurfaceMeshRefinements {
   LINEAR(TriQuadLinearRefinement::new),

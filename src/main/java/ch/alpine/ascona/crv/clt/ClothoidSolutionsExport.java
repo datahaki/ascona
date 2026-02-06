@@ -7,8 +7,8 @@ import java.util.Map;
 
 import ch.alpine.bridge.io.DeleteDirectory;
 import ch.alpine.bridge.util.DisjointSets;
-import ch.alpine.sophus.crv.clt.ClothoidSolutions;
-import ch.alpine.sophus.crv.clt.ClothoidSolutions.Search;
+import ch.alpine.sophis.crv.clt.ClothoidSolutions;
+import ch.alpine.sophis.crv.clt.ClothoidSolutions.Search;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -97,7 +97,7 @@ import ch.alpine.tensor.sca.Clips;
     }
   }
 
-  public static void main(String[] args) throws IOException {
+  static void main() throws IOException {
     ClothoidSolutionsExport clothoidSolutionsExport = //
         new ClothoidSolutionsExport(40, 40, Pi.VALUE);
     // new ClothoidSolutionsExport(20, 120, Pi.TWO.multiply(RealScalar.of(3)));

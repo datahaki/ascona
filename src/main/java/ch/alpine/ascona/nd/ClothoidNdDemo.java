@@ -4,26 +4,26 @@ package ch.alpine.ascona.nd;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.Transition;
-import ch.alpine.sophus.crv.clt.Clothoid;
-import ch.alpine.sophus.crv.clt.ClothoidBuilder;
-import ch.alpine.sophus.crv.clt.ClothoidTransition;
-import ch.alpine.sophus.math.sample.BoxRandomSample;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
+import ch.alpine.sophis.crv.clt.Clothoid;
+import ch.alpine.sophis.crv.clt.ClothoidBuilder;
+import ch.alpine.sophis.ts.ClothoidTransition;
+import ch.alpine.sophis.ts.Transition;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.opt.nd.BoxRandomSample;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Clips;
 
 public class ClothoidNdDemo extends ControlPointsDemo {
@@ -58,7 +58,7 @@ public class ClothoidNdDemo extends ControlPointsDemo {
     // ---
     controlPointsRender.setPositioningEnabled(false);
     // ---
-    RandomSampleInterface randomSampleInterface = BoxRandomSample.of(ND_BOX_SE2);
+    RandomSampleInterface randomSampleInterface = new BoxRandomSample(ND_BOX_SE2);
     Tensor tensor = RandomSample.of(randomSampleInterface, SIZE);
     for (Tensor state : tensor)
       clothoidNdMap.insert(state);
@@ -89,7 +89,7 @@ public class ClothoidNdDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

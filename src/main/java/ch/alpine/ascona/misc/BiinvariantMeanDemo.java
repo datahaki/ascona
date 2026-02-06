@@ -11,26 +11,22 @@ import java.util.Objects;
 import java.util.Optional;
 
 import ch.alpine.ascona.ext.VehicleStatic;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.ImageRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.ImageRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.dv.Biinvariant;
-import ch.alpine.sophus.dv.Biinvariants;
-import ch.alpine.sophus.fit.HsWeiszfeldMethod;
-import ch.alpine.sophus.fit.SpatialMedian;
+import ch.alpine.sophis.dv.Biinvariant;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.fit.HsWeiszfeldMethod;
+import ch.alpine.sophis.fit.SpatialMedian;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.math.sample.RandomSample;
-import ch.alpine.sophus.math.sample.RandomSampleInterface;
-import ch.alpine.sophus.math.var.InversePowerVariogram;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -40,8 +36,11 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 public class BiinvariantMeanDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
@@ -101,10 +100,10 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     Tensor weights = ConstantArray.of(RationalScalar.of(1, length), length);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._03);
+    // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._03);
     Tensor mean = null;
     try {
-      mean = biinvariantMean.mean(sequence, weights);
+      mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
     } catch (Exception e) {
       System.err.println("mean does not exist");
     }
@@ -121,7 +120,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
       Biinvariant biinvariant = map.getOrDefault(param.biinvariants, Biinvariants.LEVERAGES.ofSafe(homogeneousSpace));
       Sedarim sedarim = biinvariant.weighting(InversePowerVariogram.of(1), sequence);
-      SpatialMedian spatialMedian = new HsWeiszfeldMethod(biinvariantMean, sedarim, Chop._05);
+      SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(), sedarim, Chop._05);
       Optional<Tensor> optional = spatialMedian.uniform(sequence);
       if (optional.isPresent()) {
         Tensor median = optional.orElseThrow();
@@ -153,7 +152,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

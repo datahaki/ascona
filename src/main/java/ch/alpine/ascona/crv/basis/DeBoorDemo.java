@@ -7,7 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -88,7 +88,7 @@ public class DeBoorDemo extends AbstractDemo {
     graphics.setColor(new Color(255, 128, 128, 255));
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

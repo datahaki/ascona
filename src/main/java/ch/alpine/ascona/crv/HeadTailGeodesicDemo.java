@@ -5,15 +5,16 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AreaRender;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AreaRender;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.math.api.TensorMetric;
@@ -31,7 +32,8 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
       super(false, ManifoldDisplays.ALL);
     }
 
-    @FieldSelectionArray({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
+    @FieldSlider
+    @FieldClip(min = "5", max = "20")
     public Integer refine = 6;
   }
 
@@ -88,7 +90,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke());
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

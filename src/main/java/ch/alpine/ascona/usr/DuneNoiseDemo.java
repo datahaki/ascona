@@ -41,7 +41,7 @@ public enum DuneNoiseDemo {
     return DensityPlot.of(DuneNoiseDemo::binOp, cbb, colorDataGradient);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     DensityPlot densityPlot = densityPlot();
     densityPlot.setPlotPoints(200);
     Show show = new Show();

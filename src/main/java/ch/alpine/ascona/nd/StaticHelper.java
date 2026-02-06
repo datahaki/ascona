@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
-import ch.alpine.ascona.util.api.Box2D;
+import ch.alpine.ascony.api.Box2D;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -24,7 +24,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
   }
 
   public static void draw(Tensor location, GeometricLayer geometricLayer, Graphics2D graphics) {
-    geometricLayer.pushMatrix(GfxMatrix.translation(location));
+    geometricLayer.pushMatrix(Se2Matrix.translation(location));
     Point2D point2d = geometricLayer.toPoint2D(Tensors.vector(0, 0));
     graphics.setColor(new Color(255, 128, 128, 255));
     graphics.fillRect((int) point2d.getX() - 1, (int) point2d.getY() - 1, 4, 4);

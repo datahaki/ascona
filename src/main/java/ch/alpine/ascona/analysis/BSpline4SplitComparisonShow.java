@@ -1,13 +1,12 @@
 // code by jph
 package ch.alpine.ascona.analysis;
 
+import ch.alpine.sophis.ref.d1.BSpline4CurveSubdivision;
+import ch.alpine.sophis.ref.d1.Dual3PointCurveSubdivision;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.bm.MeanDefect;
-import ch.alpine.sophus.lie.rn.RnGroup;
-import ch.alpine.sophus.lie.se2c.Se2CoveringBiinvariantMean;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
-import ch.alpine.sophus.ref.d1.BSpline4CurveSubdivision;
-import ch.alpine.sophus.ref.d1.Dual3PointCurveSubdivision;
+import ch.alpine.sophus.lie.rn.RGroup;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
@@ -24,9 +23,9 @@ import ch.alpine.tensor.sca.Round;
  * unique biinvariant mean as reference */
 /* package */ enum BSpline4SplitComparisonShow {
   ;
-  public static void main(String[] args) {
+  static void main() {
     Dual3PointCurveSubdivision d0 = //
-        (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split3(RnGroup.INSTANCE);
+        (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split3(RGroup.INSTANCE);
     Tensor weights_lo = Join.of( //
         d0.lo(Tensors.vector(1), Tensors.vector(0), Tensors.vector(0)), //
         d0.lo(Tensors.vector(0), Tensors.vector(1), Tensors.vector(0)), //
@@ -43,7 +42,7 @@ import ch.alpine.tensor.sca.Round;
         (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split3(Se2CoveringGroup.INSTANCE);
     Dual3PointCurveSubdivision d3 = //
         (Dual3PointCurveSubdivision) BSpline4CurveSubdivision.split2hi(Se2CoveringGroup.INSTANCE);
-    BiinvariantMean biinvariantMean = Se2CoveringBiinvariantMean.INSTANCE;
+    BiinvariantMean biinvariantMean = Se2CoveringGroup.INSTANCE.biinvariantMean();
     Distribution distribution = UniformDistribution.of(-Math.PI / 2, Math.PI / 2);
     int[] wint = new int[3];
     Tensor ert = Array.zeros(3);

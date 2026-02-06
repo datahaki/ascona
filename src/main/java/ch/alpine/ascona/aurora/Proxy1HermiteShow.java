@@ -4,8 +4,8 @@ package ch.alpine.ascona.aurora;
 import java.io.File;
 import java.io.IOException;
 
-import ch.alpine.sophus.ref.d1h.Hermite1Subdivisions;
-import ch.alpine.sophus.ref.d1h.HermiteLoConfig;
+import ch.alpine.sophis.ref.d1h.Hermite1Subdivisions;
+import ch.alpine.sophis.ref.d1h.HermiteLoConfig;
 import ch.alpine.tensor.Parallelize;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.exp.Log;
     // return Parallelize.matrix((i, j) -> lambda.Get(i), rows, cols);
   }
 
-  public static void main(String[] args) throws IOException {
+  static void main() throws IOException {
     String name = "20190701T163225_01";
     // name = "20190701T170957_03";
     // name = "20190701T174152_03";

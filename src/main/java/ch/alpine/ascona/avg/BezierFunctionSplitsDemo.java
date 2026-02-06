@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.ascona.avg;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.sym.SymGeodesic;
-import ch.alpine.ascona.util.sym.SymScalar;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.sym.SymGeodesic;
+import ch.alpine.ascony.sym.SymScalar;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -16,6 +16,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.BezierFunction;
 
 /** visualization of geodesic average along geodesics */
+// TODO ASCONA manifDispl should have separate control points and zooms!
 public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
@@ -53,7 +54,7 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
     return null;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

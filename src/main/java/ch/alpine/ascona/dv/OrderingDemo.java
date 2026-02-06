@@ -9,22 +9,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.arp.BarLegend;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.arp.BarLegend;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -34,6 +33,7 @@ import ch.alpine.tensor.alg.Ordering;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.ColorFormat;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.sca.Clips;
 
 public class OrderingDemo extends ControlPointsDemo {
@@ -45,7 +45,7 @@ public class OrderingDemo extends ControlPointsDemo {
       drawControlPoints = false;
     }
 
-    @FieldSelectionArray({ "10", "50", "100" })
+    @FieldSelectionArray({ "10", "50", "100", "200" })
     public Integer size = 100;
     @FieldFuse
     public transient Boolean shuffle;
@@ -57,7 +57,7 @@ public class OrderingDemo extends ControlPointsDemo {
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public ColorDataGradients cdg = ColorDataGradients.THERMOMETER;
     @FieldSelectionArray({ "1", "3", "5", "8" })
-    public Integer closest = 5;
+    public Integer closest = 1;
 
     @ReflectionMarker
     public List<Biinvariants> biinvariants() {
@@ -130,7 +130,7 @@ public class OrderingDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

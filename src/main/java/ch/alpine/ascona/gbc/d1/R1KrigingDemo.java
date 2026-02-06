@@ -5,19 +5,18 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Kriging;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.itp.Kriging;
-import ch.alpine.sophus.math.var.InversePowerVariogram;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -30,6 +29,7 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.sca.Abs;
+import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 // TODO ASCONA DEMO behaves counter intuitively!?
 public class R1KrigingDemo extends A1AveragingDemo {
@@ -72,7 +72,7 @@ public class R1KrigingDemo extends A1AveragingDemo {
       graphics.setColor(new Color(0, 128, 128));
       Scalar IND = RealScalar.of(0.1);
       for (int index = 0; index < support.length(); ++index) {
-        geometricLayer.pushMatrix(GfxMatrix.translation(control.get(index)));
+        geometricLayer.pushMatrix(Se2Matrix.translation(control.get(index)));
         Scalar v = cvarian.Get(index);
         graphics.draw(geometricLayer.toLine2D(Tensors.of(v.zero(), v), Tensors.of(v.zero(), v.negate())));
         graphics.draw(geometricLayer.toLine2D(Tensors.of(IND, v), Tensors.of(IND.negate(), v)));
@@ -106,7 +106,7 @@ public class R1KrigingDemo extends A1AveragingDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

@@ -6,21 +6,20 @@ import java.util.Optional;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.math.api.TensorMapping;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Timing;
 
 public class Se2AnimationDemo extends ControlPointsDemo {
@@ -46,15 +45,15 @@ public class Se2AnimationDemo extends ControlPointsDemo {
     super(param);
     controlPointsRender.setMidpointIndicated(false);
     {
-      jToggleAnimate.addActionListener(e -> {
+      jToggleAnimate.addActionListener(_ -> {
         if (jToggleAnimate.isSelected()) {
           snapshotUncentered = getControlPointsSe2();
           Tensor sequence = getGeodesicControlPoints();
           if (0 < sequence.length()) {
             Tensor origin = sequence.get(0);
             LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
-            Tensor shift = lieGroup.element(origin).inverse().toCoordinate();
-            snapshot = new LieGroupOps(lieGroup).actionL(shift).slash(sequence);
+            Tensor shift = lieGroup.invert(origin);
+            snapshot = Tensor.of(sequence.stream().map(lieGroup.actionL(shift)));
           }
         } else
           setControlPointsSe2(snapshotUncentered);
@@ -75,26 +74,27 @@ public class Se2AnimationDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
-    LieGroupOps lieGroupOps = new LieGroupOps(lieGroup);
     PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
     Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
-      if (jToggleAnimate.isSelected())
-        setControlPointsSe2(lieGroupOps.conjugation(random(10 + timing.seconds() * 0.1, 0)).slash(snapshot));
+      if (jToggleAnimate.isSelected()) {
+        Tensor newPoints = Tensor.of(snapshot.stream().map(lieGroup.conjugation(random(10 + timing.seconds() * 0.1, 0))));
+        setControlPointsSe2(newPoints);
+      }
       RenderQuality.setQuality(graphics);
       Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.get();
       LeversHud.render( //
           Biinvariants.METRIC, //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics));
-      TensorMapping actionL = lieGroupOps.actionL(Tensors.vector(7, 0, 0));
+      TensorUnaryOperator actionL = lieGroup.actionL(Tensors.vector(7, 0, 0));
       LeversHud.render( //
           Biinvariants.LEVERAGES, //
-          LeversRender.of(manifoldDisplay, actionL.slash(sequence), actionL.apply(origin), geometricLayer, graphics));
+          LeversRender.of(manifoldDisplay, Tensor.of(sequence.stream().map(actionL)), actionL.apply(origin), geometricLayer, graphics));
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

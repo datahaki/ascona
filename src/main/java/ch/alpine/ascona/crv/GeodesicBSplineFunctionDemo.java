@@ -6,17 +6,17 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.api.BufferedImageSupplier;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.ControlPointsStatic;
-import ch.alpine.ascona.util.ren.Curvature2DRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.sym.SymLinkImages;
+import ch.alpine.ascony.api.BufferedImageSupplier;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.crv.GeodesicBSplineFunction;
-import ch.alpine.sophus.crv.dub.DubinsGenerator;
+import ch.alpine.sophis.crv.GeodesicBSplineFunction;
+import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -79,7 +79,7 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
     return bufferedImage;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

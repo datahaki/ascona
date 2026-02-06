@@ -7,7 +7,6 @@ import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowDialog;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.lie.se2.Se2GroupElement;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -31,12 +30,11 @@ import ch.alpine.tensor.red.Nest;
 
   @Override
   public Tensor apply(Tensor zn) {
-    Se2GroupElement gzn = Se2Group.INSTANCE.element(zn);
-    Tensor g2 = gzn.combine(zn);
-    return Se2Group.INSTANCE.element(g2).combine(c);
+    Tensor g2 = Se2Group.INSTANCE.combine(zn, zn);
+    return Se2Group.INSTANCE.combine(g2, c);
   }
 
-  public static void main(String[] args) throws IOException {
+  static void main() throws IOException {
     Tensor _x = Subdivide.of(-4, 4, 512);
     Tensor _y = Subdivide.of(-4, 4, 512);
     Tensor image = Array.zeros(_x.length(), _y.length());

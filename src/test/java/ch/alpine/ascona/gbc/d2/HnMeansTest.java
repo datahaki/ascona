@@ -8,7 +8,7 @@ import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.hn.HnWeierstrassCoordinate;
+import ch.alpine.sophus.hs.h.HWeierstrassCoordinate;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.ext.Serialization;
@@ -21,14 +21,14 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 class HnMeansTest {
   @Test
   void testSimple() throws ClassNotFoundException, IOException {
-    RandomGenerator random = new Random(3);
+    RandomGenerator randomGenerator = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     for (HnMeans hnMeans : HnMeans.values()) {
       BiinvariantMean biinvariantMean = Serialization.copy(hnMeans).get();
       for (int d = 1; d < 5; ++d) {
         final int fd = d;
-        Tensor sequence = Array.of(l -> HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, random, fd)), 10);
-        Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), random, 10));
+        Tensor sequence = Array.of(_ -> new HWeierstrassCoordinate(RandomVariate.of(distribution, randomGenerator, fd)).toPoint(), 10);
+        Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), randomGenerator, 10));
         biinvariantMean.mean(sequence, weights);
       }
     }

@@ -6,28 +6,28 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascona.util.api.HermiteSubdivisionParam;
-import ch.alpine.ascona.util.api.HermiteSubdivisions;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2Display;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.Curvature2DRender;
-import ch.alpine.ascona.util.ren.GridRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.HermiteSubdivisionParam;
+import ch.alpine.ascony.api.HermiteSubdivisions;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.Se2Display;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.GridRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.clt.ClothoidDistance;
+import ch.alpine.sophis.crv.clt.ClothoidDistance;
+import ch.alpine.sophis.crv.d2.Extract2D;
+import ch.alpine.sophis.itp.AdjacentDistances;
+import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
+import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.r2.Extract2D;
-import ch.alpine.sophus.math.AdjacentDistances;
 import ch.alpine.sophus.math.Do;
-import ch.alpine.sophus.math.api.TensorIteration;
-import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -36,7 +36,7 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.UnitVector;
-import ch.alpine.tensor.lie.r2.AngleVector;
+import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.red.Mean;
 
 public class HermiteSubdivisionDemo extends ControlPointsDemo {
@@ -99,7 +99,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
         return;
       }
       {
-        Tensor distances = new AdjacentDistances(ClothoidDistance.SE2_ANALYTIC).apply(tensor);
+        Tensor distances = AdjacentDistances.of(ClothoidDistance.SE2_ANALYTIC).apply(tensor);
         // Distances.of(geodesicDisplay::parametricDistance, control.get(Tensor.ALL, 0));
         if (0 < distances.length()) {
           Tensor scaling = Array.zeros(control.length());
@@ -147,7 +147,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

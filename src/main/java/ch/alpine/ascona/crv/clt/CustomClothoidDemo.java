@@ -13,22 +13,22 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.GridRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.GridRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.crv.clt.ClothoidBuilder;
-import ch.alpine.sophus.crv.clt.ClothoidContext;
-import ch.alpine.sophus.crv.clt.ClothoidSolutions;
-import ch.alpine.sophus.crv.clt.ClothoidTransition;
-import ch.alpine.sophus.crv.clt.mid.MidpointTangentApproximation;
-import ch.alpine.sophus.crv.clt.mid.MidpointTangentOrder2;
+import ch.alpine.sophis.crv.clt.ClothoidBuilder;
+import ch.alpine.sophis.crv.clt.ClothoidContext;
+import ch.alpine.sophis.crv.clt.ClothoidSolutions;
+import ch.alpine.sophis.crv.clt.mid.MidpointTangentApproximation;
+import ch.alpine.sophis.crv.clt.mid.MidpointTangentOrder2;
+import ch.alpine.sophis.ts.ClothoidTransition;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -36,7 +36,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
@@ -78,7 +78,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
     }
     {
       JButton jButton = new JButton("fit");
-      jButton.addActionListener(e -> {
+      jButton.addActionListener(_ -> {
         ClothoidContext clothoidContext = clothoidDefectContainer.clothoidContext;
         Scalar lambda = MidpointTangentOrder2.INSTANCE.apply(clothoidContext.s1(), clothoidContext.s2());
         setLambda(lambda);
@@ -138,7 +138,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
     Scalar lambda = LAMBDAS.Get(jSlider.getValue());
     lambda = param.lambda;
     {
-      geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.of(clothoidContext.s1(), clothoidContext.s2())));
+      geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.of(clothoidContext.s1(), clothoidContext.s2())));
       graphics.setColor(Color.RED);
       graphics.fill(geometricLayer.toPath2D(CirclePoints.of(8).multiply(RealScalar.of(0.1))));
       geometricLayer.popMatrix();
@@ -177,7 +177,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
       gridRender.render(plotLayer, graphics);
       clothoidDefectContainer.render(plotLayer, graphics);
       graphics.setColor(Color.RED);
-      plotLayer.pushMatrix(GfxMatrix.translation(Tensors.of(lambda, lambda.zero())));
+      plotLayer.pushMatrix(Se2Matrix.translation(Tensors.of(lambda, lambda.zero())));
       graphics.setStroke(new BasicStroke(2f));
       graphics.fill(plotLayer.toPath2D(POINTER, true));
       plotLayer.popMatrix();
@@ -200,7 +200,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
     fieldsEditor(0).updateJComponents();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

@@ -4,22 +4,22 @@ package ch.alpine.ascona.crv;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.AreaRender;
-import ch.alpine.ascona.util.ren.ControlPointsStatic;
-import ch.alpine.ascona.util.ren.Curvature2DRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.sym.SymGeodesic;
-import ch.alpine.ascona.util.sym.SymLinkImage;
-import ch.alpine.ascona.util.sym.SymScalar;
-import ch.alpine.ascona.util.sym.SymSequence;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.AreaRender;
+import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.sym.SymGeodesic;
+import ch.alpine.ascony.sym.SymLinkImage;
+import ch.alpine.ascony.sym.SymScalar;
+import ch.alpine.ascony.sym.SymSequence;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.LagrangeInterpolation;
-import ch.alpine.sophus.crv.dub.DubinsGenerator;
+import ch.alpine.sophis.crv.LagrangeInterpolation;
+import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -102,7 +102,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     return refined;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

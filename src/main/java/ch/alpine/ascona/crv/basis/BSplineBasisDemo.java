@@ -5,19 +5,19 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.Curvature2DRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.GeodesicBSplineFunction;
-import ch.alpine.sophus.lie.rn.RnGroup;
+import ch.alpine.sophis.crv.GeodesicBSplineFunction;
+import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -78,7 +78,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
           geometricLayer.pushMatrix(string);
           for (int k_th = 0; k_th < length; ++k_th) {
             GeodesicBSplineFunction bSplineFunction = //
-                GeodesicBSplineFunction.of(RnGroup.INSTANCE, _degree, UnitVector.of(length, k_th));
+                GeodesicBSplineFunction.of(RGroup.INSTANCE, _degree, UnitVector.of(length, k_th));
             Tensor domain = Subdivide.of(0, length - 1, 100);
             Tensor values = domain.map(bSplineFunction);
             Tensor tensor = Transpose.of(Tensors.of(domain, values));
@@ -98,7 +98,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
         ? BSplineInterpolation.solve(_degree, control)
         : control;
     GeodesicBSplineFunction bSplineFunction = //
-        GeodesicBSplineFunction.of(RnGroup.INSTANCE, _degree, effective);
+        GeodesicBSplineFunction.of(RGroup.INSTANCE, _degree, effective);
     Tensor refined = Subdivide.of(0, effective.length() - 1, 4 << _levels).map(bSplineFunction);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
@@ -107,7 +107,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
     Curvature2DRender.of(refined, false).render(geometricLayer, graphics);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

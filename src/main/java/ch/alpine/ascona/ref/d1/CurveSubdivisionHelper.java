@@ -3,10 +3,10 @@ package ch.alpine.ascona.ref.d1;
 
 import java.util.List;
 
+import ch.alpine.sophis.ref.d1.BSpline4CurveSubdivision;
+import ch.alpine.sophis.ref.d1.CurveSubdivision;
+import ch.alpine.sophis.ref.d1.FourPointCurveSubdivision;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.ref.d1.BSpline4CurveSubdivision;
-import ch.alpine.sophus.ref.d1.CurveSubdivision;
-import ch.alpine.sophus.ref.d1.FourPointCurveSubdivision;
 
 /* package */ enum CurveSubdivisionHelper {
   ;

@@ -5,21 +5,21 @@ import java.awt.image.BufferedImage;
 import java.util.Optional;
 import java.util.function.Function;
 
-import ch.alpine.ascona.util.sym.SymGeodesic;
-import ch.alpine.ascona.util.sym.SymLinkImage;
-import ch.alpine.ascona.util.sym.SymSequence;
+import ch.alpine.ascony.sym.SymGeodesic;
+import ch.alpine.ascony.sym.SymLinkImage;
+import ch.alpine.ascony.sym.SymSequence;
+import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
+import ch.alpine.sophis.ref.d1.BSpline2CurveSubdivision;
+import ch.alpine.sophis.ref.d1.BSpline3CurveSubdivision;
+import ch.alpine.sophis.ref.d1.BSpline4CurveSubdivision;
+import ch.alpine.sophis.ref.d1.BSpline5CurveSubdivision;
+import ch.alpine.sophis.ref.d1.CurveSubdivision;
+import ch.alpine.sophis.ref.d1.DualC2FourPointCurveSubdivision;
+import ch.alpine.sophis.ref.d1.HormannSabinCurveSubdivision;
+import ch.alpine.sophis.ref.d1.LaneRiesenfeld3CurveSubdivision;
+import ch.alpine.sophis.ref.d1.LaneRiesenfeldCurveSubdivision;
+import ch.alpine.sophis.ref.d1.SixPointCurveSubdivision;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
-import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;
-import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
-import ch.alpine.sophus.ref.d1.BSpline4CurveSubdivision;
-import ch.alpine.sophus.ref.d1.BSpline5CurveSubdivision;
-import ch.alpine.sophus.ref.d1.CurveSubdivision;
-import ch.alpine.sophus.ref.d1.DualC2FourPointCurveSubdivision;
-import ch.alpine.sophus.ref.d1.HormannSabinCurveSubdivision;
-import ch.alpine.sophus.ref.d1.LaneRiesenfeld3CurveSubdivision;
-import ch.alpine.sophus.ref.d1.LaneRiesenfeldCurveSubdivision;
-import ch.alpine.sophus.ref.d1.SixPointCurveSubdivision;
 import ch.alpine.tensor.Tensor;
 
 /* package */ enum SymMaskImages {

@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -21,13 +21,12 @@ import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.util.DisjointSets;
-import ch.alpine.sophus.dv.Biinvariants;
-import ch.alpine.sophus.fit.MinimumSpanningTree;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.fit.IntUndirectedEdge;
+import ch.alpine.sophis.fit.MinimumSpanningTree;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.math.IntUndirectedEdge;
-import ch.alpine.sophus.math.sample.RandomSample;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -36,6 +35,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
+import ch.alpine.tensor.pdf.RandomSample;
 
 public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   private record EdgeComparator(Tensor matrix) implements Comparator<IntUndirectedEdge> {
@@ -136,12 +136,12 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   public Tensor distanceMatrix(Manifold manifold, Tensor sequence) {
     Sedarim sedarim = param1.biinvariants.ofSafe(manifold).distances(sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(sedarim::sunder));
-    return SymmetricMatrixQ.of(matrix) //
+    return SymmetricMatrixQ.INSTANCE.isMember(matrix) //
         ? matrix
         : Symmetrize.of(matrix);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

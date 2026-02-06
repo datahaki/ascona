@@ -4,22 +4,22 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.dis.Se2ClothoidDisplay;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.Se2ClothoidDisplay;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.crv.clt.Clothoid;
-import ch.alpine.sophus.crv.clt.ClothoidBuilder;
-import ch.alpine.sophus.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.crv.d2.Arrowhead;
-import ch.alpine.sophus.ref.d1.CurveSubdivision;
-import ch.alpine.sophus.ref.d1.LaneRiesenfeldCurveSubdivision;
+import ch.alpine.sophis.crv.clt.Clothoid;
+import ch.alpine.sophis.crv.clt.ClothoidBuilder;
+import ch.alpine.sophis.crv.clt.ClothoidBuilders;
+import ch.alpine.sophis.crv.d2.ex.Arrowhead;
+import ch.alpine.sophis.ref.d1.CurveSubdivision;
+import ch.alpine.sophis.ref.d1.LaneRiesenfeldCurveSubdivision;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -54,7 +54,7 @@ public class ClothoidLRDemo extends ControlPointsDemo {
     // ---
     {
       graphics.setColor(new Color(255, 0, 0, 128));
-      geometricLayer.pushMatrix(GfxMatrix.of(mouse));
+      geometricLayer.pushMatrix(Se2Matrix.of(mouse));
       graphics.fill(geometricLayer.toPath2D(Arrowhead.of(0.3)));
       geometricLayer.popMatrix();
     }
@@ -87,7 +87,7 @@ public class ClothoidLRDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

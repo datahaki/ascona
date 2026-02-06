@@ -4,7 +4,7 @@ package ch.alpine.ascona.crv;
 import java.awt.Graphics2D;
 import java.util.List;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;

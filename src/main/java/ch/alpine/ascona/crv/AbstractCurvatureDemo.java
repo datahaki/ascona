@@ -6,12 +6,12 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
-import ch.alpine.ascona.util.api.BufferedImageSupplier;
-import ch.alpine.ascona.util.api.CurveVisualSet;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.BufferedImageSupplier;
+import ch.alpine.ascony.api.CurveVisualSet;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;

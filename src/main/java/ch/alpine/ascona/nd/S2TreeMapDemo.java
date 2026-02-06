@@ -3,8 +3,8 @@ package ch.alpine.ascona.nd;
 
 import java.util.Optional;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.S2Display;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Abs;
@@ -23,7 +23,7 @@ public class S2TreeMapDemo extends AbstractTreeMapDemo {
     return xyz;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

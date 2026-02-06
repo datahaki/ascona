@@ -9,16 +9,15 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.math.sample.RandomSample;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -30,6 +29,7 @@ import ch.alpine.tensor.opt.nd.NdCenterInterface;
 import ch.alpine.tensor.opt.nd.NdMap;
 import ch.alpine.tensor.opt.nd.NdMatch;
 import ch.alpine.tensor.opt.nd.NdTreeMap;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.red.Max;
 
 /* package */ abstract class AbstractTreeMapDemo extends AbstractDemo {
@@ -81,10 +81,10 @@ import ch.alpine.tensor.red.Max;
     Scalar radius = param.radius;
     CoordinateBoundingBox actual = CoordinateBounds.of(points);
     NdMap<Void> ndMap = NdTreeMap.of(actual, param.leafSizeMax);
-    RandomGenerator random = new Random(1);
+    RandomGenerator randomGenerator = new Random(1);
     int multi = param.multi;
     for (Tensor point : points) {
-      int count = 1 + random.nextInt(multi);
+      int count = 1 + randomGenerator.nextInt(multi);
       for (int index = 0; index < count; ++index)
         ndMap.insert(point, null);
     }
@@ -125,7 +125,7 @@ import ch.alpine.tensor.red.Max;
       // // Exponential exponential = homogeneousSpace.exponential(p);
       // // exponential.exp(p)
       // } else {
-      geometricLayer.pushMatrix(GfxMatrix.translation(xyz));
+      geometricLayer.pushMatrix(Se2Matrix.translation(xyz));
       graphics.draw(geometricLayer.toPath2D(centerNorms.shape().multiply(radius), true));
       geometricLayer.popMatrix();
       // }

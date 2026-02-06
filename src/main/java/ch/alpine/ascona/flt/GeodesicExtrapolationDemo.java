@@ -4,17 +4,17 @@ package ch.alpine.ascona.flt;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.api.BufferedImageSupplier;
-import ch.alpine.ascona.util.dat.GokartPoseDataV2;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.sym.SymGeodesic;
-import ch.alpine.ascona.util.sym.SymLinkImage;
-import ch.alpine.ascona.util.sym.SymLinkImages;
-import ch.alpine.ascona.util.sym.SymSequence;
+import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.ascony.api.BufferedImageSupplier;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.sym.SymGeodesic;
+import ch.alpine.ascony.sym.SymLinkImage;
+import ch.alpine.ascony.sym.SymLinkImages;
+import ch.alpine.ascony.sym.SymSequence;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.flt.ga.GeodesicExtrapolation;
-import ch.alpine.sophus.flt.ga.GeodesicExtrapolationFilter;
+import ch.alpine.sophis.flt.ga.GeodesicExtrapolation;
+import ch.alpine.sophis.flt.ga.GeodesicExtrapolationFilter;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -24,7 +24,7 @@ public class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implement
   private Tensor refined = Tensors.empty();
 
   public GeodesicExtrapolationDemo() {
-    super(ManifoldDisplays.SE2_R2, GokartPoseDataV2.INSTANCE);
+    super(ManifoldDisplays.SE2_R2, new GokartPos());
     updateState();
   }
 
@@ -55,7 +55,7 @@ public class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implement
     return symLinkImage.bufferedImage();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

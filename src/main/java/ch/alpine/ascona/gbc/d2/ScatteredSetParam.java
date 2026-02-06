@@ -2,7 +2,7 @@
 package ch.alpine.ascona.gbc.d2;
 
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.tensor.img.ColorDataGradients;
 
 @ReflectionMarker

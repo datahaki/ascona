@@ -14,22 +14,21 @@ import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.api.ImageTiling;
-import ch.alpine.ascona.util.api.LogWeighting;
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.api.MixedLogWeightings;
-import ch.alpine.ascona.util.api.PolygonCoordinates;
-import ch.alpine.ascona.util.arp.ArrayPlotImage;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascony.api.ImageTiling;
+import ch.alpine.ascony.api.LogWeighting;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.api.MixedLogWeightings;
+import ch.alpine.ascony.api.PolygonCoordinates;
+import ch.alpine.ascony.arp.ArrayPlotImage;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.crv.d2.PolygonRegion;
+import ch.alpine.sophis.crv.d2.alg.ConvexHull2D;
+import ch.alpine.sophis.crv.d2.alg.PolygonRegion;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Sedarim;
-import ch.alpine.sophus.hs.r2.ConvexHull2D;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -49,7 +48,6 @@ import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.num.Boole;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Entrywise;
-import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Sign;
 
 // TODO ASCONA cannot always compute the biinvariant mean (for S2)
@@ -92,7 +90,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
       RenderQuality.setDefault(graphics);
     }
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+    // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       PolygonRegion polygonRegion = new PolygonRegion(domain);
@@ -113,8 +111,8 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
       Tensor sX = Subdivide.of(min.Get(0), max.Get(0), n - 1);
       Tensor sY = Subdivide.of(max.Get(1), min.Get(1), n - 1);
       Tensor[][] array = new Tensor[n][n];
-      Tensor wgs = Array.of(l -> DoubleScalar.INDETERMINATE, n, n, domain.length());
-      Tensor neg = Array.of(l -> DoubleScalar.INDETERMINATE, n, n);
+      Tensor wgs = Array.of(_ -> DoubleScalar.INDETERMINATE, n, n, domain.length());
+      Tensor neg = Array.of(_ -> DoubleScalar.INDETERMINATE, n, n);
       boolean[][] nag = new boolean[n][n];
       IntStream.range(0, sX.length()).parallel().forEach(c0 -> {
         Scalar x = sX.Get(c0);
@@ -127,7 +125,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
             boolean anyNegative = weights.stream().map(Scalar.class::cast).anyMatch(Sign::isNegative);
             neg.set(Boole.of(anyNegative), c1, c0);
             nag[c0][c1] = anyNegative;
-            Tensor mean = biinvariantMean.mean(controlPoints, weights);
+            Tensor mean = homogeneousSpace.biinvariantMean().mean(controlPoints, weights);
             array[c0][c1] = mean;
           }
           ++c1;
@@ -202,7 +200,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

@@ -12,7 +12,7 @@ import ch.alpine.tensor.sca.Clips;
 
 public enum NoiseDemo {
   ;
-  public static void main(String[] args) {
+  static void main() {
     CoordinateBoundingBox cbb = CoordinateBoundingBox.of(Clips.absoluteOne(), Clips.absoluteOne());
     Show show1 = new Show();
     show1.setPlotLabel("SimplexContinuousNoise[x,y]");

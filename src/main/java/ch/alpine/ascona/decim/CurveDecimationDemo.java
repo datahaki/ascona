@@ -7,29 +7,28 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.dat.GokartPoseData;
-import ch.alpine.ascona.util.dat.GokartPoseDataV2;
-import ch.alpine.ascona.util.dat.GokartPoseDatas;
-import ch.alpine.ascona.util.dat.GokartPoseParam;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.ascona.dat.GokartPosParam;
+import ch.alpine.ascona.dat.GokartPoseDatas;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.decim.CurveDecimation;
-import ch.alpine.sophus.decim.DecimationResult;
-import ch.alpine.sophus.decim.LineDistances;
-import ch.alpine.sophus.flt.CenterFilter;
-import ch.alpine.sophus.flt.ga.GeodesicCenter;
+import ch.alpine.sophis.decim.CurveDecimation;
+import ch.alpine.sophis.decim.DecimationResult;
+import ch.alpine.sophis.decim.LineDistances;
+import ch.alpine.sophis.flt.CenterFilter;
+import ch.alpine.sophis.flt.ga.GeodesicCenter;
+import ch.alpine.sophis.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.sophus.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -53,8 +52,8 @@ public class CurveDecimationDemo extends AbstractDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
 
   @ReflectionMarker
-  public static class Param extends GokartPoseParam {
-    public Param(GokartPoseData gokartPoseData) {
+  public static class Param extends GokartPosParam {
+    public Param(GokartPos gokartPoseData) {
       super(gokartPoseData, ManifoldDisplays.SE2_R2);
     }
 
@@ -72,10 +71,10 @@ public class CurveDecimationDemo extends AbstractDemo {
   private final Param param;
 
   public CurveDecimationDemo() {
-    this(GokartPoseDataV2.RACING_DAY);
+    this(new GokartPos());
   }
 
-  public CurveDecimationDemo(GokartPoseData gokartPoseData) {
+  public CurveDecimationDemo(GokartPos gokartPoseData) {
     this(new Param(gokartPoseData));
   }
 
@@ -147,7 +146,7 @@ public class CurveDecimationDemo extends AbstractDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

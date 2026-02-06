@@ -6,17 +6,17 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.api.Box2D;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.R2Display;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.d2.HilbertPolygon;
+import ch.alpine.sophis.crv.d2.ex.HilbertPolygon;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.img.ColorDataGradients;
@@ -93,7 +93,7 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
     return polygon.map(scalar -> scalar.subtract(RealScalar.of(1.0 + 1e-5)));
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

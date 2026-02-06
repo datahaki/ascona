@@ -14,7 +14,7 @@ import ch.alpine.tensor.pdf.RandomVariate;
 
 /* package */ enum ColoredNoiseExport {
   ;
-  public static void main(String[] args) {
+  static void main() {
     Show show = new Show();
     for (Tensor _x : Subdivide.of(0, 2, 10)) {
       ColoredNoise coloredNoise = new ColoredNoise(((Scalar) _x).number().doubleValue());

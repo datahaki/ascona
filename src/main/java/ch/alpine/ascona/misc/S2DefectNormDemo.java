@@ -9,14 +9,14 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.util.arp.ArrayFunction;
-import ch.alpine.ascona.util.arp.D2Raster;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.ImageRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.arp.ArrayFunction;
+import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.ImageRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldLabel;
@@ -24,8 +24,8 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.sn.SnExponential;
-import ch.alpine.sophus.hs.sn.SnManifold;
+import ch.alpine.sophus.hs.s.SnExponential;
+import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -41,7 +41,6 @@ import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.red.Times;
-import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
@@ -132,7 +131,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke());
     // ---
     TSF tsf = new TSF();
-    Tensor mean = SnManifold.INSTANCE.biinvariantMean(Chop._14).mean(tsf.sequence, tsf.weights);
+    Tensor mean = SnManifold.INSTANCE.biinvariantMean().mean(tsf.sequence, tsf.weights);
     if (param.vector) {
       double rad = 1;
       Tensor dx = Subdivide.of(-rad, +rad, res);
@@ -183,7 +182,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     return tensor;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

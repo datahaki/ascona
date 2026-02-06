@@ -8,8 +8,8 @@ import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Spectrogram;
 import ch.alpine.sophus.hs.HsDifferences;
-import ch.alpine.sophus.hs.sn.SnManifold;
-import ch.alpine.sophus.hs.sn.TSnMemberQ;
+import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.sophus.hs.s.TSnMemberQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
@@ -29,10 +29,10 @@ public class SnDeltaContainer {
   public SnDeltaContainer(Tensor sequence, ScalarUnaryOperator window) {
     this.sequence = sequence;
     endos = SnTransportChain.endos(sequence);
-    differences = new HsDifferences(SnManifold.INSTANCE).apply(sequence);
+    differences = HsDifferences.of(SnManifold.INSTANCE).apply(sequence);
     TSnMemberQ tSnMemberQ = new TSnMemberQ(sequence.get(0));
     t0_deltas = Tensor.of(IntStream.range(0, differences.length()).mapToObj( //
-        index -> tSnMemberQ.require(endos.get(index).dot(differences.get(index, 1)))));
+        index -> tSnMemberQ.requireMember(endos.get(index).dot(differences.get(index, 1)))));
     // ---
     Tensor domain = Range.of(0, t0_deltas.length());
     for (int d = 1; d < 3; ++d) {

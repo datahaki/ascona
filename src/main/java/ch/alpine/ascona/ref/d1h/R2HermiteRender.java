@@ -4,11 +4,11 @@ package ch.alpine.ascona.ref.d1h;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.ren.RenderInterface;
+import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.lie.Cross;
+import ch.alpine.tensor.lie.rot.Cross;
 
 /* package */ record R2HermiteRender(Tensor points, Scalar scale) implements RenderInterface {
   @Override // from RenderInterface

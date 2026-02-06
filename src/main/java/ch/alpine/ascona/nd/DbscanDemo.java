@@ -9,15 +9,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.hs.r2.ConvexHull2D;
+import ch.alpine.sophis.crv.d2.alg.ConvexHull2D;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -68,7 +68,7 @@ public class DbscanDemo extends AbstractDemo {
     pointsAll = recomp();
   }
 
-  private static Tensor recomp() {
+  public static Tensor recomp() {
     Distribution dist_b = UniformDistribution.of(0, 10);
     Distribution dist_r = NormalDistribution.of(0, 1);
     Tensor points = Tensors.empty();
@@ -96,7 +96,7 @@ public class DbscanDemo extends AbstractDemo {
     {
       Map<Integer, Tensor> map = new HashMap<>();
       IntStream.range(0, labels.length) //
-          .forEach(index -> map.computeIfAbsent(labels[index], i -> Tensors.empty()).append(points.get(index)));
+          .forEach(index -> map.computeIfAbsent(labels[index], _ -> Tensors.empty()).append(points.get(index)));
       for (Entry<Integer, Tensor> entry : map.entrySet())
         if (Dbscan.NOISE < entry.getKey()) {
           Tensor tensor = ConvexHull2D.of(entry.getValue());
@@ -118,13 +118,13 @@ public class DbscanDemo extends AbstractDemo {
     }
     {
       graphics.setColor(Color.BLUE);
-      geometricLayer.pushMatrix(GfxMatrix.translation(xya.extract(0, 2)));
+      geometricLayer.pushMatrix(Se2Matrix.translation(xya.extract(0, 2)));
       graphics.draw(geometricLayer.toPath2D(centerNorms.shape().multiply(radius), true));
       geometricLayer.popMatrix();
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

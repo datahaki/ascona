@@ -8,16 +8,16 @@ import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
-import ch.alpine.ascona.util.api.Box2D;
-import ch.alpine.ascona.util.api.ImageTiling;
-import ch.alpine.ascona.util.api.LogWeightings;
-import ch.alpine.ascona.util.arp.ArrayPlotImage;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.LeversRender;
+import ch.alpine.ascony.api.Box2D;
+import ch.alpine.ascony.api.ImageTiling;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.arp.ArrayPlotImage;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.hs.Sedarim;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -83,7 +83,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
     Tensor sA = Drop.tail(Subdivide.increasing(RANGE_A, 6), 1);
     int n = sX.length();
     Tensor origin = getGeodesicControlPoints(); // TODO ASCONA ALG
-    Tensor wgs = Array.of(l -> DoubleScalar.INDETERMINATE, n * sA.length(), n, origin.length());
+    Tensor wgs = Array.of(_ -> DoubleScalar.INDETERMINATE, n * sA.length(), n, origin.length());
     IntStream.range(0, n).parallel().forEach(c0 -> {
       Scalar x = sX.Get(c0);
       int ofs = 0;
@@ -100,7 +100,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
     return wgs;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

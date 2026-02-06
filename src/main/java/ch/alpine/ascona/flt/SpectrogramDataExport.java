@@ -5,10 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import ch.alpine.ascona.util.dat.GokartPoseData;
-import ch.alpine.ascona.util.dat.GokartPoseDataV1;
-import ch.alpine.sophus.flt.CenterFilter;
-import ch.alpine.sophus.flt.ga.GeodesicCenter;
+import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.sophis.flt.CenterFilter;
+import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Tensor;
@@ -16,12 +15,13 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.Export;
+import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 /* package */ class SpectrogramDataExport {
-  private final GokartPoseData gokartPoseData;
+  private final GokartPos gokartPoseData;
 
-  public SpectrogramDataExport(GokartPoseData gokartPoseData) {
+  public SpectrogramDataExport(GokartPos gokartPoseData) {
     this.gokartPoseData = gokartPoseData;
   }
 
@@ -32,7 +32,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     for (String data : dataSource) {
       // iterate over Kernels
       // load data
-      Tensor control = gokartPoseData.getPose(data, Integer.MAX_VALUE);
+      Tensor control = gokartPoseData.getData(data);
       for (WindowFunctions windowFunctions : kernel) {
         ScalarUnaryOperator smoothingKernel = windowFunctions.get();
         // iterate over radius
@@ -51,12 +51,12 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   private Tensor speeds(Tensor refined) {
-    LieDifferences INSTANCE = new LieDifferences(Se2Group.INSTANCE);
-    return INSTANCE.apply(refined).multiply(gokartPoseData.getSampleRate());
+    TensorUnaryOperator INSTANCE = LieDifferences.of(Se2Group.INSTANCE);
+    return INSTANCE.apply(refined).multiply(Quantity.of(50, "Hz")); // FIXME not universal
   }
 
-  public static void main(String[] args) throws IOException {
-    SpectrogramDataExport spectrogramDataExport = new SpectrogramDataExport(GokartPoseDataV1.INSTANCE);
+  static void main() throws IOException {
+    SpectrogramDataExport spectrogramDataExport = new SpectrogramDataExport(new GokartPos());
     spectrogramDataExport.process(HomeDirectory.Desktop("MA/owl_export"));
   }
 }

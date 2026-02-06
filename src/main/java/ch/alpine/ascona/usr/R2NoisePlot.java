@@ -31,7 +31,7 @@ import ch.alpine.tensor.sca.UnitStep;
         IM.Get(y).number().doubleValue())).subtract(RealScalar.of(0.3)));
   }
 
-  public static void main(String[] args) {
+  static void main() {
     Tensor matrix = Tensors.matrix(R2NoisePlot::function, RES, RES);
     Show show = new Show();
     show.add(MatrixPlot.of(matrix));

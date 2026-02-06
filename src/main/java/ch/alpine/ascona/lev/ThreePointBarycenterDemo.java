@@ -4,23 +4,21 @@ package ch.alpine.ascona.lev;
 import java.awt.Graphics2D;
 import java.util.Optional;
 
-import ch.alpine.ascona.util.api.PolygonCoordinates;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.PolygonCoordinates;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.Sedarim;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.sca.Chop;
 
 public class ThreePointBarycenterDemo extends ControlPointsDemo {
   @ReflectionMarker
@@ -69,8 +67,8 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
         Tensor weights = sedarim.sunder(origin);
         leversRender.renderWeights(weights);
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-        BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
-        Tensor mean = biinvariantMean.mean(sequence, weights);
+        // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+        Tensor mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
         LeversRender.ORIGIN_RENDER_0 //
             .show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)) //
             .render(geometricLayer, graphics);
@@ -108,7 +106,7 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

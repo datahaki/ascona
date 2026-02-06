@@ -5,26 +5,24 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.ControlPointsStatic;
-import ch.alpine.ascona.util.ren.Curvature2DRender;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.crv.BezierMean;
+import ch.alpine.sophis.crv.BezierCurve;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.itp.BezierFunction;
-import ch.alpine.tensor.sca.Chop;
 
 /** Bezier function with extrapolation */
 public class BezierFunctionDemo extends AbstractCurvatureDemo {
@@ -78,9 +76,9 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
             : 1.0, 1 << levels);
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     if (geodesicSpace instanceof HomogeneousSpace homogeneousSpace) {
-      BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
-      if (Objects.nonNull(biinvariantMean)) {
-        Tensor refined = domain.map(BezierMean.of(biinvariantMean, sequence));
+      // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+      if (Objects.nonNull(homogeneousSpace)) {
+        Tensor refined = domain.map(BezierCurve.of(homogeneousSpace.biinvariantMean(), sequence));
         Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
         new PathRender(Color.RED, 1.25f).setCurve(render, false).render(geometricLayer, graphics);
       }
@@ -93,7 +91,7 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
     return refined;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

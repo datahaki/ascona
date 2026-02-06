@@ -13,8 +13,8 @@ import java.util.random.RandomGenerator;
 
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.fit.WeiszfeldMethod;
+import ch.alpine.sophis.fit.WeiszfeldMethod;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -45,8 +45,8 @@ import ch.alpine.tensor.sca.Chop;
   }
 
   private static Tensor image(int seed) {
-    RandomGenerator random = new Random(seed);
-    Tensor points = RandomVariate.of(UniformDistribution.unit(), random, 15, 2);
+    RandomGenerator randomGenerator = new Random(seed);
+    Tensor points = RandomVariate.of(UniformDistribution.unit(), randomGenerator, 15, 2);
     Optional<Tensor> optional = new WeiszfeldMethod(Chop._10).uniform(points);
     GeometricLayer geometricLayer = new GeometricLayer(StaticHelper.SE2);
     BufferedImage bufferedImage = StaticHelper.createWhite();
@@ -69,7 +69,7 @@ import ch.alpine.tensor.sca.Chop;
       }
       {
         graphics.setColor(Color.GREEN);
-        geometricLayer.pushMatrix(GfxMatrix.translation(solution));
+        geometricLayer.pushMatrix(Se2Matrix.translation(solution));
         Path2D path2d = geometricLayer.toPath2D(StaticHelper.POINT);
         path2d.closePath();
         graphics.fill(path2d);
@@ -77,7 +77,7 @@ import ch.alpine.tensor.sca.Chop;
       }
       graphics.setColor(Color.RED);
       for (Tensor point : points) {
-        geometricLayer.pushMatrix(GfxMatrix.translation(point));
+        geometricLayer.pushMatrix(Se2Matrix.translation(point));
         Path2D path2d = geometricLayer.toPath2D(StaticHelper.POINT);
         graphics.fill(path2d);
         geometricLayer.popMatrix();
@@ -87,7 +87,7 @@ import ch.alpine.tensor.sca.Chop;
     return ImageFormat.from(bufferedImage);
   }
 
-  public static void main(String[] args) throws IOException {
+  static void main() throws IOException {
     File folder = HomeDirectory.Pictures(SpatialMedianShow.class.getSimpleName());
     folder.mkdir();
     for (int seed = 30; seed < 40; ++seed) {

@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.lev;
 
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.sophus.dv.Biinvariants;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
@@ -51,9 +51,15 @@ public enum LeversHud {
       leversRender.renderWeightsGarden();
       break;
     case HARBOR:
-    case CUPOLA:
       leversRender.renderInfluenceX(colorDataGradient);
       leversRender.renderInfluenceP(colorDataGradient);
+      break;
+    case CUPOLA:
+      // this is for the presentation
+      // leversRender.renderLevers();
+      leversRender.renderTangentsXtoP(false);
+      leversRender.renderInfluenceX(colorDataGradient);
+      // leversRender.renderInfluenceP(colorDataGradient);
       break;
     default:
       break;

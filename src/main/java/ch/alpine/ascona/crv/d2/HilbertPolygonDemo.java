@@ -6,17 +6,17 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.function.Function;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.R2Display;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.R2Display;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.crv.d2.HilbertPolygon;
+import ch.alpine.sophis.crv.d2.ex.HilbertPolygon;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.img.ColorDataIndexed;
@@ -71,7 +71,7 @@ public class HilbertPolygonDemo extends AbstractDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

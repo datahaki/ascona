@@ -6,9 +6,9 @@ import java.awt.image.BufferedImage;
 import ch.alpine.bridge.fig.ImagePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowDialog;
-import ch.alpine.sophus.crv.clt.ClothoidBuilder;
-import ch.alpine.sophus.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.crv.clt.LagrangeQuadraticD;
+import ch.alpine.sophis.crv.clt.ClothoidBuilder;
+import ch.alpine.sophis.crv.clt.ClothoidBuilders;
+import ch.alpine.sophis.crv.clt.LagrangeQuadraticD;
 import ch.alpine.tensor.Parallelize;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -37,7 +37,7 @@ import ch.alpine.tensor.io.ImageFormat;
     return headTailInterface.maxAbs().reciprocal();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     ClothoidFigure newtonDemo = new ClothoidFigure(RealScalar.of(2.6));
     Tensor matrix = Parallelize.matrix(newtonDemo::function, RES, RES);
     Tensor image = Raster.of(matrix, ColorDataGradients.SUNSET);

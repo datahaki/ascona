@@ -4,13 +4,13 @@ package ch.alpine.ascona.flt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.api.GeodesicFilters;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PointsRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.api.GeodesicFilters;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -63,7 +63,7 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
       // leversRender.renderSequence();
       leversRender.renderIndexP();
     }
-    if (!Integers.isEven(control.length())) {
+    if (Integers.isOdd(control.length())) {
       ScalarUnaryOperator smoothingKernel = param.windowFunctions.get();
       for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
         int ordinal = geodesicFilters.ordinal();
@@ -77,7 +77,7 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

@@ -4,22 +4,20 @@ package ch.alpine.ascona.dv;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.lev.LeversHud;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.hs.HsDesign;
 import ch.alpine.sophus.lie.LieGroup;
-import ch.alpine.sophus.lie.LieGroupOps;
-import ch.alpine.sophus.math.api.TensorMapping;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 
 public class Se2InvarianceDemo extends ControlPointsDemo {
@@ -56,12 +54,11 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
     Tensor controlPointsAll = getGeodesicControlPoints();
-    LieGroupOps lieGroupOps = new LieGroupOps(lieGroup);
     if (0 < controlPointsAll.length()) {
       {
         Tensor sequence = controlPointsAll.extract(1, controlPointsAll.length());
         Tensor origin = controlPointsAll.get(0);
-        Tensor matrix = new HsDesign(lieGroup).matrix(sequence, origin);
+        Tensor matrix = lieGroup.exponential(origin).log().slash(sequence);
         Tensor weights = InfluenceMatrix.of(matrix).leverages_sqrt();
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
@@ -73,15 +70,15 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
         leversRender.renderIndexX();
         leversRender.renderIndexP();
       }
-      geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(10, 0)));
+      geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(10, 0)));
       try {
-        TensorMapping lieGroupOR = lieGroupOps.actionR(param.xya);
-        Tensor allR = lieGroupOR.slash(controlPointsAll);
-        TensorMapping lieGroupOp = lieGroupOps.actionL(lieGroup.element(allR.get(0)).inverse().toCoordinate());
-        Tensor result = lieGroupOp.slash(allR);
+        TensorUnaryOperator lieGroupOR = lieGroup.actionR(param.xya);
+        Tensor allR = Tensor.of(controlPointsAll.stream().map(lieGroupOR));
+        TensorUnaryOperator lieGroupOp = lieGroup.actionL(lieGroup.invert(allR.get(0)));
+        Tensor result = Tensor.of(allR.stream().map(lieGroupOp));
         Tensor sequence = result.extract(1, result.length());
         Tensor origin = result.get(0);
-        Tensor matrix = new HsDesign(lieGroup).matrix(sequence, origin);
+        Tensor matrix = lieGroup.exponential(origin).log().slash(sequence);
         Tensor weights = InfluenceMatrix.of(matrix).leverages_sqrt();
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
@@ -99,7 +96,7 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

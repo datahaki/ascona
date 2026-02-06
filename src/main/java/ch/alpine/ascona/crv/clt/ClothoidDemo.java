@@ -4,19 +4,19 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.crv.clt.Clothoid;
-import ch.alpine.sophus.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.crv.clt.LagrangeQuadraticD;
-import ch.alpine.sophus.crv.d2.Arrowhead;
-import ch.alpine.sophus.hs.r2.ArcTan2D;
+import ch.alpine.sophis.crv.clt.Clothoid;
+import ch.alpine.sophis.crv.clt.ClothoidBuilders;
+import ch.alpine.sophis.crv.clt.LagrangeQuadraticD;
+import ch.alpine.sophis.crv.d2.ex.Arrowhead;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -24,7 +24,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
-import ch.alpine.tensor.lie.r2.AngleVector;
+import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.sca.Round;
 
 /** The demo shows that when using LaneRiesenfeldCurveSubdivision(Clothoid.INSTANCE, degree)
@@ -55,7 +55,7 @@ public class ClothoidDemo extends ControlPointsDemo {
     // ---
     {
       graphics.setColor(new Color(255, 0, 0, 128));
-      geometricLayer.pushMatrix(GfxMatrix.of(mouse));
+      geometricLayer.pushMatrix(Se2Matrix.of(mouse));
       graphics.fill(geometricLayer.toPath2D(Arrowhead.of(0.3)));
       geometricLayer.popMatrix();
     }
@@ -83,7 +83,7 @@ public class ClothoidDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

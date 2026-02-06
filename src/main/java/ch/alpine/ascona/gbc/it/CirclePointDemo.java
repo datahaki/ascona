@@ -5,24 +5,24 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascona.lev.LeversHud;
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.dv.AffineCoordinate;
-import ch.alpine.sophus.gbc.d2.Barycenter;
-import ch.alpine.sophus.gbc.d2.ThreePointCoordinate;
-import ch.alpine.sophus.hs.Genesis;
+import ch.alpine.sophis.dv.AffineCoordinate;
+import ch.alpine.sophis.gbc.d2.ThreePointCoordinate;
+import ch.alpine.sophis.gbc.d2.ThreePointScalings;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.PadRight;
-import ch.alpine.tensor.lie.r2.CirclePoints;
+import ch.alpine.tensor.jet.AppendOne;
+import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.mat.pi.LeastSquares;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
@@ -59,12 +59,12 @@ public class CirclePointDemo extends ControlPointsDemo {
       leversRender.renderSequence();
       if (2 < sequence.length()) {
         // ---
-        Genesis genesis = ThreePointCoordinate.of(Barycenter.MEAN_VALUE);
+        Genesis genesis = ThreePointCoordinate.of(ThreePointScalings.MEAN_VALUE);
         Tensor weights = genesis.origin(levers);
         leversRender.renderWeights(weights);
       }
     }
-    geometricLayer.pushMatrix(GfxMatrix.translation(Tensors.vector(5, 0)));
+    geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(5, 0)));
     {
       graphics.setColor(Color.LIGHT_GRAY);
       graphics.draw(geometricLayer.toPath2D(CirclePoints.of(31), true));
@@ -76,7 +76,7 @@ public class CirclePointDemo extends ControlPointsDemo {
         Genesis genesis = AffineCoordinate.INSTANCE;
         Tensor weights = genesis.origin(levers);
         leversRender.renderWeights(weights);
-        Tensor lhs = Tensor.of(levers.stream().map(lever -> Append.of(lever, RealScalar.ONE)));
+        Tensor lhs = Tensor.of(levers.stream().map(AppendOne.FUNCTION));
         Tensor rhs = weights;
         Tensor sol = LeastSquares.of(lhs, rhs);
         // System.out.println(sol.map(Chop._12));
@@ -88,7 +88,7 @@ public class CirclePointDemo extends ControlPointsDemo {
     geometricLayer.popMatrix();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

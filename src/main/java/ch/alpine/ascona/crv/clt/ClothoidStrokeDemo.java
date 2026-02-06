@@ -4,20 +4,20 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.AxesRender;
-import ch.alpine.ascona.util.ren.PathRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.GfxMatrix;
-import ch.alpine.sophus.crv.clt.Clothoid;
-import ch.alpine.sophus.crv.clt.ClothoidBuilder;
-import ch.alpine.sophus.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.crv.clt.LagrangeQuadraticD;
-import ch.alpine.sophus.crv.d2.Arrowhead;
-import ch.alpine.sophus.lie.se2.Se2GroupElement;
+import ch.alpine.sophis.crv.clt.Clothoid;
+import ch.alpine.sophis.crv.clt.ClothoidBuilder;
+import ch.alpine.sophis.crv.clt.ClothoidBuilders;
+import ch.alpine.sophis.crv.clt.LagrangeQuadraticD;
+import ch.alpine.sophis.crv.d2.ex.Arrowhead;
+import ch.alpine.sophus.lie.se2.Se2Group;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -54,7 +54,7 @@ public class ClothoidStrokeDemo extends ControlPointsDemo {
     // ---
     {
       graphics.setColor(new Color(255, 0, 0, 128));
-      geometricLayer.pushMatrix(GfxMatrix.of(mouse));
+      geometricLayer.pushMatrix(Se2Matrix.of(mouse));
       graphics.fill(geometricLayer.toPath2D(Arrowhead.of(0.3)));
       geometricLayer.popMatrix();
     }
@@ -70,11 +70,11 @@ public class ClothoidStrokeDemo extends ControlPointsDemo {
       Tensor below = Tensors.empty();
       for (Tensor _t : DOMAIN) {
         Scalar t = (Scalar) _t;
-        Se2GroupElement se2GroupElement = new Se2GroupElement(clothoid.apply(t));
+        Tensor p = clothoid.apply(t);
         Scalar curvature = lagrangeQuadraticD.apply(t);
         Scalar radius = Exp.FUNCTION.apply(curvature.multiply(curvature).negate());
-        above.append(se2GroupElement.combine(Tensors.of(radius.zero(), radius, RealScalar.ZERO)));
-        below.append(se2GroupElement.combine(Tensors.of(radius.zero(), radius.negate(), RealScalar.ZERO)));
+        above.append(Se2Group.INSTANCE.combine(p, Tensors.of(radius.zero(), radius, RealScalar.ZERO)));
+        below.append(Se2Group.INSTANCE.combine(p, Tensors.of(radius.zero(), radius.negate(), RealScalar.ZERO)));
       }
       new PathRender(color, 1.5f) //
           .setCurve(above, false).render(geometricLayer, graphics);
@@ -85,7 +85,7 @@ public class ClothoidStrokeDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

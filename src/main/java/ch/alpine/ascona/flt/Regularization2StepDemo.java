@@ -4,16 +4,16 @@ package ch.alpine.ascona.flt;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.util.api.BufferedImageSupplier;
-import ch.alpine.ascona.util.sym.SymGeodesic;
-import ch.alpine.ascona.util.sym.SymLinkImage;
-import ch.alpine.ascona.util.sym.SymLinkImages;
-import ch.alpine.ascona.util.sym.SymSequence;
+import ch.alpine.ascony.api.BufferedImageSupplier;
+import ch.alpine.ascony.sym.SymGeodesic;
+import ch.alpine.ascony.sym.SymLinkImage;
+import ch.alpine.ascony.sym.SymLinkImages;
+import ch.alpine.ascony.sym.SymSequence;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.flt.ga.Regularization2Step;
+import ch.alpine.sophis.flt.ga.Regularization2Step;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -45,9 +45,9 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
 
   @Override // from AbstractDatasetFilterDemo
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    return Regularization2Step.string( //
-        gokartPoseSpec.manifoldDisplays.manifoldDisplay().geodesicSpace(), //
-        N.DOUBLE.apply(ratio.ratio)).apply(control());
+    Regularization2Step regularization2Step = new Regularization2Step(gokartPoseSpec.manifoldDisplays.manifoldDisplay().geodesicSpace(), //
+        N.DOUBLE.apply(ratio.ratio));
+    return regularization2Step.string(control());
   }
 
   @Override // from UniformDatasetFilterDemo
@@ -58,7 +58,7 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
   @Override // from BufferedImageSupplier
   public BufferedImage bufferedImage() {
     Scalar factor = ratio.ratio;
-    TensorUnaryOperator tensorUnaryOperator = Regularization2Step.string(SymGeodesic.INSTANCE, factor);
+    TensorUnaryOperator tensorUnaryOperator = new Regularization2Step(SymGeodesic.INSTANCE, factor)::string;
     Tensor vector = SymSequence.of(3);
     Tensor tensor = tensorUnaryOperator.apply(vector);
     SymLinkImage symLinkImage = new SymLinkImage(tensor.get(1), SymLinkImages.FONT_SMALL);
@@ -66,7 +66,7 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
     return symLinkImage.bufferedImage();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

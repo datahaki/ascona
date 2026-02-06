@@ -5,20 +5,20 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.MeshRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.MeshRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.gbc.d2.Barycenter;
-import ch.alpine.sophus.gbc.d2.InsidePolygonCoordinate;
-import ch.alpine.sophus.gbc.d2.SPatch;
-import ch.alpine.sophus.gbc.d2.ThreePointCoordinate;
-import ch.alpine.sophus.hs.Genesis;
+import ch.alpine.sophis.gbc.d2.InsidePolygonCoordinate;
+import ch.alpine.sophis.gbc.d2.SPatch;
+import ch.alpine.sophis.gbc.d2.ThreePointCoordinate;
+import ch.alpine.sophis.gbc.d2.ThreePointScalings;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.math.Genesis;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -28,7 +28,6 @@ import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.N;
 
 public class SPatchDemo extends ControlPointsDemo {
@@ -38,7 +37,7 @@ public class SPatchDemo extends ControlPointsDemo {
   public SPatchDemo() {
     super(new AsconaParam(false, ManifoldDisplays.SE2C_R2));
     // ---
-    Genesis genesis = new InsidePolygonCoordinate(ThreePointCoordinate.of(Barycenter.MEAN_VALUE));
+    Genesis genesis = new InsidePolygonCoordinate(ThreePointCoordinate.of(ThreePointScalings.MEAN_VALUE));
     sPatch = SPatch.of(5, genesis, 2);
     Tensor embed = sPatch.getEmbed();
     setControlPointsSe2(Tensor.of(embed.stream() //
@@ -57,7 +56,7 @@ public class SPatchDemo extends ControlPointsDemo {
     Tensor sequence = getGeodesicControlPoints();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     {
-      Tensor[][] forward = movingDomain2D.forward(sequence, homogeneousSpace.biinvariantMean(Chop._04));
+      Tensor[][] forward = movingDomain2D.forward(sequence, homogeneousSpace.biinvariantMean());
       new MeshRender(forward, ColorDataGradients.CLASSIC.deriveWithOpacity(RationalScalar.HALF)) //
           .render(geometricLayer, graphics);
       Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
@@ -99,7 +98,7 @@ public class SPatchDemo extends ControlPointsDemo {
     leversRender.renderSequence();
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

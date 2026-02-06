@@ -1,28 +1,27 @@
 // code by jph
 package ch.alpine.ascona.ref.d1;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.R2Display;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.R2Display;
+import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
+import ch.alpine.sophis.ref.d1.BSpline2CurveSubdivision;
+import ch.alpine.sophis.ref.d1.BSpline3CurveSubdivision;
+import ch.alpine.sophis.ref.d1.BSpline4CurveSubdivision;
+import ch.alpine.sophis.ref.d1.BSpline5CurveSubdivision;
+import ch.alpine.sophis.ref.d1.BSpline6CurveSubdivision;
+import ch.alpine.sophis.ref.d1.CurveSubdivision;
+import ch.alpine.sophis.ref.d1.DodgsonSabinCurveSubdivision;
+import ch.alpine.sophis.ref.d1.DualC2FourPointCurveSubdivision;
+import ch.alpine.sophis.ref.d1.EightPointCurveSubdivision;
+import ch.alpine.sophis.ref.d1.FarSixPointCurveSubdivision;
+import ch.alpine.sophis.ref.d1.HormannSabinCurveSubdivision;
+import ch.alpine.sophis.ref.d1.LaneRiesenfeld3CurveSubdivision;
+import ch.alpine.sophis.ref.d1.LaneRiesenfeldCurveSubdivision;
+import ch.alpine.sophis.ref.d1.MSpline3CurveSubdivision;
+import ch.alpine.sophis.ref.d1.MSpline4CurveSubdivision;
+import ch.alpine.sophis.ref.d1.SixPointCurveSubdivision;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.ref.d1.BSpline1CurveSubdivision;
-import ch.alpine.sophus.ref.d1.BSpline2CurveSubdivision;
-import ch.alpine.sophus.ref.d1.BSpline3CurveSubdivision;
-import ch.alpine.sophus.ref.d1.BSpline4CurveSubdivision;
-import ch.alpine.sophus.ref.d1.BSpline5CurveSubdivision;
-import ch.alpine.sophus.ref.d1.BSpline6CurveSubdivision;
-import ch.alpine.sophus.ref.d1.CurveSubdivision;
-import ch.alpine.sophus.ref.d1.DodgsonSabinCurveSubdivision;
-import ch.alpine.sophus.ref.d1.DualC2FourPointCurveSubdivision;
-import ch.alpine.sophus.ref.d1.EightPointCurveSubdivision;
-import ch.alpine.sophus.ref.d1.FarSixPointCurveSubdivision;
-import ch.alpine.sophus.ref.d1.HormannSabinCurveSubdivision;
-import ch.alpine.sophus.ref.d1.LaneRiesenfeld3CurveSubdivision;
-import ch.alpine.sophus.ref.d1.LaneRiesenfeldCurveSubdivision;
-import ch.alpine.sophus.ref.d1.MSpline3CurveSubdivision;
-import ch.alpine.sophus.ref.d1.MSpline4CurveSubdivision;
-import ch.alpine.sophus.ref.d1.SixPointCurveSubdivision;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.sca.Chop;
 
 /* package */ enum CurveSubdivisionSchemes {
   BSPLINE1(false) {
@@ -54,7 +53,7 @@ import ch.alpine.tensor.sca.Chop;
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       // BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
-      return new MSpline3CurveSubdivision(homogeneousSpace.biinvariantMean(Chop._06));
+      return new MSpline3CurveSubdivision(homogeneousSpace.biinvariantMean());
     }
   },
   /** Dyn/Sharon 2014 that uses 2 binary averages */
@@ -83,7 +82,7 @@ import ch.alpine.tensor.sca.Chop;
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-      return MSpline4CurveSubdivision.of(homogeneousSpace.biinvariantMean(Chop._06));
+      return MSpline4CurveSubdivision.of(homogeneousSpace.biinvariantMean());
     }
   },
   BSPLINE5(false) {

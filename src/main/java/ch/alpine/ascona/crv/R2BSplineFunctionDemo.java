@@ -4,9 +4,9 @@ package ch.alpine.ascona.crv;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.ren.PathRender;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -64,7 +64,7 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
     return refined;
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

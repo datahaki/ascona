@@ -5,16 +5,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.util.dis.ManifoldDisplay;
-import ch.alpine.ascona.util.dis.ManifoldDisplays;
-import ch.alpine.ascona.util.ref.AsconaParam;
-import ch.alpine.ascona.util.ren.LeversRender;
-import ch.alpine.ascona.util.win.ControlPointsDemo;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.crv.d2.Arrowhead;
-import ch.alpine.sophus.crv.dub.DubinsGenerator;
+import ch.alpine.sophis.crv.d2.ex.Arrowhead;
+import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
@@ -27,7 +26,6 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.red.Total;
-import ch.alpine.tensor.sca.Chop;
 
 public class Se2BarycenterDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
@@ -59,7 +57,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
           graphics.draw(path2d);
         }
         // ---
-        BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+        // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
         Tensor tX = Subdivide.of(-1, 1, 20);
         Tensor tY = Subdivide.of(-1, 1, 8);
         int n = tY.length();
@@ -73,7 +71,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
               Tensor weights = Tensors.of(w, x, y);
               weights.append(RealScalar.ONE.subtract(Total.ofVector(weights)));
               weights = RotateRight.of(weights, 1);
-              Tensor mean = biinvariantMean.mean(sequence, weights);
+              Tensor mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
               array[c0][c1] = mean;
               ++c1;
             }
@@ -118,7 +116,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
     }
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

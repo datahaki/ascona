@@ -4,13 +4,13 @@ package ch.alpine.ascona.ext;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.LinearGradientPaint;
 import java.awt.Paint;
 import java.awt.Rectangle;
+import java.awt.image.AffineTransformOp;
 import java.util.Objects;
 
-import ch.alpine.ascona.util.win.AbstractDemo;
+import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.ScalableImage;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -42,8 +42,8 @@ public class ImageTransitionDemo extends AbstractDemo {
     super(param);
     this.param = param;
     try {
-      im1 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_c(), Image.SCALE_SMOOTH);
-      im2 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_g(), Image.SCALE_AREA_AVERAGING);
+      im1 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_c(), AffineTransformOp.TYPE_BILINEAR);
+      im2 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_g(), AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
     } catch (Exception exception) {
       throw new RuntimeException();
     }
@@ -71,7 +71,7 @@ public class ImageTransitionDemo extends AbstractDemo {
     graphics.fillRect(rectangle.x + x - ext, rectangle.y, 2 * ext, rectangle.height);
   }
 
-  public static void main(String[] args) {
+  static void main() {
     launch();
   }
 }

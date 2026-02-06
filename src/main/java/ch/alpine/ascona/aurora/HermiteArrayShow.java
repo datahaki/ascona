@@ -5,14 +5,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.function.Function;
 
-import ch.alpine.ascona.util.dat.GokartPoseDataV2;
-import ch.alpine.sophus.crv.d2.Curvature2D;
+import ch.alpine.ascona.dat.GokartPosVel;
+import ch.alpine.sophis.crv.d2.Curvature2D;
+import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
+import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.lie.se2c.Se2CoveringGroup;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
-import ch.alpine.sophus.math.api.TensorIteration;
-import ch.alpine.sophus.ref.d1h.HermiteSubdivision;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -23,6 +23,7 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.nrm.Vector1Norm;
+import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 
 /* package */ abstract class HermiteArrayShow {
@@ -45,9 +46,9 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
     this.levels = Integers.requirePositive(levels);
     folder = HomeDirectory.Documents(name);
     folder.mkdir();
-    Tensor data = GokartPoseDataV2.INSTANCE.getPoseVel(name, 1_000);
+    Tensor data = new GokartPosVel().getData(name); // , 1_000
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
-    Scalar rate = GokartPoseDataV2.INSTANCE.getSampleRate();
+    Scalar rate = Quantity.of(50, "Hz");
     delta = QuantityMagnitude.SI().in("s").apply(period);
     int skip = Scalars.intValueExact(period.multiply(rate));
     for (int index = 0; index < data.length(); index += skip)
