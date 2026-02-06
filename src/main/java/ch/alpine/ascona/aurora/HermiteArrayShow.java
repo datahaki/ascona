@@ -6,7 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.function.Function;
 
-import ch.alpine.ascona.dat.GokartPosVel;
+import ch.alpine.ascona.dat.gok.GokartPosVel;
+import ch.alpine.ascona.dat.gok.PosVelHz;
 import ch.alpine.sophis.crv.d2.Curvature2D;
 import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
 import ch.alpine.sophis.ref.d1h.TensorIteration;
@@ -24,7 +25,6 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.nrm.Vector1Norm;
-import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 
 /* package */ abstract class HermiteArrayShow {
@@ -51,9 +51,10 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
     } catch (IOException e) {
       e.printStackTrace();
     }
-    Tensor data = new GokartPosVel().getData(name); // , 1_000
+    PosVelHz posVelHz = GokartPosVel.get(name, 1000);
+    Tensor data = posVelHz.getPosVelSequence();
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
-    Scalar rate = Quantity.of(50, "Hz");
+    Scalar rate = posVelHz.getSamplingRate();
     delta = QuantityMagnitude.SI().in("s").apply(period);
     int skip = Scalars.intValueExact(period.multiply(rate));
     for (int index = 0; index < data.length(); index += skip)

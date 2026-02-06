@@ -3,7 +3,8 @@ package ch.alpine.ascona.analysis;
 
 import java.io.IOException;
 
-import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.ascona.dat.gok.GokartPos;
+import ch.alpine.ascona.dat.gok.PosHz;
 import ch.alpine.bridge.fig.MatrixPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowDialog;
@@ -28,9 +29,9 @@ import ch.alpine.tensor.sca.Abs;
 /* package */ enum Se2PredictionShow {
   ;
   static void main() throws IOException {
-    GokartPos gokartPoseData = new GokartPos();
-    String name = gokartPoseData.list().get(1);
-    Tensor pqr_t = Partition.of(gokartPoseData.getData(name), 4); // limit , 4 * 500
+    String key = GokartPos.list().get(1);
+    PosHz posHz = GokartPos.get(key, 2000);
+    Tensor pqr_t = Partition.of(posHz.getPoseSequence(), 4); // limit , 4 * 500
     Tensor Wp = Subdivide.of(-1.5, 0.0, 25);
     Tensor Wq = Subdivide.of(-1.0, 1.0, 25);
     Tensor err_xy = Array.zeros(Wp.length(), Wq.length());

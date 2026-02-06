@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.dat;
+package ch.alpine.ascona.dat.gok;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.dat;
+package ch.alpine.ascona.dat.gok;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

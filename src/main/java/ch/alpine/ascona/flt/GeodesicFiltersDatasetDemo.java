@@ -4,7 +4,6 @@ package ch.alpine.ascona.flt;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.dat.GokartPos;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.api.GeodesicFilters;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -24,7 +23,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implemen
   private final SpinnerLabel<Integer> spinnerConvolution = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8);
 
   public GeodesicFiltersDatasetDemo() {
-    super(ManifoldDisplays.SE2_R2, new GokartPos());
+    super(ManifoldDisplays.SE2_R2);
     gokartPoseSpec.string = "20190215/20190215T144349_01";
     {
       spinnerFilters.setValue(GeodesicFilters.GEODESIC);

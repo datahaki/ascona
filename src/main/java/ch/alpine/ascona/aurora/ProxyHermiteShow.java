@@ -6,7 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.function.Function;
 
-import ch.alpine.ascona.dat.GokartPosVel;
+import ch.alpine.ascona.dat.gok.GokartPosVel;
+import ch.alpine.ascona.dat.gok.PosVelHz;
 import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
 import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -58,7 +59,8 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
     }
     delta = QuantityMagnitude.SI().in("s").apply(rate.reciprocal());
     System.out.println("delta=" + delta);
-    data = new GokartPosVel().getData(name); // limit , delta2 * 20 + 1
+    PosVelHz posVelHz = GokartPosVel.get(name, delta2 * 20 + 1);
+    data = posVelHz.getPosVelSequence(); // limit , delta2 * 20 + 1
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     System.out.println(Dimensions.of(data));
     control = Thinning.of(data, delta2);

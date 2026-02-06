@@ -4,7 +4,6 @@ package ch.alpine.ascona.flt;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascona.dat.GokartPos;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -24,7 +23,7 @@ public class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implement
   private Tensor refined = Tensors.empty();
 
   public GeodesicExtrapolationDemo() {
-    super(ManifoldDisplays.SE2_R2, new GokartPos());
+    super(ManifoldDisplays.SE2_R2);
     updateState();
   }
 

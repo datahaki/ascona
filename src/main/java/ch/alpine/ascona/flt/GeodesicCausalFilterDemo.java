@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 
 import javax.swing.JSlider;
 
-import ch.alpine.ascona.dat.GokartPos;
 import ch.alpine.ascony.api.GeodesicCausalFilters;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -33,7 +32,7 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
   private final JSlider jSlider = new JSlider(1, 999, 500);
 
   public GeodesicCausalFilterDemo() {
-    super(ManifoldDisplays.SE2_ONLY, new GokartPos());
+    super(ManifoldDisplays.SE2_ONLY);
     {
       spinnerCausalFilter.setValue(GeodesicCausalFilters.BIINVARIANT_MEAN_IIR);
       spinnerCausalFilter.addToComponent(timerFrame.jToolBar, "smoothing kernel");

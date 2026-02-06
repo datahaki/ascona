@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.dat.GokartPos;
-import ch.alpine.ascona.dat.GokartPosParam;
-import ch.alpine.ascona.dat.GokartPoseDatas;
+import ch.alpine.ascona.dat.gok.GokartPos;
+import ch.alpine.ascona.dat.gok.GokartPosParam;
+import ch.alpine.ascona.dat.gok.GokartPoseDatas;
+import ch.alpine.ascona.dat.gok.PosHz;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.GridRender;
@@ -30,7 +31,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.win.GaussianWindow;
@@ -59,8 +59,8 @@ public class ApproximationDemo extends AbstractDemo {
 
   @ReflectionMarker
   public static class Param extends GokartPosParam {
-    public Param(GokartPos gokartPoseData) {
-      super(gokartPoseData, ManifoldDisplays.SE2_R2);
+    public Param() {
+      super(ManifoldDisplays.SE2_R2);
     }
 
     @FieldSelectionArray({ "0", "2", "4", "6", "8", "10", "12", "14" })
@@ -80,11 +80,7 @@ public class ApproximationDemo extends AbstractDemo {
   private final Param param;
 
   public ApproximationDemo() {
-    this(new GokartPos());
-  }
-
-  public ApproximationDemo(GokartPos gokartPoseData) {
-    this(new Param(gokartPoseData));
+    this(new Param());
   }
 
   public ApproximationDemo(Param param) {
@@ -92,21 +88,22 @@ public class ApproximationDemo extends AbstractDemo {
     this.param = param;
     timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
-    param.string = param.gpd().list().getFirst();
+    param.string = GokartPos.list().getFirst();
     fieldsEditor(0).addUniversalListener(this::updateState);
     updateState();
   }
 
   private void updateState() {
     // Tensor rawdata =
-    Tensor rawdata = param.getPoses();
+    PosHz posHz = param.getPosHz();
+    Tensor rawdata = posHz.getPoseSequence();
     ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(manifoldDisplay.geodesicSpace(), GaussianWindow.FUNCTION);
     TensorUnaryOperator centerFilter = new CenterFilter(tensorUnaryOperator, param.width);
     Tensor tracked = centerFilter.apply(rawdata);
     int level = param.level;
     int steps = 1 << level;
-    System.out.println(DoubleScalar.of(steps).divide(Quantity.of(50, "Hz")).map(Round._3)); // param.gpd().getSampleRate()
+    System.out.println(DoubleScalar.of(steps).divide(posHz.getSamplingRate()).map(Round._3)); // param.gpd().getSampleRate()
     Tensor control = Tensor.of(IntStream.range(0, tracked.length() / steps) //
         .map(i -> i * steps) //
         .mapToObj(tracked::get));

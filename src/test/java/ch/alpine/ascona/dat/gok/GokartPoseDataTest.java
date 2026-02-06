@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.dat;
+package ch.alpine.ascona.dat.gok;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

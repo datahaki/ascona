@@ -3,7 +3,6 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.dat.GokartPos;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -25,7 +24,7 @@ public final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
   private final SpinnerLabel<Integer> spinnerConvolution;
 
   public Se2BiinvariantMeanDemo() {
-    super(ManifoldDisplays.SE2_ONLY, new GokartPos());
+    super(ManifoldDisplays.SE2_ONLY);
     {
       spinnerFilters.setValue(Se2BiinvariantMeans.LINEAR);
       spinnerFilters.addToComponent(timerFrame.jToolBar, "se2 biinvariant mean");

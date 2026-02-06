@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-import ch.alpine.ascona.dat.GokartPos;
+import ch.alpine.ascona.dat.gok.GokartPos;
 import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.lie.LieDifferences;
@@ -19,20 +19,14 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 /* package */ class SpectrogramDataExport {
-  private final GokartPos gokartPoseData;
-
-  public SpectrogramDataExport(GokartPos gokartPoseData) {
-    this.gokartPoseData = gokartPoseData;
-  }
-
   private void process(Path ROOT) throws IOException {
-    List<String> dataSource = gokartPoseData.list();
+    List<String> dataSource = GokartPos.list();
     List<WindowFunctions> kernel = List.of(WindowFunctions.GAUSSIAN, WindowFunctions.HAMMING, WindowFunctions.BLACKMAN);
     // iterate over data
     for (String data : dataSource) {
       // iterate over Kernels
       // load data
-      Tensor control = gokartPoseData.getData(data);
+      Tensor control = null; // FIXME gokartPoseData.importResource(data);
       for (WindowFunctions windowFunctions : kernel) {
         ScalarUnaryOperator smoothingKernel = windowFunctions.get();
         // iterate over radius
@@ -56,7 +50,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   static void main() throws IOException {
-    SpectrogramDataExport spectrogramDataExport = new SpectrogramDataExport(new GokartPos());
+    SpectrogramDataExport spectrogramDataExport = new SpectrogramDataExport();
     spectrogramDataExport.process(HomeDirectory.Desktop.resolve("MA/owl_export"));
   }
 }

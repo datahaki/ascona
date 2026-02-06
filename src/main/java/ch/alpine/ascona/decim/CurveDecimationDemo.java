@@ -7,9 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascona.dat.GokartPos;
-import ch.alpine.ascona.dat.GokartPosParam;
-import ch.alpine.ascona.dat.GokartPoseDatas;
+import ch.alpine.ascona.dat.gok.GokartPosParam;
+import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.PathRender;
@@ -53,8 +52,8 @@ public class CurveDecimationDemo extends AbstractDemo {
 
   @ReflectionMarker
   public static class Param extends GokartPosParam {
-    public Param(GokartPos gokartPoseData) {
-      super(gokartPoseData, ManifoldDisplays.SE2_R2);
+    public Param() {
+      super(ManifoldDisplays.SE2_R2);
     }
 
     @FieldSelectionArray({ "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })
@@ -71,11 +70,7 @@ public class CurveDecimationDemo extends AbstractDemo {
   private final Param param;
 
   public CurveDecimationDemo() {
-    this(new GokartPos());
-  }
-
-  public CurveDecimationDemo(GokartPos gokartPoseData) {
-    this(new Param(gokartPoseData));
+    this(new Param());
   }
 
   public CurveDecimationDemo(Param param) {
@@ -90,7 +85,7 @@ public class CurveDecimationDemo extends AbstractDemo {
   protected void updateState() {
     TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
         GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), param.width.number().intValue());
-    _control = tensorUnaryOperator.apply(param.getPoses());
+    _control = tensorUnaryOperator.apply(param.getPosHz().getPoseSequence());
   }
 
   @Override

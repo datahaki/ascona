@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import ch.alpine.ascona.dat.GokartPosVel;
+import ch.alpine.ascona.dat.gok.GokartPosVel;
+import ch.alpine.ascona.dat.gok.PosVelHz;
 import ch.alpine.ascony.api.HermiteSubdivisions;
 import ch.alpine.sophis.crv.d2.Curvature2D;
 import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
@@ -47,7 +48,8 @@ import ch.alpine.tensor.red.Nest;
     this.levels = Integers.requirePositive(levels);
     folder = HomeDirectory.Documents.resolve(name);
     Files.createDirectories(folder);
-    Tensor data = new GokartPosVel().getData(name); // limit , 2_000);
+    PosVelHz posVelHz = GokartPosVel.get(name, 2000); // limit , 2_000);
+    Tensor data = posVelHz.getPosVelSequence();
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     {
       Export.of(folder.resolve("gndtrth.mathematica"), data);

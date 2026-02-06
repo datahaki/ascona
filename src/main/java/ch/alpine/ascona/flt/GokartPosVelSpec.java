@@ -3,14 +3,14 @@ package ch.alpine.ascona.flt;
 
 import java.util.List;
 
-import ch.alpine.ascona.dat.gok.GokartPosParam;
+import ch.alpine.ascona.dat.gok.GokartPosVelParam;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 @ReflectionMarker
-public class GokartPoseSpec extends GokartPosParam {
-  public GokartPoseSpec(List<ManifoldDisplays> list) {
+public class GokartPosVelSpec extends GokartPosVelParam {
+  public GokartPosVelSpec(List<ManifoldDisplays> list) {
     super(list);
   }
 

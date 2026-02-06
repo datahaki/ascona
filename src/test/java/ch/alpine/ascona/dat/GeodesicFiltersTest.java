@@ -7,6 +7,10 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.ascona.dat.gok.GokartPos;
+import ch.alpine.ascona.dat.gok.GokartPosVel;
+import ch.alpine.ascona.dat.gok.PosHz;
+import ch.alpine.ascona.dat.gok.PosVelHz;
 import ch.alpine.ascony.api.GeodesicFilters;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.Se2Display;
@@ -23,9 +27,11 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class GeodesicFiltersTest {
-  private static void _check(GokartPos gokartPoseData) {
-    List<String> lines = gokartPoseData.list();
-    Tensor control = gokartPoseData.getData(lines.get(0)); // limit , 250
+  @Test
+  void testSimple() {
+    List<String> lines = GokartPos.list();
+    PosHz posHz = GokartPos.get(lines.getFirst(), 250); // limit , 250
+    Tensor control = posHz.getPoseSequence();
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     ScalarUnaryOperator smoothingKernel = WindowFunctions.GAUSSIAN.get();
@@ -46,15 +52,10 @@ class GeodesicFiltersTest {
   }
 
   @Test
-  void testSimple() {
-    _check(new GokartPos());
-    // _check(GokartPosVel.INSTANCE); // TODO
-  }
-
-  @Test
   void testTiming() {
     String name = "50Hz/20190701T170957_06.csv";
-    Tensor control = new GokartPosVel().getData(name); // TODO
+    PosVelHz posVelHz = GokartPosVel.get(name, 100_000);
+    Tensor control = posVelHz.getPosVelSequence();
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     ScalarUnaryOperator smoothingKernel = WindowFunctions.GAUSSIAN.get();

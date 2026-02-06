@@ -9,8 +9,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.util.List;
 
-import ch.alpine.ascona.dat.GokartPos;
-import ch.alpine.ascona.dat.GokartPoseDatas;
+import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -62,8 +61,8 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
   protected final Param param;
 
-  protected AbstractSpectrogramDemo(List<ManifoldDisplays> list, GokartPos gokartPoseData) {
-    this(new GokartPoseSpec(gokartPoseData, list), new Param());
+  protected AbstractSpectrogramDemo(List<ManifoldDisplays> list) {
+    this(new GokartPoseSpec(list), new Param());
   }
 
   protected AbstractSpectrogramDemo(GokartPoseSpec gokartPoseSpec, Object object) {
@@ -136,7 +135,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   protected void updateState() {
-    _control = gokartPoseSpec.getPoses();
+    _control = gokartPoseSpec.getPosHz().getPoseSequence();
   }
 
   // @Override

@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.usr;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -58,17 +57,17 @@ public enum ImageMatcher {
     System.out.println(folder.getFileName());
     String n1 = "a";
     String n2 = "b";
-    Tensor src = Import.of(folder.resolve( n1 + ".jpg")).map(N.DOUBLE);
-    Tensor dst = Import.of(folder.resolve( n2 + ".jpg")).map(N.DOUBLE);
+    Tensor src = Import.of(folder.resolve(n1 + ".jpg")).map(N.DOUBLE);
+    Tensor dst = Import.of(folder.resolve(n2 + ".jpg")).map(N.DOUBLE);
     {
       List<Integer> list = Dimensions.of(src);
       src = ImageResize.of(src, list.get(0) / 2, list.get(1) / 2);
-      Export.of(folder.resolve( "a_small.jpg"), src);
+      Export.of(folder.resolve("a_small.jpg"), src);
     }
     {
       List<Integer> list = Dimensions.of(dst);
       dst = ImageResize.of(dst, list.get(0) / 2, list.get(1) / 2);
-      Export.of(folder.resolve( "b_small.jpg"), dst);
+      Export.of(folder.resolve("b_small.jpg"), dst);
     }
     if (!Dimensions.of(src).equals(Dimensions.of(dst)))
       throw new RuntimeException("dimensions mismatch");
@@ -78,7 +77,7 @@ public enum ImageMatcher {
         throw new RuntimeException("dimensions bad " + list);
       }
     }
-    final Path file = folder.resolve( "bm");
+    final Path file = folder.resolve("bm");
     Tensor b_src = blocks(src);
     Tensor b_dst = blocks(dst);
     Timing timing = Timing.started();
@@ -99,14 +98,14 @@ public enum ImageMatcher {
         inverse[matching[i]] = i;
       }
       Tensor r_dst = build(Dimensions.of(dst), b_dst, matching);
-      Export.of(folder.resolve( "result_" + n2 + ".jpg"), r_dst);
+      Export.of(folder.resolve("result_" + n2 + ".jpg"), r_dst);
       Tensor r_src = build(Dimensions.of(src), b_src, inverse);
-      Export.of(folder.resolve( "result_" + n1 + ".jpg"), r_src);
+      Export.of(folder.resolve("result_" + n1 + ".jpg"), r_src);
       System.out.println(timing.seconds() / 60);
       Tensor m_dst = r_dst.add(dst).multiply(RationalScalar.HALF);
-      Export.of(folder.resolve( "averag_" + n2 + ".jpg"), m_dst);
+      Export.of(folder.resolve("averag_" + n2 + ".jpg"), m_dst);
       Tensor m_src = r_src.add(src).multiply(RationalScalar.HALF);
-      Export.of(folder.resolve( "averag_" + n1 + ".jpg"), m_src);
+      Export.of(folder.resolve("averag_" + n1 + ".jpg"), m_src);
     }
   }
 }

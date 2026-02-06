@@ -1,21 +1,24 @@
 package ch.alpine.bridge.res;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.ResourceData;
 import ch.alpine.tensor.io.Import;
 
-public abstract class ResourceMapper implements TensorUnaryOperator {
-  private String parent;
+public class ResourceMapper {
+  public static final ResourceMapper of(String index) {
+    return new ResourceMapper(index);
+  }
+
+  // ---
+  private Path parent;
   private List<String> lines;
 
-  public ResourceMapper(String index) {
-    parent = new File(index).getParent();
+  private ResourceMapper(String index) {
+    parent = Path.of(index).getParent();
     lines = Collections.unmodifiableList(ResourceData.lines(index));
   }
 
@@ -23,7 +26,7 @@ public abstract class ResourceMapper implements TensorUnaryOperator {
     return lines;
   }
 
-  public final Tensor getData(String line) {
-    return apply(Import.of(Path.of(parent, line).toString())); // toString() is required
+  public final Tensor importResource(String key) {
+    return Import.of(parent.resolve(key).toString()); // toString() is required
   }
 }
