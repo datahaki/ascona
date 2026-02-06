@@ -9,8 +9,8 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 @ReflectionMarker
-public class GokartPoseSpec extends GokartPosParam {
-  public GokartPoseSpec(List<ManifoldDisplays> list) {
+public class GokartPosSpec extends GokartPosParam {
+  public GokartPosSpec(List<ManifoldDisplays> list) {
     super(list);
   }
 

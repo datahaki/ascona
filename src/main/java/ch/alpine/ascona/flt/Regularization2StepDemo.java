@@ -37,7 +37,7 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
   }
 
   public Regularization2StepDemo(Ratio ratio) {
-    super(GokartPoseSpecV2.INSTANCE, ratio);
+    super(ratio);
     this.ratio = ratio;
     // ---
     updateState();

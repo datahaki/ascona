@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
-import java.util.List;
 
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.api.BufferedImageSupplier;
@@ -50,7 +49,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   // ---
   private static final ScalarUnaryOperator MAGNITUDE_PER_SECONDS = QuantityMagnitude.SI().in("s^-1");
   // ---
-  protected final GokartPoseSpec gokartPoseSpec;
+  protected final GokartPosSpec gokartPoseSpec;
   protected Tensor _control = null;
 
   @ReflectionMarker
@@ -61,12 +60,8 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
   protected final Param param;
 
-  protected AbstractSpectrogramDemo(List<ManifoldDisplays> list) {
-    this(new GokartPoseSpec(list), new Param());
-  }
-
-  protected AbstractSpectrogramDemo(GokartPoseSpec gokartPoseSpec, Object object) {
-    this(gokartPoseSpec, new Param(), object);
+  protected AbstractSpectrogramDemo(Object object) {
+    this(new GokartPosSpec(ManifoldDisplays.SE2_R2), new Param(), object);
   }
 
   protected String plotLabel() {
@@ -75,7 +70,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     return windowFunctions + " [" + (2 * radius + 1) + "]";
   }
 
-  protected AbstractSpectrogramDemo(GokartPoseSpec gokartPoseSpec, Param param, Object object) {
+  protected AbstractSpectrogramDemo(GokartPosSpec gokartPoseSpec, Param param, Object object) {
     super(gokartPoseSpec, param, object);
     this.gokartPoseSpec = gokartPoseSpec;
     this.param = param;
