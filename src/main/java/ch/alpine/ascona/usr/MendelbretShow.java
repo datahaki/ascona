@@ -49,7 +49,7 @@ import ch.alpine.tensor.red.Nest;
       }
     }
     Tensor tensor = Raster.of(image, ColorDataGradients.CLASSIC);
-    Export.of(HomeDirectory.Pictures(MendelbretShow.class.getSimpleName() + ".png"), tensor);
+    Export.of(HomeDirectory.Pictures.resolve(MendelbretShow.class.getSimpleName() + ".png"), tensor);
     Show show = new Show();
     show.add(ArrayPlot.of(image, ColorDataGradients.CLASSIC));
     ShowDialog.of(show);

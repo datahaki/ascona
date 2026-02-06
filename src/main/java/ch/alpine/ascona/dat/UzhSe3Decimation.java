@@ -1,8 +1,9 @@
 // code by jph
 package ch.alpine.ascona.dat;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import ch.alpine.sophis.decim.CurveDecimation;
 import ch.alpine.sophis.decim.DecimationResult;
@@ -20,13 +21,13 @@ import ch.alpine.tensor.io.Put;
   ;
   static void of(String name) throws IOException {
     System.out.println(name);
-    File root = HomeDirectory.Documents("uzh", name);
-    root.mkdirs();
+    Path root = HomeDirectory.Documents.resolve("uzh", name);
+    Files.createDirectories(root);
     // ---
-    File file = new File("/media/datahaki/media/resource/uzh/groundtruth", name + ".txt");
+    Path file = Path.of("/media/datahaki/media/resource/uzh/groundtruth", name + ".txt");
     Tensor poses = UzhSe3TxtFormat.of(file);
     System.out.println(Dimensions.of(poses));
-    Put.of(new File(root, "poses.file"), poses);
+    Put.of(root.resolve("poses.file"), poses);
     {
       CurveDecimation curveDecimation = Se3CurveDecimation.of(RealScalar.of(0.02));
       Timing timing = Timing.started();
@@ -35,8 +36,8 @@ import ch.alpine.tensor.io.Put;
       timing.stop();
       System.out.println(timing.seconds());
       System.out.println(Dimensions.of(decimated));
-      Put.of(new File(root, "decimated.file"), decimated);
-      Put.of(new File(root, "error.file"), result.errors());
+      Put.of(root.resolve("decimated.file"), decimated);
+      Put.of(root.resolve("error.file"), result.errors());
     }
   }
 

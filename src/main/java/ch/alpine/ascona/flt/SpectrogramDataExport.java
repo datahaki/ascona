@@ -1,8 +1,8 @@
 // code by ob, jph
 package ch.alpine.ascona.flt;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 import ch.alpine.ascona.dat.GokartPos;
@@ -25,7 +25,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     this.gokartPoseData = gokartPoseData;
   }
 
-  private void process(File ROOT) throws IOException {
+  private void process(Path ROOT) throws IOException {
     List<String> dataSource = gokartPoseData.list();
     List<WindowFunctions> kernel = List.of(WindowFunctions.GAUSSIAN, WindowFunctions.HAMMING, WindowFunctions.BLACKMAN);
     // iterate over data
@@ -44,7 +44,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
           System.out.println(data + smoothingKernel + radius);
           System.err.println(speeds(refined));
           // export velocities
-          Export.of(new File(ROOT, "190319/" + data.replace('/', '_') + "_" + smoothingKernel + "_" + radius + ".csv"), refined);
+          Export.of(ROOT.resolve("190319", data.replace('/', '_') + "_" + smoothingKernel + "_" + radius + ".csv"), refined);
         }
       }
     }
@@ -57,6 +57,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
   static void main() throws IOException {
     SpectrogramDataExport spectrogramDataExport = new SpectrogramDataExport(new GokartPos());
-    spectrogramDataExport.process(HomeDirectory.Desktop("MA/owl_export"));
+    spectrogramDataExport.process(HomeDirectory.Desktop.resolve("MA/owl_export"));
   }
 }

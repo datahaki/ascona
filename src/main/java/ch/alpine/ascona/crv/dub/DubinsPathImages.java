@@ -1,8 +1,9 @@
 // code by jph
 package ch.alpine.ascona.crv.dub;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import ch.alpine.sophis.crv.dub.DubinsPath;
 import ch.alpine.sophis.crv.dub.DubinsPathComparators;
@@ -40,12 +41,12 @@ import ch.alpine.tensor.io.Export;
 
   static void main() throws IOException {
     Tensor matrix = Tensors.matrix(DubinsPathImages::type, RES, RES);
-    File directory = HomeDirectory.Pictures(DubinsPathImages.class.getSimpleName());
-    directory.mkdir();
+    Path directory = HomeDirectory.Pictures.resolve(DubinsPathImages.class.getSimpleName());
+    Files.createDirectories(directory);
     // FIXME ASCONA this does not make sense
     for (ColorDataLists colorDataLists : ColorDataLists.values()) {
       Tensor image = matrix.map(colorDataLists.strict());
-      Export.of(new File(directory, colorDataLists.name() + ".png"), image);
+      Export.of(directory.resolve(colorDataLists.name() + ".png"), image);
     }
   }
 }

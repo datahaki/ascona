@@ -60,9 +60,9 @@ import ch.alpine.tensor.sca.tri.Sin;
       }
       matrix.append(row);
     }
-    Put.of(HomeDirectory.file("sinxy2in.mathematica"), matrix);
+    Put.of(HomeDirectory.path("sinxy2in.mathematica"), matrix);
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(R3S2Geodesic.INSTANCE);
     Tensor tensor = Nest.of(catmullClarkSubdivision::refine, matrix, 3);
-    Put.of(HomeDirectory.file("sinxy2.mathematica"), tensor);
+    Put.of(HomeDirectory.path("sinxy2.mathematica"), tensor);
   }
 }

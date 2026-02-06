@@ -19,7 +19,7 @@ import ch.alpine.tensor.img.ColorDataGradients;
       Tensor sequence = HilbertBenchmarkDemo.unit(n);
       BufferedImage bufferedImage = HilbertLevelImage.of( //
           R2Display.INSTANCE, sequence, 60, ColorDataGradients.CLASSIC, 800);
-      ImageIO.write(bufferedImage, "png", HomeDirectory.Pictures(String.format("hc%d.png", n)));
+      ImageIO.write(bufferedImage, "png", HomeDirectory.Pictures.resolve(String.format("hc%d.png", n)).toFile());
     }
   }
 }

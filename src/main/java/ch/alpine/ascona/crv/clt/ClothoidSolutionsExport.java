@@ -1,8 +1,9 @@
 // code by jph
 package ch.alpine.ascona.crv.clt;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 
 import ch.alpine.bridge.io.DeleteDirectory;
@@ -102,17 +103,17 @@ import ch.alpine.tensor.sca.Clips;
         new ClothoidSolutionsExport(40, 40, Pi.VALUE);
     // new ClothoidSolutionsExport(20, 120, Pi.TWO.multiply(RealScalar.of(3)));
     // ---
-    Export.of(HomeDirectory.file("clothoidsol.csv"), clothoidSolutionsExport.tableBuilder.getTable());
-    Export.of(HomeDirectory.file("clothoidsht.csv"), clothoidSolutionsExport.tableShortes.getTable());
+    Export.of(HomeDirectory.path("clothoidsol.csv"), clothoidSolutionsExport.tableBuilder.getTable());
+    Export.of(HomeDirectory.path("clothoidsht.csv"), clothoidSolutionsExport.tableShortes.getTable());
     int index = 0;
-    File directory = HomeDirectory.Pictures("clsol");
-    if (directory.isDirectory())
+    Path directory = HomeDirectory.Pictures.resolve("clsol");
+    if (Files.isDirectory(directory))
       DeleteDirectory.of(directory, 1, 100);
-    directory.mkdir();
+    Files.createDirectories(directory);
     for (TableBuilder tableBuilder : clothoidSolutionsExport.map.values())
       if (10 < tableBuilder.getRowCount())
         Export.of( //
-            new File(directory, String.format("%03d.csv", index++)), //
+            directory.resolve(String.format("%03d.csv", index++)), //
             tableBuilder.getTable());
   }
 }

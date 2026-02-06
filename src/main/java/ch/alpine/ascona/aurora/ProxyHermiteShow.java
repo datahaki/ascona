@@ -1,8 +1,9 @@
 // code by jph
 package ch.alpine.ascona.aurora;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.function.Function;
 
 import ch.alpine.ascona.dat.GokartPosVel;
@@ -33,7 +34,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   private static final int COLS = 240 * 1;
   // ---
   private final int levels;
-  private final File folder;
+  private final Path folder;
   private final Tensor data;
   private final Tensor control;
   private final Scalar delta;
@@ -43,8 +44,12 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
    * @param levels 2 */
   protected ProxyHermiteShow(String name, int levels) {
     this.levels = levels;
-    folder = HomeDirectory.Documents(name);
-    folder.mkdir();
+    folder = HomeDirectory.Documents.resolve(name);
+    try {
+      Files.createDirectories(folder);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     Scalar rate = Quantity.of(50, "Hz");
     int delta2 = 1;
     for (int level = 0; level < levels; ++level) {
@@ -82,10 +87,10 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
 
   abstract Tensor compute(int rows, int cols);
 
-  public static void export(File directory, Tensor matrix) throws IOException {
-    directory.mkdir();
+  public static void export(Path directory, Tensor matrix) throws IOException {
+    Files.createDirectories(directory);
     for (ColorDataGradients colorDataGradients : ColorDataGradients.values()) {
-      File file = new File(directory, String.format("%s.png", colorDataGradients));
+      Path file = directory.resolve(String.format("%s.png", colorDataGradients));
       Export.of(file, Raster.of(matrix, colorDataGradients));
     }
   }

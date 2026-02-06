@@ -1,8 +1,9 @@
 // code by jph
 package ch.alpine.ascona.aurora;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.function.Function;
 
 import ch.alpine.ascona.dat.GokartPosVel;
@@ -34,7 +35,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   private static final int COLS = 240 * 8;
   // ---
   private final int levels;
-  private final File folder;
+  private final Path folder;
   private final Tensor control = Tensors.empty();
   private final Scalar delta;
   private final Tensor matrix;
@@ -44,8 +45,12 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
    * @param levels 4 */
   protected HermiteArrayShow(String name, Scalar period, int levels) {
     this.levels = Integers.requirePositive(levels);
-    folder = HomeDirectory.Documents(name);
-    folder.mkdir();
+    folder = HomeDirectory.Documents.resolve(name);
+    try {
+      Files.createDirectories(folder);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     Tensor data = new GokartPosVel().getData(name); // , 1_000
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     Scalar rate = Quantity.of(50, "Hz");
@@ -73,10 +78,10 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
 
   abstract Tensor compute(int rows, int cols);
 
-  public static void export(File directory, Tensor matrix) throws IOException {
-    directory.mkdir();
+  public static void export(Path directory, Tensor matrix) throws IOException {
+    Files.createDirectories(directory);
     for (ColorDataGradients colorDataGradients : ColorDataGradients.values()) {
-      File file = new File(directory, String.format("%s.png", colorDataGradients));
+      Path file = directory.resolve(String.format("%s.png", colorDataGradients));
       Export.of(file, Raster.of(matrix, colorDataGradients));
     }
   }

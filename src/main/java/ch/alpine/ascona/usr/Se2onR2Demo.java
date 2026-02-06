@@ -1,8 +1,9 @@
 // code by jph
 package ch.alpine.ascona.usr;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Parallelize;
@@ -44,17 +45,15 @@ import ch.alpine.tensor.red.Min;
   }
 
   static void main() throws IOException {
-    File folder = HomeDirectory.Pictures(Se2onR2Demo.class.getSimpleName());
-    folder.mkdir();
-    if (!folder.isDirectory())
-      return;
+    Path folder = HomeDirectory.Pictures.resolve(Se2onR2Demo.class.getSimpleName());
+    Files.createDirectories(folder);
     Tensor x = Subdivide.of(-2, +2, RES - 1);
     Tensor y = Subdivide.of(-2, +2, RES - 1);
     Se2onR2Demo se2onR2Demo = new Se2onR2Demo();
     Tensor matrix = Parallelize.matrix((i, j) -> se2onR2Demo.min(Tensors.of(x.Get(i), y.Get(j))), x.length(), y.length());
     for (ColorDataGradients colorDataGradients : ColorDataGradients.values()) {
       Tensor image = Raster.of(matrix, colorDataGradients);
-      Export.of(new File(folder, colorDataGradients.name() + ".png"), image);
+      Export.of(folder.resolve(colorDataGradients.name() + ".png"), image);
     }
   }
 }

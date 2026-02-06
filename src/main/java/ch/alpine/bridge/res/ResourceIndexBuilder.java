@@ -1,6 +1,7 @@
 package ch.alpine.bridge.res;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,37 +13,40 @@ import ch.alpine.tensor.io.StringScalar;
 public class ResourceIndexBuilder {
   public static final String FILENAME = "resource_index.vector";
 
-  public static void of(File folder) {
+  public static void of(Path folder) {
     ResourceIndexBuilder resourceIndexBuilder = new ResourceIndexBuilder(folder);
   }
 
   private final int length;
   private final List<String> list = new LinkedList<>();
 
-  private ResourceIndexBuilder(File root) {
+  private ResourceIndexBuilder(Path root) {
     length = root.toString().length() + 1;
     check(root);
     Collections.sort(list);
     Tensor tensor = Tensor.of(list.stream().map(StringScalar::of));
-    Unprotect.Export(new File(root, FILENAME), tensor);
+    Unprotect.Export(root.resolve(FILENAME), tensor);
   }
 
-  void check(File folder) {
-    for (final File file : folder.listFiles()) {
-      if (file.isDirectory())
-        check(file);
-      else {
-        if (file.getName().equals(FILENAME))
-          System.err.println("skip " + file);
-        else
-          list.add(file.toString().substring(length));
+  void check(Path folder) {
+    try {
+      for (final Path file : Files.list(folder).toList()) {
+        if (Files.isDirectory(file))
+          check(file);
+        else {
+          if (file.getFileName().toString().equals(FILENAME))
+            System.err.println("skip " + file);
+          else
+            list.add(file.toString().substring(length));
+        }
       }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
   static void main() {
     String path = "/home/datahaki/Projects/ascona/src/main/resources/ch/alpine/ascona/gokart/tpq/";
-    File folder = new File(path);
-    ResourceIndexBuilder.of(folder);
+    ResourceIndexBuilder.of(Path.of(path));
   }
 }

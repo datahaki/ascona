@@ -2,8 +2,8 @@
 package ch.alpine.ascona.usr;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 
@@ -18,20 +18,20 @@ enum ImageReadDemo {
   ;
   static void main() throws IOException {
     // FIXME
-    File file = HomeDirectory.file("testimage", "COPY_P1150723_a.JPG");
+    Path file = HomeDirectory.path("testimage", "COPY_P1150723_a.JPG");
     switch (2) {
     case 1: {
-      BufferedImage bufferedImage = ImageIO.read(file);
+      BufferedImage bufferedImage = ImageIO.read(file.toFile());
       System.out.println(bufferedImage);
       Tensor tensor = ImageFormat.from(bufferedImage);
       Tensor thumb = Thumbnail.of(tensor, 100);
-      Export.of(HomeDirectory.file("testimage", "thumb.jpg"), thumb);
+      Export.of(HomeDirectory.path("testimage", "thumb.jpg"), thumb);
       break;
     }
     case 2: {
       Tensor tensor2 = Import.of(file);
       Tensor thumb = Thumbnail.of(tensor2, 200);
-      Export.of(HomeDirectory.file("testimage", "thumb2.jpg"), thumb);
+      Export.of(HomeDirectory.path("testimage", "thumb2.jpg"), thumb);
       break;
     }
     default:

@@ -70,23 +70,23 @@ import ch.alpine.tensor.sca.Abs;
     lp3_xy.set(err_xy, Tensor.ALL, Tensor.ALL, 2);
     lp3_hd.set(err_hd, Tensor.ALL, Tensor.ALL, 2);
     {
-      Put.of(HomeDirectory.file("lp3_xy.mathematica"), lp3_xy);
-      Put.of(HomeDirectory.file("lp3_hd.mathematica"), lp3_hd);
+      Put.of(HomeDirectory.path("lp3_xy.mathematica"), lp3_xy);
+      Put.of(HomeDirectory.path("lp3_hd.mathematica"), lp3_hd);
     }
     Show show1 = new Show();
     // FIXME
     {
       show1.add(MatrixPlot.of(err_xy, ColorDataGradients.CLASSIC));
-      Export.of(HomeDirectory.file("err_xy.csv"), err_xy);
+      Export.of(HomeDirectory.path("err_xy.csv"), err_xy);
       Tensor image = Raster.of(err_xy, ColorDataGradients.CLASSIC);
-      Export.of(HomeDirectory.Pictures(Se2PredictionShow.class.getSimpleName() + "_xy.png"), image);
+      Export.of(HomeDirectory.Pictures.resolve(Se2PredictionShow.class.getSimpleName() + "_xy.png"), image);
     }
     Show show2 = new Show();
     {
       show2.add(MatrixPlot.of(err_hd, ColorDataGradients.CLASSIC));
-      Export.of(HomeDirectory.file("err_hd.csv"), err_hd);
+      Export.of(HomeDirectory.path("err_hd.csv"), err_hd);
       Tensor image = Raster.of(err_hd, ColorDataGradients.CLASSIC);
-      Export.of(HomeDirectory.Pictures(Se2PredictionShow.class.getSimpleName() + "_hd.png"), image);
+      Export.of(HomeDirectory.Pictures.resolve(Se2PredictionShow.class.getSimpleName() + "_hd.png"), image);
     }
     ShowDialog.of(show1, show2);
   }

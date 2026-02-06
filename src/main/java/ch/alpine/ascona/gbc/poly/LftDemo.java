@@ -51,7 +51,7 @@ public class LftDemo extends ControlPointsDemo {
     super(new Param0());
     try {
       // FIXME ASCONA this does not work
-      bi = ImageIO.read(HomeDirectory.file("public_html/other/front", "album_it.jpg"));
+      bi = ImageIO.read(HomeDirectory.path("public_html/other/front", "album_it.jpg").toFile());
       int w = bi.getWidth() - 1;
       int h = bi.getHeight() - 1;
       REF = Tensors.fromString("{{1,1,0}, {" + w + ",1,0}, {" + w + "," + h + ",0}, {1," + h + ",0}}");

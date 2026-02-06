@@ -1,11 +1,12 @@
 // code by jph
 package ch.alpine.ascona.dat;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import ch.alpine.sophus.lie.se.Se3Matrix;
@@ -36,8 +37,8 @@ public enum UzhSe3TxtFormat {
    * @return tensor of affine matrices
    * @throws IOException
    * @throws FileNotFoundException */
-  public static Tensor of(File file) throws FileNotFoundException, IOException {
-    try (InputStream inputStream = new FileInputStream(file)) {
+  public static Tensor of(Path file) throws FileNotFoundException, IOException {
+    try (InputStream inputStream = Files.newInputStream(file)) {
       return Tensor.of(ReadLine.of(inputStream).skip(1).map(UzhSe3TxtFormat::parse));
     }
   }

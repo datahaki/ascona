@@ -29,7 +29,7 @@ import ch.alpine.tensor.io.GifAnimationWriter;
 
   static void main() throws Exception {
     try (AnimationWriter animationWriter = //
-        new GifAnimationWriter(HomeDirectory.Pictures("rodriquez.gif"), 100, TimeUnit.MILLISECONDS)) {
+        new GifAnimationWriter(HomeDirectory.Pictures.resolve("rodriquez.gif"), 100, TimeUnit.MILLISECONDS)) {
       for (Tensor _z : Subdivide.of(-4 * Math.PI, 4 * Math.PI, 40)) {
         System.out.println(_z);
         Z = (Scalar) _z;

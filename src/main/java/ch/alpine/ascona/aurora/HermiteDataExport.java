@@ -1,8 +1,9 @@
 // code by jph
 package ch.alpine.ascona.aurora;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import ch.alpine.ascona.dat.GokartPosVel;
 import ch.alpine.ascony.api.HermiteSubdivisions;
@@ -33,7 +34,7 @@ import ch.alpine.tensor.red.Nest;
 
 /* package */ class HermiteDataExport {
   private final int levels;
-  private final File folder;
+  private final Path folder;
   private final Tensor control = Tensors.empty();
   private final Scalar delta;
   private final Tensor domain;
@@ -44,39 +45,39 @@ import ch.alpine.tensor.red.Nest;
    * @throws IOException */
   public HermiteDataExport(String name, Scalar period, int levels) throws IOException {
     this.levels = Integers.requirePositive(levels);
-    folder = HomeDirectory.Documents(name);
-    folder.mkdir();
+    folder = HomeDirectory.Documents.resolve(name);
+    Files.createDirectories(folder);
     Tensor data = new GokartPosVel().getData(name); // limit , 2_000);
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     {
-      Export.of(new File(folder, "gndtrth.mathematica"), data);
+      Export.of(folder.resolve("gndtrth.mathematica"), data);
       Tensor domain1 = Range.of(0, data.length()).multiply(RealScalar.of(1 / 50.));
-      Export.of(new File(folder, "gndtrth_domain.mathematica"), domain1);
+      Export.of(folder.resolve("gndtrth_domain.mathematica"), domain1);
     }
     Scalar rate = Quantity.of(50, "Hz");
     delta = QuantityMagnitude.SI().in("s").apply(period);
     int skip = Scalars.intValueExact(period.multiply(rate));
     for (int index = 0; index < data.length(); index += skip)
       control.append(data.get(index));
-    Export.of(new File(folder, "control.mathematica"), control);
+    Export.of(folder.resolve("control.mathematica"), control);
     domain = Range.of(0, control.length()).multiply(delta);
-    Export.of(new File(folder, "control_domain.mathematica"), domain);
+    Export.of(folder.resolve("control_domain.mathematica"), domain);
   }
 
   private void process(HermiteSubdivision hermiteSubdivision, CurveSubdivision curveSubdivision, String name) throws IOException {
     TensorIteration tensorIteration = //
         hermiteSubdivision.string(delta, control);
-    File dst = new File(folder, name);
-    dst.mkdir();
+    Path dst = folder.resolve(name);
+    Files.createDirectories(dst);
     {
       Tensor refined = Do.of(tensorIteration::iterate, levels);
-      Export.of(new File(dst, "refined.mathematica"), refined);
+      Export.of(dst.resolve("refined.mathematica"), refined);
       Tensor curvatu = Curvature2D.string(Tensor.of(refined.stream().map(point -> point.get(0).extract(0, 2))));
-      Export.of(new File(dst, "curvatu.mathematica"), curvatu);
+      Export.of(dst.resolve("curvatu.mathematica"), curvatu);
     }
     {
       Tensor tensor = Nest.of(curveSubdivision::string, domain, levels);
-      Export.of(new File(dst, "refined_domain.mathematica"), tensor);
+      Export.of(dst.resolve("refined_domain.mathematica"), tensor);
     }
   }
 

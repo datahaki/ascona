@@ -28,27 +28,27 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     // poses.append(xyt);
     // }
     System.out.println(Dimensions.of(poses));
-    Put.of(HomeDirectory.file("gokart_poses.file"), poses);
+    Put.of(HomeDirectory.path("gokart_poses.file"), poses);
     TensorUnaryOperator INSTANCE = LieDifferences.of(Se2Group.INSTANCE);
     {
       Tensor delta = INSTANCE.apply(poses);
-      Put.of(HomeDirectory.file("gokart_delta.file"), delta);
+      Put.of(HomeDirectory.path("gokart_delta.file"), delta);
     }
     {
       TensorUnaryOperator tensorUnaryOperator = //
           new CenterFilter(GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), 6);
       Tensor smooth = tensorUnaryOperator.apply(poses);
-      Put.of(HomeDirectory.file("gokart_poses_gauss.file"), smooth);
+      Put.of(HomeDirectory.path("gokart_poses_gauss.file"), smooth);
       Tensor delta = INSTANCE.apply(smooth);
-      Put.of(HomeDirectory.file("gokart_delta_gauss.file"), delta);
+      Put.of(HomeDirectory.path("gokart_delta_gauss.file"), delta);
     }
     {
       TensorUnaryOperator tensorUnaryOperator = //
           new CenterFilter(GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.HAMMING.get()), 6);
       Tensor smooth = tensorUnaryOperator.apply(poses);
-      Put.of(HomeDirectory.file("gokart_poses_hammi.file"), smooth);
+      Put.of(HomeDirectory.path("gokart_poses_hammi.file"), smooth);
       Tensor delta = INSTANCE.apply(smooth);
-      Put.of(HomeDirectory.file("gokart_delta_hammi.file"), delta);
+      Put.of(HomeDirectory.path("gokart_delta_hammi.file"), delta);
     }
   }
 }
