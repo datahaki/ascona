@@ -11,6 +11,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.dub.DubinsPath;
 import ch.alpine.sophis.crv.dub.DubinsPathGenerator;
+import ch.alpine.sophis.crv.dub.DubinsType;
 import ch.alpine.sophis.crv.dub.FixedRadiusDubins;
 import ch.alpine.sophis.ts.DubinsTransition;
 import ch.alpine.tensor.RealScalar;
@@ -20,7 +21,6 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 
-// TODO ASCONA blend with dubins path demo
 public class DubinsTransitionDemo extends AbstractDemo {
   private static final Tensor START = Array.zeros(3).unmodifiable();
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
@@ -39,9 +39,10 @@ public class DubinsTransitionDemo extends AbstractDemo {
     List<DubinsPath> list = dubinsPathGenerator.stream().toList();
     Scalar minResolution = RealScalar.of(geometricLayer.pixel2modelWidth(5));
     {
-      graphics.setColor(COLOR_DATA_INDEXED.getColor(0));
       graphics.setStroke(new BasicStroke(1));
       for (DubinsPath dubinsPath : list) {
+        DubinsType dubinsType = dubinsPath.dubinsType();
+        graphics.setColor(COLOR_DATA_INDEXED.getColor(dubinsType.ordinal()));
         DubinsTransition dubinsTransition = new DubinsTransition(START, mouse, dubinsPath);
         graphics.draw(geometricLayer.toPath2D(dubinsTransition.linearized(minResolution)));
       }

@@ -3,6 +3,9 @@ package ch.alpine.ascona.gbc.poly;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 
@@ -19,7 +22,10 @@ import ch.alpine.tensor.img.ColorDataGradients;
       Tensor sequence = HilbertBenchmarkDemo.unit(n);
       BufferedImage bufferedImage = HilbertLevelImage.of( //
           R2Display.INSTANCE, sequence, 60, ColorDataGradients.CLASSIC, 800);
-      ImageIO.write(bufferedImage, "png", HomeDirectory.Pictures.resolve(String.format("hc%d.png", n)).toFile());
+      Path path = HomeDirectory.Pictures.resolve(String.format("hc%d.png", n));
+      try (OutputStream outputStream = Files.newOutputStream(path)) {
+        ImageIO.write(bufferedImage, "png", outputStream);
+      }
     }
   }
 }

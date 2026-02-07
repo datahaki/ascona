@@ -60,6 +60,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
       geometricLayer.popMatrix();
     }
     graphics.drawImage(foreground, 0, 0, null);
+    graphics.dispose();
     return background;
   }
 }

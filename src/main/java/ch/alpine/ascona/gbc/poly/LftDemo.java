@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 
@@ -49,9 +52,10 @@ public class LftDemo extends ControlPointsDemo {
 
   public LftDemo() {
     super(new Param0());
-    try {
+    Path path = HomeDirectory.path("public_html/other/front", "album_it.jpg");
+    try (InputStream inputStream = Files.newInputStream(path)) {
       // FIXME ASCONA this does not work
-      bi = ImageIO.read(HomeDirectory.path("public_html/other/front", "album_it.jpg").toFile());
+      bi = ImageIO.read(inputStream);
       int w = bi.getWidth() - 1;
       int h = bi.getHeight() - 1;
       REF = Tensors.fromString("{{1,1,0}, {" + w + ",1,0}, {" + w + "," + h + ",0}, {1," + h + ",0}}");
