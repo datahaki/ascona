@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.ascona.dat.gok;
 
 import java.io.Serializable;

@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.bridge.res;
 
 import java.nio.file.Files;
