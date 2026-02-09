@@ -54,7 +54,7 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
           ? BSplineFunctionCyclic.of(_degree, control)
           : BSplineFunctionString.of(_degree, control);
       refined = Subdivide.of(0, param.cyclic ? control.length() : control.length() - 1, 100) //
-          .map(scalarTensorFunction);
+          .maps(scalarTensorFunction);
       new PathRender(Color.BLUE).setCurve(refined, param.cyclic).render(geometricLayer, graphics);
     }
     {

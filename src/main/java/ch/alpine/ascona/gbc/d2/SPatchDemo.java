@@ -43,8 +43,8 @@ public class SPatchDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensor.of(embed.stream() //
         .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
     int res = 35;
-    Tensor dx = Subdivide.of(-1, 1, res - 1).map(N.DOUBLE);
-    Tensor dy = Subdivide.of(-1, 1, res - 1).map(N.DOUBLE);
+    Tensor dx = Subdivide.of(-1, 1, res - 1).maps(N.DOUBLE);
+    Tensor dy = Subdivide.of(-1, 1, res - 1).maps(N.DOUBLE);
     Tensor domain = Outer.of(Tensors::of, dx, dy);
     movingDomain2D = AveragedMovingDomain2D.of(embed, sPatch, domain);
   }
@@ -89,7 +89,7 @@ public class SPatchDemo extends ControlPointsDemo {
           int i0 = sPatch.basis(r0);
           int i1 = sPatch.basis(r1);
           ScalarTensorFunction stf = homogeneousSpace.curve(sequence.get(i0), sequence.get(i1));
-          Tensor points = Tensor.of(domain.map(stf).stream().map(manifoldDisplay::point2xy));
+          Tensor points = Tensor.of(domain.maps(stf).stream().map(manifoldDisplay::point2xy));
           Path2D path2d = geometricLayer.toPath2D(points);
           graphics.draw(path2d);
         }

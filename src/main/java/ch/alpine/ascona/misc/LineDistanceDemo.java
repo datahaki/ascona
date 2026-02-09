@@ -87,7 +87,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
     Tensor matrix = D2Raster.of(d2Raster, resolution, arrayFunction);
     matrix = Rescale.of(matrix);
-    return ImageFormat.of(matrix.map(param.colorDataGradients));
+    return ImageFormat.of(matrix.maps(param.colorDataGradients));
   }
 
   double rad() {
@@ -109,7 +109,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
     ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(cp.get(0), cp.get(1));
     graphics.setStroke(STROKE);
     graphics.setColor(new Color(192, 192, 192));
-    Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::point2xy));
+    Tensor ms = Tensor.of(GEODESIC_DOMAIN.maps(scalarTensorFunction).stream().map(manifoldDisplay::point2xy));
     graphics.draw(geometricLayer.toPath2D(ms));
     graphics.setStroke(new BasicStroke());
     // ---

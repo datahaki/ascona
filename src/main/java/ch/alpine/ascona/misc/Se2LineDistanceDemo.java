@@ -55,7 +55,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     ScalarTensorFunction curve = geodesicSpace.curve(beg, end);
     Exponential exponential = Se2CoveringGroup.INSTANCE.exponential(beg);
     {
-      Tensor tensor = Subdivide.of(-0.5, 1.5, 55).map(curve);
+      Tensor tensor = Subdivide.of(-0.5, 1.5, 55).maps(curve);
       Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::point2xy)));
       graphics.setColor(Color.BLUE);
       graphics.draw(path2d);
@@ -84,7 +84,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
         {
           graphics.setColor(Color.DARK_GRAY);
           graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
-          graphics.drawString("" + orthogonal.map(Round._3), 0, 40);
+          graphics.drawString("" + orthogonal.maps(Round._3), 0, 40);
         }
         {
           geometricLayer.pushMatrix(manifoldDisplay.matrixLift(glb));

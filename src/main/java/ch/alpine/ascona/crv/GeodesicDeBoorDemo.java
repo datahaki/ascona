@@ -67,7 +67,7 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
     Tensor refined = Subdivide.of( //
         center.subtract(RationalScalar.HALF), //
         center.add(RationalScalar.HALF), //
-        Math.max(1, upper * (1 << levels))).map(scalarTensorFunction);
+        Math.max(1, upper * (1 << levels))).maps(scalarTensorFunction);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(selected));

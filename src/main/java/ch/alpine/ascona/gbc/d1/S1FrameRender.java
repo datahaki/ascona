@@ -14,7 +14,7 @@ import ch.alpine.tensor.sca.N;
 /* package */ enum S1FrameRender implements RenderInterface {
   INSTANCE;
 
-  private static final Tensor CIRCLE = CirclePoints.of(61).map(N.DOUBLE);
+  private static final Tensor CIRCLE = CirclePoints.of(61).maps(N.DOUBLE);
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {

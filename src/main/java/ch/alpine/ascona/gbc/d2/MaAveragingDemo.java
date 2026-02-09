@@ -85,7 +85,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
   }
 
   private ArrayPlotImage computeImage(Tensor tensor) {
-    Tensor sequence = tensor.map(N.DOUBLE);
+    Tensor sequence = tensor.maps(N.DOUBLE);
     int resolution = param.resolution;
     int n = sequence.length();
     if (2 < n)
@@ -140,7 +140,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
     // ---
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);
-    graphics.drawString("compute: " + RealScalar.of(computeTime).map(Round._3), 0, 30);
+    graphics.drawString("compute: " + RealScalar.of(computeTime).maps(Round._3), 0, 30);
   }
 
   void prepare() {

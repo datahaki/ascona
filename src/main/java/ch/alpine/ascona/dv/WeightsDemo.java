@@ -122,7 +122,7 @@ public class WeightsDemo extends ControlPointsDemo {
             }
         }
         for (int index = 0; index < sequence.length(); ++index) {
-          Tensor map = matrix.get(Tensor.ALL, index).map(Tensors::of);
+          Tensor map = matrix.get(Tensor.ALL, index).maps(Tensors::of);
           leversRender.renderMatrix(sequence.get(index), map, colorDataIndexed);
         }
       }

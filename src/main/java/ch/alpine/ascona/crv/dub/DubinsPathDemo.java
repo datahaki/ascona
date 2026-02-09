@@ -109,7 +109,7 @@ public class DubinsPathDemo extends ControlPointsDemo {
       Tensor params = PadLeft.zeros(4).apply(dubinsPath.segments());
       graphics.setColor(new Color(128, 128, 128, 128));
       // graphics.setColor(COLOR_DATA_INDEXED.getColor(3));
-      Tensor map = params.map(scalarTensorFunction);
+      Tensor map = params.maps(scalarTensorFunction);
       {
         LeversRender leversRender = LeversRender.of(Se2CoveringDisplay.INSTANCE, map, null, geometricLayer, graphics);
         leversRender.renderSequence();
@@ -139,7 +139,7 @@ public class DubinsPathDemo extends ControlPointsDemo {
   private Tensor sample(DubinsPath dubinsPath) {
     Tensor controlPointsSe2 = getControlPointsSe2();
     Tensor START = controlPointsSe2.get(0);
-    return Subdivide.of(0.0, 1.0, POINTS).map(dubinsPath.unit(START));
+    return Subdivide.of(0.0, 1.0, POINTS).maps(dubinsPath.unit(START));
   }
 
   static void main() {

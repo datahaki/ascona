@@ -65,12 +65,12 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
       // ---
       Tensor domain = domain(support);
       // ---
-      Tensor sequence = support.map(this::lift);
+      Tensor sequence = support.maps(this::lift);
       Manifold manifold = (Manifold) param.manifoldDisplays.manifoldDisplay().geodesicSpace();
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
       ScalarTensorFunction scalarTensorFunction = //
           point -> sedarim.sunder(lift(point));
-      Tensor basis = domain.map(scalarTensorFunction);
+      Tensor basis = domain.maps(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));
         new PathRender(Color.BLUE, 1.25f).setCurve(curve, false).render(geometricLayer, graphics);

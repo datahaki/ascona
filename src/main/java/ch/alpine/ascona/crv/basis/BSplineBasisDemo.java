@@ -80,7 +80,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
             GeodesicBSplineFunction bSplineFunction = //
                 GeodesicBSplineFunction.of(RGroup.INSTANCE, _degree, UnitVector.of(length, k_th));
             Tensor domain = Subdivide.of(0, length - 1, 100);
-            Tensor values = domain.map(bSplineFunction);
+            Tensor values = domain.maps(bSplineFunction);
             Tensor tensor = Transpose.of(Tensors.of(domain, values));
             graphics.setColor(colorDataIndexed.getColor(k_th));
             graphics.draw(geometricLayer.toPath2D(tensor));
@@ -99,7 +99,7 @@ public class BSplineBasisDemo extends ControlPointsDemo {
         : control;
     GeodesicBSplineFunction bSplineFunction = //
         GeodesicBSplineFunction.of(RGroup.INSTANCE, _degree, effective);
-    Tensor refined = Subdivide.of(0, effective.length() - 1, 4 << _levels).map(bSplineFunction);
+    Tensor refined = Subdivide.of(0, effective.length() - 1, 4 << _levels).maps(bSplineFunction);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
       leversRender.renderIndexP();

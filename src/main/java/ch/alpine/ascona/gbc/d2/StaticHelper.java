@@ -25,8 +25,8 @@ import ch.alpine.tensor.sca.Round;
 /* package */ enum StaticHelper {
   ;
   public static <T extends Tensor> Tensor of(CoordinateBoundingBox coordinateBoundingBox, ManifoldDisplay manifoldDisplay, int resolution) {
-    Tensor dx = Subdivide.increasing(coordinateBoundingBox.clip(0), resolution - 1).map(N.DOUBLE);
-    Tensor dy = Subdivide.decreasing(coordinateBoundingBox.clip(1), resolution - 1).map(N.DOUBLE);
+    Tensor dx = Subdivide.increasing(coordinateBoundingBox.clip(0), resolution - 1).maps(N.DOUBLE);
+    Tensor dy = Subdivide.decreasing(coordinateBoundingBox.clip(1), resolution - 1).maps(N.DOUBLE);
     return Tensor.of(dy.stream().map(Scalar.class::cast).parallel() //
         .map(py -> Tensor.of(dx.stream().map(Scalar.class::cast) //
             .map(px -> Unprotect.using(List.of(px, py, RealScalar.ZERO))) //
@@ -47,7 +47,7 @@ import ch.alpine.tensor.sca.Round;
     Tensor c_blck = Tensors.vector(0, 0, 0, 255);
     for (int index = 0; index < domain.length(); ++index) {
       Scalar x = domain.Get(index);
-      Tensor c_rgba = clip.rescale(x).map(colorDataGradients);
+      Tensor c_rgba = clip.rescale(x).maps(colorDataGradients);
       Scalar weight = intBlend.apply(x);
       Tensor split = LinearBinaryAverage.INSTANCE.split(c_blck, c_rgba, weight);
       rgba.append(split);

@@ -67,21 +67,21 @@ public class GeodesicDemo extends ControlPointsDemo {
     ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(p, q);
     new AreaRender( //
         COLOR, //
-        manifoldDisplay::matrixLift, manifoldDisplay.shape(), Subdivide.of(0, 1, param.splits).map(scalarTensorFunction)) //
+        manifoldDisplay::matrixLift, manifoldDisplay.shape(), Subdivide.of(0, 1, param.splits).maps(scalarTensorFunction)) //
             .render(geometricLayer, graphics);
     {
-      Tensor sequence = Subdivide.of(0, 1, 1).map(scalarTensorFunction);
+      Tensor sequence = Subdivide.of(0, 1, 1).maps(scalarTensorFunction);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     }
     if (param.comb) {
-      Tensor refined = Subdivide.of(0, 1, param.splits * 6).map(scalarTensorFunction);
+      Tensor refined = Subdivide.of(0, 1, param.splits * 6).maps(scalarTensorFunction);
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     }
     if (param.extrapolation) {
       {
-        Tensor refined = Subdivide.of(1, 1.5, param.splits * 3).map(scalarTensorFunction);
+        Tensor refined = Subdivide.of(1, 1.5, param.splits * 3).maps(scalarTensorFunction);
         Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
         // CurveCurvatureRender.of(render, false, geometricLayer, graphics);
         pathRender.setCurve(render, false);
@@ -89,7 +89,7 @@ public class GeodesicDemo extends ControlPointsDemo {
       }
       new AreaRender( //
           new Color(255, 128, 128), //
-          manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.3)), Subdivide.of(1, 1.5, param.splits).map(scalarTensorFunction)) //
+          manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.3)), Subdivide.of(1, 1.5, param.splits).maps(scalarTensorFunction)) //
               .render(geometricLayer, graphics);
     }
   }

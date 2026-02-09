@@ -75,7 +75,7 @@ import ch.alpine.tensor.sca.Clips;
           }
           {
             Tensor tensor = Subdivide.increasing(Clips.unit(), steps).extract(1, steps) //
-                .map(scalarTensorFunction);
+                .maps(scalarTensorFunction);
             new AreaRender( //
                 new Color(64, 128 + 64, 64, 128), //
                 manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.5)), tensor) //

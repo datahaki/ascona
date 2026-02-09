@@ -101,7 +101,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
     if (param0.snap) {
       param0.snap = false;
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      movingOrigin = Tensor.of(getControlPointsSe2().map(N.DOUBLE).stream().map(manifoldDisplay::xya2point));
+      movingOrigin = Tensor.of(getControlPointsSe2().maps(N.DOUBLE).stream().map(manifoldDisplay::xya2point));
     }
     System.out.println("recomp");
     movingDomain2D = updateMovingDomain2D(movingOrigin, param0.refine.number().intValue());
@@ -133,7 +133,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
       for (int index = 0; index < origin.length(); ++index) {
         ScalarTensorFunction scalarTensorFunction = //
             geodesicSpace.curve(origin.get(index), target.get(index));
-        Tensor points = Tensor.of(DOMAIN.map(scalarTensorFunction).stream() //
+        Tensor points = Tensor.of(DOMAIN.maps(scalarTensorFunction).stream() //
             .map(manifoldDisplay::point2xy));
         graphics.draw(geometricLayer.toPath2D(points));
       }

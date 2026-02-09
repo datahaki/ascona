@@ -59,7 +59,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     {
       PathRender pathRender = new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(0));
       for (int index = 1; index < sequence.length(); ++index) {
-        Tensor tensor = domain.map(geodesicSpace.curve(sequence.get(index - 1), sequence.get(index)));
+        Tensor tensor = domain.maps(geodesicSpace.curve(sequence.get(index - 1), sequence.get(index)));
         pathRender.setCurve(tensor, false);
         pathRender.render(geometricLayer, graphics);
       }
@@ -71,7 +71,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     {
       PathRender pathRender = new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(1));
       for (int index = 1; index < decimate.length(); ++index) {
-        Tensor tensor = domain.map(geodesicSpace.curve(decimate.get(index - 1), decimate.get(index)));
+        Tensor tensor = domain.maps(geodesicSpace.curve(decimate.get(index - 1), decimate.get(index)));
         pathRender.setCurve(tensor, false);
         pathRender.render(geometricLayer, graphics);
       }

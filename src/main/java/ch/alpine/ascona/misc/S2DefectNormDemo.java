@@ -91,7 +91,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     public TSF() {
       sequence = getGeodesicControlPoints();
       int n = sequence.length();
-      weights = NormalizeTotal.FUNCTION.apply(param.user_weights.extract(0, n).map(N.DOUBLE));
+      weights = NormalizeTotal.FUNCTION.apply(param.user_weights.extract(0, n).maps(N.DOUBLE));
     }
 
     @Override
@@ -107,7 +107,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(new TSF(), DoubleScalar.INDETERMINATE);
     Tensor matrix = D2Raster.of(d2Raster, resolution, arrayFunction);
     matrix = Rescale.of(matrix);
-    return ImageFormat.of(matrix.map(param.colorDataGradients));
+    return ImageFormat.of(matrix.maps(param.colorDataGradients));
   }
 
   double rad() {

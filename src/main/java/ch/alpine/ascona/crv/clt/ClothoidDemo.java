@@ -62,7 +62,7 @@ public class ClothoidDemo extends ControlPointsDemo {
     int index = 0;
     for (ClothoidBuilders clothoidBuilders : ClothoidBuilders.values()) {
       Clothoid clothoid = clothoidBuilders.clothoidBuilder().curve(start, mouse);
-      Tensor points = DOMAIN.map(clothoid);
+      Tensor points = DOMAIN.maps(clothoid);
       Color color = COLOR_DATA_INDEXED.getColor(index);
       new PathRender(color, 1.5f) //
           .setCurve(points, false).render(geometricLayer, graphics);
@@ -72,7 +72,7 @@ public class ClothoidDemo extends ControlPointsDemo {
       graphics.setColor(color);
       {
         Scalar angle = ArcTan2D.of(clothoid.apply(RealScalar.of(1e-8)));
-        graphics.drawString(angle.map(Round._5) + "  " + clothoid, 0, index * 20);
+        graphics.drawString(angle.maps(Round._5) + "  " + clothoid, 0, index * 20);
         graphics.draw(geometricLayer.toLine2D(AngleVector.of(angle)));
       }
       {

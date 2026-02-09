@@ -119,7 +119,7 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
       };
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
       Tensor raster = D2Raster.of(C1Display.INSTANCE, param.resolution, arrayFunction);
-      Tensor rescal = new Rescale(raster).result().map(ColorDataGradients.HUE);
+      Tensor rescal = new Rescale(raster).result().maps(ColorDataGradients.HUE);
       BufferedImage bufferedImage = ImageFormat.of(rescal);
       new ImageRender(bufferedImage, C1Display.INSTANCE.coordinateBoundingBox()).render(geometricLayer, graphics);
     }
@@ -138,7 +138,7 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
       int dimension1 = Unprotect.dimension1(table);
       for (int index = 0; index < dimension1; ++index) {
         PathRender pathRender = new PathRender(Color.BLACK);
-        Tensor points = table.get(Tensor.ALL, index).map(manifoldDisplay::point2xya);
+        Tensor points = table.get(Tensor.ALL, index).maps(manifoldDisplay::point2xya);
         pathRender.setCurve(points, false).render(geometricLayer, graphics);
       }
     }

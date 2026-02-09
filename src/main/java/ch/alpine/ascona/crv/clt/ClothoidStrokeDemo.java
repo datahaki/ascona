@@ -61,7 +61,7 @@ public class ClothoidStrokeDemo extends ControlPointsDemo {
     ClothoidBuilder clothoidBuilder = ClothoidBuilders.SE2_COVERING.clothoidBuilder();
     {
       Clothoid clothoid = clothoidBuilder.curve(start, mouse);
-      Tensor points = DOMAIN.map(clothoid);
+      Tensor points = DOMAIN.maps(clothoid);
       Color color = COLOR_DATA_INDEXED.getColor(0);
       new PathRender(color, 1.5f) //
           .setCurve(points, false).render(geometricLayer, graphics);

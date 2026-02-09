@@ -17,7 +17,7 @@ public class R1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
   Tensor domain(Tensor support) {
     return Subdivide.of( //
         support.stream().reduce(Min::of).orElseThrow().add(MARGIN.negate()), //
-        support.stream().reduce(Max::of).orElseThrow().add(MARGIN), 128).map(N.DOUBLE);
+        support.stream().reduce(Max::of).orElseThrow().add(MARGIN), 128).maps(N.DOUBLE);
   }
 
   @Override

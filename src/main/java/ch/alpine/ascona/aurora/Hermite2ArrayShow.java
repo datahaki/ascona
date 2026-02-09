@@ -41,6 +41,6 @@ import ch.alpine.tensor.sca.exp.Log;
     Files.createDirectories(folder);
     Tensor matrix = hermiteArray.getMatrix();
     export(folder.resolve("id"), matrix);
-    export(folder.resolve("ln"), matrix.map(RealScalar.ONE::add).map(Log.FUNCTION));
+    export(folder.resolve("ln"), matrix.maps(RealScalar.ONE::add).maps(Log.FUNCTION));
   }
 }

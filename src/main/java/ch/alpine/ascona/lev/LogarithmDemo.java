@@ -113,10 +113,10 @@ public class LogarithmDemo extends ControlPointsDemo {
           graphics.draw(path2d);
         }
         Tensor angles_acc = Tensor.of(planar.stream().map(ArcTan2D::of));
-        Tensor distances = Differences.of(angles_acc).map(So2.MOD);
+        Tensor distances = Differences.of(angles_acc).maps(So2.MOD);
         try {
           ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, RGroup.INSTANCE, planar);
-          Tensor border = domain.map(scalarTensorFunction);
+          Tensor border = domain.maps(scalarTensorFunction);
           RenderQuality.setQuality(graphics);
           graphics.setColor(Color.BLUE);
           for (Tensor y : border) {
@@ -129,7 +129,7 @@ public class LogarithmDemo extends ControlPointsDemo {
         geometricLayer.popMatrix();
         try {
           ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, homogeneousSpace, refined);
-          Tensor border = domain.map(scalarTensorFunction);
+          Tensor border = domain.maps(scalarTensorFunction);
           LeversRender leversRender = LeversRender.of( //
               manifoldDisplay, //
               border, origin, //

@@ -100,7 +100,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
       // ---
       Tensor values = Tensor.of(control.stream().map(Vector2Norm::of));
       Tensor domain = Subdivide.of(Pi.VALUE.negate(), Pi.VALUE, 511);
-      Tensor spherics = domain.map(AngleVector::of);
+      Tensor spherics = domain.maps(AngleVector::of);
       // ---
       ScalarUnaryOperator suo = param.logWeightings.variogramForInterpolation();
       if (param.logWeightings.forceMetric() && //

@@ -62,10 +62,10 @@ public class ClothoidLRDemo extends ControlPointsDemo {
     for (ClothoidBuilder clothoidBuilder : new ClothoidBuilder[] { //
         ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder(), ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder() }) {
       Clothoid clothoid = clothoidBuilder.curve(start, mouse);
-      Tensor points = DOMAIN.map(clothoid);
+      Tensor points = DOMAIN.maps(clothoid);
       new PathRender(COLOR_DATA_INDEXED.getColor(index), 1.5f) //
           .setCurve(points, false).render(geometricLayer, graphics);
-      POINTS_RENDER_C.show(Se2ClothoidDisplay.ANALYTIC::matrixLift, Arrowhead.of(0.3), ARROWS.map(clothoid)) //
+      POINTS_RENDER_C.show(Se2ClothoidDisplay.ANALYTIC::matrixLift, Arrowhead.of(0.3), ARROWS.maps(clothoid)) //
           .render(geometricLayer, graphics);
       ++index;
     }

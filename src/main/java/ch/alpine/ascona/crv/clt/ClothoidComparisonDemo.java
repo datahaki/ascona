@@ -76,8 +76,8 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
         Tensor domain = curveVisualSet.getArcLength1();
         show.add(ListLinePlot.of(domain, ConstantArray.of(curvature.head(), domain.length()))).setLabel("curv.@head");
         show.add(ListLinePlot.of(domain, ConstantArray.of(curvature.tail(), domain.length()))).setLabel("curv.@tail");
-        show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(curvature))).setLabel("curv.@lagrQ");
-        show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).map(clothoid::addAngle))).setLabel("add angle");
+        show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).maps(curvature))).setLabel("curv.@lagrQ");
+        show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).maps(clothoid::addAngle))).setLabel("add angle");
       }
     }
     Dimension canvas_size = timerFrame.geometricComponent.jComponent.getSize();

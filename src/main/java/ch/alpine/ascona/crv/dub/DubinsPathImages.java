@@ -48,7 +48,7 @@ import ch.alpine.tensor.io.ImageFormat;
       Show show = new Show();
       Tensor matrix = Tensors.matrix(DubinsPathImages::type, RES, RES);
       ColorDataIndexed colorDataLists = ColorDataLists._097.strict();
-      Tensor image = matrix.map(colorDataLists);
+      Tensor image = matrix.maps(colorDataLists);
       show.add(ImagePlot.of(ImageFormat.of(image)));
       list.add(show);
     }
@@ -58,6 +58,6 @@ import ch.alpine.tensor.io.ImageFormat;
       show.add(MatrixPlot.of(matrix, ColorDataGradients.CLASSIC));
       list.add(show);
     }
-    ShowWindow.of(list);
+    ShowWindow.asDialog(list);
   }
 }

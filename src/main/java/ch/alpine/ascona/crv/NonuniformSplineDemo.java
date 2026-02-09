@@ -72,7 +72,7 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
           GeodesicBSplineFunction.of(RGroup.INSTANCE, _degree, x, y);
       Clip clip = Clips.interval(x.Get(0), Last.of(x));
       Tensor domain = Subdivide.increasing(clip, 4 << _levels);
-      Tensor values = domain.map(scalarTensorFunction);
+      Tensor values = domain.maps(scalarTensorFunction);
       Curvature2DRender.of(Transpose.of(Tensors.of(domain, values)), false).render(geometricLayer, graphics);
     }
     LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);

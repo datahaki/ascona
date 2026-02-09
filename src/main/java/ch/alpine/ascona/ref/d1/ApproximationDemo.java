@@ -103,7 +103,7 @@ public class ApproximationDemo extends AbstractDemo {
     Tensor tracked = centerFilter.apply(rawdata);
     int level = param.level;
     int steps = 1 << level;
-    System.out.println(DoubleScalar.of(steps).divide(posHz.getSamplingRate()).map(Round._3)); // param.gpd().getSampleRate()
+    System.out.println(DoubleScalar.of(steps).divide(posHz.getSamplingRate()).maps(Round._3)); // param.gpd().getSampleRate()
     Tensor control = Tensor.of(IntStream.range(0, tracked.length() / steps) //
         .map(i -> i * steps) //
         .mapToObj(tracked::get));

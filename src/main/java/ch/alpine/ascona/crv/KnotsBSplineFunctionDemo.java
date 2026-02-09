@@ -82,7 +82,7 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     }
     // ---
     RenderQuality.setQuality(graphics);
-    Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << levels))).map(scalarTensorFunction);
+    Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << levels))).maps(scalarTensorFunction);
     new AreaRender( //
         Color.DARK_GRAY, //
         manifoldDisplay::matrixLift, //

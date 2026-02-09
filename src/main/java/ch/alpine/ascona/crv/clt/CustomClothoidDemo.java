@@ -118,7 +118,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
     ClothoidContext clothoidContext = new ClothoidContext(p, q);
     if (Objects.isNull(clothoidDefectContainer) || !clothoidDefectContainer.encodes(clothoidContext)) {
       clothoidDefectContainer = new ClothoidDefectContainer(clothoidContext);
-      jLabel.setText("s1=" + clothoidContext.s1().map(Round._4) + " s2=" + clothoidContext.s2().map(Round._4));
+      jLabel.setText("s1=" + clothoidContext.s1().maps(Round._4) + " s2=" + clothoidContext.s2().maps(Round._4));
       return true;
     }
     return false;

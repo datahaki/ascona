@@ -85,7 +85,7 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
       Clothoid clothoid = clothoidBuilder.curve(cr, l1);
       // ClothoidTransition clothoidTransition = ClothoidTransition.of(cr, l1, clothoid);
       Tensor samples = ClothoidSampler.samples(clothoid, param.beta);
-      Tensor linearized = samples.map(clothoid);
+      Tensor linearized = samples.maps(clothoid);
       graphics.setColor(ColorDataLists._097.strict().getColor(index / 2));
       graphics.setStroke(new BasicStroke(2));
       graphics.draw(geometricLayer.toPath2D(linearized));

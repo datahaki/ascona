@@ -51,11 +51,11 @@ public class SpiralDemo extends AbstractDemo {
     SpiralParam spiralParam = param.spiralParam;
     Clip clip = param.clip;
     {
-      Tensor points = Subdivide.increasing(clip, param.samples).map(spiralParam.scalarTensorFunction);
+      Tensor points = Subdivide.increasing(clip, param.samples).maps(spiralParam.scalarTensorFunction);
       new PathRender(Color.BLUE, 1f).setCurve(points, false).render(geometricLayer, graphics);
     }
     {
-      Tensor points = Subdivide.increasing(clip, 50).map(spiralParam.scalarTensorFunction);
+      Tensor points = Subdivide.increasing(clip, 50).maps(spiralParam.scalarTensorFunction);
       POINTS_RENDER.show(Se2ClothoidDisplay.ANALYTIC::matrixLift, Arrowhead.of(0.03), points) //
           .render(geometricLayer, graphics);
     }

@@ -74,13 +74,13 @@ public class DeBoorCustomDemo extends AbstractDemo {
             DeBoor deBoor = DeBoor.of(RGroup.INSTANCE, _knots, UnitVector.of(length, k_th));
             {
               graphics.setStroke(new BasicStroke(1.25f));
-              Tensor values = domain.map(deBoor);
+              Tensor values = domain.maps(deBoor);
               Tensor tensor = Transpose.of(Tensors.of(domain, values));
               graphics.draw(geometricLayer.toPath2D(tensor));
             }
             {
               graphics.setStroke(new BasicStroke(1.25f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0));
-              Tensor values = domahi.map(deBoor);
+              Tensor values = domahi.maps(deBoor);
               Tensor tensor = Transpose.of(Tensors.of(domahi, values));
               graphics.draw(geometricLayer.toPath2D(tensor));
             }

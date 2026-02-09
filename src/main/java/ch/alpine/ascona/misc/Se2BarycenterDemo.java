@@ -51,7 +51,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
         HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
         final ScalarTensorFunction curve = homogeneousSpace.curve(sequence.get(0), sequence.get(1));
         {
-          Tensor tensor = Subdivide.of(-0.5, 1.5, 55).map(curve);
+          Tensor tensor = Subdivide.of(-0.5, 1.5, 55).maps(curve);
           Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::point2xy)));
           graphics.setColor(Color.BLUE);
           graphics.draw(path2d);

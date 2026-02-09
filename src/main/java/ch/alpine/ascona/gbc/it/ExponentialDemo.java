@@ -85,7 +85,7 @@ public class ExponentialDemo extends ControlPointsDemo {
           }
           {
             LeversRender leversRender = LeversRender.of( //
-                manifoldDisplay, leversVirtual, origin.map(Scalar::zero), geometricLayer, graphics);
+                manifoldDisplay, leversVirtual, origin.maps(Scalar::zero), geometricLayer, graphics);
             leversRender.renderSequence(POINTS_RENDER);
             // Tensor weights = iterativeAffineCoordinate.origin(deque, levers2);
             // leversRender.renderWeights(weights);

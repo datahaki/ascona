@@ -105,8 +105,8 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
         graphics.setStroke(new BasicStroke(1));
       }
       Sedarim sedarim = operator(domain);
-      Tensor min = Entrywise.min().of(hull).map(RealScalar.of(0.01)::add);
-      Tensor max = Entrywise.max().of(hull).map(RealScalar.of(0.01)::subtract).negate();
+      Tensor min = Entrywise.min().of(hull).maps(RealScalar.of(0.01)::add);
+      Tensor max = Entrywise.max().of(hull).maps(RealScalar.of(0.01)::subtract).negate();
       final int n = scatteredSetParam.refine;
       Tensor sX = Subdivide.of(min.Get(0), max.Get(0), n - 1);
       Tensor sY = Subdivide.of(max.Get(1), min.Get(1), n - 1);

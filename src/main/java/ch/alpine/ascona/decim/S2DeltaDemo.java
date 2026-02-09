@@ -84,7 +84,7 @@ public class S2DeltaDemo extends AbstractDemo {
     ScalarTensorFunction stf = S2Loxodrome.of(param.angle);
     Tensor domain = Subdivide.of(0, 20, 200);
     CurveSubdivision curveSubdivision = UniformResample.of(SnManifold.INSTANCE, SnManifold.INSTANCE, param.delta);
-    Tensor sequence = domain.map(stf);
+    Tensor sequence = domain.maps(stf);
     sequence = curveSubdivision.string(sequence);
     TensorUnaryOperator tuo = t -> t; // SnPerturbation.of(NormalDistribution.of(param.noise.zero(), param.noise));
     sequence = Tensor.of(sequence.stream().map(tuo));

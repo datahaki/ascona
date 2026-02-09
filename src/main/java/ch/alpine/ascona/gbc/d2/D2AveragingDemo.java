@@ -93,8 +93,8 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   }
 
   private ArrayPlotRecord computeImage(Tensor tensor) {
-    Tensor sequence = tensor.get(0).map(N.DOUBLE);
-    Tensor values = tensor.get(1).map(N.DOUBLE);
+    Tensor sequence = tensor.get(0).maps(N.DOUBLE);
+    Tensor values = tensor.get(1).maps(N.DOUBLE);
     int resolution = param.resolution;
     if (2 < values.length())
       try {
@@ -143,7 +143,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     leversRender.renderWeights(values);
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);
-    graphics.drawString("compute: " + RealScalar.of(computeTime).map(Round._3), 0, 30);
+    graphics.drawString("compute: " + RealScalar.of(computeTime).maps(Round._3), 0, 30);
   }
 
   static void main() {

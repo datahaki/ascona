@@ -64,7 +64,7 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
       Tensor support = control.get(Tensor.ALL, 0);
       Tensor funceva = control.get(Tensor.ALL, 1);
       // ---
-      Tensor sequence = support.map(Tensors::of);
+      Tensor sequence = support.maps(Tensors::of);
       Tensor domain = StaticHelper.domain(getControlPointsSe2());
       Manifold manifold = (Manifold) manifoldDisplay().geodesicSpace();
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);

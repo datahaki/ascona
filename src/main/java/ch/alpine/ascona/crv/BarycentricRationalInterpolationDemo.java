@@ -76,7 +76,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     if (1 < control.length()) {
       Tensor domain = Subdivide.of(knots.get(0), Last.of(knots), 25 * control.length());
       // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._03);
-      Tensor basis2 = domain.map(param.lagrange //
+      Tensor basis2 = domain.maps(param.lagrange //
           ? BarycentricMetricInterpolation.la(knots, InversePowerVariogram.of(2))
           : BarycentricMetricInterpolation.of(knots, InversePowerVariogram.of(2)));
       try {
@@ -87,7 +87,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       } catch (Exception exception) {
         System.err.println("no can do");
       }
-      Tensor basis1 = domain.map(BarycentricRationalInterpolation.of(knots, param.degree));
+      Tensor basis1 = domain.maps(BarycentricRationalInterpolation.of(knots, param.degree));
       try {
         Tensor curve = Tensor.of(basis1.stream().map(weights -> homogeneousSpace.biinvariantMean().mean(control, weights)));
         new PathRender(Color.BLUE) //

@@ -22,7 +22,7 @@ import ch.alpine.tensor.sca.Floor;
 
   @Override
   public Scalar apply(Tensor point) {
-    Scalar scalar = Total.ofVector(tensorUnaryOperator.apply(point).map(Floor.FUNCTION));
+    Scalar scalar = Total.ofVector(tensorUnaryOperator.apply(point).maps(Floor.FUNCTION));
     if (FiniteScalarQ.of(scalar))
       return RealScalar.of(Math.floorMod(scalar.number().intValue(), 2));
     return DoubleScalar.INDETERMINATE;

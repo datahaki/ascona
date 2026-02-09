@@ -89,6 +89,6 @@ import ch.alpine.tensor.sca.Abs;
       Tensor image = Raster.of(err_hd, ColorDataGradients.CLASSIC);
       Export.of(HomeDirectory.Pictures.resolve(Se2PredictionShow.class.getSimpleName() + "_hd.png"), image);
     }
-    ShowWindow.of(show1, show2);
+    ShowWindow.asDialog(show1, show2);
   }
 }

@@ -29,8 +29,8 @@ import ch.alpine.tensor.sca.exp.Log;
 
   @Override // from HermiteArray
   Tensor compute(int rows, int cols) {
-    Tensor lambda = Subdivide.of(RationalScalar.of(-3, 4), RationalScalar.of(-1, 6), rows - 1).map(N.DOUBLE);
-    Tensor mu = Subdivide.of(RationalScalar.of(-2, 1), RationalScalar.of(+5, 2), cols - 1).map(N.DOUBLE);
+    Tensor lambda = Subdivide.of(RationalScalar.of(-3, 4), RationalScalar.of(-1, 6), rows - 1).maps(N.DOUBLE);
+    Tensor mu = Subdivide.of(RationalScalar.of(-2, 1), RationalScalar.of(+5, 2), cols - 1).maps(N.DOUBLE);
     return Parallelize.matrix((i, j) -> h1(lambda.Get(i), mu.Get(j)), rows, cols);
     // return Parallelize.matrix((i, j) -> lambda.Get(i), rows, cols);
   }
@@ -46,6 +46,6 @@ import ch.alpine.tensor.sca.exp.Log;
     Files.createDirectories(folder);
     Tensor matrix = hermiteArray.getMatrix();
     HermiteArrayShow.export(folder.resolve("id"), matrix);
-    HermiteArrayShow.export(folder.resolve("ln"), matrix.map(RealScalar.ONE::add).map(Log.FUNCTION));
+    HermiteArrayShow.export(folder.resolve("ln"), matrix.maps(RealScalar.ONE::add).maps(Log.FUNCTION));
   }
 }

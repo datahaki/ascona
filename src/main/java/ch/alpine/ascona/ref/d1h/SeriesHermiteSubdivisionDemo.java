@@ -76,7 +76,7 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
     if (1 < _control.length()) {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
-      Tensor control = _control.map(N.DOUBLE);
+      Tensor control = _control.maps(N.DOUBLE);
       Scalar delta = RealScalar.ONE;
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
       int levels = param.refine;
@@ -106,9 +106,9 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
       Polynomial f0 = Polynomial.of(_coeffs);
       ScalarUnaryOperator f1 = f0.derivative();
       Tensor vx0 = Range.of(-4, 5);
-      Tensor vd0 = vx0.map(f0);
+      Tensor vd0 = vx0.maps(f0);
       Tensor vx1 = ConstantArray.of(RealScalar.ONE, vx0.length());
-      Tensor vd1 = vx0.map(f1);
+      Tensor vd1 = vx0.maps(f1);
       Tensor p0 = Transpose.of(Tensors.of(vx0, vd0));
       Tensor p1 = Transpose.of(Tensors.of(vx1, vd1));
       _control = Transpose.of(Tensors.of(p0, p1));

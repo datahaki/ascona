@@ -45,7 +45,7 @@ import ch.alpine.tensor.sca.N;
 // FIXME ASCONA DEMO what does this demo do: there is no curve shown
 public class S1KrigingDemo extends ControlPointsDemo {
   private static final double RANGE = 2;
-  private static final Tensor DOMAIN = Drop.tail(CirclePoints.of(161).map(N.DOUBLE), 80);
+  private static final Tensor DOMAIN = Drop.tail(CirclePoints.of(161).maps(N.DOUBLE), 80);
   private static final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
 
   @ReflectionMarker
@@ -89,7 +89,7 @@ public class S1KrigingDemo extends ControlPointsDemo {
       // TODO ASCONA ALG check for zero norm below
       Tensor sequence = Tensor.of(control.stream().map(Vector2Norm.NORMALIZE));
       Tensor funceva = Tensor.of(control.stream().map(Vector2Norm::of));
-      Tensor cvarian = getControlPointsSe2().get(Tensor.ALL, 2).multiply(RationalScalar.HALF).map(Abs.FUNCTION);
+      Tensor cvarian = getControlPointsSe2().get(Tensor.ALL, 2).multiply(RationalScalar.HALF).maps(Abs.FUNCTION);
       // ---
       graphics.setColor(new Color(0, 128, 128));
       Scalar IND = RealScalar.of(0.1);

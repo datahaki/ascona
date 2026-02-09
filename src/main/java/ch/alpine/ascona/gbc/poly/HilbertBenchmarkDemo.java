@@ -90,7 +90,7 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
    * @return hilbert polygon inside unit square [0, 1]^2 */
   public static Tensor unit(int n) {
     Tensor polygon = HilbertPolygon.of(n).multiply(Power.of(2.0, -n + 1));
-    return polygon.map(scalar -> scalar.subtract(RealScalar.of(1.0 + 1e-5)));
+    return polygon.maps(scalar -> scalar.subtract(RealScalar.of(1.0 + 1e-5)));
   }
 
   static void main() {

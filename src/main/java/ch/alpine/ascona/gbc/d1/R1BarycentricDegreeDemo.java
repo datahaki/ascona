@@ -65,7 +65,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   static Tensor domain(Tensor support) {
     return Subdivide.of( //
         support.stream().reduce(Min::of).orElseThrow().add(MARGIN.negate()), //
-        support.stream().reduce(Max::of).orElseThrow().add(MARGIN), 128).map(N.DOUBLE);
+        support.stream().reduce(Max::of).orElseThrow().add(MARGIN), 128).maps(N.DOUBLE);
   }
 
   @Override
@@ -81,7 +81,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
       Tensor domain = domain(support);
       if (param.lagrange) {
         ScalarTensorFunction geodesicNeville = InterpolatingPolynomial.of(manifoldDisplay.geodesicSpace(), support).scalarTensorFunction(funceva);
-        Tensor basis = domain.map(geodesicNeville);
+        Tensor basis = domain.maps(geodesicNeville);
         {
           Tensor curve = Transpose.of(Tensors.of(domain, basis));
           new PathRender(new Color(255, 0, 0, 128), STROKE).setCurve(curve, false).render(geometricLayer, graphics);
@@ -90,7 +90,7 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
       // ---
       ScalarTensorFunction scalarTensorFunction = //
           BarycentricRationalInterpolation.of(support, param.degree);
-      Tensor basis = domain.map(scalarTensorFunction);
+      Tensor basis = domain.maps(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));
         new PathRender(Color.BLUE, 1.25f).setCurve(curve, false).render(geometricLayer, graphics);

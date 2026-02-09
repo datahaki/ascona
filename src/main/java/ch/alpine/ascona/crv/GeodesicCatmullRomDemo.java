@@ -97,7 +97,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
       Clip interval = Clips.interval(lo, hi);
       Scalar parameter = (Scalar) LinearBinaryAverage.INSTANCE.split(lo, hi, param.evalAt);
       ScalarTensorFunction scalarTensorFunction = GeodesicCatmullRom.of(geodesicSpace, knots, control);
-      Tensor refined = Subdivide.increasing(interval, Math.max(1, levels * control.length())).map(scalarTensorFunction);
+      Tensor refined = Subdivide.increasing(interval, Math.max(1, levels * control.length())).maps(scalarTensorFunction);
       {
         Tensor selected = scalarTensorFunction.apply(parameter);
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(selected));

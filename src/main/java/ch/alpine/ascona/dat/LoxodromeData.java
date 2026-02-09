@@ -25,7 +25,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 /* package */ enum LoxodromeData {
   ;
   static void main() throws IOException {
-    Tensor tensor = Subdivide.of(0, 4.5, 250).map(AbsSquared.FUNCTION).map(S2Loxodrome.of(RealScalar.of(0.15)));
+    Tensor tensor = Subdivide.of(0, 4.5, 250).maps(AbsSquared.FUNCTION).maps(S2Loxodrome.of(RealScalar.of(0.15)));
     Export.of(HomeDirectory.path("loxodrome_exact.csv"), tensor);
     Tensor noise = RandomVariate.of(NormalDistribution.of(0, 0.05), Dimensions.of(tensor));
     tensor = tensor.add(noise);

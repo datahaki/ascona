@@ -59,7 +59,7 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Tensor sequence = getGeodesicControlPoints();
     int length = sequence.length();
-    Tensor domain = Range.of(-sequence.length(), 0).map(Tensors::of).unmodifiable();
+    Tensor domain = Range.of(-sequence.length(), 0).maps(Tensors::of).unmodifiable();
     graphics.setColor(Color.GRAY);
     graphics.setStroke(STROKE);
     for (int index = 0; index < length; ++index) {
@@ -70,7 +70,7 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
     }
     graphics.setStroke(new BasicStroke());
     if (1 < length) {
-      Tensor samples = Subdivide.of(-length, 0, 127).map(Tensors::of);
+      Tensor samples = Subdivide.of(-length, 0, 127).maps(Tensors::of);
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(homogeneousSpace), s -> s, domain);
       Tensor curve = Tensor.of(samples.stream() //
           .map(sedarim::sunder) //

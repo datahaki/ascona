@@ -72,7 +72,7 @@ public class DeBoorDemo extends AbstractDemo {
               graphics.drawString(length + " " + k_th + ":" + knots.toString().replace(" ", ""), //
                   (int) point2d.getX(), //
                   (int) point2d.getY() + 10);
-              Tensor values = domain.map(bSplineFunction);
+              Tensor values = domain.maps(bSplineFunction);
               Tensor tensor = Transpose.of(Tensors.of(domain, values));
               graphics.draw(geometricLayer.toPath2D(tensor));
               graphics.setColor(param.color);

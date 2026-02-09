@@ -103,7 +103,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           Tensor q = new SnExponential(p).exp(v); // point on sphere
           ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(p, q);
           graphics.setStroke(STROKE);
-          Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(s2Display::point2xy));
+          Tensor ms = Tensor.of(GEODESIC_DOMAIN.maps(scalarTensorFunction).stream().map(s2Display::point2xy));
           graphics.setColor(Color.LIGHT_GRAY);
           graphics.draw(geometricLayer.toPath2D(ms));
         }
@@ -133,7 +133,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
             Tensor q = new SnExponential(p).exp(v); // point on sphere
             ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(p, q);
             graphics.setStroke(STROKE);
-            Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(s2Display::point2xy));
+            Tensor ms = Tensor.of(GEODESIC_DOMAIN.maps(scalarTensorFunction).stream().map(s2Display::point2xy));
             graphics.setColor(Color.LIGHT_GRAY);
             graphics.draw(geometricLayer.toPath2D(ms));
           }

@@ -118,7 +118,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
         Tensor p = sequence.get(directedEdge.i());
         Tensor q = sequence.get(directedEdge.j());
         ScalarTensorFunction curve = geodesicSpace.curve(p, q);
-        Tensor tensor = Tensor.of(domain.map(curve).stream().map(manifoldDisplay::point2xy));
+        Tensor tensor = Tensor.of(domain.maps(curve).stream().map(manifoldDisplay::point2xy));
         Path2D line = geometricLayer.toPath2D(tensor);
         graphics.draw(line);
       }

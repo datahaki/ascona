@@ -84,7 +84,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     int levels = param.refine;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Interpolation interpolation = LagrangeInterpolation.of(manifoldDisplay.geodesicSpace(), getGeodesicControlPoints());
-    Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).map(interpolation::at);
+    Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).maps(interpolation::at);
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     new AreaRender( //

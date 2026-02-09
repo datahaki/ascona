@@ -66,19 +66,19 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke(1.5f));
     Tensor shape = manifoldDisplay.shape();
     Tensor domain = Subdivide.of(0, 1, param.refine);
-    Tensor points = domain.map(scalarTensorFunction);
+    Tensor points = domain.maps(scalarTensorFunction);
     Tensor xys = Tensor.of(points.stream().map(manifoldDisplay::point2xy));
     graphics.setColor(new Color(128, 255, 0));
     graphics.draw(geometricLayer.toPath2D(xys, false));
     if (geodesicSpace instanceof TensorMetric tensorMetric) {
       Scalar pseudoDistance = tensorMetric.distance(p, q);
       graphics.setColor(Color.DARK_GRAY);
-      graphics.drawString("" + pseudoDistance.map(Round._4), 10, 20);
+      graphics.drawString("" + pseudoDistance.maps(Round._4), 10, 20);
     }
     // ---
     new AreaRender( //
         Color.LIGHT_GRAY, //
-        manifoldDisplay::matrixLift, manifoldDisplay.shape(), domain.map(scalarTensorFunction)) //
+        manifoldDisplay::matrixLift, manifoldDisplay.shape(), domain.maps(scalarTensorFunction)) //
             .render(geometricLayer, graphics);
     graphics.setColor(Color.BLUE);
     for (Tensor _t : Subdivide.of(0, 1, 1)) {

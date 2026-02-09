@@ -67,7 +67,7 @@ public class R1KrigingDemo extends A1AveragingDemo {
     if (1 < control.length()) {
       Tensor support = control.get(Tensor.ALL, 0);
       Tensor funceva = control.get(Tensor.ALL, 1);
-      Tensor cvarian = control.get(Tensor.ALL, 2).multiply(RationalScalar.HALF).map(Abs.FUNCTION);
+      Tensor cvarian = control.get(Tensor.ALL, 2).multiply(RationalScalar.HALF).maps(Abs.FUNCTION);
       // ---
       graphics.setColor(new Color(0, 128, 128));
       Scalar IND = RealScalar.of(0.1);
@@ -80,7 +80,7 @@ public class R1KrigingDemo extends A1AveragingDemo {
         geometricLayer.popMatrix();
       }
       // ---
-      Tensor sequence = support.map(Tensors::of);
+      Tensor sequence = support.maps(Tensors::of);
       Tensor covariance = DiagonalMatrix.with(cvarian);
       Manifold manifold = (Manifold) manifoldDisplay().geodesicSpace();
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);

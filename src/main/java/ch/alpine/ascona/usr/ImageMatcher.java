@@ -57,8 +57,8 @@ public enum ImageMatcher {
     System.out.println(folder.getFileName());
     String n1 = "a";
     String n2 = "b";
-    Tensor src = Import.of(folder.resolve(n1 + ".jpg")).map(N.DOUBLE);
-    Tensor dst = Import.of(folder.resolve(n2 + ".jpg")).map(N.DOUBLE);
+    Tensor src = Import.of(folder.resolve(n1 + ".jpg")).maps(N.DOUBLE);
+    Tensor dst = Import.of(folder.resolve(n2 + ".jpg")).maps(N.DOUBLE);
     {
       List<Integer> list = Dimensions.of(src);
       src = ImageResize.of(src, list.get(0) / 2, list.get(1) / 2);

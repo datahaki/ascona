@@ -115,14 +115,14 @@ public class LftDemo extends ControlPointsDemo {
   public static LinearFractionalTransform lft(Tensor points, int width, int height) {
     Tensor reference = Tensors.matrixInt( //
         new int[][] { { height, 0 }, { height, width }, { 0, width }, { 0, 0 } });
-    reference = reference.map(RealScalar.of(-0.5)::add);
+    reference = reference.maps(RealScalar.of(-0.5)::add);
     return LinearFractionalTransform.fit(reference, points);
   }
 
   private static Tensor rectify1(Tensor src, Tensor points, int width, int height) {
     Tensor reference = Tensors.matrixInt( //
         new int[][] { { height, 0 }, { height, width }, { 0, width }, { 0, 0 } });
-    Tensor ref2 = reference.map(RealScalar.of(-0.5)::add);
+    Tensor ref2 = reference.maps(RealScalar.of(-0.5)::add);
     Genesis genesis = ThreePointCoordinate.of(ThreePointScalings.MEAN_VALUE);
     Interpolation interpolation = LinearInterpolation.of(src);
     try {

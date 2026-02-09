@@ -85,7 +85,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     RenderQuality.setQuality(graphics);
     graphics.setColor(Color.BLACK);
-    graphics.drawString(tsp2OptHeuristic.cost().map(Round._5).toString(), 3, 450);
+    graphics.drawString(tsp2OptHeuristic.cost().maps(Round._5).toString(), 3, 450);
     Tensor sequence = getGeodesicControlPoints();
     {
       // TODO ASCONA should use transition !?
@@ -96,7 +96,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
         Tensor p = sequence.get(directedEdge.i());
         Tensor q = sequence.get(directedEdge.j());
         ScalarTensorFunction curve = geodesicSpace.curve(p, q);
-        Tensor tensor = Tensor.of(domain.map(curve).stream().map(manifoldDisplay::point2xy));
+        Tensor tensor = Tensor.of(domain.maps(curve).stream().map(manifoldDisplay::point2xy));
         Path2D line = geometricLayer.toPath2D(tensor);
         graphics.draw(line);
       }
@@ -125,7 +125,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     }
     {
       Show show = new Show();
-      show.add(ListLinePlot.of(Tensor.of(points.stream().map(v -> Tensors.of(v.Get(0), v.Get(1).map(Log.FUNCTION))))));
+      show.add(ListLinePlot.of(Tensor.of(points.stream().map(v -> Tensors.of(v.Get(0), v.Get(1).maps(Log.FUNCTION))))));
       show.render_autoIndent(graphics, new Rectangle(0, 200, 300, 200));
     }
   }
