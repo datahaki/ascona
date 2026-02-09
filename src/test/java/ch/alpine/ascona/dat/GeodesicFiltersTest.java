@@ -21,8 +21,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.nrm.MatrixInfinityNorm;
+import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 

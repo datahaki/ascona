@@ -17,18 +17,21 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Partition;
+import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ImageResize;
 import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.io.Import;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
+import ch.alpine.tensor.qty.Timing;
+import ch.alpine.tensor.qty.UnitConvert;
 import ch.alpine.tensor.sca.N;
 
 public enum ImageMatcher {
   ;
   private static final int SIZE = 8;
+  private static final ScalarUnaryOperator MIN = UnitConvert.SI().to("min");
 
   public static Tensor blocks(Tensor image) {
     List<Integer> list = Dimensions.of(image);
@@ -84,9 +87,9 @@ public enum ImageMatcher {
     // if (!file.isFile())
     {
       Tensor matrix = Outer.of(Vector2Norm::between, b_src, b_dst);
-      System.out.println(timing.seconds() / 60);
+      System.out.println(MIN.apply(timing.seconds()));
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
-      System.out.println(timing.seconds() / 60);
+      System.out.println(MIN.apply(timing.seconds()));
       Export.object(file, bipartiteMatching);
     }
     // else
@@ -101,7 +104,7 @@ public enum ImageMatcher {
       Export.of(folder.resolve("result_" + n2 + ".jpg"), r_dst);
       Tensor r_src = build(Dimensions.of(src), b_src, inverse);
       Export.of(folder.resolve("result_" + n1 + ".jpg"), r_src);
-      System.out.println(timing.seconds() / 60);
+      System.out.println(MIN.apply(timing.seconds()));
       Tensor m_dst = r_dst.add(dst).multiply(RationalScalar.HALF);
       Export.of(folder.resolve("averag_" + n2 + ".jpg"), m_dst);
       Tensor m_src = r_src.add(src).multiply(RationalScalar.HALF);

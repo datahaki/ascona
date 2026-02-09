@@ -20,7 +20,8 @@ import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.ext.Timing;
+import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.qty.Timing;
 
 public class Se2AnimationDemo extends ControlPointsDemo {
   @ReflectionMarker
@@ -78,7 +79,8 @@ public class Se2AnimationDemo extends ControlPointsDemo {
     Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
       if (jToggleAnimate.isSelected()) {
-        Tensor newPoints = Tensor.of(snapshot.stream().map(lieGroup.conjugation(random(10 + timing.seconds() * 0.1, 0))));
+        Tensor newPoints = Tensor
+            .of(snapshot.stream().map(lieGroup.conjugation(random(10 + timing.seconds().multiply(Quantity.of(0.1, "s^-1")).number().doubleValue(), 0))));
         setControlPointsSe2(newPoints);
       }
       RenderQuality.setQuality(graphics);

@@ -12,8 +12,8 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.io.Put;
+import ch.alpine.tensor.qty.Timing;
 
 /** the quaternions in the data set have norm of approximately
  * 1.00005... due to the use of float precision */

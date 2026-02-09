@@ -31,9 +31,10 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
@@ -78,7 +79,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ColorDataGradient colorDataGradient = scatteredSetParam.spinnerColorData;
     if (jToggleAnimate.isSelected()) {
-      double toc = timing.seconds() * 0.3;
+      double toc = timing.seconds().multiply(Quantity.of(0.3, "s^-1")).number().doubleValue();
       int n = snapshot.length();
       Tensor control = Tensors.reserve(n);
       for (int index = 0; index < n; ++index) { //

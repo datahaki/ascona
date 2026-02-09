@@ -38,10 +38,11 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.ext.Cache;
-import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Ceiling;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Floor;
@@ -85,7 +86,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   }
 
   private final Cache<Tensor, ArrayPlotRecord> cache = Cache.of(this::computeImage, 1);
-  private double computeTime = 0;
+  private Scalar computeTime = Quantity.of(0, "s");
 
   protected void recompute() {
     System.out.println("clear");
@@ -143,7 +144,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     leversRender.renderWeights(values);
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);
-    graphics.drawString("compute: " + RealScalar.of(computeTime).maps(Round._3), 0, 30);
+    graphics.drawString("compute: " + computeTime.maps(Round._3), 0, 30);
   }
 
   static void main() {

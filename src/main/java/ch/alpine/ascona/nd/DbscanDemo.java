@@ -22,7 +22,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.opt.nd.Dbscan;
@@ -30,6 +29,8 @@ import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.qty.Timing;
+import ch.alpine.tensor.sca.Round;
 
 public class DbscanDemo extends AbstractDemo {
   @ReflectionMarker
@@ -89,8 +90,8 @@ public class DbscanDemo extends AbstractDemo {
     Timing timing = Timing.started();
     CenterNorms centerNorms = param.centerNorms;
     Integer[] labels = Dbscan.of(points, centerNorms::ndCenterInterface, radius, param.minPts);
-    double seconds = timing.seconds();
-    graphics.drawString(String.format("%6.4f", seconds), 0, 40);
+    Scalar seconds = timing.seconds();
+    graphics.drawString(seconds.maps(Round._4).toString(), 0, 40);
     ColorDataIndexed colorDataIndexed = param.cdl.cyclic();
     ColorDataIndexed colorFillIndexed = colorDataIndexed.deriveWithAlpha(96);
     {

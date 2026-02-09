@@ -21,7 +21,6 @@ import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.opt.nd.CoordinateBounds;
@@ -30,7 +29,9 @@ import ch.alpine.tensor.opt.nd.NdMap;
 import ch.alpine.tensor.opt.nd.NdMatch;
 import ch.alpine.tensor.opt.nd.NdTreeMap;
 import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.red.Max;
+import ch.alpine.tensor.sca.Round;
 
 /* package */ abstract class AbstractTreeMapDemo extends AbstractDemo {
   @ReflectionMarker
@@ -104,10 +105,10 @@ import ch.alpine.tensor.red.Max;
       ndMap.visit(graphicSpherical);
       collection = graphicSpherical.list();
     }
-    double seconds = timing.seconds();
+    Scalar seconds = timing.seconds();
     RenderQuality.setQuality(graphics);
     graphics.setColor(Color.GRAY);
-    graphics.drawString(String.format("%d %d %6.4f", ndMap.size(), collection.size(), seconds), 0, 40);
+    graphics.drawString(String.format("%d %d %s", ndMap.size(), collection.size(), seconds.maps(Round._3)), 0, 40);
     graphics.setColor(new Color(255, 0, 0, 128));
     if (param.nearest) {
       Optional<Scalar> optional = collection.stream() //

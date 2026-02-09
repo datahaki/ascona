@@ -32,10 +32,11 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.ext.Cache;
-import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.mat.IdentityMatrix;
+import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.AbsSquared;
 import ch.alpine.tensor.sca.N;
@@ -77,7 +78,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
 
   private static final int CACHE_SIZE = 1;
   private final Cache<Tensor, ArrayPlotImage> cache = Cache.of(this::computeImage, CACHE_SIZE);
-  private double computeTime = 0;
+  private Scalar computeTime = Quantity.of(0, "s");
 
   protected final void recompute() {
     System.out.println("clear");
@@ -140,7 +141,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
     // ---
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);
-    graphics.drawString("compute: " + RealScalar.of(computeTime).maps(Round._3), 0, 30);
+    graphics.drawString("compute: " + computeTime.maps(Round._3), 0, 30);
   }
 
   void prepare() {

@@ -25,7 +25,8 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.ext.Timing;
+import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.qty.Timing;
 
 public class ClothoidEvolution extends ControlPointsDemo {
   @ReflectionMarker
@@ -68,7 +69,9 @@ public class ClothoidEvolution extends ControlPointsDemo {
     // ClothoidBuilder clothoidBuilder = (ClothoidBuilder) geodesicSpace;
     Tensor beg = sequence.get(0);
     ClothoidBuilder clothoidBuilder2 = PriorityClothoid.of(ClothoidComparators.CURVATURE_HEAD);
-    double time = param.animate ? timing.seconds() * 0.2 : 0;
+    double time = param.animate //
+        ? timing.seconds().multiply(Quantity.of(0.2, "s^-1")).number().doubleValue()
+        : 0;
     for (int index = 1; index < sequence.length(); ++index) {
       Tensor end = sequence.get(index);
       Clothoid clothoid = clothoidBuilder2.curve(beg, end);

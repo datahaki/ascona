@@ -18,8 +18,9 @@ import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.ext.Timing;
 import ch.alpine.tensor.lie.rot.RotationMatrix;
+import ch.alpine.tensor.qty.Quantity;
+import ch.alpine.tensor.qty.Timing;
 
 public class AnimationDemo extends ControlPointsDemo {
   @ReflectionMarker
@@ -86,7 +87,7 @@ public class AnimationDemo extends ControlPointsDemo {
         // TODO ASCONA should be part of manifoldDisplay interface
         switch (param0.manifoldDisplays) {
         case R2: {
-          Tensor vectorExp = RotationMatrix.of(timing.seconds() * 0.2);
+          Tensor vectorExp = RotationMatrix.of(timing.seconds().multiply(Quantity.of(0.2, "s^-1")));
           for (Tensor xya : snapshot) {
             Tensor project = vectorExp.dot(manifoldDisplay.xya2point(xya));
             list.append(manifoldDisplay.point2xya(project));
@@ -94,7 +95,7 @@ public class AnimationDemo extends ControlPointsDemo {
           break;
         }
         case S2: {
-          Tensor vector = random(10 + timing.seconds() * 0.1, 0);
+          Tensor vector = random(10 + timing.seconds().multiply(Quantity.of(0.1, "s^-1")).number().doubleValue(), 0);
           Tensor vectorExp = Rodrigues.vectorExp(vector);
           for (Tensor xya : snapshot) {
             Tensor project = vectorExp.dot(manifoldDisplay.xya2point(xya));
