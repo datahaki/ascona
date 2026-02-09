@@ -7,7 +7,7 @@ import java.util.List;
 import ch.alpine.bridge.fig.ImagePlot;
 import ch.alpine.bridge.fig.MatrixPlot;
 import ch.alpine.bridge.fig.Show;
-import ch.alpine.bridge.fig.ShowDialog;
+import ch.alpine.bridge.fig.ShowWindow;
 import ch.alpine.sophis.crv.dub.DubinsPath;
 import ch.alpine.sophis.crv.dub.DubinsPathComparators;
 import ch.alpine.sophis.crv.dub.FixedRadiusDubins;
@@ -58,6 +58,6 @@ import ch.alpine.tensor.io.ImageFormat;
       show.add(MatrixPlot.of(matrix, ColorDataGradients.CLASSIC));
       list.add(show);
     }
-    ShowDialog.of(list);
+    ShowWindow.of(list);
   }
 }

@@ -19,7 +19,7 @@ import ch.alpine.tensor.io.Import;
 enum ImageReadDemo {
   ;
   static void main() throws IOException {
-    // FIXME
+    // FIXME ASCONA
     Path file = HomeDirectory.path("testimage", "COPY_P1150723_a.JPG");
     switch (2) {
     case 1: {

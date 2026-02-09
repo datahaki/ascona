@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.analysis;
+package ch.alpine.ascona.dat;
 
 import java.io.IOException;
 
@@ -7,7 +7,7 @@ import ch.alpine.ascona.dat.gok.GokartPos;
 import ch.alpine.ascona.dat.gok.PosHz;
 import ch.alpine.bridge.fig.MatrixPlot;
 import ch.alpine.bridge.fig.Show;
-import ch.alpine.bridge.fig.ShowDialog;
+import ch.alpine.bridge.fig.ShowWindow;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.RealScalar;
@@ -28,6 +28,7 @@ import ch.alpine.tensor.sca.Abs;
 
 /* package */ enum Se2PredictionShow {
   ;
+  // TODO ASCONA demo relevant?
   static void main() throws IOException {
     String key = GokartPos.list().get(1);
     PosHz posHz = GokartPos.get(key, 2000);
@@ -75,7 +76,6 @@ import ch.alpine.tensor.sca.Abs;
       Put.of(HomeDirectory.path("lp3_hd.mathematica"), lp3_hd);
     }
     Show show1 = new Show();
-    // FIXME
     {
       show1.add(MatrixPlot.of(err_xy, ColorDataGradients.CLASSIC));
       Export.of(HomeDirectory.path("err_xy.csv"), err_xy);
@@ -89,6 +89,6 @@ import ch.alpine.tensor.sca.Abs;
       Tensor image = Raster.of(err_hd, ColorDataGradients.CLASSIC);
       Export.of(HomeDirectory.Pictures.resolve(Se2PredictionShow.class.getSimpleName() + "_hd.png"), image);
     }
-    ShowDialog.of(show1, show2);
+    ShowWindow.of(show1, show2);
   }
 }

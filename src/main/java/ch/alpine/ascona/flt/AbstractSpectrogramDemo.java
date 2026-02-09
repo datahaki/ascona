@@ -151,7 +151,8 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     if (geodesicSpace instanceof LieGroup lieGroup) {
       TensorUnaryOperator lieDifferences = LieDifferences.of(lieGroup);
-      Scalar sampleRate = MAGNITUDE_PER_SECONDS.apply(Quantity.of(50, "Hz")); // FIXME gokartPoseSpec.gpd().getSampleRate()
+      // FIXME ASCONA gokartPoseSpec.gpd().getSampleRate()
+      Scalar sampleRate = MAGNITUDE_PER_SECONDS.apply(Quantity.of(50, "Hz"));
       Tensor speeds = lieDifferences.apply(refined).multiply(sampleRate);
       if (0 < speeds.length()) {
         int dimensions = speeds.get(0).length();

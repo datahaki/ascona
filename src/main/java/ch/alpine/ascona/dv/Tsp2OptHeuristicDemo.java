@@ -1,11 +1,14 @@
 // code by jph
 package ch.alpine.ascona.dv;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.util.LinkedList;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -17,14 +20,21 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.fit.IntUndirectedEdge;
+import ch.alpine.sophis.fit.MinimumSpanningTree;
 import ch.alpine.sophis.fit.Tsp2OptHeuristic;
 import ch.alpine.sophis.ts.TransitionSpace;
+import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Subdivide;
+import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
+import ch.alpine.tensor.sca.Round;
+import ch.alpine.tensor.sca.exp.Log;
 
 public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   @ReflectionMarker
@@ -72,8 +82,25 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       points.append(Tensors.of(RealScalar.of(points.length()), tsp2OptHeuristic.cost()));
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     RenderQuality.setQuality(graphics);
+    graphics.setColor(Color.BLACK);
+    graphics.drawString(tsp2OptHeuristic.cost().map(Round._5).toString(), 3, 450);
     Tensor sequence = getGeodesicControlPoints();
+    {
+      // TODO ASCONA should use transition !?
+      Tensor domain = Subdivide.of(0.0, 1.0, 10);
+      graphics.setColor(new Color(128, 128, 128, 128));
+      graphics.setStroke(new BasicStroke(1f));
+      for (IntUndirectedEdge directedEdge : list) {
+        Tensor p = sequence.get(directedEdge.i());
+        Tensor q = sequence.get(directedEdge.j());
+        ScalarTensorFunction curve = geodesicSpace.curve(p, q);
+        Tensor tensor = Tensor.of(domain.map(curve).stream().map(manifoldDisplay::point2xy));
+        Path2D line = geometricLayer.toPath2D(tensor);
+        graphics.draw(line);
+      }
+    }
     Color color = Color.BLACK;
     graphics.setColor(color);
     for (Tensor p : sequence) {
@@ -82,7 +109,8 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     }
     int[] index = tsp2OptHeuristic.index();
     TransitionSpace transitionSpace = manifoldDisplay.transitionSpace();
-    graphics.setColor(Color.CYAN);
+    graphics.setColor(new Color(0, 192, 192));
+    graphics.setStroke(new BasicStroke(1.5f));
     for (int i = 0; i < index.length; ++i) {
       Tensor head = sequence.get(index[i]);
       Tensor tail = sequence.get(index[(i + 1) % index.length]);
@@ -90,10 +118,19 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       Path2D line = geometricLayer.toPath2D(tensor);
       graphics.draw(line);
     }
-    Show show = new Show();
-    show.add(ListLinePlot.of(points));
-    show.render_autoIndent(graphics, new Rectangle(0, 0, 300, 200));
+    {
+      Show show = new Show();
+      show.add(ListLinePlot.of(points));
+      show.render_autoIndent(graphics, new Rectangle(0, 0, 300, 200));
+    }
+    {
+      Show show = new Show();
+      show.add(ListLinePlot.of(Tensor.of(points.stream().map(v -> Tensors.of(v.Get(0), v.Get(1).map(Log.FUNCTION))))));
+      show.render_autoIndent(graphics, new Rectangle(0, 200, 300, 200));
+    }
   }
+
+  private List<IntUndirectedEdge> list = new LinkedList<>();
 
   private void shuffle() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
@@ -103,6 +140,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     // ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
     Tensor matrix = StaticHelper.distanceMatrix(manifold, getGeodesicControlPoints());
+    list = MinimumSpanningTree.of(matrix);
     tsp2OptHeuristic = new Tsp2OptHeuristic(matrix);
     points = Tensors.empty();
   }

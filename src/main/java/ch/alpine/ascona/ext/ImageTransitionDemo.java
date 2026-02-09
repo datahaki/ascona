@@ -42,7 +42,7 @@ public class ImageTransitionDemo extends AbstractDemo {
     super(param);
     this.param = param;
     try {
-      im1 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_c(), AffineTransformOp.TYPE_BILINEAR);
+      im1 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_c(), AffineTransformOp.TYPE_BICUBIC);
       im2 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_g(), AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
     } catch (Exception exception) {
       throw new RuntimeException();

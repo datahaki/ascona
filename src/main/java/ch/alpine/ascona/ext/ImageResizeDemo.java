@@ -17,8 +17,8 @@ public class ImageResizeDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     @FieldSlider
-    @FieldClip(min = "5", max = "20")
-    public Integer size = 10;
+    @FieldClip(min = "5", max = "30")
+    public Integer size = 20;
   }
 
   private final Param param;
@@ -39,24 +39,21 @@ public class ImageResizeDemo extends AbstractDemo {
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     int width = bufferedImage.getWidth();
     int height = bufferedImage.getHeight();
-    int[] hints = { //
-        Image.SCALE_DEFAULT, //
-        Image.SCALE_FAST, //
-        Image.SCALE_SMOOTH, // good quality
-        Image.SCALE_REPLICATE, //
-        Image.SCALE_AREA_AVERAGING // good quality
-    };
-    int count = 0;
     int size = param.size;
-    for (int hint : hints) {
-      Graphics2D g = (Graphics2D) graphics.create();
-      g.scale(size * 0.1, size * 0.1);
-      Image image = bufferedImage; // .getScaledInstance(width * size / 10, height * size / 10, hint);
-      g.drawImage(image, 0, count * (height * size / 10), null);
-      ++count;
-    }
-    graphics.drawImage( //
-        ImageResize.of(bufferedImage, width * size / 10, height * size / 10, AffineTransformOp.TYPE_NEAREST_NEIGHBOR), 300, 0, null);
+    Graphics2D g = (Graphics2D) graphics.create();
+    Image image = bufferedImage;
+    g.drawImage(image, 0, 0, null);
+    final int piw = width * size / 10;
+    final int pih = height * size / 10;
+    int piy = height;
+    graphics.drawImage(ImageResize.of(bufferedImage, //
+        piw, pih, AffineTransformOp.TYPE_NEAREST_NEIGHBOR), 0, piy, null);
+    piy += pih;
+    graphics.drawImage(ImageResize.of(bufferedImage, //
+        piw, pih, AffineTransformOp.TYPE_BILINEAR), 0, piy, null);
+    piy += pih;
+    graphics.drawImage(ImageResize.of(bufferedImage, //
+        piw, pih, AffineTransformOp.TYPE_BICUBIC), 0, piy, null);
   }
 
   static void main() {
