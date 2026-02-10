@@ -2,7 +2,6 @@
 package ch.alpine.ascona.ext;
 
 import java.awt.Graphics2D;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.ren.AxesRender;
@@ -30,11 +29,11 @@ public class ImageRenderDemo extends AbstractDemo {
 
   public ImageRenderDemo() {
     bufferedImage = VehicleStatic.INSTANCE.bufferedImage_c();
-    bufferedImag2 = ImageResize.of(bufferedImage, bufferedImage.getWidth(), bufferedImage.getHeight(), AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+    bufferedImag2 = ImageResize.DEGREE_1.of(bufferedImage, bufferedImage.getWidth(), bufferedImage.getHeight());
     Tensor tensor = ImageFormat.from(bufferedImage);
     Tensor graysc = TensorMap.of(rgba -> Mean.of(rgba.extract(0, 3)), tensor, 2);
     grayscale = ImageFormat.of(graysc);
-    grayscal2 = ImageResize.of(grayscale, grayscale.getWidth() + 10, grayscale.getHeight() + 10, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+    grayscal2 = ImageResize.DEGREE_0.of(grayscale, grayscale.getWidth() + 10, grayscale.getHeight() + 10);
   }
 
   @Override // from RenderInterface

@@ -3,7 +3,6 @@ package ch.alpine.ascona.ext;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.win.AbstractDemo;
@@ -46,14 +45,10 @@ public class ImageResizeDemo extends AbstractDemo {
     final int piw = width * size / 10;
     final int pih = height * size / 10;
     int piy = height;
-    graphics.drawImage(ImageResize.of(bufferedImage, //
-        piw, pih, AffineTransformOp.TYPE_NEAREST_NEIGHBOR), 0, piy, null);
-    piy += pih;
-    graphics.drawImage(ImageResize.of(bufferedImage, //
-        piw, pih, AffineTransformOp.TYPE_BILINEAR), 0, piy, null);
-    piy += pih;
-    graphics.drawImage(ImageResize.of(bufferedImage, //
-        piw, pih, AffineTransformOp.TYPE_BICUBIC), 0, piy, null);
+    for (ImageResize imageResize : ImageResize.values()) {
+      graphics.drawImage(imageResize.of(bufferedImage, piw, pih), 0, piy, null);
+      piy += pih;
+    }
   }
 
   static void main() {

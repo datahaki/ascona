@@ -64,12 +64,12 @@ public enum ImageMatcher {
     Tensor dst = Import.of(folder.resolve(n2 + ".jpg")).maps(N.DOUBLE);
     {
       List<Integer> list = Dimensions.of(src);
-      src = ImageResize.of(src, list.get(0) / 2, list.get(1) / 2);
+      src = ImageResize.DEGREE_0.of(src, list.get(0) / 2, list.get(1) / 2);
       Export.of(folder.resolve("a_small.jpg"), src);
     }
     {
       List<Integer> list = Dimensions.of(dst);
-      dst = ImageResize.of(dst, list.get(0) / 2, list.get(1) / 2);
+      dst = ImageResize.DEGREE_0.of(dst, list.get(0) / 2, list.get(1) / 2);
       Export.of(folder.resolve("b_small.jpg"), dst);
     }
     if (!Dimensions.of(src).equals(Dimensions.of(dst)))

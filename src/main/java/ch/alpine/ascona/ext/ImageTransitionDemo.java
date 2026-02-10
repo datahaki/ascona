@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.LinearGradientPaint;
 import java.awt.Paint;
 import java.awt.Rectangle;
-import java.awt.image.AffineTransformOp;
 import java.util.Objects;
 
 import ch.alpine.ascony.win.AbstractDemo;
@@ -18,6 +17,7 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.img.ImageResize;
 
 public class ImageTransitionDemo extends AbstractDemo {
   @ReflectionMarker
@@ -42,8 +42,8 @@ public class ImageTransitionDemo extends AbstractDemo {
     super(param);
     this.param = param;
     try {
-      im1 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_c(), AffineTransformOp.TYPE_BICUBIC);
-      im2 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_g(), AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+      im1 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_c());
+      im2 = new ScalableImage(VehicleStatic.INSTANCE.bufferedImage_g());
     } catch (Exception exception) {
       throw new RuntimeException();
     }
@@ -56,12 +56,12 @@ public class ImageTransitionDemo extends AbstractDemo {
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     Rectangle rectangle = new Rectangle(100, 50, dimension.width - 200, dimension.height - 100);
     // ---
-    graphics.drawImage(im2.getScaledInstance(rectangle.width, rectangle.height), rectangle.x, rectangle.y, null);
+    graphics.drawImage(im2.getScaledInstance(ImageResize.DEGREE_3, rectangle.width, rectangle.height), rectangle.x, rectangle.y, null);
     int ext = (int) (rectangle.width * param.ex.number().floatValue());
     int x = (int) ((rectangle.width + 2 * ext) * param.c1.number().floatValue()) - ext;
     int _x = Math.max(0, x);
     graphics.setClip(rectangle.x + _x, rectangle.y, rectangle.width - _x, rectangle.height);
-    graphics.drawImage(im1.getScaledInstance(rectangle.width, rectangle.height), rectangle.x, rectangle.y, null);
+    graphics.drawImage(im1.getScaledInstance(ImageResize.DEGREE_0, rectangle.width, rectangle.height), rectangle.x, rectangle.y, null);
     graphics.setClip(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     Color color_lo = new Color(255, 255, 255, 0);
     Color color_hi = new Color(0, 0, 0, 192);
