@@ -96,7 +96,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
 
     @Override
     public Scalar apply(Tensor xyz) {
-      MeanDefect meanDefect = new MeanDefect(sequence, weights, new SnExponential(xyz));
+      MeanDefect meanDefect = MeanDefect.of(sequence, weights, new SnExponential(xyz));
       return FrobeniusNorm.of(meanDefect.tangent());
     }
   }
@@ -146,7 +146,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
           if (Sign.isPositive(z2)) {
             Scalar z = Sqrt.FUNCTION.apply(z2);
             Tensor xyz = point.append(z);
-            MeanDefect meanDefect = new MeanDefect(tsf.sequence, tsf.weights, new SnExponential(xyz));
+            MeanDefect meanDefect = MeanDefect.of(tsf.sequence, tsf.weights, new SnExponential(xyz));
             Tensor v = meanDefect.tangent();
             renderTangentsPtoX(geometricLayer, graphics, xyz, v.multiply(RealScalar.of(0.2)));
           } else
@@ -175,7 +175,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Tensor tensor = Tensors.empty();
     for (int count = 0; count < iter; ++count) {
-      MeanDefect meanDefect = new MeanDefect(sequence, weights, homogeneousSpace.exponential(shifted));
+      MeanDefect meanDefect =  MeanDefect.of(sequence, weights, homogeneousSpace.exponential(shifted));
       shifted = meanDefect.shifted();
       tensor.append(shifted);
     }

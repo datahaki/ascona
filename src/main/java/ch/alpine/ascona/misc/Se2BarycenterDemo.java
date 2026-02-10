@@ -20,7 +20,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.RotateRight;
+import ch.alpine.tensor.alg.Rotate;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataIndexed;
@@ -70,7 +70,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
               Scalar w = RationalScalar.HALF;
               Tensor weights = Tensors.of(w, x, y);
               weights.append(RealScalar.ONE.subtract(Total.ofVector(weights)));
-              weights = RotateRight.of(weights, 1);
+              weights = Rotate.PUSH.of(weights, 1);
               Tensor mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
               array[c0][c1] = mean;
               ++c1;
