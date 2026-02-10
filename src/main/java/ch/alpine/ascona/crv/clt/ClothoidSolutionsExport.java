@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.crv.clt;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
@@ -98,7 +97,7 @@ import ch.alpine.tensor.sca.Clips;
     }
   }
 
-  static void main() throws IOException {
+  static void main() throws Exception {
     ClothoidSolutionsExport clothoidSolutionsExport = //
         new ClothoidSolutionsExport(40, 40, Pi.VALUE);
     // new ClothoidSolutionsExport(20, 120, Pi.TWO.multiply(RealScalar.of(3)));
