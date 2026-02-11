@@ -22,6 +22,7 @@ import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.crv.clt.ClothoidContext;
 import ch.alpine.sophis.crv.clt.ClothoidSolutions;
@@ -48,6 +49,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   private static final Tensor LAMBDAS = CLOTHOID_SOLUTIONS.probes();
   private static final Tensor POINTER = Tensors.fromString("{{0, 0}, {-0.2, -1}, {+0.2, -1}}");
 
+  @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
       super(false, ManifoldDisplays.CL_ONLY);

@@ -69,6 +69,7 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     try {
+      // FIXME ASCONA
       // Font.TYPE1_FONT
       // Font[] fonts = Font.createFonts(new File("/usr/share/fonts/urw-base35/Z003-MediumItalic.t1"));
       Font[] fonts = Font.createFonts(new File("/home/datahaki/.local/share/fonts/DS Elzevier Initialen.ttf"));

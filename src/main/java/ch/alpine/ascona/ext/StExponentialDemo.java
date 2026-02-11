@@ -37,7 +37,8 @@ public class StExponentialDemo extends AbstractDemo {
   }
 
   private final Param param;
-  private final int n = 10;
+  private final Tensor circle = CirclePoints.of(50);
+  private final int n = 5;
   private final int k = 2;
   private final StiefelManifold stiefelManifold = new StiefelManifold(n, k);
   private Tensor p;
@@ -52,6 +53,7 @@ public class StExponentialDemo extends AbstractDemo {
     this.param = param;
     p = RandomSample.of(stiefelManifold);
     v = new TStMemberQ(p).projection(RandomVariate.of(NormalDistribution.of(0, 0.4), k, n));
+    circle.append(circle.get(0));
   }
 
   @Override // from RenderInterface
@@ -61,7 +63,7 @@ public class StExponentialDemo extends AbstractDemo {
     Clip clip = Clips.translation(param.scalar).apply(Clips.absolute(2));
     Tensor res = Subdivide.increasing(clip, 20).maps(stf);
     Show show = new Show();
-    show.add(ListLinePlot.of(CirclePoints.of(50)));
+    show.add(ListLinePlot.of(circle));
     for (int i = 0; i < n; ++i)
       show.add(ListLinePlot.of(res.get(Tensor.ALL, Tensor.ALL, i)));
     show.setCbb(CoordinateBoundingBox.of(Clips.absoluteOne(), Clips.absoluteOne()));

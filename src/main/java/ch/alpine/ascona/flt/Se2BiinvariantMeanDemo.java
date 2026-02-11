@@ -24,7 +24,7 @@ public final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
   private final SpinnerLabel<Integer> spinnerConvolution;
 
   public Se2BiinvariantMeanDemo() {
-    super(ManifoldDisplays.SE2_ONLY);
+    super(ManifoldDisplays.SE2_ONLY); // TODO passing this param is no good !!!
     {
       spinnerFilters.setValue(Se2BiinvariantMeans.LINEAR);
       spinnerFilters.addToComponent(timerFrame.jToolBar, "se2 biinvariant mean");

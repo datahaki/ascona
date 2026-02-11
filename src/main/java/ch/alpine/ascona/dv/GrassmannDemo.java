@@ -23,6 +23,7 @@ import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.pdf.RandomSample;
 
+// FIXME
 public final class GrassmannDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {

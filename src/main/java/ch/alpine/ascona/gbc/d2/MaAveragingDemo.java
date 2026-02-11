@@ -55,6 +55,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
 
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;
+    // TODO adaptive resolution
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
     public Integer resolution = 40;
     public ColorDataGradients cdg = ColorDataGradients.PARULA;

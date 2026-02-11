@@ -3,13 +3,14 @@ package ch.alpine.ascona.ext;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascony.win.AbstractDemo;
+import javax.swing.JComponent;
+
 import ch.alpine.bridge.col.Cielab;
-import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -21,85 +22,76 @@ import ch.alpine.tensor.red.Times;
 
 /** uses ColorSpace.CS_CIEXYZ to interpolate colors */
 // TODO ASCONA add labels for each method, perhaps use graphs!
-public class ColorInterpDemo extends AbstractDemo {
+@ReflectionMarker
+public class ColorInterpDemo implements ManipulateProvider {
   private static final ColorSpace COLOR_SPACE = ColorSpace.getInstance(ColorSpace.CS_CIEXYZ);
-
-  @ReflectionMarker
-  public static class Param {
-    public Color c1 = Color.RED;
-    public Color c2 = Color.BLUE;
-    public Tensor offset = Tensors.vector(0, 0, 0);
-    public Tensor weights = Tensors.vector(1, 1, 1);
-  }
-
-  private final Param param;
-
-  public ColorInterpDemo() {
-    this(new Param());
-  }
-
-  public ColorInterpDemo(Param param) {
-    super(param);
-    this.param = param;
-  }
+  public Color c1 = Color.RED;
+  public Color c2 = Color.BLUE;
+  public Tensor offset = Tensors.vector(0, 0, 0);
+  public Tensor weights = Tensors.vector(1, 1, 1);
 
   @Override
-  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public JComponent getJComponent() {
     float[] rgba1 = new float[4];
-    param.c1.getComponents(rgba1);
+    c1.getComponents(rgba1);
     float[] rgba2 = new float[4];
-    param.c2.getComponents(rgba2);
-    // ---
-    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    final int width = dimension.width;
-    final int HEIGHT_INCR = dimension.height / 4;
-    final int height = HEIGHT_INCR - 10;
-    {
-      Tensor tensor = Tensors.of(Subdivide.of(Tensors.vectorFloat(rgba1), Tensors.vectorFloat(rgba2), width));
-      tensor = tensor.multiply(RealScalar.of(255));
-      BufferedImage bufferedImage = ImageFormat.of(tensor);
-      graphics.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth(), height, null);
-    }
-    // ---
-    int piy = HEIGHT_INCR;
-    {
-      float[] xyz1 = COLOR_SPACE.fromRGB(rgba1);
-      float[] xyz2 = COLOR_SPACE.fromRGB(rgba2);
-      Tensor result = Tensors.empty();
-      for (Tensor xyz : Subdivide.of( //
-          Times.of(Tensors.vectorFloat(xyz1), param.weights).add(param.offset), //
-          Times.of(Tensors.vectorFloat(xyz2), param.weights).add(param.offset), //
-          width)) {
-        float[] rgb = COLOR_SPACE.toRGB(Primitives.toFloatArray(xyz));
-        Tensor append = Tensors.vectorFloat(rgb);
-        result.append(append.multiply(RealScalar.of(255)).append(RealScalar.of(255)));
+    c2.getComponents(rgba2);
+    JComponent jComponent = new JComponent() {
+      @Override
+      protected void paintComponent(Graphics graphics) {
+        Dimension dimension = getSize();
+        final int width = dimension.width;
+        final int HEIGHT_INCR = dimension.height / 4;
+        final int height = HEIGHT_INCR - 10;
+        {
+          Tensor tensor = Tensors.of(Subdivide.of(Tensors.vectorFloat(rgba1), Tensors.vectorFloat(rgba2), width));
+          tensor = tensor.multiply(RealScalar.of(255));
+          BufferedImage bufferedImage = ImageFormat.of(tensor);
+          graphics.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth(), height, null);
+        }
+        // ---
+        int piy = HEIGHT_INCR;
+        {
+          float[] xyz1 = COLOR_SPACE.fromRGB(rgba1);
+          float[] xyz2 = COLOR_SPACE.fromRGB(rgba2);
+          Tensor result = Tensors.empty();
+          for (Tensor xyz : Subdivide.of( //
+              Times.of(Tensors.vectorFloat(xyz1), weights).add(offset), //
+              Times.of(Tensors.vectorFloat(xyz2), weights).add(offset), //
+              width)) {
+            float[] rgb = COLOR_SPACE.toRGB(Primitives.toFloatArray(xyz));
+            Tensor append = Tensors.vectorFloat(rgb);
+            result.append(append.multiply(RealScalar.of(255)).append(RealScalar.of(255)));
+          }
+          BufferedImage bufferedImage = ImageFormat.of(Tensors.of(result));
+          graphics.drawImage(bufferedImage, 0, piy, bufferedImage.getWidth(), height, null);
+          piy += HEIGHT_INCR;
+        }
+        for (Cielab cielab : Cielab.values()) {
+          float[] xyz1 = COLOR_SPACE.fromRGB(rgba1);
+          float[] xyz2 = COLOR_SPACE.fromRGB(rgba2);
+          Tensor result = Tensors.empty();
+          Tensor lab1 = cielab.xyz2lab(Tensors.vectorFloat(xyz1));
+          Tensor lab2 = cielab.xyz2lab(Tensors.vectorFloat(xyz2));
+          for (Tensor lab : Subdivide.of( //
+              Times.of(lab1, weights).add(offset), //
+              Times.of(lab2, weights).add(offset), //
+              width)) {
+            Tensor xyz = cielab.lab2xyz(lab);
+            float[] rgb = COLOR_SPACE.toRGB(Primitives.toFloatArray(xyz));
+            Tensor append = Tensors.vectorFloat(rgb);
+            result.append(append.multiply(RealScalar.of(255)).append(RealScalar.of(255)));
+          }
+          BufferedImage bufferedImage = ImageFormat.of(Tensors.of(result));
+          graphics.drawImage(bufferedImage, 0, piy, bufferedImage.getWidth(), height, null);
+          piy += HEIGHT_INCR;
+        }
       }
-      BufferedImage bufferedImage = ImageFormat.of(Tensors.of(result));
-      graphics.drawImage(bufferedImage, 0, piy, bufferedImage.getWidth(), height, null);
-      piy += HEIGHT_INCR;
-    }
-    for (Cielab cielab : Cielab.values()) {
-      float[] xyz1 = COLOR_SPACE.fromRGB(rgba1);
-      float[] xyz2 = COLOR_SPACE.fromRGB(rgba2);
-      Tensor result = Tensors.empty();
-      Tensor lab1 = cielab.xyz2lab(Tensors.vectorFloat(xyz1));
-      Tensor lab2 = cielab.xyz2lab(Tensors.vectorFloat(xyz2));
-      for (Tensor lab : Subdivide.of( //
-          Times.of(lab1, param.weights).add(param.offset), //
-          Times.of(lab2, param.weights).add(param.offset), //
-          width)) {
-        Tensor xyz = cielab.lab2xyz(lab);
-        float[] rgb = COLOR_SPACE.toRGB(Primitives.toFloatArray(xyz));
-        Tensor append = Tensors.vectorFloat(rgb);
-        result.append(append.multiply(RealScalar.of(255)).append(RealScalar.of(255)));
-      }
-      BufferedImage bufferedImage = ImageFormat.of(Tensors.of(result));
-      graphics.drawImage(bufferedImage, 0, piy, bufferedImage.getWidth(), height, null);
-      piy += HEIGHT_INCR;
-    }
+    };
+    return jComponent;
   }
 
   static void main() {
-    launch();
+    new ColorInterpDemo().run();
   }
 }

@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
-import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -47,7 +46,7 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
+    // AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor start = control.get(0);
     Tensor mouse = control.get(1);
