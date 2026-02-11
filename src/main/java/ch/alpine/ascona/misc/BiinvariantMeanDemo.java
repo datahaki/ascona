@@ -3,7 +3,9 @@ package ch.alpine.ascona.misc;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.util.Map;
@@ -18,6 +20,8 @@ import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ListLinePlot;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -26,20 +30,26 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.fit.HsWeiszfeldMethod;
 import ch.alpine.sophis.fit.SpatialMedian;
+import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.s.SnPhongMean;
 import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.mat.Tolerance;
+import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.exp.Log10;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 public class BiinvariantMeanDemo extends ControlPointsDemo {
@@ -100,12 +110,32 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     Tensor weights = ConstantArray.of(RationalScalar.of(1, length), length);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._03);
     Tensor mean = null;
     try {
       mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
     } catch (Exception e) {
-      System.err.println("mean does not exist");
+      graphics.setColor(Color.RED);
+      graphics.drawString("mean does not exist", 0, 30);
+    }
+    try {
+      Tensor shifted = sequence.get(0);
+      if (homogeneousSpace.toString().equals("S"))
+        shifted = SnPhongMean.INSTANCE.mean(sequence, weights);
+      Tensor points = Tensors.empty();
+      for (int iteration = 0; iteration < 100; ++iteration) {
+        MeanDefect meanDefect = MeanDefect.of(sequence, weights, homogeneousSpace.exponential(shifted));
+        shifted = meanDefect.shifted();
+        Scalar err = FrobeniusNorm.of(meanDefect.tangent());
+        if (Tolerance.CHOP.isZero(err))
+          break;
+        points.append(Tensors.of(RealScalar.of(iteration), Log10.FUNCTION.apply(err)));
+      }
+      Show show = new Show();
+      show.add(ListLinePlot.of(points));
+      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, 400));
+    } catch (Exception e) {
+      System.err.println("mean iteration failed");
     }
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.setStroke(STROKE);
