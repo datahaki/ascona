@@ -131,7 +131,14 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke());
     // ---
     TSF tsf = new TSF();
-    Tensor mean = SnManifold.INSTANCE.biinvariantMean().mean(tsf.sequence, tsf.weights);
+    Tensor mean = null;
+    try {
+      mean = SnManifold.INSTANCE.biinvariantMean().mean(tsf.sequence, tsf.weights);
+    } catch (Exception e) {
+      graphics.setColor(Color.RED);
+      graphics.drawString("no mean avaiable", 0, 25);
+      // ---
+    }
     if (param.vector) {
       double rad = 1;
       Tensor dx = Subdivide.of(-rad, +rad, res);
