@@ -16,7 +16,6 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.BezierFunction;
 
 /** visualization of geodesic average along geodesics */
-// TODO ASCONA manifDispl should have separate control points and zooms!
 public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {

@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
+import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.api.BufferedImageSupplier;
@@ -103,8 +105,11 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     Tensor refined = protected_render(geometricLayer, graphics);
     // ---
     if (this instanceof BufferedImageSupplier bufferedImageSupplier && //
-        gokartPoseSpec.symi)
-      graphics.drawImage(bufferedImageSupplier.bufferedImage(), 0, 0, null);
+        gokartPoseSpec.symi) {
+      Optional<BufferedImage> optional = Optional.ofNullable(bufferedImageSupplier.bufferedImage());
+      if (optional.isPresent())
+        graphics.drawImage(optional.orElseThrow(), 0, 0, null);
+    }
     // ---
     graphics.setStroke(new BasicStroke(1f));
     if (conv) {

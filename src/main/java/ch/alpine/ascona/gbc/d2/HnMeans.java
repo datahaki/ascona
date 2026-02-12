@@ -4,11 +4,11 @@ package ch.alpine.ascona.gbc.d2;
 import java.util.function.Supplier;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.h.Hyperboloid;
+import ch.alpine.sophus.hs.h.HManifold;
 
 /** RMF(p,t,w)[x] == w.t for w = IDC(p,x) */
 /* package */ enum HnMeans implements Supplier<BiinvariantMean> {
-  EXACT(Hyperboloid.INSTANCE.biinvariantMean()),
+  EXACT(HManifold.INSTANCE.biinvariantMean()),
   // FAST(HnFastMean.INSTANCE),
   // PHONG(HnPhongMean.INSTANCE),
   ;

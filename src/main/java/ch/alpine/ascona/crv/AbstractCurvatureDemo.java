@@ -4,7 +4,9 @@ package ch.alpine.ascona.crv;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Optional;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.api.CurveVisualSet;
@@ -27,12 +29,12 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   public static class AbstractCurvatureParam extends AsconaParam {
+    public Boolean graph = true;
+    public Boolean curvt = true;
+
     public AbstractCurvatureParam(List<ManifoldDisplays> list) {
       super(true, list);
     }
-
-    public Boolean graph = this instanceof BufferedImageSupplier;
-    public Boolean curvt = true;
   }
 
   private final AbstractCurvatureParam abstractCurvatureParam;
@@ -46,8 +48,12 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
   public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor refined = protected_render(geometricLayer, graphics);
-    if (abstractCurvatureParam.graph && this instanceof BufferedImageSupplier bufferedImageSupplier)
-      graphics.drawImage(bufferedImageSupplier.bufferedImage(), 0, 0, null);
+    if (abstractCurvatureParam.graph && //
+        this instanceof BufferedImageSupplier bufferedImageSupplier) {
+      Optional<BufferedImage> optional = Optional.ofNullable(bufferedImageSupplier.bufferedImage());
+      if (optional.isPresent())
+        graphics.drawImage(optional.orElseThrow(), 0, 0, null);
+    }
     if (abstractCurvatureParam.curvt && 1 < refined.length()) {
       Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Show show = new Show(COLOR_DATA_INDEXED);

@@ -58,12 +58,10 @@ public class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implemen
   @Override // from BufferedImageSupplier
   public BufferedImage bufferedImage() {
     GeodesicFilters geodesicFilters = spinnerFilters.getValue();
-    switch (geodesicFilters) {
-    case GEODESIC:
-      return SymLinkImages.ofGC(gokartPoseSpec.kernel.get(), param.radius).bufferedImage();
-    default:
-      return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-    }
+    return switch (geodesicFilters) {
+    case GEODESIC -> SymLinkImages.ofGC(gokartPoseSpec.kernel.get(), param.radius).bufferedImage();
+    default -> null;
+    };
   }
 
   static void main() {

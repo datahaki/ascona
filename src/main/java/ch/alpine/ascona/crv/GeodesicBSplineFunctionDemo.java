@@ -26,7 +26,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.red.Times;
 
 public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
-  private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+  private BufferedImage bufferedImage;
 
   public GeodesicBSplineFunctionDemo() {
     this(new AbstractCurveParam(ManifoldDisplays.ALL));

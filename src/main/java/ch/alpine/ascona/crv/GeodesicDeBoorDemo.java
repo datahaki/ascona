@@ -34,8 +34,7 @@ import ch.alpine.tensor.red.Times;
 // FIXME ASCONA ALG demo does not seem correct
 @ReflectionMarker
 public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
-  // TODO ASCONA REDUNDANT to GeodesicBSplineFunctionDemo
-  private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+  private BufferedImage bufferedImage;
 
   public GeodesicDeBoorDemo() {
     super(new AbstractCurveParam(ManifoldDisplays.ALL));

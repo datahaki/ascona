@@ -26,9 +26,8 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.mat.pi.LeastSquares;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
-// TODO ASCONA misnomer
-public class CirclePointDemo extends ControlPointsDemo {
-  public CirclePointDemo() {
+public class AffineCoordinateDemo extends ControlPointsDemo {
+  public AffineCoordinateDemo() {
     super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
     // ---
     Tensor sequence = Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(2)).stream().map(PadRight.zeros(3)));

@@ -45,7 +45,7 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
     public Scalar exponent = RealScalar.ONE;
   }
 
-  private BufferedImage bufferedImage = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+  private BufferedImage bufferedImage;
   private final Param param;
 
   public KnotsBSplineFunctionDemo() {
