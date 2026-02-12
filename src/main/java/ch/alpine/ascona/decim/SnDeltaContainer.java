@@ -32,7 +32,7 @@ public class SnDeltaContainer {
     differences = HsDifferences.of(SnManifold.INSTANCE).apply(sequence);
     TSnMemberQ tSnMemberQ = new TSnMemberQ(sequence.get(0));
     t0_deltas = Tensor.of(IntStream.range(0, differences.length()).mapToObj( //
-        index -> tSnMemberQ.requireMember(endos.get(index).dot(differences.get(index, 1)))));
+        index -> tSnMemberQ.require(endos.get(index).dot(differences.get(index, 1)))));
     // ---
     Tensor domain = Range.of(0, t0_deltas.length());
     for (int d = 1; d < 3; ++d) {

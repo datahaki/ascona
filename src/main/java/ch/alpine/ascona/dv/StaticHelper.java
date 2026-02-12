@@ -12,7 +12,7 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
   ;
   public static Tensor distanceMatrix(Manifold manifold, Tensor sequence) {
     Tensor matrix = distanceMatrix(manifold, sequence, sequence);
-    return SymmetricMatrixQ.INSTANCE.isMember(matrix) //
+    return SymmetricMatrixQ.INSTANCE.test(matrix) //
         ? matrix
         : Symmetrize.of(matrix);
   }

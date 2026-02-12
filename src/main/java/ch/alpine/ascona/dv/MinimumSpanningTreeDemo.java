@@ -136,7 +136,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   public Tensor distanceMatrix(Manifold manifold, Tensor sequence) {
     Sedarim sedarim = param1.biinvariants.ofSafe(manifold).distances(sequence);
     Tensor matrix = Tensor.of(sequence.stream().map(sedarim::sunder));
-    return SymmetricMatrixQ.INSTANCE.isMember(matrix) //
+    return SymmetricMatrixQ.INSTANCE.test(matrix) //
         ? matrix
         : Symmetrize.of(matrix);
   }

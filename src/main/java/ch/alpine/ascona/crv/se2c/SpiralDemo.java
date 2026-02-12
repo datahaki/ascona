@@ -62,10 +62,11 @@ public class SpiralDemo extends AbstractDemo {
     graphics.drawString(spiralParam.scalarTensorFunction.toString(), 0, 20);
     {
       Show show = new Show();
+      show.setPlotLabel(param.spiralParam.toString());
       show.add(ParametricPlot.of(s -> spiralParam.scalarTensorFunction.apply(s).extract(0, 2), clip));
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       show.setAspectRatioOne();
-      show.render(graphics, new Rectangle(dimension.width - 420, 30, 400, 400));
+      show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, 400));
     }
   }
 

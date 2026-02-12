@@ -70,7 +70,7 @@ public class ExponentialDemo extends ControlPointsDemo {
         pathRender.setCurve(hull, true);
         pathRender.render(geometricLayer, graphics);
       }
-      if (OriginEnclosureQ.INSTANCE.isMember(levers2)) {
+      if (OriginEnclosureQ.INSTANCE.test(levers2)) {
         GenesisDeque dequeGenesis = (GenesisDeque) genesisDequeProperties.genesis();
         Deque<WeightsFactors> deque = dequeGenesis.deque(levers2);
         {

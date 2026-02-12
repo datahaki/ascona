@@ -3,6 +3,7 @@ package ch.alpine.ascona.misc;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 import ch.alpine.ascony.win.AbstractDemo;
@@ -69,7 +70,7 @@ public class StExponentialDemo extends AbstractDemo {
     show.setCbb(CoordinateBoundingBox.of(Clips.absoluteOne(), Clips.absoluteOne()));
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
     show.setAspectRatioOne();
-    show.render(graphics, new Rectangle(20, 20, dimension.width - 50, dimension.height - 50));
+    show.render_autoIndent(graphics, new Rectangle(new Point(), dimension));
   }
 
   static void main() {
