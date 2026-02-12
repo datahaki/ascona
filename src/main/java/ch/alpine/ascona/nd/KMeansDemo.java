@@ -108,7 +108,7 @@ public class KMeansDemo extends ControlPointsDemo {
     // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     Tensor seeds = getGeodesicControlPoints();
     if (0 < seeds.length()) {
-      kMeans = new KMeans(biinvariant.distances(sequence), new CenterMean(homogeneousSpace.biinvariantMean()), sequence);
+      kMeans = new KMeans(biinvariant.relative_distances(sequence), new CenterMean(homogeneousSpace.biinvariantMean()), sequence);
       kMeans.setSeeds(seeds);
       Timing timing = Timing.started();
       int iterations = kMeans.complete();

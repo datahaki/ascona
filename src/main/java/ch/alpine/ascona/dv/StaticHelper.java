@@ -18,7 +18,7 @@ import ch.alpine.tensor.mat.SymmetricMatrixQ;
   }
 
   public static Tensor distanceMatrix(Manifold manifold, Tensor sequence, Tensor target) {
-    Sedarim sedarim = Biinvariants.METRIC.ofSafe(manifold).distances(target);
+    Sedarim sedarim = Biinvariants.METRIC.ofSafe(manifold).relative_distances(target);
     return Tensor.of(sequence.stream().map(sedarim::sunder));
   }
 }
