@@ -4,6 +4,7 @@ package ch.alpine.ascona.misc;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
@@ -17,6 +18,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListLinePlot;
@@ -30,6 +32,7 @@ import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.fit.HsWeiszfeldMethod;
 import ch.alpine.sophis.fit.SpatialMedian;
 import ch.alpine.sophus.bm.MeanDefect;
+import ch.alpine.sophus.bm.ReducingMeanEstimate;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.s.SnPhongMean;
 import ch.alpine.tensor.RationalScalar;
@@ -109,6 +112,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     Tensor weights = ConstantArray.of(RationalScalar.of(1, length), length);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    Tensor mean_approximation = new ReducingMeanEstimate(homogeneousSpace).estimate(sequence, weights);
     Tensor mean = null;
     try {
       mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
@@ -119,7 +123,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     try {
       Tensor shifted = sequence.get(0);
       if (homogeneousSpace.toString().equals("S"))
-        shifted = SnPhongMean.INSTANCE.mean(sequence, weights);
+        shifted = SnPhongMean.INSTANCE.estimate(sequence, weights);
       Tensor points = Tensors.empty();
       for (int iteration = 0; iteration < 100; ++iteration) {
         MeanDefect meanDefect = MeanDefect.of(sequence, weights, homogeneousSpace.exponential(shifted));
@@ -174,10 +178,37 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
         geometricLayer.popMatrix();
       }
     } else {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, mean, geometricLayer, graphics);
-      leversRender.renderOrigin();
-      leversRender.renderIndexP();
-      leversRender.renderIndexX();
+      {
+        LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, mean, geometricLayer, graphics);
+        leversRender.renderOrigin();
+        leversRender.renderIndexP();
+        leversRender.renderIndexX();
+      }
+      {
+        Tensor origin = mean_approximation;
+        Tensor shape = manifoldDisplay.shape();
+        // graphics.setFont(FONT_LABELS);
+        FontMetrics fontMetrics = graphics.getFontMetrics();
+        int fheight = fontMetrics.getAscent();
+        graphics.setColor(Color.BLACK);
+        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
+        Rectangle rectangle = geometricLayer.toPath2D(shape, true).getBounds();
+        int pix = rectangle.x;
+        int piy = rectangle.y + rectangle.height + (-rectangle.height + fheight) / 2;
+        {
+          String string = "apx";
+          pix -= fontMetrics.stringWidth(string);
+          graphics.drawString(string, pix, piy - fheight / 3);
+        }
+        geometricLayer.popMatrix();
+        PointsRender ORIGIN_RENDER_0 = //
+            new PointsRender(new Color(128, 64, 64, 128), new Color(128, 64, 64, 255));
+        ORIGIN_RENDER_0.show( //
+            manifoldDisplay::matrixLift, //
+            shape.multiply(RealScalar.of(1.0)), //
+            Tensors.of(origin)) //
+            .render(geometricLayer, graphics);
+      }
     }
   }
 

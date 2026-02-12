@@ -11,8 +11,8 @@ import ch.alpine.sophus.hs.s.SnPhongMean;
 /** RMF(p,t,w)[x] == w.t for w = IDC(p,x) */
 /* package */ enum SnMeans implements Supplier<BiinvariantMean> {
   EXACT(SnManifold.INSTANCE.biinvariantMean()),
-  FAST(SnFastMean.INSTANCE),
-  PHONG(SnPhongMean.INSTANCE);
+  FAST(SnFastMean.INSTANCE::estimate),
+  PHONG(SnPhongMean.INSTANCE::estimate);
 
   private final BiinvariantMean biinvariantMean;
 
