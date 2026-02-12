@@ -47,13 +47,13 @@ import ch.alpine.tensor.sca.Clips;
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       TransitionSpace transitionSpace = manifoldDisplay.transitionSpace();
       if (symLink instanceof SymLinkPart symLinkPart) {
-        new Link(symLinkPart.lP).render(geometricLayer, graphics);
-        new Link(symLinkPart.lQ).render(geometricLayer, graphics);
+        new Link(symLinkPart.lP()).render(geometricLayer, graphics);
+        new Link(symLinkPart.lQ()).render(geometricLayer, graphics);
         {
-          Tensor posP = symLinkPart.lP.getPosition(geodesicSpace);
-          Tensor posQ = symLinkPart.lQ.getPosition(geodesicSpace);
+          Tensor posP = symLinkPart.lP().position(geodesicSpace);
+          Tensor posQ = symLinkPart.lQ().position(geodesicSpace);
           ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(posP, posQ);
-          Tensor posM = scalarTensorFunction.apply(symLinkPart.lambda);
+          Tensor posM = scalarTensorFunction.apply(symLinkPart.lambda());
           graphics.setColor(new Color(0, 128 + 64, 0, 255));
           Scalar resolution = RealScalar.of(geometricLayer.pixel2modelWidth(4));
           {
@@ -83,7 +83,7 @@ import ch.alpine.tensor.sca.Clips;
           }
         }
         // ---
-        Tensor p = symLink.getPosition(geodesicSpace);
+        Tensor p = symLink.position(geodesicSpace);
         graphics.setColor(new Color(0, 0, 255, 192));
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(p));
         Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape().multiply(RealScalar.of(0.7)));
