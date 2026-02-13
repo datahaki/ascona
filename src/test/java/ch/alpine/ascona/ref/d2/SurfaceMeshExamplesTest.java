@@ -4,6 +4,7 @@ package ch.alpine.ascona.ref.d2;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophis.ref.d2.SurfaceMeshRefinement;
+import ch.alpine.sophis.ref.d2.SurfaceMeshRefinements;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 

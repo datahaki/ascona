@@ -46,6 +46,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 /** Reference:
  * "Circumscribed Quadrics in Barycentric Coordinates"
  * by Marc Alexa */
+// TODO demo crashes when no ctrl points!
 public class MaAveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
