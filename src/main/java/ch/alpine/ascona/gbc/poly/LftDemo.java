@@ -29,7 +29,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
-import ch.alpine.tensor.ext.HomeDirectory;
+import ch.alpine.tensor.ext.UserName;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.itp.Interpolation;
 import ch.alpine.tensor.itp.LinearInterpolation;
@@ -52,7 +52,7 @@ public class LftDemo extends ControlPointsDemo {
 
   public LftDemo() {
     super(new Param0());
-    Path path = HomeDirectory.path("public_html/other/front", "album_it.jpg");
+    Path path = UserName.home().resolve("public_html/other/front", "album_it.jpg");
     try (InputStream inputStream = Files.newInputStream(path)) {
       // FIXME ASCONA this does not work
       bi = ImageIO.read(inputStream);

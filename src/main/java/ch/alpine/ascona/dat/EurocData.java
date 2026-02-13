@@ -2,6 +2,7 @@
 package ch.alpine.ascona.dat;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
@@ -35,17 +36,18 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   static void main() throws IOException {
+    Path path = HomeDirectory.Ephemeral.createDirectories(EurocData.class.getSimpleName());
     Tensor tensor = Import.of("/3rdparty/app/pose/euroc/MH_04_difficult.csv");
     System.out.println(Dimensions.of(tensor));
-    Export.of(HomeDirectory.path("MH_04_difficult_time.csv"), tensor.get(Tensor.ALL, 0));
+    Export.of(path.resolve("MH_04_difficult_time.csv"), tensor.get(Tensor.ALL, 0));
     Tensor poses = Tensor.of(tensor.stream().limit(12500).map(EurocData::rowmap));
     System.out.println(Dimensions.of(poses));
-    Put.of(HomeDirectory.path("MH_04_difficult_poses.file"), poses);
+    Put.of(path.resolve("MH_04_difficult_poses.file"), poses);
     System.out.println("differences");
     TensorUnaryOperator INSTANCE = LieDifferences.of(Se3Group.INSTANCE);
     {
       Tensor delta = INSTANCE.apply(poses);
-      Put.of(HomeDirectory.path("MH_04_difficult_delta.file"), delta);
+      Put.of(path.resolve("MH_04_difficult_delta.file"), delta);
     }
     System.out.println("smooth");
     {
@@ -53,11 +55,11 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
           new CenterFilter(GeodesicCenter.of(Se3Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), 4 * 3 * 2);
       Tensor smooth = tensorUnaryOperator.apply(poses);
       System.out.println("store");
-      Put.of(HomeDirectory.path("MH_04_difficult_poses_smooth.file"), smooth);
+      Put.of(path.resolve("MH_04_difficult_poses_smooth.file"), smooth);
       System.out.println("differences");
       Tensor delta = INSTANCE.apply(smooth);
       System.out.println("store");
-      Put.of(HomeDirectory.path("MH_04_difficult_delta_smooth.file"), delta);
+      Put.of(path.resolve("MH_04_difficult_delta_smooth.file"), delta);
     }
   }
 }

@@ -2,6 +2,7 @@
 package ch.alpine.ascona.dat;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
@@ -18,6 +19,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 /* package */ enum EugocData {
   ;
   static void main() throws IOException {
+    Path path = HomeDirectory.Ephemeral.createDirectories(EugocData.class.getSimpleName());
     Tensor tensor = Import.of("/dubilab/app/pose/2r/20180820T165637_2.csv");
     // System.out.println(Dimensions.of(tensor));
     Tensor poses = Tensor.of(tensor.stream() //
@@ -28,27 +30,27 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     // poses.append(xyt);
     // }
     System.out.println(Dimensions.of(poses));
-    Put.of(HomeDirectory.path("gokart_poses.file"), poses);
+    Put.of(path.resolve("gokart_poses.file"), poses);
     TensorUnaryOperator INSTANCE = LieDifferences.of(Se2Group.INSTANCE);
     {
       Tensor delta = INSTANCE.apply(poses);
-      Put.of(HomeDirectory.path("gokart_delta.file"), delta);
+      Put.of(path.resolve("gokart_delta.file"), delta);
     }
     {
       TensorUnaryOperator tensorUnaryOperator = //
           new CenterFilter(GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), 6);
       Tensor smooth = tensorUnaryOperator.apply(poses);
-      Put.of(HomeDirectory.path("gokart_poses_gauss.file"), smooth);
+      Put.of(path.resolve("gokart_poses_gauss.file"), smooth);
       Tensor delta = INSTANCE.apply(smooth);
-      Put.of(HomeDirectory.path("gokart_delta_gauss.file"), delta);
+      Put.of(path.resolve("gokart_delta_gauss.file"), delta);
     }
     {
       TensorUnaryOperator tensorUnaryOperator = //
           new CenterFilter(GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.HAMMING.get()), 6);
       Tensor smooth = tensorUnaryOperator.apply(poses);
-      Put.of(HomeDirectory.path("gokart_poses_hammi.file"), smooth);
+      Put.of(path.resolve("gokart_poses_hammi.file"), smooth);
       Tensor delta = INSTANCE.apply(smooth);
-      Put.of(HomeDirectory.path("gokart_delta_hammi.file"), delta);
+      Put.of(path.resolve("gokart_delta_hammi.file"), delta);
     }
   }
 }

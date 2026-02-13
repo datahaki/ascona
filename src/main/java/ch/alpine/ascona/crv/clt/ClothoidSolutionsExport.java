@@ -102,8 +102,8 @@ import ch.alpine.tensor.sca.Clips;
         new ClothoidSolutionsExport(40, 40, Pi.VALUE);
     // new ClothoidSolutionsExport(20, 120, Pi.TWO.multiply(RealScalar.of(3)));
     // ---
-    Export.of(HomeDirectory.path("clothoidsol.csv"), clothoidSolutionsExport.tableBuilder.getTable());
-    Export.of(HomeDirectory.path("clothoidsht.csv"), clothoidSolutionsExport.tableShortes.getTable());
+    Export.of(HomeDirectory.Ephemeral.resolve("clothoidsol.csv"), clothoidSolutionsExport.tableBuilder.getTable());
+    Export.of(HomeDirectory.Ephemeral.resolve("clothoidsht.csv"), clothoidSolutionsExport.tableShortes.getTable());
     int index = 0;
     Path directory = HomeDirectory.Pictures.resolve("clsol");
     if (Files.isDirectory(directory))

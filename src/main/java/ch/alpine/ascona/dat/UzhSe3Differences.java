@@ -20,15 +20,16 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 /* package */ enum UzhSe3Differences {
   ;
   static void main() throws IOException {
+    Path path = HomeDirectory.Ephemeral.createDirectories(UzhSe3Differences.class.getSimpleName());
     Path file = Path.of("/media/datahaki/media/resource/uzh/groundtruth", "outdoor_forward_5_davis.txt");
     Tensor poses = UzhSe3TxtFormat.of(file).extract(0, 1200);
     System.out.println(Dimensions.of(poses));
-    Put.of(HomeDirectory.path("MH_04_difficult_poses.file"), poses);
+    Put.of(path.resolve("MH_04_difficult_poses.file"), poses);
     System.out.println("differences");
     TensorUnaryOperator lieDifferences = LieDifferences.of(Se3Group.INSTANCE);
     {
       Tensor delta = lieDifferences.apply(poses);
-      Put.of(HomeDirectory.path("MH_04_difficult_delta.file"), delta);
+      Put.of(path.resolve("MH_04_difficult_delta.file"), delta);
     }
     System.out.println("smooth");
     {
@@ -36,11 +37,11 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
           new CenterFilter(GeodesicCenter.of(Se3Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), 4 * 3 * 2);
       Tensor smooth = tensorUnaryOperator.apply(poses);
       System.out.println("store");
-      Put.of(HomeDirectory.path("MH_04_difficult_poses_smooth.file"), smooth);
+      Put.of(path.resolve("MH_04_difficult_poses_smooth.file"), smooth);
       System.out.println("differences");
       Tensor delta = lieDifferences.apply(smooth);
       System.out.println("store");
-      Put.of(HomeDirectory.path("MH_04_difficult_delta_smooth.file"), delta);
+      Put.of(path.resolve("MH_04_difficult_delta_smooth.file"), delta);
     }
   }
 }

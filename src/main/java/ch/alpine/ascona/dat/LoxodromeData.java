@@ -2,6 +2,7 @@
 package ch.alpine.ascona.dat;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.sophis.flt.CenterFilter;
@@ -25,19 +26,20 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 /* package */ enum LoxodromeData {
   ;
   static void main() throws IOException {
+    Path path = HomeDirectory.Ephemeral.createDirectories(LoxodromeData.class.getSimpleName());
     Tensor tensor = Subdivide.of(0, 4.5, 250).maps(AbsSquared.FUNCTION).maps(S2Loxodrome.of(RealScalar.of(0.15)));
-    Export.of(HomeDirectory.path("loxodrome_exact.csv"), tensor);
+    Export.of(path.resolve("loxodrome_exact.csv"), tensor);
     Tensor noise = RandomVariate.of(NormalDistribution.of(0, 0.05), Dimensions.of(tensor));
     tensor = tensor.add(noise);
     tensor = Tensor.of(tensor.stream().map(Vector2Norm.NORMALIZE));
-    Export.of(HomeDirectory.path("loxodrome_noise.csv"), tensor);
+    Export.of(path.resolve("loxodrome_noise.csv"), tensor);
     GeodesicSpace geodesicSpace = S2Display.INSTANCE.geodesicSpace();
     for (WindowFunctions windowFunctions : WindowFunctions.values()) {
       ScalarUnaryOperator smoothingKernel = windowFunctions.get();
       TensorUnaryOperator tensorUnaryOperator = //
           new CenterFilter(GeodesicCenter.of(geodesicSpace, smoothingKernel), 7);
       Tensor smooth = tensorUnaryOperator.apply(tensor);
-      Export.of(HomeDirectory.path("loxodrome_" + smoothingKernel + ".csv"), smooth);
+      Export.of(path.resolve("loxodrome_" + smoothingKernel + ".csv"), smooth);
     }
   }
 }

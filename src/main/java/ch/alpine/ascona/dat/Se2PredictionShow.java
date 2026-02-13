@@ -2,6 +2,7 @@
 package ch.alpine.ascona.dat;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import ch.alpine.ascona.dat.gok.GokartPos;
 import ch.alpine.ascona.dat.gok.PosHz;
@@ -30,6 +31,7 @@ import ch.alpine.tensor.sca.Abs;
   ;
   // TODO ASCONA demo relevant?
   static void main() throws IOException {
+    Path path = HomeDirectory.Ephemeral.createDirectories(Se2PredictionShow.class.getSimpleName());
     String key = GokartPos.list().get(1);
     PosHz posHz = GokartPos.get(key, 2000);
     Tensor pqr_t = Partition.of(posHz.getPoseSequence(), 4); // limit , 4 * 500
@@ -72,22 +74,22 @@ import ch.alpine.tensor.sca.Abs;
     lp3_xy.set(err_xy, Tensor.ALL, Tensor.ALL, 2);
     lp3_hd.set(err_hd, Tensor.ALL, Tensor.ALL, 2);
     {
-      Put.of(HomeDirectory.path("lp3_xy.mathematica"), lp3_xy);
-      Put.of(HomeDirectory.path("lp3_hd.mathematica"), lp3_hd);
+      Put.of(path.resolve("lp3_xy.mathematica"), lp3_xy);
+      Put.of(path.resolve("lp3_hd.mathematica"), lp3_hd);
     }
     Show show1 = new Show();
     {
       show1.add(MatrixPlot.of(err_xy, ColorDataGradients.CLASSIC));
-      Export.of(HomeDirectory.path("err_xy.csv"), err_xy);
+      Export.of(path.resolve("err_xy.csv"), err_xy);
       Tensor image = Raster.of(err_xy, ColorDataGradients.CLASSIC);
-      Export.of(HomeDirectory.Pictures.resolve(Se2PredictionShow.class.getSimpleName() + "_xy.png"), image);
+      Export.of(path.resolve(Se2PredictionShow.class.getSimpleName() + "_xy.png"), image);
     }
     Show show2 = new Show();
     {
       show2.add(MatrixPlot.of(err_hd, ColorDataGradients.CLASSIC));
-      Export.of(HomeDirectory.path("err_hd.csv"), err_hd);
+      Export.of(path.resolve("err_hd.csv"), err_hd);
       Tensor image = Raster.of(err_hd, ColorDataGradients.CLASSIC);
-      Export.of(HomeDirectory.Pictures.resolve(Se2PredictionShow.class.getSimpleName() + "_hd.png"), image);
+      Export.of(path.resolve(Se2PredictionShow.class.getSimpleName() + "_hd.png"), image);
     }
     ShowWindow.asDialog(show1, show2);
   }

@@ -15,10 +15,11 @@ import ch.alpine.tensor.io.Export;
 public enum Ply2FormatDemo {
   ;
   static void main() throws IOException {
-    Path file = HomeDirectory.path("doraemon.ply2");
+    Path path = HomeDirectory.Ephemeral.createDirectories(Plot3DDesign.class.getSimpleName());
+    Path file = path.resolve("doraemon.ply2");
     try (InputStream inputStream = Files.newInputStream(file)) {
       SurfaceMesh surfaceMesh = Ply2Format.parse(ReadLine.of(inputStream));
-      Export.of(HomeDirectory.path("mesh.v.csv"), surfaceMesh.vrt);
+      Export.of(path.resolve("mesh.v.csv"), surfaceMesh.vrt);
       // Export.of(HomeDirectory.file("mesh.i.csv"), surfaceMesh.ind().map(RealScalar.ONE::add));
     }
   }

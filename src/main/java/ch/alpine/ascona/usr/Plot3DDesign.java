@@ -2,6 +2,7 @@
 package ch.alpine.ascona.usr;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import ch.alpine.sophis.ref.d2.GeodesicCatmullClarkSubdivision;
 import ch.alpine.sophus.hs.r3s2.R3S2Geodesic;
@@ -51,6 +52,7 @@ import ch.alpine.tensor.sca.tri.Sin;
   }
 
   static void main() throws IOException {
+    Path path = HomeDirectory.Ephemeral.createDirectories(Plot3DDesign.class.getSimpleName());
     Plot3DDesign plot3dDesign = new Plot3DDesign(Plot3DDesign::sin_xy2);
     Tensor matrix = Tensors.empty();
     for (Tensor x : Subdivide.of(0, 4, 12)) {
@@ -60,9 +62,9 @@ import ch.alpine.tensor.sca.tri.Sin;
       }
       matrix.append(row);
     }
-    Put.of(HomeDirectory.path("sinxy2in.mathematica"), matrix);
+    Put.of(path.resolve("sinxy2in.mathematica"), matrix);
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(R3S2Geodesic.INSTANCE);
     Tensor tensor = Nest.of(catmullClarkSubdivision::refine, matrix, 3);
-    Put.of(HomeDirectory.path("sinxy2.mathematica"), tensor);
+    Put.of(path.resolve("sinxy2.mathematica"), tensor);
   }
 }

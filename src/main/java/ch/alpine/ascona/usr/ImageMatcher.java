@@ -56,7 +56,7 @@ public enum ImageMatcher {
   }
 
   static void main() throws IOException, ClassNotFoundException, DataFormatException {
-    Path folder = HomeDirectory.path("Public", "wa01");
+    Path folder = HomeDirectory.Public.createDirectories("wa01");
     System.out.println(folder.getFileName());
     String n1 = "a";
     String n2 = "b";
