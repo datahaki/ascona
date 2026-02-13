@@ -60,11 +60,11 @@ jobs:
       - name: checkout ascony
         uses: actions/checkout@v4
         with:
-          repository: datahaki/sophis
-          path: sophis
-      - name: build and install sophis
+          repository: datahaki/ascony
+          path: ascony
+      - name: build and install ascony
         run: mvn -B --no-transfer-progress install -DskipTests
-        working-directory: ./sophis
+        working-directory: ./ascony
 
       - name: mvn test
         shell: bash
