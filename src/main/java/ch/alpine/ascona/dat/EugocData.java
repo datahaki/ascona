@@ -9,6 +9,7 @@ import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
@@ -19,8 +20,9 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 /* package */ enum EugocData {
   ;
   static void main() throws IOException {
+    Path resourcePath = Unprotect.resourcePath("/ch/alpine/ascona/gokart/tpq/20Hz/20180820T165637_2.csv");
+    Tensor tensor = Import.of(resourcePath);
     Path path = HomeDirectory.Ephemeral.createDirectories(EugocData.class.getSimpleName());
-    Tensor tensor = Import.of("/dubilab/app/pose/2r/20180820T165637_2.csv");
     // System.out.println(Dimensions.of(tensor));
     Tensor poses = Tensor.of(tensor.stream() //
         .map(row -> row.extract(1, 4)));

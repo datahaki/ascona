@@ -10,6 +10,7 @@ import ch.alpine.sophus.lie.LieDifferences;
 import ch.alpine.sophus.lie.se.Se3Group;
 import ch.alpine.sophus.lie.se.Se3Matrix;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
@@ -36,8 +37,9 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   static void main() throws IOException {
+    Path resourcePath = Unprotect.resourcePath("/ch/alpine/ascona/euroc/tpq/200Hz/MH_04_difficult.csv");
+    Tensor tensor = Import.of(resourcePath);
     Path path = HomeDirectory.Ephemeral.createDirectories(EurocData.class.getSimpleName());
-    Tensor tensor = Import.of("/3rdparty/app/pose/euroc/MH_04_difficult.csv");
     System.out.println(Dimensions.of(tensor));
     Export.of(path.resolve("MH_04_difficult_time.csv"), tensor.get(Tensor.ALL, 0));
     Tensor poses = Tensor.of(tensor.stream().limit(12500).map(EurocData::rowmap));
