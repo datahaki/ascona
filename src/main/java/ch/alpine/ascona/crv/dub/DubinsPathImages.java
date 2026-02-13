@@ -48,7 +48,6 @@ import ch.alpine.tensor.sca.Clips;
     for (DubinsPathImages d : DubinsPathImages.values()) {
       Show show = new Show();
       show.add(DensityPlot.of(d, cbb, ColorDataGradients.CLASSIC));
-      show.setAspectRatioOne();
       list.add(show);
     }
     ShowWindow.asDialog(list);
