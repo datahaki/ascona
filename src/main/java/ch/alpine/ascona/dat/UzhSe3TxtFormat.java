@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-import ch.alpine.sophus.lie.se.Se3Matrix;
+import ch.alpine.sophus.lie.se3.Se3Matrix;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.ReadLine;

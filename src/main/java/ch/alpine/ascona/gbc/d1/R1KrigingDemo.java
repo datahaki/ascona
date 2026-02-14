@@ -81,7 +81,7 @@ public class R1KrigingDemo extends A1AveragingDemo {
       }
       // ---
       Tensor sequence = support.maps(Tensors::of);
-      Tensor covariance = DiagonalMatrix.with(cvarian);
+      Tensor covariance = DiagonalMatrix.sparse(cvarian);
       Manifold manifold = (Manifold) manifoldDisplay().geodesicSpace();
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
       // Sedarim sedarim = operator(sequence);

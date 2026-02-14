@@ -110,7 +110,7 @@ public class S1KrigingDemo extends ControlPointsDemo {
       new PointsRender(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255)) //
           .show(manifoldDisplay()::matrixLift, shape, sequence) //
           .render(geometricLayer, graphics);
-      Tensor covariance = DiagonalMatrix.with(cvarian);
+      Tensor covariance = DiagonalMatrix.sparse(cvarian);
       // if (isDeterminate())
       {
         Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), s -> s, sequence);
