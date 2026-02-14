@@ -3,7 +3,7 @@ package ch.alpine.ascona.usr;
 
 import java.util.concurrent.TimeUnit;
 
-import ch.alpine.sophus.lie.so.Rodrigues;
+import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.tensor.Parallelize;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -23,7 +23,7 @@ import ch.alpine.tensor.io.GifAnimationWriter;
   private static Scalar Z;
 
   private static Scalar function(int y, int x) {
-    Tensor mat = Rodrigues.INSTANCE.exp(Tensors.of(RE.Get(x), IM.Get(y), Z));
+    Tensor mat = So3Exponential.INSTANCE.exp(Tensors.of(RE.Get(x), IM.Get(y), Z));
     return mat.Get(0, 2);
   }
 

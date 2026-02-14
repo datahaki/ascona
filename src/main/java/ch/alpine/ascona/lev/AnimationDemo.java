@@ -13,7 +13,7 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
-import ch.alpine.sophus.lie.so.Rodrigues;
+import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -96,7 +96,7 @@ public class AnimationDemo extends ControlPointsDemo {
         }
         case S2: {
           Tensor vector = random(10 + timing.seconds().multiply(Quantity.of(0.1, "s^-1")).number().doubleValue(), 0);
-          Tensor vectorExp = Rodrigues.vectorExp(vector);
+          Tensor vectorExp = So3Exponential.vectorExp(vector);
           for (Tensor xya : snapshot) {
             Tensor project = vectorExp.dot(manifoldDisplay.xya2point(xya));
             list.append(manifoldDisplay.point2xya(project));

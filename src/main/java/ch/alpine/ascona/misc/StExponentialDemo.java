@@ -30,6 +30,7 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 public class StExponentialDemo extends AbstractDemo {
+  private static final int k = 2;
   @ReflectionMarker
   public static class Param {
     @FieldSlider
@@ -39,8 +40,7 @@ public class StExponentialDemo extends AbstractDemo {
 
   private final Param param;
   private final Tensor circle = CirclePoints.of(50);
-  private final int n = 5;
-  private final int k = 2;
+  private final int n = 6;
   private final StiefelManifold stiefelManifold = new StiefelManifold(n, k);
   private Tensor p;
   private Tensor v;
@@ -61,8 +61,8 @@ public class StExponentialDemo extends AbstractDemo {
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Exponential exponential = stiefelManifold.exponential(p);
     ScalarTensorFunction stf = s -> exponential.exp(v.multiply(s));
-    Clip clip = Clips.translation(param.scalar).apply(Clips.absolute(2));
-    Tensor res = Subdivide.increasing(clip, 20).maps(stf);
+    Clip clip = Clips.translation(param.scalar).apply(Clips.absolute(4));
+    Tensor res = Subdivide.increasing(clip, 50).maps(stf);
     Show show = new Show();
     show.add(ListLinePlot.of(circle));
     for (int i = 0; i < n; ++i)
