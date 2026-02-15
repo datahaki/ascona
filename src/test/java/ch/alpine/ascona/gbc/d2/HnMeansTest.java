@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import java.io.IOException;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
@@ -11,7 +10,6 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.h.HWeierstrassCoordinate;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -20,11 +18,11 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class HnMeansTest {
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     RandomGenerator randomGenerator = new Random(3);
     Distribution distribution = NormalDistribution.standard();
     for (HnMeans hnMeans : HnMeans.values()) {
-      BiinvariantMean biinvariantMean = Serialization.copy(hnMeans).get();
+      BiinvariantMean biinvariantMean = hnMeans.get();
       for (int d = 1; d < 5; ++d) {
         final int fd = d;
         Tensor sequence = Array.of(_ -> new HWeierstrassCoordinate(RandomVariate.of(distribution, randomGenerator, fd)).toPoint(), 10);
