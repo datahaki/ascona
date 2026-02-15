@@ -31,6 +31,7 @@ import ch.alpine.tensor.sca.Clips;
 
 public class StExponentialDemo extends AbstractDemo {
   private static final int k = 2;
+
   @ReflectionMarker
   public static class Param {
     @FieldSlider

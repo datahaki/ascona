@@ -21,7 +21,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.math.api.DistanceMatrix;
+import ch.alpine.sophus.math.DistanceMatrix;
 import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
