@@ -20,7 +20,7 @@ import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophis.crv.GeodesicBSplineFunction;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -62,10 +62,10 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
     ScalarTensorFunction scalarTensorFunction = //
         DeBoor.of(geodesicSpace, knots, control);
     GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, control);
-    Scalar center = RationalScalar.of(control.length() - 1, 2);
+    Scalar center = Rational.of(control.length() - 1, 2);
     Tensor refined = Subdivide.of( //
-        center.subtract(RationalScalar.HALF), //
-        center.add(RationalScalar.HALF), //
+        center.subtract(Rational.HALF), //
+        center.add(Rational.HALF), //
         Math.max(1, upper * (1 << levels))).maps(scalarTensorFunction);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);

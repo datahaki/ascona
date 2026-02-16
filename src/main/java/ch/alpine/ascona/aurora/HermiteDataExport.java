@@ -19,7 +19,7 @@ import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -125,7 +125,7 @@ import ch.alpine.tensor.red.Nest;
   }
 
   static void main() throws IOException {
-    Scalar period = Quantity.of(RationalScalar.of(1, 1), "s");
+    Scalar period = Quantity.of(Rational.of(1, 1), "s");
     HermiteDataExport hermiteDataExport = new HermiteDataExport("20190701T163225_01", period, 6);
     hermiteDataExport.processAll();
   }

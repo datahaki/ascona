@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import ch.alpine.sophis.ref.d1h.Hermite1Subdivisions;
 import ch.alpine.sophis.ref.d1h.HermiteLoConfig;
 import ch.alpine.tensor.Parallelize;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -28,8 +28,8 @@ import ch.alpine.tensor.sca.exp.Log;
 
   @Override // from HermiteArray
   Tensor compute(int rows, int cols) {
-    Tensor lambda = Subdivide.of(RationalScalar.of(-3, 4), RationalScalar.of(-1, 6), rows - 1).maps(N.DOUBLE);
-    Tensor mu = Subdivide.of(RationalScalar.of(-2, 1), RationalScalar.of(+5, 2), cols - 1).maps(N.DOUBLE);
+    Tensor lambda = Subdivide.of(Rational.of(-3, 4), Rational.of(-1, 6), rows - 1).maps(N.DOUBLE);
+    Tensor mu = Subdivide.of(Rational.of(-2, 1), Rational.of(+5, 2), cols - 1).maps(N.DOUBLE);
     return Parallelize.matrix((i, j) -> h1(lambda.Get(i), mu.Get(j)), rows, cols);
     // return Parallelize.matrix((i, j) -> lambda.Get(i), rows, cols);
   }

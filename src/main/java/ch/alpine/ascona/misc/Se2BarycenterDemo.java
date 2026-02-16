@@ -15,7 +15,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -67,7 +67,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
           for (Tensor x : tX) {
             int c1 = 0;
             for (Tensor y : tY) {
-              Scalar w = RationalScalar.HALF;
+              Scalar w = Rational.HALF;
               Tensor weights = Tensors.of(w, x, y);
               weights.append(RealScalar.ONE.subtract(Total.ofVector(weights)));
               weights = Rotate.PUSH.of(weights, 1);
@@ -97,7 +97,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
           }
         // ---
         {
-          geometricLayer.pushMatrix(manifoldDisplay.matrixLift(curve.apply(RationalScalar.HALF)));
+          geometricLayer.pushMatrix(manifoldDisplay.matrixLift(curve.apply(Rational.HALF)));
           Path2D path2d = geometricLayer.toPath2D(Arrowhead.of(0.5));
           path2d.closePath();
           graphics.setColor(COLOR_DATA_INDEXED_FILL.getColor(0));

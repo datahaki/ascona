@@ -14,7 +14,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.s.Sphere;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
@@ -53,7 +53,7 @@ public class SnRotationDemo extends AbstractDemo {
     @Override
     public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
       for (int count = 0; count < samples.length(); ++count) {
-        Tensor rgba = colorDataGradient.apply(Mod.function(1).apply(RationalScalar.of(count, 20)));
+        Tensor rgba = colorDataGradient.apply(Mod.function(1).apply(Rational.of(count, 20)));
         Color color = ColorFormat.toColor(rgba);
         int fi = count;
         Tensor trace = Tensor.of(boundedLinkedList.stream().map(p -> p.get(fi)));

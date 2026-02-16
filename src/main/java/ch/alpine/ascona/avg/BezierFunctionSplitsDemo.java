@@ -8,7 +8,7 @@ import ch.alpine.ascony.sym.SymScalar;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -46,7 +46,7 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
       ScalarTensorFunction scalarTensorFunction = new BezierFunction(SymGeodesic.INSTANCE, vector);
       Scalar parameter = n <= 1 //
           ? RealScalar.ZERO
-          : RationalScalar.of(n, n - 1);
+          : Rational.of(n, n - 1);
       parameter = parameter.multiply(param.ratio);
       return (SymScalar) scalarTensorFunction.apply(parameter);
     }

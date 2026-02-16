@@ -21,7 +21,7 @@ import ch.alpine.sophus.hs.Exponential;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -114,7 +114,7 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
     }
     // ---
     {
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(curve.apply(RationalScalar.HALF)));
+      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(curve.apply(Rational.HALF)));
       Path2D path2d = geometricLayer.toPath2D(Arrowhead.of(0.5));
       path2d.closePath();
       graphics.setColor(COLOR_DATA_INDEXED_FILL.getColor(0));

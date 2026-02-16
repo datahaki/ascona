@@ -24,7 +24,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -96,7 +96,7 @@ public class OrderingDemo extends ControlPointsDemo {
         .sunder(origin);
     // ---
     int[] integers = Ordering.INCREASING.of(weights);
-    ColorDataGradient colorDataGradientF = param1.cdg.deriveWithOpacity(RationalScalar.HALF);
+    ColorDataGradient colorDataGradientF = param1.cdg.deriveWithOpacity(Rational.HALF);
     ColorDataGradient colorDataGradientD = param1.cdg;
     RenderQuality.setQuality(graphics);
     Tensor shape = manifoldDisplay.shape();
@@ -104,7 +104,7 @@ public class OrderingDemo extends ControlPointsDemo {
       Tensor point = sequence.get(integers[index]);
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
       Path2D path2d = geometricLayer.toPath2D(shape, true);
-      Scalar ratio = RationalScalar.of(index, integers.length);
+      Scalar ratio = Rational.of(index, integers.length);
       graphics.setColor(ColorFormat.toColor(colorDataGradientF.apply(ratio)));
       graphics.fill(path2d);
       graphics.setColor(ColorFormat.toColor(colorDataGradientD.apply(ratio)));

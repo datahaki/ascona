@@ -19,7 +19,7 @@ import ch.alpine.sophis.gbc.d2.ThreePointCoordinate;
 import ch.alpine.sophis.gbc.d2.ThreePointScalings;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.Genesis;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -57,7 +57,7 @@ public class SPatchDemo extends ControlPointsDemo {
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     {
       Tensor[][] forward = movingDomain2D.forward(sequence, homogeneousSpace.biinvariantMean());
-      new MeshRender(forward, ColorDataGradients.CLASSIC.deriveWithOpacity(RationalScalar.HALF)) //
+      new MeshRender(forward, ColorDataGradients.CLASSIC.deriveWithOpacity(Rational.HALF)) //
           .render(geometricLayer, graphics);
       Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
       int x = 0;

@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import ch.alpine.sophis.ref.d1h.Hermite2Subdivisions;
 import ch.alpine.sophis.ref.d1h.HermiteLoConfig;
 import ch.alpine.tensor.Parallelize;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -28,15 +28,15 @@ import ch.alpine.tensor.sca.exp.Log;
 
   @Override // from HermiteArray
   Tensor compute(int rows, int cols) {
-    Tensor mu = Subdivide.of(RationalScalar.of(-1, 1), RationalScalar.of(+2, 1), rows - 1);
-    Tensor lambda = Subdivide.of(RationalScalar.of(-2, 1), RationalScalar.of(+3, 1), cols - 1);
+    Tensor mu = Subdivide.of(Rational.of(-1, 1), Rational.of(+2, 1), rows - 1);
+    Tensor lambda = Subdivide.of(Rational.of(-2, 1), Rational.of(+3, 1), cols - 1);
     return Parallelize.matrix((i, j) -> h2(lambda.Get(j), mu.Get(i)), rows, cols);
   }
 
   static void main() throws IOException {
     int levels = 4;
     HermiteArrayShow hermiteArray = //
-        new Hermite2ArrayShow("20190701T163225_01", Quantity.of(RationalScalar.of(1, 1), "s"), levels);
+        new Hermite2ArrayShow("20190701T163225_01", Quantity.of(Rational.of(1, 1), "s"), levels);
     Path folder = HomeDirectory.Pictures.resolve(hermiteArray.getClass().getSimpleName(), String.format("cs_%1d", levels));
     Files.createDirectories(folder);
     Tensor matrix = hermiteArray.getMatrix();

@@ -30,7 +30,7 @@ import ch.alpine.sophis.crv.clt.mid.MidpointTangentApproximation;
 import ch.alpine.sophis.crv.clt.mid.MidpointTangentOrder2;
 import ch.alpine.sophis.ts.ClothoidTransition;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -184,7 +184,7 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
       graphics.fill(plotLayer.toPath2D(POINTER, true));
       plotLayer.popMatrix();
       // ---
-      Scalar s1 = clothoidContext.b0().add(clothoidContext.b1()).multiply(RationalScalar.HALF);
+      Scalar s1 = clothoidContext.b0().add(clothoidContext.b1()).multiply(Rational.HALF);
       Scalar reifs = MidpointTangentApproximation.ORDER2.apply(clothoidContext.b0(), clothoidContext.b1()).subtract(s1);
       graphics.setColor(Color.CYAN);
       graphics.draw(plotLayer.toLine2D(Tensors.of(reifs, RealScalar.ZERO), Tensors.of(reifs, RealScalar.ONE.negate())));

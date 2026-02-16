@@ -28,7 +28,7 @@ import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophis.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -101,7 +101,7 @@ public class CurveDecimationDemo extends AbstractDemo {
             .render(geometricLayer, graphics);
       }
     }
-    Scalar epsilon = Power.of(RationalScalar.HALF, param.level.number().intValue());
+    Scalar epsilon = Power.of(Rational.HALF, param.level.number().intValue());
     // epsilon = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum() * 3);
     HomogeneousSpace geodesicSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     CurveDecimation curveDecimation = CurveDecimation.of( //

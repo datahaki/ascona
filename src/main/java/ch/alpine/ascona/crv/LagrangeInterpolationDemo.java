@@ -20,7 +20,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.LagrangeInterpolation;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -42,7 +42,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
 
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" })
     public Integer refine = 7;
-    public Scalar ratio = RationalScalar.HALF;
+    public Scalar ratio = Rational.HALF;
   }
 
   private final Param param;

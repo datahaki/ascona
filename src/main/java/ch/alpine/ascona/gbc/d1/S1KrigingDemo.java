@@ -23,7 +23,7 @@ import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -89,7 +89,7 @@ public class S1KrigingDemo extends ControlPointsDemo {
       // TODO ASCONA ALG check for zero norm below
       Tensor sequence = Tensor.of(control.stream().map(Vector2Norm.NORMALIZE));
       Tensor funceva = Tensor.of(control.stream().map(Vector2Norm::of));
-      Tensor cvarian = getControlPointsSe2().get(Tensor.ALL, 2).multiply(RationalScalar.HALF).maps(Abs.FUNCTION);
+      Tensor cvarian = getControlPointsSe2().get(Tensor.ALL, 2).multiply(Rational.HALF).maps(Abs.FUNCTION);
       // ---
       graphics.setColor(new Color(0, 128, 128));
       Scalar IND = RealScalar.of(0.1);

@@ -14,7 +14,7 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so2.So2Lift;
 import ch.alpine.sophus.math.Do;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -55,7 +55,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
     int delta2 = 1;
     for (int level = 0; level < levels; ++level) {
       delta2 *= 2;
-      rate = rate.multiply(RationalScalar.HALF);
+      rate = rate.multiply(Rational.HALF);
     }
     delta = QuantityMagnitude.SI().in("s").apply(rate.reciprocal());
     System.out.println("delta=" + delta);

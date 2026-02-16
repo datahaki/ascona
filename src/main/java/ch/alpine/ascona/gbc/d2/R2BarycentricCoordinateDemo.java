@@ -30,7 +30,7 @@ import ch.alpine.sophis.crv.d2.alg.PolygonRegion;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.DoubleScalar;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -160,7 +160,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
         }
       }
       // render grid lines functions
-      ColorDataGradient cdg = colorDataGradient.deriveWithOpacity(RationalScalar.HALF);
+      ColorDataGradient cdg = colorDataGradient.deriveWithOpacity(Rational.HALF);
       for (int i0 = 1; i0 < n; ++i0)
         for (int i1 = 1; i1 < n; ++i1) {
           Tensor ao = array[i0][i1];

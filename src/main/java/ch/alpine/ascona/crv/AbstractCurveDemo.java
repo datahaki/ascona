@@ -11,7 +11,7 @@ import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -30,7 +30,7 @@ public abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
     @FieldSlider
     @FieldPreferredWidth(300)
     @FieldClip(min = "0", max = "1")
-    public Scalar ratio = RationalScalar.HALF;
+    public Scalar ratio = Rational.HALF;
   }
 
   protected final AbstractCurveParam abstractCurveParam;

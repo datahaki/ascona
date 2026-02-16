@@ -18,7 +18,7 @@ import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -56,7 +56,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
           logWeighting.equals(LogWeightings.KRIGING_COORDINATE)) {
         spinnerVariogram.setValue(VariogramFunctions.POWER);
         scatteredSetParam.biinvariants = Biinvariants.HARBOR;
-        spinnerBeta.setValue(RationalScalar.of(3, 2));
+        spinnerBeta.setValue(Rational.of(3, 2));
       }
     }
   };

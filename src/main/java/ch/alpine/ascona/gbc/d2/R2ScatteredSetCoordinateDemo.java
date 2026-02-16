@@ -24,7 +24,7 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.DoubleScalar;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -119,7 +119,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
         ++c0;
       });
       // ---
-      new MeshRender(point, colorDataGradient.deriveWithOpacity(RationalScalar.HALF)).render(geometricLayer, graphics);
+      new MeshRender(point, colorDataGradient.deriveWithOpacity(Rational.HALF)).render(geometricLayer, graphics);
       // ---
       { // render basis functions
         Rescale rescale = new Rescale(ImageTiling.of(wgs));

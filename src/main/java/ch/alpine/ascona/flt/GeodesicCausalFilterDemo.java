@@ -19,7 +19,7 @@ import ch.alpine.sophis.flt.ga.GeodesicIIRnFilter;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
@@ -73,7 +73,7 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
   }
 
   private Scalar alpha() {
-    return RationalScalar.of(jSlider.getValue(), 1000);
+    return Rational.of(jSlider.getValue(), 1000);
   }
 
   @Override

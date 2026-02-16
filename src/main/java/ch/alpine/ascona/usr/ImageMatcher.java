@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.zip.DataFormatException;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ArrayFlatten;
@@ -105,9 +105,9 @@ public enum ImageMatcher {
       Tensor r_src = build(Dimensions.of(src), b_src, inverse);
       Export.of(folder.resolve("result_" + n1 + ".jpg"), r_src);
       System.out.println(MIN.apply(timing.seconds()));
-      Tensor m_dst = r_dst.add(dst).multiply(RationalScalar.HALF);
+      Tensor m_dst = r_dst.add(dst).multiply(Rational.HALF);
       Export.of(folder.resolve("averag_" + n2 + ".jpg"), m_dst);
-      Tensor m_src = r_src.add(src).multiply(RationalScalar.HALF);
+      Tensor m_src = r_src.add(src).multiply(Rational.HALF);
       Export.of(folder.resolve("averag_" + n1 + ".jpg"), m_src);
     }
   }

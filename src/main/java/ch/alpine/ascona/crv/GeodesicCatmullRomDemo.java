@@ -22,7 +22,7 @@ import ch.alpine.sophis.math.win.KnotSpacing;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.DoubleScalar;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -48,7 +48,7 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
     @FieldSlider
     @FieldPreferredWidth(300)
     @FieldClip(min = "0", max = "1")
-    public Scalar evalAt = RationalScalar.HALF;
+    public Scalar evalAt = Rational.HALF;
     @FieldSlider
     @FieldPreferredWidth(200)
     @FieldClip(min = "0", max = "2")
