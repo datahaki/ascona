@@ -6,7 +6,7 @@ import java.util.List;
 import ch.alpine.sophis.ref.d1.BSpline4CurveSubdivision;
 import ch.alpine.sophis.ref.d1.CurveSubdivision;
 import ch.alpine.sophis.ref.d1.FourPointCurveSubdivision;
-import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 
 /* package */ enum CurveSubdivisionHelper {
   ;

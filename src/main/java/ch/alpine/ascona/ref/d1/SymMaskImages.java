@@ -19,7 +19,7 @@ import ch.alpine.sophis.ref.d1.HormannSabinCurveSubdivision;
 import ch.alpine.sophis.ref.d1.LaneRiesenfeld3CurveSubdivision;
 import ch.alpine.sophis.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.sophis.ref.d1.SixPointCurveSubdivision;
-import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 
 /* package */ enum SymMaskImages {

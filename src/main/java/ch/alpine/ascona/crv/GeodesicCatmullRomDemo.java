@@ -19,7 +19,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.GeodesicCatmullRom;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.math.win.KnotSpacing;
-import ch.alpine.sophus.hs.GeodesicSpace;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Rational;

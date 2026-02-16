@@ -21,7 +21,7 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.fit.KMeans;
 import ch.alpine.sophus.bm.CenterMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.MetricManifold;
+import ch.alpine.sophus.math.api.MetricManifold;
 import ch.alpine.sophus.math.noise.SimplexContinuousNoise;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
