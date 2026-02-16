@@ -21,7 +21,7 @@ import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.decim.LineDistance;
-import ch.alpine.sophis.math.TensorNorm;
+import ch.alpine.sophis.math.api.TensorNorm;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;

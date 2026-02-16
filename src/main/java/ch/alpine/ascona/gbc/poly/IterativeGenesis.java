@@ -7,7 +7,7 @@ import ch.alpine.sophis.dv.AffineCoordinate;
 import ch.alpine.sophis.gbc.d2.IterativeCoordinateLevel;
 import ch.alpine.sophis.gbc.d2.ThreePointScalings;
 import ch.alpine.sophis.gbc.d2.ThreePointWeighting;
-import ch.alpine.sophis.math.Genesis;
+import ch.alpine.sophis.math.api.Genesis;
 import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
