@@ -35,12 +35,11 @@ import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.bm.ReducingMeanEstimate;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.s.SnPhongMean;
-import ch.alpine.tensor.Rational;
+import ch.alpine.sophus.math.AveragingWeights;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
@@ -109,7 +108,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     int length = sequence.length();
     if (0 == length)
       return;
-    Tensor weights = ConstantArray.of(Rational.of(1, length), length);
+    Tensor weights = AveragingWeights.of(length);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
     Tensor mean_approximation = new ReducingMeanEstimate(homogeneousSpace).estimate(sequence, weights);

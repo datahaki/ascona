@@ -8,12 +8,12 @@ import java.util.function.Function;
 
 import ch.alpine.ascona.dat.gok.GokartPosVel;
 import ch.alpine.ascona.dat.gok.PosVelHz;
+import ch.alpine.sophis.math.Do;
 import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
 import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.so2.So2Lift;
-import ch.alpine.sophus.math.Do;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
