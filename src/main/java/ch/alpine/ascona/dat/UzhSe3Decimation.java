@@ -20,7 +20,7 @@ import ch.alpine.tensor.qty.Timing;
   ;
   static void of(String name) throws IOException {
     System.out.println(name);
-    Path root = HomeDirectory.Documents.mk_dirs("uzh", name);
+    Path root = HomeDirectory.Ephemeral.mk_dirs("uzh", name);
     // ---
     Path file = Path.of("/media/datahaki/media/resource/uzh/groundtruth", name + ".txt");
     Tensor poses = UzhSe3TxtFormat.of(file);

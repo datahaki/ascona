@@ -94,7 +94,7 @@ import ch.alpine.tensor.sca.Chop;
       Export.of(folder.resolve(String.format("%03d.png", seed)), image);
     }
     {
-      Export.of(HomeDirectory.Pictures.resolve(SpatialMedianShow.class.getSimpleName() + ".png"), image(35));
+      Export.of(folder.resolve(SpatialMedianShow.class.getSimpleName() + ".png"), image(35));
     }
   }
 }

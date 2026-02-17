@@ -42,7 +42,7 @@ public class CoastlineDemo extends AbstractDemo {
   public CoastlineDemo() {
     this(new Param());
     // TODO ASCONA CSV file
-    points = Unprotect.Import(HomeDirectory.Documents.resolve("iberia.csv"));
+    points = Unprotect.Import(HomeDirectory.Ephemeral.resolve("iberia.csv"));
   }
 
   public CoastlineDemo(Param param) {
