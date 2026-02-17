@@ -52,7 +52,7 @@ import ch.alpine.tensor.sca.tri.Sin;
   }
 
   static void main() throws IOException {
-    Path path = HomeDirectory.Ephemeral.createDirectories(Plot3DDesign.class.getSimpleName());
+    Path path = HomeDirectory.Ephemeral.mk_dirs(Plot3DDesign.class.getSimpleName());
     Plot3DDesign plot3dDesign = new Plot3DDesign(Plot3DDesign::sin_xy2);
     Tensor matrix = Tensors.empty();
     for (Tensor x : Subdivide.of(0, 4, 12)) {

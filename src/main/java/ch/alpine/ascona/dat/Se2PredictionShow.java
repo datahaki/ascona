@@ -31,7 +31,7 @@ import ch.alpine.tensor.sca.Abs;
   ;
   // TODO ASCONA demo relevant?
   static void main() throws IOException {
-    Path path = HomeDirectory.Ephemeral.createDirectories(Se2PredictionShow.class.getSimpleName());
+    Path path = HomeDirectory.Ephemeral.mk_dirs(Se2PredictionShow.class.getSimpleName());
     String key = GokartPos.list().get(1);
     PosHz posHz = GokartPos.get(key, 2000);
     Tensor pqr_t = Partition.of(posHz.getPoseSequence(), 4); // limit , 4 * 500

@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 /* package */ enum LoxodromeData {
   ;
   static void main() throws IOException {
-    Path path = HomeDirectory.Ephemeral.createDirectories(LoxodromeData.class.getSimpleName());
+    Path path = HomeDirectory.Ephemeral.mk_dirs(LoxodromeData.class.getSimpleName());
     Tensor tensor = Subdivide.of(0, 4.5, 250).maps(AbsSquared.FUNCTION).maps(S2Loxodrome.of(RealScalar.of(0.15)));
     Export.of(path.resolve("loxodrome_exact.csv"), tensor);
     Tensor noise = RandomVariate.of(NormalDistribution.of(0, 0.05), Dimensions.of(tensor));

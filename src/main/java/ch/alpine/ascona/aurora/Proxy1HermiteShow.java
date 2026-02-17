@@ -2,7 +2,6 @@
 package ch.alpine.ascona.aurora;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 import ch.alpine.sophis.ref.d1h.Hermite1Subdivisions;
@@ -40,8 +39,8 @@ import ch.alpine.tensor.sca.exp.Log;
     // name = "20190701T174152_03";
     int levels = 3;
     ProxyHermiteShow proxyHermite = new Proxy1HermiteShow(name, levels);
-    Path folder = HomeDirectory.Pictures.resolve(proxyHermite.getClass().getSimpleName(), String.format("p_%1d", levels));
-    Files.createDirectories(folder);
+    Path folder = HomeDirectory.Pictures.mk_dirs( //
+        proxyHermite.getClass().getSimpleName(), String.format("p_%1d", levels));
     Tensor matrix = proxyHermite.getMatrix();
     HermiteArrayShow.export(folder.resolve("id"), matrix);
     HermiteArrayShow.export(folder.resolve("ln"), matrix.maps(RealScalar.ONE::add).maps(Log.FUNCTION));

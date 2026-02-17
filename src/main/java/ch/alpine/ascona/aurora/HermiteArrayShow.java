@@ -19,7 +19,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.Raster;
@@ -35,7 +34,6 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   private static final int COLS = 240 * 8;
   // ---
   private final int levels;
-  private final Path folder;
   private final Tensor control = Tensors.empty();
   private final Scalar delta;
   private final Tensor matrix;
@@ -45,12 +43,6 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
    * @param levels 4 */
   protected HermiteArrayShow(String name, Scalar period, int levels) {
     this.levels = Integers.requirePositive(levels);
-    folder = HomeDirectory.Documents.resolve(name);
-    try {
-      Files.createDirectories(folder);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
     PosVelHz posVelHz = GokartPosVel.get(name, 1000);
     Tensor data = posVelHz.getPosVelSequence();
     data.set(new So2Lift(), Tensor.ALL, 0, 2);

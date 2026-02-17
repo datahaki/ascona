@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
@@ -107,12 +105,7 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
       // LeversRender leversRender = LeversRender.of( //
       // geodesicDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
       // leversRender.renderSurfaceP();
-      Path folder = HomeDirectory.Pictures.resolve(CheckerBoardDemo.class.getSimpleName());
-      try {
-        Files.createDirectories(folder);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      Path folder = HomeDirectory.Pictures.mk_dirs(CheckerBoardDemo.class.getSimpleName());
       for (LogWeighting logWeighting : PolygonCoordinates.list())
         try {
           System.out.println(logWeighting);

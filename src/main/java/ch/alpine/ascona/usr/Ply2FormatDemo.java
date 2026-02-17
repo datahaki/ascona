@@ -15,7 +15,7 @@ import ch.alpine.tensor.io.Export;
 public enum Ply2FormatDemo {
   ;
   static void main() throws IOException {
-    Path path = HomeDirectory.Ephemeral.createDirectories(Plot3DDesign.class.getSimpleName());
+    Path path = HomeDirectory.Ephemeral.mk_dirs(Plot3DDesign.class.getSimpleName());
     Path file = path.resolve("doraemon.ply2");
     try (InputStream inputStream = Files.newInputStream(file)) {
       SurfaceMesh surfaceMesh = Ply2Format.parse(ReadLine.of(inputStream));

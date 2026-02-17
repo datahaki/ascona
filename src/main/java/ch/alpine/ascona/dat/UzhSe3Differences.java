@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   private static final LieGroup LIE_GROUP = new SeNGroup(3);
 
   static void main() throws IOException {
-    Path path = HomeDirectory.Ephemeral.createDirectories(UzhSe3Differences.class.getSimpleName());
+    Path path = HomeDirectory.Ephemeral.mk_dirs(UzhSe3Differences.class.getSimpleName());
     Path file = Path.of("/media/datahaki/media/resource/uzh/groundtruth", "outdoor_forward_5_davis.txt");
     Tensor poses = UzhSe3TxtFormat.of(file).extract(0, 1200);
     System.out.println(Dimensions.of(poses));

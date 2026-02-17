@@ -2,7 +2,6 @@
 package ch.alpine.ascona.dat;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 import ch.alpine.sophis.decim.CurveDecimation;
@@ -21,8 +20,7 @@ import ch.alpine.tensor.qty.Timing;
   ;
   static void of(String name) throws IOException {
     System.out.println(name);
-    Path root = HomeDirectory.Documents.resolve("uzh", name);
-    Files.createDirectories(root);
+    Path root = HomeDirectory.Documents.mk_dirs("uzh", name);
     // ---
     Path file = Path.of("/media/datahaki/media/resource/uzh/groundtruth", name + ".txt");
     Tensor poses = UzhSe3TxtFormat.of(file);

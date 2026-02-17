@@ -19,7 +19,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
-import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.Raster;
 import ch.alpine.tensor.io.Export;
@@ -35,7 +34,6 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   private static final int COLS = 240 * 1;
   // ---
   private final int levels;
-  private final Path folder;
   private final Tensor data;
   private final Tensor control;
   private final Scalar delta;
@@ -45,12 +43,6 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
    * @param levels 2 */
   protected ProxyHermiteShow(String name, int levels) {
     this.levels = levels;
-    folder = HomeDirectory.Documents.resolve(name);
-    try {
-      Files.createDirectories(folder);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
     Scalar rate = Quantity.of(50, "Hz");
     int delta2 = 1;
     for (int level = 0; level < levels; ++level) {

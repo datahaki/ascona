@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.Random;
@@ -89,8 +88,7 @@ import ch.alpine.tensor.sca.Chop;
   }
 
   static void main() throws IOException {
-    Path folder = HomeDirectory.Pictures.resolve(SpatialMedianShow.class.getSimpleName());
-    Files.createDirectories(folder);
+    Path folder = HomeDirectory.Pictures.mk_dirs(SpatialMedianShow.class.getSimpleName());
     for (int seed = 30; seed < 40; ++seed) {
       Tensor image = image(seed);
       Export.of(folder.resolve(String.format("%03d.png", seed)), image);
