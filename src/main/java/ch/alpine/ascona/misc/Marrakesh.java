@@ -22,14 +22,12 @@ import ch.alpine.ascona.lev.Se2AnimationDemo;
 import ch.alpine.ascona.ref.d1.CurveSubdivisionDemo;
 import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.WindowBounds;
-import ch.alpine.bridge.ref.util.ReflectionMarkers;
 import ch.alpine.bridge.swing.LookAndFeels;
 
 public enum Marrakesh {
   ;
   static void main() {
-    ReflectionMarkers.INSTANCE.DEBUG_PRINT.set(true);
-    LookAndFeels.LIGHT.updateComponentTreeUI();
+    LookAndFeels.autoDetect();
     // ---
     List<Class<? extends AbstractDemo>> list = List.of( //
         BiinvariantMeanDemo.class, //
