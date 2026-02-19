@@ -6,7 +6,7 @@ import java.util.List;
 
 import ch.alpine.bridge.fig.DensityPlot;
 import ch.alpine.bridge.fig.Show;
-import ch.alpine.bridge.fig.ShowWindow;
+import ch.alpine.bridge.pro.ShowWindow;
 import ch.alpine.sophis.crv.dub.DubinsPath;
 import ch.alpine.sophis.crv.dub.DubinsPathComparators;
 import ch.alpine.sophis.crv.dub.FixedRadiusDubins;
