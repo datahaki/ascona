@@ -101,6 +101,6 @@ public class PolygonClipDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new PolygonClipDemo().runStandalone();
   }
 }

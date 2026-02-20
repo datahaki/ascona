@@ -126,6 +126,6 @@ public class DbscanDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new DbscanDemo().runStandalone();
   }
 }

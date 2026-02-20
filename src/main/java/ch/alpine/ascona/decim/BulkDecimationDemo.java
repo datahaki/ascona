@@ -84,6 +84,6 @@ public class BulkDecimationDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new BulkDecimationDemo().runStandalone();
   }
 }

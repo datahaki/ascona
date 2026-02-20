@@ -132,6 +132,6 @@ public class S1InterpolationDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new S1InterpolationDemo().runStandalone();
   }
 }

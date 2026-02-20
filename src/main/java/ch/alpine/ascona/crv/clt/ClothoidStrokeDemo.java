@@ -86,6 +86,6 @@ public class ClothoidStrokeDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ClothoidStrokeDemo().runStandalone();
   }
 }

@@ -84,6 +84,6 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new Se2UnprojectDemo().runStandalone();
   }
 }

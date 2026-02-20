@@ -145,6 +145,6 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   }
 
   static void main() {
-    launch();
+    new R2ScatteredSetCoordinateDemo().runStandalone();
   }
 }

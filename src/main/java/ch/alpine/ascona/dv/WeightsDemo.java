@@ -130,6 +130,6 @@ public class WeightsDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new WeightsDemo().runStandalone();
   }
 }

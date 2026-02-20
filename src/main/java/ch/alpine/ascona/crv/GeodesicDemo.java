@@ -95,7 +95,6 @@ public class GeodesicDemo extends ControlPointsDemo {
   }
 
   static void main() {
-//    new GeodesicDemo().run(null);
-    launch();
+    new GeodesicDemo().runStandalone();
   }
 }

@@ -66,6 +66,6 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   }
 
   static void main() {
-    launch();
+    new R2DeformationDemo().runStandalone();
   }
 }

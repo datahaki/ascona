@@ -42,6 +42,6 @@ public class SpearheadDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new SpearheadDemo().runStandalone();
   }
 }

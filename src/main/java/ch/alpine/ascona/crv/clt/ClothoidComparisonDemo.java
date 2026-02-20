@@ -85,6 +85,6 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ClothoidComparisonDemo().runStandalone();
   }
 }

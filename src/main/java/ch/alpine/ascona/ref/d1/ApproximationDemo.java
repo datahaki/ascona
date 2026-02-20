@@ -158,6 +158,6 @@ public class ApproximationDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new ApproximationDemo().runStandalone();
   }
 }

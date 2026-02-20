@@ -92,6 +92,6 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
   }
 
   static void main() {
-    launch();
+    new GeodesicDeBoorDemo().runStandalone();
   }
 }

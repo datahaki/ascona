@@ -85,6 +85,6 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new BipartiteMatchingDemo().runStandalone();
   }
 }

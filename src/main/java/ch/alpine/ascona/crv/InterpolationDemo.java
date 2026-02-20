@@ -58,6 +58,6 @@ public class InterpolationDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new InterpolationDemo().runStandalone();
   }
 }

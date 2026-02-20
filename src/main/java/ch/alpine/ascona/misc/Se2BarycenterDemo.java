@@ -117,6 +117,6 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new Se2BarycenterDemo().runStandalone();
   }
 }

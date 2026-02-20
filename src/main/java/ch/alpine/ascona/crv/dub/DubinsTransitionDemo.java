@@ -50,6 +50,6 @@ public class DubinsTransitionDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new DubinsTransitionDemo().runStandalone();
   }
 }

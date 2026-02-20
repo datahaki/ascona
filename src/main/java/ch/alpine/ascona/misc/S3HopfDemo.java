@@ -64,6 +64,6 @@ public class S3HopfDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new S3HopfDemo().runStandalone();
   }
 }

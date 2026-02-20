@@ -75,6 +75,6 @@ public class ScreenRectanglesDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ScreenRectanglesDemo().runStandalone();
   }
 }

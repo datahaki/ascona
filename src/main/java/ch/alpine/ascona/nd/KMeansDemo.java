@@ -157,6 +157,6 @@ public class KMeansDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new KMeansDemo().runStandalone();
   }
 }

@@ -69,6 +69,6 @@ public class LbsBarycenterDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new LbsBarycenterDemo().runStandalone();
   }
 }

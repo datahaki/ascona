@@ -147,6 +147,6 @@ public class ClassificationDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ClassificationDemo().runStandalone();
   }
 }

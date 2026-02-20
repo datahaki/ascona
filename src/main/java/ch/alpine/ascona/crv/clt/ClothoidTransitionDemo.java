@@ -116,6 +116,6 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ClothoidTransitionDemo().runStandalone();
   }
 }

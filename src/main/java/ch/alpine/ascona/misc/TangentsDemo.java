@@ -43,6 +43,6 @@ public class TangentsDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new TangentsDemo().runStandalone();
   }
 }

@@ -142,6 +142,6 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new MinimumSpanningTreeDemo().runStandalone();
   }
 }

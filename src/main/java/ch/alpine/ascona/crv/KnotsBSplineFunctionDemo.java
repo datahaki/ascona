@@ -106,6 +106,6 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
   }
 
   static void main() {
-    launch();
+    new KnotsBSplineFunctionDemo().runStandalone();
   }
 }

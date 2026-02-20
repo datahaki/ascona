@@ -219,6 +219,6 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   }
 
   static void main() {
-    launch();
+    new CheckerBoardDemo().runStandalone();
   }
 }

@@ -78,6 +78,6 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new GeodesicFiltersDemo().runStandalone();
   }
 }

@@ -131,6 +131,6 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
   }
 
   static void main() {
-    launch();
+    new PlanarScatteredSetCoordinateDemo().runStandalone();
   }
 }

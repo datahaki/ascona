@@ -68,6 +68,6 @@ public class MinTriangleAreaSquaredDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new MinTriangleAreaSquaredDemo().runStandalone();
   }
 }

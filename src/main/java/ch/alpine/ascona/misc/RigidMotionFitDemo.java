@@ -113,6 +113,6 @@ public class RigidMotionFitDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new RigidMotionFitDemo().runStandalone();
   }
 }

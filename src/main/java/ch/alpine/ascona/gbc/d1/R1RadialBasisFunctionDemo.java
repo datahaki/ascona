@@ -93,6 +93,6 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
   }
 
   static void main() {
-    launch();
+    new R1RadialBasisFunctionDemo().runStandalone();
   }
 }

@@ -54,6 +54,6 @@ public class ImageRenderDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new ImageRenderDemo().runStandalone();
   }
 }

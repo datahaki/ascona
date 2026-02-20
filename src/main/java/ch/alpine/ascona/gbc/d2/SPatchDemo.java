@@ -99,6 +99,6 @@ public class SPatchDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new SPatchDemo().runStandalone();
   }
 }

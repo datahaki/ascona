@@ -17,6 +17,6 @@ public class R2TreeMapDemo extends AbstractTreeMapDemo {
   }
 
   static void main() {
-    launch();
+    new R2TreeMapDemo().runStandalone();
   }
 }

@@ -143,6 +143,6 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ClothoidBrushDemo().runStandalone();
   }
 }

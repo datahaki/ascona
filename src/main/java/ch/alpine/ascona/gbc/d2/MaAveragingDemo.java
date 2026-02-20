@@ -151,6 +151,6 @@ public class MaAveragingDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new MaAveragingDemo().runStandalone();
   }
 }

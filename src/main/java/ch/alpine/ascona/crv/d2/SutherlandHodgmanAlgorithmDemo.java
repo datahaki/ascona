@@ -138,6 +138,6 @@ public class SutherlandHodgmanAlgorithmDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new SutherlandHodgmanAlgorithmDemo().runStandalone();
   }
 }

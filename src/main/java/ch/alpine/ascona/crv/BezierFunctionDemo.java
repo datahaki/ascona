@@ -92,6 +92,6 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
   }
 
   static void main() {
-    launch();
+    new BezierFunctionDemo().runStandalone();
   }
 }

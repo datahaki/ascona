@@ -107,6 +107,6 @@ public class R1KrigingDemo extends A1AveragingDemo {
   }
 
   static void main() {
-    launch();
+    new R1KrigingDemo().runStandalone();
   }
 }

@@ -101,6 +101,6 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
   }
 
   static void main() {
-    launch();
+    new Se2ScatteredSetCoordinateDemo().runStandalone();
   }
 }

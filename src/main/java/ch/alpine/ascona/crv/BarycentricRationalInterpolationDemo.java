@@ -121,6 +121,6 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new BarycentricRationalInterpolationDemo().runStandalone();
   }
 }

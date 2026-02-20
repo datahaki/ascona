@@ -56,6 +56,6 @@ public final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
   }
 
   static void main() {
-    launch();
+    new Se2BiinvariantMeanDemo().runStandalone();
   }
 }

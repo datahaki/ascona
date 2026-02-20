@@ -130,6 +130,6 @@ public class S1KrigingDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new S1KrigingDemo().runStandalone();
   }
 }

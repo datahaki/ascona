@@ -96,6 +96,6 @@ public class SnRotationDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new SnRotationDemo().runStandalone();
   }
 }

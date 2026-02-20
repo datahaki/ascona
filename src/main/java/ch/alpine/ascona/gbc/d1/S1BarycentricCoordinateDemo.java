@@ -20,6 +20,6 @@ public class S1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
   }
 
   static void main() {
-    launch();
+    new S1BarycentricCoordinateDemo().runStandalone();
   }
 }

@@ -85,6 +85,6 @@ public final class GrassmannDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new GrassmannDemo().runStandalone();
   }
 }

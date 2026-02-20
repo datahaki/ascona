@@ -80,6 +80,6 @@ public class NonuniformSplineDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new NonuniformSplineDemo().runStandalone();
   }
 }

@@ -78,6 +78,6 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new GeodesicCatmullClarkSubdivisionDemo().runStandalone();
   }
 }

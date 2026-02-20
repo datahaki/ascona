@@ -142,6 +142,6 @@ public class CurveDecimationDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new CurveDecimationDemo().runStandalone();
   }
 }

@@ -142,6 +142,6 @@ public class S2DeltaDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new S2DeltaDemo().runStandalone();
   }
 }

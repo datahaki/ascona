@@ -143,6 +143,6 @@ public class DubinsPathDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new DubinsPathDemo().runStandalone();
   }
 }

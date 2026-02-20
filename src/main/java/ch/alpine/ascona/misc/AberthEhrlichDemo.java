@@ -180,6 +180,6 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new AberthEhrlichDemo().runStandalone();
   }
 }

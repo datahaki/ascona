@@ -97,6 +97,6 @@ public class Se2AnimationDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new Se2AnimationDemo().runStandalone();
   }
 }

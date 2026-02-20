@@ -190,6 +190,6 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new S2DefectNormDemo().runStandalone();
   }
 }

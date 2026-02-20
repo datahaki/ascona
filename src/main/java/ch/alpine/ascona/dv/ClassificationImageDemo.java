@@ -161,6 +161,6 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ClassificationImageDemo().runStandalone();
   }
 }

@@ -67,6 +67,6 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
   }
 
   static void main() {
-    launch();
+    new Regularization2StepDemo().runStandalone();
   }
 }

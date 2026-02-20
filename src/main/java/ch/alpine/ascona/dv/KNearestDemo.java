@@ -147,6 +147,6 @@ public class KNearestDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new KNearestDemo().runStandalone();
   }
 }

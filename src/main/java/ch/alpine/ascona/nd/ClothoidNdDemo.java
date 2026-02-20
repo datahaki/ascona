@@ -90,6 +90,6 @@ public class ClothoidNdDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ClothoidNdDemo().runStandalone();
   }
 }

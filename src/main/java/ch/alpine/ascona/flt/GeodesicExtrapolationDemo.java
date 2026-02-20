@@ -55,6 +55,6 @@ public class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implement
   }
 
   static void main() {
-    launch();
+    new GeodesicExtrapolationDemo().runStandalone();
   }
 }

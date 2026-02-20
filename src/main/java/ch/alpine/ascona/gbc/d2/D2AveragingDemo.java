@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import ch.alpine.ascona.lev.Se2AnimationDemo;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.arp.ArrayPlotRecord;
@@ -148,6 +149,6 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new Se2AnimationDemo().runStandalone();
   }
 }

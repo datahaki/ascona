@@ -127,6 +127,6 @@ public class SphereFitDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new SphereFitDemo().runStandalone();
   }
 }

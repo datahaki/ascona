@@ -70,6 +70,6 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new GeodesicMeanFilterDemo().runStandalone();
   }
 }

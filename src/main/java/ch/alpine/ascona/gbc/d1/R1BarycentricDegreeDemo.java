@@ -110,6 +110,6 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new R1BarycentricDegreeDemo().runStandalone();
   }
 }

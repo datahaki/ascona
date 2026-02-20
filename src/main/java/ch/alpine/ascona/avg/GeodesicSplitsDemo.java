@@ -49,6 +49,6 @@ public class GeodesicSplitsDemo extends AbstractSplitsDemo {
   }
 
   static void main() {
-    launch();
+    new GeodesicSplitsDemo().runStandalone();
   }
 }

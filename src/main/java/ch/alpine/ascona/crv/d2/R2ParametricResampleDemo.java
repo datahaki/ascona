@@ -83,6 +83,6 @@ public class R2ParametricResampleDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new R2ParametricResampleDemo().runStandalone();
   }
 }

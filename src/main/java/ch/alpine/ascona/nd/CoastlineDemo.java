@@ -68,6 +68,6 @@ public class CoastlineDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new CoastlineDemo().runStandalone();
   }
 }

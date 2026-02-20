@@ -166,6 +166,6 @@ public class LogarithmDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new LogarithmDemo().runStandalone();
   }
 }

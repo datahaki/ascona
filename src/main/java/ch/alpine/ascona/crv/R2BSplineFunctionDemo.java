@@ -65,6 +65,6 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
   }
 
   static void main() {
-    launch();
+    new R2BSplineFunctionDemo().runStandalone();
   }
 }

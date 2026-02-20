@@ -131,6 +131,6 @@ public class Se2LineDistanceDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new Se2LineDistanceDemo().runStandalone();
   }
 }

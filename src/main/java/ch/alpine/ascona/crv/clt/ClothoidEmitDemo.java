@@ -83,6 +83,6 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ClothoidEmitDemo().runStandalone();
   }
 }

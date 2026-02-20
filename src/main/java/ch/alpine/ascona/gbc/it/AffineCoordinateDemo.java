@@ -88,6 +88,6 @@ public class AffineCoordinateDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new AffineCoordinateDemo().runStandalone();
   }
 }

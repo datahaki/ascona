@@ -149,6 +149,6 @@ public class LftDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new LftDemo().runStandalone();
   }
 }

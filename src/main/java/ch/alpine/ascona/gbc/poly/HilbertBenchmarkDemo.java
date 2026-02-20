@@ -94,6 +94,6 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new HilbertBenchmarkDemo().runStandalone();
   }
 }

@@ -212,6 +212,6 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new BiinvariantMeanDemo().runStandalone();
   }
 }

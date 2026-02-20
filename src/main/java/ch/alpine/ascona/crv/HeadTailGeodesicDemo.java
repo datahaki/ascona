@@ -91,6 +91,6 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new HeadTailGeodesicDemo().runStandalone();
   }
 }

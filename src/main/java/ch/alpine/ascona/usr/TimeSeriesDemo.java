@@ -124,6 +124,6 @@ public class TimeSeriesDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new TimeSeriesDemo().runStandalone();
   }
 }

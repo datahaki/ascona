@@ -86,6 +86,6 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new BarycentricExtrapolationDemo().runStandalone();
   }
 }

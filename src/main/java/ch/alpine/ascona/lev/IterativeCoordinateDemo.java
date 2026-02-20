@@ -83,6 +83,6 @@ public class IterativeCoordinateDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new IterativeCoordinateDemo().runStandalone();
   }
 }

@@ -117,6 +117,6 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new SeriesHermiteSubdivisionDemo().runStandalone();
   }
 }

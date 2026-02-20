@@ -116,6 +116,6 @@ public class AnimationDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new AnimationDemo().runStandalone();
   }
 }

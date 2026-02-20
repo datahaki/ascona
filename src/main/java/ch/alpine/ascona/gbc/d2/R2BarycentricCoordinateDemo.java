@@ -201,6 +201,6 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
   }
 
   static void main() {
-    launch();
+    new R2BarycentricCoordinateDemo().runStandalone();
   }
 }

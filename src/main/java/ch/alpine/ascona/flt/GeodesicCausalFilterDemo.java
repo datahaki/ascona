@@ -82,6 +82,6 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
   }
 
   static void main() {
-    launch();
+    new GeodesicCausalFilterDemo().runStandalone();
   }
 }

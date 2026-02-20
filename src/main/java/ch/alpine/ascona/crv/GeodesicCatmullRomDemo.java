@@ -114,6 +114,6 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   }
 
   static void main() {
-    launch();
+    new GeodesicCatmullRomDemo().runStandalone();
   }
 }

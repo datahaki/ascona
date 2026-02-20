@@ -203,6 +203,6 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   }
 
   static void main() {
-    launch();
+    new ClothoidComparisonDemo().runStandalone();
   }
 }

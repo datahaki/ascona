@@ -129,6 +129,6 @@ public class ExponentialDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ExponentialDemo().runStandalone();
   }
 }

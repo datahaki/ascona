@@ -148,6 +148,6 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new HermiteSubdivisionDemo().runStandalone();
   }
 }

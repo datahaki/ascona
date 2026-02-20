@@ -65,6 +65,6 @@ public class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implemen
   }
 
   static void main() {
-    launch();
+    new GeodesicFiltersDatasetDemo().runStandalone();
   }
 }

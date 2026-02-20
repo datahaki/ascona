@@ -80,6 +80,6 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
   }
 
   static void main() {
-    launch();
+    new GeodesicBSplineFunctionDemo().runStandalone();
   }
 }

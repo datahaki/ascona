@@ -120,6 +120,6 @@ public class LineDistanceDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new LineDistanceDemo().runStandalone();
   }
 }

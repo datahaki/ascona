@@ -54,6 +54,6 @@ public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   }
 
   static void main() {
-    launch();
+    new BezierFunctionSplitsDemo().runStandalone();
   }
 }

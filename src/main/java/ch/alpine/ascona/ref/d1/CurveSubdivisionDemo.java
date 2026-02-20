@@ -170,6 +170,6 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
   }
 
   static void main() {
-    launch();
+    new CurveSubdivisionDemo().runStandalone();
   }
 }

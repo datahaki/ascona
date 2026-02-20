@@ -153,6 +153,6 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new LaneRiesenfeldComparisonDemo().runStandalone();
   }
 }

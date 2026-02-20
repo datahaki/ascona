@@ -119,6 +119,6 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new PolygonCoordinatesDemo().runStandalone();
   }
 }

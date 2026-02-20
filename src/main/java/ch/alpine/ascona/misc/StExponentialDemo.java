@@ -82,6 +82,6 @@ public class StExponentialDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new StExponentialDemo().runStandalone();
   }
 }

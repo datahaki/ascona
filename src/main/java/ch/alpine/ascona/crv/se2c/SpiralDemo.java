@@ -71,6 +71,6 @@ public class SpiralDemo extends AbstractDemo {
   }
 
   static void main() {
-    launch();
+    new SpiralDemo().runStandalone();
   }
 }

@@ -131,6 +131,6 @@ public class OrderingDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new OrderingDemo().runStandalone();
   }
 }

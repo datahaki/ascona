@@ -97,6 +97,6 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new Se2InvarianceDemo().runStandalone();
   }
 }

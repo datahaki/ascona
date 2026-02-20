@@ -53,6 +53,6 @@ public class H2DeformationDemo extends AbstractDeformationDemo {
   }
 
   static void main() {
-    launch();
+    new H2DeformationDemo().runStandalone();
   }
 }

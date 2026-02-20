@@ -88,6 +88,6 @@ public class ClothoidDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ClothoidDemo().runStandalone();
   }
 }

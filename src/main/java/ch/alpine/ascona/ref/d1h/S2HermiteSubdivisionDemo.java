@@ -151,6 +151,6 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new S2HermiteSubdivisionDemo().runStandalone();
   }
 }

@@ -107,6 +107,6 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new ThreePointBarycenterDemo().runStandalone();
   }
 }

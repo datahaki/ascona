@@ -24,6 +24,6 @@ public class S2TreeMapDemo extends AbstractTreeMapDemo {
   }
 
   static void main() {
-    launch();
+    new S2TreeMapDemo().runStandalone();
   }
 }

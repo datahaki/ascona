@@ -96,6 +96,6 @@ public class LaserTagDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new LaserTagDemo().runStandalone();
   }
 }

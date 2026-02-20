@@ -146,6 +146,6 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    launch();
+    new Tsp2OptHeuristicDemo().runStandalone();
   }
 }
