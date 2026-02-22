@@ -23,13 +23,13 @@ import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.pdf.RandomSample;
 
-// FIXME
+// FIXME for S2
 public final class GrassmannDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
       super(true, ManifoldDisplays.manifolds());
-      manifoldDisplays = ManifoldDisplays.S2;
+      manifoldDisplays = ManifoldDisplays.R2;
     }
 
     @FieldSelectionArray({ "4", "6", "8", "10" })

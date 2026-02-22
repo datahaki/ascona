@@ -40,7 +40,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(false, ManifoldDisplays.metricManifolds());
+      super(false, ManifoldDisplays.manifolds());
       manifoldDisplays = ManifoldDisplays.R2;
     }
 

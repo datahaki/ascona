@@ -27,7 +27,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.d2Rasters());
+      super(true, ManifoldDisplays.manifolds());
     }
 
     @FieldClip(min = "1", max = "200")
