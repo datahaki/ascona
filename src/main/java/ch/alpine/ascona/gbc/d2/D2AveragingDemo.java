@@ -4,12 +4,10 @@ package ch.alpine.ascona.gbc.d2;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import ch.alpine.ascona.lev.Se2AnimationDemo;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -20,6 +18,7 @@ import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -50,10 +49,6 @@ import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 public final class D2AveragingDemo extends ControlPointsDemo {
-  public record ArrayPlotRecord(Tensor matrix, ColorDataGradient cdg) {
-    // ---
-  }
-
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
@@ -88,15 +83,14 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setOffset(400, 400);
   }
 
-  private final Cache<Tensor, ArrayPlotRecord> cache = Cache.of(this::computeImage, 1);
+  private final Cache<Tensor, Showable> cache = Cache.of(this::computeImage, 1);
   private Scalar computeTime = Quantity.of(0, "s");
 
   protected void recompute() {
-    System.out.println("clear");
     cache.clear();
   }
 
-  private ArrayPlotRecord computeImage(Tensor tensor) {
+  private Showable computeImage(Tensor tensor) {
     Tensor sequence = tensor.get(0).maps(N.DOUBLE);
     Tensor values = tensor.get(1).maps(N.DOUBLE);
     int resolution = param.resolution;
@@ -120,7 +114,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
         Range.of(Ceiling.intValueExact(clip.min()), Floor.intValueExact(clip.max()) + 1).stream() //
             .map(Scalar.class::cast) //
             .forEach(set::add);
-        return new ArrayPlotRecord(matrix, colorDataGradient);
+        return ArrayPlot.of(matrix, cbb, colorDataGradient);
       } catch (Exception exception) {
         exception.printStackTrace();
       }
@@ -130,15 +124,14 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    CoordinateBoundingBox coordinateBoundingBox = manifoldDisplay.d2Raster_coordinateBoundingBox();
     Tensor sequence = getGeodesicControlPoints();
     Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
-    ArrayPlotRecord arrayPlotRecord = cache.apply(Unprotect.byRef(sequence, values));
-    if (Objects.nonNull(arrayPlotRecord)) {
-      int height = 300;
+    Showable showable = cache.apply(Unprotect.byRef(sequence, values));
+    if (Objects.nonNull(showable)) {
       Show show = new Show();
-      show.add(ArrayPlot.of(arrayPlotRecord.matrix(), coordinateBoundingBox, arrayPlotRecord.cdg()));
-      show.render(graphics, new Rectangle(70, 50, height, height));
+      show.add(showable);
+      CoordinateBoundingBox cbb = showable.fullPlotRange().orElseThrow();
+      show.render(graphics, geometricLayer.toRectangle(cbb));
     }
     RenderQuality.setQuality(graphics);
     LeversRender leversRender = //
@@ -150,6 +143,6 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    new Se2AnimationDemo().runStandalone();
+    new D2AveragingDemo().runStandalone();
   }
 }
