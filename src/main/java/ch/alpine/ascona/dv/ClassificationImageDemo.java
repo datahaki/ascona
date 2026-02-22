@@ -35,6 +35,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.io.ImageFormat;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
@@ -129,7 +130,8 @@ public class ClassificationImageDemo extends ControlPointsDemo {
         param1.classificationImage.operator(classification, sedarim, colorDataLists.cyclic());
     int resolution = param1.res;
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
-    Tensor raster = manifoldDisplay.d2Raster().of(resolution, arrayFunction);
+    CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+    Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
     bufferedImage = ImageFormat.of(raster);
   }
 
@@ -137,7 +139,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     if (Objects.nonNull(bufferedImage))
-      new ImageRender(bufferedImage, manifoldDisplay.d2Raster().coordinateBoundingBox()).render(geometricLayer, graphics);
+      new ImageRender(bufferedImage, manifoldDisplay.d2Raster_coordinateBoundingBox()).render(geometricLayer, graphics);
     // ---
     render(geometricLayer, graphics, manifoldDisplay, getGeodesicControlPoints(), vector, param1.cdg.cyclic());
   }

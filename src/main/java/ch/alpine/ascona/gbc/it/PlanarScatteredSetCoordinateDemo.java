@@ -32,6 +32,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
@@ -85,7 +86,8 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
     if (manifoldDisplay.dimensions() < sequence.length()) {
       Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(operator(sequence)::sunder, fallback);
-      Tensor wgs = manifoldDisplay.d2Raster().of(scatteredSetParam.refine, arrayFunction);
+      CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+      Tensor wgs = manifoldDisplay.d2Raster().of(arrayFunction, cbb, scatteredSetParam.refine);
       Show _show = new Show();
       _show.add(ArrayPlot.of(ImageTiling.of(wgs), scatteredSetParam.spinnerColorData));
       show = _show;

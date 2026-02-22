@@ -14,6 +14,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /* package */ enum HilbertLevelShow {
   ;
@@ -24,7 +25,8 @@ import ch.alpine.tensor.img.ColorDataGradient;
     int sequence_length = IterativeGenesis.values().length;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence_length);
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, fallback);
-    Tensor array = manifoldDisplay.d2Raster().of(res, arrayFunction);
+    CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+    Tensor array = manifoldDisplay.d2Raster().of(arrayFunction, cbb, res);
     Show show = new Show();
     show.add(ArrayPlot.of(ImageTiling.of(array), colorDataGradient));
     return show;

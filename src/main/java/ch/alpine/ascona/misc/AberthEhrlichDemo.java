@@ -33,6 +33,7 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.io.TableBuilder;
 import ch.alpine.tensor.lie.rot.CirclePoints;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Arg;
@@ -117,10 +118,11 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
         return DoubleScalar.INDETERMINATE;
       };
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
-      Tensor raster = manifoldDisplay().d2Raster().of(param.resolution, arrayFunction);
+      CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
+      Tensor raster = manifoldDisplay().d2Raster().of(arrayFunction, cbb, param.resolution);
       Tensor rescal = new Rescale(raster).result().maps(ColorDataGradients.HUE);
       BufferedImage bufferedImage = ImageFormat.of(rescal);
-      new ImageRender(bufferedImage, manifoldDisplay().d2Raster().coordinateBoundingBox()).render(geometricLayer, graphics);
+      new ImageRender(bufferedImage, cbb).render(geometricLayer, graphics);
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LeversRender leversRender = LeversRender.of(C1Display.INSTANCE, zeros.extract(0, length), null, geometricLayer, graphics);

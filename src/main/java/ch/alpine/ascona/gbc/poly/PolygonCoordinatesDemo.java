@@ -28,6 +28,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** transfer weights from barycentric coordinates defined by set of control points
@@ -77,7 +78,8 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     if (manifoldDisplay.dimensions() < sequence.length()) {
       Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(sedarim::sunder, fallback);
-      Tensor weights = manifoldDisplay.d2Raster().of(param1.resolution, arrayFunction);
+      CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+      Tensor weights = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param1.resolution);
       Show _show = new Show();
       _show.add(ArrayPlot.of(ImageTiling.of(weights), param1.cdg));
       show = _show;

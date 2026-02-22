@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.bas.AveragedMovingDomain2D;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.bas.RnFittedMovingDomain2D;
@@ -48,8 +47,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   @Override
   protected MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster d2Raster = manifoldDisplay.d2Raster();
-    CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
+    CoordinateBoundingBox coordinateBoundingBox = manifoldDisplay.d2Raster_coordinateBoundingBox();
     Tensor domain = StaticHelper.of(coordinateBoundingBox, manifoldDisplay, res);
     Sedarim sedarim = operator(movingOrigin);
     return param2.mls //

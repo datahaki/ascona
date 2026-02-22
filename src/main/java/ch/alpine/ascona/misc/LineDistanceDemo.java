@@ -8,7 +8,6 @@ import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.arp.ArrayFunction;
-import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
@@ -34,6 +33,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.io.ImageFormat;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Times;
 
 public class LineDistanceDemo extends ControlPointsDemo {
@@ -84,7 +84,8 @@ public class LineDistanceDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorScalarFunction tsf = tensorNorm()::norm;
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-    Tensor matrix = manifoldDisplay.d2Raster().of(resolution, arrayFunction);
+    CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+    Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
     matrix = Rescale.of(matrix);
     return ImageFormat.of(matrix.maps(param.colorDataGradients));
   }
@@ -96,11 +97,10 @@ public class LineDistanceDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = manifoldDisplay.d2Raster();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     RenderQuality.setDefault(graphics);
     BufferedImage bufferedImage = bufferedImage(param.resolution);
-    new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()) //
+    new ImageRender(bufferedImage, manifoldDisplay.d2Raster_coordinateBoundingBox()) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     // ---

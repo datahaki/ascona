@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascony.arp.ArrayFunction;
-import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
@@ -40,6 +39,7 @@ import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Sign;
@@ -104,7 +104,8 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   private BufferedImage bufferedImage(int resolution) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(new TSF(), DoubleScalar.INDETERMINATE);
-    Tensor matrix = manifoldDisplay.d2Raster().of(resolution, arrayFunction);
+    CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+    Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
     matrix = Rescale.of(matrix);
     return ImageFormat.of(matrix.maps(param.colorDataGradients));
   }
@@ -116,11 +117,10 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = manifoldDisplay.d2Raster();
     RenderQuality.setDefault(graphics);
     int res = param.resolution;
     BufferedImage bufferedImage = bufferedImage(res);
-    new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()) //
+    new ImageRender(bufferedImage, manifoldDisplay.d2Raster_coordinateBoundingBox()) //
         .render(geometricLayer, graphics);
     RenderQuality.setQuality(graphics);
     graphics.setStroke(STROKE);

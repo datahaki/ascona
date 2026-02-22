@@ -108,7 +108,8 @@ public class MaAveragingDemo extends ControlPointsDemo {
         };
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-        Tensor matrix = manifoldDisplay.d2Raster().of(resolution, arrayFunction);
+        CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+        Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
         computeTime = timing.seconds();
         // ---
         ColorDataGradient colorDataGradient = param.cdg;
@@ -133,7 +134,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
     Show arrayPlotImage = cache.apply(sequence);
     if (Objects.nonNull(arrayPlotImage)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      CoordinateBoundingBox cbb = manifoldDisplay.d2Raster().coordinateBoundingBox();
+      CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
       arrayPlotImage.render(graphics, geometricLayer.toRectangle(cbb));
     }
     RenderQuality.setQuality(graphics);

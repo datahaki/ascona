@@ -14,7 +14,6 @@ import ch.alpine.ascony.api.LogWeighting;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.arp.ArrayFunction;
-import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
@@ -41,6 +40,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.var.VariogramFunctions;
 
 /** transfe
@@ -114,7 +114,8 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
           ManifoldDisplay manifoldDisplay = manifoldDisplay();
           // TODO ASCONA ALG redundant
           ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, DoubleScalar.INDETERMINATE);
-          Tensor matrix = manifoldDisplay.d2Raster().of(512, arrayFunction);
+          CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+          Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, 512);
           // BufferedImage bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1, false).bufferedImage();
           // ImageIO.write(bufferedImage, "png", new File(folder, logWeighting.toString() + ".png"));
           // RenderQuality.setDefault(graphics); // default so that raster becomes visible
@@ -136,7 +137,8 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
       TensorScalarFunction tsf = function(sequence, reference.multiply(DoubleScalar.of(param1.factor)));
       ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-      Tensor matrix = manifoldDisplay.d2Raster().of(param1.refine, arrayFunction);
+      CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+      Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param1.refine);
       Showable showable = ArrayPlot.of(matrix, COLOR_DATA_INDEXED);
       Show show = new Show();
       show.add(showable);
@@ -149,7 +151,6 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = manifoldDisplay.d2Raster();
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));
     RenderQuality.setQuality(graphics);
@@ -162,7 +163,7 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
         recompute();
       if (Objects.nonNull(bufferedImage)) {
         RenderQuality.setDefault(graphics); // default so that raster becomes visible
-        new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()) //
+        new ImageRender(bufferedImage, manifoldDisplay.d2Raster_coordinateBoundingBox()) //
             .render(geometricLayer, graphics);
       }
     } else {

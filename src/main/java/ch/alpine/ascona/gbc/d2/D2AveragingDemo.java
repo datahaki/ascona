@@ -12,7 +12,6 @@ import java.util.Set;
 import ch.alpine.ascona.lev.Se2AnimationDemo;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
-import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
@@ -110,7 +109,8 @@ public final class D2AveragingDemo extends ControlPointsDemo {
             InversePowerVariogram.of(2), sequence, values);
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(t -> Round._1.apply(tensorScalarFunction.apply(t)), DoubleScalar.INDETERMINATE);
-        Tensor matrix = manifoldDisplay.d2Raster().of(resolution, arrayFunction);
+        CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+        Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
         computeTime = timing.seconds();
         // ---
         Rescale rescale = new Rescale(matrix);
@@ -130,8 +130,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster d2Raster = manifoldDisplay.d2Raster();
-    CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
+    CoordinateBoundingBox coordinateBoundingBox = manifoldDisplay.d2Raster_coordinateBoundingBox();
     Tensor sequence = getGeodesicControlPoints();
     Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
     ArrayPlotRecord arrayPlotRecord = cache.apply(Unprotect.byRef(sequence, values));
