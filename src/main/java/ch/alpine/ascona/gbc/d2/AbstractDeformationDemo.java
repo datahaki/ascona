@@ -4,12 +4,13 @@ package ch.alpine.ascona.gbc.d2;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascony.api.LogWeightings;
-import ch.alpine.ascony.arp.ArrayPlotImage;
+import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
@@ -18,6 +19,8 @@ import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
@@ -30,7 +33,7 @@ import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Rescale;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradient;
@@ -114,6 +117,8 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
   @Override // from RenderInterface
   public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    timerFrame.geometricComponent.renderGrid(graphics);
+    graphics.setClip(null);
     if (Objects.isNull(movingDomain2D))
       recompute();
     RenderQuality.setQuality(graphics);
@@ -147,8 +152,10 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
         : origin, null, geometricLayer, graphics);
     leversRender.renderIndexP(param0.target ? "q" : "p");
     {
-      Rescale rescale = new Rescale(movingDomain2D.arrayReshape_weights());
-      ArrayPlotImage.of(rescale.result(), rescale.clip(), param0.cdg).draw(graphics);
+      Tensor weights = movingDomain2D.arrayReshape_weights();
+      Show show = new Show();
+      show.add(ArrayPlot.of(weights, param0.cdg));
+      show.render(graphics, new Rectangle(100, 10, 100 + Unprotect.dimension1Hint(weights) * 2, 400));
     }
   }
 

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.crv.d2;
+package ch.alpine.euclid;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
-import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -62,7 +61,7 @@ public class R2ParametricResampleDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
+    timerFrame.geometricComponent.renderGrid(graphics);
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();

@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
+import ch.alpine.ascony.bas.AveragedMovingDomain2D;
+import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
@@ -37,7 +39,7 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
     Tensor dx = Subdivide.of(0, 6, res - 1);
     Tensor dy = Subdivide.of(0, 6, res - 1);
     Tensor domain = Outer.of((cx, cy) -> Tensors.of(cx, cy, RealScalar.ZERO), dx, dy);
-    return AveragedMovingDomain2D.of(movingOrigin, operator(movingOrigin), domain);
+    return new AveragedMovingDomain2D(movingOrigin, operator(movingOrigin), domain);
   }
 
   @Override

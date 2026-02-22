@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Clips;
 /** use of tensor lib {@link BSplineFunction}
  * 
  * {@link GeodesicBSplineFunction} */
-public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
+public class BSplineFunctionDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
   public static class Param extends AbstractCurvatureParam {
     public Param() {
@@ -40,17 +40,18 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
 
   private final Param param;
 
-  public R2BSplineFunctionDemo() {
+  public BSplineFunctionDemo() {
     this(new Param());
   }
 
-  public R2BSplineFunctionDemo(Param param) {
+  public BSplineFunctionDemo(Param param) {
     super(param);
     this.param = param;
   }
 
   @Override
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    timerFrame.geometricComponent.renderGrid(graphics);
     RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor refined = Tensors.empty();
@@ -76,6 +77,6 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
   }
 
   static void main() {
-    new R2BSplineFunctionDemo().runStandalone();
+    new BSplineFunctionDemo().runStandalone();
   }
 }

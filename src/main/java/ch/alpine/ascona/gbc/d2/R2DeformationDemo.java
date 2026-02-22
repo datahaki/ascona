@@ -2,6 +2,9 @@
 package ch.alpine.ascona.gbc.d2;
 
 import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.bas.AveragedMovingDomain2D;
+import ch.alpine.ascony.bas.MovingDomain2D;
+import ch.alpine.ascony.bas.RnFittedMovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -50,8 +53,8 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
     Tensor domain = StaticHelper.of(coordinateBoundingBox, manifoldDisplay, res);
     Sedarim sedarim = operator(movingOrigin);
     return param2.mls //
-        ? RnFittedMovingDomain2D.of(movingOrigin, sedarim, domain)
-        : AveragedMovingDomain2D.of(movingOrigin, sedarim, domain);
+        ? new RnFittedMovingDomain2D(movingOrigin, sedarim, domain)
+        : new AveragedMovingDomain2D(movingOrigin, sedarim, domain);
   }
 
   @Override

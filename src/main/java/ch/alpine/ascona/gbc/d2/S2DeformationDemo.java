@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
+import ch.alpine.ascony.bas.AveragedMovingDomain2D;
+import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -55,7 +57,7 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
     Tensor dy = Subdivide.of(-1, 1, res - 1);
     Tensor domain = Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, param2.zHeight)), dx, dy);
     Sedarim sedarim = operator(movingOrigin);
-    return AveragedMovingDomain2D.of(movingOrigin, sedarim, domain);
+    return new AveragedMovingDomain2D(movingOrigin, sedarim, domain);
   }
 
   @Override

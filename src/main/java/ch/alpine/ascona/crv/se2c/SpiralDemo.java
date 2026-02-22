@@ -2,18 +2,13 @@
 package ch.alpine.ascona.crv.se2c;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 
 import ch.alpine.ascony.dis.Se2ClothoidDisplay;
-import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.fig.ParametricPlot;
-import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
@@ -46,8 +41,8 @@ public class SpiralDemo extends AbstractDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    timerFrame.geometricComponent.renderGrid(graphics);
     RenderQuality.setQuality(graphics);
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
     SpiralParam spiralParam = param.spiralParam;
     Clip clip = param.clip;
     {
@@ -60,14 +55,6 @@ public class SpiralDemo extends AbstractDemo {
           .render(geometricLayer, graphics);
     }
     graphics.drawString(spiralParam.scalarTensorFunction.toString(), 0, 20);
-    {
-      Show show = new Show();
-      show.setPlotLabel(param.spiralParam.toString());
-      show.add(ParametricPlot.of(s -> spiralParam.scalarTensorFunction.apply(s).extract(0, 2), clip));
-      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-      show.setAspectRatioOne();
-      show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, 400));
-    }
   }
 
   static void main() {

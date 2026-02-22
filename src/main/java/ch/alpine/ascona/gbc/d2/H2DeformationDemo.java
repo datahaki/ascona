@@ -2,6 +2,8 @@
 package ch.alpine.ascona.gbc.d2;
 
 import ch.alpine.ascony.api.Box2D;
+import ch.alpine.ascony.bas.AveragedMovingDomain2D;
+import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Sedarim;
@@ -39,7 +41,7 @@ public class H2DeformationDemo extends AbstractDeformationDemo {
   protected MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
     Tensor domain = StaticHelper.of(Box2D.xy(Clips.absolute(1.0)), manifoldDisplay(), res);
     Sedarim sedarim = operator(movingOrigin);
-    return AveragedMovingDomain2D.of(movingOrigin, sedarim, domain);
+    return new AveragedMovingDomain2D(movingOrigin, sedarim, domain);
   }
 
   @Override // from AbstractDeformationDemo

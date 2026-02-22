@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
+import ch.alpine.ascony.bas.AveragedMovingDomain2D;
+import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
@@ -46,7 +48,7 @@ public class SPatchDemo extends ControlPointsDemo {
     Tensor dx = Subdivide.of(-1, 1, res - 1).maps(N.DOUBLE);
     Tensor dy = Subdivide.of(-1, 1, res - 1).maps(N.DOUBLE);
     Tensor domain = Outer.of(Tensors::of, dx, dy);
-    movingDomain2D = AveragedMovingDomain2D.of(embed, sPatch, domain);
+    movingDomain2D = new AveragedMovingDomain2D(embed, sPatch, domain);
   }
 
   @Override
