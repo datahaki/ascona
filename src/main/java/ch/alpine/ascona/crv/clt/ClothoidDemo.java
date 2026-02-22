@@ -78,7 +78,7 @@ public class ClothoidDemo extends ControlPointsDemo {
         Scalar angle = lagrangeQuadraticD.head();
         graphics.draw(geometricLayer.toLine2D(AngleVector.of(angle).multiply(RealScalar.of(2))));
       }
-      Tensor string = Curvature2D.string(tuo.slash(points));
+      Tensor string = Curvature2D.INSTANCE.string(tuo.slash(points));
       Showable showable = show.add(ListLinePlot.of(DOMAIN, string));
       showable.setLabel(clothoid.toString());
       ++index;

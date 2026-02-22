@@ -15,7 +15,6 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLinkImages;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophis.crv.GeodesicBSplineFunction;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
@@ -32,7 +31,6 @@ import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.red.Times;
 
 // FIXME ASCONA ALG demo does not seem correct
-@ReflectionMarker
 public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   private BufferedImage bufferedImage;
 

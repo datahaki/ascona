@@ -73,7 +73,7 @@ import ch.alpine.tensor.red.Nest;
     {
       Tensor refined = Do.of(tensorIteration::iterate, levels);
       Export.of(dst.resolve("refined.mathematica"), refined);
-      Tensor curvatu = Curvature2D.string(Tensor.of(refined.stream().map(point -> point.get(0).extract(0, 2))));
+      Tensor curvatu = Curvature2D.INSTANCE.string(Tensor.of(refined.stream().map(point -> point.get(0).extract(0, 2))));
       Export.of(dst.resolve("curvatu.mathematica"), curvatu);
     }
     {

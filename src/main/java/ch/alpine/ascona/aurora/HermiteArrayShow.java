@@ -57,7 +57,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   final Scalar process(HermiteSubdivision hermiteSubdivision) {
     TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
     Tensor refined = Do.of(tensorIteration::iterate, levels);
-    Tensor vector = Curvature2D.string(Tensor.of(refined.stream().map(point -> point.get(0).extract(0, 2))));
+    Tensor vector = Curvature2D.INSTANCE.string(Tensor.of(refined.stream().map(point -> point.get(0).extract(0, 2))));
     // Tensor vector = Differences.of(Tensor.of(refined.stream().map(point -> point.get(1, 1))));
     // return Log.FUNCTION.apply(Norm._1.ofVector(vector).add(RealScalar.ONE));
     // Tensor vector = Flatten.of(Differences.of(Tensor.of(refined.stream().map(point -> point.get(1)))));

@@ -23,7 +23,8 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Clips;
 
-/** visualization of the geometric geodesic average */
+/** visualization of the geometric geodesic average 
+ * with curves on the manifolds */
 /* package */ class GeometricSymLinkRender {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);

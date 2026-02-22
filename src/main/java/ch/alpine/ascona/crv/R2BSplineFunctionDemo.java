@@ -1,12 +1,11 @@
 // code by jph
 package ch.alpine.ascona.crv;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -18,6 +17,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.BSplineFunction;
 import ch.alpine.tensor.itp.BSplineFunctionCyclic;
 import ch.alpine.tensor.itp.BSplineFunctionString;
+import ch.alpine.tensor.lie.rot.CirclePoints;
 
 /** use of tensor lib {@link BSplineFunction} */
 public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
@@ -55,8 +55,10 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
           : BSplineFunctionString.of(_degree, control);
       refined = Subdivide.of(0, param.cyclic ? control.length() : control.length() - 1, 100) //
           .maps(scalarTensorFunction);
-      new PathRender(Color.BLUE).setCurve(refined, param.cyclic).render(geometricLayer, graphics);
+    } else {
+      refined = CirclePoints.of(7);
     }
+    Curvature2DRender.of(refined, param.cyclic).render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
       leversRender.renderIndexP();
