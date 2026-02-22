@@ -14,6 +14,7 @@ import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -45,8 +46,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 /** Reference:
  * "Circumscribed Quadrics in Barycentric Coordinates"
  * by Marc Alexa */
-// TODO demo crashes when no ctrl points!
-public class MaAveragingDemo extends ControlPointsDemo {
+public final class MaAveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
@@ -77,7 +77,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setOffset(400, 400);
   }
 
-  private final Cache<Tensor, Show> cache = Cache.of(this::computeImage, 1);
+  private final Cache<Tensor, Showable> cache = Cache.of(this::computeImage, 1);
   private Scalar computeTime = Quantity.of(0, "s");
 
   protected final void recompute() {
@@ -85,14 +85,14 @@ public class MaAveragingDemo extends ControlPointsDemo {
     cache.clear();
   }
 
-  private Show computeImage(Tensor tensor) {
+  private Showable computeImage(Tensor tensor) {
     Tensor sequence = tensor.maps(N.DOUBLE);
     int resolution = param.resolution;
     int n = sequence.length();
     if (2 < n)
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
-        HomogeneousSpace homogeneousSpace = manifoldDisplay().homogeneousSpace();
+        HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
         final Tensor dist;
         if (param.type || !(homogeneousSpace instanceof TensorMetric)) {
           dist = ConstantArray.of(RealScalar.ONE, n, n).subtract(IdentityMatrix.of(n));
@@ -113,9 +113,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
         computeTime = timing.seconds();
         // ---
         ColorDataGradient colorDataGradient = param.cdg;
-        Show show = new Show();
-        show.add(ArrayPlot.of(matrix, colorDataGradient));
-        return show;
+        return ArrayPlot.of(matrix, cbb, colorDataGradient);
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();
@@ -125,27 +123,18 @@ public class MaAveragingDemo extends ControlPointsDemo {
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RenderQuality.setQuality(graphics);
-    prepare();
-    // ---
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
-    // Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
-    Show arrayPlotImage = cache.apply(sequence);
-    if (Objects.nonNull(arrayPlotImage)) {
-      RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
-      arrayPlotImage.render(graphics, geometricLayer.toRectangle(cbb));
+    Showable showable = cache.apply(sequence);
+    if (Objects.nonNull(showable)) {
+      Show show = new Show();
+      show.add(showable);
+      show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()));
     }
     RenderQuality.setQuality(graphics);
     // ---
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);
     graphics.drawString("compute: " + computeTime.maps(Round._3), 0, 30);
-  }
-
-  void prepare() {
-    // ---
   }
 
   static void main() {

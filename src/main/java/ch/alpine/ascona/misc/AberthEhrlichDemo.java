@@ -3,7 +3,6 @@ package ch.alpine.ascona.misc;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 import ch.alpine.ascony.arp.ArrayFunction;
@@ -11,11 +10,13 @@ import ch.alpine.ascony.dis.C1Display;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
-import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
@@ -26,11 +27,9 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
-import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.io.TableBuilder;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -41,7 +40,6 @@ import ch.alpine.tensor.sca.ply.AberthEhrlich;
 import ch.alpine.tensor.sca.ply.Polynomial;
 import ch.alpine.tensor.sca.ply.Roots;
 
-// TODO ASCONA REV what are these artifacts?
 public class AberthEhrlichDemo extends ControlPointsDemo {
   private static final PointsRender POINTS_RENDER_0 = //
       new PointsRender(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255));
@@ -120,10 +118,11 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
       CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
       Tensor raster = manifoldDisplay().d2Raster().of(arrayFunction, cbb, param.resolution);
-      Tensor rescal = new Rescale(raster).result().maps(ColorDataGradients.HUE);
-      BufferedImage bufferedImage = ImageFormat.of(rescal);
-      new ImageRender(bufferedImage, cbb).render(geometricLayer, graphics);
+      Show show = new Show();
+      show.add(ArrayPlot.of(raster, cbb, ColorDataGradients.HUE));
+      show.render(graphics, geometricLayer.toRectangle(cbb));
     }
+    RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LeversRender leversRender = LeversRender.of(C1Display.INSTANCE, zeros.extract(0, length), null, geometricLayer, graphics);
     leversRender.renderSequence(POINTS_RENDER_0);

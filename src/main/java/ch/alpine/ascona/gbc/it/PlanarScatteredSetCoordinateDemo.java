@@ -23,6 +23,7 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.PanelFieldsEditor;
 import ch.alpine.tensor.DoubleScalar;
@@ -69,15 +70,17 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
       leversRender.renderIndexP();
     }
     // ---
-    if (Objects.isNull(show))
+    if (Objects.isNull(showable))
       recompute();
-    if (Objects.nonNull(show)) {
+    if (Objects.nonNull(showable)) {
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      Show show = new Show();
+      show.add(showable);
       show.render(graphics, new Rectangle(100, 10, dimension.width - 200, 400));
     }
   }
 
-  private Show show;
+  private Showable showable;
 
   @Override
   protected final void recompute() {
@@ -88,11 +91,9 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(operator(sequence)::sunder, fallback);
       CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
       Tensor wgs = manifoldDisplay.d2Raster().of(arrayFunction, cbb, scatteredSetParam.refine);
-      Show _show = new Show();
-      _show.add(ArrayPlot.of(ImageTiling.of(wgs), scatteredSetParam.spinnerColorData));
-      show = _show;
+      showable = ArrayPlot.of(ImageTiling.of(wgs), scatteredSetParam.spinnerColorData);
     } else
-      show = null;
+      showable = null;
   }
 
   @Override

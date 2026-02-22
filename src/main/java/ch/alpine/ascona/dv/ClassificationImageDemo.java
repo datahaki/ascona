@@ -4,7 +4,6 @@ package ch.alpine.ascona.dv;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,9 +15,11 @@ import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
-import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.fig.ImagePlot;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -77,7 +78,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   private final Param1 param1;
   // ---
   protected Tensor vector;
-  private BufferedImage bufferedImage;
+  private Showable showable;
 
   public ClassificationImageDemo() {
     this(new Param0(), new Param1());
@@ -132,16 +133,18 @@ public class ClassificationImageDemo extends ControlPointsDemo {
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
     CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
     Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
-    bufferedImage = ImageFormat.of(raster);
+    showable = ImagePlot.of(ImageFormat.of(raster), cbb);
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    if (Objects.nonNull(bufferedImage))
-      new ImageRender(bufferedImage, manifoldDisplay.d2Raster_coordinateBoundingBox()).render(geometricLayer, graphics);
+    if (Objects.nonNull(showable)) {
+      Show show = new Show();
+      show.add(showable);
+      show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()));
+    }
     // ---
-    render(geometricLayer, graphics, manifoldDisplay, getGeodesicControlPoints(), vector, param1.cdg.cyclic());
+    render(geometricLayer, graphics, manifoldDisplay(), getGeodesicControlPoints(), vector, param1.cdg.cyclic());
   }
 
   static void render(GeometricLayer geometricLayer, Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor sequence, Tensor vector,

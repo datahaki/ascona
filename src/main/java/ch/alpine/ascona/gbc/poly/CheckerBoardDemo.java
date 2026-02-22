@@ -139,7 +139,7 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
       ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
       CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
       Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param1.refine);
-      Showable showable = ArrayPlot.of(matrix, COLOR_DATA_INDEXED);
+      Showable showable = ArrayPlot.of(matrix, cbb, COLOR_DATA_INDEXED);
       Show show = new Show();
       show.add(showable);
       bufferedImage = show.image(new Dimension(200, 200));

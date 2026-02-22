@@ -17,6 +17,7 @@ import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -68,7 +69,7 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     spun();
   }
 
-  private Show show;
+  private Showable showable;
 
   protected final void recompute() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
@@ -80,20 +81,20 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(sedarim::sunder, fallback);
       CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
       Tensor weights = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param1.resolution);
-      Show _show = new Show();
-      _show.add(ArrayPlot.of(ImageTiling.of(weights), param1.cdg));
-      show = _show;
+      showable = ArrayPlot.of(ImageTiling.of(weights), param1.cdg);
     } else
-      show = null;
+      showable = null;
   }
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (Objects.isNull(show))
+    if (Objects.isNull(showable))
       recompute();
-    if (Objects.nonNull(show)) {
+    if (Objects.nonNull(showable)) {
       Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
       Rectangle rectangle = new Rectangle(100, 10, dimension.width - 200, 400);
+      Show show = new Show();
+      show.add(showable);
       show.render(graphics, rectangle);
     } // ---
     RenderQuality.setQuality(graphics);
