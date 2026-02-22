@@ -112,10 +112,9 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
           TensorScalarFunction tensorUnaryOperator = function(sequence, reference.multiply( //
               DoubleScalar.of(param1.factor)));
           ManifoldDisplay manifoldDisplay = manifoldDisplay();
-          D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
           // TODO ASCONA ALG redundant
           ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, DoubleScalar.INDETERMINATE);
-          Tensor matrix = D2Raster.of(hsArrayPlot, 512, arrayFunction);
+          Tensor matrix = manifoldDisplay.d2Raster().of(512, arrayFunction);
           // BufferedImage bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1, false).bufferedImage();
           // ImageIO.write(bufferedImage, "png", new File(folder, logWeighting.toString() + ".png"));
           // RenderQuality.setDefault(graphics); // default so that raster becomes visible
@@ -135,10 +134,9 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
       System.out.println("compute");
       Tensor sequence = getGeodesicControlPoints();
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
       TensorScalarFunction tsf = function(sequence, reference.multiply(DoubleScalar.of(param1.factor)));
       ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-      Tensor matrix = D2Raster.of(hsArrayPlot, param1.refine, arrayFunction);
+      Tensor matrix = manifoldDisplay.d2Raster().of(param1.refine, arrayFunction);
       Showable showable = ArrayPlot.of(matrix, COLOR_DATA_INDEXED);
       Show show = new Show();
       show.add(showable);

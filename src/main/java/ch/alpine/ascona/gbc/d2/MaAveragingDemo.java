@@ -94,7 +94,6 @@ public class MaAveragingDemo extends ControlPointsDemo {
     if (2 < n)
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
-        D2Raster d2Raster = (D2Raster) manifoldDisplay;
         HomogeneousSpace homogeneousSpace = manifoldDisplay().homogeneousSpace();
         final Tensor dist;
         if (param.type || !(homogeneousSpace instanceof TensorMetric)) {
@@ -111,7 +110,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
         };
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-        Tensor matrix = D2Raster.of(d2Raster, resolution, arrayFunction);
+        Tensor matrix = manifoldDisplay.d2Raster().of(resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
         ColorDataGradient colorDataGradient = param.cdg;

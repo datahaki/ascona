@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import ch.alpine.ascony.arp.ArrayFunction;
-import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.dis.C1Display;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -118,10 +117,10 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
         return DoubleScalar.INDETERMINATE;
       };
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
-      Tensor raster = D2Raster.of(C1Display.INSTANCE, param.resolution, arrayFunction);
+      Tensor raster = manifoldDisplay().d2Raster().of(param.resolution, arrayFunction);
       Tensor rescal = new Rescale(raster).result().maps(ColorDataGradients.HUE);
       BufferedImage bufferedImage = ImageFormat.of(rescal);
-      new ImageRender(bufferedImage, C1Display.INSTANCE.coordinateBoundingBox()).render(geometricLayer, graphics);
+      new ImageRender(bufferedImage, manifoldDisplay().d2Raster().coordinateBoundingBox()).render(geometricLayer, graphics);
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LeversRender leversRender = LeversRender.of(C1Display.INSTANCE, zeros.extract(0, length), null, geometricLayer, graphics);

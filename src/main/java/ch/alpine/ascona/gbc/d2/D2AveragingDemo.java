@@ -105,10 +105,9 @@ public final class D2AveragingDemo extends ControlPointsDemo {
         TensorScalarFunction tensorScalarFunction = param.logWeightings.function( //
             param.biinvariants.ofSafe(manifold), //
             InversePowerVariogram.of(2), sequence, values);
-        D2Raster d2Raster = (D2Raster) manifoldDisplay;
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(t -> Round._1.apply(tensorScalarFunction.apply(t)), DoubleScalar.INDETERMINATE);
-        Tensor matrix = D2Raster.of(d2Raster, resolution, arrayFunction);
+        Tensor matrix = manifoldDisplay.d2Raster().of(resolution, arrayFunction);
         computeTime = timing.seconds();
         // ---
         Rescale rescale = new Rescale(matrix);

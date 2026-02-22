@@ -8,7 +8,6 @@ import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.arp.ArrayPlotImage;
-import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
@@ -80,10 +79,9 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
 
   protected final ArrayPlotImage arrayPlotImage(Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster d2Raster = (D2Raster) manifoldDisplay;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, fallback);
-    Tensor wgs = D2Raster.of(d2Raster, refinement, arrayFunction);
+    Tensor wgs = manifoldDisplay.d2Raster().of(refinement, arrayFunction);
     Rescale rescale = new Rescale(ImageTiling.of(wgs));
     // logWeighting().equals(LogWeightings.DISTANCES)
     return ArrayPlotImage.of(rescale.result(), rescale.clip(), param1.cdg);

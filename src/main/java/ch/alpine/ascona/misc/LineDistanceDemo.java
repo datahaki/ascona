@@ -82,10 +82,9 @@ public class LineDistanceDemo extends ControlPointsDemo {
 
   private BufferedImage bufferedImage(int resolution) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster d2Raster = (D2Raster) manifoldDisplay;
     TensorScalarFunction tsf = tensorNorm()::norm;
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
-    Tensor matrix = D2Raster.of(d2Raster, resolution, arrayFunction);
+    Tensor matrix = manifoldDisplay.d2Raster().of(resolution, arrayFunction);
     matrix = Rescale.of(matrix);
     return ImageFormat.of(matrix.maps(param.colorDataGradients));
   }

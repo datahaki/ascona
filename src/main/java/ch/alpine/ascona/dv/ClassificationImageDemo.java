@@ -122,7 +122,6 @@ public class ClassificationImageDemo extends ControlPointsDemo {
     // System.out.println("recomp");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = manifoldDisplay.manifold();
-    D2Raster d2Raster = (D2Raster) manifoldDisplay;
     Objects.requireNonNull(vector);
     Classification classification = param1.labels.apply(vector);
     Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), null, getGeodesicControlPoints());
@@ -131,7 +130,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
         param1.classificationImage.operator(classification, sedarim, colorDataLists.cyclic());
     int resolution = param1.res;
     ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, Array.zeros(4));
-    Tensor raster = D2Raster.of(d2Raster, resolution, arrayFunction);
+    Tensor raster = manifoldDisplay.d2Raster().of(resolution, arrayFunction);
     bufferedImage = ImageFormat.of(raster);
   }
 
