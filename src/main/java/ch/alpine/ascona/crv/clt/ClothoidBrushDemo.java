@@ -37,7 +37,7 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
 
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.CLC_ONLY);
+      super(true, ManifoldDisplays.SE2C_ONLY);
     }
 
     @FieldPreferredWidth(200)
@@ -88,11 +88,11 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
     // // timerFrame.geometricComponent.addRenderInterfaceBackground(imageRender);
     // }
     timerFrame.geometricComponent.setOffset(100, 700);
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    timerFrame.geometricComponent.renderGrid(graphics);
     RenderQuality.setQuality(graphics);
     if (Objects.nonNull(param.font)) {
       graphics.setColor(new Color(164, 164, 64));

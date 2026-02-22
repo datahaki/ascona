@@ -5,7 +5,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -48,7 +47,7 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
 
   @Override
   protected BiinvariantMean biinvariantMean() {
-    return ((HomogeneousSpace) manifoldDisplay().geodesicSpace()).biinvariantMean();
+    return manifoldDisplay().homogeneousSpace().biinvariantMean();
   }
 
   static void main() {

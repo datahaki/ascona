@@ -68,7 +68,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
     TensorUnaryOperator tensorUnaryOperator = //
         KnotSpacing.centripetal(tensorMetric, param.beta);

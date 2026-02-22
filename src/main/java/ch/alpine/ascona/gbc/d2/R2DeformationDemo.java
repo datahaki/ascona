@@ -61,7 +61,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
 
   @Override
   protected BiinvariantMean biinvariantMean() {
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay().homogeneousSpace();
     return homogeneousSpace.biinvariantMean();
   }
 

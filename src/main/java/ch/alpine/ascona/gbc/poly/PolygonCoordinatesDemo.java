@@ -70,7 +70,7 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
 
   protected final void recompute() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Manifold manifold = manifoldDisplay.manifold();
     Tensor sequence = getGeodesicControlPoints();
     Sedarim sedarim = param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
     arrayPlotImage = manifoldDisplay.dimensions() < sequence.length() //

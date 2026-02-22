@@ -64,7 +64,7 @@ public class LogarithmDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
     Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {

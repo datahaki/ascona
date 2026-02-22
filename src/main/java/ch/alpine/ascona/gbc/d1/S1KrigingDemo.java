@@ -83,7 +83,7 @@ public class S1KrigingDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Manifold manifold = manifoldDisplay.manifold();
     final Tensor shape = manifoldDisplay.shape(); // .multiply(RealScalar.of(0.3));
     if (1 < control.length()) {
       // TODO ASCONA ALG check for zero norm below

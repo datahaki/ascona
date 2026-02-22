@@ -58,7 +58,7 @@ public class IterativeCoordinateDemo extends ControlPointsDemo {
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       leversRender.renderSurfaceP();
       LeversHud.render(Biinvariants.LEVERAGES, leversRender, null);
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       Manifold manifold = homogeneousSpace;
       try {
         Tensor matrix = new IterativeCoordinateMatrix(param.total).origin( //

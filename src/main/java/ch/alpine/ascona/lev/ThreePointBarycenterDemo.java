@@ -47,7 +47,7 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Manifold manifold = manifoldDisplay.manifold();
     PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
     Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
@@ -66,7 +66,7 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
         Sedarim sedarim = param.polygonCoordinates.sedarim(Biinvariants.LEVERAGES.ofSafe(manifold), null, sequence);
         Tensor weights = sedarim.sunder(origin);
         leversRender.renderWeights(weights);
-        HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+        HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
         // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
         Tensor mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
         LeversRender.ORIGIN_RENDER_0 //

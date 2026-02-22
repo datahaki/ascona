@@ -66,7 +66,7 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
       // ---
       Tensor sequence = support.maps(Tensors::of);
       Tensor domain = StaticHelper.domain(getControlPointsSe2());
-      Manifold manifold = (Manifold) manifoldDisplay().geodesicSpace();
+      Manifold manifold = manifoldDisplay().manifold();
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
       try {
         TensorUnaryOperator tensorUnaryOperator = //

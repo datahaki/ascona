@@ -114,7 +114,7 @@ public class KNearestDemo extends ControlPointsDemo {
 
   public void render(GeometricLayer geometricLayer, Graphics2D graphics, Tensor sequence, Tensor origin, String p) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Manifold manifold = manifoldDisplay.manifold();
     Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), s -> s, sequence);
     Tensor weights = sedarim.sunder(origin);
     // ---

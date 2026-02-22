@@ -15,7 +15,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.api.Exponential;
-import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -44,13 +43,12 @@ public class Se2UnprojectDemo extends ControlPointsDemo {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor sequence = getControlPointsSe2();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     // ---
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor p = sequence.get(0);
     Tensor q = sequence.get(1);
     {
-      ScalarTensorFunction curve = geodesicSpace.curve(p, q);
+      ScalarTensorFunction curve = homogeneousSpace.curve(p, q);
       Tensor tensor = Subdivide.of(-0.05, 1.05, 25).maps(curve);
       Path2D path2d = geometricLayer.toPath2D(Tensor.of(tensor.stream().map(manifoldDisplay::point2xy)));
       graphics.setColor(Color.BLUE);

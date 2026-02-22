@@ -110,7 +110,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
       return;
     Tensor weights = AveragingWeights.of(length);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     Tensor mean_approximation = new ReducingMeanEstimate(homogeneousSpace).estimate(sequence, weights);
     Tensor mean = null;
     try {

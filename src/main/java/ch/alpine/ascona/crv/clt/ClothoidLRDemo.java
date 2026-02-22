@@ -41,7 +41,7 @@ public class ClothoidLRDemo extends ControlPointsDemo {
 
   public ClothoidLRDemo() {
     super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
-    setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
+    setControlPointsSe2(Tensors.fromString("{{0,0,0}, {-3,0,0}}"));
   }
 
   @Override // from RenderInterface

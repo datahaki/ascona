@@ -60,7 +60,7 @@ public class ExponentialDemo extends ControlPointsDemo {
     Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
       Tensor origin = optional.get();
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       Manifold manifold = homogeneousSpace;
       final Tensor sequence = placeWrap.getSequence();
       final Tensor levers2 = manifold.exponential(origin).log().slash(sequence);

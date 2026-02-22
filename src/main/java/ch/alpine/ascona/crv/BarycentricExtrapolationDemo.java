@@ -56,7 +56,7 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     Tensor sequence = getGeodesicControlPoints();
     int length = sequence.length();
     Tensor domain = Range.of(-sequence.length(), 0).maps(Tensors::of).unmodifiable();

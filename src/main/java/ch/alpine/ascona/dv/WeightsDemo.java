@@ -98,7 +98,7 @@ public class WeightsDemo extends ControlPointsDemo {
       leversRender.renderIndexP();
       // ---
       if (manifoldDisplay.dimensions() < sequence.length()) {
-        Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+        Manifold manifold = manifoldDisplay.manifold();
         Map<Biinvariants, Biinvariant> map2 = Biinvariants.all(manifold);
         Tensor matrix = Tensors.empty();
         int[] minIndex = new int[map2.size()];

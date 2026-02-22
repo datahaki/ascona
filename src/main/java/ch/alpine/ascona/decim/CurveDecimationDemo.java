@@ -103,7 +103,7 @@ public class CurveDecimationDemo extends AbstractDemo {
     }
     Scalar epsilon = Power.of(Rational.HALF, param.level.number().intValue());
     // epsilon = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum() * 3);
-    HomogeneousSpace geodesicSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace geodesicSpace = manifoldDisplay.homogeneousSpace();
     CurveDecimation curveDecimation = CurveDecimation.of( //
         param.type.supply(geodesicSpace), epsilon);
     Tensor control = Tensor.of(_control.stream().map(manifoldDisplay::xya2point));

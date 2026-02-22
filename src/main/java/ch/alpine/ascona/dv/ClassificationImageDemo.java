@@ -121,7 +121,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   private void recompute() {
     // System.out.println("recomp");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Manifold manifold = manifoldDisplay.manifold();
     D2Raster d2Raster = (D2Raster) manifoldDisplay;
     Objects.requireNonNull(vector);
     Classification classification = param1.labels.apply(vector);

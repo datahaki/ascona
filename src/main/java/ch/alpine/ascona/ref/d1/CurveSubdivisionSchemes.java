@@ -51,7 +51,7 @@ import ch.alpine.tensor.Tensors;
   BSPLINE3M(false) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       // BiinvariantMean biinvariantMean = manifoldDisplay.biinvariantMean();
       return new MSpline3CurveSubdivision(homogeneousSpace.biinvariantMean());
     }
@@ -81,7 +81,7 @@ import ch.alpine.tensor.Tensors;
   BSPLINE4M(true) {
     @Override
     public CurveSubdivision of(ManifoldDisplay manifoldDisplay) {
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       return MSpline4CurveSubdivision.of(homogeneousSpace.biinvariantMean());
     }
   },

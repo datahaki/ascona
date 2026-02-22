@@ -90,7 +90,7 @@ public class OrderingDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor origin = getGeodesicControlPoints().get(0);
-    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Manifold manifold = manifoldDisplay.manifold();
     // ---
     Tensor weights = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), null, sequence) //
         .sunder(origin);

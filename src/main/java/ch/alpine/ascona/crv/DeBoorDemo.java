@@ -31,10 +31,10 @@ import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.red.Times;
 
 // FIXME ASCONA ALG demo does not seem correct
-public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
+public class DeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   private BufferedImage bufferedImage;
 
-  public GeodesicDeBoorDemo() {
+  public DeBoorDemo() {
     super(new AbstractCurveParam(ManifoldDisplays.ALL));
     addButtonDubins();
     ToolbarFieldsEditor.addToComponent(this, timerFrame.jToolBar);
@@ -90,6 +90,6 @@ public class GeodesicDeBoorDemo extends AbstractCurveDemo implements BufferedIma
   }
 
   static void main() {
-    new GeodesicDeBoorDemo().runStandalone();
+    new DeBoorDemo().runStandalone();
   }
 }

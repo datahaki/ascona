@@ -138,7 +138,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     Tensor sample = RandomSample.of(randomSampleInterface, param0.numel);
     setControlPointsSe2(Tensor.of(sample.stream().map(manifoldDisplay::point2xya)));
     // ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Manifold manifold = manifoldDisplay.manifold();
     Tensor matrix = StaticHelper.distanceMatrix(manifold, getGeodesicControlPoints());
     list = MinimumSpanningTree.of(matrix);
     tsp2OptHeuristic = new Tsp2OptHeuristic(matrix);

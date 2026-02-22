@@ -34,8 +34,7 @@ public class InterpolationDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
-    // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     Tensor sequence = getGeodesicControlPoints();
     RenderQuality.setQuality(graphics);
     if (0 < sequence.length()) {

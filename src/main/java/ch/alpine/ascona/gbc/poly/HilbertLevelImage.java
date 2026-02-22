@@ -29,7 +29,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
   ;
   public static BufferedImage of( //
       ManifoldDisplay manifoldDisplay, Tensor sequence, int res, ColorDataGradient colorDataGradient, int max) {
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     TensorUnaryOperator tuo = IterativeGenesis.counts(homogeneousSpace, sequence, max);
     int sequence_length = IterativeGenesis.values().length;
     Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence_length);

@@ -205,7 +205,7 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   // @Override
   protected Sedarim operator(Tensor sequence) {
     // of biinvariant only hsDesign is used
-    Manifold manifold = (Manifold) manifoldDisplay().geodesicSpace();
+    Manifold manifold = manifoldDisplay().manifold();
     Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(manifold);
     return LogWeightings.COORDINATE.sedarim(biinvariant, VariogramFunctions.GAUSSIAN.of(RealScalar.ONE), sequence);
   }

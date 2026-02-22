@@ -66,7 +66,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
     Tensor control = controlPointsRender.getGeodesicControlPoints();
     if (0 < control.length()) {
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+      Manifold manifold = manifoldDisplay.manifold();
       Tensor matrix = StaticHelper.distanceMatrix(manifold, control, ground);
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
       int[] matching = bipartiteMatching.matching();

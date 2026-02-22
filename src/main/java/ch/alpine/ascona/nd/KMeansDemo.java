@@ -103,7 +103,7 @@ public class KMeansDemo extends ControlPointsDemo {
 
   private void recomp(Tensor sequence) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(homogeneousSpace);
     // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     Tensor seeds = getGeodesicControlPoints();
@@ -122,7 +122,7 @@ public class KMeansDemo extends ControlPointsDemo {
     graphics.setColor(Color.GRAY);
     Tensor sequence = Tensor.of(pointsAll.stream().limit(param1.count));
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     if (Objects.nonNull(kMeans)) {
       Tensor partition = kMeans.partition();
       ColorDataIndexed colorDataIndexed = ColorDataLists._097.strict().deriveWithAlpha(128);

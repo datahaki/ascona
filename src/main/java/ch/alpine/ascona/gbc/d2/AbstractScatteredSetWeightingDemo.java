@@ -101,7 +101,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
 
   protected final Biinvariant biinvariant() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Manifold manifold = manifoldDisplay.manifold();
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(manifold);
     return map.getOrDefault(scatteredSetParam.biinvariants, Biinvariants.LEVERAGES.ofSafe(manifold));
   }

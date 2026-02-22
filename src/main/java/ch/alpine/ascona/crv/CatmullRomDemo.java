@@ -35,7 +35,7 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
+public class CatmullRomDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
   public static class Param extends AbstractCurvatureParam {
     public Param() {
@@ -57,11 +57,11 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
 
   private final Param param;
 
-  public GeodesicCatmullRomDemo() {
+  public CatmullRomDemo() {
     this(new Param());
   }
 
-  public GeodesicCatmullRomDemo(Param param) {
+  public CatmullRomDemo(Param param) {
     super(param);
     this.param = param;
     // ---
@@ -114,6 +114,6 @@ public class GeodesicCatmullRomDemo extends AbstractCurvatureDemo {
   }
 
   static void main() {
-    new GeodesicCatmullRomDemo().runStandalone();
+    new CatmullRomDemo().runStandalone();
   }
 }

@@ -33,7 +33,7 @@ class GeodesicFiltersTest {
     PosHz posHz = GokartPos.get(lines.getFirst(), 250); // limit , 250
     Tensor control = posHz.getPoseSequence();
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     ScalarUnaryOperator smoothingKernel = WindowFunctions.GAUSSIAN.get();
     int radius = 7;
     Map<GeodesicFilters, Tensor> map = new EnumMap<>(GeodesicFilters.class);
@@ -57,7 +57,7 @@ class GeodesicFiltersTest {
     PosVelHz posVelHz = GokartPosVel.get(name, 100_000);
     Tensor control = posVelHz.getPosVelSequence();
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     ScalarUnaryOperator smoothingKernel = WindowFunctions.GAUSSIAN.get();
     for (int radius : new int[] { 0, 10 }) {
       for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {

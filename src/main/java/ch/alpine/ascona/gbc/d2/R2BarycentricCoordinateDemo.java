@@ -89,7 +89,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
       leversRender.renderIndexP();
       RenderQuality.setDefault(graphics);
     }
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));

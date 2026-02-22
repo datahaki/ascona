@@ -101,7 +101,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     if (2 < values.length())
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
-        Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+        Manifold manifold = manifoldDisplay.manifold();
         TensorScalarFunction tensorScalarFunction = param.logWeightings.function( //
             param.biinvariants.ofSafe(manifold), //
             InversePowerVariogram.of(2), sequence, values);

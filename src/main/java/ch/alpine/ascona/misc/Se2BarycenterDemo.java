@@ -48,7 +48,7 @@ public class Se2BarycenterDemo extends ControlPointsDemo {
     Tensor sequence = getControlPointsSe2();
     if (sequence.length() == 4)
       try {
-        HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+        HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
         final ScalarTensorFunction curve = homogeneousSpace.curve(sequence.get(0), sequence.get(1));
         {
           Tensor tensor = Subdivide.of(-0.5, 1.5, 55).maps(curve);

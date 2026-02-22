@@ -94,7 +94,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
     }));
     POINTS_RENDER_0.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
     // GeodesicSpace geodesicSpace = s2Display.geodesicSpace();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     { // render tangents as geodesic on sphere
       for (Tensor ctrl : control) {
         Tensor p = ctrl.get(0); // point

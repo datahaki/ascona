@@ -54,7 +54,7 @@ public class SPatchDemo extends ControlPointsDemo {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     {
       Tensor[][] forward = movingDomain2D.forward(sequence, homogeneousSpace.biinvariantMean());
       new MeshRender(forward, ColorDataGradients.CLASSIC.deriveWithOpacity(Rational.HALF)) //

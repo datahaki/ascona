@@ -108,7 +108,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   }
 
   protected final Sedarim operator(Tensor sequence) {
-    Manifold manifold = (Manifold) param0.manifoldDisplays.manifoldDisplay().geodesicSpace();
+    Manifold manifold = param0.manifoldDisplays.manifoldDisplay().manifold();
     return param0.logWeightings.sedarim(param0.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
   }
 

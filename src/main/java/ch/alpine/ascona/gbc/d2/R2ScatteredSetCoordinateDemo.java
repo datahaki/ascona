@@ -90,7 +90,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));

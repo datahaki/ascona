@@ -50,7 +50,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     if (0 == length)
       return;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace geodesicSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace geodesicSpace = manifoldDisplay.homogeneousSpace();
     graphics.setColor(Color.LIGHT_GRAY);
     // graphics.setStroke(STROKE);
     RenderQuality.setQuality(graphics);

@@ -98,7 +98,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
-    HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     RenderQuality.setDefault(graphics);
     BufferedImage bufferedImage = bufferedImage(param.resolution);
     new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()) //

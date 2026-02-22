@@ -95,7 +95,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
         D2Raster d2Raster = (D2Raster) manifoldDisplay;
-        HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay().geodesicSpace();
+        HomogeneousSpace homogeneousSpace = manifoldDisplay().homogeneousSpace();
         final Tensor dist;
         if (param.type || !(homogeneousSpace instanceof TensorMetric)) {
           dist = ConstantArray.of(RealScalar.ONE, n, n).subtract(IdentityMatrix.of(n));

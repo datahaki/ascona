@@ -98,7 +98,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
+    Manifold manifold = manifoldDisplay.manifold();
     RenderQuality.setQuality(graphics);
     Tensor sequence = getGeodesicControlPoints();
     Tensor domain = Subdivide.of(0.0, 1.0, 10);

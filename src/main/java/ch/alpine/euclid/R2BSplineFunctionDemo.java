@@ -1,8 +1,9 @@
 // code by jph
-package ch.alpine.ascona.crv;
+package ch.alpine.euclid;
 
 import java.awt.Graphics2D;
 
+import ch.alpine.ascona.crv.AbstractCurvatureDemo;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -10,16 +11,19 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.crv.GeodesicBSplineFunction;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.BSplineFunction;
 import ch.alpine.tensor.itp.BSplineFunctionCyclic;
 import ch.alpine.tensor.itp.BSplineFunctionString;
 import ch.alpine.tensor.lie.rot.CirclePoints;
+import ch.alpine.tensor.sca.Clips;
 
-/** use of tensor lib {@link BSplineFunction} */
+/** use of tensor lib {@link BSplineFunction}
+ * 
+ * {@link GeodesicBSplineFunction} */
 public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
   public static class Param extends AbstractCurvatureParam {
@@ -29,6 +33,8 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
 
     @FieldClip(min = "0", max = "9")
     public Integer degree = 3;
+    @FieldClip(min = "1", max = "1000")
+    public Integer points = 100;
     public Boolean cyclic = false;
   }
 
@@ -48,13 +54,16 @@ public class R2BSplineFunctionDemo extends AbstractCurvatureDemo {
     RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor refined = Tensors.empty();
-    if (0 < control.length()) {
+    int n = control.length();
+    if (0 < n) {
       int _degree = param.degree;
-      ScalarTensorFunction scalarTensorFunction = param.cyclic //
-          ? BSplineFunctionCyclic.of(_degree, control)
-          : BSplineFunctionString.of(_degree, control);
-      refined = Subdivide.of(0, param.cyclic ? control.length() : control.length() - 1, 100) //
-          .maps(scalarTensorFunction);
+      if (param.cyclic) {
+        refined = Subdivide.intermediate_increasing(Clips.interval(0.0, n), param.points) //
+            .maps(BSplineFunctionCyclic.of(_degree, control));
+      } else {
+        refined = Subdivide.of(0, n - 1, param.points) //
+            .maps(BSplineFunctionString.of(_degree, control));
+      }
     } else {
       refined = CirclePoints.of(7);
     }
