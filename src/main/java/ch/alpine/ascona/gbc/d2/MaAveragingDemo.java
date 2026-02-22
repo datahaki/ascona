@@ -126,6 +126,8 @@ public class MaAveragingDemo extends ControlPointsDemo {
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    timerFrame.geometricComponent.renderGrid(graphics);
+    graphics.setClip(null);
     RenderQuality.setQuality(graphics);
     prepare();
     // ---

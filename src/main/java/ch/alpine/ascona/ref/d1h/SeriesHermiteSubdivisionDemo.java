@@ -74,7 +74,7 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
     RenderQuality.setQuality(graphics);
     if (1 < _control.length()) {
-      HomogeneousSpace homogeneousSpace =  manifoldDisplay.homogeneousSpace();
+      HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
       Tensor control = _control.maps(N.DOUBLE);
       Scalar delta = RealScalar.ONE;

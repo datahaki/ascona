@@ -1,9 +1,9 @@
 // code by jph
-package ch.alpine.ascona.gbc.poly;
+package ch.alpine.euclid.hil;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 import java.util.Objects;
 
 import ch.alpine.ascony.api.Box2D;
@@ -12,6 +12,7 @@ import ch.alpine.ascony.dis.R2Display;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -53,12 +54,11 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
   }
 
   void updateCtrl() {
-    System.out.println("update");
     polygon = unit(param.levels);
-    bufferedImage = null;
+    show = null;
   }
 
-  private BufferedImage bufferedImage = null;
+  private Show show = null;
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
@@ -75,15 +75,14 @@ public class HilbertBenchmarkDemo extends AbstractDemo {
       leversRender.renderIndexP();
     }
     leversRender.renderSurfaceP();
-    int magnification = 4;
-    if (Objects.isNull(bufferedImage))
+    if (Objects.isNull(show))
       compute();
-    if (Objects.nonNull(bufferedImage))
-      graphics.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth() * magnification, bufferedImage.getHeight() * magnification, null);
+    if (Objects.nonNull(show))
+      show.render(graphics, new Rectangle(100, 10, 400, 300));
   }
 
   public void compute() {
-    bufferedImage = HilbertLevelImage.of(R2Display.INSTANCE, polygon, param.resolution, param.cdg, 32);
+    show = HilbertLevelShow.of(polygon, param.resolution, param.cdg, 32);
   }
 
   /** @param n positive

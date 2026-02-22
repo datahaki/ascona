@@ -3,6 +3,7 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.util.stream.IntStream;
 
@@ -11,20 +12,21 @@ import javax.swing.JToggleButton;
 import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.ascony.api.LogWeightings;
-import ch.alpine.ascony.arp.ArrayPlotImage;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Drop;
-import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.num.Pi;
@@ -64,6 +66,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
       graphics.draw(path2d);
     }
     {
+      RenderQuality.setQuality(graphics);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     }
@@ -71,9 +74,10 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
       Tensor origin = getGeodesicControlPoints();
       // TODO ASCONA use cache
       Tensor wgs = compute(operator(origin), scatteredSetParam.refine);
-      RenderQuality.setQuality(graphics);
-      Rescale rescale = new Rescale(ImageTiling.of(wgs));
-      ArrayPlotImage.of(rescale.result(), rescale.clip(), colorDataGradient).draw(graphics);
+      Tensor weights = ImageTiling.of(wgs);
+      Show show = new Show();
+      show.add(ArrayPlot.of(weights, colorDataGradient));
+      show.render(graphics, new Rectangle(100, 10, 100 + Unprotect.dimension1Hint(weights) * 2, 400));
     }
   }
 
