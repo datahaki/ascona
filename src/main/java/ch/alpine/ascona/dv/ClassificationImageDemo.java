@@ -10,7 +10,6 @@ import java.util.Objects;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
-import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.cls.Classification;
 import ch.alpine.ascony.cls.ClassificationImage;
 import ch.alpine.ascony.cls.Labels;
@@ -137,9 +136,8 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = manifoldDisplay.d2Raster();
     if (Objects.nonNull(bufferedImage))
-      new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()).render(geometricLayer, graphics);
+      new ImageRender(bufferedImage, manifoldDisplay.d2Raster().coordinateBoundingBox()).render(geometricLayer, graphics);
     // ---
     render(geometricLayer, graphics, manifoldDisplay, getGeodesicControlPoints(), vector, param1.cdg.cyclic());
   }

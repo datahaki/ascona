@@ -12,7 +12,6 @@ import java.util.Set;
 import ch.alpine.ascona.lev.Se2AnimationDemo;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
-import ch.alpine.ascony.arp.ArrayPlotRecord;
 import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -52,6 +51,10 @@ import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 public final class D2AveragingDemo extends ControlPointsDemo {
+  public record ArrayPlotRecord(Tensor matrix, ColorDataGradient cdg) {
+    // ---
+  }
+
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {

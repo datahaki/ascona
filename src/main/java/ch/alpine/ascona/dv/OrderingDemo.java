@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascony.api.LogWeightings;
-import ch.alpine.ascony.arp.BarLegend;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
