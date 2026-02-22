@@ -127,7 +127,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster d2Raster = (D2Raster) manifoldDisplay;
+    D2Raster d2Raster = manifoldDisplay.d2Raster();
     CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
     Tensor sequence = getGeodesicControlPoints();
     Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);

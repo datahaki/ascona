@@ -7,14 +7,13 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 
 import ch.alpine.ascony.arp.ArrayFunction;
-import ch.alpine.ascony.arp.ArrayPlotImage;
-import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
-import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -29,12 +28,12 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
-import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.mat.IdentityMatrix;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Abs;
@@ -78,8 +77,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setOffset(400, 400);
   }
 
-  private static final int CACHE_SIZE = 1;
-  private final Cache<Tensor, ArrayPlotImage> cache = Cache.of(this::computeImage, CACHE_SIZE);
+  private final Cache<Tensor, Show> cache = Cache.of(this::computeImage, 1);
   private Scalar computeTime = Quantity.of(0, "s");
 
   protected final void recompute() {
@@ -87,7 +85,7 @@ public class MaAveragingDemo extends ControlPointsDemo {
     cache.clear();
   }
 
-  private ArrayPlotImage computeImage(Tensor tensor) {
+  private Show computeImage(Tensor tensor) {
     Tensor sequence = tensor.maps(N.DOUBLE);
     int resolution = param.resolution;
     int n = sequence.length();
@@ -114,8 +112,9 @@ public class MaAveragingDemo extends ControlPointsDemo {
         computeTime = timing.seconds();
         // ---
         ColorDataGradient colorDataGradient = param.cdg;
-        Rescale rescale = new Rescale(matrix);
-        return ArrayPlotImage.of(rescale.result(), rescale.clip(), colorDataGradient);
+        Show show = new Show();
+        show.add(ArrayPlot.of(matrix, colorDataGradient));
+        return show;
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();
@@ -125,20 +124,17 @@ public class MaAveragingDemo extends ControlPointsDemo {
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    timerFrame.geometricComponent.renderGrid(graphics);
-    graphics.setClip(null);
     RenderQuality.setQuality(graphics);
     prepare();
     // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     // Tensor values = getControlPointsSe2().get(Tensor.ALL, 2);
-    ArrayPlotImage arrayPlotImage = cache.apply(sequence);
+    Show arrayPlotImage = cache.apply(sequence);
     if (Objects.nonNull(arrayPlotImage)) {
       RenderQuality.setDefault(graphics); // default so that raster becomes visible
-      D2Raster d2Raster = (D2Raster) manifoldDisplay;
-      new ImageRender(arrayPlotImage.bufferedImage(), d2Raster.coordinateBoundingBox()) //
-          .render(geometricLayer, graphics);
+      CoordinateBoundingBox cbb = manifoldDisplay.d2Raster().coordinateBoundingBox();
+      arrayPlotImage.render(graphics, geometricLayer.toRectangle(cbb));
     }
     RenderQuality.setQuality(graphics);
     // ---

@@ -96,7 +96,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
+    D2Raster hsArrayPlot = manifoldDisplay.d2Raster();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     RenderQuality.setDefault(graphics);
     BufferedImage bufferedImage = bufferedImage(param.resolution);

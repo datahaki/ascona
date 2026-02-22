@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,11 +17,12 @@ import ch.alpine.ascony.api.InsideConvexHullLogWeighting;
 import ch.alpine.ascony.api.LogWeighting;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
-import ch.alpine.ascony.arp.ArrayPlotImage;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.PanelFieldsEditor;
 import ch.alpine.tensor.DoubleScalar;
@@ -28,8 +30,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.PadRight;
-import ch.alpine.tensor.alg.Rescale;
-import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 
@@ -68,25 +68,29 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
       leversRender.renderIndexP();
     }
     // ---
-    if (Objects.isNull(arrayPlotImage))
+    if (Objects.isNull(show))
       recompute();
-    if (Objects.nonNull(arrayPlotImage)) {
-      Dimension dimension = arrayPlotImage.getDimension();
-      dimension.width *= 3;
-      dimension.height *= 3;
-      arrayPlotImage.draw(graphics, dimension);
+    if (Objects.nonNull(show)) {
+      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      show.render(graphics, new Rectangle(100, 10, dimension.width - 200, 400));
     }
   }
 
-  private ArrayPlotImage arrayPlotImage;
+  private Show show;
 
   @Override
   protected final void recompute() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
-    arrayPlotImage = manifoldDisplay.dimensions() < sequence.length() //
-        ? arrayPlotImage(manifoldDisplay, scatteredSetParam.spinnerColorData, sequence, scatteredSetParam.refine, operator(sequence)::sunder)
-        : null;
+    if (manifoldDisplay.dimensions() < sequence.length()) {
+      Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
+      ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(operator(sequence)::sunder, fallback);
+      Tensor wgs = manifoldDisplay.d2Raster().of(scatteredSetParam.refine, arrayFunction);
+      Show _show = new Show();
+      _show.add(ArrayPlot.of(ImageTiling.of(wgs), scatteredSetParam.spinnerColorData));
+      show = _show;
+    } else
+      show = null;
   }
 
   @Override
@@ -115,18 +119,6 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
   // -0.667, 0.000}, {-1.450, -1.650, 0.000}}"));
   // }
   // }
-
-  protected static ArrayPlotImage arrayPlotImage( //
-      ManifoldDisplay manifoldDisplay, //
-      ScalarTensorFunction colorDataGradient, //
-      Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator) {
-    Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
-    ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, fallback);
-    Tensor wgs = manifoldDisplay.d2Raster().of(refinement, arrayFunction);
-    Rescale rescale = new Rescale(ImageTiling.of(wgs));
-    // logWeighting().equals(LogWeightings.DISTANCES)
-    return ArrayPlotImage.of(rescale.result(), rescale.clip(), colorDataGradient);
-  }
 
   static void main() {
     new PlanarScatteredSetCoordinateDemo().runStandalone();

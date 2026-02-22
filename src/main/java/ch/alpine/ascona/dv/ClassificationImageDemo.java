@@ -137,7 +137,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
+    D2Raster hsArrayPlot = manifoldDisplay.d2Raster();
     if (Objects.nonNull(bufferedImage))
       new ImageRender(bufferedImage, hsArrayPlot.coordinateBoundingBox()).render(geometricLayer, graphics);
     // ---

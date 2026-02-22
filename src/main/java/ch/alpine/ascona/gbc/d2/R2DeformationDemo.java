@@ -48,7 +48,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   @Override
   protected MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster d2Raster = (D2Raster) manifoldDisplay;
+    D2Raster d2Raster = manifoldDisplay.d2Raster();
     CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
     Tensor domain = StaticHelper.of(coordinateBoundingBox, manifoldDisplay, res);
     Sedarim sedarim = operator(movingOrigin);

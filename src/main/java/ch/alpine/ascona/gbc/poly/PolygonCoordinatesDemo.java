@@ -1,18 +1,22 @@
 // code by jph
 package ch.alpine.ascona.gbc.poly;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.Objects;
 
 import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.arp.ArrayFunction;
-import ch.alpine.ascony.arp.ArrayPlotImage;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.awt.RenderQuality;
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -23,8 +27,6 @@ import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
-import ch.alpine.tensor.alg.Rescale;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
@@ -35,7 +37,7 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
   public static class Param0 extends AsconaParam {
     public Param0() {
       super(true, ManifoldDisplays.d2Rasters());
-      manifoldDisplays = ManifoldDisplays.S2;
+      manifoldDisplays = ManifoldDisplays.R2;
     }
   }
 
@@ -65,35 +67,34 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     spun();
   }
 
-  private ArrayPlotImage arrayPlotImage;
+  private Show show;
 
   protected final void recompute() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = manifoldDisplay.manifold();
     Tensor sequence = getGeodesicControlPoints();
     Sedarim sedarim = param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
-    arrayPlotImage = manifoldDisplay.dimensions() < sequence.length() //
-        ? arrayPlotImage(sequence, param1.resolution, sedarim::sunder)
-        : null;
-  }
-
-  protected final ArrayPlotImage arrayPlotImage(Tensor sequence, int refinement, TensorUnaryOperator tensorUnaryOperator) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
-    ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, fallback);
-    Tensor wgs = manifoldDisplay.d2Raster().of(refinement, arrayFunction);
-    Rescale rescale = new Rescale(ImageTiling.of(wgs));
-    // logWeighting().equals(LogWeightings.DISTANCES)
-    return ArrayPlotImage.of(rescale.result(), rescale.clip(), param1.cdg);
+    if (manifoldDisplay.dimensions() < sequence.length()) {
+      Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
+      ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(sedarim::sunder, fallback);
+      Tensor weights = manifoldDisplay.d2Raster().of(param1.resolution, arrayFunction);
+      Show _show = new Show();
+      _show.add(ArrayPlot.of(ImageTiling.of(weights), param1.cdg));
+      show = _show;
+    } else
+      show = null;
   }
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (Objects.isNull(arrayPlotImage))
+    if (Objects.isNull(show))
       recompute();
-    if (Objects.nonNull(arrayPlotImage))
-      arrayPlotImage.draw(graphics);
-    // ---
+    if (Objects.nonNull(show)) {
+      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      Rectangle rectangle = new Rectangle(100, 10, dimension.width - 200, 400);
+      show.render(graphics, rectangle);
+    } // ---
+    RenderQuality.setQuality(graphics);
     LeversRender leversRender = LeversRender.of( //
         manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
     leversRender.renderSurfaceP();

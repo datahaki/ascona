@@ -116,7 +116,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    D2Raster hsArrayPlot = (D2Raster) manifoldDisplay;
+    D2Raster hsArrayPlot = manifoldDisplay.d2Raster();
     RenderQuality.setDefault(graphics);
     int res = param.resolution;
     BufferedImage bufferedImage = bufferedImage(res);
