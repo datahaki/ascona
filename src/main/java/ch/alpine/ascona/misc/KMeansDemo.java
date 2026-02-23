@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.nd;
+package ch.alpine.ascona.misc;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

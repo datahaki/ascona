@@ -31,12 +31,12 @@ import ch.alpine.tensor.Tensor;
   BSPLINE4DS(BSpline4CurveSubdivision::split2lo, 3, 2, 3), //
   BSPLINE4S2(BSpline4CurveSubdivision::split2hi, 3, 2, 3), //
   BSPLINE5(BSpline5CurveSubdivision::new, 4, 2, 3), //
-  LR1(gi -> LaneRiesenfeldCurveSubdivision.of(gi, 1), 2, 0, 1), //
-  LR2(gi -> LaneRiesenfeldCurveSubdivision.of(gi, 2), 3, 0, 1), //
-  LR3(gi -> LaneRiesenfeldCurveSubdivision.of(gi, 3), 3, 1, 2), //
-  LR4(gi -> LaneRiesenfeldCurveSubdivision.of(gi, 4), 5, 1, 2), //
-  LR5(gi -> LaneRiesenfeldCurveSubdivision.of(gi, 5), 5, 2, 3), //
-  LR6(gi -> LaneRiesenfeldCurveSubdivision.of(gi, 6), 5, 2, 3), //
+  LR1(bi -> LaneRiesenfeldCurveSubdivision.of(bi, 1), 2, 0, 1), //
+  LR2(bi -> LaneRiesenfeldCurveSubdivision.of(bi, 2), 3, 0, 1), //
+  LR3(bi -> LaneRiesenfeldCurveSubdivision.of(bi, 3), 3, 1, 2), //
+  LR4(bi -> LaneRiesenfeldCurveSubdivision.of(bi, 4), 5, 1, 2), //
+  LR5(bi -> LaneRiesenfeldCurveSubdivision.of(bi, 5), 5, 2, 3), //
+  LR6(bi -> LaneRiesenfeldCurveSubdivision.of(bi, 6), 5, 2, 3), //
   THREEPOINT(HormannSabinCurveSubdivision::of, 5, 1, 2), //
   FOURPOINT(CurveSubdivisionHelper::fps, 6, 0, 3), //
   C2CUBIC(DualC2FourPointCurveSubdivision::cubic, 6, 2, 3), //

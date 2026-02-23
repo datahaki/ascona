@@ -31,10 +31,10 @@ import ch.alpine.tensor.sca.Clips;
 
 class ClothoidNdDemo extends ControlPointsDemo {
   private static final int SIZE = 400;
-  private static final CoordinateBoundingBox ND_BOX_R2 = CoordinateBoundingBox.of( //
-      Clips.absolute(5), Clips.absolute(5));
-  private static final CoordinateBoundingBox ND_BOX_SE2 = CoordinateBoundingBox.of( //
-      Clips.absolute(5), Clips.absolute(5), Clips.absolute(Math.PI));
+  private static final CoordinateBoundingBox ND_BOX_R2 = //
+      CoordinateBoundingBox.of(Clips.absolute(5), Clips.absolute(5));
+  private static final CoordinateBoundingBox ND_BOX_SE2 = //
+      CoordinateBoundingBox.of(Clips.absolute(5), Clips.absolute(5), Clips.absolute(Math.PI));
   // ---
   private final ClothoidNdMap<Tensor> clothoidNdMap = new ClothoidNdMap<>(ND_BOX_R2, t -> t);
 

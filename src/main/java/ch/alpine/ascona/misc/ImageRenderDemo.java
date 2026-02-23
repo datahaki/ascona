@@ -11,7 +11,9 @@ import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.TensorMap;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -21,14 +23,23 @@ import ch.alpine.tensor.sca.Clips;
 public class ImageRenderDemo extends AbstractDemo {
   private static final CoordinateBoundingBox COORDINATE_BOUNDING_BOX = //
       CoordinateBoundingBox.of(Clips.interval(-0.4, 1), Clips.interval(-0.35, 0.35));
+  private static final Scalar SHIFT = RealScalar.of(1.5);
   private final BufferedImage bufferedImage;
+  private final BufferedImage grayscale_alpha;
   private final BufferedImage grayscale;
 
   public ImageRenderDemo() {
     bufferedImage = VehicleStatic.INSTANCE.bufferedImage_c();
-    Tensor tensor = ImageFormat.from(bufferedImage);
-    Tensor graysc = TensorMap.of(rgba -> Mean.of(rgba.extract(0, 3)), tensor, 2);
-    grayscale = ImageFormat.of(graysc);
+    {
+      Tensor tensor = ImageFormat.from(bufferedImage);
+      Tensor graysc = TensorMap.of(rgba -> Tensors.of(Mean.of(rgba.extract(0, 3)), rgba.Get(3)), tensor, 2);
+      grayscale_alpha = ImageFormat.of(graysc);
+    }
+    {
+      Tensor tensor = ImageFormat.from(bufferedImage);
+      Tensor graysc = TensorMap.of(rgba -> Mean.of(rgba.extract(0, 3)), tensor, 2);
+      grayscale = ImageFormat.of(graysc);
+    }
   }
 
   @Override // from RenderInterface
@@ -43,7 +54,15 @@ public class ImageRenderDemo extends AbstractDemo {
           COORDINATE_BOUNDING_BOX).render(geometricLayer, graphics);
       geometricLayer.popMatrix();
     }
-    mouse.set(RealScalar.TWO::add, 0);
+    mouse.set(SHIFT::add, 0);
+    {
+      geometricLayer.pushMatrix(Se2Matrix.of(mouse));
+      new ImageRender( //
+          grayscale_alpha, //
+          COORDINATE_BOUNDING_BOX).render(geometricLayer, graphics);
+      geometricLayer.popMatrix();
+    }
+    mouse.set(SHIFT::add, 0);
     {
       geometricLayer.pushMatrix(Se2Matrix.of(mouse));
       new ImageRender( //
