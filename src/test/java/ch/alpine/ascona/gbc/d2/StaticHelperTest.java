@@ -2,6 +2,9 @@
 package ch.alpine.ascona.gbc.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.lang.reflect.Modifier;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,5 +19,10 @@ class StaticHelperTest {
     IntBlend intBlend = new IntBlend(RealScalar.of(0.1));
     assertEquals(intBlend.apply(RealScalar.of(2.5)), RealScalar.ONE);
     Tolerance.CHOP.requireClose(intBlend.apply(RealScalar.of(3.95)), Rational.HALF);
+  }
+
+  @Test
+  void testVisibility() {
+    assertFalse(Modifier.isPublic(StaticHelper.class.getModifiers()));
   }
 }

@@ -20,9 +20,9 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.decim.LineDistance;
-import ch.alpine.sophis.math.api.TensorDistance;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.math.api.LineDistance;
+import ch.alpine.sophus.math.api.TensorDistance;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -44,7 +44,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(false, ManifoldDisplays.R2_S2);
+      super(false, ManifoldDisplays.lineDistances());
     }
 
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200" })
@@ -75,7 +75,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
     LineDistance lineDistance = manifoldDisplay().lineDistance();
     Tensor cp = getGeodesicControlPoints();
     return 1 < cp.length() //
-        ? lineDistance.tensorNorm(cp.get(0), cp.get(1))
+        ? lineDistance.distanceToLine(cp.get(0), cp.get(1))
         : _ -> RealScalar.ZERO;
   }
 
