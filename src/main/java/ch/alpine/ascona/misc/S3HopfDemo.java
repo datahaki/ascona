@@ -29,15 +29,9 @@ public class S3HopfDemo extends ControlPointsDemo {
     }
   }
 
-  private final Param0 param0;
 
   public S3HopfDemo() {
-    this(new Param0());
-  }
-
-  public S3HopfDemo(Param0 param0) {
-    super(param0);
-    this.param0 = param0;
+    super(new Param0());
     controlPointsRender.setMidpointIndicated(false);
   }
 

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import ch.alpine.tensor.ext.ResourceData;
 
-public enum VehicleStatic {
+enum VehicleStatic {
   INSTANCE;
 
   private final BufferedImage bufferedImage_c = ResourceData.bufferedImage("/ch/alpine/ascona/image/vehicle_c.png");
