@@ -11,7 +11,6 @@ import ch.alpine.ascony.dis.R2Display;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.AbstractDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -72,7 +71,6 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
-    RenderQuality.setQuality(graphics);
     if (1 < _control.length()) {
       HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);

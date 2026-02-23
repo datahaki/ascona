@@ -14,7 +14,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
@@ -97,7 +96,6 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
       show.add(showable);
       show.render(graphics, rectangle);
     } // ---
-    RenderQuality.setQuality(graphics);
     LeversRender leversRender = LeversRender.of( //
         manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
     leversRender.renderSurfaceP();

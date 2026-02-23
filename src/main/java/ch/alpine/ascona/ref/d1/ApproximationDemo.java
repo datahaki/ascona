@@ -16,7 +16,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.AbstractDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
@@ -114,7 +113,6 @@ public class ApproximationDemo extends AbstractDemo {
     Container container = _container;
     if (Objects.isNull(container))
       return;
-    RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = container.manifoldDisplay;
     {
       Tensor tracked = container.tracked;
@@ -150,7 +148,6 @@ public class ApproximationDemo extends AbstractDemo {
         geometricLayer.popMatrix();
       }
     }
-    RenderQuality.setDefault(graphics);
   }
 
   static void main() {

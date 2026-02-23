@@ -11,7 +11,6 @@ import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
@@ -108,7 +107,6 @@ public class AnimationDemo extends ControlPointsDemo {
         }
         setControlPointsSe2(list);
       }
-      RenderQuality.setQuality(graphics);
       Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.get();
       LeversRender leversRender = //

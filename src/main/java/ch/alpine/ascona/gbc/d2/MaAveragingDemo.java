@@ -11,7 +11,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
@@ -130,7 +129,6 @@ public final class MaAveragingDemo extends ControlPointsDemo {
       show.add(showable);
       show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()));
     }
-    RenderQuality.setQuality(graphics);
     // ---
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);

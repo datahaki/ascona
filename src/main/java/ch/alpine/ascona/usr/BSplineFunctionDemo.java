@@ -7,7 +7,6 @@ import ch.alpine.ascona.crv.AbstractCurvatureDemo;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -52,7 +51,6 @@ public class BSplineFunctionDemo extends AbstractCurvatureDemo {
   @Override
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     timerFrame.geometricComponent.renderGrid(graphics);
-    RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor refined = Tensors.empty();
     int n = control.length();

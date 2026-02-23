@@ -8,7 +8,6 @@ import ch.alpine.ascony.dis.Se2ClothoidDisplay;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.AbstractDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
@@ -42,7 +41,6 @@ public class SpiralDemo extends AbstractDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     timerFrame.geometricComponent.renderGrid(graphics);
-    RenderQuality.setQuality(graphics);
     SpiralParam spiralParam = param.spiralParam;
     Clip clip = param.clip;
     {

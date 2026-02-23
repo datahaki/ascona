@@ -15,7 +15,6 @@ import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -63,7 +62,6 @@ public class LogarithmDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
@@ -90,11 +88,9 @@ public class LogarithmDemo extends ControlPointsDemo {
         while (refined.length() < 100)
           refined = curveSubdivision.cyclic(refined);
         // ---
-        RenderQuality.setQuality(graphics);
         if (manifoldDisplay instanceof R2Display)
           GRID_RENDER.render(geometricLayer, graphics);
         {
-          RenderQuality.setQuality(graphics);
           Path2D path2d = geometricLayer.toPath2D(Tensor.of(refined.stream().map(manifoldDisplay::point2xy)), true);
           graphics.setColor(DOMAIN_F);
           graphics.fill(path2d);
@@ -106,7 +102,6 @@ public class LogarithmDemo extends ControlPointsDemo {
         GRID_RENDER.render(geometricLayer, graphics);
         Tensor planar = homogeneousSpace.exponential(origin).log().slash(refined);
         {
-          RenderQuality.setQuality(graphics);
           Path2D path2d = geometricLayer.toPath2D(planar, true);
           graphics.setColor(DOMAIN_F);
           graphics.fill(path2d);
@@ -118,7 +113,6 @@ public class LogarithmDemo extends ControlPointsDemo {
         try {
           ScalarTensorFunction scalarTensorFunction = ArcLengthParameterization.of(distances, RGroup.INSTANCE, planar);
           Tensor border = domain.maps(scalarTensorFunction);
-          RenderQuality.setQuality(graphics);
           graphics.setColor(Color.BLUE);
           for (Tensor y : border) {
             Line2D line2d = geometricLayer.toLine2D(y);

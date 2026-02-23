@@ -14,7 +14,6 @@ import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.lang.UnicodeString;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -66,7 +65,6 @@ class BarLegend {
         height, null);
     graphics.setFont(font);
     graphics.setColor(color);
-    RenderQuality.setQuality(graphics);
     int ascent = fontMetrics.getAscent();
     for (Entry<Scalar, String> entry : map.entrySet()) {
       Scalar rescale = RealScalar.ONE.subtract(clip.rescale(entry.getKey()));

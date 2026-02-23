@@ -9,7 +9,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -60,7 +59,6 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         catmullClarkSubdivision::refine, //
         ArrayReshape.of(control, 2, 3, dim), //
         param.refine);
-    RenderQuality.setQuality(graphics);
     // TODO ASCONA LR
     Tensor shape = manifoldDisplay.shape();
     for (Tensor point : Flatten.of(refined, 1)) {

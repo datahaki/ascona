@@ -14,7 +14,6 @@ import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymLinkImages;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -81,7 +80,6 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
       bufferedImage = symLinkImage.bufferedImage();
     }
     // ---
-    RenderQuality.setQuality(graphics);
     Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << levels))).maps(scalarTensorFunction);
     new AreaRender( //
         Color.DARK_GRAY, //

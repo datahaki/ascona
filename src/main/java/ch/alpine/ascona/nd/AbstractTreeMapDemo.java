@@ -12,7 +12,6 @@ import java.util.random.RandomGenerator;
 import ch.alpine.ascony.arp.CenterNorms;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.win.AbstractDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -107,7 +106,6 @@ import ch.alpine.tensor.sca.Round;
       collection = graphicSpherical.list();
     }
     Scalar seconds = timing.seconds();
-    RenderQuality.setQuality(graphics);
     graphics.setColor(Color.GRAY);
     graphics.drawString(String.format("%d %d %s", ndMap.size(), collection.size(), seconds.maps(Round._3)), 0, 40);
     graphics.setColor(new Color(255, 0, 0, 128));

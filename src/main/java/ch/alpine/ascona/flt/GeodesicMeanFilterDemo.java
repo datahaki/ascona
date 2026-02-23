@@ -10,7 +10,6 @@ import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -60,7 +59,6 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
     Tensor curve = Nest.of(BSpline4CurveSubdivision.split2lo(manifoldDisplay.geodesicSpace())::string, refined, 7);
     Tensor render = Tensor.of(curve.stream().map(manifoldDisplay::point2xy));
     // ---
-    RenderQuality.setQuality(graphics);
     Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
     {

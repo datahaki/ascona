@@ -16,7 +16,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.BoundingBoxRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -96,7 +95,6 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
-      RenderQuality.setQuality(graphics);
       // ---
       Sedarim sedarim = Biinvariants.METRIC.ofSafe(RGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), domain);
       // operator(domain);

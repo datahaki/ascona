@@ -18,7 +18,6 @@ import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.AbstractDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Spectrogram;
@@ -86,7 +85,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = control();
-    RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
     final Tensor shape = manifoldDisplay.shape().multiply(markerScale());
     boolean conv = gokartPoseSpec.conv;
@@ -125,7 +123,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
         geometricLayer.popMatrix();
       }
     }
-    RenderQuality.setDefault(graphics);
     if (gokartPoseSpec.diff)
       differences_render(graphics, manifoldDisplay, refined, gokartPoseSpec.spec);
   }

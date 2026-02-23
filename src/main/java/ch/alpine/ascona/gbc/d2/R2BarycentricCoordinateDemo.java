@@ -22,7 +22,6 @@ import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -81,18 +80,15 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
     {
-      RenderQuality.setQuality(graphics);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
       leversRender.renderSequence();
       leversRender.renderIndexP();
-      RenderQuality.setDefault(graphics);
     }
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       PolygonRegion polygonRegion = new PolygonRegion(domain);
-      RenderQuality.setQuality(graphics);
       Tensor hull = ConvexHull2D.of(domain);
       {
         graphics.setColor(Color.LIGHT_GRAY);

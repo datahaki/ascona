@@ -7,7 +7,6 @@ import java.util.List;
 
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.win.AbstractDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.dub.DubinsPath;
 import ch.alpine.sophis.crv.dub.DubinsPathGenerator;
@@ -32,7 +31,6 @@ public class DubinsTransitionDemo extends AbstractDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RenderQuality.setQuality(graphics);
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     // ---
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(START, mouse, RealScalar.of(1));

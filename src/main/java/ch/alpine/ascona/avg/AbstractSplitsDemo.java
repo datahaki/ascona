@@ -15,7 +15,6 @@ import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymScalar;
 import ch.alpine.ascony.sym.SymSequence;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 
@@ -28,7 +27,6 @@ public abstract class AbstractSplitsDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RenderQuality.setQuality(graphics);
     Tensor control = getGeodesicControlPoints();
     // ---
     SymScalar symScalar = symScalar(SymSequence.of(control.length()));

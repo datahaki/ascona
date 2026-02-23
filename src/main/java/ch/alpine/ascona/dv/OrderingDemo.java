@@ -15,7 +15,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -97,7 +96,6 @@ public class OrderingDemo extends ControlPointsDemo {
     int[] integers = Ordering.INCREASING.of(weights);
     ColorDataGradient colorDataGradientF = param1.cdg.deriveWithOpacity(Rational.HALF);
     ColorDataGradient colorDataGradientD = param1.cdg;
-    RenderQuality.setQuality(graphics);
     Tensor shape = manifoldDisplay.shape();
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor point = sequence.get(integers[index]);

@@ -9,7 +9,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -80,7 +79,6 @@ public class CatmullRomDemo extends AbstractCurvatureDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     final int levels = param.refine;
     final Tensor control = getGeodesicControlPoints();
-    RenderQuality.setQuality(graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
       leversRender.renderIndexP();

@@ -153,7 +153,6 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));
-    RenderQuality.setQuality(graphics);
     // ---
     if (param1.freeze) {
       LeversRender leversRender = LeversRender.of( //

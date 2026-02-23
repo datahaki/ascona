@@ -20,7 +20,6 @@ import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
@@ -129,7 +128,6 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     AxesRender.INSTANCE.render(geometricLayer, graphics);
-    RenderQuality.setQuality(graphics);
     boolean validated = validateContainer();
     if (validated) {
       graphics.setColor(Color.BLACK);

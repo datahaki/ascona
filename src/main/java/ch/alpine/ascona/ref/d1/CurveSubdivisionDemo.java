@@ -16,7 +16,6 @@ import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -116,7 +115,6 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
         graphics.drawImage(image1, image0.getWidth() + 1, 0, null);
       }
     }
-    RenderQuality.setQuality(graphics);
     // ---
     final boolean cyclic = param.cyclic || !scheme.isStringSupported();
     Tensor control = getGeodesicControlPoints();

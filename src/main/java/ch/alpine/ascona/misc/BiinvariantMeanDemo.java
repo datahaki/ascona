@@ -20,7 +20,6 @@ import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -141,7 +140,6 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
     }
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.setStroke(STROKE);
-    RenderQuality.setQuality(graphics);
     if (Objects.nonNull(mean))
       for (Tensor point : sequence) {
         Tensor curve = Subdivide.of(0, 1, 20).maps(homogeneousSpace.curve(point, mean));

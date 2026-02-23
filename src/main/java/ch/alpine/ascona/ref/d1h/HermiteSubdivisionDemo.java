@@ -15,7 +15,6 @@ import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -75,7 +74,6 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     timerFrame.geometricComponent.renderGrid(graphics);
     final Tensor tensor = getControlPointsSe2();
-    RenderQuality.setQuality(graphics);
     POINTS_RENDER_0.show(Se2Display.INSTANCE::matrixLift, //
         Se2Display.INSTANCE.shape(), //
         tensor).render(geometricLayer, graphics);

@@ -12,7 +12,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
@@ -101,7 +100,6 @@ public class LineDistanceDemo extends ControlPointsDemo {
     show.add(showable);
     show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()));
     // ---
-    RenderQuality.setQuality(graphics);
     Tensor cp = getGeodesicControlPoints();
     ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(cp.get(0), cp.get(1));
     graphics.setStroke(STROKE);

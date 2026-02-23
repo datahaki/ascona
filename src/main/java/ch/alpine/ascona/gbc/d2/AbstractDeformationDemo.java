@@ -18,7 +18,6 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -121,7 +120,6 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
     graphics.setClip(null);
     if (Objects.isNull(movingDomain2D))
       recompute();
-    RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor origin = movingDomain2D.origin();
     Tensor target = getGeodesicControlPoints();

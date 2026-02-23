@@ -14,7 +14,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -83,7 +82,6 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    RenderQuality.setQuality(graphics);
     graphics.setColor(Color.BLACK);
     graphics.drawString(tsp2OptHeuristic.cost().maps(Round._5).toString(), 3, 450);
     Tensor sequence = getGeodesicControlPoints();

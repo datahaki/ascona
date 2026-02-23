@@ -13,7 +13,6 @@ import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLinkImages;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophis.crv.GeodesicBSplineFunction;
@@ -53,8 +52,6 @@ public class DeBoorDemo extends AbstractCurveDemo implements BufferedImageSuppli
     final Scalar parameter = abstractCurveParam.ratio.multiply(RealScalar.of(upper));
     Tensor knots = Range.of(0, 2 * upper);
     bufferedImage = SymLinkImages.deboor(knots, control.length(), parameter).bufferedImage();
-    // ---
-    RenderQuality.setQuality(graphics);
     // ---
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     ScalarTensorFunction scalarTensorFunction = //

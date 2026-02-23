@@ -10,7 +10,6 @@ import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.ref.d1.BSpline3CurveSubdivision;
 import ch.alpine.sophis.ref.d1.CurveSubdivision;
@@ -36,7 +35,6 @@ public class InterpolationDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     Tensor sequence = getGeodesicControlPoints();
-    RenderQuality.setQuality(graphics);
     if (0 < sequence.length()) {
       Tensor matrix = BSplineInterpolation.matrix(3, sequence.length());
       Tensor invers = Inverse.of(matrix);

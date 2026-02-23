@@ -15,7 +15,6 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -66,7 +65,6 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
       graphics.draw(path2d);
     }
     {
-      RenderQuality.setQuality(graphics);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     }

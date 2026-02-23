@@ -14,7 +14,6 @@ import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymScalar;
 import ch.alpine.ascony.sym.SymSequence;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -78,8 +77,6 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
       SymScalar symScalar = (SymScalar) scalarTensorFunction.apply(scalar);
       graphics.drawImage(new SymLinkImage(symScalar).bufferedImage(), 0, 0, null);
     }
-    // ---
-    RenderQuality.setQuality(graphics);
     // ---
     int levels = param.refine;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

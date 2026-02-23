@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.win.AbstractDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
@@ -44,7 +43,6 @@ public class ImageRenderDemo extends AbstractDemo {
 
   @Override // from RenderInterface
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RenderQuality.setQuality(graphics);
     AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
     {

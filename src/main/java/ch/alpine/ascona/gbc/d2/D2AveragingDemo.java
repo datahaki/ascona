@@ -15,7 +15,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
@@ -133,7 +132,6 @@ public final class D2AveragingDemo extends ControlPointsDemo {
       CoordinateBoundingBox cbb = showable.fullPlotRange().orElseThrow();
       show.render(graphics, geometricLayer.toRectangle(cbb));
     }
-    RenderQuality.setQuality(graphics);
     LeversRender leversRender = //
         LeversRender.of(manifoldDisplay, sequence, values, geometricLayer, graphics);
     leversRender.renderWeights(values);

@@ -13,7 +13,6 @@ import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
@@ -85,7 +84,6 @@ public class Se2AnimationDemo extends ControlPointsDemo {
             .of(snapshot.stream().map(lieGroup.conjugation(random(10 + timing.seconds().multiply(Quantity.of(0.1, "s^-1")).number().doubleValue(), 0))));
         setControlPointsSe2(newPoints);
       }
-      RenderQuality.setQuality(graphics);
       Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.get();
       LeversHud.render( //

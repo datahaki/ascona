@@ -10,7 +10,6 @@ import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.decim.CurveDecimation;
 import ch.alpine.sophis.decim.LineDistances;
@@ -52,9 +51,6 @@ public class BulkDecimationDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace geodesicSpace = manifoldDisplay.homogeneousSpace();
     graphics.setColor(Color.LIGHT_GRAY);
-    // graphics.setStroke(STROKE);
-    RenderQuality.setQuality(graphics);
-    // graphics.setStroke(new BasicStroke(1));
     Tensor domain = Subdivide.of(0, 1, 10);
     {
       PathRender pathRender = new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(0));

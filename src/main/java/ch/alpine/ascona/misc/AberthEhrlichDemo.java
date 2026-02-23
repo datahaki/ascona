@@ -14,7 +14,6 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -122,7 +121,6 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
       show.add(ArrayPlot.of(raster, cbb, ColorDataGradients.HUE));
       show.render(graphics, geometricLayer.toRectangle(cbb));
     }
-    RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LeversRender leversRender = LeversRender.of(C1Display.INSTANCE, zeros.extract(0, length), null, geometricLayer, graphics);
     leversRender.renderSequence(POINTS_RENDER_0);
