@@ -9,6 +9,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.lie.se2.Se2Matrix;

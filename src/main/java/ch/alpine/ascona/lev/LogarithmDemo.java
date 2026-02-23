@@ -14,6 +14,7 @@ import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;

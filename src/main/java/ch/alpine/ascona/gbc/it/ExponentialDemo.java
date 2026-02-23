@@ -9,7 +9,6 @@ import java.awt.geom.Line2D;
 import java.util.Deque;
 import java.util.Optional;
 
-import ch.alpine.ascona.lev.PlaceWrap;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
@@ -17,6 +16,7 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;

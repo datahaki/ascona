@@ -110,10 +110,8 @@ public class LineDistanceDemo extends ControlPointsDemo {
     graphics.draw(geometricLayer.toPath2D(ms));
     graphics.setStroke(new BasicStroke());
     // ---
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, cp, null, geometricLayer, graphics);
-      leversRender.renderSequence();
-    }
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, cp, null, geometricLayer, graphics);
+    leversRender.renderSequence();
   }
 
   static void main() {

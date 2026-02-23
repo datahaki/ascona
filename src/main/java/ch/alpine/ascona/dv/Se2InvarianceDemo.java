@@ -3,10 +3,10 @@ package ch.alpine.ascona.dv;
 
 import java.awt.Graphics2D;
 
-import ch.alpine.ascona.lev.LeversHud;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.awt.RenderQuality;
