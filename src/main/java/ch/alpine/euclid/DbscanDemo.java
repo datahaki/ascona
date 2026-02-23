@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.IntStream;
 
-import javax.swing.SwingUtilities;
-
 import ch.alpine.ascony.arp.CenterNorms;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.ascony.win.GeometricComponent;
@@ -139,7 +137,6 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
       pointsAll = recomp1();
       shuffle = false;
     }
-    SwingUtilities.invokeLater(geometricComponent.jComponent::repaint);
     return geometricComponent.jComponent;
   }
 

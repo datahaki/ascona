@@ -13,9 +13,9 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.Curvature2DRender;
-import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -34,7 +34,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Last;
-import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.red.Mean;
@@ -72,12 +71,11 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
     this.param = param;
   }
 
-  private static final GridRender GRID_RENDER = new GridRender(Subdivide.of(0, 10, 10));
-
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    GRID_RENDER.render(geometricLayer, graphics);
+    timerFrame.geometricComponent.renderGrid(graphics);
     final Tensor tensor = getControlPointsSe2();
+    RenderQuality.setQuality(graphics);
     POINTS_RENDER_0.show(Se2Display.INSTANCE::matrixLift, //
         Se2Display.INSTANCE.shape(), //
         tensor).render(geometricLayer, graphics);

@@ -14,7 +14,6 @@ import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascona.dat.gok.PosHz;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -29,7 +28,6 @@ import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Round;
@@ -40,7 +38,6 @@ public class ApproximationDemo extends AbstractDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final Scalar MARKER_SCALE = RealScalar.of(0.1);
-  private static final GridRender GRID_RENDER = new GridRender(Subdivide.of(0, 100, 10));
   private static final CurveSubdivisionSchemes[] SCHEMES = { //
       CurveSubdivisionSchemes.BSPLINE1, //
       CurveSubdivisionSchemes.BSPLINE2, //
@@ -86,7 +83,6 @@ public class ApproximationDemo extends AbstractDemo {
   public ApproximationDemo(Param param) {
     super(param);
     this.param = param;
-    timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     param.string = GokartPos.list().getFirst();
     fieldsEditor(0).addUniversalListener(this::updateState);
@@ -115,6 +111,7 @@ public class ApproximationDemo extends AbstractDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    timerFrame.geometricComponent.renderGrid(graphics);
     Container container = _container;
     if (Objects.isNull(container))
       return;
