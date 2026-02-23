@@ -28,7 +28,7 @@ import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.qty.UnitConvert;
 import ch.alpine.tensor.sca.N;
 
-public enum ImageMatcher {
+enum ImageMatcher {
   ;
   private static final int SIZE = 8;
   private static final ScalarUnaryOperator MIN = UnitConvert.SI().to("min");
@@ -56,7 +56,7 @@ public enum ImageMatcher {
   }
 
   static void main() throws IOException, ClassNotFoundException, DataFormatException {
-    Path folder = HomeDirectory.Public.mk_dirs("wa01");
+    Path folder = HomeDirectory.Ephemeral.mk_dirs("wa01");
     System.out.println(folder.getFileName());
     String n1 = "a";
     String n2 = "b";
