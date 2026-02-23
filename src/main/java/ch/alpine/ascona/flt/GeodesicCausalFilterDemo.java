@@ -55,7 +55,6 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
       TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicSpace, windowFunctions);
       // ---
       GeodesicCausalFilters geodesicCausalFilters = spinnerCausalFilter.getValue();
-      // System.out.println(geodesicCausalFilters);
       // TODO ASCONA ALG should be able to do with geodesicCausalFilters.supply, but doesn't
       TensorUnaryOperator tensorUnaryOperator = geodesicCausalFilters.supply(gokartPoseSpec.manifoldDisplays.manifoldDisplay(), windowFunctions, radius,
           alpha());

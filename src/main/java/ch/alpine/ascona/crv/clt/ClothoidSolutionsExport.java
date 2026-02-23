@@ -55,13 +55,13 @@ import ch.alpine.tensor.sca.Clips;
   public ClothoidSolutionsExport(int _n1, int _n2, Scalar ext2) {
     S1 = Subdivide.of(RealScalar.ZERO, Pi.VALUE, _n1 + 1).extract(1, _n1 + 1);
     S2 = Subdivide.of(RealScalar.ZERO, ext2, _n2 - 1);
-    System.out.println(S1.length());
-    System.out.println(S2.length());
+    IO.println(S1.length());
+    IO.println(S2.length());
     sols = new Sol[S1.length()][S2.length()][];
     ClothoidSolutions clothoidSolutions = ClothoidSolutions.of(Clips.absolute(15.0));
     for (int ind1 = 0; ind1 < S1.length(); ++ind1) {
       Scalar s1 = S1.Get(ind1);
-      System.out.println(s1);
+      IO.println(s1);
       for (int ind2 = 0; ind2 < S2.length(); ++ind2) {
         Scalar s2 = S2.Get(ind2);
         Search search = clothoidSolutions.new Search(s1, s2);

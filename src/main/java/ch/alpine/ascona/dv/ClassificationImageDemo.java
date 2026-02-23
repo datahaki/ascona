@@ -120,7 +120,6 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   }
 
   private void recompute() {
-    // System.out.println("recomp");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = manifoldDisplay.manifold();
     Objects.requireNonNull(vector);

@@ -64,11 +64,11 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
             .setCurve(points, false).render(geometricLayer, graphics);
       }
     } catch (Exception exception) {
-      System.out.println("---");
-      System.out.println("start=" + start);
-      System.out.println("mouse=" + mouse);
-      System.out.println("s1=" + clothoidContext.s1());
-      System.out.println("s2=" + clothoidContext.s2());
+      IO.println("---");
+      IO.println("start=" + start);
+      IO.println("mouse=" + mouse);
+      IO.println("s1=" + clothoidContext.s1());
+      IO.println("s2=" + clothoidContext.s2());
       exception.printStackTrace();
     }
     // ---

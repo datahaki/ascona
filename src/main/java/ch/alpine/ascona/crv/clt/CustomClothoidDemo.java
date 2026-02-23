@@ -163,10 +163,10 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
       PATH_RENDER.setCurve(points, false).render(geometricLayer, graphics);
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("===");
-      System.out.println(lambda);
-      System.out.println(clothoidContext.p());
-      System.out.println(clothoidContext.q());
+      IO.println("===");
+      IO.println(lambda);
+      IO.println(clothoidContext.p());
+      IO.println(clothoidContext.q());
     }
     // ---
     {

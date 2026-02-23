@@ -65,7 +65,6 @@ class DbscanDemo extends AbstractDemo {
       }
     });
     timerFrame.geometricComponent.setOffset(100, 600);
-    // System.out.println(pointsAll.length());
     pointsAll = recomp();
   }
 

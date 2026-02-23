@@ -40,24 +40,24 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     IO.println("data = " + Dimensions.of(tensor));
     // ---
     Tensor poses = Tensor.of(tensor.stream().limit(12500).map(EurocData::rowmap));
-    System.out.println("maps = " + Dimensions.of(poses));
-    System.out.println("differences");
+    IO.println("maps = " + Dimensions.of(poses));
+    IO.println("differences");
     LieGroup lieGroup = new SeNGroup(3);
     TensorUnaryOperator INSTANCE = LieDifferences.of(lieGroup);
     {
       Tensor delta = INSTANCE.apply(poses);
       Put.of(path.resolve("MH_04_difficult_delta.file"), delta);
     }
-    System.out.println("smooth");
+    IO.println("smooth");
     {
       TensorUnaryOperator tensorUnaryOperator = //
           new CenterFilter(GeodesicCenter.of(lieGroup, WindowFunctions.GAUSSIAN.get()), 4 * 3 * 2);
       Tensor smooth = tensorUnaryOperator.apply(poses);
-      System.out.println("store");
+      IO.println("store");
       Put.of(path.resolve("MH_04_difficult_poses_smooth.file"), smooth);
-      System.out.println("differences");
+      IO.println("differences");
       Tensor delta = INSTANCE.apply(smooth);
-      System.out.println("store");
+      IO.println("store");
       Put.of(path.resolve("MH_04_difficult_delta_smooth.file"), delta);
     }
   }
