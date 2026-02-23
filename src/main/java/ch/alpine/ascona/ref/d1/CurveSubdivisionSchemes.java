@@ -21,7 +21,13 @@ import ch.alpine.sophis.ref.d1.MSpline3CurveSubdivision;
 import ch.alpine.sophis.ref.d1.MSpline4CurveSubdivision;
 import ch.alpine.sophis.ref.d1.SixPointCurveSubdivision;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.math.api.GeodesicSpace;
+import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Join;
+import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.ext.Integers;
 
 /* package */ enum CurveSubdivisionSchemes {
   BSPLINE1(false) {
@@ -202,5 +208,32 @@ import ch.alpine.tensor.Tensors;
       // ---
     }
     return false;
+  }
+
+  /** @param control
+   * @param levels
+   * @param curveSubdivision
+   * @param isDual
+   * @param cyclic
+   * @param geodesicSpace
+   * @return */
+  public Tensor refine(ManifoldDisplay manifoldDisplay, Tensor control, int levels, boolean cyclic) {
+    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+    CurveSubdivision curveSubdivision = of(manifoldDisplay);
+    TensorUnaryOperator tensorUnaryOperator = curveSubdivision.auto(cyclic);
+    Tensor refined = control;
+    for (int level = 0; level < levels; ++level) {
+      Tensor prev = refined;
+      refined = tensorUnaryOperator.apply(refined);
+      if (isDual && //
+          Integers.isOdd(level) && //
+          !cyclic && //
+          1 < control.length())
+        refined = Join.of( //
+            Tensors.of(geodesicSpace.midpoint(control.get(0), prev.get(0))), //
+            refined, //
+            Tensors.of(geodesicSpace.midpoint(Last.of(prev), Last.of(control))));
+    }
+    return refined;
   }
 }

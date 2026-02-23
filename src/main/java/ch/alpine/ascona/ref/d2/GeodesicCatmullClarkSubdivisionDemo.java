@@ -14,7 +14,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophis.ref.d2.GeodesicCatmullClarkSubdivision;
 import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
@@ -25,12 +24,10 @@ import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.red.Nest;
 
 public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
-  private static final Tensor ARROWHEAD_LO = Arrowhead.of(0.18);
-
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(false, ManifoldDisplays.SE2C_SE2);
+      super(false, ManifoldDisplays.ALL);
     }
 
     @FieldSlider
@@ -55,18 +52,20 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
+    int dim = control.get(0).length();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = //
         new GeodesicCatmullClarkSubdivision(geodesicSpace);
     Tensor refined = Nest.of( //
         catmullClarkSubdivision::refine, //
-        ArrayReshape.of(control, 2, 3, 3), //
+        ArrayReshape.of(control, 2, 3, dim), //
         param.refine);
     RenderQuality.setQuality(graphics);
     // TODO ASCONA LR
+    Tensor shape = manifoldDisplay.shape();
     for (Tensor point : Flatten.of(refined, 1)) {
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-      Path2D path2d = geometricLayer.toPath2D(ARROWHEAD_LO);
+      Path2D path2d = geometricLayer.toPath2D(shape);
       geometricLayer.popMatrix();
       int rgb = 128 + 32;
       path2d.closePath();

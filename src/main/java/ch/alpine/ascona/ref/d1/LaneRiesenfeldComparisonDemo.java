@@ -1,4 +1,4 @@
-// code by gjoel
+// code by gjoel, jph
 package ch.alpine.ascona.ref.d1;
 
 import java.awt.Dimension;
@@ -19,7 +19,6 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -27,10 +26,14 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 
 /** compare different levels of smoothing in the LaneRiesenfeldCurveSubdivision */
-public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
+class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLORS = ColorDataLists._097.cyclic();
-  private static final List<CurveSubdivisionSchemes> CURVE_SUBDIVISION_SCHEMES = //
-      CurveSubdivisionHelper.LANE_RIESENFELD;
+  private static final List<CurveSubdivisionSchemes> CURVE_SUBDIVISION_SCHEMES = List.of( //
+      CurveSubdivisionSchemes.LR2, //
+      CurveSubdivisionSchemes.LR3, //
+      CurveSubdivisionSchemes.LR4, //
+      CurveSubdivisionSchemes.LR5 //
+  );
 
   @ReflectionMarker
   public static class Param extends AsconaParam {
@@ -40,7 +43,6 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
 
     @FieldClip(min = "0", max = "9")
     public Integer refine = 3;
-    public Boolean curv = false;
   }
 
   private final List<PathRender> pathRenders = new ArrayList<>();
@@ -66,68 +68,28 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   }
 
   @Override // from RenderInterface
-  public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Show show1 = new Show();
     show1.setPlotLabel("Curvature");
-    // visualSet1.getAxisX().setLabel("length");
-    // visualSet1.getAxisY().setLabel("curvature");
     // ---
     Show show2 = new Show();
     show2.setPlotLabel("Curvature d/ds");
-    // visualSet2.getAxisX().setLabel("length");
-    // visualSet2.getAxisY().setLabel("curvature d/ds");
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i) {
       Tensor refined = curve(geometricLayer, graphics, i);
-      if (param.curv && 1 < refined.length()) {
+      if (1 < refined.length()) {
         Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-        Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
         CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
-        // VisualRow visualRow =
-        curveVisualSet.addCurvature(show);
-        // Tensor curvature = visualRow.points();
-        // ---
-        // Tensor curvatureRy = Tensor.of(Differences.of(curvature).stream().map(t -> t.Get(1).divide(t.Get(0))));
-        // Tensor curvatureRx = Tensor.of(IntStream.range(1, curvature.length()).mapToObj(j -> {
-        // Tensor domain = curvature.get(Tensor.ALL, 0);
-        // return Mean.of(domain.extract(j - 1, j + 1));
-        // }));
-        // ---
-        // show1.add(new ListPlot(curvature));
-        // visualRow1.setLabel(CURVE_SUBDIVISION_SCHEMES.get(i).name());
-        // visualRow1.setColor(COLORS.getColor(i));
-        // ---
-        // Showable visualRow2 = show2.add(new ListPlot(curvatureRx, curvatureRy));
-        // visualRow2.setLabel(CURVE_SUBDIVISION_SCHEMES.get(i).name());
-        // visualRow2.setColor(COLORS.getColor(i));
+        curveVisualSet.addCurvature(show1);
+        curveVisualSet.addCurvatureD(show2);
       }
     }
     // ---
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    if (param.curv) {
-      show1.render_autoIndent(graphics, new Rectangle(dimension.width / 2, 0, dimension.width / 2, dimension.height / 2));
-      // ---
-      if (!show2.isEmpty()) {
-        // Tensor tensorMin = Tensor.of(show2.visualRows().stream() //
-        // .map(VisualRow::points) //
-        // .map(points -> points.get(Tensor.ALL, 1)) //
-        // .map(CoordinateBounds::of) //
-        // .map(CoordinateBoundingBox::min));
-        // TODO ASCONA DEMO code below is broken
-        // double min = Quantile.of(tensorMin).apply(RationalScalar.of(1, CURVE_SUBDIVISION_SCHEMES.size() - 1)).number().doubleValue();
-        // Tensor tensorMax = Tensor.of(visualSet2.visualRows().stream() //
-        // .map(VisualRow::points) //
-        // .map(points -> points.get(Tensor.ALL, 1)) //
-        // .map(CoordinateBounds::of) //
-        // .map(CoordinateBoundingBox::max));
-        // double max = Quantile.of(tensorMax) //
-        // .apply(RationalScalar.of(CURVE_SUBDIVISION_SCHEMES.size() - 1, CurveSubdivisionHelper.LANE_RIESENFELD.size() - 1)).number().doubleValue();
-        // if (min != max)
-      }
-      show2.render_autoIndent(graphics, new Rectangle(dimension.width / 2, dimension.height / 2, dimension.width / 2, dimension.height / 2));
-    }
-    RenderQuality.setDefault(graphics);
+    int width = dimension.width * 2 / 5;
+    show1.render_autoIndent(graphics, new Rectangle(dimension.width - width, 0, width, dimension.height / 2));
+    show2.render_autoIndent(graphics, new Rectangle(dimension.width - width, dimension.height / 2, width, dimension.height / 2));
   }
 
   public Tensor curve(GeometricLayer geometricLayer, Graphics2D graphics, int index) {
@@ -137,16 +99,13 @@ public class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     Tensor control = getGeodesicControlPoints();
     int levels = param.refine;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    Tensor refined = StaticHelper.refine(control, levels, scheme.of(manifoldDisplay), //
-        scheme.isDual(), false, geodesicSpace);
+    Tensor refined = scheme.refine(manifoldDisplay, control, levels, false);
     // ---
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     pathRender.setCurve(render, false);
     pathRender.render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      // leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     return refined;

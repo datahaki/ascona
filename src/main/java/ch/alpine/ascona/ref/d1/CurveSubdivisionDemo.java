@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import javax.swing.JButton;
@@ -24,12 +23,10 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerMenu;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
-import ch.alpine.sophis.ref.d1.CurveSubdivision;
 import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.io.Import;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.red.Nest;
@@ -37,7 +34,7 @@ import ch.alpine.tensor.red.Times;
 
 /** split interface and biinvariant mean based curve subdivision */
 public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
-  private static final PathRender pathRender = new PathRender(new Color(0, 255, 0, 128));
+  private static final PathRender PATH_RENDER = new PathRender(new Color(0, 128, 0, 128));
 
   @ReflectionMarker
   public static class Param extends AbstractCurvatureParam {
@@ -91,21 +88,6 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
         });
         spinnerMenu.showSouth(jButton);
       });
-      // Supplier<StandardMenu> supplier = () -> new StandardMenu() {
-      // @Override
-      // protected void design(JPopupMenu jPopupMenu) {
-      // for (String string : list) {
-      // JMenuItem jMenuItem = new JMenuItem(string);
-      // jMenuItem.addActionListener(new ActionListener() {
-      // @Override
-      // public void actionPerformed(ActionEvent actionEvent) {
-      // }
-      // });
-      // jPopupMenu.add(jMenuItem);
-      // }
-      // }
-      // };
-      // StandardMenu.bind(jButton, supplier);
       timerFrame.jToolBar.add(jButton);
     }
     // ---
@@ -145,26 +127,19 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }
-    CurveSubdivision curveSubdivision = null;
     try {
-      curveSubdivision = param.scheme.of(manifoldDisplay);
-    } catch (Exception exception) {
-      // ---
-    }
-    if (Objects.nonNull(curveSubdivision)) {
-      GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-      Tensor refined = StaticHelper.refine( //
-          control, levels, curveSubdivision, //
-          scheme.isDual(), cyclic, geodesicSpace);
+      Tensor refined = param.scheme.refine(manifoldDisplay, control, levels, cyclic);
       if (param.line) {
-        TensorUnaryOperator tensorUnaryOperator = StaticHelper.create(new BSpline1CurveSubdivision(geodesicSpace), cyclic);
-        pathRender.setCurve(Nest.of(tensorUnaryOperator, control, 8), cyclic).render(geometricLayer, graphics);
+        GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+        PATH_RENDER.setCurve(Nest.of(new BSpline1CurveSubdivision(geodesicSpace).auto(cyclic), control, 8), cyclic).render(geometricLayer, graphics);
       }
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, cyclic, param.comb).render(geometricLayer, graphics);
       if (levels < 5)
         ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
       return refined;
+    } catch (Exception exception) {
+      // ---
     }
     return Tensors.empty();
   }
