@@ -20,7 +20,7 @@ import ch.alpine.tensor.opt.nd.NdTreeMap;
 
 public class ClothoidNdMap<T> {
   private final int FACTOR = 3;
-  private final NdMap<T> ndMap;
+  final NdMap<T> ndMap;
   private final Function<T, Tensor> se2Projection;
 
   public ClothoidNdMap(CoordinateBoundingBox coordinateBoundingBox, Function<T, Tensor> se2Projection) {

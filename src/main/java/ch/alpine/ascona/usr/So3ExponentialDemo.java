@@ -2,7 +2,10 @@
 package ch.alpine.ascona.usr;
 
 import java.awt.Container;
-import java.net.MalformedURLException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
@@ -46,7 +49,7 @@ import ch.alpine.tensor.io.GifAnimationWriter;
     Path path = HomeDirectory.Pictures.resolve("rodriquez.gif");
     try (AnimationWriter animationWriter = //
         new GifAnimationWriter(path, millis, TimeUnit.MILLISECONDS)) {
-      for (Tensor _z : Subdivide.of(-4 * Math.PI, 4 * Math.PI, 40)) {
+      for (Tensor _z : Subdivide.of(-4 * Math.PI, 4 * Math.PI, 10)) {
         System.out.println(_z);
         Slice slice = new Slice((Scalar) _z);
         Tensor matrix = Parallelize.matrix(slice::function, RES, RES);
@@ -56,10 +59,11 @@ import ch.alpine.tensor.io.GifAnimationWriter;
       throw new RuntimeException(e);
     }
     ImageIcon imageIcon = null;
-    try {
-      imageIcon = new ImageIcon(path.toUri().toURL());
-    } catch (MalformedURLException e) {
-      e.printStackTrace();
+    try (InputStream inputStream = Files.newInputStream(path)) {
+      byte[] data = inputStream.readAllBytes();
+      imageIcon = new ImageIcon(data);
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
     }
     return new JLabel(imageIcon);
   }

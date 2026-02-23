@@ -20,7 +20,7 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataLists;
 
-public class CoastlineDemo extends AbstractDemo {
+class CoastlineDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     @FieldSelectionArray({ "100", "200", "500", "1000" })

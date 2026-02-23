@@ -9,6 +9,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -22,11 +23,13 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.opt.nd.BoxRandomSample;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.opt.nd.NdCenterInterface;
+import ch.alpine.tensor.opt.nd.NdCenters;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Clips;
 
-public class ClothoidNdDemo extends ControlPointsDemo {
+class ClothoidNdDemo extends ControlPointsDemo {
   private static final int SIZE = 400;
   private static final CoordinateBoundingBox ND_BOX_R2 = CoordinateBoundingBox.of( //
       Clips.absolute(5), Clips.absolute(5));
@@ -41,9 +44,9 @@ public class ClothoidNdDemo extends ControlPointsDemo {
       super(false, ManifoldDisplays.CL_ONLY);
     }
 
-    @FieldClip(min = "1", max = "20")
+    @FieldClip(min = "1", max = "30")
     @FieldSlider
-    public Integer value = 3;
+    public Integer value = 8;
   }
 
   private final Param param;
@@ -67,14 +70,22 @@ public class ClothoidNdDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    int _value = param.value;
     Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
-    LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), mouse, geometricLayer, graphics);
+    {
+      NdCenterInterface ndCenterInterface = NdCenters.VECTOR_2_NORM.apply(mouse.extract(0, 2));
+      GraphicNearest<Tensor> graphicNearest = //
+          new GraphicNearest<>(ndCenterInterface, _value, geometricLayer, graphics);
+      clothoidNdMap.ndMap.visit(graphicNearest);
+    }
+    RenderQuality.setQuality(graphics);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    LeversRender leversRender = //
+        LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), mouse, geometricLayer, graphics);
     leversRender.renderSequence();
     leversRender.renderOrigin();
     // ---
     ClothoidBuilder clothoidBuilder = (ClothoidBuilder) manifoldDisplay.geodesicSpace();
-    int _value = param.value;
     graphics.setColor(new Color(255, 0, 0, 128));
     Scalar minResolution = RealScalar.of(geometricLayer.pixel2modelWidth(10));
     for (Clothoid clothoid : clothoidNdMap.cl_nearFrom(clothoidBuilder, mouse, _value)) {

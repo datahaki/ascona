@@ -32,7 +32,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Round;
 
-public class DbscanDemo extends AbstractDemo {
+class DbscanDemo extends AbstractDemo {
   @ReflectionMarker
   public static class Param {
     @FieldSelectionArray({ "100", "200", "500", "1000" })
