@@ -54,14 +54,11 @@ public class KMeansDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   public static class Param2 {
-    @FieldSelectionArray({ "1", "2", "3", "4", "5", "10", "20", "30" })
-    public Integer depth = 5;
     @FieldFuse
     public transient Boolean recomp = false;
   }
 
   private final Param1 param1;
-  private final Param2 param2;
   private Tensor pointsAll;
   private KMeans kMeans;
 
@@ -72,7 +69,6 @@ public class KMeansDemo extends ControlPointsDemo {
   public KMeansDemo(Param1 param1, Param2 param2) {
     super(param1, param2);
     this.param1 = param1;
-    this.param2 = param2;
     fieldsEditor(0).addUniversalListener(() -> {
       pointsAll = shuffle();
       recomp(pointsAll);

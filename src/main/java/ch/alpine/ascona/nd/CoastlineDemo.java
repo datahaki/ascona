@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
+import ch.alpine.ascony.arp.CenterNorms;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;

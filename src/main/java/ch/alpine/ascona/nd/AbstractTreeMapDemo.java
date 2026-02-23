@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
+import ch.alpine.ascony.arp.CenterNorms;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.awt.RenderQuality;
