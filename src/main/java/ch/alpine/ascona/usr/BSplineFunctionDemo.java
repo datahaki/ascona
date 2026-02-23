@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.euclid;
+package ch.alpine.ascona.usr;
 
 import java.awt.Graphics2D;
 
