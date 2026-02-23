@@ -21,7 +21,7 @@ import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.decim.LineDistance;
-import ch.alpine.sophis.math.api.TensorNorm;
+import ch.alpine.sophis.math.api.TensorDistance;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
@@ -71,7 +71,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setOffset(400, 400);
   }
 
-  TensorNorm tensorNorm() {
+  TensorDistance tensorNorm() {
     LineDistance lineDistance = manifoldDisplay().lineDistance();
     Tensor cp = getGeodesicControlPoints();
     return 1 < cp.length() //
@@ -81,7 +81,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
 
   private Showable arrayPlot(int resolution) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorScalarFunction tsf = tensorNorm()::norm;
+    TensorScalarFunction tsf = tensorNorm()::distance;
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
     CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
     Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
