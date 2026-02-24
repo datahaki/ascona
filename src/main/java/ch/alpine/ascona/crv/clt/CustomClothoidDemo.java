@@ -5,17 +5,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.Objects;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
-import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -25,8 +19,8 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.crv.clt.ClothoidContext;
 import ch.alpine.sophis.crv.clt.ClothoidSolutions;
+import ch.alpine.sophis.crv.clt.ClothoidTangentDefect;
 import ch.alpine.sophis.crv.clt.mid.MidpointTangentApproximation;
-import ch.alpine.sophis.crv.clt.mid.MidpointTangentOrder2;
 import ch.alpine.sophis.ts.ClothoidTransition;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Rational;
@@ -34,18 +28,13 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
-// TODO ASCONA much is broken
-public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListener {
-  private static final Tensor CONFIG = Tensors.fromString("{{0, 0}, {3, 0}}");
-  private static final PathRender PATH_RENDER = new PathRender(new Color(0, 0, 255, 128), 2f);
-  private static final ClothoidSolutions CLOTHOID_SOLUTIONS = ClothoidSolutions.of(Clips.absolute(20.0));
-  private static final Tensor LAMBDAS = CLOTHOID_SOLUTIONS.probes();
+public class CustomClothoidDemo extends ControlPointsDemo {
+  private static final Tensor INITIAL = Tensors.fromString("{{0,0,0},{3,0,0}}");
   private static final Tensor POINTER = Tensors.fromString("{{0, 0}, {-0.2, -1}, {+0.2, -1}}");
 
   @ReflectionMarker
@@ -58,11 +47,9 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
     public Integer solution = 0;
   }
 
-  private final JSlider jSlider = new JSlider(0, LAMBDAS.length() - 1, LAMBDAS.length() / 2);
   private final JLabel jLabel = new JLabel();
-  private static final Scalar MIN_RESOLUTION = RealScalar.of(0.1);
+  private static final Scalar MIN_RESOLUTION = RealScalar.of(0.05);
   // ---
-  private ClothoidDefectContainer clothoidDefectContainer = null;
   private final Param param;
 
   public CustomClothoidDemo() {
@@ -72,71 +59,23 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
   public CustomClothoidDemo(Param param) {
     super(param);
     this.param = param;
-    {
-      jSlider.addChangeListener(this);
-      jSlider.setPreferredSize(new Dimension(700, 28));
-      timerFrame.jToolBar.add(jSlider);
-    }
-    {
-      JButton jButton = new JButton("fit");
-      jButton.addActionListener(_ -> {
-        ClothoidContext clothoidContext = clothoidDefectContainer.clothoidContext;
-        Scalar lambda = MidpointTangentOrder2.INSTANCE.apply(clothoidContext.s1(), clothoidContext.s2());
-        setLambda(lambda);
-      });
-      timerFrame.jToolBar.add(jButton);
-    }
-    // fieldsEditor.addUniversalListener(()much is b->);
-    // spinnerSolution.addSpinnerListener(index -> {
-    // Tensor lambdas2 = clothoidDefectContainer.search.lambdas();
-    // try {
-    // setLambda(lambdas2.Get(index));
-    // } catch (Exception exception) {
-    // // ---
-    // }
-    // });
-    // spinnerSolution.addToComponentReduced(timerFrame.jToolBar, new Dimension(50, 28), "sol. index");
-    {
-      timerFrame.jToolBar.add(jLabel);
-    }
-    // ---
-    stateChanged(null);
-    setControlPointsSe2(Array.zeros(2, 3));
+    setControlPointsSe2(INITIAL);
+    timerFrame.jToolBar.add(jLabel);
     timerFrame.geometricComponent.setOffset(300, 700);
-    validateContainer();
-  }
-
-  private boolean validateContainer() {
-    {
-      Tensor control = getGeodesicControlPoints();
-      control.set(CONFIG.get(Tensor.ALL, 0), Tensor.ALL, 0);
-      control.set(CONFIG.get(Tensor.ALL, 1), Tensor.ALL, 1);
-      setControlPointsSe2(control);
-    }
-    // ---
-    Tensor p = getGeodesicControlPoints().get(0);
-    Tensor q = getGeodesicControlPoints().get(1);
-    ClothoidContext clothoidContext = new ClothoidContext(p, q);
-    if (Objects.isNull(clothoidDefectContainer) || !clothoidDefectContainer.encodes(clothoidContext)) {
-      clothoidDefectContainer = new ClothoidDefectContainer(clothoidContext);
-      jLabel.setText("s1=" + clothoidContext.s1().maps(Round._4) + " s2=" + clothoidContext.s2().maps(Round._4));
-      return true;
-    }
-    return false;
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
-    boolean validated = validateContainer();
-    if (validated) {
-      graphics.setColor(Color.BLACK);
-      graphics.drawString("validated", 0, 30);
-    }
+    Tensor p = getGeodesicControlPoints().get(0);
+    Tensor q = getGeodesicControlPoints().get(1);
+    ClothoidContext clothoidContext = new ClothoidContext(p, q);
+    ClothoidTangentDefect clothoidTangentDefect = ClothoidTangentDefect.of(clothoidContext);
+    ClothoidSolutions clothoidSolutions = new ClothoidSolutions(clothoidTangentDefect, Clips.absolute(15.0));
+    ClothoidDefectContainer clothoidDefectContainer = new ClothoidDefectContainer(clothoidContext, clothoidSolutions);
     // ---
-    ClothoidContext clothoidContext = clothoidDefectContainer.clothoidContext;
-    Scalar lambda = LAMBDAS.Get(jSlider.getValue());
-    lambda = param.lambda;
+    jLabel.setText("s1=" + clothoidContext.s1().maps(Round._4) + " s2=" + clothoidContext.s2().maps(Round._4));
+    // ---
+    Scalar lambda = param.lambda;
     {
       geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.of(clothoidContext.s1(), clothoidContext.s2())));
       graphics.setColor(Color.RED);
@@ -148,23 +87,12 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
         { 30, 0, dimension.width / 2 }, //
         { 0, -30, 200 }, //
         { 0, 0, 1 } }));
-    for (Tensor _lambda : clothoidDefectContainer.search.lambdas()) {
+    graphics.setStroke(new BasicStroke(1.5f));
+    for (Tensor _lambda : clothoidSolutions.lambdas()) {
       ClothoidBuilder clothoidBuilder = CustomClothoidBuilder.of((Scalar) _lambda);
       ClothoidTransition clothoidTransition = ClothoidTransition.of(clothoidBuilder, clothoidContext.p(), clothoidContext.q());
       Tensor points = clothoidTransition.linearized(MIN_RESOLUTION);
-      new PathRender(new Color(64, 255, 64, 64)).setCurve(points, false).render(geometricLayer, graphics);
-    }
-    try {
-      ClothoidBuilder clothoidBuilder = CustomClothoidBuilder.of(lambda);
-      ClothoidTransition clothoidTransition = ClothoidTransition.of(clothoidBuilder, clothoidContext.p(), clothoidContext.q());
-      Tensor points = clothoidTransition.linearized(MIN_RESOLUTION);
-      PATH_RENDER.setCurve(points, false).render(geometricLayer, graphics);
-    } catch (Exception e) {
-      e.printStackTrace();
-      IO.println("===");
-      IO.println(lambda);
-      IO.println(clothoidContext.p());
-      IO.println(clothoidContext.q());
+      new PathRender(new Color(64, 128, 64, 128 + 32)).setCurve(points, false).render(geometricLayer, graphics);
     }
     // ---
     {
@@ -188,11 +116,6 @@ public class CustomClothoidDemo extends ControlPointsDemo implements ChangeListe
       graphics.draw(plotLayer.toLine2D(Tensors.of(reifs, RealScalar.ZERO), Tensors.of(reifs, RealScalar.ONE.negate())));
       graphics.setStroke(new BasicStroke(1f));
     }
-  }
-
-  @Override
-  public void stateChanged(ChangeEvent e) {
-    setLambda(LAMBDAS.Get(jSlider.getValue()));
   }
 
   public void setLambda(Scalar lambda) {

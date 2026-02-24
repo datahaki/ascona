@@ -13,40 +13,21 @@ import ch.alpine.sophis.crv.clt.Clothoid;
 import ch.alpine.sophis.crv.clt.ClothoidContext;
 import ch.alpine.sophis.crv.clt.ClothoidEmit;
 import ch.alpine.sophis.crv.clt.ClothoidSolutions;
-import ch.alpine.sophis.crv.clt.ClothoidSolutions.Search;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Transpose;
-import ch.alpine.tensor.sca.Clip;
-import ch.alpine.tensor.sca.Clips;
 
-public class ClothoidDefectContainer implements RenderInterface {
-  private static final Clip RANGE = Clips.absolute(15.0);
+public record ClothoidDefectContainer(ClothoidContext clothoidContext, ClothoidSolutions clothoidSolutions) implements RenderInterface {
   private static final Scalar DENOM = RealScalar.of(5.0);
-  private static final ClothoidSolutions CLOTHOID_SOLUTIONS = ClothoidSolutions.of(RANGE);
-  // ---
-  public final Search search;
-  public final ClothoidContext clothoidContext;
-
-  public ClothoidDefectContainer(ClothoidContext clothoidContext) {
-    search = CLOTHOID_SOLUTIONS.new Search(clothoidContext.s1(), clothoidContext.s2());
-    this.clothoidContext = clothoidContext;
-  }
-
-  public boolean encodes(ClothoidContext clothoidContext) {
-    return this.clothoidContext.s1().equals(clothoidContext.s1()) //
-        && this.clothoidContext.s2().equals(clothoidContext.s2());
-  }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     PathRender pathRender = new PathRender(new Color(0, 0, 0, 128));
-    Tensor tensor = Transpose.of(Tensors.of(CLOTHOID_SOLUTIONS.probes(), search.defects_real));
+    Tensor tensor = clothoidSolutions.defectsXY();
     pathRender.setCurve(tensor, false);
     pathRender.render(geometricLayer, graphics);
-    Tensor lambdas = search.lambdas();
+    Tensor lambdas = clothoidSolutions.lambdas();
     List<Clothoid> clothoids = ClothoidEmit.stream(clothoidContext, lambdas).toList();
     for (int index = 0; index < lambdas.length(); ++index) {
       Scalar lambda = lambdas.Get(index);

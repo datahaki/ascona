@@ -16,7 +16,7 @@ import ch.alpine.sophis.crv.clt.ClothoidComparators;
 import ch.alpine.sophis.crv.clt.ClothoidContext;
 import ch.alpine.sophis.crv.clt.ClothoidEmit;
 import ch.alpine.sophis.crv.clt.ClothoidSolutions;
-import ch.alpine.sophis.crv.clt.ClothoidSolutions.Search;
+import ch.alpine.sophis.crv.clt.ClothoidTangentDefect;
 import ch.alpine.sophis.ts.ClothoidTransition;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -34,7 +34,6 @@ import ch.alpine.tensor.sca.Clips;
 public class ClothoidEmitDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //
       ColorDataLists._097.cyclic().deriveWithAlpha(192);
-  private static final ClothoidSolutions CLOTHOID_SOLUTIONS = ClothoidSolutions.of(Clips.absolute(15.0), 101);
   private static final Scalar minResolution = RealScalar.of(0.02);
 
   public ClothoidEmitDemo() {
@@ -51,9 +50,10 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
     // ---
     List<Clothoid> list = List.of();
     ClothoidContext clothoidContext = new ClothoidContext(start, mouse);
+    ClothoidTangentDefect clothoidTangentDefect = ClothoidTangentDefect.of(clothoidContext);
     try {
-      Search search = CLOTHOID_SOLUTIONS.new Search(clothoidContext.s1(), clothoidContext.s2());
-      list = ClothoidEmit.stream(clothoidContext, search.lambdas()).toList();
+      ClothoidSolutions clothoidSolutions = new ClothoidSolutions(clothoidTangentDefect, Clips.absolute(20));
+      list = ClothoidEmit.stream(clothoidContext, clothoidSolutions.lambdas()).toList();
       int index = 0;
       for (Clothoid clothoid : list) {
         ClothoidTransition clothoidTransition = ClothoidTransition.of(start, mouse, clothoid);
