@@ -42,9 +42,6 @@ public class CustomClothoidDemo extends ControlPointsDemo {
     public Param() {
       super(false, ManifoldDisplays.CL_ONLY);
     }
-
-    public Scalar lambda = RealScalar.ZERO;
-    public Integer solution = 0;
   }
 
   private final JLabel jLabel = new JLabel();
@@ -75,7 +72,6 @@ public class CustomClothoidDemo extends ControlPointsDemo {
     // ---
     jLabel.setText("s1=" + clothoidContext.s1().maps(Round._4) + " s2=" + clothoidContext.s2().maps(Round._4));
     // ---
-    Scalar lambda = param.lambda;
     {
       geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.of(clothoidContext.s1(), clothoidContext.s2())));
       graphics.setColor(Color.RED);
@@ -104,11 +100,6 @@ public class CustomClothoidDemo extends ControlPointsDemo {
       GridRender gridRender = new GridRender(Subdivide.of(-20, 20, 10), Subdivide.of(-3, 3, 6));
       gridRender.render(plotLayer, graphics);
       clothoidDefectContainer.render(plotLayer, graphics);
-      graphics.setColor(Color.RED);
-      plotLayer.pushMatrix(Se2Matrix.translation(Tensors.of(lambda, lambda.zero())));
-      graphics.setStroke(new BasicStroke(2f));
-      graphics.fill(plotLayer.toPath2D(POINTER, true));
-      plotLayer.popMatrix();
       // ---
       Scalar s1 = clothoidContext.b0().add(clothoidContext.b1()).multiply(Rational.HALF);
       Scalar reifs = MidpointTangentApproximation.ORDER2.apply(clothoidContext.b0(), clothoidContext.b1()).subtract(s1);
@@ -116,11 +107,6 @@ public class CustomClothoidDemo extends ControlPointsDemo {
       graphics.draw(plotLayer.toLine2D(Tensors.of(reifs, RealScalar.ZERO), Tensors.of(reifs, RealScalar.ONE.negate())));
       graphics.setStroke(new BasicStroke(1f));
     }
-  }
-
-  public void setLambda(Scalar lambda) {
-    param.lambda = Round._6.apply(lambda);
-    fieldsEditor(0).updateJComponents();
   }
 
   static void main() {

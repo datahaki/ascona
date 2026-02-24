@@ -43,7 +43,6 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    // AxesRender.INSTANCE.render(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor start = control.get(0);
     Tensor mouse = control.get(1);
@@ -51,23 +50,14 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
     List<Clothoid> list = List.of();
     ClothoidContext clothoidContext = new ClothoidContext(start, mouse);
     ClothoidTangentDefect clothoidTangentDefect = ClothoidTangentDefect.of(clothoidContext);
-    try {
-      ClothoidSolutions clothoidSolutions = new ClothoidSolutions(clothoidTangentDefect, Clips.absolute(20));
-      list = ClothoidEmit.stream(clothoidContext, clothoidSolutions.lambdas()).toList();
-      int index = 0;
-      for (Clothoid clothoid : list) {
-        ClothoidTransition clothoidTransition = ClothoidTransition.of(start, mouse, clothoid);
-        Tensor points = clothoidTransition.linearized(minResolution);
-        new PathRender(COLOR_DATA_INDEXED.getColor(index++), 1.5f) //
-            .setCurve(points, false).render(geometricLayer, graphics);
-      }
-    } catch (Exception exception) {
-      IO.println("---");
-      IO.println("start=" + start);
-      IO.println("mouse=" + mouse);
-      IO.println("s1=" + clothoidContext.s1());
-      IO.println("s2=" + clothoidContext.s2());
-      exception.printStackTrace();
+    ClothoidSolutions clothoidSolutions = new ClothoidSolutions(clothoidTangentDefect, Clips.absolute(20));
+    list = ClothoidEmit.stream(clothoidContext, clothoidSolutions.lambdas()).toList();
+    int index = 0;
+    for (Clothoid clothoid : list) {
+      ClothoidTransition clothoidTransition = ClothoidTransition.of(start, mouse, clothoid);
+      Tensor points = clothoidTransition.linearized(minResolution);
+      new PathRender(COLOR_DATA_INDEXED.getColor(index++), 1.5f) //
+          .setCurve(points, false).render(geometricLayer, graphics);
     }
     // ---
     Optional<Clothoid> optional = list.stream().min(ClothoidComparators.CURVATURE_HEAD);
