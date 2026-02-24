@@ -39,6 +39,7 @@ import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Clips;
 
+// TODO allDubins causes demo to crash sometimes. also:
 public class DubinsPathDemo extends ControlPointsDemo {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
   private static final int POINTS = 200;
@@ -124,7 +125,6 @@ public class DubinsPathDemo extends ControlPointsDemo {
           ClothoidTransition.of(CLOTHOID_BUILDER, START, mouse);
       Tensor tensor = clothoidTransition.linearized(RealScalar.of(0.1));
       pathRenderClothoid.setCurve(tensor, false).render(geometricLayer, graphics);
-      // TODO ASCONA ALG
     }
     { // draw least curved path
       graphics.setColor(COLOR_DATA_INDEXED.getColor(2));

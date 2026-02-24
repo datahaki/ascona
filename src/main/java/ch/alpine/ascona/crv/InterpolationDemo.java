@@ -23,7 +23,7 @@ import ch.alpine.tensor.red.Nest;
  * that define a cubic subdivision curve that interpolates the
  * original control points */
 // FIXME ASCONA this does not interpolate anything
-public class InterpolationDemo extends ControlPointsDemo {
+class InterpolationDemo extends ControlPointsDemo {
   public InterpolationDemo() {
     super(new AsconaParam(true, ManifoldDisplays.homogeneousSpaces()));
     // ---
@@ -36,7 +36,7 @@ public class InterpolationDemo extends ControlPointsDemo {
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     Tensor sequence = getGeodesicControlPoints();
     if (0 < sequence.length()) {
-      Tensor matrix = BSplineInterpolation.matrix(3, sequence.length());
+      Tensor matrix = BSplineInterpolation.matrix(1, sequence.length());
       Tensor invers = Inverse.of(matrix);
       try {
         Tensor tensor = Tensor.of(invers.stream() //
