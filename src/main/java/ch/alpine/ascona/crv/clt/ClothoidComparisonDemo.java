@@ -6,16 +6,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.List;
 
 import ch.alpine.ascony.api.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2CoveringClothoidDisplay;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -35,7 +32,7 @@ import ch.alpine.tensor.img.ColorDataLists;
  * number clothoid approximation to generate figures in report:
  * 
  * https://github.com/idsc-frazzoli/retina/files/3568308/20190903_appox_clothoids_with_ext_windings.pdf */
-public class ClothoidComparisonDemo extends ControlPointsDemo {
+public class ClothoidComparisonDemo extends ClothoidBaseDemo {
   private static final int WIDTH = 480;
   private static final int HEIGHT = 360;
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
@@ -43,11 +40,6 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
   public ClothoidComparisonDemo() {
     super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
-  }
-
-  @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
-    return ManifoldDisplays.SE2C_ONLY;
   }
 
   @Override // from RenderInterface

@@ -5,12 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.List;
 
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
@@ -36,7 +33,7 @@ import ch.alpine.tensor.sca.Round;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
-public class ClothoidDemo extends ControlPointsDemo {
+public class ClothoidDemo extends ClothoidBaseDemo {
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 200);
   // private static final Tensor ARROWS = Subdivide.of(0.0, 1.0, 10);
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //
@@ -47,11 +44,6 @@ public class ClothoidDemo extends ControlPointsDemo {
   public ClothoidDemo() {
     super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{2,0,0},{-2,0,0}}"));
-  }
-
-  @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
-    return ManifoldDisplays.SE2C_ONLY;
   }
 
   @Override // from RenderInterface

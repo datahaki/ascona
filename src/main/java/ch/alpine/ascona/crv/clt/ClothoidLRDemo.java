@@ -3,15 +3,11 @@ package ch.alpine.ascona.crv.clt;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.List;
 
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2ClothoidDisplay;
 import ch.alpine.ascony.ref.AsconaParam;
-import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
-import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.clt.Clothoid;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
@@ -32,7 +28,7 @@ import ch.alpine.tensor.red.Nest;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
-public class ClothoidLRDemo extends ControlPointsDemo {
+public class ClothoidLRDemo extends ClothoidBaseDemo {
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 100);
   private static final Tensor ARROWS = Subdivide.of(0.0, 1.0, 8);
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
@@ -44,14 +40,9 @@ public class ClothoidLRDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {-3,0,0}}"));
   }
 
-  @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
-    return ManifoldDisplays.SE2C_ONLY;
-  }
-
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    AxesRender.INSTANCE.render(geometricLayer, graphics);
+    timerFrame.geometricComponent.renderGrid(graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor start = control.get(0);
     Tensor mouse = control.get(1);

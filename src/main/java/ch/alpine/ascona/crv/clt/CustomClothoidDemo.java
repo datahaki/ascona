@@ -5,16 +5,13 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.List;
 
 import javax.swing.JLabel;
 
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
@@ -34,7 +31,7 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
-public class CustomClothoidDemo extends ControlPointsDemo {
+public class CustomClothoidDemo extends ClothoidBaseDemo {
   private static final Tensor INITIAL = Tensors.fromString("{{0,0,0},{3,0,0}}");
   private static final Tensor POINTER = Tensors.fromString("{{0, 0}, {-0.2, -1}, {+0.2, -1}}");
 
@@ -60,11 +57,6 @@ public class CustomClothoidDemo extends ControlPointsDemo {
     setControlPointsSe2(INITIAL);
     timerFrame.jToolBar.add(jLabel);
     timerFrame.geometricComponent.setOffset(300, 700);
-  }
-
-  @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
-    return ManifoldDisplays.CL_ONLY;
   }
 
   @Override

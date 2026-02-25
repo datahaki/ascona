@@ -3,13 +3,10 @@ package ch.alpine.ascona.crv.clt;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.List;
 
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.clt.Clothoid;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
@@ -34,7 +31,7 @@ import ch.alpine.tensor.sca.exp.Exp;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
-public class ClothoidStrokeDemo extends ControlPointsDemo {
+public class ClothoidStrokeDemo extends ClothoidBaseDemo {
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 100);
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //
       ColorDataLists._097.cyclic().deriveWithAlpha(192);
@@ -42,11 +39,6 @@ public class ClothoidStrokeDemo extends ControlPointsDemo {
   public ClothoidStrokeDemo() {
     super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
-  }
-
-  @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
-    return ManifoldDisplays.SE2C_ONLY;
   }
 
   @Override // from RenderInterface

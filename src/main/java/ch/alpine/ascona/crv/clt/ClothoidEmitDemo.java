@@ -6,10 +6,8 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Optional;
 
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.clt.Clothoid;
 import ch.alpine.sophis.crv.clt.ClothoidComparators;
@@ -31,7 +29,7 @@ import ch.alpine.tensor.sca.Clips;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
-public class ClothoidEmitDemo extends ControlPointsDemo {
+public class ClothoidEmitDemo extends ClothoidBaseDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //
       ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final Scalar minResolution = RealScalar.of(0.02);
@@ -39,11 +37,6 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
   public ClothoidEmitDemo() {
     super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
-  }
-
-  @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
-    return ManifoldDisplays.SE2C_ONLY;
   }
 
   @Override // from RenderInterface

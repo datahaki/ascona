@@ -7,13 +7,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.io.File;
-import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -31,7 +28,7 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.ext.Cache;
 
-public class ClothoidBrushDemo extends ControlPointsDemo {
+public class ClothoidBrushDemo extends ClothoidBaseDemo {
   public static final Scalar BETA = RealScalar.of(0.05);
 
   public static class Param extends AsconaParam {
@@ -87,11 +84,6 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
     // // timerFrame.geometricComponent.addRenderInterfaceBackground(imageRender);
     // }
     timerFrame.geometricComponent.setOffset(100, 700);
-  }
-
-  @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
-    return ManifoldDisplays.SE2C_ONLY;
   }
 
   @Override
