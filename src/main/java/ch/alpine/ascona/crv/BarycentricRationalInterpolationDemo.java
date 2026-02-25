@@ -20,7 +20,7 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.itp.BarycentricMetricInterpolation;
 import ch.alpine.sophis.itp.BarycentricRationalInterpolation;
-import ch.alpine.sophis.math.win.KnotSpacing;
+import ch.alpine.sophis.win.KnotSpacing;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;

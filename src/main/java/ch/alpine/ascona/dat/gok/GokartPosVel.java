@@ -3,7 +3,7 @@ package ch.alpine.ascona.dat.gok;
 
 import java.util.List;
 
-import ch.alpine.bridge.res.ResourceMapper;
+import ch.alpine.ascony.res.ResourceMapper;
 import ch.alpine.tensor.Tensor;
 
 /** Columns:
