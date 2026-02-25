@@ -45,7 +45,7 @@ public class ClothoidDemo extends ControlPointsDemo {
   // new PointsRender(new Color(0, 0, 0, 0), new Color(128, 128, 128, 64));
 
   public ClothoidDemo() {
-    super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
+    super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{2,0,0},{-2,0,0}}"));
   }
 

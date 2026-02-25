@@ -40,7 +40,7 @@ public class ClothoidStrokeDemo extends ControlPointsDemo {
       ColorDataLists._097.cyclic().deriveWithAlpha(192);
 
   public ClothoidStrokeDemo() {
-    super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
+    super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
   }
 

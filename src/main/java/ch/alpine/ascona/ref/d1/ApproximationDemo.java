@@ -15,7 +15,7 @@ import ch.alpine.ascona.dat.gok.PosHz;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.win.AbstractDemo;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
@@ -32,7 +32,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 
-public class ApproximationDemo extends AbstractDemo {
+public class ApproximationDemo extends ControlPointsDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final Scalar MARKER_SCALE = RealScalar.of(0.1);
@@ -54,10 +54,6 @@ public class ApproximationDemo extends AbstractDemo {
 
   @ReflectionMarker
   public static class Param extends GokartPosParam {
-    public Param() {
-      super(ManifoldDisplays.SE2_R2);
-    }
-
     @FieldSelectionArray({ "0", "2", "4", "6", "8", "10", "12", "14" })
     public Integer width = 12;
     @FieldSelectionCallback("schemes")
@@ -87,11 +83,16 @@ public class ApproximationDemo extends AbstractDemo {
     updateState();
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.ALL;
+  }
+
   private void updateState() {
     // Tensor rawdata =
     PosHz posHz = param.getPosHz();
     Tensor rawdata = posHz.getPoseSequence();
-    ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(manifoldDisplay.geodesicSpace(), GaussianWindow.FUNCTION);
     TensorUnaryOperator centerFilter = new CenterFilter(tensorUnaryOperator, param.width);
     Tensor tracked = centerFilter.apply(rawdata);

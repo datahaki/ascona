@@ -25,7 +25,7 @@ public class S3HopfDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(true, ManifoldDisplays.S2_ONLY);
+      super(true);
     }
   }
 

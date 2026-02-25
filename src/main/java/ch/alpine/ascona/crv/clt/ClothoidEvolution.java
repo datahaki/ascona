@@ -32,7 +32,7 @@ public class ClothoidEvolution extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.CLC_ONLY);
+      super(true);
     }
 
     @FieldSelectionArray({ "0.05", "0.1", "0.2", "0.3", "0.4", "0.5" })

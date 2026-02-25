@@ -5,13 +5,11 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.api.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.Show;
@@ -32,8 +30,8 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
     public Boolean graph = true;
     public Boolean curvt = true;
 
-    public AbstractCurvatureParam(List<ManifoldDisplays> list) {
-      super(true, list);
+    public AbstractCurvatureParam() {
+      super(true);
     }
   }
 

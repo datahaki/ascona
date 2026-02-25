@@ -40,7 +40,7 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.CL_ONLY);
+      super(true);
     }
 
     public Boolean ctrl = true;

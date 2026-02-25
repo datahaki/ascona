@@ -44,7 +44,7 @@ public class KMeansDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param1 extends AsconaParam {
     public Param1() {
-      super(true, ManifoldDisplays.R2_H2_S2_SE2C);
+      super(true);
     }
 
     @FieldSelectionArray({ "100", "200", "500", "1000" })

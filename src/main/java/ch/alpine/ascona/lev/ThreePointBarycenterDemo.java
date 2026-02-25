@@ -26,7 +26,7 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.d2Rasters());
+      super(true);
     }
 
     public PolygonCoordinates polygonCoordinates = PolygonCoordinates.MEAN_VALUE;
@@ -91,7 +91,7 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
 
   @SuppressWarnings("incomplete-switch")
   public void spun() {
-    switch (asconaParam().manifoldDisplays) {
+    switch (getSelectedMD()) {
     case R2:
     case T1d: {
       setControlPointsSe2(Tensors.fromString( //

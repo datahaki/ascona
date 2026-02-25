@@ -41,7 +41,7 @@ public class CustomClothoidDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(false, ManifoldDisplays.CL_ONLY);
+      super(false);
     }
   }
 

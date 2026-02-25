@@ -1,19 +1,12 @@
 // code by ob, jph
 package ch.alpine.ascona.flt;
 
-import java.util.List;
-
 import ch.alpine.ascona.dat.gok.GokartPosVelParam;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 @ReflectionMarker
 public class GokartPosVelSpec extends GokartPosVelParam {
-  public GokartPosVelSpec(List<ManifoldDisplays> list) {
-    super(list);
-  }
-
   public Boolean diff = true;
   public Boolean spec = false;
   public Boolean data = true;

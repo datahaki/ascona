@@ -33,8 +33,7 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.SE2C_R2);
-      manifoldDisplays = ManifoldDisplays.R2;
+      super(true);
     }
 
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
@@ -50,6 +49,7 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
   public BarycentricExtrapolationDemo(Param param) {
     super(param);
     this.param = param;
+    setManifoldDisplay(ManifoldDisplays.R2);
   }
 
   @Override

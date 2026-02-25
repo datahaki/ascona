@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.avg;
 
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymScalar;
@@ -17,7 +16,7 @@ public class GeodesicSplitsDemo extends AbstractSplitsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.ALL);
+      super(true);
     }
 
     public WindowFunctions kernel = WindowFunctions.DIRICHLET;

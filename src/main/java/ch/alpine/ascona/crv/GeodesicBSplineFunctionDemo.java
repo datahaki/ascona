@@ -29,7 +29,7 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
   private BufferedImage bufferedImage;
 
   public GeodesicBSplineFunctionDemo() {
-    this(new AbstractCurveParam(ManifoldDisplays.ALL));
+    this(new AbstractCurveParam());
   }
 
   public GeodesicBSplineFunctionDemo(AbstractCurveParam abstractCurveParam) {

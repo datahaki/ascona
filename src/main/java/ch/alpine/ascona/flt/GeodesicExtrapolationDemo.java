@@ -3,6 +3,7 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -23,15 +24,20 @@ public class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implement
   private Tensor refined = Tensors.empty();
 
   public GeodesicExtrapolationDemo() {
-    super(ManifoldDisplays.SE2_R2);
+    super(new Object());
     updateState();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2_R2;
   }
 
   @Override
   protected void updateState() {
     super.updateState();
     // ---
-    ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = //
         GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), gokartPoseSpec.kernel.get());
     refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesicSpace(), param.radius).apply(control());

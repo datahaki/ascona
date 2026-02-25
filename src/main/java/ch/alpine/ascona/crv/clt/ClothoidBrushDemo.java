@@ -36,7 +36,7 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
 
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.SE2C_ONLY);
+      super(true);
     }
 
     @FieldPreferredWidth(200)

@@ -3,6 +3,7 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import javax.swing.JSlider;
 
@@ -56,8 +57,7 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
       // ---
       GeodesicCausalFilters geodesicCausalFilters = spinnerCausalFilter.getValue();
       // TODO ASCONA ALG should be able to do with geodesicCausalFilters.supply, but doesn't
-      TensorUnaryOperator tensorUnaryOperator = geodesicCausalFilters.supply(gokartPoseSpec.manifoldDisplays.manifoldDisplay(), windowFunctions, radius,
-          alpha());
+      TensorUnaryOperator tensorUnaryOperator = geodesicCausalFilters.supply(manifoldDisplay(), windowFunctions, radius, alpha());
       tensorUnaryOperator = switch (geodesicCausalFilters) {
       case GEODESIC_FIR -> GeodesicFIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
       case GEODESIC_IIR -> GeodesicIIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
@@ -82,5 +82,11 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
 
   static void main() {
     new GeodesicCausalFilterDemo().runStandalone();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

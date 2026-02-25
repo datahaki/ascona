@@ -16,7 +16,7 @@ import ch.alpine.tensor.Tensors;
 
 public class TangentsDemo extends ControlPointsDemo {
   public TangentsDemo() {
-    super(new AsconaParam(true, ManifoldDisplays.manifolds()));
+    super(new AsconaParam(true));
     controlPointsRender.setMidpointIndicated(false);
     // ---
     setControlPointsSe2(Tensors.fromString("{{-0.3, 0.0, 0}, {0.0, 0.5, 0.0}, {0.5, 0.5, 1}, {0.5, -0.4, 0}}"));

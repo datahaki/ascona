@@ -3,6 +3,7 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.api.GeodesicFilters;
@@ -23,7 +24,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implemen
   private final SpinnerLabel<Integer> spinnerConvolution = SpinnerLabel.of(1, 2, 3, 4, 5, 6, 7, 8);
 
   public GeodesicFiltersDatasetDemo() {
-    super(ManifoldDisplays.SE2_R2);
+    super(new Object());
     gokartPoseSpec.string = "20190215/20190215T144349_01";
     {
       spinnerFilters.setValue(GeodesicFilters.GEODESIC);
@@ -39,6 +40,11 @@ public class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implemen
     updateState();
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2_R2;
+  }
+
   @Override // from UniformDatasetFilterDemo
   protected void updateState() {
     super.updateState();
@@ -46,7 +52,7 @@ public class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implemen
 
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     ScalarUnaryOperator smoothingKernel = gokartPoseSpec.kernel.get();
     GeodesicFilters geodesicFilters = spinnerFilters.getValue();
     TensorUnaryOperator tensorUnaryOperator = geodesicFilters.supply(manifoldDisplay.geodesicSpace(), smoothingKernel);

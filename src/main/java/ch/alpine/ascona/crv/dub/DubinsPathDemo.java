@@ -48,7 +48,7 @@ public class DubinsPathDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(false, ManifoldDisplays.SE2_ONLY);
+      super(false);
     }
 
     public Boolean allDubins = false;

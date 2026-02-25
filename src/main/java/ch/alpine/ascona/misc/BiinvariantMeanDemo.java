@@ -65,7 +65,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.manifolds());
+      super(true);
     }
 
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;

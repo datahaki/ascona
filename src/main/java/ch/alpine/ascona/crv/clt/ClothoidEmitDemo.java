@@ -37,7 +37,7 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
   private static final Scalar minResolution = RealScalar.of(0.02);
 
   public ClothoidEmitDemo() {
-    super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
+    super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
   }
 

@@ -36,10 +36,6 @@ import ch.alpine.tensor.red.Times;
 public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   @ReflectionMarker
   public static class Param extends AbstractCurveParam {
-    public Param() {
-      super(ManifoldDisplays.metricManifolds());
-    }
-
     @FieldSlider
     @FieldClip(min = "0", max = "1")
     public Scalar exponent = RealScalar.ONE;

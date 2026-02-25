@@ -31,7 +31,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.R2_ONLY);
+      super(true);
     }
 
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
@@ -70,7 +70,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
       Tensor domain = domain(support);
       // ---
       Tensor sequence = support.maps(this::lift);
-      Manifold manifold = param.manifoldDisplays.manifoldDisplay().manifold();
+      Manifold manifold = manifoldDisplay().manifold();
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
       ScalarTensorFunction scalarTensorFunction = //
           point -> sedarim.sunder(lift(point));

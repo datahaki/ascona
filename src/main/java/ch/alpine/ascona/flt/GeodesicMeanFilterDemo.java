@@ -27,7 +27,7 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.ALL);
+      super(true);
     }
 
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })

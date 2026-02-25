@@ -37,7 +37,7 @@ public class SPatchDemo extends ControlPointsDemo {
   private final MovingDomain2D movingDomain2D;
 
   public SPatchDemo() {
-    super(new AsconaParam(false, ManifoldDisplays.SE2C_R2));
+    super(new AsconaParam(false));
     // ---
     Genesis genesis = new InsidePolygonCoordinate(ThreePointCoordinate.of(ThreePointScalings.MEAN_VALUE));
     sPatch = SPatch.of(5, genesis, 2);

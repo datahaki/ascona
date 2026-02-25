@@ -34,7 +34,7 @@ public class GeodesicDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(false, ManifoldDisplays.ALL);
+      super(false);
     }
 
     @FieldSlider
@@ -65,7 +65,7 @@ public class GeodesicDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     timerFrame.geometricComponent.renderGrid(graphics);
-    ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor points = getGeodesicControlPoints();
     Tensor p = points.get(0);

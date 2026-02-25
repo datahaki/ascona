@@ -39,7 +39,7 @@ public class KNearestDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(true, ManifoldDisplays.SE2_ONLY);
+      super(true);
       drawControlPoints = false;
     }
 

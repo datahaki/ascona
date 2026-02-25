@@ -53,7 +53,7 @@ public class LogarithmDemo extends ControlPointsDemo {
   }
 
   public LogarithmDemo(Param param) {
-    super(new AsconaParam(true, ManifoldDisplays.d2Rasters()), param);
+    super(new AsconaParam(true), param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---
@@ -144,7 +144,7 @@ public class LogarithmDemo extends ControlPointsDemo {
   }
 
   public void spun() {
-    switch (asconaParam().manifoldDisplays) {
+    switch (getSelectedMD()) {
     case R2:
     case T1d:
       setControlPointsSe2(Tensors.fromString( //

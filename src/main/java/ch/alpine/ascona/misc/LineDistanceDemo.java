@@ -44,7 +44,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(false, ManifoldDisplays.lineDistances());
+      super(false);
     }
 
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200" })

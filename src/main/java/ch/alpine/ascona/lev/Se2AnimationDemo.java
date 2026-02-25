@@ -29,7 +29,7 @@ public class Se2AnimationDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.SE2C_SE2);
+      super(true);
       drawControlPoints = false;
     }
   }

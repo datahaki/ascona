@@ -45,8 +45,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(false, ManifoldDisplays.d2Rasters());
-      manifoldDisplays = ManifoldDisplays.R2;
+      super(false);
       drawControlPoints = false;
     }
 
@@ -88,6 +87,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
     super(param0, param1);
     this.param0 = param0;
     this.param1 = param1;
+    setManifoldDisplay(ManifoldDisplays.R2);
     fieldsEditor(0).addUniversalListener(this::shuffle);
     fieldsEditor(1).addUniversalListener(this::recompute);
     {

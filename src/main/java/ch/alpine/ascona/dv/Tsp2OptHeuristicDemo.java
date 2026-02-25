@@ -39,8 +39,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(false, ManifoldDisplays.manifolds());
-      manifoldDisplays = ManifoldDisplays.R2;
+      super(false);
     }
 
     @FieldSelectionArray({ "25", "50", "100", "150", "200" })
@@ -67,6 +66,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     super(param0, param1);
     this.param0 = param0;
     this.param1 = param1;
+    setManifoldDisplay(ManifoldDisplays.R2);
     controlPointsRender.setPositioningEnabled(false);
     fieldsEditor(0).addUniversalListener(this::shuffle);
     // ---

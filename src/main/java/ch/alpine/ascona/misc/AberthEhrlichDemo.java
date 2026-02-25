@@ -46,7 +46,7 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, List.of(ManifoldDisplays.C1));
+      super(true);
     }
 
     @FieldClip(min = "3", max = "20")

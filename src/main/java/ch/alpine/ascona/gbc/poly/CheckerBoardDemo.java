@@ -52,8 +52,7 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(true, ManifoldDisplays.d2Rasters());
-      manifoldDisplays = ManifoldDisplays.S2;
+      super(true);
     }
   }
 
@@ -84,6 +83,7 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
     super(param, param1);
     this.param0 = param;
     this.param1 = param1;
+    setManifoldDisplay(ManifoldDisplays.S2);
     controlPointsRender.setMidpointIndicated(true);
     // ---
     // fieldsEditor(0).addUniversalListener(this::spun);

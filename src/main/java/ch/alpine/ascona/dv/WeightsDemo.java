@@ -33,8 +33,7 @@ public class WeightsDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(true, ManifoldDisplays.manifolds());
-      manifoldDisplays = ManifoldDisplays.Se2;
+      super(true);
       drawControlPoints = false;
     }
 
@@ -62,6 +61,7 @@ public class WeightsDemo extends ControlPointsDemo {
     this.param0 = param0;
     this.param1 = param1;
     // ---
+    setManifoldDisplay(ManifoldDisplays.Se2);
     setControlPointsSe2(Tensors.fromString("{{-1, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}}"));
     ManifoldDisplays manifoldDisplays = ManifoldDisplays.Se2;
     setManifoldDisplay(manifoldDisplays);

@@ -28,10 +28,6 @@ import ch.alpine.tensor.itp.BezierFunction;
 public class BezierFunctionDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
   public static class Param extends AbstractCurvatureParam {
-    public Param() {
-      super(ManifoldDisplays.ALL);
-    }
-
     @FieldSlider
     @FieldClip(min = "0", max = "10")
     public Integer refine = 6;

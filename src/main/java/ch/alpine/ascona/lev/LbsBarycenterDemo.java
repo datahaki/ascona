@@ -21,7 +21,7 @@ import ch.alpine.tensor.Tensors;
  * by Torsten Langer, Alexander Belyaev, Hans-Peter Seidel, 2005 */
 public class LbsBarycenterDemo extends ControlPointsDemo {
   public LbsBarycenterDemo() {
-    super(new AsconaParam(true, ManifoldDisplays.S2_ONLY));
+    super(new AsconaParam(true));
     // ---
     setManifoldDisplay(ManifoldDisplays.S2);
     setControlPointsSe2(Tensors.fromString( //

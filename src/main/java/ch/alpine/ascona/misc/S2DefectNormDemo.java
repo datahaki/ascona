@@ -52,7 +52,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.S2_ONLY);
+      super(true);
     }
 
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })

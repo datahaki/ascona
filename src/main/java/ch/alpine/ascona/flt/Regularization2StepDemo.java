@@ -3,8 +3,10 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymLinkImages;
@@ -43,9 +45,14 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
     updateState();
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2_R2;
+  }
+
   @Override // from AbstractDatasetFilterDemo
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Regularization2Step regularization2Step = new Regularization2Step(gokartPoseSpec.manifoldDisplays.manifoldDisplay().geodesicSpace(), //
+    Regularization2Step regularization2Step = new Regularization2Step(manifoldDisplay().geodesicSpace(), //
         N.DOUBLE.apply(ratio.ratio));
     return regularization2Step.string(control());
   }

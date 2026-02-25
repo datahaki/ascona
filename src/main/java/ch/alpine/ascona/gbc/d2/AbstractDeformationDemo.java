@@ -6,13 +6,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
-import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
@@ -52,8 +50,8 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   // ---
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
-    public Param0(List<ManifoldDisplays> list) {
-      super(false, list);
+    public Param0() {
+      super(false);
     }
 
     public LogWeightings logWeightings = LogWeightings.COORDINATE;
@@ -78,8 +76,8 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   private Tensor movingOrigin;
   private MovingDomain2D movingDomain2D;
 
-  protected AbstractDeformationDemo(List<ManifoldDisplays> list, Object object) {
-    this(new Param0(list), new Param1(), object);
+  protected AbstractDeformationDemo(Object object) {
+    this(new Param0(), new Param1(), object);
   }
 
   protected AbstractDeformationDemo(Param0 param0, Param1 param1, Object object) {
@@ -110,7 +108,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   }
 
   protected final Sedarim operator(Tensor sequence) {
-    Manifold manifold = param0.manifoldDisplays.manifoldDisplay().manifold();
+    Manifold manifold = manifoldDisplay().manifold();
     return param0.logWeightings.sedarim(param0.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
   }
 

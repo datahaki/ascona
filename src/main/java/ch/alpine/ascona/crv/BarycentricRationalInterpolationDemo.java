@@ -38,8 +38,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.metricManifolds());
-      manifoldDisplays = ManifoldDisplays.R2;
+      super(true);
     }
 
     @FieldClip(min = "0", max = "1")
@@ -60,6 +59,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     // ---
+    setManifoldDisplay(ManifoldDisplays.R2);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {2, 0, 0}, {4, 3, 1}, {5, -1, -2}}"));
   }
 

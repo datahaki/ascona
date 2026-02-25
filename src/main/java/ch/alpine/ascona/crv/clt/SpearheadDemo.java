@@ -21,7 +21,7 @@ public class SpearheadDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(128);
 
   public SpearheadDemo() {
-    super(new AsconaParam(false, ManifoldDisplays.SE2_ONLY));
+    super(new AsconaParam(false));
     // ---
     timerFrame.geometricComponent.addRenderInterface(AxesRender.INSTANCE);
     // ---

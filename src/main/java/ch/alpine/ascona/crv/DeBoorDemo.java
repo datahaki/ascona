@@ -35,7 +35,7 @@ public class DeBoorDemo extends AbstractCurveDemo implements BufferedImageSuppli
   private BufferedImage bufferedImage;
 
   public DeBoorDemo() {
-    super(new AbstractCurveParam(ManifoldDisplays.ALL));
+    super(new AbstractCurveParam());
     addButtonDubins();
     ToolbarFieldsEditor.addToComponent(this, timerFrame.jToolBar);
     // ---

@@ -9,7 +9,6 @@ import java.util.Map;
 import ch.alpine.ascony.api.LogWeighting;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -62,15 +61,13 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
   };
 
   protected AbstractScatteredSetWeightingDemo( //
-      List<ManifoldDisplays> list, //
       List<LogWeighting> array) {
-    this(list, array, new ScatteredSetParam());
+    this(array, new ScatteredSetParam());
   }
 
   protected AbstractScatteredSetWeightingDemo( //
-      List<ManifoldDisplays> list, //
       List<LogWeighting> array, ScatteredSetParam scatteredSetParam) {
-    super(new AsconaParam(true, list), scatteredSetParam);
+    super(new AsconaParam(true), scatteredSetParam);
     fieldsEditor(1).addUniversalListener(this::recompute);
     this.scatteredSetParam = scatteredSetParam;
     {

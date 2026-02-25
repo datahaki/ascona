@@ -40,7 +40,7 @@ public class ClothoidLRDemo extends ControlPointsDemo {
   private static final PointsRender POINTS_RENDER_S = new PointsRender(new Color(0, 0, 0), Color.BLACK);
 
   public ClothoidLRDemo() {
-    super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
+    super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {-3,0,0}}"));
   }
 

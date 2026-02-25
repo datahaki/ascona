@@ -38,8 +38,7 @@ public class OrderingDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(false, ManifoldDisplays.manifolds());
-      manifoldDisplays = ManifoldDisplays.Se2;
+      super(false);
       drawControlPoints = false;
     }
 
@@ -75,6 +74,7 @@ public class OrderingDemo extends ControlPointsDemo {
     super(param0, param1);
     this.param0 = param0;
     this.param1 = param1;
+    setManifoldDisplay(ManifoldDisplays.Se2);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}}"));
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();

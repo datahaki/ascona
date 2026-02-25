@@ -37,7 +37,7 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.ALL);
+      super(true);
     }
 
     @FieldClip(min = "0", max = "9")

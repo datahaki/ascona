@@ -27,7 +27,7 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(false, ManifoldDisplays.ALL);
+      super(false);
     }
 
     @FieldSlider

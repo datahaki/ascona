@@ -29,7 +29,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 public class AffineCoordinateDemo extends ControlPointsDemo {
   public AffineCoordinateDemo() {
-    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY));
+    super(new AsconaParam(true));
     // ---
     Tensor sequence = Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(2)).stream().map(PadRight.zeros(3)));
     setControlPointsSe2(sequence);

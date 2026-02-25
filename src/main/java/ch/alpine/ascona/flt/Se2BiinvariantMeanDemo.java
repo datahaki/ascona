@@ -2,6 +2,7 @@
 package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -24,7 +25,7 @@ public final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
   private final SpinnerLabel<Integer> spinnerConvolution;
 
   public Se2BiinvariantMeanDemo() {
-    super(ManifoldDisplays.SE2_ONLY); // TODO passing this param is no good !!!
+    super(new Object());
     {
       spinnerFilters.setValue(Se2BiinvariantMeans.LINEAR);
       spinnerFilters.addToComponent(timerFrame.jToolBar, "se2 biinvariant mean");
@@ -38,6 +39,11 @@ public final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
     }
     // ---
     updateState();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2_R2;
   }
 
   @Override

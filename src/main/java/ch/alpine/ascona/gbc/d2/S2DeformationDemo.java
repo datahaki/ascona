@@ -41,7 +41,7 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
   }
 
   public S2DeformationDemo(Param2 param2) {
-    super(ManifoldDisplays.S2_ONLY, param2);
+    super(param2);
     this.param2 = param2;
   }
 

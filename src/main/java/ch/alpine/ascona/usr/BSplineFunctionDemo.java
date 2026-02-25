@@ -27,10 +27,6 @@ import ch.alpine.tensor.sca.Clips;
 public class BSplineFunctionDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
   public static class Param extends AbstractCurvatureParam {
-    public Param() {
-      super(ManifoldDisplays.R2_ONLY);
-    }
-
     @FieldClip(min = "0", max = "9")
     public Integer degree = 3;
     @FieldClip(min = "1", max = "1000")

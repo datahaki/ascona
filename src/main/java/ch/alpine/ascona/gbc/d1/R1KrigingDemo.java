@@ -37,7 +37,7 @@ public class R1KrigingDemo extends A1AveragingDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.R2_ONLY);
+      super(true);
     }
 
     public LogWeightings logWeightings = LogWeightings.WEIGHTING;

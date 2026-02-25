@@ -64,7 +64,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
   private final JToggleButton jToggleEntire = new JToggleButton("entire");
 
   public R2BarycentricCoordinateDemo() {
-    super(ManifoldDisplays.manifolds(), list());
+    super(list());
     {
       timerFrame.jToolBar.add(jToggleEntire);
     }

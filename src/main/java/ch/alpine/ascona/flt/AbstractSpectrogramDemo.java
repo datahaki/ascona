@@ -13,11 +13,10 @@ import java.util.Optional;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
-import ch.alpine.ascony.win.AbstractDemo;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Spectrogram;
@@ -40,7 +39,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-/* package */ abstract class AbstractSpectrogramDemo extends AbstractDemo {
+/* package */ abstract class AbstractSpectrogramDemo extends ControlPointsDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final GridRender GRID_RENDER = new GridRender(Subdivide.of(0, 100, 10));
@@ -62,7 +61,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   protected final Param param;
 
   protected AbstractSpectrogramDemo(Object object) {
-    this(new GokartPosSpec(ManifoldDisplays.SE2_R2), new Param(), object);
+    this(new GokartPosSpec(), new Param(), object);
   }
 
   protected String plotLabel() {
@@ -85,7 +84,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = control();
-    ManifoldDisplay manifoldDisplay = gokartPoseSpec.manifoldDisplays.manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     final Tensor shape = manifoldDisplay.shape().multiply(markerScale());
     boolean conv = gokartPoseSpec.conv;
     if (gokartPoseSpec.data) {
@@ -137,7 +136,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
   // @Override
   protected final Tensor control() {
-    return Tensor.of(_control.stream().map(gokartPoseSpec.manifoldDisplays.manifoldDisplay()::xya2point)).unmodifiable();
+    return Tensor.of(_control.stream().map(manifoldDisplay()::xya2point)).unmodifiable();
   }
   // /** @return */
   // protected abstract String plotLabel();

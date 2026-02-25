@@ -41,7 +41,7 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
 
   public ClothoidComparisonDemo() {
-    super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
+    super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
   }
 

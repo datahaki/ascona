@@ -2,9 +2,7 @@
 package ch.alpine.ascona.crv;
 
 import java.awt.Graphics2D;
-import java.util.List;
 
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -19,10 +17,6 @@ import ch.alpine.tensor.Tensors;
 abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
   public static class AbstractCurveParam extends AbstractCurvatureParam {
-    public AbstractCurveParam(List<ManifoldDisplays> list) {
-      super(list);
-    }
-
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
     public Integer degree = 3;
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })

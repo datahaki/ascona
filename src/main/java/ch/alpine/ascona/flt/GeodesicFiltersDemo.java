@@ -34,7 +34,7 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.SE2C_SE2_R2);
+      super(true);
     }
 
     public WindowFunctions windowFunctions = WindowFunctions.DIRICHLET;

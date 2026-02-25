@@ -27,8 +27,7 @@ public final class GrassmannDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(true, ManifoldDisplays.manifolds());
-      manifoldDisplays = ManifoldDisplays.R2;
+      super(true);
     }
 
     @FieldSelectionArray({ "4", "6", "8", "10" })
@@ -54,6 +53,7 @@ public final class GrassmannDemo extends ControlPointsDemo {
     super(param0, param1);
     this.param0 = param0;
     this.param1 = param1;
+    setManifoldDisplay(ManifoldDisplays.R2);
     controlPointsRender.setMidpointIndicated(false);
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();

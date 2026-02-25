@@ -49,8 +49,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(true, ManifoldDisplays.manifolds());
-      manifoldDisplays = ManifoldDisplays.R2;
+      super(true);
       drawControlPoints = false;
     }
 
@@ -80,6 +79,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
     this.param0 = param0;
     this.param1 = param1;
     // ---
+    setManifoldDisplay(ManifoldDisplays.R2);
     controlPointsRender.setMidpointIndicated(false);
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();

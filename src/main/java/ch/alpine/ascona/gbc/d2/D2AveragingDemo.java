@@ -52,8 +52,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.d2Rasters());
-      manifoldDisplays = ManifoldDisplays.S2;
+      super(true);
     }
 
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
@@ -75,6 +74,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   public D2AveragingDemo(Param param) {
     super(param);
     this.param = param;
+    setManifoldDisplay(ManifoldDisplays.S2);
     controlPointsRender.setMidpointIndicated(false);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
+import java.util.List;
 
 import ch.alpine.ascona.dat.gok.GokartPosParam;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
@@ -13,7 +14,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
-import ch.alpine.ascony.win.AbstractDemo;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -39,7 +40,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.pow.Power;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class CurveDecimationDemo extends AbstractDemo {
+public class CurveDecimationDemo extends ControlPointsDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 160);
   private static final Color COLOR_RECON = new Color(128, 128, 128, 255);
@@ -51,10 +52,6 @@ public class CurveDecimationDemo extends AbstractDemo {
 
   @ReflectionMarker
   public static class Param extends GokartPosParam {
-    public Param() {
-      super(ManifoldDisplays.SE2_R2);
-    }
-
     @FieldSelectionArray({ "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })
     public Scalar width = RealScalar.of(0);
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5" })
@@ -81,6 +78,11 @@ public class CurveDecimationDemo extends AbstractDemo {
     updateState();
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2_R2;
+  }
+
   protected void updateState() {
     TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
         GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), param.width.number().intValue());
@@ -89,7 +91,7 @@ public class CurveDecimationDemo extends AbstractDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = param.manifoldDisplays.manifoldDisplay();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     {
       final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
       pathRenderCurve.setCurve(_control, false).render(geometricLayer, graphics);

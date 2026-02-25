@@ -46,7 +46,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.S2_ONLY);
+      super(true);
     }
 
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;

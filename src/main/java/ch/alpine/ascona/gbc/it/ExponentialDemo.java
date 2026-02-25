@@ -42,7 +42,7 @@ public class ExponentialDemo extends ControlPointsDemo {
   private final GenesisDequeProperties genesisDequeProperties;
 
   public ExponentialDemo() {
-    super(new AsconaParam(true, ManifoldDisplays.R2_ONLY), new GenesisDequeProperties());
+    super(new AsconaParam(true), new GenesisDequeProperties());
     // ---
     genesisDequeProperties = (GenesisDequeProperties) objects()[1];
     // ---

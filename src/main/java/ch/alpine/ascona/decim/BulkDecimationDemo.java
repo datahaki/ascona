@@ -33,7 +33,7 @@ public class BulkDecimationDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
 
   public BulkDecimationDemo() {
-    super(new AsconaParam(true, ManifoldDisplays.SE2_R2));
+    super(new AsconaParam(true));
     Distribution dX = UniformDistribution.of(-3, 3);
     Distribution dY = NormalDistribution.of(0, .3);
     Distribution dA = NormalDistribution.of(1, .5);

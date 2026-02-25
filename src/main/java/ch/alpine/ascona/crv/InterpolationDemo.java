@@ -26,7 +26,7 @@ import ch.alpine.tensor.red.Nest;
 // FIXME ASCONA this does not interpolate anything
 class InterpolationDemo extends ControlPointsDemo {
   public InterpolationDemo() {
-    super(new AsconaParam(true, ManifoldDisplays.homogeneousSpaces()));
+    super(new AsconaParam(true));
     // ---
     addButtonDubins();
   }

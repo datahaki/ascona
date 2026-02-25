@@ -28,7 +28,7 @@ public class AnimationDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param0 extends AsconaParam {
     public Param0() {
-      super(true, ManifoldDisplays.R2_S2);
+      super(true);
     }
 
     public Biinvariants biinvariants = Biinvariants.METRIC;
@@ -92,7 +92,7 @@ public class AnimationDemo extends ControlPointsDemo {
       if (param1.animate) {
         Tensor list = Tensors.empty();
         // TODO ASCONA should be part of manifoldDisplay interface
-        switch (param0.manifoldDisplays) {
+        switch (getSelectedMD()) {
         case R2: {
           Tensor vectorExp = RotationMatrix.of(timing.seconds().multiply(Quantity.of(0.2, "s^-1")));
           for (Tensor xya : snapshot) {

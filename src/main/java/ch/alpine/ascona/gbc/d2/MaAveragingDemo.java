@@ -50,7 +50,7 @@ public final class MaAveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param extends AsconaParam {
     public Param() {
-      super(true, ManifoldDisplays.d2Rasters());
+      super(true);
     }
 
     public Biinvariants biinvariants = Biinvariants.METRIC;
