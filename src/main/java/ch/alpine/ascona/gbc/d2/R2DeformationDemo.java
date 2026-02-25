@@ -39,7 +39,7 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.R2_ONLY;
   }
 

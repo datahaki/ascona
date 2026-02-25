@@ -28,7 +28,7 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_SE2;
   }
 

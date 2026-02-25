@@ -72,7 +72,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_SE2_R2;
   }
 

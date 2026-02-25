@@ -62,7 +62,7 @@ public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements Buffe
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.metricManifolds();
   }
 

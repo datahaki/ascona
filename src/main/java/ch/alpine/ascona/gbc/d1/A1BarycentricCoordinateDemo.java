@@ -56,7 +56,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.R2_ONLY;
   }
 

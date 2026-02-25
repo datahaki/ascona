@@ -13,6 +13,7 @@ import java.util.Optional;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -71,7 +72,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   protected AbstractSpectrogramDemo(GokartPosSpec gokartPoseSpec, Param param, Object object) {
-    super(gokartPoseSpec, param, object);
+    super(new AsconaParam(false), gokartPoseSpec, param, object);
     this.gokartPoseSpec = gokartPoseSpec;
     this.param = param;
     // gokartPoseSpec.symi = this instanceof BufferedImageSupplier;

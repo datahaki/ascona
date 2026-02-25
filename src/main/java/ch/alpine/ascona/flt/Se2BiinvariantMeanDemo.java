@@ -42,7 +42,7 @@ public final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_R2;
   }
 

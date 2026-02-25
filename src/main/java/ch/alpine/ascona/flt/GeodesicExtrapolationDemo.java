@@ -29,7 +29,7 @@ public class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implement
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_R2;
   }
 

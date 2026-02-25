@@ -12,7 +12,7 @@ abstract class ClothoidBaseDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected final List<ManifoldDisplays> getManifoldDisplays() {
+  protected final List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.CLC_ONLY;
   }
 }

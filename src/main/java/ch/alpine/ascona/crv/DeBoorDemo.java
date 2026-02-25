@@ -47,7 +47,7 @@ public class DeBoorDemo extends AbstractCurveDemo implements BufferedImageSuppli
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
   }
 

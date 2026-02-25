@@ -62,7 +62,7 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
   }
 

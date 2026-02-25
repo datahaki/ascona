@@ -28,7 +28,7 @@ public abstract class AbstractSplitsDemo extends ControlPointsDemo {
   }
 
   @Override
-  public final List<ManifoldDisplays> getManifoldDisplays() {
+  public final List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
   }
 

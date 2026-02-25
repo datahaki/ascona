@@ -72,12 +72,13 @@ public class DubinsPathDemo extends ControlPointsDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_ONLY;
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    timerFrame.geometricComponent.renderGrid(graphics);
     Tensor controlPointsSe2 = getControlPointsSe2();
     Tensor START = controlPointsSe2.get(0);
     Tensor mouse = controlPointsSe2.get(1);

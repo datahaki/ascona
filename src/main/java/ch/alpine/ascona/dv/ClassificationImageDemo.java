@@ -87,6 +87,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
     super(param0, param1);
     this.param0 = param0;
     this.param1 = param1;
+    addChangeListener(_ -> shuffle());
     setManifoldDisplay(ManifoldDisplays.R2);
     fieldsEditor(0).addUniversalListener(this::shuffle);
     fieldsEditor(1).addUniversalListener(this::recompute);
@@ -108,7 +109,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.d2Rasters();
   }
 

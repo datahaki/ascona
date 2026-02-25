@@ -46,7 +46,7 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_R2;
   }
 

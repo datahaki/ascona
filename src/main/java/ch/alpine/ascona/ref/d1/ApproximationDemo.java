@@ -84,7 +84,7 @@ public class ApproximationDemo extends ControlPointsDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
   }
 

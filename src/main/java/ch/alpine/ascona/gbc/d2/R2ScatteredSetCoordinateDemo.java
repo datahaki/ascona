@@ -71,7 +71,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_SE2;
   }
 

@@ -75,7 +75,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.manifolds();
   }
 

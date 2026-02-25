@@ -35,7 +35,7 @@ public class H2DeformationDemo extends AbstractDeformationDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.H2_ONLY;
   }
 

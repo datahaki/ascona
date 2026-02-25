@@ -46,7 +46,7 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.d2Rasters();
   }
 
@@ -93,7 +93,7 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
   public void spun() {
     switch (getSelectedMD()) {
     case R2:
-    case T1d: {
+    case Td1: {
       setControlPointsSe2(Tensors.fromString( //
           "{{-0.175, 0.358, 0.000}, {-0.991, 0.113, 0.000}, {-0.644, 0.967, 0.000}, {0.509, 0.840, 0.000}, {0.689, 0.513, 0.000}, {0.956, -0.627, 0.000}}"));
       break;

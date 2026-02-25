@@ -57,7 +57,7 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.d2Rasters();
   }
 

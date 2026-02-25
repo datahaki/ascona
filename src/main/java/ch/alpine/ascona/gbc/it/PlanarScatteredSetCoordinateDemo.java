@@ -57,7 +57,7 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.d2Rasters();
   }
 

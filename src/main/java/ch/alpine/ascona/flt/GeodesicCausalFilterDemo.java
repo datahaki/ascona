@@ -85,7 +85,7 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     // TODO Auto-generated method stub
     return null;
   }

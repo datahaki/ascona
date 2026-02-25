@@ -62,7 +62,7 @@ public class LogarithmDemo extends ControlPointsDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.d2Rasters();
   }
 
@@ -146,7 +146,7 @@ public class LogarithmDemo extends ControlPointsDemo {
   public void spun() {
     switch (getSelectedMD()) {
     case R2:
-    case T1d:
+    case Td1:
       setControlPointsSe2(Tensors.fromString( //
           "{{0.358, 0.508, 0.000}, {-0.375, -0.567, 0.000}, {0.442, -0.425, 0.000}, {1.142, 0.000, 0.000}, {1.158, 1.108, 0.000}, {0.192, 1.433, 0.000}, {-0.625, 0.342, 0.000}}"));
       break;

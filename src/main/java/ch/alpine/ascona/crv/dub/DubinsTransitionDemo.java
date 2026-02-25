@@ -5,8 +5,9 @@ import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.util.List;
 
-import ch.alpine.ascony.ren.AxesRender;
-import ch.alpine.ascony.win.AbstractDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.dub.DubinsPath;
 import ch.alpine.sophis.crv.dub.DubinsPathGenerator;
@@ -16,22 +17,29 @@ import ch.alpine.sophis.ts.DubinsTransition;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 
-public class DubinsTransitionDemo extends AbstractDemo {
-  private static final Tensor START = Array.zeros(3).unmodifiable();
+public class DubinsTransitionDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
 
   public DubinsTransitionDemo() {
-    super(new Object());
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
+    super(new AsconaParam(false));
+    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {3, 0, 0}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
+    return ManifoldDisplays.SE2_ONLY;
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
+    timerFrame.geometricComponent.renderGrid(graphics);
+    Tensor controlPointsSe2 = getControlPointsSe2();
+    Tensor START = controlPointsSe2.get(0);
+    Tensor mouse = controlPointsSe2.get(1);
     // ---
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(START, mouse, RealScalar.of(1));
     List<DubinsPath> list = dubinsPathGenerator.stream().toList();

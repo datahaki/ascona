@@ -49,14 +49,16 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();
     controlPointsRender.setMidpointIndicated(false);
+    addChangeListener(_ -> shuffle());
   }
 
   @Override
-  public List<ManifoldDisplays> getManifoldDisplays() {
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.manifolds();
   }
 
-  private void shuffle() {
+  private synchronized void shuffle() {
+    IO.println("SHUFFLE");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     int n = param.n;
     ground = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
@@ -66,8 +68,8 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
   }
 
   @Override // from RenderInterface
-  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Tensor control = controlPointsRender.getGeodesicControlPoints();
+  public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    Tensor control = getGeodesicControlPoints();
     if (0 < control.length()) {
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
       Manifold manifold = manifoldDisplay.manifold();
