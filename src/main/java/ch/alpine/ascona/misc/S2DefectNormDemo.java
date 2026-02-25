@@ -23,7 +23,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.s.SnExponential;
+import ch.alpine.sophus.hs.s.STangentSpace;
 import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
@@ -94,7 +94,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
 
     @Override
     public Scalar apply(Tensor xyz) {
-      MeanDefect meanDefect = MeanDefect.of(sequence, weights, new SnExponential(xyz));
+      MeanDefect meanDefect = MeanDefect.of(sequence, weights, new STangentSpace(xyz));
       return FrobeniusNorm.of(meanDefect.tangent());
     }
   }
@@ -147,7 +147,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
           if (Sign.isPositive(z2)) {
             Scalar z = Sqrt.FUNCTION.apply(z2);
             Tensor xyz = point.append(z);
-            MeanDefect meanDefect = MeanDefect.of(tsf.sequence, tsf.weights, new SnExponential(xyz));
+            MeanDefect meanDefect = MeanDefect.of(tsf.sequence, tsf.weights, new STangentSpace(xyz));
             Tensor v = meanDefect.tangent();
             renderTangentsPtoX(geometricLayer, graphics, xyz, v.multiply(RealScalar.of(0.2)));
           } else

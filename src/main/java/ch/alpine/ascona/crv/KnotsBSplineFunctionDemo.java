@@ -21,7 +21,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.GeodesicBSplineFunction;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.math.win.KnotSpacing;
-import ch.alpine.sophus.math.api.TensorMetric;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;

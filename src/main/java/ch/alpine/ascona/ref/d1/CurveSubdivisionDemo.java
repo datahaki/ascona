@@ -22,7 +22,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.swing.SpinnerMenu;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
-import ch.alpine.sophus.math.api.GeodesicSpace;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

@@ -25,7 +25,7 @@ import ch.alpine.sophis.math.Do;
 import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
 import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.s.SnExponential;
+import ch.alpine.sophus.hs.s.STangentSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -98,7 +98,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
         Tensor p = ctrl.get(0); // point
         Tensor v = ctrl.get(1); // vector
         if (param.derivatives) {
-          Tensor q = new SnExponential(p).exp(v); // point on sphere
+          Tensor q = new STangentSpace(p).exp(v); // point on sphere
           ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(p, q);
           graphics.setStroke(STROKE);
           Tensor ms = Tensor.of(GEODESIC_DOMAIN.maps(scalarTensorFunction).stream().map(s2Display::point2xy));
@@ -128,7 +128,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           Tensor p = pv.get(0);
           Tensor v = pv.get(1);
           {
-            Tensor q = new SnExponential(p).exp(v); // point on sphere
+            Tensor q = new STangentSpace(p).exp(v); // point on sphere
             ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(p, q);
             graphics.setStroke(STROKE);
             Tensor ms = Tensor.of(GEODESIC_DOMAIN.maps(scalarTensorFunction).stream().map(s2Display::point2xy));

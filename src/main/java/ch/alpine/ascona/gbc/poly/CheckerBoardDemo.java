@@ -20,7 +20,6 @@ import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
@@ -30,7 +29,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
-import ch.alpine.sophus.math.api.Manifold;
+import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -161,7 +160,7 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
       if (Objects.isNull(bufferedImage))
         recompute();
       if (Objects.nonNull(bufferedImage)) {
-        RenderQuality.setDefault(graphics); // default so that raster becomes visible
+        // RenderQuality.setDefault(graphics); // default so that raster becomes visible
         new ImageRender(bufferedImage, manifoldDisplay.d2Raster_coordinateBoundingBox()) //
             .render(geometricLayer, graphics);
       }

@@ -17,7 +17,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophis.crv.GeodesicBSplineFunction;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
-import ch.alpine.sophus.math.api.GeodesicSpace;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
