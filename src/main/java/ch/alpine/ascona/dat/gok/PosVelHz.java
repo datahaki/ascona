@@ -12,8 +12,6 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Mean;
 
 public class PosVelHz implements Serializable {
-  private static final TensorUnaryOperator EXTRACT = row -> Tensors.of(row.extract(1, 4), row.extract(5, 8));
-  // ---
   private final Tensor tensor;
 
   public PosVelHz(Tensor tensor) {
@@ -21,7 +19,13 @@ public class PosVelHz implements Serializable {
   }
 
   public Tensor getPosVelSequence() {
-    return EXTRACT.slash(tensor);
+    TensorUnaryOperator extract = row -> Tensors.of(row.extract(1, 4), row.extract(5, 8));
+    return extract.slash(tensor);
+  }
+
+  public Tensor getPosSequence() {
+    TensorUnaryOperator extract = row -> row.extract(1, 4);
+    return extract.slash(tensor);
   }
 
   public Scalar getSamplingRate() {
