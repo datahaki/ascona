@@ -3,10 +3,12 @@ package ch.alpine.ascona.avg;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascona.avg.GeometricSymLinkRender.Link;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLink;
@@ -23,6 +25,11 @@ public abstract class AbstractSplitsDemo extends ControlPointsDemo {
 
   protected AbstractSplitsDemo(AsconaParam asconaParam) {
     super(asconaParam);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.ALL;
   }
 
   @Override // from RenderInterface

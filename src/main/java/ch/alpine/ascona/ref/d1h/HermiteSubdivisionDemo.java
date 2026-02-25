@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.List;
 
 import ch.alpine.ascony.api.HermiteSubdivisionParam;
 import ch.alpine.ascony.api.HermiteSubdivisions;
@@ -68,6 +69,11 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
   public HermiteSubdivisionDemo(Param param) {
     super(param);
     this.param = param;
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_SE2_R2;
   }
 
   @Override

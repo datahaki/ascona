@@ -3,6 +3,7 @@ package ch.alpine.ascona.gbc.d1;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -53,6 +54,11 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
     controlPointsRender.setMidpointIndicated(false);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 2, 0}, {2, -1, 0}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.R2_ONLY;
   }
 
   @Override

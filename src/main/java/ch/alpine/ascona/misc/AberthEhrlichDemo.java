@@ -78,6 +78,11 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
     shuffle();
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.C1_ONLY;
+  }
+
   private void shuffle() {
     RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
     zeros = RandomSample.of(randomSampleInterface, 10);

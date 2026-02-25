@@ -2,6 +2,7 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -25,6 +26,11 @@ public class LbsBarycenterDemo extends ControlPointsDemo {
     setManifoldDisplay(ManifoldDisplays.S2);
     setControlPointsSe2(Tensors.fromString( //
         "{{-0.314, 0.662, 0.000}, {-0.809, 0.426, 0.000}, {-0.261, 0.927, 0.000}, {0.564, 0.685, 0.000}, {0.694, 0.220, 0.000}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.S2_ONLY;
   }
 
   @Override // from RenderInterface

@@ -4,6 +4,7 @@ package ch.alpine.ascona.gbc.poly;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascony.api.ImageTiling;
@@ -66,6 +67,11 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     fieldsEditor(0).addUniversalListener(this::spun);
     fieldsEditor(1).addUniversalListener(this::recompute);
     spun();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.d2Rasters();
   }
 
   private Showable showable;

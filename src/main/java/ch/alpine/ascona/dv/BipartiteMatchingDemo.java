@@ -4,6 +4,7 @@ package ch.alpine.ascona.dv;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -48,6 +49,11 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();
     controlPointsRender.setMidpointIndicated(false);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.manifolds();
   }
 
   private void shuffle() {

@@ -2,6 +2,7 @@
 package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -47,6 +48,11 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
       setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
           Tensor.of(tensor.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
     }
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.ALL;
   }
 
   @Override // from RenderInterface

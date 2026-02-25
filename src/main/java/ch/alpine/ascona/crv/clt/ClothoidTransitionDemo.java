@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
+import java.util.List;
 
 import ch.alpine.ascony.api.RnLineTrim;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -69,6 +70,11 @@ public class ClothoidTransitionDemo extends ControlPointsDemo {
     // ---
     setControlPointsSe2(RandomVariate.of(UniformDistribution.of(0, 8), 1 * 2, 3));
     timerFrame.geometricComponent.setOffset(100, 700);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.CL_ONLY;
   }
 
   @Override

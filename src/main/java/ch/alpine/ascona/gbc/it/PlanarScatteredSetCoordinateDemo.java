@@ -57,6 +57,11 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
   }
 
   @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.d2Rasters();
+  }
+
+  @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     graphics.setColor(Color.LIGHT_GRAY);
     graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));

@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascony.api.Box2D;
@@ -54,6 +55,11 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
       super(true, ManifoldDisplays.d2Rasters());
       manifoldDisplays = ManifoldDisplays.S2;
     }
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.d2Rasters();
   }
 
   @ReflectionMarker

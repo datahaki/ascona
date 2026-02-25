@@ -3,6 +3,7 @@ package ch.alpine.ascona.crv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -62,6 +63,11 @@ public class LagrangeInterpolationDemo extends AbstractCurvatureDemo {
     }
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.ALL;
   }
 
   @Override // from RenderInterface

@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.util.List;
 
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -68,6 +69,11 @@ public class LineDistanceDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     // ---
     timerFrame.geometricComponent.setOffset(400, 400);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.lineDistances();
   }
 
   TensorDistance tensorNorm() {

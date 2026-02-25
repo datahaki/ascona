@@ -2,6 +2,7 @@
 package ch.alpine.ascona.misc;
 
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -19,6 +20,11 @@ public class TangentsDemo extends ControlPointsDemo {
     controlPointsRender.setMidpointIndicated(false);
     // ---
     setControlPointsSe2(Tensors.fromString("{{-0.3, 0.0, 0}, {0.0, 0.5, 0.0}, {0.5, 0.5, 1}, {0.5, -0.4, 0}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.manifolds();
   }
 
   @Override

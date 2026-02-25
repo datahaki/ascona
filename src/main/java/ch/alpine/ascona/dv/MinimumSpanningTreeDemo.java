@@ -85,6 +85,11 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
     shuffle();
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.manifolds();
+  }
+
   private void shuffle() {
     int n = param0.size;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

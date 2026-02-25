@@ -107,6 +107,11 @@ public class ClassificationImageDemo extends ControlPointsDemo {
     shuffle();
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.d2Rasters();
+  }
+
   private void shuffle() {
     int n = param0.size;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

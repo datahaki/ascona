@@ -2,6 +2,7 @@
 package ch.alpine.ascona.crv.clt;
 
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.api.Spearhead;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -25,6 +26,11 @@ public class SpearheadDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.addRenderInterface(AxesRender.INSTANCE);
     // ---
     setControlPointsSe2(Tensors.fromString("{{-0.5, -0.5, 0.3}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_ONLY;
   }
 
   @Override // from RenderInterface

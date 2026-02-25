@@ -4,6 +4,7 @@ package ch.alpine.ascona.crv;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -48,6 +49,11 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
     setManifoldDisplay(ManifoldDisplays.S2);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 0, 0}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.ALL;
   }
 
   @Override // from RenderInterface

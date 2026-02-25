@@ -3,6 +3,7 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.api.GeodesicFilters;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -50,6 +51,11 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
     this.param = param;
     // ---
     setControlPointsSe2(TensorProduct.of(Range.of(0, 5), UnitVector.of(3, 0)).multiply(RealScalar.of(2)));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_SE2_R2;
   }
 
   @Override // from RenderInterface

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
+import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -58,6 +59,11 @@ public class LogarithmDemo extends ControlPointsDemo {
     // ---
     fieldsEditor(0).addUniversalListener(this::spun);
     spun();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.d2Rasters();
   }
 
   @Override

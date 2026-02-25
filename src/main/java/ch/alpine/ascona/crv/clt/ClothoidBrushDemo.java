@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.io.File;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -86,6 +87,11 @@ public class ClothoidBrushDemo extends ControlPointsDemo {
     // // timerFrame.geometricComponent.addRenderInterfaceBackground(imageRender);
     // }
     timerFrame.geometricComponent.setOffset(100, 700);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_ONLY;
   }
 
   @Override

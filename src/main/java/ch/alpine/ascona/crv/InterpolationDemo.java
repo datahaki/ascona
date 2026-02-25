@@ -3,6 +3,7 @@ package ch.alpine.ascona.crv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -28,6 +29,11 @@ class InterpolationDemo extends ControlPointsDemo {
     super(new AsconaParam(true, ManifoldDisplays.homogeneousSpaces()));
     // ---
     addButtonDubins();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.homogeneousSpaces();
   }
 
   @Override

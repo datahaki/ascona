@@ -71,6 +71,11 @@ public class DubinsPathDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {3, 0, 0}}"));
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2_ONLY;
+  }
+
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor controlPointsSe2 = getControlPointsSe2();

@@ -3,6 +3,7 @@ package ch.alpine.ascona.misc;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -31,6 +32,11 @@ public class S3HopfDemo extends ControlPointsDemo {
   public S3HopfDemo() {
     super(new Param0());
     controlPointsRender.setMidpointIndicated(false);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.S2_ONLY;
   }
 
   @Override

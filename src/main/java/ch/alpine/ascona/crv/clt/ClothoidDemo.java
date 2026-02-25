@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.AsconaParam;
@@ -46,6 +47,11 @@ public class ClothoidDemo extends ControlPointsDemo {
   public ClothoidDemo() {
     super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
     setControlPointsSe2(Tensors.fromString("{{2,0,0},{-2,0,0}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_ONLY;
   }
 
   @Override // from RenderInterface

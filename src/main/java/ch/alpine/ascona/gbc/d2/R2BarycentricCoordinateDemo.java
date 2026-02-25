@@ -75,6 +75,11 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
   }
 
   @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.manifolds();
+  }
+
+  @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ColorDataGradient colorDataGradient = scatteredSetParam.spinnerColorData;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

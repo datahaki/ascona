@@ -80,6 +80,11 @@ public class OrderingDemo extends ControlPointsDemo {
     shuffle();
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.manifolds();
+  }
+
   private void shuffle() {
     sequence = RandomSample.of(manifoldDisplay().randomSampleInterface(), param0.size);
   }

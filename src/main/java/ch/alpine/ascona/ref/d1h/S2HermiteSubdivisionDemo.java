@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.util.List;
 
 import ch.alpine.ascony.api.HermiteSubdivisionParam;
 import ch.alpine.ascony.api.HermiteSubdivisions;
@@ -76,6 +77,11 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setOffset(400, 400);
     // ---
     setControlPointsSe2(Tensors.fromString("{{-0.3, 0.0, 0}, {0.0, 0.5, 0.0}, {0.5, 0.5, 1}, {0.5, -0.4, 0}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.S2_ONLY;
   }
 
   @Override

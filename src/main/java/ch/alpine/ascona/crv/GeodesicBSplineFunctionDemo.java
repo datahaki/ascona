@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -39,6 +40,11 @@ public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements Bu
         "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
         Tensor.of(dubins.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.ALL;
   }
 
   @Override // from RenderInterface

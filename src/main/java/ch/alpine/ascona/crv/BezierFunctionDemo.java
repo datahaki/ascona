@@ -3,6 +3,7 @@ package ch.alpine.ascona.crv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -52,6 +53,11 @@ public class BezierFunctionDemo extends AbstractCurvatureDemo {
       setControlPointsSe2(tensor);
     }
     setManifoldDisplay(ManifoldDisplays.Se2);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.ALL;
   }
 
   @Override // from RenderInterface

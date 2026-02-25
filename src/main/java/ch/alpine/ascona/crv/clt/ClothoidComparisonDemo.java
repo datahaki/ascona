@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.List;
 
 import ch.alpine.ascony.api.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -42,6 +43,11 @@ public class ClothoidComparisonDemo extends ControlPointsDemo {
   public ClothoidComparisonDemo() {
     super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_ONLY;
   }
 
   @Override // from RenderInterface

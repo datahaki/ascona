@@ -4,6 +4,7 @@ package ch.alpine.ascona.gbc.d2;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascony.arp.ArrayFunction;
@@ -74,6 +75,11 @@ public final class MaAveragingDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
     // ---
     timerFrame.geometricComponent.setOffset(400, 400);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.d2Rasters();
   }
 
   private final Cache<Tensor, Showable> cache = Cache.of(this::computeImage, 1);

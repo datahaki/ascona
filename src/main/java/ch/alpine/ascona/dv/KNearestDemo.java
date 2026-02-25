@@ -4,6 +4,7 @@ package ch.alpine.ascona.dv;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
+import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.api.LogWeightings;
@@ -70,6 +71,11 @@ public class KNearestDemo extends ControlPointsDemo {
     controlPointsRender.setMidpointIndicated(false);
     fieldsEditor(0).addUniversalListener(this::shuffleSnap);
     shuffleSnap();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2_ONLY;
   }
 
   private void shuffleSnap() {

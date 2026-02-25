@@ -3,6 +3,7 @@ package ch.alpine.ascona.misc;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -78,6 +79,11 @@ public class KMeansDemo extends ControlPointsDemo {
     });
     controlPointsRender.setMidpointIndicated(false);
     pointsAll = shuffle();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.R2_H2_S2_SE2C;
   }
 
   private Tensor shuffle() {

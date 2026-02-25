@@ -2,6 +2,7 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -67,6 +68,11 @@ public class AnimationDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.matrix(new Number[][] { //
         { 0.000, 0.000, 0.000 }, { 0.699, -0.521, 0.000 }, { 0.641, 0.634, 0.000 }, //
         { -0.320, 0.734, 0 }, { -0.067, -0.716, 0.000 }, { -0.768, 0.215, 0.000 } }));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.R2_S2;
   }
 
   private static Tensor random(double toc, int index) {

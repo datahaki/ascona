@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
+import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -49,6 +50,11 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
   public BarycentricExtrapolationDemo(Param param) {
     super(param);
     this.param = param;
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_R2;
   }
 
   @Override

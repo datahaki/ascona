@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
@@ -80,6 +81,11 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     // ---
     timerFrame.geometricComponent.setOffset(400, 400);
     controlPointsRender.setMidpointIndicated(false);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.S2_ONLY;
   }
 
   public class TSF implements TensorScalarFunction {

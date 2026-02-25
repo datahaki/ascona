@@ -66,6 +66,11 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setOffset(100, 600);
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.ALL;
+  }
+
   @Override // from RenderInterface
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

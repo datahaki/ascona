@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 import java.util.Deque;
+import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -48,6 +49,11 @@ public class ExponentialDemo extends ControlPointsDemo {
     Tensor sequence = Tensor.of(CirclePoints.of(15).multiply(RealScalar.of(2)).stream().skip(5).map(PadRight.zeros(3)));
     sequence.set(Scalar::zero, 0, Tensor.ALL);
     setControlPointsSe2(sequence);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.R2_ONLY;
   }
 
   private static final PointsRender POINTS_RENDER = //

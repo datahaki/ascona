@@ -4,6 +4,7 @@ package ch.alpine.ascona.gbc.d2;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
@@ -67,6 +68,11 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
         "{{-1.217, -2.050, 1.309}, {1.783, 1.917, 0.262}, {-3.583, 0.300, -0.262}, {2.200, -0.283, 0.262}, {-4.000, -3.000, 1.000}, {-1.900, 2.117, 1.309}}"));
     timerFrame.geometricComponent.addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
     timerFrame.geometricComponent.setOffset(500, 500);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_SE2;
   }
 
   private static Tensor random(double toc, int index) {

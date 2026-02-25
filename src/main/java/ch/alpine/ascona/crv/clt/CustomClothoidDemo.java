@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import javax.swing.JLabel;
 
@@ -59,6 +60,11 @@ public class CustomClothoidDemo extends ControlPointsDemo {
     setControlPointsSe2(INITIAL);
     timerFrame.jToolBar.add(jLabel);
     timerFrame.geometricComponent.setOffset(300, 700);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.CL_ONLY;
   }
 
   @Override

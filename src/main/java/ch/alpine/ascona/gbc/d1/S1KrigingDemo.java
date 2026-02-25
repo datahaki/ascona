@@ -4,6 +4,7 @@ package ch.alpine.ascona.gbc.d1;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
+import java.util.List;
 
 import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.LogWeightings;
@@ -77,6 +78,11 @@ public class S1KrigingDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
     timerFrame.geometricComponent.addRenderInterfaceBackground(S1FrameRender.INSTANCE);
     timerFrame.geometricComponent.setOffset(500, 500);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.R2_ONLY;
   }
 
   @Override // from RenderInterface

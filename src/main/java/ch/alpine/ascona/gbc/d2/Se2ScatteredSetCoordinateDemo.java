@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
@@ -51,6 +52,11 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
     // Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     // timerFrame.geometricComponent.setModel2Pixel(Tensors.vector(5, 5, 1).pmul(model2pixel));
     timerFrame.geometricComponent.setOffset(500, 500);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_SE2;
   }
 
   @Override

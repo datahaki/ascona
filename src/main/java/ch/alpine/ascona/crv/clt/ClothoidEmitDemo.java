@@ -41,6 +41,11 @@ public class ClothoidEmitDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_ONLY;
+  }
+
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();

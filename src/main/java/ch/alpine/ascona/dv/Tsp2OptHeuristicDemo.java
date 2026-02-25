@@ -73,6 +73,11 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     shuffle();
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.manifolds();
+  }
+
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     if (param1.active) {

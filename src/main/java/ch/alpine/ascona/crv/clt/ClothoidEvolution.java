@@ -4,6 +4,7 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -55,6 +56,11 @@ public class ClothoidEvolution extends ControlPointsDemo {
     Tensor ctrl = Tensors.fromString( //
         "{{0.017, 0.017, 0.000}, {1.733, 0.967, 4.712}, {3.933, -0.750, -3.665}, {5.567, 1.717, 3.927}, {7.983, 1.500, 4.451}}");
     setControlPointsSe2(ctrl);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.CLC_ONLY;
   }
 
   @Override

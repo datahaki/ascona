@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -80,6 +81,11 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     fieldsEditor(0).addUniversalListener(this::recompute);
     // ---
     timerFrame.geometricComponent.setOffset(400, 400);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.d2Rasters();
   }
 
   private final Cache<Tensor, Showable> cache = Cache.of(this::computeImage, 1);

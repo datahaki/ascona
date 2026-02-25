@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -43,6 +44,11 @@ public class DeBoorDemo extends AbstractCurveDemo implements BufferedImageSuppli
     Tensor dubins = Tensors.fromString("{{1, 0, 0}, {2, 0, 2.5708}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 0), //
         Tensor.of(dubins.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.ALL;
   }
 
   @Override // from RenderInterface

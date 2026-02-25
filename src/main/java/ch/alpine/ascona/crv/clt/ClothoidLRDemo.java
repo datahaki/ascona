@@ -3,6 +3,7 @@ package ch.alpine.ascona.crv.clt;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2ClothoidDisplay;
@@ -41,6 +42,11 @@ public class ClothoidLRDemo extends ControlPointsDemo {
   public ClothoidLRDemo() {
     super(new AsconaParam(false, ManifoldDisplays.SE2C_ONLY));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {-3,0,0}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_ONLY;
   }
 
   @Override // from RenderInterface

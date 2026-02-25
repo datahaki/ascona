@@ -3,6 +3,7 @@ package ch.alpine.ascona.nd;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -65,6 +66,11 @@ class ClothoidNdDemo extends ControlPointsDemo {
     for (Tensor state : tensor)
       clothoidNdMap.insert(state);
     setControlPointsSe2(tensor);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.CL_ONLY;
   }
 
   @Override

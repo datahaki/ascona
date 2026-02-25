@@ -2,6 +2,7 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Optional;
 
 import javax.swing.JToggleButton;
@@ -63,6 +64,11 @@ public class Se2AnimationDemo extends ControlPointsDemo {
       timerFrame.jToolBar.add(jToggleAnimate);
     }
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1.5, -1, -1}, {2, 1, 1}, {-0.5, 1.5, 2}, {-1, -1.5, -2}, {-1.5, 0, 0.3}}"));
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_SE2;
   }
 
   private static Tensor random(double toc, int index) {

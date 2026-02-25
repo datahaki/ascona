@@ -78,6 +78,11 @@ public class S1InterpolationDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.addRenderInterfaceBackground(S1FrameRender.INSTANCE);
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.R2_ONLY;
+  }
+
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

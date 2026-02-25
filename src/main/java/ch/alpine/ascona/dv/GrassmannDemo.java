@@ -2,6 +2,7 @@
 package ch.alpine.ascona.dv;
 
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -56,6 +57,11 @@ public final class GrassmannDemo extends ControlPointsDemo {
     controlPointsRender.setMidpointIndicated(false);
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.manifolds();
   }
 
   private void shuffle() {

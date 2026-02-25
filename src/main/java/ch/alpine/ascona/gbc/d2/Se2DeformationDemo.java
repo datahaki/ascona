@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
+import java.util.List;
+
 import ch.alpine.ascony.bas.AveragedMovingDomain2D;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -23,6 +25,11 @@ public class Se2DeformationDemo extends AbstractDeformationDemo {
     super(ManifoldDisplays.SE2C_SE2, new Object());
     // ---
     timerFrame.geometricComponent.setOffset(300, 500);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2C_SE2;
   }
 
   @Override

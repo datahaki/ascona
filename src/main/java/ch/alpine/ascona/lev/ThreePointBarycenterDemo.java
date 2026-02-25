@@ -2,6 +2,7 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.api.PolygonCoordinates;
@@ -42,6 +43,11 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     spun();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.d2Rasters();
   }
 
   @Override // from RenderInterface

@@ -3,6 +3,7 @@ package ch.alpine.ascona.gbc.it;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -32,6 +33,11 @@ public class AffineCoordinateDemo extends ControlPointsDemo {
     // ---
     Tensor sequence = Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(2)).stream().map(PadRight.zeros(3)));
     setControlPointsSe2(sequence);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.R2_ONLY;
   }
 
   @Override

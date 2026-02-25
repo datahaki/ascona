@@ -3,6 +3,7 @@ package ch.alpine.ascona.decim;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -40,6 +41,11 @@ public class BulkDecimationDemo extends ControlPointsDemo {
         RandomVariate.of(dX), RandomVariate.of(dY), RandomVariate.of(dA)), 4).stream() //
         .map(Se2CoveringGroup.INSTANCE.exponential0()::exp));
     setControlPointsSe2(tensor);
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.SE2_R2;
   }
 
   @Override

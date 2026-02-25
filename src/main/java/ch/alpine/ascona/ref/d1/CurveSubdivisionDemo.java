@@ -100,6 +100,11 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
   }
 
   @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.ALL;
+  }
+
+  @Override
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     final CurveSubdivisionSchemes scheme = param.scheme;
     //

@@ -2,6 +2,7 @@
 package ch.alpine.ascona.usr;
 
 import java.awt.Graphics2D;
+import java.util.List;
 
 import ch.alpine.ascona.crv.AbstractCurvatureDemo;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -46,6 +47,11 @@ public class BSplineFunctionDemo extends AbstractCurvatureDemo {
   public BSplineFunctionDemo(Param param) {
     super(param);
     this.param = param;
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.R2_ONLY;
   }
 
   @Override

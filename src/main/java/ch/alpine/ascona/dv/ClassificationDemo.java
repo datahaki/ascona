@@ -82,6 +82,11 @@ public class ClassificationDemo extends ControlPointsDemo {
     shuffle();
   }
 
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.manifolds();
+  }
+
   protected void shuffle() {
     // assignment of random labels to points
     int n = param0.size;

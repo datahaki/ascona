@@ -3,6 +3,7 @@ package ch.alpine.ascona.dv;
 
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -67,6 +68,11 @@ public class WeightsDemo extends ControlPointsDemo {
     controlPointsRender.setMidpointIndicated(false);
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.manifolds();
   }
 
   private void shuffle() {

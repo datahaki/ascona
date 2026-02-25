@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
+import java.util.List;
+
 import ch.alpine.ascony.bas.AveragedMovingDomain2D;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.bas.RnFittedMovingDomain2D;
@@ -34,6 +36,11 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
   public R2DeformationDemo(Param2 param2) {
     super(ManifoldDisplays.R2_ONLY, param2);
     this.param2 = param2;
+  }
+
+  @Override
+  public List<ManifoldDisplays> getManifoldDisplays() {
+    return ManifoldDisplays.R2_ONLY;
   }
 
   @Override
