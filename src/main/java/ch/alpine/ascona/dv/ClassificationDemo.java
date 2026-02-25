@@ -78,6 +78,7 @@ public class ClassificationDemo extends ControlPointsDemo {
     this.param1 = param1;
     setManifoldDisplay(ManifoldDisplays.Se2);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}}"));
+    addChangeListener(this::shuffle);
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();
   }
@@ -97,8 +98,8 @@ public class ClassificationDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Manifold manifold = manifoldDisplay.manifold();
     Tensor origin = getGeodesicControlPoints().get(0);
+    Manifold manifold = manifoldDisplay.manifold();
     // ---
     Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), null, sequence);
     Tensor weights = sedarim.sunder(origin);

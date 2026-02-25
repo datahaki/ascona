@@ -1,9 +1,7 @@
 // code by jph
 package ch.alpine.ascona.gbc.it;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -24,7 +22,8 @@ import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.util.PanelFieldsEditor;
+import ch.alpine.bridge.ref.util.FieldsEditor;
+import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -44,10 +43,8 @@ public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeight
   public PlanarScatteredSetCoordinateDemo() {
     super(List.of(LogWeightings.WEIGHTING));
     spinnerLogWeighting.setVisible(false);
-    Container container = timerFrame.jFrame.getContentPane();
-    PanelFieldsEditor fieldsPanel = PanelFieldsEditor.splits(dequeGenesisProperties);
-    fieldsPanel.addUniversalListener(this::recompute);
-    container.add(fieldsPanel.createJScrollPane(), BorderLayout.WEST);
+    FieldsEditor fieldsEditor = ToolbarFieldsEditor.addToComponent(dequeGenesisProperties, timerFrame.jToolBar);
+    fieldsEditor.addUniversalListener(this::recompute);
     // ---
     TensorUnaryOperator tuo = PadRight.zeros(3);
     setControlPointsSe2(Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(0.6)).stream().map(tuo)));
