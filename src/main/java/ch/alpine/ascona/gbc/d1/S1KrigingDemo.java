@@ -10,7 +10,7 @@ import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.BoundingBoxRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -50,11 +50,7 @@ public class S1KrigingDemo extends ControlPointsDemo {
   private static final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     public LogWeightings logWeightings = LogWeightings.KRIGING;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;
@@ -70,7 +66,7 @@ public class S1KrigingDemo extends ControlPointsDemo {
   }
 
   public S1KrigingDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

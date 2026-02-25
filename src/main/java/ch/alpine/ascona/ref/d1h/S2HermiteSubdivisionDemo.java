@@ -12,7 +12,7 @@ import ch.alpine.ascony.api.HermiteSubdivisions;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.S2Display;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -44,11 +44,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   private static final Tensor GEODESIC_DOMAIN = Subdivide.of(0.0, 1.0, 11);
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
     public final HermiteSubdivisionParam hsp = HermiteSubdivisionParam.GLOBAL;
     @FieldSlider
@@ -69,7 +65,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   }
 
   public S2HermiteSubdivisionDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     // ---
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();

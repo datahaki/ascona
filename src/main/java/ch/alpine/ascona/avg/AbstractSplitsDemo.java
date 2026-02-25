@@ -9,7 +9,7 @@ import java.util.Objects;
 import ch.alpine.ascona.avg.GeometricSymLinkRender.Link;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLink;
 import ch.alpine.ascony.sym.SymLinkBuilder;
@@ -23,8 +23,8 @@ import ch.alpine.tensor.Tensor;
 public abstract class AbstractSplitsDemo extends ControlPointsDemo {
   private static final Font FONT = new Font(Font.DIALOG, Font.PLAIN, 13);
 
-  protected AbstractSplitsDemo(AsconaParam asconaParam) {
-    super(asconaParam);
+  protected AbstractSplitsDemo(Object object) {
+    super(new AsconaParam(true), object);
   }
 
   @Override

@@ -10,7 +10,7 @@ import java.util.List;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -42,11 +42,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
   private static final Tensor INITIAL = Tensors.fromString("{{-0.5, 0, 0}, {0.5, 0, 0}}").unmodifiable();
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(false);
-    }
-
+  public static class Param {
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200" })
     public Integer resolution = 50;
     @FieldLabel("color data gradient")
@@ -60,7 +56,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
   }
 
   public LineDistanceDemo(Param param) {
-    super(param);
+    super(new AsconaParam(false), param);
     this.param = param;
     // ---
     setControlPointsSe2(INITIAL);

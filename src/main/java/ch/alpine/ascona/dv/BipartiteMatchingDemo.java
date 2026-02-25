@@ -8,7 +8,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -25,11 +25,7 @@ import ch.alpine.tensor.pdf.RandomSample;
 
 public class BipartiteMatchingDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     @FieldClip(min = "1", max = "200")
     public Integer n = 5;
     @FieldFuse
@@ -44,7 +40,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
   }
 
   public BipartiteMatchingDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();

@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -50,11 +50,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   private static final Tensor INITIAL = Tensors.fromString("{{-0.5, 0, 0}, {0.5, 0, 0}, {0, 0.5, 0}, {0, -0.5, 0}}").unmodifiable();
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })
     public Integer resolution = 20;
     @FieldLabel("color data gradient")
@@ -71,7 +67,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   }
 
   public S2DefectNormDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     // ---
     setControlPointsSe2(INITIAL);

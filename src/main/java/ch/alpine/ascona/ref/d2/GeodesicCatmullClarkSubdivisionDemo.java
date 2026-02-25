@@ -8,7 +8,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -25,11 +25,7 @@ import ch.alpine.tensor.red.Nest;
 
 public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(false);
-    }
-
+  public static class Param {
     @FieldSlider
     @FieldClip(min = "0", max = "4")
     public Integer refine = 2;
@@ -42,7 +38,7 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   }
 
   public GeodesicCatmullClarkSubdivisionDemo(Param param) {
-    super(param);
+    super(new AsconaParam(false), param);
     this.param = param;
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {0, 1, 0}, {1, 1, 0}, {2, 1, 0}}").multiply(RealScalar.of(2)));

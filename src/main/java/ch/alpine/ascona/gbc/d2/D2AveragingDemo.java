@@ -13,7 +13,7 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -50,11 +50,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 public final class D2AveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
@@ -72,7 +68,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   }
 
   public D2AveragingDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     setManifoldDisplay(ManifoldDisplays.S2);
     controlPointsRender.setMidpointIndicated(false);

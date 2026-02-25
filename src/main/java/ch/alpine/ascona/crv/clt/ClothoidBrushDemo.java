@@ -9,12 +9,13 @@ import java.awt.geom.Path2D;
 import java.io.File;
 import java.util.Objects;
 
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.crv.clt.ClothoidBuilders;
 import ch.alpine.sophis.crv.clt.ClothoidSampler;
@@ -31,11 +32,8 @@ import ch.alpine.tensor.ext.Cache;
 public class ClothoidBrushDemo extends ClothoidBaseDemo {
   public static final Scalar BETA = RealScalar.of(0.05);
 
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  @ReflectionMarker
+  public static class Param {
     @FieldPreferredWidth(200)
     public Tensor shiftL = Tensors.vector(-1.3, -1.3, 0);
     @FieldPreferredWidth(200)
@@ -62,7 +60,7 @@ public class ClothoidBrushDemo extends ClothoidBaseDemo {
   }
 
   public ClothoidBrushDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     try {
       // FIXME ASCONA

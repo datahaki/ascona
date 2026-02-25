@@ -4,11 +4,12 @@ package ch.alpine.ascona.crv.clt;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
 
 abstract class ClothoidBaseDemo extends ControlPointsDemo {
-  public ClothoidBaseDemo(Object... objects) {
-    super(objects);
+  public ClothoidBaseDemo(AsconaParam asconaParam, Object... objects) {
+    super(asconaParam, objects);
   }
 
   @Override

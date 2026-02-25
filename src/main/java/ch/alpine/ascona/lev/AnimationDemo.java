@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -26,11 +26,7 @@ import ch.alpine.tensor.qty.Timing;
 
 public class AnimationDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 extends AsconaParam {
-    public Param0() {
-      super(true);
-    }
-
+  public static class Param0 {
     public Biinvariants biinvariants = Biinvariants.METRIC;
   }
 
@@ -51,7 +47,7 @@ public class AnimationDemo extends ControlPointsDemo {
   }
 
   public AnimationDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
+    super(new AsconaParam(true), param0, param1);
     this.param0 = param0;
     this.param1 = param1;
     controlPointsRender.setMidpointIndicated(false);

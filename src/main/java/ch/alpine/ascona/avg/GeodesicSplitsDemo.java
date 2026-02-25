@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.avg;
 
-import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymScalar;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -14,11 +13,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 public class GeodesicSplitsDemo extends AbstractSplitsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     public WindowFunctions kernel = WindowFunctions.DIRICHLET;
     public Boolean prediction = false;
   }

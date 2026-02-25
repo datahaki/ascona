@@ -9,7 +9,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -36,11 +36,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   private static final int HEIGHT = 300;
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     @FieldClip(min = "0", max = "1")
     public Integer beta = 0;
     @FieldClip(min = "0", max = "7")
@@ -56,7 +52,7 @@ public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   }
 
   public BarycentricRationalInterpolationDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);

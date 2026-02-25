@@ -8,7 +8,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -30,11 +30,7 @@ import ch.alpine.tensor.qty.Timing;
 
 public class ClothoidEvolution extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     @FieldSelectionArray({ "0.05", "0.1", "0.2", "0.3", "0.4", "0.5" })
     public Scalar beta = RealScalar.of(0.05);
     public Boolean animate = true;
@@ -48,7 +44,7 @@ public class ClothoidEvolution extends ControlPointsDemo {
   }
 
   public ClothoidEvolution(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     // ---
     timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);

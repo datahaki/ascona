@@ -8,12 +8,11 @@ import java.awt.Graphics2D;
 
 import javax.swing.JLabel;
 
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.crv.clt.ClothoidContext;
 import ch.alpine.sophis.crv.clt.ClothoidSolutions;
@@ -34,26 +33,12 @@ import ch.alpine.tensor.sca.Round;
 public class CustomClothoidDemo extends ClothoidBaseDemo {
   private static final Tensor INITIAL = Tensors.fromString("{{0,0,0},{3,0,0}}");
   private static final Tensor POINTER = Tensors.fromString("{{0, 0}, {-0.2, -1}, {+0.2, -1}}");
-
-  @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(false);
-    }
-  }
-
   private final JLabel jLabel = new JLabel();
   private static final Scalar MIN_RESOLUTION = RealScalar.of(0.05);
   // ---
-  private final Param param;
 
   public CustomClothoidDemo() {
-    this(new Param());
-  }
-
-  public CustomClothoidDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(new AsconaParam(false));
     setControlPointsSe2(INITIAL);
     timerFrame.jToolBar.add(jLabel);
     timerFrame.geometricComponent.setOffset(300, 700);

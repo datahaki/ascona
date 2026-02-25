@@ -17,7 +17,7 @@ import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -47,14 +47,7 @@ import ch.alpine.tensor.sca.var.VariogramFunctions;
  * weights from barycentric coordinates defined by set of control points*in the square domain(subset of R^2)to means in non-linear spaces */
 public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   public static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._000.strict();
-
   // ---
-  @ReflectionMarker
-  public static class Param0 extends AsconaParam {
-    public Param0() {
-      super(true);
-    }
-  }
 
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
@@ -71,17 +64,15 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
     public Boolean freeze = false;
   }
 
-  private final Param0 param0;
   private final Param1 param1;
   private Tensor reference;
 
   public CheckerBoardDemo() {
-    this(new Param0(), new Param1());
+    this(new Param1());
   }
 
-  public CheckerBoardDemo(Param0 param, Param1 param1) {
-    super(param, param1);
-    this.param0 = param;
+  public CheckerBoardDemo(Param1 param1) {
+    super(new AsconaParam(true), param1);
     this.param1 = param1;
     setManifoldDisplay(ManifoldDisplays.S2);
     controlPointsRender.setMidpointIndicated(true);

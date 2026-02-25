@@ -9,7 +9,7 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2CoveringDisplay;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -46,11 +46,7 @@ public class DubinsPathDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(false);
-    }
-
+  public static class Param {
     public Boolean allDubins = false;
     public Boolean relax = true;
     public Boolean shortest = true;
@@ -66,7 +62,7 @@ public class DubinsPathDemo extends ControlPointsDemo {
   }
 
   public DubinsPathDemo(Param param) {
-    super(param);
+    super(new AsconaParam(false), param);
     this.param = param;
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {3, 0, 0}}"));
   }

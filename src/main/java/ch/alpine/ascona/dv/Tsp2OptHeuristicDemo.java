@@ -12,7 +12,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -37,11 +37,7 @@ import ch.alpine.tensor.sca.exp.Log;
 
 public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 extends AsconaParam {
-    public Param0() {
-      super(false);
-    }
-
+  public static class Param0 {
     @FieldSelectionArray({ "25", "50", "100", "150", "200" })
     public Integer numel = 50;
     public transient Boolean shuffle = false;
@@ -63,7 +59,7 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   }
 
   public Tsp2OptHeuristicDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
+    super(new AsconaParam(false), param0, param1);
     this.param0 = param0;
     this.param1 = param1;
     setManifoldDisplay(ManifoldDisplays.R2);

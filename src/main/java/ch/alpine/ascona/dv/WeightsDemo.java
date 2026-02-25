@@ -10,7 +10,7 @@ import java.util.Optional;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
@@ -31,12 +31,7 @@ import ch.alpine.tensor.pdf.RandomSample;
 
 public class WeightsDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 extends AsconaParam {
-    public Param0() {
-      super(true);
-      drawControlPoints = false;
-    }
-
+  public static class Param0 {
     @FieldSelectionArray({ "3", "5", "10" })
     public Integer size = 5;
     @FieldFuse
@@ -57,7 +52,8 @@ public class WeightsDemo extends ControlPointsDemo {
   }
 
   public WeightsDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
+    super(new AsconaParam(true), param0, param1);
+    asconaParam().drawControlPoints = false;
     this.param0 = param0;
     this.param1 = param1;
     // ---

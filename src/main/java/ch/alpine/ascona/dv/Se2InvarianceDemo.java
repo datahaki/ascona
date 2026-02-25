@@ -6,7 +6,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -22,12 +22,7 @@ import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 
 public class Se2InvarianceDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-      drawControlPoints = false;
-    }
-
+  public static class Param {
     @FieldSelectionArray({ "{0,0,0}", "{1,1,3}" })
     public Tensor xya = Tensors.vector(1, 1, 3);
   }
@@ -39,7 +34,8 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
   }
 
   public Se2InvarianceDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
+    asconaParam().drawControlPoints = false;
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     setControlPointsSe2(Tensors.fromString( //

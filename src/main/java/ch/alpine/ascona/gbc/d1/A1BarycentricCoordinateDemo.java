@@ -7,7 +7,7 @@ import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -29,11 +29,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /* package */ abstract class A1BarycentricCoordinateDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
@@ -48,7 +44,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   }
 
   protected A1BarycentricCoordinateDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

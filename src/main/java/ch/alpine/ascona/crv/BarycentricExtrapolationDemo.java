@@ -11,7 +11,7 @@ import java.util.List;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -31,11 +31,7 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
   }
@@ -47,7 +43,7 @@ public class BarycentricExtrapolationDemo extends ControlPointsDemo {
   }
 
   public BarycentricExtrapolationDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     setManifoldDisplay(ManifoldDisplays.R2);
   }

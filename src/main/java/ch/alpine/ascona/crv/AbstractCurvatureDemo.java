@@ -10,7 +10,7 @@ import java.util.Optional;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.api.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -26,19 +26,15 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
   private static final int HEIGHT = 360;
 
   @ReflectionMarker
-  public static class AbstractCurvatureParam extends AsconaParam {
+  public static class AbstractCurvatureParam {
     public Boolean graph = true;
     public Boolean curvt = true;
-
-    public AbstractCurvatureParam() {
-      super(true);
-    }
   }
 
   private final AbstractCurvatureParam abstractCurvatureParam;
 
   protected AbstractCurvatureDemo(AbstractCurvatureParam abstractCurvatureParam) {
-    super(abstractCurvatureParam);
+    super(new AsconaParam(true), abstractCurvatureParam);
     this.abstractCurvatureParam = abstractCurvatureParam;
   }
 

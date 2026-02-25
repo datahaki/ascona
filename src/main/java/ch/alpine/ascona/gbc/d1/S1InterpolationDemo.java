@@ -9,7 +9,7 @@ import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.BoundingBoxRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -38,11 +38,7 @@ import ch.alpine.tensor.sca.Clips;
 
 public class S1InterpolationDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     @FieldSelectionCallback("logWeightings")
     public LogWeightings logWeightings = LogWeightings.WEIGHTING;
     @FieldSelectionCallback("biinvariants")
@@ -68,7 +64,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
   }
 
   public S1InterpolationDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

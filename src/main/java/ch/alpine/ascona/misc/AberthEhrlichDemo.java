@@ -9,7 +9,7 @@ import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.C1Display;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -44,11 +44,7 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
       new PointsRender(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255));
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     @FieldClip(min = "3", max = "20")
     @FieldSlider
     public Integer depth = 5;
@@ -65,7 +61,7 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
   }
 
   public AberthEhrlichDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

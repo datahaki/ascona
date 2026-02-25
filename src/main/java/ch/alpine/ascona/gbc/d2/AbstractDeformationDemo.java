@@ -11,7 +11,7 @@ import java.util.Objects;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -49,11 +49,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
   // ---
   @ReflectionMarker
-  public static class Param0 extends AsconaParam {
-    public Param0() {
-      super(false);
-    }
-
+  public static class Param0 {
     public LogWeightings logWeightings = LogWeightings.COORDINATE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public ColorDataGradients cdg = ColorDataGradients.RAINBOW;
@@ -81,7 +77,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   }
 
   protected AbstractDeformationDemo(Param0 param0, Param1 param1, Object object) {
-    super(param0, param1, object);
+    super(new AsconaParam(false), param0, param1, object);
     this.param0 = param0;
     this.param1 = param1;
     fieldsEditor(0).addUniversalListener(this::recompute);

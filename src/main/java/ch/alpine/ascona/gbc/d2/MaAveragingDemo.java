@@ -10,7 +10,7 @@ import java.util.Objects;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -48,11 +48,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
  * by Marc Alexa */
 public final class MaAveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;
     // TODO adaptive resolution
@@ -68,7 +64,7 @@ public final class MaAveragingDemo extends ControlPointsDemo {
   }
 
   public MaAveragingDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

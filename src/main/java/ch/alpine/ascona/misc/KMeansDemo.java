@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -42,11 +42,7 @@ import ch.alpine.tensor.sca.Clips;
 
 public class KMeansDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param1 extends AsconaParam {
-    public Param1() {
-      super(true);
-    }
-
+  public static class Param1 {
     @FieldSelectionArray({ "100", "200", "500", "1000" })
     public Integer count = 200;
     @FieldFuse
@@ -68,7 +64,7 @@ public class KMeansDemo extends ControlPointsDemo {
   }
 
   public KMeansDemo(Param1 param1, Param2 param2) {
-    super(param1, param2);
+    super(new AsconaParam(true), param1, param2);
     this.param1 = param1;
     fieldsEditor(0).addUniversalListener(() -> {
       pointsAll = shuffle();

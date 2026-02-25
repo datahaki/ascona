@@ -12,7 +12,7 @@ import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -36,13 +36,6 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
  * in the square domain (subset of R^2) to means in non-linear spaces */
 public class PolygonCoordinatesDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 extends AsconaParam {
-    public Param0() {
-      super(true);
-    }
-  }
-
-  @ReflectionMarker
   public static class Param1 {
     public PolygonCoordinates logWeightings = PolygonCoordinates.MEAN_VALUE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
@@ -51,16 +44,14 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     public ColorDataGradients cdg = ColorDataGradients.PARULA;
   }
 
-  private final Param0 param0;
   private final Param1 param1;
 
   public PolygonCoordinatesDemo() {
-    this(new Param0(), new Param1());
+    this(new Param1());
   }
 
-  public PolygonCoordinatesDemo(Param0 param, Param1 param1) {
-    super(param, param1);
-    this.param0 = param;
+  public PolygonCoordinatesDemo(Param1 param1) {
+    super(new AsconaParam(true), param1);
     this.param1 = param1;
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);

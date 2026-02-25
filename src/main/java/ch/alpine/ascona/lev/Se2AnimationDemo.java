@@ -9,13 +9,12 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.noise.SimplexContinuousNoise;
 import ch.alpine.sophus.lie.LieGroup;
@@ -26,14 +25,6 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Timing;
 
 public class Se2AnimationDemo extends ControlPointsDemo {
-  @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-      drawControlPoints = false;
-    }
-  }
-
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();
   // ---
@@ -41,11 +32,8 @@ public class Se2AnimationDemo extends ControlPointsDemo {
   private Tensor snapshot;
 
   public Se2AnimationDemo() {
-    this(new Param());
-  }
-
-  public Se2AnimationDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true));
+    asconaParam().drawControlPoints = false;
     controlPointsRender.setMidpointIndicated(false);
     {
       jToggleAnimate.addActionListener(_ -> {

@@ -7,7 +7,7 @@ import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -29,11 +29,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 /** TODO ASCONA ALG investigate, this produces some nice results for kriging+metric+power */
 public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     public LogWeightings logWeightings = LogWeightings.WEIGHTING;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;
@@ -49,7 +45,7 @@ public class R1RadialBasisFunctionDemo extends A1AveragingDemo {
   }
 
   public R1RadialBasisFunctionDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

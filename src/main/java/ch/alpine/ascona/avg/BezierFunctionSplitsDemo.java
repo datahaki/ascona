@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.avg;
 
-import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymScalar;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -17,11 +16,7 @@ import ch.alpine.tensor.itp.BezierFunction;
 /** visualization of geodesic average along geodesics */
 public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     @FieldSlider
     @FieldClip(min = "0", max = "1")
     public Scalar ratio = RealScalar.of(0.5);

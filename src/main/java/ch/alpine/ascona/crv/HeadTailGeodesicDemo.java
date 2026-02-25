@@ -8,8 +8,8 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.AreaRender;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -26,11 +26,7 @@ import ch.alpine.tensor.sca.Round;
 
 public class HeadTailGeodesicDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(false);
-    }
-
+  public static class Param {
     @FieldSlider
     @FieldClip(min = "5", max = "20")
     public Integer refine = 6;
@@ -43,7 +39,7 @@ public class HeadTailGeodesicDemo extends ControlPointsDemo {
   }
 
   public HeadTailGeodesicDemo(Param param) {
-    super(param);
+    super(new AsconaParam(false), param);
     this.param = param;
     // ---
     setManifoldDisplay(ManifoldDisplays.S2);

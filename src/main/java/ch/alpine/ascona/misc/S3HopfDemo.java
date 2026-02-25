@@ -7,12 +7,11 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.s.S3Hopf;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -22,15 +21,8 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Clips;
 
 public class S3HopfDemo extends ControlPointsDemo {
-  @ReflectionMarker
-  public static class Param0 extends AsconaParam {
-    public Param0() {
-      super(true);
-    }
-  }
-
   public S3HopfDemo() {
-    super(new Param0());
+    super(new AsconaParam(true));
     controlPointsRender.setMidpointIndicated(false);
   }
 

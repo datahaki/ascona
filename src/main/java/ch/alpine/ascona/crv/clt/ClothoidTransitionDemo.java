@@ -10,7 +10,7 @@ import java.awt.geom.Path2D;
 import ch.alpine.ascony.api.RnLineTrim;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.Se2Display;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.fig.ListLinePlot;
@@ -35,11 +35,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 public class ClothoidTransitionDemo extends ClothoidBaseDemo {
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     public Boolean ctrl = true;
     @FieldSlider
     @FieldClip(min = "0.01", max = "1")
@@ -62,7 +58,7 @@ public class ClothoidTransitionDemo extends ClothoidBaseDemo {
   }
 
   public ClothoidTransitionDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     // ---
     setControlPointsSe2(RandomVariate.of(UniformDistribution.of(0, 8), 1 * 2, 3));

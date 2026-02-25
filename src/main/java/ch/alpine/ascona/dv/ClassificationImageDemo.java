@@ -14,7 +14,7 @@ import ch.alpine.ascony.cls.ClassificationImage;
 import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ImagePlot;
@@ -43,12 +43,7 @@ import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
 public class ClassificationImageDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 extends AsconaParam {
-    public Param0() {
-      super(false);
-      drawControlPoints = false;
-    }
-
+  public static class Param0 {
     @FieldSelectionArray({ "10", "20", "50" })
     public Integer size = 20;
     @FieldSelectionArray({ "2", "3", "4", "5" })
@@ -84,7 +79,8 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   }
 
   public ClassificationImageDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
+    super(new AsconaParam(false), param0, param1);
+    asconaParam().drawControlPoints = false;
     this.param0 = param0;
     this.param1 = param1;
     addChangeListener(_ -> shuffle());

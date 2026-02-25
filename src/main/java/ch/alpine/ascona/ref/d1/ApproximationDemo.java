@@ -14,6 +14,7 @@ import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascona.dat.gok.PosHz;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -75,7 +76,7 @@ public class ApproximationDemo extends ControlPointsDemo {
   }
 
   public ApproximationDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     param.string = GokartPos.list().getFirst();

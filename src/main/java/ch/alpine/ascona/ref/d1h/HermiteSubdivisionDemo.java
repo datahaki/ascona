@@ -12,7 +12,7 @@ import ch.alpine.ascony.api.HermiteSubdivisions;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2Display;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -47,11 +47,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
 
   // ---
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(true);
-    }
-
+  public static class Param {
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
     public final HermiteSubdivisionParam hsp = HermiteSubdivisionParam.GLOBAL;
     @FieldSlider
@@ -67,7 +63,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
   }
 
   public HermiteSubdivisionDemo(Param param) {
-    super(param);
+    super(new AsconaParam(true), param);
     this.param = param;
   }
 

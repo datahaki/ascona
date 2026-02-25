@@ -8,8 +8,8 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.ren.AreaRender;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -32,11 +32,7 @@ public class GeodesicDemo extends ControlPointsDemo {
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0));
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(false);
-    }
-
+  public static class Param {
     @FieldSlider
     @FieldClip(min = "5", max = "20")
     public Integer splits = 10;
@@ -51,7 +47,7 @@ public class GeodesicDemo extends ControlPointsDemo {
   }
 
   public GeodesicDemo(Param param) {
-    super(param);
+    super(new AsconaParam(false), param);
     this.param = param;
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {1,0,0}}"));
     timerFrame.geometricComponent.setRotatable(false);

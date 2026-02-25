@@ -4,7 +4,7 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.api.Spearhead;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;

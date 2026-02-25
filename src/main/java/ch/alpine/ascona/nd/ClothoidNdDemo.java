@@ -7,7 +7,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -39,11 +39,7 @@ class ClothoidNdDemo extends ControlPointsDemo {
   private final ClothoidNdMap<Tensor> clothoidNdMap = new ClothoidNdMap<>(ND_BOX_R2, t -> t);
 
   @ReflectionMarker
-  public static class Param extends AsconaParam {
-    public Param() {
-      super(false);
-    }
-
+  public static class Param {
     @FieldClip(min = "1", max = "30")
     @FieldSlider
     public Integer value = 8;
@@ -56,7 +52,7 @@ class ClothoidNdDemo extends ControlPointsDemo {
   }
 
   public ClothoidNdDemo(Param param) {
-    super(param);
+    super(new AsconaParam(false), param);
     this.param = param;
     // ---
     controlPointsRender.setPositioningEnabled(false);

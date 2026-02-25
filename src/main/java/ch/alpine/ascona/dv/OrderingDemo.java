@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -36,12 +36,7 @@ import ch.alpine.tensor.sca.Clips;
 
 public class OrderingDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 extends AsconaParam {
-    public Param0() {
-      super(false);
-      drawControlPoints = false;
-    }
-
+  public static class Param0 {
     @FieldSelectionArray({ "10", "50", "100", "200" })
     public Integer size = 100;
     @FieldFuse
@@ -71,7 +66,8 @@ public class OrderingDemo extends ControlPointsDemo {
   }
 
   public OrderingDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
+    super(new AsconaParam(false), param0, param1);
+    asconaParam().drawControlPoints = false;
     this.param0 = param0;
     this.param1 = param1;
     setManifoldDisplay(ManifoldDisplays.Se2);
