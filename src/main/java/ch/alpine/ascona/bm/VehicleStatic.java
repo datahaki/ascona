@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.misc;
+package ch.alpine.ascona.bm;
 
 import java.awt.image.BufferedImage;
 

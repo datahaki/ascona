@@ -8,8 +8,6 @@ import java.awt.geom.Path2D;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import javax.swing.JToggleButton;
-
 import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.ascony.api.LogWeightings;
@@ -36,16 +34,10 @@ import ch.alpine.tensor.sca.Clips;
 public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final Clip RANGE_X = Clips.absolute(3);
   private static final Clip RANGE_A = Clips.absolute(Pi.VALUE);
-  // ---
-  private final JToggleButton jToggleAxes = new JToggleButton("axes");
 
   public Se2ScatteredSetCoordinateDemo() {
     super(LogWeightings.list());
     scatteredSetParam.refine = 15;
-    {
-      jToggleAxes.setSelected(true);
-      timerFrame.jToolBar.add(jToggleAxes);
-    }
     Tensor se2 = Tensors.fromString("{{-1.5, 1.3, -2.3}, {+1.5, +1.3, 2.3}, {0.3, 1.5, 1.2}, {0.0, 0.5, -0.5}, {-1.4, -1.3, 0.1}, {1.2, -1.3, -1.2}}");
     // Tensor del = RandomVariate.of(UniformDistribution.of(0.00, 0.1),Dimensions.of(se2));
     setControlPointsSe2(se2);

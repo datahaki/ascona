@@ -7,14 +7,11 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
-import java.util.LinkedList;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
-import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -36,7 +33,7 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.exp.Log;
 
-public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
+public class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
   @ReflectionMarker
   public static class Param0 {
     @FieldSelectionArray({ "25", "50", "100", "150", "200" })
@@ -56,17 +53,10 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   private Tensor points = Tensors.empty();
 
   public Tsp2OptHeuristicDemo() {
-    this(new Param0(), new Param1());
-  }
-
-  public Tsp2OptHeuristicDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
-    this.param0 = param0;
-    this.param1 = param1;
-    setManifoldDisplay(ManifoldDisplays.R2);
+    super(param0 = new Param0(), param1 = new Param1());
     fieldsEditor(0).addUniversalListener(this::shuffle);
-    // ---
-    shuffle();
+    addChangeListener(this::shuffle);
+    setManifoldDisplay(ManifoldDisplays.R2);
   }
 
   @Override
@@ -74,9 +64,18 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     return ManifoldDisplays.manifolds();
   }
 
-  @Override
-  protected ControlPointType controlPointType() {
-    return ControlPointTypes.SHOW_ONLY;
+  private List<IntUndirectedEdge> list;
+  private Tensor control;
+
+  private void shuffle() {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
+    control = RandomSample.of(randomSampleInterface, param0.numel);
+    Manifold manifold = manifoldDisplay.manifold();
+    Tensor matrix = StaticHelper.distanceMatrix(manifold, control);
+    list = MinimumSpanningTree.of(matrix);
+    tsp2OptHeuristic = new Tsp2OptHeuristic(matrix);
+    points = Tensors.empty();
   }
 
   @Override // from RenderInterface
@@ -87,10 +86,11 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       points.append(Tensors.of(RealScalar.of(points.length()), tsp2OptHeuristic.cost()));
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    manifoldDisplay.background().render(geometricLayer, graphics);
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     graphics.setColor(Color.BLACK);
     graphics.drawString(tsp2OptHeuristic.cost().maps(Round._5).toString(), 3, 450);
-    Tensor sequence = getGeodesicControlPoints();
+    Tensor sequence = control;
     {
       // TODO ASCONA should use transition !?
       Tensor domain = Subdivide.of(0.0, 1.0, 10);
@@ -132,20 +132,6 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
       show.add(ListLinePlot.of(Tensor.of(points.stream().map(v -> Tensors.of(v.Get(0), v.Get(1).maps(Log.FUNCTION))))));
       show.render_autoIndent(graphics, new Rectangle(0, 200, 300, 200));
     }
-  }
-
-  private List<IntUndirectedEdge> list = new LinkedList<>();
-
-  private void shuffle() {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
-    Tensor sample = RandomSample.of(randomSampleInterface, param0.numel);
-    setControlPointsSe2(Tensor.of(sample.stream().map(manifoldDisplay::point2xya)));
-    Manifold manifold = manifoldDisplay.manifold();
-    Tensor matrix = StaticHelper.distanceMatrix(manifold, getGeodesicControlPoints());
-    list = MinimumSpanningTree.of(matrix);
-    tsp2OptHeuristic = new Tsp2OptHeuristic(matrix);
-    points = Tensors.empty();
   }
 
   static void main() {

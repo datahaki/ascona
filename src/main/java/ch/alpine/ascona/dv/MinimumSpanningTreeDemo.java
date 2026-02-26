@@ -87,7 +87,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.SHOW_ONLY;
+    return ControlPointTypes.ADDREMOVE;
   }
 
   private void shuffle() {

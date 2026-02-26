@@ -35,12 +35,7 @@ public class Regularization2StepDemo extends AbstractSpectrogramDemo implements 
   private final Ratio ratio;
 
   public Regularization2StepDemo() {
-    this(new Ratio());
-  }
-
-  public Regularization2StepDemo(Ratio ratio) {
-    super(ratio);
-    this.ratio = ratio;
+    super(ratio = new Ratio());
     // ---
     updateState();
   }

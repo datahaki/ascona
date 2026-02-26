@@ -49,13 +49,7 @@ public class WeightsDemo extends ControlPointsDemo {
   private final Param1 param1;
 
   public WeightsDemo() {
-    this(new Param0(), new Param1());
-  }
-
-  public WeightsDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
-    this.param0 = param0;
-    this.param1 = param1;
+    super(param0 = new Param0(), param1 = new Param1());
     // ---
     setManifoldDisplay(ManifoldDisplays.Se2);
     setControlPointsSe2(Tensors.fromString("{{-1, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}}"));

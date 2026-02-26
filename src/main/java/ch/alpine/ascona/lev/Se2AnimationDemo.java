@@ -33,22 +33,20 @@ public class Se2AnimationDemo extends ControlPointsDemo {
   private Tensor snapshot;
 
   public Se2AnimationDemo() {
-    {
-      jToggleAnimate.addActionListener(_ -> {
-        if (jToggleAnimate.isSelected()) {
-          snapshotUncentered = getControlPointsSe2();
-          Tensor sequence = getGeodesicControlPoints();
-          if (0 < sequence.length()) {
-            Tensor origin = sequence.get(0);
-            LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
-            Tensor shift = lieGroup.invert(origin);
-            snapshot = Tensor.of(sequence.stream().map(lieGroup.actionL(shift)));
-          }
-        } else
-          setControlPointsSe2(snapshotUncentered);
-      });
-      timerFrame.jToolBar.add(jToggleAnimate);
-    }
+    jToggleAnimate.addActionListener(_ -> {
+      if (jToggleAnimate.isSelected()) {
+        snapshotUncentered = getControlPointsSe2();
+        Tensor sequence = getGeodesicControlPoints();
+        if (0 < sequence.length()) {
+          Tensor origin = sequence.get(0);
+          LieGroup lieGroup = manifoldDisplay().lieGroup();
+          Tensor shift = lieGroup.invert(origin);
+          snapshot = Tensor.of(sequence.stream().map(lieGroup.actionL(shift)));
+        }
+      } else
+        setControlPointsSe2(snapshotUncentered);
+    });
+    timerFrame.jToolBar.add(jToggleAnimate);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1.5, -1, -1}, {2, 1, 1}, {-0.5, 1.5, 2}, {-1, -1.5, -2}, {-1.5, 0, 0.3}}"));
   }
 
@@ -72,7 +70,7 @@ public class Se2AnimationDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    LieGroup lieGroup = (LieGroup) manifoldDisplay().geodesicSpace();
+    LieGroup lieGroup = manifoldDisplay().lieGroup();
     PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
     Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {

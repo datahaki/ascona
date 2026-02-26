@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.misc;
+package ch.alpine.ascona.bm;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -54,7 +54,7 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.exp.Log10;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
-public class BiinvariantMeanDemo extends ControlPointsDemo {
+class BiinvariantMeanDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
   private static final Stroke STROKE = //
@@ -98,7 +98,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.HEAD_TAIL;
+    return ControlPointTypes.SCATTERED;
   }
 
   public void shuffle() {

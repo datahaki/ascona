@@ -37,12 +37,7 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
   private final Param2 param2;
 
   public S2DeformationDemo() {
-    this(new Param2());
-  }
-
-  public S2DeformationDemo(Param2 param2) {
-    super(param2);
-    this.param2 = param2;
+    super(param2 = new Param2());
   }
 
   @Override

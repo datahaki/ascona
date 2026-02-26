@@ -49,12 +49,7 @@ class ClothoidNdDemo extends ControlPointsDemo {
   private final Param param;
 
   public ClothoidNdDemo() {
-    this(new Param());
-  }
-
-  public ClothoidNdDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     RandomSampleInterface randomSampleInterface = new BoxRandomSample(ND_BOX_SE2);
     Tensor tensor = RandomSample.of(randomSampleInterface, SIZE);

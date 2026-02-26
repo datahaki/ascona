@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.misc;
+package ch.alpine.ascona.bm;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

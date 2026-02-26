@@ -57,7 +57,7 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);
     fieldsEditor(0).addUniversalListener(this::spun);
-    fieldsEditor(1).addUniversalListener(this::recompute);
+    fieldsEditor(0).addUniversalListener(this::recompute);
     spun();
   }
 

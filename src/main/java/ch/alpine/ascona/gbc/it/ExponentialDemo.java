@@ -7,17 +7,15 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 import java.util.Deque;
-import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
-import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -37,15 +35,15 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.red.Times;
 
-public class ExponentialDemo extends ControlPointsDemo {
+public class ExponentialDemo extends EuclideanPlaneDemo {
   private static final int WIDTH = 300;
+  private static final PointsRender POINTS_RENDER = //
+      new PointsRender(new Color(0, 128, 128, 64), new Color(0, 128, 128, 96));
   // ---
   private final GenesisDequeProperties genesisDequeProperties;
 
   public ExponentialDemo() {
-    super(new GenesisDequeProperties());
-    // ---
-    genesisDequeProperties = (GenesisDequeProperties) objects()[1];
+    super(genesisDequeProperties = new GenesisDequeProperties());
     // ---
     Tensor sequence = Tensor.of(CirclePoints.of(15).multiply(RealScalar.of(2)).stream().skip(5).map(PadRight.zeros(3)));
     sequence.set(Scalar::zero, 0, Tensor.ALL);
@@ -53,17 +51,9 @@ public class ExponentialDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.R2_ONLY;
-  }
-
-  @Override
   protected ControlPointType controlPointType() {
     return ControlPointTypes.CURVYCURV;
   }
-
-  private static final PointsRender POINTS_RENDER = //
-      new PointsRender(new Color(0, 128, 128, 64), new Color(0, 128, 128, 96));
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {

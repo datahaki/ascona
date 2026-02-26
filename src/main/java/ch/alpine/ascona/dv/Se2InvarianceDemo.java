@@ -50,7 +50,7 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.SHOW_ONLY;
+    return ControlPointTypes.ADDREMOVE;
   }
 
   @Override // from RenderInterface

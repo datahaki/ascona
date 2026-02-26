@@ -81,7 +81,7 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.HEAD_TAIL;
+    return ControlPointTypes.SCATTERED;
   }
 
   private void shuffle() {

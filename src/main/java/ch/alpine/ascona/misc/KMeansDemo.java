@@ -57,16 +57,12 @@ public class KMeansDemo extends ControlPointsDemo {
   }
 
   private final Param1 param1;
+  private final Param2 param2;
   private Tensor pointsAll;
   private KMeans kMeans;
 
   public KMeansDemo() {
-    this(new Param1(), new Param2());
-  }
-
-  public KMeansDemo(Param1 param1, Param2 param2) {
-    super(param1, param2);
-    this.param1 = param1;
+    super(param1 = new Param1(), param2 = new Param2());
     fieldsEditor(0).addUniversalListener(() -> {
       pointsAll = shuffle();
       recomp(pointsAll);

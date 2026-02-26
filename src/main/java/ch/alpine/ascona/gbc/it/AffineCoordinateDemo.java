@@ -3,15 +3,13 @@ package ch.alpine.ascona.gbc.it;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
-import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.api.Genesis;
 import ch.alpine.sophis.dv.AffineCoordinate;
@@ -28,15 +26,10 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.mat.pi.LeastSquares;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
-public class AffineCoordinateDemo extends ControlPointsDemo {
+public class AffineCoordinateDemo extends EuclideanPlaneDemo {
   public AffineCoordinateDemo() {
     Tensor sequence = Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(2)).stream().map(PadRight.zeros(3)));
     setControlPointsSe2(sequence);
-  }
-
-  @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.R2_ONLY;
   }
 
   @Override

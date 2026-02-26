@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.misc;
+package ch.alpine.ascona.bm;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -19,7 +19,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Clips;
 
-public class ImageRenderDemo extends AbstractDemo {
+class ImageRenderDemo extends AbstractDemo {
   private static final CoordinateBoundingBox COORDINATE_BOUNDING_BOX = //
       CoordinateBoundingBox.of(Clips.interval(-0.4, 1), Clips.interval(-0.35, 0.35));
   private static final Scalar SHIFT = RealScalar.of(1.5);
