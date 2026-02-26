@@ -14,9 +14,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
-import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
-import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -42,7 +40,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.pow.Power;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class CurveDecimationDemo extends ControlPointsDemo {
+public class CurveDecimationDemo extends ManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 160);
   private static final Color COLOR_RECON = new Color(128, 128, 128, 255);
@@ -81,13 +79,8 @@ public class CurveDecimationDemo extends ControlPointsDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_R2;
-  }
-
-  @Override
-  public ControlPointType controlPointType() {
-    return ControlPointTypes.HEAD_TAIL;
   }
 
   protected void updateState() {

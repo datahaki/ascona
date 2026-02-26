@@ -58,13 +58,13 @@ public class R1BarycentricDegreeDemo extends ControlPointsDemo {
   }
 
   @Override
-  public ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+    return ManifoldDisplays.R2_ONLY;
   }
 
   @Override
-  public List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.R2_ONLY;
+  protected ControlPointType controlPointType() {
+    return ControlPointTypes.CURVYCURV;
   }
 
   private static final Scalar MARGIN = RealScalar.of(2);

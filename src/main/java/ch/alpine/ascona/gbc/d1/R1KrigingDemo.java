@@ -65,7 +65,7 @@ public class R1KrigingDemo extends ControlPointsDemo {
   }
 
   @Override
-  public ControlPointType controlPointType() {
+  protected ControlPointType controlPointType() {
     return ControlPointTypes.SCATTERED;
   }
 

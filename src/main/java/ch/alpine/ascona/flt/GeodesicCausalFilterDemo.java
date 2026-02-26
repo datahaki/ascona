@@ -46,6 +46,11 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
     updateState();
   }
 
+  @Override
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+    return ManifoldDisplays.ALL; // TODO
+  }
+
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     final int radius = param.radius;
@@ -82,11 +87,5 @@ public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
 
   static void main() {
     new GeodesicCausalFilterDemo().runStandalone();
-  }
-
-  @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    // TODO Auto-generated method stub
-    return null;
   }
 }

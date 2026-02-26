@@ -52,12 +52,12 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   }
 
   @Override
-  public List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.R2_ONLY;
   }
 
   @Override
-  public ControlPointType controlPointType() {
+  protected ControlPointType controlPointType() {
     return ControlPointTypes.SCATTERED;
   }
 

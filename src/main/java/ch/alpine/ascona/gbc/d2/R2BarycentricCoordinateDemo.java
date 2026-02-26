@@ -81,7 +81,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
   }
 
   @Override
-  public ControlPointType controlPointType() {
+  protected ControlPointType controlPointType() {
     return ControlPointTypes.CURVYCURV;
   }
 

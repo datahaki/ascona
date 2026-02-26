@@ -42,12 +42,12 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.d2Rasters();
   }
 
   @Override
-  public ControlPointType controlPointType() {
+  protected ControlPointType controlPointType() {
     return ControlPointTypes.HEAD_TAIL;
   }
 

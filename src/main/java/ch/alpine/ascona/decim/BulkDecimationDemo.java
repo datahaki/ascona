@@ -31,7 +31,8 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 // TODO ASCONA DEMO init properly, draw better, offer configuration of parameters
 public class BulkDecimationDemo extends ControlPointsDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
+  private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = //
+      ColorDataLists._097.cyclic().deriveWithAlpha(192);
 
   public BulkDecimationDemo() {
     Distribution dX = UniformDistribution.of(-3, 3);
@@ -44,12 +45,12 @@ public class BulkDecimationDemo extends ControlPointsDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_R2;
   }
 
   @Override
-  public ControlPointType controlPointType() {
+  protected ControlPointType controlPointType() {
     return ControlPointTypes.CURVYCURV;
   }
 

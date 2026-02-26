@@ -89,7 +89,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   }
 
   @Override
-  public ControlPointType controlPointType() {
+  protected ControlPointType controlPointType() {
     return ControlPointTypes.HEAD_TAIL;
   }
 

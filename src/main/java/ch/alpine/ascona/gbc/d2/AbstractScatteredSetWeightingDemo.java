@@ -94,7 +94,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
   }
 
   @Override
-  public ControlPointType controlPointType() {
+  protected ControlPointType controlPointType() {
     return ControlPointTypes.HEAD_TAIL;
   }
 

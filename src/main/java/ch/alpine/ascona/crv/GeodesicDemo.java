@@ -55,12 +55,12 @@ public class GeodesicDemo extends ControlPointsDemo {
   }
 
   @Override
-  public List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
   }
 
   @Override
-  public ControlPointType controlPointType() {
+  protected ControlPointType controlPointType() {
     return ControlPointTypes.HEAD_TAIL;
   }
 
