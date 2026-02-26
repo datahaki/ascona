@@ -76,13 +76,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   private Showable showable;
 
   public ClassificationImageDemo() {
-    this(new Param0(), new Param1());
-  }
-
-  public ClassificationImageDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
-    this.param0 = param0;
-    this.param1 = param1;
+    super(param0 = new Param0(), param1 = new Param1());
     addChangeListener(_ -> shuffle());
     setManifoldDisplay(ManifoldDisplays.R2);
     fieldsEditor(0).addUniversalListener(this::shuffle);

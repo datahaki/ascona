@@ -37,12 +37,7 @@ public class BSplineFunctionDemo extends AbstractCurvatureDemo {
   private final Param param;
 
   public BSplineFunctionDemo() {
-    this(new Param());
-  }
-
-  public BSplineFunctionDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
   }
 
   @Override

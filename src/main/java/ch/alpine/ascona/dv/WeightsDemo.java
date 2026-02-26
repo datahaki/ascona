@@ -51,12 +51,9 @@ public class WeightsDemo extends ControlPointsDemo {
   public WeightsDemo() {
     super(param0 = new Param0(), param1 = new Param1());
     // ---
-    setManifoldDisplay(ManifoldDisplays.Se2);
-    setControlPointsSe2(Tensors.fromString("{{-1, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}}"));
-    ManifoldDisplays manifoldDisplays = ManifoldDisplays.Se2;
-    setManifoldDisplay(manifoldDisplays);
     fieldsEditor(0).addUniversalListener(this::shuffle);
-    shuffle();
+    addChangeListener(this::shuffle);
+    setManifoldDisplay(ManifoldDisplays.Se2);
   }
 
   @Override
@@ -66,7 +63,7 @@ public class WeightsDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.DELEGATED;
+    return ControlPointTypes.ADDREMOVE;
   }
 
   private void shuffle() {

@@ -43,16 +43,10 @@ public final class GrassmannDemo extends ControlPointsDemo {
   private final Param1 param1;
 
   public GrassmannDemo() {
-    this(new Param0(), new Param1());
-  }
-
-  public GrassmannDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
-    this.param0 = param0;
-    this.param1 = param1;
-    setManifoldDisplay(ManifoldDisplays.R2);
+    super(param0 = new Param0(), param1 = new Param1());
     fieldsEditor(0).addUniversalListener(this::shuffle);
-    shuffle();
+    addChangeListener(this::shuffle);
+    setManifoldDisplay(ManifoldDisplays.R2);
   }
 
   @Override

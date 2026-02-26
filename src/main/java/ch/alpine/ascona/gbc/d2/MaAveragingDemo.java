@@ -61,12 +61,7 @@ public final class MaAveragingDemo extends ControlPointsDemo {
   private final Param param;
 
   public MaAveragingDemo() {
-    this(new Param());
-  }
-
-  public MaAveragingDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
     // ---

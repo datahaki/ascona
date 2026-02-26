@@ -37,12 +37,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
   private Tensor ground;
 
   public BipartiteMatchingDemo() {
-    this(new Param());
-  }
-
-  public BipartiteMatchingDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();
     addChangeListener(_ -> shuffle());

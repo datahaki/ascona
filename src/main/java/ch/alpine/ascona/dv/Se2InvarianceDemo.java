@@ -31,12 +31,7 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
   private final Param param;
 
   public Se2InvarianceDemo() {
-    this(new Param());
-  }
-
-  public Se2InvarianceDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     setControlPointsSe2(Tensors.fromString( //
         "{{0, 0, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}, {-3, 0, 0}}"));
     setControlPointsSe2(Tensors.fromString( //

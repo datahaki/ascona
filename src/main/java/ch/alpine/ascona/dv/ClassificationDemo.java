@@ -60,18 +60,12 @@ public class ClassificationDemo extends ControlPointsDemo {
 
   private final Param0 param0;
   private final Param1 param1;
-  private Tensor sequence;
   // ---
+  private Tensor sequence;
   private Tensor vector;
 
   public ClassificationDemo() {
-    this(new Param0(), new Param1());
-  }
-
-  public ClassificationDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
-    this.param0 = param0;
-    this.param1 = param1;
+    super(param0 = new Param0(), param1 = new Param1());
     setManifoldDisplay(ManifoldDisplays.Se2);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}}"));
     addChangeListener(this::shuffle);

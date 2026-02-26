@@ -62,16 +62,11 @@ public class CurveDecimationDemo extends ManifoldDisplayDemo {
     public Boolean error = false;
   }
 
-  protected Tensor _control = Tensors.empty();
   private final Param param;
+  protected Tensor _control = Tensors.empty();
 
   public CurveDecimationDemo() {
-    this(new Param());
-  }
-
-  public CurveDecimationDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     fieldsEditor(0).addUniversalListener(this::updateState);
     // ---
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);

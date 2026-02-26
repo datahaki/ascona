@@ -69,12 +69,7 @@ public class S2DeltaDemo extends AbstractDemo {
   private SnDeltaContainer snDeltaFil;
 
   public S2DeltaDemo() {
-    this(new Param());
-  }
-
-  public S2DeltaDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     fieldsEditor(0).addUniversalListener(this::compute);
     compute();
   }

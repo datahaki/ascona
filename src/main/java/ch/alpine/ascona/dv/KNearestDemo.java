@@ -57,13 +57,7 @@ public class KNearestDemo extends ControlPointsDemo {
   private final Param1 param1;
 
   public KNearestDemo() {
-    this(new Param0(), new Param1());
-  }
-
-  public KNearestDemo(Param0 param0, Param1 param1) {
-    super(param0, param1);
-    this.param0 = param0;
-    this.param1 = param1;
+    super(param0 = new Param0(), param1 = new Param1());
     fieldsEditor(0).addUniversalListener(this::shuffleSnap);
     shuffleSnap();
   }

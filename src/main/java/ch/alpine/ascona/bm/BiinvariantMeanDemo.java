@@ -75,12 +75,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
   private final Param param;
 
   public BiinvariantMeanDemo() {
-    this(new Param());
-  }
-
-  public BiinvariantMeanDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     fieldsEditor(0).addUniversalListener(() -> {
       if (param.shuffle) {
