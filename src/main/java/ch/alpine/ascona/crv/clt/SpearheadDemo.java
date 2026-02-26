@@ -22,15 +22,11 @@ public class SpearheadDemo extends ClothoidBaseDemo {
     setControlPointsSe2(Tensors.fromString("{{-0.5, -0.5, 0.3}}"));
   }
 
-  @Override
-  protected boolean addRemoveControlPoints() {
-    return false;
-  }
-
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();
-    controlPointsRender.render(geometricLayer, graphics);
+    // TODO review !?
+    // controlPointsRender.render(geometricLayer, graphics);
     Tensor curve = Spearhead.of(control.get(0), RealScalar.of(geometricLayer.pixel2modelWidth(10)));
     graphics.setColor(COLOR_DATA_INDEXED.getColor(1));
     graphics.fill(geometricLayer.toPath2D(curve));

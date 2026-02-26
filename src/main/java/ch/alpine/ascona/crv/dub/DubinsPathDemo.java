@@ -11,6 +11,8 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2CoveringDisplay;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -72,8 +74,8 @@ public class DubinsPathDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected boolean addRemoveControlPoints() {
-    return false;
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.HEAD_TAIL;
   }
 
   @Override // from RenderInterface

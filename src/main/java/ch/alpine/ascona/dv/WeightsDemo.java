@@ -11,6 +11,8 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -59,7 +61,6 @@ public class WeightsDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.fromString("{{-1, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}}"));
     ManifoldDisplays manifoldDisplays = ManifoldDisplays.Se2;
     setManifoldDisplay(manifoldDisplays);
-    controlPointsRender.setMidpointIndicated(false);
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();
   }
@@ -70,8 +71,8 @@ public class WeightsDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected boolean drawControlPoints() {
-    return false;
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.DELEGATED;
   }
 
   private void shuffle() {

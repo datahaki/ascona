@@ -10,6 +10,8 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -51,6 +53,11 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_SE2_R2;
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.CURVYCURV;
   }
 
   @Override // from RenderInterface

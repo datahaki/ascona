@@ -89,8 +89,6 @@ public class CurveSubdivisionDemo extends AbstractCurvatureDemo {
     timerFrame.jToolBar.addSeparator();
     addButtonDubins();
     // ---
-    controlPointsRender.setMidpointIndicated(true);
-    // ---
     setManifoldDisplay(ManifoldDisplays.Se2);
     timerFrame.geometricComponent.setOffset(100, 600);
   }

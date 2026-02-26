@@ -28,7 +28,7 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.ext.Cache;
 
-public class ClothoidBrushDemo extends ClothoidBaseDemo {
+public class ClothoidBrushDemo extends ClothoidSequenceDemo {
   public static final Scalar BETA = RealScalar.of(0.05);
 
   @ReflectionMarker

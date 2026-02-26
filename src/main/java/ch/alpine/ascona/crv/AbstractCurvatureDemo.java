@@ -10,6 +10,8 @@ import java.util.Optional;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.api.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -35,6 +37,11 @@ public abstract class AbstractCurvatureDemo extends ControlPointsDemo {
   protected AbstractCurvatureDemo(AbstractCurvatureParam abstractCurvatureParam) {
     super(abstractCurvatureParam);
     this.abstractCurvatureParam = abstractCurvatureParam;
+  }
+
+  @Override
+  protected final ControlPointType controlPointType() {
+    return ControlPointTypes.CURVYCURV;
   }
 
   @Override

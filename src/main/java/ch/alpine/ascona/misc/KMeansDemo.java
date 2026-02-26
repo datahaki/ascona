@@ -9,6 +9,8 @@ import java.util.Objects;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
@@ -72,13 +74,17 @@ public class KMeansDemo extends ControlPointsDemo {
     fieldsEditor(1).addUniversalListener(() -> {
       recomp(pointsAll);
     });
-    controlPointsRender.setMidpointIndicated(false);
     pointsAll = shuffle();
   }
 
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.R2_H2_S2_SE2C;
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.HEAD_TAIL;
   }
 
   private Tensor shuffle() {

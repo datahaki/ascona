@@ -12,6 +12,8 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -62,7 +64,6 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
     this.param0 = param0;
     this.param1 = param1;
     setManifoldDisplay(ManifoldDisplays.R2);
-    controlPointsRender.setPositioningEnabled(false);
     fieldsEditor(0).addUniversalListener(this::shuffle);
     // ---
     shuffle();
@@ -74,8 +75,8 @@ public class Tsp2OptHeuristicDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected boolean addRemoveControlPoints() {
-    return false;
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.SHOW_ONLY;
   }
 
   @Override // from RenderInterface

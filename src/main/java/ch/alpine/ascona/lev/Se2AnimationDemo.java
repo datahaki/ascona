@@ -11,6 +11,8 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -31,7 +33,6 @@ public class Se2AnimationDemo extends ControlPointsDemo {
   private Tensor snapshot;
 
   public Se2AnimationDemo() {
-    controlPointsRender.setMidpointIndicated(false);
     {
       jToggleAnimate.addActionListener(_ -> {
         if (jToggleAnimate.isSelected()) {
@@ -57,8 +58,8 @@ public class Se2AnimationDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected boolean drawControlPoints() {
-    return false;
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.DELEGATED;
   }
 
   private static Tensor random(double toc, int index) {

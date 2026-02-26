@@ -14,6 +14,8 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -64,6 +66,11 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_SE2_R2;
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.CURVYCURV;
   }
 
   @Override

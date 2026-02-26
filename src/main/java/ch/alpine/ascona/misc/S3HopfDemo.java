@@ -9,6 +9,8 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.hs.s.S3Hopf;
@@ -20,13 +22,14 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Clips;
 
 public class S3HopfDemo extends ControlPointsDemo {
-  public S3HopfDemo() {
-    controlPointsRender.setMidpointIndicated(false);
-  }
-
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.S2_ONLY;
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.SCATTERED;
   }
 
   @Override

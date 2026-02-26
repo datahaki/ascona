@@ -18,7 +18,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public record ClothoidDefectContainer(ClothoidContext clothoidContext, ClothoidSolutions clothoidSolutions) implements RenderInterface {
+record ClothoidDefectContainer(ClothoidContext clothoidContext, ClothoidSolutions clothoidSolutions) implements RenderInterface {
   private static final Scalar DENOM = RealScalar.of(5.0);
 
   @Override // from RenderInterface

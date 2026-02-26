@@ -11,6 +11,8 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -62,7 +64,6 @@ public class KNearestDemo extends ControlPointsDemo {
     super(param0, param1);
     this.param0 = param0;
     this.param1 = param1;
-    controlPointsRender.setMidpointIndicated(false);
     fieldsEditor(0).addUniversalListener(this::shuffleSnap);
     shuffleSnap();
   }
@@ -73,8 +74,8 @@ public class KNearestDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected boolean drawControlPoints() {
-    return false;
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.SHOW_ONLY;
   }
 
   private void shuffleSnap() {

@@ -14,6 +14,8 @@ import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -70,7 +72,6 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     setManifoldDisplay(ManifoldDisplays.S2);
-    controlPointsRender.setMidpointIndicated(false);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
     fieldsEditor(0).addUniversalListener(this::recompute);
@@ -81,6 +82,11 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.d2Rasters();
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.SCATTERED;
   }
 
   private final Cache<Tensor, Showable> cache = Cache.of(this::computeImage, 1);

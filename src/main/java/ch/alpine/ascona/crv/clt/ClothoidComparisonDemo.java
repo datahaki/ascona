@@ -40,11 +40,6 @@ public class ClothoidComparisonDemo extends ClothoidBaseDemo {
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
   }
 
-  @Override
-  protected boolean addRemoveControlPoints() {
-    return false;
-  }
-
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     AxesRender.INSTANCE.render(geometricLayer, graphics);

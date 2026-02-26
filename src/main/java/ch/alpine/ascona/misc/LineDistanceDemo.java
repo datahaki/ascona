@@ -11,6 +11,8 @@ import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -72,8 +74,8 @@ public class LineDistanceDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected boolean addRemoveControlPoints() {
-    return false;
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.HEAD_TAIL;
   }
 
   TensorDistance tensorNorm() {

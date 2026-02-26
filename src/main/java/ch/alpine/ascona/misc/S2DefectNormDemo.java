@@ -13,6 +13,8 @@ import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -75,12 +77,16 @@ public class S2DefectNormDemo extends ControlPointsDemo {
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
     // ---
     timerFrame.geometricComponent.setOffset(400, 400);
-    controlPointsRender.setMidpointIndicated(false);
   }
 
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.S2_ONLY;
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.SCATTERED;
   }
 
   public class TSF implements TensorScalarFunction {

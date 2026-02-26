@@ -9,6 +9,8 @@ import java.util.List;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -43,13 +45,17 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
     this.param = param;
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();
-    controlPointsRender.setMidpointIndicated(false);
     addChangeListener(_ -> shuffle());
   }
 
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.manifolds();
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.SCATTERED;
   }
 
   private synchronized void shuffle() {
@@ -59,7 +65,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
     ground = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
     Tensor tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
     Tensor xyas = Tensor.of(tensor.stream().map(manifoldDisplay::point2xya));
-    controlPointsRender.setControlPointsSe2(xyas);
+    setControlPointsSe2(xyas);
   }
 
   @Override // from RenderInterface

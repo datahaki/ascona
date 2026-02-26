@@ -44,11 +44,6 @@ public class ClothoidDemo extends ClothoidBaseDemo {
     setControlPointsSe2(Tensors.fromString("{{2,0,0},{-2,0,0}}"));
   }
 
-  @Override
-  protected boolean addRemoveControlPoints() {
-    return false;
-  }
-
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();

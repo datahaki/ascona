@@ -15,6 +15,8 @@ import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ImagePlot;
 import ch.alpine.bridge.fig.Show;
@@ -89,7 +91,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
       timerFrame.geometricComponent.jComponent.addMouseMotionListener(new MouseMotionListener() {
         @Override
         public void mouseMoved(MouseEvent e) {
-          if (controlPointsRender.isPositioningOngoing())
+          if (isPositioningOngoing())
             recompute();
         }
 
@@ -108,13 +110,8 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected boolean addRemoveControlPoints() {
-    return false;
-  }
-
-  @Override
-  protected boolean drawControlPoints() {
-    return false;
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.DELEGATED;
   }
 
   private void shuffle() {

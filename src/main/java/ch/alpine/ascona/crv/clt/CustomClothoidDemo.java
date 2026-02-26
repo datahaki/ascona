@@ -43,11 +43,6 @@ public class CustomClothoidDemo extends ClothoidBaseDemo {
   }
 
   @Override
-  protected boolean addRemoveControlPoints() {
-    return false;
-  }
-
-  @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor p = getGeodesicControlPoints().get(0);
     Tensor q = getGeodesicControlPoints().get(1);

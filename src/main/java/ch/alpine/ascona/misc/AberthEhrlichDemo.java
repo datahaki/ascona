@@ -12,6 +12,8 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -62,7 +64,6 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
   public AberthEhrlichDemo(Param param) {
     super(param);
     this.param = param;
-    controlPointsRender.setMidpointIndicated(false);
     // ---
     fieldsEditor(0).addUniversalListener(() -> {
       if (param.shuffle) {
@@ -76,6 +77,11 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.C1_ONLY;
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.HEAD_TAIL;
   }
 
   private void shuffle() {

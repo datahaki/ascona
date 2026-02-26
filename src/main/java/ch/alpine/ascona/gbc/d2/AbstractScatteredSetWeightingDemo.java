@@ -9,6 +9,8 @@ import java.util.Map;
 import ch.alpine.ascony.api.LogWeighting;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.bridge.swing.SpinnerListener;
@@ -88,8 +90,12 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
       spinnerBeta.addToComponent(timerFrame.jToolBar, "beta");
       spinnerBeta.addSpinnerListener(_ -> recompute());
     }
-    controlPointsRender.setMidpointIndicated(false);
     spinnerLogWeighting.addSpinnerListener(_ -> recompute());
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.HEAD_TAIL;
   }
 
   private static final Tensor BETAS = Tensors.fromString("{0, 1/2, 1, 3/2, 7/4, 2, 5/2, 3}");
@@ -124,7 +130,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
       public void mousePressed(MouseEvent mouseEvent) {
         switch (mouseEvent.getButton()) {
         case MouseEvent.BUTTON1: // insert point
-          if (!controlPointsRender.isPositioningOngoing())
+          if (!isPositioningOngoing())
             recompute();
           break;
         default:
@@ -133,7 +139,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
 
       @Override
       public void mouseMoved(MouseEvent e) {
-        if (controlPointsRender.isPositioningOngoing())
+        if (isPositioningOngoing())
           recompute();
       }
     };

@@ -9,6 +9,8 @@ import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -36,13 +38,17 @@ public class ThreePointBarycenterDemo extends ControlPointsDemo {
   public ThreePointBarycenterDemo(Param param) {
     super(param);
     this.param = param;
-    controlPointsRender.setMidpointIndicated(false);
     spun();
   }
 
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.d2Rasters();
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.HEAD_TAIL;
   }
 
   @Override // from RenderInterface

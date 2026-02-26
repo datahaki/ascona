@@ -22,6 +22,8 @@ import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -71,12 +73,16 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
     // setManifoldDisplay(ManifoldDisplays.S2);
     setManifoldDisplay(ManifoldDisplays.R2);
     setControlPointsSe2(Tensors.fromString("{{0, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}}"));
-    controlPointsRender.setMidpointIndicated(true);
   }
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.manifolds();
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.CURVYCURV;
   }
 
   @Override

@@ -8,6 +8,8 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -35,7 +37,6 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
   public Se2InvarianceDemo(Param param) {
     super(param);
     this.param = param;
-    controlPointsRender.setMidpointIndicated(false);
     setControlPointsSe2(Tensors.fromString( //
         "{{0, 0, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}, {-2, -3, -2}, {-3, 0, 0}}"));
     setControlPointsSe2(Tensors.fromString( //
@@ -48,8 +49,8 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected boolean drawControlPoints() {
-    return false;
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.SHOW_ONLY;
   }
 
   @Override // from RenderInterface

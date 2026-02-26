@@ -19,6 +19,8 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -48,11 +50,6 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   public static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._000.strict();
   // ---
 
-  @Override
-  public List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.d2Rasters();
-  }
-
   @ReflectionMarker
   public static class Param1 {
     public ParameterizationPattern pattern = ParameterizationPattern.CHECKER_BOARD;
@@ -74,7 +71,6 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
     super(param1);
     this.param1 = param1;
     setManifoldDisplay(ManifoldDisplays.S2);
-    controlPointsRender.setMidpointIndicated(true);
     // ---
     // fieldsEditor(0).addUniversalListener(this::spun);
     // fieldsEditor(1).addUniversalListener(this::recompute);
@@ -92,6 +88,16 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   // recompute();
   // ---
   // }
+
+  @Override
+  public List<ManifoldDisplays> permitted_manifoldDisplays() {
+    return ManifoldDisplays.d2Rasters();
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.CURVYCURV;
+  }
 
   public void actionPerformed(ActionEvent actionEvent) {
     System.out.println("export");

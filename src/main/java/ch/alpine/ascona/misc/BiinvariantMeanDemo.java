@@ -19,6 +19,8 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -79,7 +81,6 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   public BiinvariantMeanDemo(Param param) {
     super(param);
     this.param = param;
-    controlPointsRender.setMidpointIndicated(false);
     // ---
     fieldsEditor(0).addUniversalListener(() -> {
       if (param.shuffle) {
@@ -93,6 +94,11 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.manifolds();
+  }
+
+  @Override
+  public ControlPointType controlPointType() {
+    return ControlPointTypes.HEAD_TAIL;
   }
 
   public void shuffle() {

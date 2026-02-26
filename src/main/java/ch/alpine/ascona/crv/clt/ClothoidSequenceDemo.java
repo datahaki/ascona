@@ -8,8 +8,8 @@ import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 
-abstract class ClothoidBaseDemo extends ControlPointsDemo {
-  public ClothoidBaseDemo(Object... objects) {
+abstract class ClothoidSequenceDemo extends ControlPointsDemo {
+  public ClothoidSequenceDemo(Object... objects) {
     super(objects);
   }
 
@@ -20,6 +20,6 @@ abstract class ClothoidBaseDemo extends ControlPointsDemo {
 
   @Override
   protected final ControlPointType controlPointType() {
-    return ControlPointTypes.HEAD_TAIL;
+    return ControlPointTypes.CURVYCURV;
   }
 }
