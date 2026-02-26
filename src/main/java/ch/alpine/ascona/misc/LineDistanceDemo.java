@@ -10,7 +10,6 @@ import java.util.List;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -56,7 +55,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
   }
 
   public LineDistanceDemo(Param param) {
-    super(new AsconaParam(false), param);
+    super(param);
     this.param = param;
     // ---
     setControlPointsSe2(INITIAL);
@@ -70,6 +69,11 @@ public class LineDistanceDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.lineDistances();
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
   }
 
   TensorDistance tensorNorm() {

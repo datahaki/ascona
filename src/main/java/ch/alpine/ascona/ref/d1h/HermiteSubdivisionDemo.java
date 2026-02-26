@@ -12,7 +12,6 @@ import ch.alpine.ascony.api.HermiteSubdivisions;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2Display;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -59,12 +58,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
   private final Param param;
 
   public HermiteSubdivisionDemo() {
-    this(new Param());
-  }
-
-  public HermiteSubdivisionDemo(Param param) {
-    super(new AsconaParam(true), param);
-    this.param = param;
+    super(this.param = new Param());
   }
 
   @Override

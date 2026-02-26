@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.Se2ClothoidDisplay;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -36,8 +35,12 @@ public class ClothoidLRDemo extends ClothoidBaseDemo {
   private static final PointsRender POINTS_RENDER_S = new PointsRender(new Color(0, 0, 0), Color.BLACK);
 
   public ClothoidLRDemo() {
-    super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {-3,0,0}}"));
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
   }
 
   @Override // from RenderInterface

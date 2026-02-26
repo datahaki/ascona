@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Optional;
 
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.clt.Clothoid;
@@ -35,8 +34,12 @@ public class ClothoidEmitDemo extends ClothoidBaseDemo {
   private static final Scalar minResolution = RealScalar.of(0.02);
 
   public ClothoidEmitDemo() {
-    super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
   }
 
   @Override // from RenderInterface

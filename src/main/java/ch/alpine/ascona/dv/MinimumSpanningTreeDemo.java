@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -70,8 +69,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   }
 
   public MinimumSpanningTreeDemo(Param0 param0, Param1 param1) {
-    super(new AsconaParam(true), param0, param1);
-    asconaParam().drawControlPoints = false;
+    super(param0, param1);
     this.param0 = param0;
     this.param1 = param1;
     // ---
@@ -84,6 +82,11 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.manifolds();
+  }
+
+  @Override
+  protected boolean drawControlPoints() {
+    return false;
   }
 
   private void shuffle() {

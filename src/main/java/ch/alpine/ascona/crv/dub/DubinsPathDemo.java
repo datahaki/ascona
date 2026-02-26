@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2CoveringDisplay;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -62,7 +61,7 @@ public class DubinsPathDemo extends ControlPointsDemo {
   }
 
   public DubinsPathDemo(Param param) {
-    super(new AsconaParam(false), param);
+    super(param);
     this.param = param;
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {3, 0, 0}}"));
   }
@@ -70,6 +69,11 @@ public class DubinsPathDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_ONLY;
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
   }
 
   @Override // from RenderInterface

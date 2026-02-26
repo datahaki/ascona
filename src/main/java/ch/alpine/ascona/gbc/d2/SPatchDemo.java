@@ -10,7 +10,6 @@ import ch.alpine.ascony.bas.AveragedMovingDomain2D;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -37,8 +36,6 @@ public class SPatchDemo extends ControlPointsDemo {
   private final MovingDomain2D movingDomain2D;
 
   public SPatchDemo() {
-    super(new AsconaParam(false));
-    // ---
     Genesis genesis = new InsidePolygonCoordinate(ThreePointCoordinate.of(ThreePointScalings.MEAN_VALUE));
     sPatch = SPatch.of(5, genesis, 2);
     Tensor embed = sPatch.getEmbed();
@@ -54,6 +51,11 @@ public class SPatchDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_R2;
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
   }
 
   @Override

@@ -6,7 +6,6 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -34,8 +33,7 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
   }
 
   public Se2InvarianceDemo(Param param) {
-    super(new AsconaParam(true), param);
-    asconaParam().drawControlPoints = false;
+    super(param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     setControlPointsSe2(Tensors.fromString( //
@@ -47,6 +45,11 @@ public class Se2InvarianceDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_SE2;
+  }
+
+  @Override
+  protected boolean drawControlPoints() {
+    return false;
   }
 
   @Override // from RenderInterface

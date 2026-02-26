@@ -9,7 +9,6 @@ import javax.swing.JToggleButton;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -32,8 +31,6 @@ public class Se2AnimationDemo extends ControlPointsDemo {
   private Tensor snapshot;
 
   public Se2AnimationDemo() {
-    super(new AsconaParam(true));
-    asconaParam().drawControlPoints = false;
     controlPointsRender.setMidpointIndicated(false);
     {
       jToggleAnimate.addActionListener(_ -> {
@@ -57,6 +54,11 @@ public class Se2AnimationDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_SE2;
+  }
+
+  @Override
+  protected boolean drawControlPoints() {
+    return false;
   }
 
   private static Tensor random(double toc, int index) {

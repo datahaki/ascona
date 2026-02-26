@@ -7,7 +7,6 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -52,7 +51,7 @@ class ClothoidNdDemo extends ControlPointsDemo {
   }
 
   public ClothoidNdDemo(Param param) {
-    super(new AsconaParam(false), param);
+    super(param);
     this.param = param;
     // ---
     controlPointsRender.setPositioningEnabled(false);
@@ -67,6 +66,11 @@ class ClothoidNdDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.CL_ONLY;
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
   }
 
   @Override

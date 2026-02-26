@@ -4,7 +4,6 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.api.Spearhead;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -18,11 +17,14 @@ public class SpearheadDemo extends ClothoidBaseDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(128);
 
   public SpearheadDemo() {
-    super(new AsconaParam(false));
-    // ---
     timerFrame.geometricComponent.addRenderInterface(AxesRender.INSTANCE);
     // ---
     setControlPointsSe2(Tensors.fromString("{{-0.5, -0.5, 0.3}}"));
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
   }
 
   @Override // from RenderInterface

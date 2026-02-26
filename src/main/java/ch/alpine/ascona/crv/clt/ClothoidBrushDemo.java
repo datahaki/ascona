@@ -9,7 +9,6 @@ import java.awt.geom.Path2D;
 import java.io.File;
 import java.util.Objects;
 
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -60,7 +59,7 @@ public class ClothoidBrushDemo extends ClothoidBaseDemo {
   }
 
   public ClothoidBrushDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     try {
       // FIXME ASCONA

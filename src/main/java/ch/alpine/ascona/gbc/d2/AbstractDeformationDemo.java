@@ -11,7 +11,6 @@ import java.util.Objects;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -77,7 +76,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   }
 
   protected AbstractDeformationDemo(Param0 param0, Param1 param1, Object object) {
-    super(new AsconaParam(false), param0, param1, object);
+    super(param0, param1, object);
     this.param0 = param0;
     this.param1 = param1;
     fieldsEditor(0).addUniversalListener(this::recompute);
@@ -85,6 +84,11 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
     fieldsEditor(2).addUniversalListener(this::recompute);
     // ---
     setControlPointsSe2(shufflePointsSe2(param1.length));
+  }
+
+  @Override
+  protected final boolean addRemoveControlPoints() {
+    return false;
   }
 
   protected final void shuffleSnap() {

@@ -7,7 +7,6 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -22,7 +21,6 @@ import ch.alpine.tensor.sca.Clips;
 
 public class S3HopfDemo extends ControlPointsDemo {
   public S3HopfDemo() {
-    super(new AsconaParam(true));
     controlPointsRender.setMidpointIndicated(false);
   }
 

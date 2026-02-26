@@ -7,7 +7,6 @@ import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -44,7 +43,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   }
 
   protected A1BarycentricCoordinateDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

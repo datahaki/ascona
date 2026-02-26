@@ -12,7 +12,6 @@ import ch.alpine.ascony.api.HermiteSubdivisions;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.S2Display;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -65,7 +64,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   }
 
   public S2HermiteSubdivisionDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     // ---
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();

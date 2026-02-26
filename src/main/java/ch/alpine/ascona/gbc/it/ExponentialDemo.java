@@ -12,7 +12,6 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -42,7 +41,7 @@ public class ExponentialDemo extends ControlPointsDemo {
   private final GenesisDequeProperties genesisDequeProperties;
 
   public ExponentialDemo() {
-    super(new AsconaParam(true), new GenesisDequeProperties());
+    super(new GenesisDequeProperties());
     // ---
     genesisDequeProperties = (GenesisDequeProperties) objects()[1];
     // ---

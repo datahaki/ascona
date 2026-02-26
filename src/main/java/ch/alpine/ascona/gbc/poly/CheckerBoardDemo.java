@@ -17,7 +17,6 @@ import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -72,7 +71,7 @@ public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   }
 
   public CheckerBoardDemo(Param1 param1) {
-    super(new AsconaParam(true), param1);
+    super(param1);
     this.param1 = param1;
     setManifoldDisplay(ManifoldDisplays.S2);
     controlPointsRender.setMidpointIndicated(true);

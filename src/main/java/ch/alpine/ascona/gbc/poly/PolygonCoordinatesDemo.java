@@ -12,7 +12,6 @@ import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -51,7 +50,7 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
   }
 
   public PolygonCoordinatesDemo(Param1 param1) {
-    super(new AsconaParam(true), param1);
+    super(param1);
     this.param1 = param1;
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);

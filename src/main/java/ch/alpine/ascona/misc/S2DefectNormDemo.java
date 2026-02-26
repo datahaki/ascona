@@ -12,7 +12,6 @@ import java.util.stream.IntStream;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -67,7 +66,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   }
 
   public S2DefectNormDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     // ---
     setControlPointsSe2(INITIAL);

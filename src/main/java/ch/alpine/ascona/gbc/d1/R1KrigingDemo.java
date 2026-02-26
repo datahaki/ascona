@@ -8,8 +8,8 @@ import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 // TODO ASCONA DEMO behaves counter intuitively!?
-public class R1KrigingDemo extends A1AveragingDemo {
+public class R1KrigingDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param {
     public LogWeightings logWeightings = LogWeightings.WEIGHTING;
@@ -51,7 +51,7 @@ public class R1KrigingDemo extends A1AveragingDemo {
   }
 
   public R1KrigingDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

@@ -10,7 +10,6 @@ import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.BoundingBoxRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -66,7 +65,7 @@ public class S1KrigingDemo extends ControlPointsDemo {
   }
 
   public S1KrigingDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -78,7 +77,7 @@ public class BiinvariantMeanDemo extends ControlPointsDemo {
   }
 
   public BiinvariantMeanDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

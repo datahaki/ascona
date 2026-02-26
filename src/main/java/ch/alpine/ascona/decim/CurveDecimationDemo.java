@@ -12,7 +12,6 @@ import ch.alpine.ascona.dat.gok.GokartPosParam;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -71,7 +70,7 @@ public class CurveDecimationDemo extends ControlPointsDemo {
   }
 
   public CurveDecimationDemo(Param param) {
-    super(new AsconaParam(false), param);
+    super(param);
     this.param = param;
     fieldsEditor(0).addUniversalListener(this::updateState);
     // ---
@@ -82,6 +81,11 @@ public class CurveDecimationDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_R2;
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
   }
 
   protected void updateState() {

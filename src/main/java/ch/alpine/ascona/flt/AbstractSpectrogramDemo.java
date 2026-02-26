@@ -13,11 +13,10 @@ import java.util.Optional;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
-import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Spectrogram;
@@ -40,7 +39,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-/* package */ abstract class AbstractSpectrogramDemo extends ControlPointsDemo {
+/* package */ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final GridRender GRID_RENDER = new GridRender(Subdivide.of(0, 100, 10));
@@ -72,7 +71,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   protected AbstractSpectrogramDemo(GokartPosSpec gokartPoseSpec, Param param, Object object) {
-    super(new AsconaParam(false), gokartPoseSpec, param, object);
+    super(gokartPoseSpec, param, object);
     this.gokartPoseSpec = gokartPoseSpec;
     this.param = param;
     // gokartPoseSpec.symi = this instanceof BufferedImageSupplier;

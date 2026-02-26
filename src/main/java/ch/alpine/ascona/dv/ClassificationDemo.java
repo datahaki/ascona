@@ -11,7 +11,6 @@ import ch.alpine.ascony.cls.Classification;
 import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -68,8 +67,7 @@ public class ClassificationDemo extends ControlPointsDemo {
   }
 
   public ClassificationDemo(Param0 param0, Param1 param1) {
-    super(new AsconaParam(false), param0, param1);
-    asconaParam().drawControlPoints = false;
+    super(param0, param1);
     this.param0 = param0;
     this.param1 = param1;
     setManifoldDisplay(ManifoldDisplays.Se2);
@@ -82,6 +80,16 @@ public class ClassificationDemo extends ControlPointsDemo {
   @Override
   public List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.manifolds();
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
+  }
+
+  @Override
+  protected boolean drawControlPoints() {
+    return false;
   }
 
   protected void shuffle() {

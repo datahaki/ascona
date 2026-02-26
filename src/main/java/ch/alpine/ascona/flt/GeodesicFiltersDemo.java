@@ -8,7 +8,6 @@ import java.util.List;
 import ch.alpine.ascony.api.GeodesicFilters;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -43,7 +42,7 @@ public class GeodesicFiltersDemo extends ControlPointsDemo {
   }
 
   public GeodesicFiltersDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     // ---
     setControlPointsSe2(TensorProduct.of(Range.of(0, 5), UnitVector.of(3, 0)).multiply(RealScalar.of(2)));

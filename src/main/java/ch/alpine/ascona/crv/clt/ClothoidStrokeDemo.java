@@ -4,7 +4,6 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -37,8 +36,12 @@ public class ClothoidStrokeDemo extends ClothoidBaseDemo {
       ColorDataLists._097.cyclic().deriveWithAlpha(192);
 
   public ClothoidStrokeDemo() {
-    super(new AsconaParam(false));
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {3,0,0}}"));
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
   }
 
   @Override // from RenderInterface

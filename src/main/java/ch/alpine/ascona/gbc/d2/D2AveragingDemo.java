@@ -13,7 +13,6 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -68,7 +67,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
   }
 
   public D2AveragingDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     setManifoldDisplay(ManifoldDisplays.S2);
     controlPointsRender.setMidpointIndicated(false);

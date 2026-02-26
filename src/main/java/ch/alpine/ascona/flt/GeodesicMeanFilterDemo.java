@@ -6,7 +6,6 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -37,7 +36,7 @@ public class GeodesicMeanFilterDemo extends ControlPointsDemo {
   }
 
   public GeodesicMeanFilterDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     {
       Tensor tensor = Tensors.fromString("{{1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}}");

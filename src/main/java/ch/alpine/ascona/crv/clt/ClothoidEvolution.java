@@ -8,7 +8,6 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -44,7 +43,7 @@ public class ClothoidEvolution extends ControlPointsDemo {
   }
 
   public ClothoidEvolution(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     // ---
     timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);

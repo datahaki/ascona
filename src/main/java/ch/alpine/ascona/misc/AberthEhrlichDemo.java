@@ -9,7 +9,6 @@ import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.C1Display;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -61,7 +60,7 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
   }
 
   public AberthEhrlichDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     controlPointsRender.setMidpointIndicated(false);
     // ---

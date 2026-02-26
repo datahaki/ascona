@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
@@ -21,8 +20,6 @@ import ch.alpine.tensor.Tensors;
  * by Torsten Langer, Alexander Belyaev, Hans-Peter Seidel, 2005 */
 public class LbsBarycenterDemo extends ControlPointsDemo {
   public LbsBarycenterDemo() {
-    super(new AsconaParam(true));
-    // ---
     setManifoldDisplay(ManifoldDisplays.S2);
     setControlPointsSe2(Tensors.fromString( //
         "{{-0.314, 0.662, 0.000}, {-0.809, 0.426, 0.000}, {-0.261, 0.927, 0.000}, {0.564, 0.685, 0.000}, {0.694, 0.220, 0.000}}"));

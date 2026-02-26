@@ -8,7 +8,6 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -40,7 +39,7 @@ public class BipartiteMatchingDemo extends ControlPointsDemo {
   }
 
   public BipartiteMatchingDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     fieldsEditor(0).addUniversalListener(this::shuffle);
     shuffle();

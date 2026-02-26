@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 
 import javax.swing.JLabel;
 
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -38,10 +37,14 @@ public class CustomClothoidDemo extends ClothoidBaseDemo {
   // ---
 
   public CustomClothoidDemo() {
-    super(new AsconaParam(false));
     setControlPointsSe2(INITIAL);
     timerFrame.jToolBar.add(jLabel);
     timerFrame.geometricComponent.setOffset(300, 700);
+  }
+
+  @Override
+  protected boolean addRemoveControlPoints() {
+    return false;
   }
 
   @Override

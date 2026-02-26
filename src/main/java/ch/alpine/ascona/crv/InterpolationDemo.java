@@ -7,7 +7,6 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -26,8 +25,6 @@ import ch.alpine.tensor.red.Nest;
 // FIXME ASCONA this does not interpolate anything
 class InterpolationDemo extends ControlPointsDemo {
   public InterpolationDemo() {
-    super(new AsconaParam(true));
-    // ---
     addButtonDubins();
   }
 

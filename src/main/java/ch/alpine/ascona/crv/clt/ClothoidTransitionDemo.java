@@ -10,7 +10,6 @@ import java.awt.geom.Path2D;
 import ch.alpine.ascony.api.RnLineTrim;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.Se2Display;
-import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.fig.ListLinePlot;
@@ -58,7 +57,7 @@ public class ClothoidTransitionDemo extends ClothoidBaseDemo {
   }
 
   public ClothoidTransitionDemo(Param param) {
-    super(new AsconaParam(true), param);
+    super(param);
     this.param = param;
     // ---
     setControlPointsSe2(RandomVariate.of(UniformDistribution.of(0, 8), 1 * 2, 3));
