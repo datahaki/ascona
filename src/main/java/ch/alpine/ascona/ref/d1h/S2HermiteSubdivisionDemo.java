@@ -62,12 +62,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   private final Param param;
 
   public S2HermiteSubdivisionDemo() {
-    this(new Param());
-  }
-
-  public S2HermiteSubdivisionDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     timerFrame.geometricComponent.setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));

@@ -100,7 +100,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.d2Rasters();
+    return ManifoldDisplays.manifoldD2Rasters();
   }
 
   @Override

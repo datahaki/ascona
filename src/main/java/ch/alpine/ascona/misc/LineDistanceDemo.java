@@ -53,12 +53,7 @@ public class LineDistanceDemo extends ControlPointsDemo {
   private final Param param;
 
   public LineDistanceDemo() {
-    this(new Param());
-  }
-
-  public LineDistanceDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     setControlPointsSe2(INITIAL);
     // ---

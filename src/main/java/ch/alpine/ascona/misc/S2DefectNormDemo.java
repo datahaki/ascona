@@ -64,12 +64,7 @@ public class S2DefectNormDemo extends ControlPointsDemo {
   public final Param param;
 
   public S2DefectNormDemo() {
-    this(new Param());
-  }
-
-  public S2DefectNormDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     setControlPointsSe2(INITIAL);
     // ---

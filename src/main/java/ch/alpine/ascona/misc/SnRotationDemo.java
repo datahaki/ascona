@@ -75,12 +75,7 @@ public class SnRotationDemo extends AbstractDemo {
   private final List<SnRotationChunk> list = new ArrayList<>();
 
   public SnRotationDemo() {
-    this(new Param());
-  }
-
-  public SnRotationDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     list.add(new SnRotationChunk(3, 200, 3, 0.1, ColorDataGradients.PARULA.deriveWithOpacity(RealScalar.of(0.3))));
     // list.add(new SnRotationChunk(3, 50, 20, 0.02, ColorDataGradients.SOLAR.deriveWithOpacity(RealScalar.of(0.5))));
   }

@@ -55,12 +55,7 @@ public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
   private final Param param;
 
   public SeriesHermiteSubdivisionDemo() {
-    this(new Param());
-  }
-
-  public SeriesHermiteSubdivisionDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     fieldsEditor(0).addUniversalListener(this::compute);
     compute();
   }

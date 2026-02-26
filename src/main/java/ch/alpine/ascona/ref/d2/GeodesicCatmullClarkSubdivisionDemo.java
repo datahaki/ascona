@@ -35,12 +35,7 @@ public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   private final Param param;
 
   public GeodesicCatmullClarkSubdivisionDemo() {
-    this(new Param());
-  }
-
-  public GeodesicCatmullClarkSubdivisionDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {0, 1, 0}, {1, 1, 0}, {2, 1, 0}}").multiply(RealScalar.of(2)));
   }

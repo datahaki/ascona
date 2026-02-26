@@ -58,12 +58,7 @@ public class AberthEhrlichDemo extends ControlPointsDemo {
   private Tensor zeros;
 
   public AberthEhrlichDemo() {
-    this(new Param());
-  }
-
-  public AberthEhrlichDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     fieldsEditor(0).addUniversalListener(() -> {
       if (param.shuffle) {
