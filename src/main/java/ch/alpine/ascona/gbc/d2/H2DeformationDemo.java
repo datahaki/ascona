@@ -41,14 +41,16 @@ public class H2DeformationDemo extends AbstractDeformationDemo {
 
   @Override // from AbstractDeformationDemo
   protected synchronized Tensor shufflePointsSe2(int n) {
-    return Tensor.of(CirclePoints.of(n).multiply(RealScalar.of(3)).stream().map(row -> row.append(RealScalar.ZERO)));
+    return Tensor.of(CirclePoints.of(n).multiply(RealScalar.of(2)).stream().map(row -> row.append(RealScalar.ZERO)));
   }
 
   @Override // from AbstractDeformationDemo
   protected MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
     Tensor domain = StaticHelper.of(Box2D.xy(Clips.absolute(1.0)), manifoldDisplay(), res);
     Sedarim sedarim = operator(movingOrigin);
-    return new AveragedMovingDomain2D(movingOrigin, sedarim, domain);
+    return new AveragedMovingDomain2D( //
+        movingOrigin, sedarim, domain, //
+        manifoldDisplay().indetPoint());
   }
 
   @Override // from AbstractDeformationDemo

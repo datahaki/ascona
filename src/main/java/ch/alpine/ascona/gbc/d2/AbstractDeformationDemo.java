@@ -63,7 +63,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   @ReflectionMarker
   public static class Param1 {
     @FieldClip(min = "3", max = "12")
-    public Integer length = 6;
+    public Integer length = 8;
   }
 
   private final Param0 param0;

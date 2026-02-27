@@ -59,7 +59,8 @@ public class S2DeformationDemo extends AbstractDeformationDemo {
     Tensor dy = Subdivide.of(-1, 1, res - 1);
     Tensor domain = Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, param2.zHeight)), dx, dy);
     Sedarim sedarim = operator(movingOrigin);
-    return new AveragedMovingDomain2D(movingOrigin, sedarim, domain);
+    return new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
+        manifoldDisplay().indetPoint());
   }
 
   @Override

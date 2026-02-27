@@ -28,6 +28,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Round;
@@ -115,11 +116,12 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
     TransitionSpace transitionSpace = manifoldDisplay.transitionSpace();
     graphics.setColor(new Color(0, 192, 192));
     graphics.setStroke(new BasicStroke(1.5f));
+    TensorUnaryOperator tuo = manifoldDisplay.point2xy();
     for (int i = 0; i < index.length; ++i) {
       Tensor head = sequence.get(index[i]);
       Tensor tail = sequence.get(index[(i + 1) % index.length]);
       Tensor tensor = transitionSpace.connect(head, tail).linearized(RealScalar.of(0.1));
-      Path2D line = geometricLayer.toPath2D(tensor);
+      Path2D line = geometricLayer.toPath2D(tuo.slash(tensor));
       graphics.draw(line);
     }
     {

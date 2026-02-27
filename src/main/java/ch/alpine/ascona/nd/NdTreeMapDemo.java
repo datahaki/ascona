@@ -80,7 +80,6 @@ class NdTreeMapDemo extends ManifoldDisplayDemo {
   }
 
   void shuffle() {
-    IO.println("build");
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor points = RandomSample.of(manifoldDisplay.randomSampleInterface(), param0.count);
     CoordinateBoundingBox cbb = CoordinateBounds.of(points);

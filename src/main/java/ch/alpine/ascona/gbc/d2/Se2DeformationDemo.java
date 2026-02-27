@@ -46,7 +46,8 @@ class Se2DeformationDemo extends AbstractDeformationDemo {
     Tensor dx = Subdivide.of(0, 6, res - 1);
     Tensor dy = Subdivide.of(0, 6, res - 1);
     Tensor domain = Outer.of((cx, cy) -> Tensors.of(cx, cy, RealScalar.ZERO), dx, dy);
-    return new AveragedMovingDomain2D(movingOrigin, operator(movingOrigin), domain);
+    return new AveragedMovingDomain2D(movingOrigin, operator(movingOrigin), domain, //
+        manifoldDisplay().indetPoint());
   }
 
   @Override

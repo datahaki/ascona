@@ -54,7 +54,8 @@ public class R2DeformationDemo extends AbstractDeformationDemo {
     Sedarim sedarim = operator(movingOrigin);
     return param2.mls //
         ? new RnFittedMovingDomain2D(movingOrigin, sedarim, domain)
-        : new AveragedMovingDomain2D(movingOrigin, sedarim, domain);
+        : new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
+            manifoldDisplay().indetPoint());
   }
 
   @Override

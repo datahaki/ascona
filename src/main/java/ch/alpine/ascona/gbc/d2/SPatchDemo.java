@@ -16,6 +16,8 @@ import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.api.Genesis;
 import ch.alpine.sophis.gbc.d2.InsidePolygonCoordinate;
 import ch.alpine.sophis.gbc.d2.SPatch;
@@ -31,23 +33,31 @@ import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.sca.N;
 
 class SPatchDemo extends ControlPointsDemo {
+  @ReflectionMarker
+  static class Param0 {
+    @FieldSelectionArray({ "20", "30", "50" })
+    public Integer res = 34;
+  }
+
+  @ReflectionMarker
+  static class Param1 {
+    public ColorDataGradients cdg = ColorDataGradients.CLASSIC;
+  }
+
   private final SPatch sPatch;
-  private final MovingDomain2D movingDomain2D;
+  private final Param0 param0;
+  private final Param1 param1;
+  private MovingDomain2D movingDomain2D;
 
   public SPatchDemo() {
+    super(param0 = new Param0(), param1 = new Param1());
+    fieldsEditor(0).addUniversalListener(this::shuffle);
     Genesis genesis = new InsidePolygonCoordinate(ThreePointCoordinate.of(ThreePointScalings.MEAN_VALUE));
     sPatch = SPatch.of(5, genesis, 2);
-    Tensor embed = sPatch.getEmbed();
-    setControlPointsSe2(Tensor.of(embed.stream() //
-        .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
-    int res = 35;
-    Tensor dx = Subdivide.of(-1, 1, res - 1).maps(N.DOUBLE);
-    Tensor dy = Subdivide.of(-1, 1, res - 1).maps(N.DOUBLE);
-    Tensor domain = Outer.of(Tensors::of, dx, dy);
-    movingDomain2D = new AveragedMovingDomain2D(embed, sPatch, domain);
+    addChangeListener(this::shuffle);
+    setManifoldDisplay(ManifoldDisplays.R2);
   }
 
   @Override
@@ -60,6 +70,17 @@ class SPatchDemo extends ControlPointsDemo {
     return ControlPointTypes.HEAD_TAIL;
   }
 
+  void shuffle() {
+    Tensor embed = sPatch.getEmbed();
+    setControlPointsSe2(Tensor.of(embed.stream() //
+        .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
+    Tensor dx = Subdivide.of(-1.0, 1.0, param0.res);
+    Tensor dy = Subdivide.of(-1.0, 1.0, param0.res);
+    Tensor domain = Outer.of(Tensors::of, dx, dy);
+    movingDomain2D = new AveragedMovingDomain2D(embed, sPatch, domain, //
+        manifoldDisplay().indetPoint());
+  }
+
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
@@ -67,7 +88,7 @@ class SPatchDemo extends ControlPointsDemo {
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     {
       Tensor[][] forward = movingDomain2D.forward(sequence, homogeneousSpace.biinvariantMean());
-      new MeshRender(forward, ColorDataGradients.CLASSIC.deriveWithOpacity(Rational.HALF)) //
+      new MeshRender(forward, param1.cdg.deriveWithOpacity(Rational.HALF)) //
           .render(geometricLayer, graphics);
       Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
       int x = 0;

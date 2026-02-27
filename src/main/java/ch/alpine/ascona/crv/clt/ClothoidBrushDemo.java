@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.io.File;
 import java.util.Objects;
 
 import ch.alpine.ascony.ren.LeversRender;
@@ -47,8 +46,7 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
     @FieldSlider
     @FieldClip(min = "0", max = "0.7")
     public Scalar width = RealScalar.of(0.3);
-    // private bufferedImage = null;
-    private Font font = null;
+    public Font font = new Font(Font.DIALOG, Font.BOLD, 500);
   }
 
   public final Cache<Tensor, Tensor> cache = Cache.of(ClothoidBrushDemo::sample, 100);
@@ -65,10 +63,10 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
       // FIXME ASCONA
       // Font.TYPE1_FONT
       // Font[] fonts = Font.createFonts(new File("/usr/share/fonts/urw-base35/Z003-MediumItalic.t1"));
-      Font[] fonts = Font.createFonts(new File("/home/datahaki/.local/share/fonts/DS Elzevier Initialen.ttf"));
-      IO.println("fonts.length=" + fonts.length);
-      if (0 < fonts.length)
-        param.font = fonts[0].deriveFont(500f);
+      // Font[] fonts = Font.createFonts(new File("/home/datahaki/.local/share/fonts/DS Elzevier Initialen.ttf"));
+      // IO.println("fonts.length=" + fonts.length);
+      // if (0 < fonts.length)
+      // param.font = fonts[0].deriveFont(500f);
     } catch (Exception exception) {
       exception.printStackTrace();
     }
