@@ -36,7 +36,7 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   );
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldClip(min = "0", max = "9")
     public Integer refine = 3;
   }
@@ -45,12 +45,7 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   private final Param param;
 
   public LaneRiesenfeldComparisonDemo() {
-    this(new Param());
-  }
-
-  public LaneRiesenfeldComparisonDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     setManifoldDisplay(ManifoldDisplays.ClL);
     // ---
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {3, 1, 0}, {4, 1, 0}, {5, 0, 0}, {6, 0, 0}, {7, 0, 0}}").multiply(RealScalar.of(2));

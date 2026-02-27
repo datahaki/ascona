@@ -11,9 +11,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class GeodesicSplitsDemo extends AbstractSplitsDemo {
+class GeodesicSplitsDemo extends AbstractSplitsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public WindowFunctions kernel = WindowFunctions.DIRICHLET;
     public Boolean prediction = false;
   }

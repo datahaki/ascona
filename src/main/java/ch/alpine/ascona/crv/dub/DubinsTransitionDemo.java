@@ -22,7 +22,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 
-public class DubinsTransitionDemo extends ControlPointsDemo {
+class DubinsTransitionDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
 
   public DubinsTransitionDemo() {

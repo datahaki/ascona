@@ -26,7 +26,7 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.mat.pi.LeastSquares;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
-public class AffineCoordinateDemo extends EuclideanPlaneDemo {
+class AffineCoordinateDemo extends EuclideanPlaneDemo {
   public AffineCoordinateDemo() {
     Tensor sequence = Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(2)).stream().map(PadRight.zeros(3)));
     setControlPointsSe2(sequence);

@@ -34,9 +34,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-public class ClassificationDemo extends ControlPointsDemo {
+class ClassificationDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 {
+  static class Param0 {
     @FieldSelectionArray({ "10", "20", "50" })
     public Integer size = 20;
     @FieldFuse
@@ -44,7 +44,7 @@ public class ClassificationDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     @FieldSelectionCallback("biinvariants")
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public ColorDataLists cdg = ColorDataLists._097;

@@ -41,9 +41,9 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Clips;
 
-public class KMeansDemo extends ControlPointsDemo {
+class KMeansDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     @FieldSelectionArray({ "100", "200", "500", "1000" })
     public Integer count = 200;
     @FieldFuse
@@ -51,7 +51,7 @@ public class KMeansDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  public static class Param2 {
+  static class Param2 {
     @FieldFuse
     public transient Boolean recomp = false;
   }

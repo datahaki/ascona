@@ -40,12 +40,12 @@ import ch.alpine.tensor.sca.ply.AberthEhrlich;
 import ch.alpine.tensor.sca.ply.Polynomial;
 import ch.alpine.tensor.sca.ply.Roots;
 
-public class AberthEhrlichDemo extends ControlPointsDemo {
+class AberthEhrlichDemo extends ControlPointsDemo {
   private static final PointsRender POINTS_RENDER_0 = //
       new PointsRender(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255));
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldClip(min = "3", max = "20")
     @FieldSlider
     public Integer depth = 5;

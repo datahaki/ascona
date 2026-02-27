@@ -30,9 +30,9 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.pdf.RandomSample;
 
-public class WeightsDemo extends ControlPointsDemo {
+class WeightsDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 {
+  static class Param0 {
     @FieldSelectionArray({ "3", "5", "10" })
     public Integer size = 5;
     @FieldFuse
@@ -40,7 +40,7 @@ public class WeightsDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     public LogWeightings logWeightings = LogWeightings.DISTANCES;
     public ColorDataLists colorDataLists = ColorDataLists._097;
   }

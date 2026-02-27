@@ -45,13 +45,13 @@ import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-public class S2DefectNormDemo extends ControlPointsDemo {
+class S2DefectNormDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final Tensor INITIAL = Tensors.fromString("{{-0.5, 0, 0}, {0.5, 0, 0}, {0, 0.5, 0}, {0, -0.5, 0}}").unmodifiable();
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })
     public Integer resolution = 20;
     @FieldLabel("color data gradient")

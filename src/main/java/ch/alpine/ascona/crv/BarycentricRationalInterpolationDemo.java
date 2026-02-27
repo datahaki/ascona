@@ -32,12 +32,12 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
-public class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
+class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   private static final int WIDTH = 400;
   private static final int HEIGHT = 300;
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldClip(min = "0", max = "1")
     public Integer beta = 0;
     @FieldClip(min = "0", max = "7")

@@ -36,9 +36,9 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 
-public class KNearestDemo extends ControlPointsDemo {
+class KNearestDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 {
+  static class Param0 {
     @FieldFuse
     public transient Boolean shuffle;
     @FieldClip(min = "4", max = "10")
@@ -46,7 +46,7 @@ public class KNearestDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public Tensor tensor = Tensors.vector(.3, 0, .6);
     @FieldClip(min = "2", max = "5")

@@ -35,7 +35,7 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.red.Times;
 
-public class ExponentialDemo extends EuclideanPlaneDemo {
+class ExponentialDemo extends EuclideanPlaneDemo {
   private static final int WIDTH = 300;
   private static final PointsRender POINTS_RENDER = //
       new PointsRender(new Color(0, 128, 128, 64), new Color(0, 128, 128, 96));

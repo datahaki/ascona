@@ -26,14 +26,14 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-public class GeodesicDemo extends ControlPointsDemo {
+class GeodesicDemo extends ControlPointsDemo {
   private static final Color COLOR = new Color(128, 128, 128, 128);
   // ---
   private final PathRender pathRender = new PathRender(new Color(128, 128, 255), //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0));
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSlider
     @FieldClip(min = "5", max = "20")
     public Integer splits = 10;

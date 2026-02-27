@@ -21,9 +21,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 
-public class Se2InvarianceDemo extends ControlPointsDemo {
+class Se2InvarianceDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSelectionArray({ "{0,0,0}", "{1,1,3}" })
     public Tensor xya = Tensors.vector(1, 1, 3);
   }

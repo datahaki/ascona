@@ -35,12 +35,12 @@ import ch.alpine.tensor.chq.FiniteTensorQ;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.ply.Polynomial;
 
-public class SeriesHermiteSubdivisionDemo extends AbstractDemo {
+class SeriesHermiteSubdivisionDemo extends AbstractDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
     @FieldSlider
     @FieldPreferredWidth(100)

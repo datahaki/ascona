@@ -25,7 +25,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Timing;
 
-public class Se2AnimationDemo extends ControlPointsDemo {
+class Se2AnimationDemo extends ControlPointsDemo {
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();
   // ---

@@ -24,9 +24,9 @@ import ch.alpine.tensor.sca.Clips;
 /** use of tensor lib {@link BSplineFunction}
  * 
  * {@link GeodesicBSplineFunction} */
-public class BSplineFunctionDemo extends AbstractCurvatureDemo {
+class BSplineFunctionDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
-  public static class Param extends AbstractCurvatureParam {
+  static class Param extends AbstractCurvatureParam {
     @FieldClip(min = "0", max = "9")
     public Integer degree = 3;
     @FieldClip(min = "1", max = "1000")

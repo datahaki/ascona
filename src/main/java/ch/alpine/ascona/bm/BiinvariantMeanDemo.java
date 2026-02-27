@@ -64,7 +64,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       Clips.interval(-0.22, 0.22));
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public Boolean median = false;
     @FieldFuse

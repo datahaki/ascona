@@ -31,7 +31,7 @@ import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.red.Times;
 
 // FIXME ASCONA ALG demo does not seem correct
-public class DeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
+class DeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   private BufferedImage bufferedImage;
 
   public DeBoorDemo() {

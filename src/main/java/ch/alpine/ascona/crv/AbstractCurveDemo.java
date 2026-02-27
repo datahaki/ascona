@@ -16,7 +16,7 @@ import ch.alpine.tensor.Tensors;
 
 abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
-  public static class AbstractCurveParam extends AbstractCurvatureParam {
+  static class AbstractCurveParam extends AbstractCurvatureParam {
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
     public Integer degree = 3;
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })

@@ -15,7 +15,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-public class TangentsDemo extends ControlPointsDemo {
+class TangentsDemo extends ControlPointsDemo {
   public TangentsDemo() {
     setControlPointsSe2(Tensors.fromString("{{-0.3, 0.0, 0}, {0.0, 0.5, 0.0}, {0.5, 0.5, 1}, {0.5, -0.4, 0}}"));
   }

@@ -24,9 +24,9 @@ import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.pdf.RandomSample;
 
-public final class GrassmannDemo extends ControlPointsDemo {
+final class GrassmannDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 {
+  static class Param0 {
     @FieldSelectionArray({ "4", "6", "8", "10" })
     public Integer size = 6;
     @FieldFuse
@@ -34,7 +34,7 @@ public final class GrassmannDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public ColorDataGradients cdg = ColorDataGradients.TEMPERATURE;
   }

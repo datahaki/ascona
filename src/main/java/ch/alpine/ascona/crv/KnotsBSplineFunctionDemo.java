@@ -33,9 +33,9 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.itp.DeBoor;
 import ch.alpine.tensor.red.Times;
 
-public class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
+class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   @ReflectionMarker
-  public static class Param extends AbstractCurveParam {
+  static class Param extends AbstractCurveParam {
     @FieldSlider
     @FieldClip(min = "0", max = "1")
     public Scalar exponent = RealScalar.ONE;

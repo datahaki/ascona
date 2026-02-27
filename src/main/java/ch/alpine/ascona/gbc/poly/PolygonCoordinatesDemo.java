@@ -35,9 +35,9 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
-public class PolygonCoordinatesDemo extends ControlPointsDemo {
+class PolygonCoordinatesDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param1 {
+  static class Param {
     public PolygonCoordinates logWeightings = PolygonCoordinates.MEAN_VALUE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     @FieldSelectionArray({ "20", "30", "40" })
@@ -45,15 +45,10 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     public ColorDataGradients cdg = ColorDataGradients.PARULA;
   }
 
-  private final Param1 param1;
+  private final Param param;
 
   public PolygonCoordinatesDemo() {
-    this(new Param1());
-  }
-
-  public PolygonCoordinatesDemo(Param1 param1) {
-    super(param1);
-    this.param1 = param1;
+    super(param = new Param());
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);
     fieldsEditor(0).addUniversalListener(this::spun);
@@ -77,13 +72,13 @@ public class PolygonCoordinatesDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = manifoldDisplay.manifold();
     Tensor sequence = getGeodesicControlPoints();
-    Sedarim sedarim = param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
+    Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
     if (manifoldDisplay.dimensions() < sequence.length()) {
       Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(sedarim::sunder, fallback);
       CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
-      Tensor weights = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param1.resolution);
-      showable = ArrayPlot.of(ImageTiling.of(weights), param1.cdg);
+      Tensor weights = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param.resolution);
+      showable = ArrayPlot.of(ImageTiling.of(weights), param.cdg);
     } else
       showable = null;
   }

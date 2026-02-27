@@ -36,14 +36,14 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Times;
 
-public class LineDistanceDemo extends ControlPointsDemo {
+class LineDistanceDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final Tensor GEODESIC_DOMAIN = Subdivide.of(0.0, 1.0, 11);
   private static final Tensor INITIAL = Tensors.fromString("{{-0.5, 0, 0}, {0.5, 0, 0}}").unmodifiable();
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200" })
     public Integer resolution = 50;
     @FieldLabel("color data gradient")

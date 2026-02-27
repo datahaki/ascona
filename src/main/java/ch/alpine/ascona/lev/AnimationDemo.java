@@ -25,14 +25,15 @@ import ch.alpine.tensor.lie.rot.RotationMatrix;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Timing;
 
-public class AnimationDemo extends ControlPointsDemo {
+// FIXME S2 crashes
+class AnimationDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 {
+  static class Param0 {
     public Biinvariants biinvariants = Biinvariants.METRIC;
   }
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     public Boolean animate = false;
   }
 

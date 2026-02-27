@@ -20,7 +20,7 @@ import ch.alpine.tensor.Tensors;
 /** Visualization of
  * "Spherical Barycentric Coordinates"
  * by Torsten Langer, Alexander Belyaev, Hans-Peter Seidel, 2005 */
-public class LbsBarycenterDemo extends ControlPointsDemo {
+class LbsBarycenterDemo extends ControlPointsDemo {
   public LbsBarycenterDemo() {
     setManifoldDisplay(ManifoldDisplays.S2);
     setControlPointsSe2(Tensors.fromString( //

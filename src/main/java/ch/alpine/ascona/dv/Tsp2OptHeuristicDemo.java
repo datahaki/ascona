@@ -33,16 +33,16 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.exp.Log;
 
-public class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
+class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
   @ReflectionMarker
-  public static class Param0 {
+  static class Param0 {
     @FieldSelectionArray({ "25", "50", "100", "150", "200" })
     public Integer numel = 50;
     public transient Boolean shuffle = false;
   }
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     public Integer attempts = 20;
     public Boolean active = false;
   }

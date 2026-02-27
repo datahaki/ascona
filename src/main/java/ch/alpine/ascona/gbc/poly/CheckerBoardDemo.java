@@ -46,12 +46,12 @@ import ch.alpine.tensor.sca.var.VariogramFunctions;
 
 /** transfe
  * weights from barycentric coordinates defined by set of control points*in the square domain(subset of R^2)to means in non-linear spaces */
-public class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
+class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   public static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._000.strict();
   // ---
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     public ParameterizationPattern pattern = ParameterizationPattern.CHECKER_BOARD;
     @FieldClip(min = "50", max = "360")
     public Integer refine = 50;

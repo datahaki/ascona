@@ -29,7 +29,7 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Mod;
 
 // TODO ASCONA REV add more parameters
-public class SnRotationDemo extends AbstractDemo {
+class SnRotationDemo extends AbstractDemo {
   private static class SnRotationChunk implements RenderInterface {
     private final ColorDataGradient colorDataGradient;
     private final BoundedLinkedList<Tensor> boundedLinkedList;

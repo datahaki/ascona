@@ -35,9 +35,9 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class CatmullRomDemo extends AbstractCurvatureDemo {
+class CatmullRomDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
-  public static class Param extends AbstractCurvatureParam {
+  static class Param extends AbstractCurvatureParam {
     @FieldPreferredWidth(100)
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
     public Integer refine = 5;

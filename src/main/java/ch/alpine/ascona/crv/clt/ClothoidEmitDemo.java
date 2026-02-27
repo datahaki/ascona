@@ -28,7 +28,7 @@ import ch.alpine.tensor.sca.Clips;
  * resulting curve. The difference is only noticeable for S shaped curves.
  * 
  * Therefore, for simplicity in algorithms we use degree == 1. */
-public class ClothoidEmitDemo extends ClothoidBaseDemo {
+class ClothoidEmitDemo extends ClothoidBaseDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //
       ColorDataLists._097.cyclic().deriveWithAlpha(192);
   private static final Scalar minResolution = RealScalar.of(0.02);

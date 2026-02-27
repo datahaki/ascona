@@ -27,7 +27,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 // TODO ASCONA nope: 2x radius
-public class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
+class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
   protected final SpinnerLabel<GeodesicCausalFilters> spinnerCausalFilter = SpinnerLabel.of(GeodesicCausalFilters.class);
   /** parameter to blend extrapolation with measurement */
   private final JSlider jSlider = new JSlider(1, 999, 500);

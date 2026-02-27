@@ -23,9 +23,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.N;
 
 @ReflectionMarker
-public class Regularization2StepDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
+class Regularization2StepDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
   @ReflectionMarker
-  public static class Ratio {
+  static class Ratio {
     /** regularization parameter in the interval [0, 1] */
     @FieldSlider
     @FieldClip(min = "0.0", max = "1.0")

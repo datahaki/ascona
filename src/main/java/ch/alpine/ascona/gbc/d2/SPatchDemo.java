@@ -33,7 +33,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.sca.N;
 
-public class SPatchDemo extends ControlPointsDemo {
+class SPatchDemo extends ControlPointsDemo {
   private final SPatch sPatch;
   private final MovingDomain2D movingDomain2D;
 

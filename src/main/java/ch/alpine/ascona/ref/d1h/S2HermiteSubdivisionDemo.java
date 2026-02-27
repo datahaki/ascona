@@ -36,7 +36,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.red.Times;
 
-public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
+class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   // TODO ASCONA redundant
   private static final PointsRender POINTS_RENDER_0 = //
       new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
@@ -45,7 +45,7 @@ public class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   private static final Tensor GEODESIC_DOMAIN = Subdivide.of(0.0, 1.0, 11);
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE1;
     public final HermiteSubdivisionParam hsp = HermiteSubdivisionParam.GLOBAL;
     @FieldSlider

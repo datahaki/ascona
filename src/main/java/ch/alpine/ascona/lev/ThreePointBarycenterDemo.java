@@ -23,7 +23,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
 // TODO does not really work
-public class ThreePointBarycenterDemo extends ControlPointsDemo {
+class ThreePointBarycenterDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param {
     public PolygonCoordinates polygonCoordinates = PolygonCoordinates.MEAN_VALUE;

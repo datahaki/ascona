@@ -14,9 +14,9 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.BezierFunction;
 
 /** visualization of geodesic average along geodesics */
-public class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
+class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSlider
     @FieldClip(min = "0", max = "1")
     public Scalar ratio = RealScalar.of(0.5);

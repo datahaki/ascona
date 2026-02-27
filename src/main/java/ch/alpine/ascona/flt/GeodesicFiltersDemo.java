@@ -28,12 +28,12 @@ import ch.alpine.tensor.lie.TensorProduct;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 // TODO ASCONA DEMO visualization can be improved much
-public class GeodesicFiltersDemo extends ControlPointsDemo {
+class GeodesicFiltersDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DRAW = ColorDataLists._001.strict();
   private static final ColorDataIndexed COLOR_FILL = COLOR_DRAW.deriveWithAlpha(64);
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public WindowFunctions windowFunctions = WindowFunctions.DIRICHLET;
   }
 

@@ -24,9 +24,9 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.red.Times;
 
-public class GeodesicMeanFilterDemo extends ControlPointsDemo {
+class GeodesicMeanFilterDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
     public Integer radius = 2;
   }

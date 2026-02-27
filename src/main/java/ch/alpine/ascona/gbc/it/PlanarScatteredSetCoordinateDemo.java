@@ -36,7 +36,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 // FIXME ASCONA SPIN
-public class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
+class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private final GenesisDequeProperties dequeGenesisProperties = new GenesisDequeProperties();
 
   // FIXME ASCONA the class structure is not correct, since log weighting is empty and not visible

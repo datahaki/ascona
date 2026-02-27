@@ -35,13 +35,13 @@ import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
-public class LogarithmDemo extends ControlPointsDemo {
+class LogarithmDemo extends ControlPointsDemo {
   private static final GridRender GRID_RENDER = new GridRender(Tensors.vector(-1, 0, 1), Color.LIGHT_GRAY);
   private static final Color DOMAIN_F = new Color(192, 192, 64, 64);
   private static final Color DOMAIN_D = new Color(192, 192, 64, 192);
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldClip(min = "5", max = "20")
     public Integer length = 11;
     public Boolean ctrl = false;

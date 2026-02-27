@@ -32,7 +32,7 @@ import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-public class ClothoidTransitionDemo extends ClothoidSequenceDemo {
+class ClothoidTransitionDemo extends ClothoidSequenceDemo {
   @ReflectionMarker
   public static class Param {
     public Boolean ctrl = true;

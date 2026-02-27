@@ -25,9 +25,9 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Round;
 
-public class HeadTailGeodesicDemo extends ControlPointsDemo {
+class HeadTailGeodesicDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSlider
     @FieldClip(min = "5", max = "20")
     public Integer refine = 6;

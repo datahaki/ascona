@@ -42,9 +42,9 @@ import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
-public class ClassificationImageDemo extends ControlPointsDemo {
+class ClassificationImageDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 {
+  static class Param0 {
     @FieldSelectionArray({ "10", "20", "50" })
     public Integer size = 20;
     @FieldSelectionArray({ "2", "3", "4", "5" })
@@ -54,7 +54,7 @@ public class ClassificationImageDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     @FieldSelectionCallback("biinvariants")
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public Labels labels = Labels.ARG_MIN;

@@ -24,9 +24,9 @@ import ch.alpine.tensor.alg.ArrayReshape;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.red.Nest;
 
-public class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
+class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSlider
     @FieldClip(min = "0", max = "4")
     public Integer refine = 2;

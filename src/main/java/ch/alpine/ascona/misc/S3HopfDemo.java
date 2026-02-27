@@ -21,7 +21,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Clips;
 
-public class S3HopfDemo extends ControlPointsDemo {
+class S3HopfDemo extends ControlPointsDemo {
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.S2_ONLY;

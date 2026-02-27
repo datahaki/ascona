@@ -41,7 +41,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Clips;
 
 // TODO allDubins causes demo to crash sometimes. also:
-public class DubinsPathDemo extends ControlPointsDemo {
+class DubinsPathDemo extends ControlPointsDemo {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
   private static final int POINTS = 200;
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();

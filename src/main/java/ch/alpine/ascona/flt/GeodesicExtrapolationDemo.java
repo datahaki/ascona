@@ -20,7 +20,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
+class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
   private Tensor refined = Tensors.empty();
 
   public GeodesicExtrapolationDemo() {

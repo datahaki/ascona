@@ -5,7 +5,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.R2Display;
 import ch.alpine.tensor.Tensor;
 
-public class R2TreeMapDemo extends AbstractTreeMapDemo {
+class R2TreeMapDemo extends AbstractTreeMapDemo {
   @Override
   protected ManifoldDisplay manifoldDisplay() {
     return R2Display.INSTANCE;

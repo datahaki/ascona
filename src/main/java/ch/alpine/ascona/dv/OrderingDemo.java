@@ -35,9 +35,9 @@ import ch.alpine.tensor.img.ColorFormat;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.sca.Clips;
 
-public class OrderingDemo extends ControlPointsDemo {
+class OrderingDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param0 {
+  static class Param0 {
     @FieldSelectionArray({ "10", "50", "100", "200" })
     public Integer size = 100;
     @FieldFuse
@@ -45,7 +45,7 @@ public class OrderingDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     @FieldSelectionCallback("biinvariants")
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public ColorDataGradients cdg = ColorDataGradients.THERMOMETER;

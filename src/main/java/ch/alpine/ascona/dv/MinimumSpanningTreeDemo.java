@@ -37,7 +37,7 @@ import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.pdf.RandomSample;
 
-public class MinimumSpanningTreeDemo extends ControlPointsDemo {
+class MinimumSpanningTreeDemo extends ControlPointsDemo {
   private record EdgeComparator(Tensor matrix) implements Comparator<IntUndirectedEdge> {
     @Override
     public int compare(IntUndirectedEdge edge1, IntUndirectedEdge edge2) {
@@ -48,7 +48,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  public static class Param0 {
+  static class Param0 {
     @FieldSelectionArray({ "10", "20", "30", "50" })
     public Integer size = 20;
     @FieldFuse
@@ -56,7 +56,7 @@ public class MinimumSpanningTreeDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     public Biinvariants biinvariants = Biinvariants.METRIC;
     @FieldClip(min = "1", max = "8")
     public Integer refine = 2;

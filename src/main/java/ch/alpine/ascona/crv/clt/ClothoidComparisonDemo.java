@@ -31,7 +31,7 @@ import ch.alpine.tensor.img.ColorDataLists;
  * number clothoid approximation to generate figures in report:
  * 
  * https://github.com/idsc-frazzoli/retina/files/3568308/20190903_appox_clothoids_with_ext_windings.pdf */
-public class ClothoidComparisonDemo extends ClothoidBaseDemo {
+class ClothoidComparisonDemo extends ClothoidBaseDemo {
   private static final int WIDTH = 480;
   private static final int HEIGHT = 360;
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);

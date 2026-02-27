@@ -25,9 +25,9 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.itp.BezierFunction;
 
 /** Bezier function with extrapolation */
-public class BezierFunctionDemo extends AbstractCurvatureDemo {
+class BezierFunctionDemo extends AbstractCurvatureDemo {
   @ReflectionMarker
-  public static class Param extends AbstractCurvatureParam {
+  static class Param extends AbstractCurvatureParam {
     @FieldSlider
     @FieldClip(min = "0", max = "10")
     public Integer refine = 6;

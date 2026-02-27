@@ -29,7 +29,7 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
-public class CustomClothoidDemo extends ClothoidBaseDemo {
+class CustomClothoidDemo extends ClothoidBaseDemo {
   private static final Tensor INITIAL = Tensors.fromString("{{0,0,0},{3,0,0}}");
   private static final Tensor POINTER = Tensors.fromString("{{0, 0}, {-0.2, -1}, {+0.2, -1}}");
   private final JLabel jLabel = new JLabel();

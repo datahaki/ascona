@@ -20,7 +20,7 @@ import ch.alpine.tensor.red.Nest;
  * 
  * illustration of three ways to average the angular component:
  * {@link So2BiinvariantMeans} */
-public final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
+final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
   private final SpinnerLabel<Se2BiinvariantMeans> spinnerFilters = SpinnerLabel.of(Se2BiinvariantMeans.class);
   private final SpinnerLabel<Integer> spinnerConvolution;
 

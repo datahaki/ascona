@@ -24,7 +24,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
 import ch.alpine.tensor.pdf.RandomSample;
 
-public class BipartiteMatchingDemo extends ControlPointsDemo {
+class BipartiteMatchingDemo extends ControlPointsDemo {
   @ReflectionMarker
   public static class Param {
     @FieldClip(min = "1", max = "200")

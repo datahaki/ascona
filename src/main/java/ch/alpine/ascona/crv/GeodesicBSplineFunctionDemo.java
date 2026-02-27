@@ -25,7 +25,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.red.Times;
 
-public class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
+class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   private BufferedImage bufferedImage;
 
   public GeodesicBSplineFunctionDemo() {

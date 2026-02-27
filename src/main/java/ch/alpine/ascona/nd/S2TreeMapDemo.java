@@ -9,7 +9,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.Abs;
 
-public class S2TreeMapDemo extends AbstractTreeMapDemo {
+class S2TreeMapDemo extends AbstractTreeMapDemo {
   @Override
   protected ManifoldDisplay manifoldDisplay() {
     return S2Display.INSTANCE;

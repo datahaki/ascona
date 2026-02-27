@@ -34,7 +34,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 
-public class ApproximationDemo extends ControlPointsDemo {
+class ApproximationDemo extends ControlPointsDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final Scalar MARKER_SCALE = RealScalar.of(0.1);
@@ -55,7 +55,7 @@ public class ApproximationDemo extends ControlPointsDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
 
   @ReflectionMarker
-  public static class Param extends GokartPosParam {
+  static class Param extends GokartPosParam {
     @FieldSelectionArray({ "0", "2", "4", "6", "8", "10", "12", "14" })
     public Integer width = 12;
     @FieldSelectionCallback("schemes")

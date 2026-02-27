@@ -31,7 +31,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-public class S2DeltaDemo extends AbstractDemo {
+class S2DeltaDemo extends AbstractDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 128 + 64);
   private static final Color COLOR_SHAPE = new Color(128, 255, 128, 128 + 64);
   private static final int WIDTH = 360;
@@ -42,7 +42,7 @@ public class S2DeltaDemo extends AbstractDemo {
   // ---
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSlider
     @FieldClip(min = "0", max = "1")
     public Scalar angle = RealScalar.of(0.1);

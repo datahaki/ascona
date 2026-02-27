@@ -40,7 +40,7 @@ class ClothoidNdDemo extends ControlPointsDemo {
   private final ClothoidNdMap<Tensor> clothoidNdMap = new ClothoidNdMap<>(ND_BOX_R2, t -> t);
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldClip(min = "1", max = "30")
     @FieldSlider
     public Integer value = 8;

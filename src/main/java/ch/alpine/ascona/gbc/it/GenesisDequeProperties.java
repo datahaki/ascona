@@ -14,7 +14,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 @ReflectionMarker
-public class GenesisDequeProperties {
+class GenesisDequeProperties {
   public Boolean lagrange = false;
   public Amplifiers amplifiers = Amplifiers.EXP;
   public Scalar beta = RealScalar.of(3);
