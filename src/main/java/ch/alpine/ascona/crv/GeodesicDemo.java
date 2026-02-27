@@ -66,7 +66,7 @@ class GeodesicDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    timerFrame.geometricComponent.renderGrid(graphics);
+    // timerFrame.geometricComponent.renderGrid(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor points = getGeodesicControlPoints();

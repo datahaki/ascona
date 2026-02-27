@@ -33,7 +33,7 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
   private final JSlider jSlider = new JSlider(1, 999, 500);
 
   public GeodesicCausalFilterDemo() {
-    super(ManifoldDisplays.SE2_ONLY);
+    super(new Object());
     {
       spinnerCausalFilter.setValue(GeodesicCausalFilters.BIINVARIANT_MEAN_IIR);
       spinnerCausalFilter.addToComponent(timerFrame.jToolBar, "smoothing kernel");
@@ -48,7 +48,7 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.ALL; // TODO
+    return ManifoldDisplays.SE2_ONLY; // TODO
   }
 
   @Override // from RenderInterface

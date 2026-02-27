@@ -25,13 +25,11 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophis.ref.d1.CurveSubdivision;
-import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Nest;
-import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.win.GaussianWindow;
 
 class ApproximationDemo extends ControlPointsDemo {
@@ -105,7 +103,7 @@ class ApproximationDemo extends ControlPointsDemo {
     Tensor tracked = centerFilter.apply(rawdata);
     int level = param.level;
     int steps = 1 << level;
-    IO.println(DoubleScalar.of(steps).divide(posHz.getSamplingRate()).maps(Round._3)); // param.gpd().getSampleRate()
+    // IO.println(DoubleScalar.of(steps).divide(posHz.getSamplingRate()).maps(Round._3)); // param.gpd().getSampleRate()
     Tensor control = Tensor.of(IntStream.range(0, tracked.length() / steps) //
         .map(i -> i * steps) //
         .mapToObj(tracked::get));

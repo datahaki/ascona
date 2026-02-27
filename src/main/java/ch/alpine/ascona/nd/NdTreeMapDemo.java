@@ -42,8 +42,6 @@ class NdTreeMapDemo extends ManifoldDisplayDemo {
     public Integer count = 1000;
     @FieldClip(min = "1", max = "5")
     public Integer leafSizeMax = 5;
-    @FieldClip(min = "0", max = "20")
-    public Integer multi = 0;
   }
 
   @ReflectionMarker
@@ -84,11 +82,8 @@ class NdTreeMapDemo extends ManifoldDisplayDemo {
     Tensor points = RandomSample.of(manifoldDisplay.randomSampleInterface(), param0.count);
     CoordinateBoundingBox cbb = CoordinateBounds.of(points);
     NdMap<Void> ndMap = NdTreeMap.of(cbb, param0.leafSizeMax);
-    int multi = param0.multi;
-    for (Tensor point : points) {
-      for (int index = 0; index <= multi; ++index)
-        ndMap.insert(point, null);
-    }
+    for (Tensor point : points)
+      ndMap.insert(point, null);
     triple = new Triple(points, cbb, ndMap);
   }
 
