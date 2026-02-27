@@ -3,19 +3,23 @@ package ch.alpine.ascona.ref.d1;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Optional;
 
 import javax.swing.JButton;
 
-import ch.alpine.ascona.crv.AbstractCurvatureDemo;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.BaseCurvatureParam;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -32,11 +36,11 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.red.Times;
 
 /** split interface and biinvariant mean based curve subdivision */
-class CurveSubdivisionDemo extends AbstractCurvatureDemo {
+class CurveSubdivisionDemo extends ControlPointsDemo {
   private static final PathRender PATH_RENDER = new PathRender(new Color(0, 128, 0, 128));
 
   @ReflectionMarker
-  static class Param extends AbstractCurvatureParam {
+  static class Param extends BaseCurvatureParam {
     public CurveSubdivisionSchemes scheme = CurveSubdivisionSchemes.BSPLINE1;
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
     public Integer refine = 5;
@@ -94,7 +98,12 @@ class CurveSubdivisionDemo extends AbstractCurvatureDemo {
   }
 
   @Override
-  public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  protected final ControlPointType controlPointType() {
+    return ControlPointTypes.CURVYCURV;
+  }
+
+  @Override
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     final CurveSubdivisionSchemes scheme = param.scheme;
     //
     if (scheme.equals(CurveSubdivisionSchemes.DODGSON_SABIN))
@@ -129,11 +138,11 @@ class CurveSubdivisionDemo extends AbstractCurvatureDemo {
       Curvature2DRender.of(render, cyclic, param.comb).render(geometricLayer, graphics);
       if (levels < 5)
         ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
-      return refined;
+      param.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
+          .render(geometricLayer, graphics);
     } catch (Exception exception) {
       // ---
     }
-    return Tensors.empty();
   }
 
   static void main() {

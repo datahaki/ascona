@@ -3,13 +3,18 @@ package ch.alpine.ascona.crv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.BaseCurvatureParam;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -35,9 +40,9 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-class CatmullRomDemo extends AbstractCurvatureDemo {
+class CatmullRomDemo extends ControlPointsDemo {
   @ReflectionMarker
-  static class Param extends AbstractCurvatureParam {
+  static class Param extends BaseCurvatureParam {
     @FieldPreferredWidth(100)
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
     public Integer refine = 5;
@@ -76,8 +81,13 @@ class CatmullRomDemo extends AbstractCurvatureDemo {
     return ManifoldDisplays.metricManifolds();
   }
 
+  @Override
+  protected final ControlPointType controlPointType() {
+    return ControlPointTypes.CURVYCURV;
+  }
+
   @Override // from RenderInterface
-  public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     final int levels = param.refine;
     final Tensor control = getGeodesicControlPoints();
@@ -108,9 +118,9 @@ class CatmullRomDemo extends AbstractCurvatureDemo {
       }
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
-      return refined;
+      param.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
+          .render(geometricLayer, graphics);
     }
-    return control;
   }
 
   static void main() {

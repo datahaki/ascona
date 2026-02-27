@@ -121,6 +121,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       graphics.drawString("mean does not exist", 0, 30);
     }
     try {
+      // TODO not generic
       Tensor shifted = sequence.get(0);
       if (homogeneousSpace.toString().equals("S"))
         shifted = SnPhongMean.INSTANCE.estimate(sequence, weights);

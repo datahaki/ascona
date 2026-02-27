@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.it;
+package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.ascona.gbc.d2.AbstractScatteredSetWeightingDemo;
 import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.ascony.api.InsideConvexHullLogWeighting;
@@ -17,6 +16,7 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.GenesisDequeParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -37,7 +37,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
  * in the square domain (subset of R^2) to means in non-linear spaces */
 // FIXME ASCONA SPIN
 class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
-  private final GenesisDequeProperties dequeGenesisProperties = new GenesisDequeProperties();
+  private final GenesisDequeParam dequeGenesisProperties = new GenesisDequeParam();
 
   // FIXME ASCONA the class structure is not correct, since log weighting is empty and not visible
   public PlanarScatteredSetCoordinateDemo() {

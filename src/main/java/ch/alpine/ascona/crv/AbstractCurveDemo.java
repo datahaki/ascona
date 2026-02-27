@@ -2,7 +2,12 @@
 package ch.alpine.ascona.crv;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
+import ch.alpine.ascony.ref.BaseCurvatureParam;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
+import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -14,9 +19,9 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
+abstract class AbstractCurveDemo extends ControlPointsDemo {
   @ReflectionMarker
-  static class AbstractCurveParam extends AbstractCurvatureParam {
+  static class AbstractCurveParam extends BaseCurvatureParam {
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
     public Integer degree = 3;
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
@@ -35,11 +40,18 @@ abstract class AbstractCurveDemo extends AbstractCurvatureDemo {
   }
 
   @Override
-  protected final Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  protected final ControlPointType controlPointType() {
+    return ControlPointTypes.CURVYCURV;
+  }
+
+  @Override
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();
-    if (Tensors.isEmpty(control))
-      return Tensors.empty();
-    return protected_render(geometricLayer, graphics, abstractCurveParam.degree, abstractCurveParam.refine, control);
+    if (!Tensors.isEmpty(control)) {
+      Tensor refined = protected_render(geometricLayer, graphics, abstractCurveParam.degree, abstractCurveParam.refine, control);
+      abstractCurveParam.spawn(manifoldDisplay(), refined, new Rectangle(0, 0, 400, 300)) //
+          .render(geometricLayer, graphics);
+    }
   }
 
   protected abstract Tensor protected_render( //
