@@ -59,12 +59,7 @@ class DubinsPathDemo extends ControlPointsDemo {
   private final PathRender pathRenderClothoid = new PathRender(Color.CYAN, 2f);
 
   public DubinsPathDemo() {
-    this(new Param());
-  }
-
-  public DubinsPathDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {3, 0, 0}}"));
   }
 

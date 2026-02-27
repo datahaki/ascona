@@ -21,6 +21,7 @@ import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
 import ch.alpine.tensor.pdf.RandomSample;
 
@@ -39,8 +40,8 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
   public BipartiteMatchingDemo() {
     super(param = new Param());
     fieldsEditor(0).addUniversalListener(this::shuffle);
-    shuffle();
-    addChangeListener(_ -> shuffle());
+    addChangeListener(this::shuffle);
+    setManifoldDisplay(ManifoldDisplays.R2);
   }
 
   @Override
@@ -57,9 +58,8 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     int n = param.n;
     ground = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
-    Tensor tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
-    Tensor xyas = Tensor.of(tensor.stream().map(manifoldDisplay::point2xya));
-    setControlPointsSe2(xyas);
+    Tensor tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), n + 2);
+    setControlPointsSe2(manifoldDisplay.point2xya().slash(tensor));
   }
 
   @Override // from RenderInterface
@@ -78,7 +78,8 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
           Tensor head = control.get(index);
           Tensor tail = ground.get(matching[index]);
           Transition transition = transitionSpace.connect(head, tail);
-          Path2D path2d = geometricLayer.toPath2D(transition.linearized(RealScalar.of(0.1)));
+          TensorUnaryOperator tuo = manifoldDisplay::point2xy;
+          Path2D path2d = geometricLayer.toPath2D(tuo.slash(transition.linearized(RealScalar.of(0.1))));
           graphics.draw(path2d);
         }
     }

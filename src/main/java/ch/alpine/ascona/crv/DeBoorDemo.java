@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -15,20 +14,16 @@ import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLinkImages;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.sophis.crv.GeodesicBSplineFunction;
-import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.itp.DeBoor;
-import ch.alpine.tensor.red.Times;
 
 // FIXME ASCONA ALG demo does not seem correct
 class DeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
@@ -37,18 +32,8 @@ class DeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   public DeBoorDemo() {
     super(new AbstractCurveParam());
     addButtonDubins();
-    ToolbarFieldsEditor.addToComponent(this, timerFrame.jToolBar);
     // ---
     setManifoldDisplay(ManifoldDisplays.Se2C);
-    // ---
-    Tensor dubins = Tensors.fromString("{{1, 0, 0}, {2, 0, 2.5708}}");
-    setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 0), //
-        Tensor.of(dubins.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
-  }
-
-  @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.ALL;
   }
 
   @Override // from RenderInterface

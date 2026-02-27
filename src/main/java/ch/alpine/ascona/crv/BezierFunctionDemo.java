@@ -42,12 +42,7 @@ class BezierFunctionDemo extends ControlPointsDemo {
   private final Param param;
 
   public BezierFunctionDemo() {
-    this(new Param());
-  }
-
-  public BezierFunctionDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     addButtonDubins();
     {
       Tensor tensor = Tensors.fromString("{{0, 1, 0}, {1, 0, 0}}");

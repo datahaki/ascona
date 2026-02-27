@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
+import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.AreaRender;
@@ -20,7 +21,6 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Round;
@@ -43,9 +43,8 @@ class HeadTailGeodesicDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     // ---
+    addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.S2);
-    // ---
-    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 0, 0}}"));
   }
 
   @Override
@@ -56,6 +55,12 @@ class HeadTailGeodesicDemo extends ControlPointsDemo {
   @Override
   protected ControlPointType controlPointType() {
     return ControlPointTypes.HEAD_TAIL;
+  }
+
+  void shuffle() {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Tensor tensor = RandomPoints.on_line(manifoldDisplay, 2);
+    setControlPointsSe2(manifoldDisplay.point2xya().slash(tensor));
   }
 
   @Override // from RenderInterface

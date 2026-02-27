@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.avg;
+package ch.alpine.ascona.crv;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

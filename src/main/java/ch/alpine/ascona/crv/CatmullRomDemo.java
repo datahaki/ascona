@@ -12,9 +12,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.BaseCurvatureParam;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
-import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -22,7 +19,6 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.GeodesicCatmullRom;
-import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.win.KnotSpacing;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
@@ -31,16 +27,14 @@ import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.itp.LinearBinaryAverage;
-import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-class CatmullRomDemo extends ControlPointsDemo {
+class CatmullRomDemo extends PointSequenceDemo {
   @ReflectionMarker
   static class Param extends BaseCurvatureParam {
     @FieldPreferredWidth(100)
@@ -69,21 +63,11 @@ class CatmullRomDemo extends ControlPointsDemo {
     addButtonDubins();
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);
-    {
-      Tensor dubins = Tensors.fromString("{{1, 1, 0}, {1, 2, -1}, {2, 1, 0.5}}");
-      setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 0), //
-          Tensor.of(dubins.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
-    }
   }
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.metricManifolds();
-  }
-
-  @Override
-  protected final ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
   }
 
   @Override // from RenderInterface

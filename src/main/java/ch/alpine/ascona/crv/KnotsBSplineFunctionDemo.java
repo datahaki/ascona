@@ -20,18 +20,15 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.GeodesicBSplineFunction;
-import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.win.KnotSpacing;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.itp.DeBoor;
-import ch.alpine.tensor.red.Times;
 
 class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
   @ReflectionMarker
@@ -55,10 +52,10 @@ class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImag
     setManifoldDisplay(ManifoldDisplays.R2);
     param.refine = 5;
     // ---
-    Tensor dubins = Tensors.fromString(
-        "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");
-    setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
-        Tensor.of(dubins.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
+    // Tensor dubins = Tensors.fromString(
+    // "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");
+    // setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
+    // Tensor.of(dubins.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
   }
 
   @Override

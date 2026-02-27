@@ -26,13 +26,13 @@ import ch.alpine.sophis.win.KnotSpacing;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
+// TODO ASCONA what is this?
 class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   private static final int WIDTH = 400;
   private static final int HEIGHT = 300;
@@ -59,7 +59,6 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     // ---
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.R2);
-    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {2, 0, 0}, {4, 3, 1}, {5, -1, -2}}"));
   }
 
   @Override
