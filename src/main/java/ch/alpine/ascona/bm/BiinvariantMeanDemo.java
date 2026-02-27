@@ -25,7 +25,6 @@ import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
@@ -36,6 +35,7 @@ import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.bm.ReducingMeanEstimate;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.s.SnPhongMean;
+import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.math.AveragingWeights;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -67,8 +67,6 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
   static class Param {
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public Boolean median = false;
-    @FieldFuse
-    public transient Boolean shuffle = false;
     public Boolean vehicle = false;
   }
 
@@ -77,13 +75,8 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
   public BiinvariantMeanDemo() {
     super(param = new Param());
     // ---
-    fieldsEditor(0).addUniversalListener(() -> {
-      if (param.shuffle) {
-        param.shuffle = false;
-        shuffle();
-      }
-    });
-    shuffle();
+    addChangeListener(this::shuffle);
+    setManifoldDisplay(ManifoldDisplays.H2);
   }
 
   @Override
@@ -96,11 +89,9 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
     return ControlPointTypes.SCATTERED;
   }
 
-  public void shuffle() {
+  private void shuffle() {
     RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
-    Tensor tensor = RandomSample.of(randomSampleInterface, 6);
-    tensor.set(Scalar::zero, Tensor.ALL, 2);
-    setControlPointsSe2(tensor);
+    setControlPointsSe2(manifoldDisplay().point2xya().slash(RandomSample.of(randomSampleInterface, 6)));
   }
 
   @Override
@@ -123,7 +114,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
     try {
       // TODO not generic
       Tensor shifted = sequence.get(0);
-      if (homogeneousSpace.toString().equals("S"))
+      if (homogeneousSpace instanceof Sphere)
         shifted = SnPhongMean.INSTANCE.estimate(sequence, weights);
       Tensor points = Tensors.empty();
       for (int iteration = 0; iteration < 100; ++iteration) {
