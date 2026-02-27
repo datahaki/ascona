@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
+import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
@@ -56,6 +57,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     // ---
+    addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.R2);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {2, 0, 0}, {4, 3, 1}, {5, -1, -2}}"));
   }
@@ -68,6 +70,11 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   @Override
   protected ControlPointType controlPointType() {
     return ControlPointTypes.CURVYCURV;
+  }
+
+  private void shuffle() {
+    Tensor points = RandomPoints.scattered(manifoldDisplay(), 6);
+    setControlPointsSe2(manifoldDisplay().point2xya().slash(points));
   }
 
   @Override

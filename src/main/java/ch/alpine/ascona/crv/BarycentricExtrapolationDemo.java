@@ -27,6 +27,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 
+// TODO what does this demo do? crashes for other than R2
 class BarycentricExtrapolationDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
@@ -51,7 +52,7 @@ class BarycentricExtrapolationDemo extends ControlPointsDemo {
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2C_R2;
+    return ManifoldDisplays.R2_ONLY;
   }
 
   @Override

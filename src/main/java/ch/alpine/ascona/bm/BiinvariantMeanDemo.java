@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ImageRender;
@@ -47,8 +48,6 @@ import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.pdf.RandomSample;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.exp.Log10;
@@ -90,8 +89,8 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
-    setControlPointsSe2(manifoldDisplay().point2xya().slash(RandomSample.of(randomSampleInterface, 6)));
+    Tensor points = RandomPoints.scattered(manifoldDisplay(), 6);
+    setControlPointsSe2(manifoldDisplay().point2xya().slash(points));
   }
 
   @Override
