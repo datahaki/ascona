@@ -55,6 +55,7 @@ class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
     int dim = control.get(0).length();
+    IO.println(control.get(0));
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = //
         new GeodesicCatmullClarkSubdivision(geodesicSpace);
