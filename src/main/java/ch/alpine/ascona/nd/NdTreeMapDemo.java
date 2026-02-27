@@ -5,13 +5,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-import java.util.random.RandomGenerator;
 
 import ch.alpine.ascony.arp.CenterNorms;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.win.AbstractDemo;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.S2Display;
+import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -31,17 +32,22 @@ import ch.alpine.tensor.opt.nd.NdTreeMap;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.red.Max;
+import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Round;
 
-/* package */ abstract class AbstractTreeMapDemo extends AbstractDemo {
+class NdTreeMapDemo extends ManifoldDisplayDemo {
   @ReflectionMarker
-  public static class Param {
-    @FieldClip(min = "1", max = "5")
-    public Integer leafSizeMax = 5;
+  static class Param0 {
     @FieldSelectionArray({ "100", "200", "500", "1000", "2000", "5000", "10000" })
     public Integer count = 1000;
-    @FieldClip(min = "1", max = "20")
-    public Integer multi = 10;
+    @FieldClip(min = "1", max = "5")
+    public Integer leafSizeMax = 5;
+    @FieldClip(min = "0", max = "20")
+    public Integer multi = 0;
+  }
+
+  @ReflectionMarker
+  static class Param1 {
     @FieldClip(min = "1", max = "10")
     public Integer limit = 4;
     public Boolean nearest = false;
@@ -51,19 +57,53 @@ import ch.alpine.tensor.sca.Round;
     public Scalar radius = RealScalar.of(0.3);
   }
 
-  private final Param param;
-  private final Tensor pointsAll;
+  private final Param0 param0;
+  private final Param1 param1;
 
-  protected AbstractTreeMapDemo() {
-    this(new Param());
+  record Triple(Tensor points, CoordinateBoundingBox cbb, NdMap<Void> ndMap) {
   }
 
-  protected AbstractTreeMapDemo(Param param) {
-    super(param);
-    this.param = param;
-    pointsAll = pointsAll(5000);
+  private Triple triple;
+
+  protected NdTreeMapDemo() {
+    super(param0 = new Param0(), param1 = new Param1());
+    fieldsEditor(0).addUniversalListener(this::shuffle);
     timerFrame.geometricComponent.setModel2Pixel(DiagonalMatrix.of(200, -200, 1));
     timerFrame.geometricComponent.setOffset(300, 300);
+    addChangeListener(this::shuffle);
+    setManifoldDisplay(ManifoldDisplays.S2);
+  }
+
+  @Override
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+    return ManifoldDisplays.R2_S2;
+  }
+
+  void shuffle() {
+    IO.println("build");
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Tensor points = RandomSample.of(manifoldDisplay.randomSampleInterface(), param0.count);
+    CoordinateBoundingBox cbb = CoordinateBounds.of(points);
+    NdMap<Void> ndMap = NdTreeMap.of(cbb, param0.leafSizeMax);
+    int multi = param0.multi;
+    for (Tensor point : points) {
+      for (int index = 0; index <= multi; ++index)
+        ndMap.insert(point, null);
+    }
+    triple = new Triple(points, cbb, ndMap);
+  }
+
+  /** @param xya
+   * @return mouse position in manifold space */
+  private Tensor center(Tensor xya) {
+    ManifoldDisplays manifoldDisplays = getSelectedMD();
+    if (manifoldDisplays.equals(ManifoldDisplays.S2)) {
+      Optional<Tensor> optionalZ = S2Display.optionalZ(xya);
+      Tensor xyz = optionalZ.orElse(xya.extract(0, 2).append(RealScalar.ZERO));
+      xyz.set(Abs.FUNCTION, 2);
+      return xyz;
+    }
+    return xya.extract(0, 2);
   }
 
   @Override
@@ -74,42 +114,33 @@ import ch.alpine.tensor.sca.Round;
     Tensor xyz = center(mouse);
     // normal rendering quality
     graphics.setColor(Color.GRAY);
-    Tensor points = Tensor.of(pointsAll.stream().limit(param.count));
+    Tensor points = triple.points;
     for (Tensor point : points) {
       Point2D point2d = geometricLayer.toPoint2D(point);
       graphics.fillRect((int) point2d.getX(), (int) point2d.getY(), 2, 2);
     }
-    Scalar radius = param.radius;
-    CoordinateBoundingBox actual = CoordinateBounds.of(points);
-    NdMap<Void> ndMap = NdTreeMap.of(actual, param.leafSizeMax);
-    RandomGenerator randomGenerator = new Random(1);
-    int multi = param.multi;
-    for (Tensor point : points) {
-      int count = 1 + randomGenerator.nextInt(multi);
-      for (int index = 0; index < count; ++index)
-        ndMap.insert(point, null);
-    }
+    Scalar radius = param1.radius;
     Timing timing = Timing.started();
-    CenterNorms centerNorms = param.centerNorms;
+    CenterNorms centerNorms = param1.centerNorms;
     NdCenterInterface ndCenterInterface = centerNorms.ndCenterInterface(xyz);
-    int limit = param.limit;
+    int limit = param1.limit;
     final Collection<NdMatch<Void>> collection;
-    if (param.nearest) {
+    if (param1.nearest) {
       GraphicNearest<Void> graphicNearest = //
           new GraphicNearest<>(ndCenterInterface, limit, geometricLayer, graphics);
-      ndMap.visit(graphicNearest);
+      triple.ndMap().visit(graphicNearest);
       collection = graphicNearest.queue();
     } else {
       GraphicRadius<Void> graphicSpherical = //
           new GraphicRadius<>(ndCenterInterface, radius, geometricLayer, graphics);
-      ndMap.visit(graphicSpherical);
+      triple.ndMap().visit(graphicSpherical);
       collection = graphicSpherical.list();
     }
     Scalar seconds = timing.seconds();
     graphics.setColor(Color.GRAY);
-    graphics.drawString(String.format("%d %d %s", ndMap.size(), collection.size(), seconds.maps(Round._3)), 0, 40);
+    graphics.drawString(String.format("%d %d %s", triple.ndMap().size(), collection.size(), seconds.maps(Round._3)), 0, 40);
     graphics.setColor(new Color(255, 0, 0, 128));
-    if (param.nearest) {
+    if (param1.nearest) {
       Optional<Scalar> optional = collection.stream() //
           .map(NdMatch::distance) //
           .reduce(Max::of);
@@ -138,18 +169,13 @@ import ch.alpine.tensor.sca.Round;
     }
     {
       Tensor mxy = xyz;
-      Tensor spc = actual.mapInside(mxy);
+      Tensor spc = triple.cbb().mapInside(mxy);
       graphics.setColor(new Color(0, 128, 255, 255));
       graphics.draw(geometricLayer.toLine2D(mxy, spc));
     }
   }
 
-  final Tensor pointsAll(int length) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    return RandomSample.of(manifoldDisplay.randomSampleInterface(), length);
+  static void main() {
+    new NdTreeMapDemo().runStandalone();
   }
-
-  protected abstract Tensor center(Tensor xya);
-
-  protected abstract ManifoldDisplay manifoldDisplay();
 }
