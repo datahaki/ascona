@@ -7,7 +7,6 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophis.flt.ga.GeodesicExtrapolation;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
@@ -21,14 +20,7 @@ class GeodesicSplitsDemo extends AbstractSplitsDemo {
   private final Param param;
 
   public GeodesicSplitsDemo() {
-    this(new Param());
-  }
-
-  public GeodesicSplitsDemo(Param param) {
-    super(param);
-    this.param = param;
-    // ---
-    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {2, 2, 1}, {5, 0, 2}}"));
+    super(new SaveParam(), param = new Param());
   }
 
   @Override

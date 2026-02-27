@@ -178,7 +178,7 @@ class S2DefectNormDemo extends ControlPointsDemo {
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     Tensor tensor = Tensors.empty();
     for (int count = 0; count < iter; ++count) {
-      MeanDefect meanDefect = MeanDefect.of(sequence, weights, homogeneousSpace.exponential(shifted));
+      MeanDefect meanDefect = MeanDefect.of(sequence, weights, homogeneousSpace.tangentSpace(shifted));
       shifted = meanDefect.shifted();
       tensor.append(shifted);
     }

@@ -1,9 +1,12 @@
+// code by jph
 package ch.alpine.ascona;
 
+import java.util.Objects;
+
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.sophis.prc.CurveRandomProcess;
 import ch.alpine.sophus.api.Manifold;
-import ch.alpine.sophus.api.TangentSpace;
-import ch.alpine.sophus.rsm.LocalRandomSample;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
@@ -11,17 +14,15 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 public enum RandomPoints {
   ;
   public static Tensor scattered(ManifoldDisplay manifoldDisplay, int n) {
-    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
-    return RandomSample.of(randomSampleInterface, n);
+    return RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
   }
 
   public static Tensor on_line(ManifoldDisplay manifoldDisplay, int n) {
-    RandomSampleInterface rsi = manifoldDisplay.randomSampleInterface();
     Manifold manifold = manifoldDisplay.manifold();
+    if (Objects.isNull(manifold))
+      return scattered(manifoldDisplay, n);
+    RandomSampleInterface rsi = manifoldDisplay.randomSampleInterface();
     Tensor p = RandomSample.of(rsi);
-    TangentSpace tangentSpace = manifold.exponential(p);
-    RandomSampleInterface lrs = LocalRandomSample.of(tangentSpace, 0.2);
-    Tensor q = RandomSample.of(lrs);
-    return null;
+    return Tensor.of(CurveRandomProcess.stream(manifold, RealScalar.of(0.2), p).limit(n));
   }
 }

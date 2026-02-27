@@ -16,21 +16,16 @@ import ch.alpine.tensor.itp.BezierFunction;
 /** visualization of geodesic average along geodesics */
 class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
   @ReflectionMarker
-  static class Param {
+  static class Param0 {
     @FieldSlider
     @FieldClip(min = "0", max = "1")
     public Scalar ratio = RealScalar.of(0.5);
   }
 
-  private final Param param;
+  private final Param0 param0;
 
   public BezierFunctionSplitsDemo() {
-    this(new Param());
-  }
-
-  public BezierFunctionSplitsDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(new SaveParam(), param0 = new Param0());
   }
 
   @Override // from GeodesicAverageDemo
@@ -41,7 +36,7 @@ class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
       Scalar parameter = n <= 1 //
           ? RealScalar.ZERO
           : Rational.of(n, n - 1);
-      parameter = parameter.multiply(param.ratio);
+      parameter = parameter.multiply(param0.ratio);
       return (SymScalar) scalarTensorFunction.apply(parameter);
     }
     return null;

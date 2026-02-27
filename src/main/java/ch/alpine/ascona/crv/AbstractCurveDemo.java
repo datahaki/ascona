@@ -45,7 +45,7 @@ abstract class AbstractCurveDemo extends ControlPointsDemo {
   }
 
   @Override
-  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();
     if (!Tensors.isEmpty(control)) {
       Tensor refined = protected_render(geometricLayer, graphics, abstractCurveParam.degree, abstractCurveParam.refine, control);

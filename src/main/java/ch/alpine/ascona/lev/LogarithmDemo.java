@@ -111,7 +111,7 @@ class LogarithmDemo extends ControlPointsDemo {
         final Tensor domain = Drop.tail(Subdivide.of(0.0, 1.0, param.length), 1);
         geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(10, 0)));
         GRID_RENDER.render(geometricLayer, graphics);
-        Tensor planar = homogeneousSpace.exponential(origin).log().slash(refined);
+        Tensor planar = homogeneousSpace.tangentSpace(origin).log().slash(refined);
         {
           Path2D path2d = geometricLayer.toPath2D(planar, true);
           graphics.setColor(DOMAIN_F);

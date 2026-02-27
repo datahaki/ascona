@@ -57,7 +57,7 @@ class Se2InvarianceDemo extends ControlPointsDemo {
       {
         Tensor sequence = controlPointsAll.extract(1, controlPointsAll.length());
         Tensor origin = controlPointsAll.get(0);
-        Tensor matrix = lieGroup.exponential(origin).log().slash(sequence);
+        Tensor matrix = lieGroup.tangentSpace(origin).log().slash(sequence);
         Tensor weights = InfluenceMatrix.of(matrix).leverages_sqrt();
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
@@ -77,7 +77,7 @@ class Se2InvarianceDemo extends ControlPointsDemo {
         Tensor result = Tensor.of(allR.stream().map(lieGroupOp));
         Tensor sequence = result.extract(1, result.length());
         Tensor origin = result.get(0);
-        Tensor matrix = lieGroup.exponential(origin).log().slash(sequence);
+        Tensor matrix = lieGroup.tangentSpace(origin).log().slash(sequence);
         Tensor weights = InfluenceMatrix.of(matrix).leverages_sqrt();
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);

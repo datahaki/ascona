@@ -117,7 +117,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
         shifted = SnPhongMean.INSTANCE.estimate(sequence, weights);
       Tensor points = Tensors.empty();
       for (int iteration = 0; iteration < 100; ++iteration) {
-        MeanDefect meanDefect = MeanDefect.of(sequence, weights, homogeneousSpace.exponential(shifted));
+        MeanDefect meanDefect = MeanDefect.of(sequence, weights, homogeneousSpace.tangentSpace(shifted));
         shifted = meanDefect.shifted();
         Scalar err = FrobeniusNorm.of(meanDefect.tangent());
         if (Tolerance.CHOP.isZero(err))
