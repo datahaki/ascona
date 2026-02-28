@@ -58,7 +58,6 @@ class HeadTailGeodesicDemo extends ControlPointsDemo {
   }
 
   void shuffle() {
-    
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     setGeodesicControlPoints(RandomPoints.on_line(manifoldDisplay, 2));
   }

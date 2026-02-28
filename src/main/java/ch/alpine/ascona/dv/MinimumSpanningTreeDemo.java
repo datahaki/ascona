@@ -2,7 +2,9 @@
 package ch.alpine.ascona.dv;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.util.Comparator;
 import java.util.List;
@@ -15,6 +17,8 @@ import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.fig.MatrixPlot;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
@@ -27,15 +31,20 @@ import ch.alpine.sophis.fit.IntUndirectedEdge;
 import ch.alpine.sophis.fit.MinimumSpanningTree;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.Manifold;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.lie.Symmetrize;
 import ch.alpine.tensor.mat.SymmetricMatrixQ;
 import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.red.Max;
+import ch.alpine.tensor.sca.Abs;
 
 class MinimumSpanningTreeDemo extends ControlPointsDemo {
   private record EdgeComparator(Tensor matrix) implements Comparator<IntUndirectedEdge> {
@@ -61,6 +70,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
     @FieldClip(min = "1", max = "8")
     public Integer refine = 2;
     public ColorDataLists colorDataLists = ColorDataLists._097;
+    public ColorDataGradients cdg = ColorDataGradients.TEMPERATURE_LIGHT;
   }
 
   private final Param0 param0;
@@ -103,7 +113,19 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
     DisjointSets disjointSets = DisjointSets.allocate(sequence.length());
     if (0 < sequence.length()) {
       Tensor matrix = distanceMatrix(manifold, sequence);
-      List<IntUndirectedEdge> list = MinimumSpanningTree.of(matrix);
+      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      Show show = new Show();
+      show.add(MatrixPlot.of(matrix, param1.cdg, false));
+      {
+        boolean isSymmetric = SymmetricMatrixQ.INSTANCE.test(matrix);
+        if (!isSymmetric) {
+          Tensor defect = SymmetricMatrixQ.INSTANCE.defect(matrix);
+          Scalar optional = Flatten.scalars(defect).map(Abs.FUNCTION).reduce(Max::of).orElseThrow();
+          show.setPlotLabel("not symmetric: " + optional);
+        }
+      }
+      show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, Math.min(dimension.height, 300)));
+      List<IntUndirectedEdge> list = MinimumSpanningTree.of(Symmetrize.of(matrix));
       list.sort(new EdgeComparator(matrix));
       int count = Math.max(0, list.size() - splits);
       {
@@ -132,10 +154,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
 
   public Tensor distanceMatrix(Manifold manifold, Tensor sequence) {
     Sedarim sedarim = param1.biinvariants.ofSafe(manifold).relative_distances(sequence);
-    Tensor matrix = Tensor.of(sequence.stream().map(sedarim::sunder));
-    return SymmetricMatrixQ.INSTANCE.test(matrix) //
-        ? matrix
-        : Symmetrize.of(matrix);
+    return Tensor.of(sequence.stream().map(sedarim::sunder));
   }
 
   static void main() {

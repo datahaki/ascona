@@ -22,9 +22,9 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.pdf.RandomSample;
 
 class GeodesicDemo extends ControlPointsDemo {
   private static final Color COLOR = new Color(128, 128, 128, 128);
@@ -44,13 +44,9 @@ class GeodesicDemo extends ControlPointsDemo {
   private final Param param;
 
   public GeodesicDemo() {
-    this(new Param());
-  }
-
-  public GeodesicDemo(Param param) {
-    super(param);
-    this.param = param;
-    setControlPointsSe2(Tensors.fromString("{{0,0,0}, {1,0,0}}"));
+    super(param = new Param());
+    addChangeListener(this::shuffle);
+    setManifoldDisplay(ManifoldDisplays.S2);
   }
 
   @Override
@@ -61,6 +57,10 @@ class GeodesicDemo extends ControlPointsDemo {
   @Override
   protected ControlPointType controlPointType() {
     return ControlPointTypes.HEAD_TAIL;
+  }
+
+  void shuffle() {
+    setGeodesicControlPoints(RandomSample.of(manifoldDisplay().randomSampleInterface(), 2));
   }
 
   @Override // from RenderInterface
