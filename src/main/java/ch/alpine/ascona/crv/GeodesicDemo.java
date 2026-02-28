@@ -51,7 +51,6 @@ class GeodesicDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {1,0,0}}"));
-    timerFrame.geometricComponent.setRotatable(false);
   }
 
   @Override
@@ -66,7 +65,6 @@ class GeodesicDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    // timerFrame.geometricComponent.renderGrid(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Tensor points = getGeodesicControlPoints();

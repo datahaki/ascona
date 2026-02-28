@@ -19,7 +19,8 @@ import ch.alpine.tensor.opt.nd.NdMatch;
 import ch.alpine.tensor.opt.nd.NdTreeMap;
 
 public class ClothoidNdMap<T> {
-  private final int FACTOR = 3;
+  private static final int FACTOR = 3;
+  // ---
   final NdMap<T> ndMap;
   private final Function<T, Tensor> se2Projection;
 
