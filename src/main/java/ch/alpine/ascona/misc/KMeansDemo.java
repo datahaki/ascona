@@ -16,7 +16,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.crv.d2.Extract2D;
 import ch.alpine.sophis.crv.d2.alg.ConvexHull2D;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
@@ -30,6 +29,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.mat.Tolerance;
@@ -40,78 +41,91 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.Round;
 
+/** the control points are the seeds of the K-Means iteration */
 class KMeansDemo extends ControlPointsDemo {
   @ReflectionMarker
-  static class Param1 {
+  static class Param0 {
     @FieldSelectionArray({ "100", "200", "500", "1000" })
     public Integer count = 200;
+    @FieldSelectionArray({ "2", "3", "4", "5" })
+    public Integer initK = 5;
     @FieldFuse
     public transient Boolean shuffle = false;
   }
 
   @ReflectionMarker
-  static class Param2 {
+  static class Param1 {
+    @FieldSelectionArray({ "METRIC", "LEVERAGES", "GARDEN" })
+    public Biinvariants biinvariants = Biinvariants.METRIC;
     @FieldFuse
     public transient Boolean recomp = false;
   }
 
+  @ReflectionMarker
+  static class Param2 {
+    public ColorDataLists cdl = ColorDataLists._097;
+    public Boolean dataOnly = false;
+  }
+
+  private final Param0 param0;
   private final Param1 param1;
   private final Param2 param2;
-  private Tensor pointsAll;
+  private Tensor pointSet;
+  private Timing timing = Timing.stopped();
   private KMeans kMeans;
 
   public KMeansDemo() {
-    super(param1 = new Param1(), param2 = new Param2());
-    fieldsEditor(0).addUniversalListener(() -> {
-      pointsAll = shuffle();
-      recomp(pointsAll);
-    });
-    fieldsEditor(1).addUniversalListener(() -> {
-      recomp(pointsAll);
-    });
-    pointsAll = shuffle();
+    super(param0 = new Param0(), param1 = new Param1(), param2 = new Param2());
+    fieldsEditor(0).addUniversalListener(this::shuffle);
+    fieldsEditor(1).addUniversalListener(this::recomp);
+    addChangeListener(this::shuffle);
+    shuffle();
   }
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.R2_H2_S2_SE2C;
+    return ManifoldDisplays.manifolds();
   }
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.HEAD_TAIL;
+    return ControlPointTypes.SCATTERED;
   }
 
-  private Tensor shuffle() {
-    Tensor points = Tensors.empty();
+  private void shuffle() {
     RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
-    Distribution distribution = UniformDistribution.of(Clips.interval(-0.5, 1));
-    for (int index = 0; index < 10000; ++index) {
-      Tensor point = RandomSample.of(randomSampleInterface);
-      Scalar scalar = SimplexContinuousNoise.FUNCTION.apply(point);
-      Scalar p = RandomVariate.of(distribution);
-      if (Scalars.lessThan(p, scalar)) {
-        points.append(point);
+    {
+      Tensor points = Tensors.empty();
+      Distribution distribution = UniformDistribution.of(Clips.interval(-0.5, 1));
+      while (points.length() < param0.count) {
+        Tensor point = RandomSample.of(randomSampleInterface);
+        Tensor probe = PadRight.zeros(4).apply(Flatten.of(point));
+        Scalar scalar = SimplexContinuousNoise.FUNCTION.apply(probe);
+        Scalar p = RandomVariate.of(distribution);
+        if (Scalars.lessThan(p, scalar))
+          points.append(point);
       }
-      if (points.length() == param1.count)
-        return points;
+      pointSet = points;
     }
-    return points;
+    {
+      setGeodesicControlPoints(RandomSample.of(randomSampleInterface, param0.initK));
+    }
+    recomp();
   }
 
-  private void recomp(Tensor sequence) {
+  private void recomp() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(homogeneousSpace);
-    // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
+    Biinvariant biinvariant = param1.biinvariants.ofSafe(homogeneousSpace);
     Tensor seeds = getGeodesicControlPoints();
     if (0 < seeds.length()) {
-      kMeans = new KMeans(biinvariant.relative_distances(sequence), new CenterMean(homogeneousSpace.biinvariantMean()), sequence);
+      timing = Timing.started();
+      kMeans = new KMeans(biinvariant.relative_distances(pointSet), new CenterMean(homogeneousSpace.biinvariantMean()), pointSet);
       kMeans.setSeeds(seeds);
-      Timing timing = Timing.started();
-      int iterations = kMeans.complete();
-      IO.println(iterations + " steps in " + timing.seconds());
+      timing.stop();
+      kMeans.complete();
     } else
       kMeans = null;
   }
@@ -119,18 +133,21 @@ class KMeansDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     graphics.setColor(Color.GRAY);
-    Tensor sequence = Tensor.of(pointsAll.stream().limit(param1.count));
+    Tensor sequence = pointSet;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    if (Objects.nonNull(kMeans)) {
+    if (Objects.nonNull(kMeans) && !param2.dataOnly) {
+      graphics.drawString("" + timing.seconds().maps(Round._6), 0, 20);
       Tensor partition = kMeans.partition();
-      ColorDataIndexed colorDataIndexed = ColorDataLists._097.strict().deriveWithAlpha(128);
-      ColorDataIndexed colorFillIndexed = ColorDataLists._097.strict().deriveWithAlpha(64);
+      ColorDataIndexed cdi = param2.cdl.cyclic();
+      ColorDataIndexed colorDataIndexed = cdi.deriveWithAlpha(128);
+      ColorDataIndexed colorFillIndexed = cdi.deriveWithAlpha(64);
       int index = 0;
       Tensor seeds2 = kMeans.seeds();
       for (Tensor subset : partition) {
-        if (homogeneousSpace instanceof MetricManifold) {
-          Tensor tensor = ConvexHull2D.of(subset.stream().map(Extract2D.FUNCTION), Tolerance.CHOP);
+        if (homogeneousSpace instanceof MetricManifold && 1 < manifoldDisplay.dimensions()) {
+          Tensor projected = manifoldDisplay.point2xy().slash(subset);
+          Tensor tensor = ConvexHull2D.of(projected, Tolerance.CHOP);
           graphics.setColor(colorFillIndexed.getColor(index));
           graphics.fill(geometricLayer.toPath2D(tensor, true));
         }
@@ -147,9 +164,7 @@ class KMeansDemo extends ControlPointsDemo {
         ++index;
       }
     } else {
-      PointsRender pointsRender = new PointsRender( //
-          Color.GRAY, //
-          Color.BLACK);
+      PointsRender pointsRender = new PointsRender(Color.GRAY, Color.BLACK);
       pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.2)), sequence) //
           .render(geometricLayer, graphics);
     }

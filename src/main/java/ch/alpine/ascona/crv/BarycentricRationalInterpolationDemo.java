@@ -72,8 +72,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    Tensor points = RandomPoints.scattered(manifoldDisplay(), 6);
-    setControlPointsSe2(manifoldDisplay().point2xya().slash(points));
+    setGeodesicControlPoints(RandomPoints.scattered(manifoldDisplay(), 6));
   }
 
   @Override

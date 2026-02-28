@@ -63,7 +63,7 @@ public abstract class PointSequenceDemo extends ControlPointsDemo {
       System.err.println("cannot load");
       tensor = RandomPoints.on_line(manifoldDisplay, 3);
     }
-    setControlPointsSe2(manifoldDisplay.point2xya().slash(tensor));
+    setGeodesicControlPoints(tensor);
   }
 
   private Path getResPath() {

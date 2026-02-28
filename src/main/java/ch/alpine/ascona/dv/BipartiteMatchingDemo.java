@@ -58,8 +58,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     int n = param.n;
     ground = RandomSample.of(manifoldDisplay.randomSampleInterface(), n);
-    Tensor tensor = RandomSample.of(manifoldDisplay.randomSampleInterface(), n + 2);
-    setControlPointsSe2(manifoldDisplay.point2xya().slash(tensor));
+    setGeodesicControlPoints(RandomSample.of(manifoldDisplay.randomSampleInterface(), n + 2));
   }
 
   @Override // from RenderInterface

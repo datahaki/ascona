@@ -48,7 +48,8 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 /** Reference:
  * "Circumscribed Quadrics in Barycentric Coordinates"
  * by Marc Alexa */
-final class MaAveragingDemo extends ControlPointsDemo {
+class MaAveragingDemo extends ControlPointsDemo {
+  @ReflectionMarker
   static class Param0 {
     @FieldSelectionArray({ "3", "4", "5", "6" })
     public Integer numel = 6;
@@ -61,7 +62,7 @@ final class MaAveragingDemo extends ControlPointsDemo {
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
-    public Integer resolution = 40;
+    public Integer resolution = 50;
   }
 
   @ReflectionMarker
@@ -94,8 +95,7 @@ final class MaAveragingDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    Tensor points = RandomPoints.scattered(manifoldDisplay(), param0.numel);
-    setControlPointsSe2(manifoldDisplay().point2xya().slash(points));
+    setGeodesicControlPoints(RandomPoints.scattered(manifoldDisplay(), param0.numel));
     recompute();
   }
 

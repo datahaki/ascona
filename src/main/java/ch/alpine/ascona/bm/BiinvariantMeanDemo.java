@@ -63,16 +63,16 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       Clips.interval(-0.22, 0.22));
 
   @ReflectionMarker
-  static class Param {
+  static class Param0 {
     public Biinvariants biinvariants = Biinvariants.LEVERAGES;
     public Boolean median = false;
     public Boolean vehicle = false;
   }
 
-  private final Param param;
+  private final Param0 param0;
 
   public BiinvariantMeanDemo() {
-    super(param = new Param());
+    super(param0 = new Param0());
     // ---
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.H2);
@@ -89,8 +89,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    Tensor points = RandomPoints.scattered(manifoldDisplay(), 6);
-    setControlPointsSe2(manifoldDisplay().point2xya().slash(points));
+    setGeodesicControlPoints(RandomPoints.scattered(manifoldDisplay(), 6));
   }
 
   @Override
@@ -139,9 +138,9 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
         graphics.draw(geometricLayer.toPath2D(Tensor.of(curve.stream().map(manifoldDisplay::point2xy))));
       }
     graphics.setStroke(new BasicStroke(1));
-    if (param.median) {
+    if (param0.median) {
       Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
-      Biinvariant biinvariant = map.getOrDefault(param.biinvariants, Biinvariants.LEVERAGES.ofSafe(homogeneousSpace));
+      Biinvariant biinvariant = map.getOrDefault(param0.biinvariants, Biinvariants.LEVERAGES.ofSafe(homogeneousSpace));
       Sedarim sedarim = biinvariant.weighting(InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(), sedarim, Chop._05);
       Optional<Tensor> optional = spatialMedian.uniform(sequence);
@@ -156,7 +155,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
         geometricLayer.popMatrix();
       }
     }
-    if (param.vehicle) {
+    if (param0.vehicle) {
       for (Tensor point : sequence) {
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
         new ImageRender(VehicleStatic.INSTANCE.bufferedImage_o(), BOX).render(geometricLayer, graphics);

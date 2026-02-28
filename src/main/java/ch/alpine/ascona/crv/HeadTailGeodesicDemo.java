@@ -58,9 +58,9 @@ class HeadTailGeodesicDemo extends ControlPointsDemo {
   }
 
   void shuffle() {
+    
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor tensor = RandomPoints.on_line(manifoldDisplay, 2);
-    setControlPointsSe2(manifoldDisplay.point2xya().slash(tensor));
+    setGeodesicControlPoints(RandomPoints.on_line(manifoldDisplay, 2));
   }
 
   @Override // from RenderInterface
