@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Objects;
 
+import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -17,6 +18,7 @@ import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
@@ -32,7 +34,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.ext.Cache;
-import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -47,25 +48,39 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 /** Reference:
  * "Circumscribed Quadrics in Barycentric Coordinates"
  * by Marc Alexa */
-public final class MaAveragingDemo extends ControlPointsDemo {
+final class MaAveragingDemo extends ControlPointsDemo {
+  static class Param0 {
+    @FieldSelectionArray({ "3", "4", "5", "6" })
+    public Integer numel = 6;
+    @FieldFuse
+    public Boolean shuffle = false;
+  }
+
   @ReflectionMarker
-  public static class Param {
+  static class Param1 {
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;
-    // TODO adaptive resolution
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
     public Integer resolution = 40;
+  }
+
+  @ReflectionMarker
+  static class Param2 {
     public ColorDataGradients cdg = ColorDataGradients.PARULA;
   }
 
-  private final Param param;
+  private final Param0 param0;
+  private final Param1 param1;
+  private final Param2 param2;
+  private final Cache<Tensor, Tensor> cache = Cache.of(this::computeImage, 1);
+  private Scalar computeTime = Quantity.of(0, "s");
 
   public MaAveragingDemo() {
-    super(param = new Param());
-    // ---
+    super(param0 = new Param0(), param1 = new Param1(), param2 = new Param2());
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
-    // ---
-    timerFrame.geometricComponent.setOffset(400, 400);
+    fieldsEditor(0).addUniversalListener(this::shuffle);
+    fieldsEditor(1).addUniversalListener(this::recompute);
+    addChangeListener(this::shuffle);
   }
 
   @Override
@@ -78,31 +93,33 @@ public final class MaAveragingDemo extends ControlPointsDemo {
     return ControlPointTypes.SCATTERED;
   }
 
-  private final Cache<Tensor, Showable> cache = Cache.of(this::computeImage, 1);
-  private Scalar computeTime = Quantity.of(0, "s");
+  private void shuffle() {
+    Tensor points = RandomPoints.scattered(manifoldDisplay(), param0.numel);
+    setControlPointsSe2(manifoldDisplay().point2xya().slash(points));
+    recompute();
+  }
 
-  protected final void recompute() {
-    System.out.println("clear");
+  private void recompute() {
     cache.clear();
   }
 
-  private Showable computeImage(Tensor tensor) {
+  private Tensor computeImage(Tensor tensor) {
     Tensor sequence = tensor.maps(N.DOUBLE);
-    int resolution = param.resolution;
+    int resolution = param1.resolution;
     int n = sequence.length();
     if (2 < n)
       try {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
         HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
         final Tensor dist;
-        if (param.type || !(homogeneousSpace instanceof TensorMetric)) {
+        if (param1.type || !(homogeneousSpace instanceof TensorMetric)) {
           dist = ConstantArray.of(RealScalar.ONE, n, n).subtract(IdentityMatrix.of(n));
         } else {
           TensorMetric tensorMetric = (TensorMetric) homogeneousSpace;
           TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(tensorMetric.distance(p, q));
           dist = DistanceMatrix.of(sequence, msq);
         }
-        Sedarim sedarim = param.biinvariants.ofSafe(homogeneousSpace).coordinate(InversePowerVariogram.of(2), sequence);
+        Sedarim sedarim = param1.biinvariants.ofSafe(homogeneousSpace).coordinate(InversePowerVariogram.of(2), sequence);
         TensorScalarFunction tsf = p -> {
           Tensor b = sedarim.sunder(p);
           return Abs.FUNCTION.apply((Scalar) dist.dot(b).dot(b));
@@ -113,8 +130,7 @@ public final class MaAveragingDemo extends ControlPointsDemo {
         Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
         computeTime = timing.seconds();
         // ---
-        ColorDataGradient colorDataGradient = param.cdg;
-        return ArrayPlot.of(matrix, cbb, colorDataGradient);
+        return matrix;
       } catch (Exception exception) {
         System.out.println(exception);
         exception.printStackTrace();
@@ -125,10 +141,11 @@ public final class MaAveragingDemo extends ControlPointsDemo {
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor sequence = getGeodesicControlPoints();
-    Showable showable = cache.apply(sequence);
-    if (Objects.nonNull(showable)) {
+    Tensor tensor = cache.apply(sequence);
+    if (Objects.nonNull(tensor)) {
+      CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
       Show show = new Show();
-      show.add(showable);
+      Showable showable = show.add(ArrayPlot.of(tensor, cbb, param2.cdg));
       show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()));
     }
     // ---
