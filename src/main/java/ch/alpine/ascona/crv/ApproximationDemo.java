@@ -72,7 +72,7 @@ class ApproximationDemo extends ControlPointsDemo {
 
   public ApproximationDemo() {
     super(param = new Param());
-    timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
+    geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     param.string = GokartPos.list().getFirst();
     fieldsEditor(0).addUniversalListener(this::updateState);
     updateState();
@@ -110,7 +110,7 @@ class ApproximationDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    timerFrame.geometricComponent.renderGrid(graphics);
+    geometricComponent().renderGrid(graphics);
     Container container = _container;
     if (Objects.isNull(container))
       return;

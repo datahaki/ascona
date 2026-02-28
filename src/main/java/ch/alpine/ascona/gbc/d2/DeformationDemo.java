@@ -46,10 +46,7 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSample;
-import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
@@ -63,22 +60,23 @@ class DeformationDemo extends ControlPointsDemo {
   /** for parameterization of geodesic */
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 10);
 
-  // ---
   @ReflectionMarker
   public static class Param0 {
-    public LogWeightings logWeightings = LogWeightings.COORDINATE;
-    public Biinvariants biinvariants = Biinvariants.METRIC;
-    public ColorDataGradients cdg = ColorDataGradients.RAINBOW;
-    public Scalar refine = RealScalar.of(20);
-    public Boolean target = true;
-    @FieldFuse
-    public transient Boolean snap = true; // true intentional
+    @FieldClip(min = "3", max = "12")
+    public Integer length = 8;
   }
 
   @ReflectionMarker
   public static class Param1 {
-    @FieldClip(min = "3", max = "12")
-    public Integer length = 8;
+    public LogWeightings logWeightings = LogWeightings.COORDINATE;
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public ColorDataGradients cdg = ColorDataGradients.RAINBOW;
+    public Integer refine = 20;
+    public Boolean target = true;
+    public Boolean r2Mls = false;
+    public Scalar s2z = RealScalar.of(1);
+    @FieldFuse
+    public transient Boolean snap = true; // true intentional
   }
 
   private final Param0 param0;
@@ -90,8 +88,8 @@ class DeformationDemo extends ControlPointsDemo {
 
   protected DeformationDemo() {
     super(param0 = new Param0(), param1 = new Param1());
-    fieldsEditor(0).addUniversalListener(this::recompute);
-    fieldsEditor(1).addUniversalListener(this::shuffleSnap);
+    fieldsEditor(0).addUniversalListener(this::shuffleSnap);
+    fieldsEditor(1).addUniversalListener(this::recompute);
     // ---
     addChangeListener(this::shuffleSnap);
     shuffleSnap();
@@ -108,29 +106,28 @@ class DeformationDemo extends ControlPointsDemo {
   }
 
   protected final void shuffleSnap() {
-    setControlPointsSe2(shufflePointsSe2(param1.length));
-    param0.snap = true;
+    setGeodesicControlPoints(shufflePoints(param0.length));
+    param1.snap = true;
     recompute();
   }
 
   protected final void recompute() {
-    if (param0.snap) {
-      param0.snap = false;
+    if (param1.snap) {
+      param1.snap = false;
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
       movingOrigin = Tensor.of(getControlPointsSe2().maps(N.DOUBLE).stream().map(manifoldDisplay::xya2point));
     }
-    System.out.println("recomp");
-    movingDomain2D = updateMovingDomain2D(movingOrigin, param0.refine.number().intValue());
+    movingDomain2D = updateMovingDomain2D(movingOrigin, param1.refine);
   }
 
-  protected final Sedarim operator(Tensor sequence) {
+  protected Sedarim operator(Tensor sequence) {
     Manifold manifold = manifoldDisplay().manifold();
-    return param0.logWeightings.sedarim(param0.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
+    return param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
   }
 
   @Override // from RenderInterface
-  public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    timerFrame.geometricComponent.renderGrid(graphics);
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    geometricComponent().renderGrid(graphics);
     graphics.setClip(null);
     if (Objects.isNull(movingDomain2D))
       recompute();
@@ -139,11 +136,11 @@ class DeformationDemo extends ControlPointsDemo {
     Tensor target = getGeodesicControlPoints();
     // ---
     {
-      ColorDataGradient colorDataGradient = param0.cdg.deriveWithOpacity(RealScalar.of(0.5));
+      ColorDataGradient colorDataGradient = param1.cdg.deriveWithOpacity(RealScalar.of(0.5));
       new MeshRender(movingDomain2D.forward(target, biinvariantMean()), colorDataGradient) //
           .render(geometricLayer, graphics);
     }
-    if (param0.target) { // connect origin and target pairs with lines/geodesics
+    if (param1.target) { // connect origin and target pairs with lines/geodesics
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       graphics.setColor(new Color(128, 128, 128, 255));
       graphics.setStroke(STROKE);
@@ -159,94 +156,66 @@ class DeformationDemo extends ControlPointsDemo {
     POINTS_RENDER_POINTS //
         .show(manifoldDisplay::matrixLift, shapeOrigin(), origin) //
         .render(geometricLayer, graphics);
-    LeversRender leversRender = LeversRender.of(manifoldDisplay, param0.target //
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, param1.target //
         ? getGeodesicControlPoints()
         : origin, null, geometricLayer, graphics);
-    leversRender.renderIndexP(param0.target ? "q" : "p");
+    leversRender.renderIndexP(param1.target ? "q" : "p");
     {
       Tensor weights = movingDomain2D.arrayReshape_weights();
       Show show = new Show();
-      show.add(ArrayPlot.of(weights, param0.cdg));
+      show.add(ArrayPlot.of(weights, param1.cdg));
       show.render(graphics, new Rectangle(100, 10, 100 + Unprotect.dimension1Hint(weights) * 2, 400));
     }
   }
 
-  protected final Tensor shapeOrigin() {
+  protected Tensor shapeOrigin() {
     return manifoldDisplay().shape().multiply(RealScalar.of(0.8));
   }
 
   /** @return method to compute mean (for instance approximation instead of exact mean) */
-  protected final BiinvariantMean biinvariantMean() {
+  protected BiinvariantMean biinvariantMean() {
     HomogeneousSpace homogeneousSpace = manifoldDisplay().homogeneousSpace();
     return homogeneousSpace.biinvariantMean();
   }
 
-  protected final Tensor shufflePointsSe2(int n) {
-    switch (getSelectedMD()) {
-    case R2: {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
-          .map(manifoldDisplay::point2xya));
-      return tensor;
-    }
-    case S2: {
-      Distribution distribution = UniformDistribution.of(-0.5, 0.5);
-      return Tensor.of(RandomVariate.of(distribution, n, 2).stream() //
-          .map(Tensor::copy) //
-          .map(row -> row.append(RealScalar.ZERO)));
-    }
-    case H2: {
-      return Tensor.of(CirclePoints.of(n).multiply(RealScalar.of(2)).stream().map(row -> row.append(RealScalar.ZERO)));
-    }
-    case Se2C:
-    case Se2: {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      Distribution distributionp = UniformDistribution.of(-1, 7);
-      Distribution distributiona = UniformDistribution.of(-1, 1);
-      return Tensors.vector(_ -> manifoldDisplay.xya2point( //
-          RandomVariate.of(distributionp, 2).append(RandomVariate.of(distributiona))), n);
-    }
-    default:
-      throw new IllegalArgumentException();
-    }
+  protected Tensor shufflePoints(int n) {
+    return switch (getSelectedMD()) {
+    case H2 -> CirclePoints.of(n).multiply(RealScalar.of(2));
+    default -> RandomSample.of(manifoldDisplay().randomSampleInterface(), n);
+    };
   }
 
-  protected final MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
+  protected MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
+    Tensor domain = updateDomain(movingOrigin, res);
+    Sedarim sedarim = operator(movingOrigin);
+    // return param0.r2Mls //
+    // ? new RnFittedMovingDomain2D(movingOrigin, sedarim, domain)
+    // : new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
+    // manifoldDisplay().indetPoint());
+    return new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
+        manifoldDisplay().indetPoint());
+  }
+
+  protected Tensor updateDomain(Tensor movingOrigin, int res) {
     switch (getSelectedMD()) {
     case R2: {
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
       CoordinateBoundingBox coordinateBoundingBox = manifoldDisplay.d2Raster_coordinateBoundingBox();
-      Tensor domain = StaticHelper.of(coordinateBoundingBox, manifoldDisplay, res);
-      Sedarim sedarim = operator(movingOrigin);
-      return
-      // param2.mls //
-      // ? new RnFittedMovingDomain2D(movingOrigin, sedarim, domain)
-      // :
-      new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
-          manifoldDisplay().indetPoint());
+      return StaticHelper.of(coordinateBoundingBox, res);
     }
     case S2: {
       Tensor dx = Subdivide.of(-1, 1, res - 1);
       Tensor dy = Subdivide.of(-1, 1, res - 1);
-      Tensor domain = Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, RealScalar.of(1.0))), dx, dy);
-      Sedarim sedarim = operator(movingOrigin);
-      return new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
-          manifoldDisplay().indetPoint());
+      return Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, param1.s2z)), dx, dy);
     }
     case H2: {
-      Tensor domain = StaticHelper.of(Box2D.xy(Clips.absolute(1.0)), manifoldDisplay(), res);
-      Sedarim sedarim = operator(movingOrigin);
-      return new AveragedMovingDomain2D( //
-          movingOrigin, sedarim, domain, //
-          manifoldDisplay().indetPoint());
+      return StaticHelper.of(Box2D.xy(Clips.absolute(1.0)), res);
     }
     case Se2C:
     case Se2: {
-      Tensor dx = Subdivide.of(0, 6, res - 1);
-      Tensor dy = Subdivide.of(0, 6, res - 1);
-      Tensor domain = Outer.of((cx, cy) -> Tensors.of(cx, cy, RealScalar.ZERO), dx, dy);
-      return new AveragedMovingDomain2D(movingOrigin, operator(movingOrigin), domain, //
-          manifoldDisplay().indetPoint());
+      Tensor dx = Subdivide.of(-2, 2, res - 1);
+      Tensor dy = Subdivide.of(-2, 2, res - 1);
+      return Outer.of((cx, cy) -> Tensors.of(cx, cy, RealScalar.ZERO), dx, dy);
     }
     default:
       throw new IllegalArgumentException();

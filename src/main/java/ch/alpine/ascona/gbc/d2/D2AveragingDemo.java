@@ -76,7 +76,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
     fieldsEditor(0).addUniversalListener(this::recompute);
     // ---
-    timerFrame.geometricComponent.setOffset(400, 400);
+    geometricComponent().setOffset(400, 400);
   }
 
   @Override

@@ -66,8 +66,8 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     setControlPointsSe2(Tensors.fromString("{{2, -3, 1.5}, {3, 5, 1}, {-4, -3, 1}, {-5, 3, 2}}"));
     setControlPointsSe2(Tensors.fromString( //
         "{{-1.217, -2.050, 1.309}, {1.783, 1.917, 0.262}, {-3.583, 0.300, -0.262}, {2.200, -0.283, 0.262}, {-4.000, -3.000, 1.000}, {-1.900, 2.117, 1.309}}"));
-    timerFrame.geometricComponent.addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
-    timerFrame.geometricComponent.setOffset(500, 500);
+    geometricComponent().addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
+    geometricComponent().setOffset(500, 500);
   }
 
   @Override

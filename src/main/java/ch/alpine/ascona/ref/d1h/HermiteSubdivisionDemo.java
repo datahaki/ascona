@@ -75,7 +75,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    timerFrame.geometricComponent.renderGrid(graphics);
+    geometricComponent().renderGrid(graphics);
     final Tensor tensor = getControlPointsSe2();
     POINTS_RENDER_0.show(Se2Display.INSTANCE::matrixLift, //
         Se2Display.INSTANCE.shape(), //

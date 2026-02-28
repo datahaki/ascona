@@ -19,9 +19,14 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.sca.Clips;
 
 class S3HopfDemo extends ControlPointsDemo {
+  public S3HopfDemo() {
+    setGeodesicControlPoints(RandomSample.of(manifoldDisplay().randomSampleInterface(), 3));
+  }
+
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.S2_ONLY;

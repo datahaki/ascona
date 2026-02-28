@@ -64,12 +64,7 @@ class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   private Tensor reference;
 
   public CheckerBoardDemo() {
-    this(new Param1());
-  }
-
-  public CheckerBoardDemo(Param1 param1) {
-    super(param1);
-    this.param1 = param1;
+    super(param1 = new Param1());
     setManifoldDisplay(ManifoldDisplays.S2);
     // ---
     // fieldsEditor(0).addUniversalListener(this::spun);

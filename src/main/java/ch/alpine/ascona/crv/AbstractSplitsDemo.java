@@ -35,7 +35,7 @@ public abstract class AbstractSplitsDemo extends PointSequenceDemo {
 
   @Override // from RenderInterface
   public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    timerFrame.geometricComponent.renderGrid(graphics);
+    geometricComponent().renderGrid(graphics);
     Tensor control = getGeodesicControlPoints();
     // ---
     SymScalar symScalar = symScalar(SymSequence.of(control.length()));

@@ -71,7 +71,7 @@ class ClothoidNdDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     int _value = param.value;
-    Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
+    Tensor mouse = geometricComponent().getMouseSe2CState();
     {
       NdCenterInterface ndCenterInterface = NdCenters.VECTOR_2_NORM.apply(mouse.extract(0, 2));
       GraphicNearest<Tensor> graphicNearest = //

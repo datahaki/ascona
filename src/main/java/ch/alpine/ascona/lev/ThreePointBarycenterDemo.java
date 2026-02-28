@@ -25,19 +25,14 @@ import ch.alpine.tensor.Tensors;
 // TODO does not really work
 class ThreePointBarycenterDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public PolygonCoordinates polygonCoordinates = PolygonCoordinates.MEAN_VALUE;
   }
 
   private final Param param;
 
   public ThreePointBarycenterDemo() {
-    this(new Param());
-  }
-
-  public ThreePointBarycenterDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     spun();
   }
 

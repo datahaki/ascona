@@ -31,7 +31,7 @@ class SpearheadDemo extends ClothoidBaseDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    timerFrame.geometricComponent.renderGrid(graphics);
+    geometricComponent().renderGrid(graphics);
     Tensor control = getGeodesicControlPoints();
     Scalar res = RealScalar.of(geometricLayer.pixel2modelWidth(10));
     Tensor polygon = Spearhead.of(control.get(0), res);

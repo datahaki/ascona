@@ -81,7 +81,7 @@ class SeriesHermiteSubdivisionDemo extends AbstractDemo {
         Tensor deltas = iterate.get(Tensor.ALL, 1);
         if (0 < deltas.length()) {
           Show show = StaticHelper.listPlot(deltas, delta, levels);
-          Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+          Dimension dimension = geometricComponent().jComponent.getSize();
           show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
         }
       }

@@ -40,7 +40,7 @@ class ClothoidLRDemo extends ClothoidBaseDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    timerFrame.geometricComponent.renderGrid(graphics);
+    geometricComponent().renderGrid(graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor start = control.get(0);
     Tensor mouse = control.get(1);

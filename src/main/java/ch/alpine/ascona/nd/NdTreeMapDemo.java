@@ -66,8 +66,8 @@ class NdTreeMapDemo extends ManifoldDisplayDemo {
   protected NdTreeMapDemo() {
     super(param0 = new Param0(), param1 = new Param1());
     fieldsEditor(0).addUniversalListener(this::shuffle);
-    timerFrame.geometricComponent.setModel2Pixel(DiagonalMatrix.of(200, -200, 1));
-    timerFrame.geometricComponent.setOffset(300, 300);
+    geometricComponent().setModel2Pixel(DiagonalMatrix.of(200, -200, 1));
+    geometricComponent().setOffset(300, 300);
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.S2);
   }
@@ -104,7 +104,7 @@ class NdTreeMapDemo extends ManifoldDisplayDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     manifoldDisplay.background().render(geometricLayer, graphics);
-    Tensor mouse = timerFrame.geometricComponent.getMouseSe2CState();
+    Tensor mouse = geometricComponent().getMouseSe2CState();
     Tensor xyz = center(mouse);
     // normal rendering quality
     graphics.setColor(Color.GRAY);

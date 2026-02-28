@@ -113,7 +113,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
     DisjointSets disjointSets = DisjointSets.allocate(sequence.length());
     if (0 < sequence.length()) {
       Tensor matrix = distanceMatrix(manifold, sequence);
-      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      Dimension dimension = geometricComponent().jComponent.getSize();
       Show show = new Show();
       show.add(MatrixPlot.of(matrix, param1.cdg, false));
       {

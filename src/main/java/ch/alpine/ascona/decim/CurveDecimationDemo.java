@@ -69,7 +69,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     super(param = new Param());
     fieldsEditor(0).addUniversalListener(this::updateState);
     // ---
-    timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
+    geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     updateState();
   }
 
@@ -125,7 +125,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
       }
     }
     if (param.error) {
-      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      Dimension dimension = geometricComponent().jComponent.getSize();
       Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
       show.setPlotLabel("Reduction from " + control.length() + " to " + simplified.length() + " samples");
       // visualSet.getAxisX().setLabel("sample no.");

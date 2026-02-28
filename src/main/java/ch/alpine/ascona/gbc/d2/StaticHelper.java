@@ -3,7 +3,6 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.util.List;
 
-import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -24,13 +23,13 @@ import ch.alpine.tensor.sca.Round;
 
 /* package */ enum StaticHelper {
   ;
-  public static <T extends Tensor> Tensor of(CoordinateBoundingBox coordinateBoundingBox, ManifoldDisplay manifoldDisplay, int resolution) {
-    Tensor dx = Subdivide.increasing(coordinateBoundingBox.clip(0), resolution - 1).maps(N.DOUBLE);
-    Tensor dy = Subdivide.decreasing(coordinateBoundingBox.clip(1), resolution - 1).maps(N.DOUBLE);
-    return Tensor.of(dy.stream().map(Scalar.class::cast).parallel() //
+  public static <T extends Tensor> Tensor of(CoordinateBoundingBox cbb, int resolution) {
+    Tensor dx = Subdivide.increasing(cbb.clip(0), resolution - 1).maps(N.DOUBLE);
+    Tensor dy = Subdivide.decreasing(cbb.clip(1), resolution - 1).maps(N.DOUBLE);
+    return Tensor.of(dy.stream().map(Scalar.class::cast) //
         .map(py -> Tensor.of(dx.stream().map(Scalar.class::cast) //
-            .map(px -> Unprotect.using(List.of(px, py, RealScalar.ZERO))) //
-            .map(manifoldDisplay::xya2point))));
+            .map(px -> Unprotect.using(List.of(px, py))) //
+        )));
   }
 
   static record IntBlend(Scalar radius) implements ScalarUnaryOperator {

@@ -75,7 +75,7 @@ class DubinsPathDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    timerFrame.geometricComponent.renderGrid(graphics);
+    geometricComponent().renderGrid(graphics);
     Tensor controlPointsSe2 = getControlPointsSe2();
     Tensor START = controlPointsSe2.get(0);
     Tensor mouse = controlPointsSe2.get(1);

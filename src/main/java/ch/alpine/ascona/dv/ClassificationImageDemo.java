@@ -82,7 +82,7 @@ class ClassificationImageDemo extends ControlPointsDemo {
     fieldsEditor(0).addUniversalListener(this::shuffle);
     fieldsEditor(1).addUniversalListener(this::recompute);
     {
-      timerFrame.geometricComponent.jComponent.addMouseMotionListener(new MouseMotionListener() {
+      geometricComponent().jComponent.addMouseMotionListener(new MouseMotionListener() {
         @Override
         public void mouseMoved(MouseEvent e) {
           if (isPositioningOngoing())

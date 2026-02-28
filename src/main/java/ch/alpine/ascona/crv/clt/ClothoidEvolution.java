@@ -48,7 +48,7 @@ public class ClothoidEvolution extends ControlPointsDemo {
     super(param);
     this.param = param;
     // ---
-    timerFrame.geometricComponent.addRenderInterfaceBackground(AxesRender.INSTANCE);
+    geometricComponent().addRenderInterfaceBackground(AxesRender.INSTANCE);
     // ---
     Tensor ctrl = Tensors.fromString( //
         "{{0.017, 0.017, 0.000}, {1.733, 0.967, 4.712}, {3.933, -0.750, -3.665}, {5.567, 1.717, 3.927}, {7.983, 1.500, 4.451}}");

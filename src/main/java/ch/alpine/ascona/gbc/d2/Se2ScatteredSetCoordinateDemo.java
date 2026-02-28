@@ -43,7 +43,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
     setControlPointsSe2(se2);
     // Tensor model2pixel = timerFrame.geometricComponent.getModel2Pixel();
     // timerFrame.geometricComponent.setModel2Pixel(Tensors.vector(5, 5, 1).pmul(model2pixel));
-    timerFrame.geometricComponent.setOffset(500, 500);
+    geometricComponent().setOffset(500, 500);
   }
 
   @Override

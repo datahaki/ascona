@@ -50,12 +50,7 @@ class LogarithmDemo extends ControlPointsDemo {
   private final Param param;
 
   public LogarithmDemo() {
-    this(new Param()); // for 2 dimensional
-  }
-
-  public LogarithmDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     fieldsEditor(0).addUniversalListener(this::spun);
     spun();

@@ -76,9 +76,9 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     this.param = param;
     // gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
     fieldsEditor(0).addUniversalListener(this::updateState);
-    timerFrame.geometricComponent.addRenderInterfaceBackground(GRID_RENDER);
+    geometricComponent().addRenderInterfaceBackground(GRID_RENDER);
     // ---
-    timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
+    geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
   }
 
   @Override
@@ -148,7 +148,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   // @Override
   protected final void differences_render( //
       Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor refined, boolean spectrogram) {
-    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+    Dimension dimension = geometricComponent().jComponent.getSize();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     if (geodesicSpace instanceof LieGroup lieGroup) {
       TensorUnaryOperator lieDifferences = LieDifferences.of(lieGroup);

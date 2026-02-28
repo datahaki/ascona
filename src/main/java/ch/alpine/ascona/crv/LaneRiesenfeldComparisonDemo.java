@@ -50,12 +50,11 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     // ---
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {3, 1, 0}, {4, 1, 0}, {5, 0, 0}, {6, 0, 0}, {7, 0, 0}}").multiply(RealScalar.of(2));
     setControlPointsSe2(control);
-    timerFrame.jToolBar.addSeparator();
     // ---
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i)
       pathRenders.add(new PathRender(COLORS.getColor(i)));
     // ---
-    timerFrame.geometricComponent.setOffset(100, 600);
+    geometricComponent().setOffset(100, 600);
   }
 
   @Override
@@ -86,7 +85,7 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
       }
     }
     // ---
-    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+    Dimension dimension = geometricComponent().jComponent.getSize();
     int width = dimension.width * 2 / 5;
     show1.render_autoIndent(graphics, new Rectangle(dimension.width - width, 0, width, dimension.height / 2));
     show2.render_autoIndent(graphics, new Rectangle(dimension.width - width, dimension.height / 2, width, dimension.height / 2));

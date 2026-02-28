@@ -44,7 +44,7 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
   public CustomClothoidDemo() {
     setControlPointsSe2(INITIAL);
     timerFrame.jToolBar.add(jLabel);
-    timerFrame.geometricComponent.setOffset(300, 700);
+    geometricComponent().setOffset(300, 700);
   }
 
   @Override
@@ -96,7 +96,7 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
       Tensor points = Tensors.of(Tensors.of(reifs, RealScalar.ONE));
       show.add(ListPlot.of(points));
     }
-    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+    Dimension dimension = geometricComponent().jComponent.getSize();
     show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width, dimension.height / 2));
   }
 

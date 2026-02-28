@@ -78,12 +78,12 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
     // ImageRender imageRender = ImageRender.range(bufferedImage, Tensors.vector(10, 10));
     // // timerFrame.geometricComponent.addRenderInterfaceBackground(imageRender);
     // }
-    timerFrame.geometricComponent.setOffset(100, 700);
+    geometricComponent().setOffset(100, 700);
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    timerFrame.geometricComponent.renderGrid(graphics);
+    geometricComponent().renderGrid(graphics);
     if (Objects.nonNull(param.font)) {
       graphics.setColor(new Color(164, 164, 64));
       graphics.setFont(param.font);
