@@ -1,0 +1,149 @@
+package ch.alpine.ascona.gbc.d2;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Stroke;
+
+import ch.alpine.ascony.api.Box2D;
+import ch.alpine.ascony.bas.MovingDomain2D;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.MeshRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
+import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.alg.Outer;
+import ch.alpine.tensor.alg.Subdivide;
+import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.img.ColorDataGradient;
+import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.lie.rot.CirclePoints;
+import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.sca.Clips;
+
+abstract class AbstractDeformationDemo extends ControlPointsDemo {
+  static final PointsRender POINTS_RENDER_POINTS = //
+      new PointsRender(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255));
+  static final Stroke STROKE = //
+      new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
+  /** for parameterization of geodesic */
+  static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 10);
+
+  @ReflectionMarker
+  static class Param2 {
+    public ColorDataGradients cdg = ColorDataGradients.RAINBOW;
+    public Boolean target = true;
+  }
+
+  private final Param2 param2;
+  MovingDomain2D movingDomain2D;
+
+  public AbstractDeformationDemo(Object obj1, Object obj2) {
+    super(obj1, obj2, param2 = new Param2());
+  }
+
+  @Override
+  protected final ControlPointType controlPointType() {
+    return ControlPointTypes.HEAD_TAIL;
+  }
+
+  protected final Tensor shufflePoints(int n) {
+    return switch (getSelectedMD()) {
+    case H2 -> CirclePoints.of(n).multiply(RealScalar.of(2));
+    default -> RandomSample.of(manifoldDisplay().randomSampleInterface(), n);
+    };
+  }
+
+  protected final Tensor updateDomain(Tensor movingOrigin, int res, Scalar s2z) {
+    switch (getSelectedMD()) {
+    case R2: {
+      ManifoldDisplay manifoldDisplay = manifoldDisplay();
+      CoordinateBoundingBox coordinateBoundingBox = manifoldDisplay.d2Raster_coordinateBoundingBox();
+      return Meshgrid.image(coordinateBoundingBox, res);
+    }
+    case S2: {
+      Tensor dx = Subdivide.of(-1, 1, res);
+      Tensor dy = Subdivide.of(-1, 1, res);
+      return Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, s2z)), dx, dy);
+    }
+    case H2: {
+      return Meshgrid.image(Box2D.xy(Clips.absolute(1.0)), res);
+    }
+    case Se2C:
+    case Se2: {
+      Tensor dx = Subdivide.of(-2, 2, res);
+      Tensor dy = Subdivide.of(-2, 2, res);
+      return Outer.of((cx, cy) -> Tensors.of(cx, cy, RealScalar.ZERO), dx, dy);
+    }
+    default:
+      throw new IllegalArgumentException();
+    }
+  }
+
+  protected final BiinvariantMean biinvariantMean() {
+    HomogeneousSpace homogeneousSpace = manifoldDisplay().homogeneousSpace();
+    return homogeneousSpace.biinvariantMean();
+  }
+
+  protected final Tensor shapeOrigin() {
+    return manifoldDisplay().shape().multiply(RealScalar.of(0.8));
+  }
+
+  @Override // from RenderInterface
+  public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    geometricComponent().renderGrid(graphics);
+    graphics.setClip(null);
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Tensor origin = movingDomain2D.origin();
+    Tensor target = getGeodesicControlPoints();
+    // ---
+    {
+      ColorDataGradient colorDataGradient = param2.cdg.deriveWithOpacity(RealScalar.of(0.5));
+      new MeshRender(movingDomain2D.forward(target, biinvariantMean()), colorDataGradient) //
+          .render(geometricLayer, graphics);
+    }
+    if (param2.target) { // connect origin and target pairs with lines/geodesics
+      GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+      graphics.setColor(new Color(128, 128, 128, 255));
+      graphics.setStroke(STROKE);
+      for (int index = 0; index < origin.length(); ++index) {
+        ScalarTensorFunction scalarTensorFunction = //
+            geodesicSpace.curve(origin.get(index), target.get(index));
+        Tensor points = Tensor.of(DOMAIN.maps(scalarTensorFunction).stream() //
+            .map(manifoldDisplay::point2xy));
+        graphics.draw(geometricLayer.toPath2D(points));
+      }
+      graphics.setStroke(new BasicStroke(1));
+    }
+    POINTS_RENDER_POINTS //
+        .show(manifoldDisplay::matrixLift, shapeOrigin(), origin) //
+        .render(geometricLayer, graphics);
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, param2.target //
+        ? getGeodesicControlPoints()
+        : origin, null, geometricLayer, graphics);
+    leversRender.renderIndexP(param2.target ? "q" : "p");
+    {
+      Tensor weights = movingDomain2D.arrayReshape_weights();
+      Show show = new Show();
+      show.add(ArrayPlot.of(weights, param2.cdg));
+      show.render(graphics, new Rectangle(100, 10, 100 + Unprotect.dimension1Hint(weights) * 2, 400));
+    }
+  }
+}

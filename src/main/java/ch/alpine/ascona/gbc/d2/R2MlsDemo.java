@@ -6,6 +6,7 @@ import java.util.List;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.bas.AveragedMovingDomain2D;
 import ch.alpine.ascony.bas.MovingDomain2D;
+import ch.alpine.ascony.bas.RnFittedMovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -15,14 +16,12 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 // TODO ASCONA maps to target every frame right now
-class DeformationDemo extends AbstractDeformationDemo {
+class R2MlsDemo extends AbstractDeformationDemo {
   @ReflectionMarker
   public static class Param0 {
     @FieldClip(min = "3", max = "12")
@@ -30,12 +29,10 @@ class DeformationDemo extends AbstractDeformationDemo {
   }
 
   @ReflectionMarker
-  public static class Param1 {
-    public LogWeightings logWeightings = LogWeightings.COORDINATE;
-    public Biinvariants biinvariants = Biinvariants.METRIC;
+  static class Param1 {
     @FieldSelectionArray({ "20", "30", "50" })
     public Integer refine = 20;
-    public Scalar s2z = RealScalar.of(1);
+    public Boolean r2Mls = false;
     @FieldFuse
     public transient Boolean snap = true; // true intentional
   }
@@ -46,7 +43,7 @@ class DeformationDemo extends AbstractDeformationDemo {
   /** in coordinate specific to geodesic display */
   private Tensor movingOrigin;
 
-  protected DeformationDemo() {
+  protected R2MlsDemo() {
     super(param0 = new Param0(), param1 = new Param1());
     fieldsEditor(0).addUniversalListener(this::shuffleSnap);
     fieldsEditor(1).addUniversalListener(this::recompute);
@@ -57,7 +54,7 @@ class DeformationDemo extends AbstractDeformationDemo {
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.DEFORM_2D;
+    return ManifoldDisplays.R2_ONLY;
   }
 
   protected final void shuffleSnap() {
@@ -75,20 +72,20 @@ class DeformationDemo extends AbstractDeformationDemo {
     movingDomain2D = updateMovingDomain2D(movingOrigin, param1.refine);
   }
 
-  protected Sedarim operator(Tensor sequence) {
-    Manifold manifold = manifoldDisplay().manifold();
-    return param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
-  }
-
-  /** @return method to compute mean (for instance approximation instead of exact mean) */
   protected MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
-    Tensor domain = updateDomain(movingOrigin, res, param1.s2z);
-    Sedarim sedarim = operator(movingOrigin);
+    Tensor domain = updateDomain(movingOrigin, res, null);
+    Biinvariants biinvariants = Biinvariants.METRIC;
+    Manifold manifold = manifoldDisplay().manifold();
+    if (param1.r2Mls) {
+      Sedarim sedarim = LogWeightings.WEIGHTING.sedarim(biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), movingOrigin);
+      return new RnFittedMovingDomain2D(movingOrigin, sedarim, domain);
+    }
+    Sedarim sedarim = LogWeightings.COORDINATE.sedarim(biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), movingOrigin);
     return new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
         manifoldDisplay().indetPoint());
   }
 
   static void main() {
-    new DeformationDemo().runStandalone();
+    new R2MlsDemo().runStandalone();
   }
 }

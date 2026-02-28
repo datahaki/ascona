@@ -1,37 +1,23 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import java.util.List;
-
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.LinearColorDataGradient;
 import ch.alpine.tensor.itp.LinearBinaryAverage;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Clip;
-import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
 
 /* package */ enum StaticHelper {
   ;
-  public static <T extends Tensor> Tensor of(CoordinateBoundingBox cbb, int resolution) {
-    Tensor dx = Subdivide.increasing(cbb.clip(0), resolution - 1).maps(N.DOUBLE);
-    Tensor dy = Subdivide.decreasing(cbb.clip(1), resolution - 1).maps(N.DOUBLE);
-    return Tensor.of(dy.stream().map(Scalar.class::cast) //
-        .map(py -> Tensor.of(dx.stream().map(Scalar.class::cast) //
-            .map(px -> Unprotect.using(List.of(px, py))) //
-        )));
-  }
-
   static record IntBlend(Scalar radius) implements ScalarUnaryOperator {
     @Override
     public Scalar apply(Scalar scalar) {
