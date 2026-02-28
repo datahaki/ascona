@@ -43,6 +43,7 @@ record ClothoidTangentDefectShow(Scalar s1, Scalar s2, Clip clip) implements Sho
       list.add(StringItem.of(Tensors.of(l, l.zero()), "" + l.maps(Round._4)));
     }
     show.add(StringPlot.of(list));
+    show.setPlotLabel("Clothoid Tangent Defect");
     return show;
   }
 

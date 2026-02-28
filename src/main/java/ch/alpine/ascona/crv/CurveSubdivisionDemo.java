@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.ref.d1;
+package ch.alpine.ascona.crv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,8 +8,6 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.JButton;
-
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.BaseCurvatureParam;
@@ -17,26 +15,16 @@ import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
-import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.bridge.swing.SpinnerMenu;
-import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.io.Import;
-import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.red.Nest;
-import ch.alpine.tensor.red.Times;
 
 /** split interface and biinvariant mean based curve subdivision */
-class CurveSubdivisionDemo extends ControlPointsDemo {
+class CurveSubdivisionDemo extends PointSequenceDemo {
   private static final PathRender PATH_RENDER = new PathRender(new Color(0, 128, 0, 128));
 
   @ReflectionMarker
@@ -55,51 +43,11 @@ class CurveSubdivisionDemo extends ControlPointsDemo {
 
   public CurveSubdivisionDemo() {
     super(param = new Param());
-    Tensor control = null;
-    {
-      Tensor move = Tensors.fromString( //
-          "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");
-      move = Tensor.of(move.stream().map(Times.operator(Tensors.vector(2, 1, 1))));
-      Tensor init = Tensors.vector(0, 0, 2.1);
-      control = DubinsGenerator.of(init, move);
-      control = Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {3, 1, 0}, {4, 1, 0}, {5, 0, 0}, {6, 0, 0}, {7, 0, 0}}").multiply(RealScalar.of(2));
-    }
-    setControlPointsSe2(control);
-    {
-      JButton jButton = new JButton("load");
-      List<String> list = List.of("ducttape/20180514.csv", "tires/20190116.csv", "tires/20190117.csv");
-      jButton.addActionListener(_ -> {
-        SpinnerMenu<String> spinnerMenu = new SpinnerMenu<>(list, null, Object::toString, null, false);
-        spinnerMenu.addSpinnerListener(string -> {
-          Tensor tensor = Import.of("/dubilab/controlpoints/" + string);
-          tensor = Tensor.of(tensor.stream().map(Times.operator(Tensors.vector(0.5, 0.5, 1))));
-          Tensor center = Mean.of(tensor);
-          center.set(RealScalar.ZERO, 2);
-          tensor = Tensor.of(tensor.stream().map(row -> row.subtract(center)));
-          setManifoldDisplay(ManifoldDisplays.Se2);
-          param.cyclic = true;
-          setControlPointsSe2(tensor);
-        });
-        spinnerMenu.showSouth(jButton);
-      });
-      timerFrame.jToolBar.add(jButton);
-    }
-    // ---
-    timerFrame.jToolBar.addSeparator();
-    addButtonDubins();
-    // ---
-    setManifoldDisplay(ManifoldDisplays.Se2);
-    timerFrame.geometricComponent.setOffset(100, 600);
   }
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
-  }
-
-  @Override
-  protected final ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
   }
 
   @Override

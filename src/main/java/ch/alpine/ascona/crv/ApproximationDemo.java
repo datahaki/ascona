@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.ref.d1;
+package ch.alpine.ascona.crv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -71,12 +71,7 @@ class ApproximationDemo extends ControlPointsDemo {
   private final Param param;
 
   public ApproximationDemo() {
-    this(new Param());
-  }
-
-  public ApproximationDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     timerFrame.geometricComponent.setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     param.string = GokartPos.list().getFirst();
     fieldsEditor(0).addUniversalListener(this::updateState);

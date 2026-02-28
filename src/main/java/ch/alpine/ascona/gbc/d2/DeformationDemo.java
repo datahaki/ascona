@@ -6,11 +6,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
+import java.util.List;
 import java.util.Objects;
 
+import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.bas.AveragedMovingDomain2D;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -28,19 +32,30 @@ import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.lie.rot.CirclePoints;
+import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 // TODO ASCONA maps to target every frame right now
-/* package */ abstract class AbstractDeformationDemo extends ControlPointsDemo {
+class DeformationDemo extends ControlPointsDemo {
   private static final PointsRender POINTS_RENDER_POINTS = //
       new PointsRender(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255));
   private static final Stroke STROKE = //
@@ -73,19 +88,18 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
   private Tensor movingOrigin;
   private MovingDomain2D movingDomain2D;
 
-  protected AbstractDeformationDemo(Object object) {
-    this(new Param0(), new Param1(), object);
-  }
-
-  protected AbstractDeformationDemo(Param0 param0, Param1 param1, Object object) {
-    super(param0, param1, object);
-    this.param0 = param0;
-    this.param1 = param1;
+  protected DeformationDemo() {
+    super(param0 = new Param0(), param1 = new Param1());
     fieldsEditor(0).addUniversalListener(this::recompute);
     fieldsEditor(1).addUniversalListener(this::shuffleSnap);
-    fieldsEditor(2).addUniversalListener(this::recompute);
     // ---
-    setControlPointsSe2(shufflePointsSe2(param1.length));
+    addChangeListener(this::shuffleSnap);
+    shuffleSnap();
+  }
+
+  @Override
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+    return ManifoldDisplays.DEFORM_2D;
   }
 
   @Override
@@ -157,12 +171,89 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
     }
   }
 
-  protected abstract Tensor shufflePointsSe2(int n);
+  protected final Tensor shapeOrigin() {
+    return manifoldDisplay().shape().multiply(RealScalar.of(0.8));
+  }
 
   /** @return method to compute mean (for instance approximation instead of exact mean) */
-  protected abstract BiinvariantMean biinvariantMean();
+  protected final BiinvariantMean biinvariantMean() {
+    HomogeneousSpace homogeneousSpace = manifoldDisplay().homogeneousSpace();
+    return homogeneousSpace.biinvariantMean();
+  }
 
-  protected abstract MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res);
+  protected final Tensor shufflePointsSe2(int n) {
+    switch (getSelectedMD()) {
+    case R2: {
+      ManifoldDisplay manifoldDisplay = manifoldDisplay();
+      Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
+          .map(manifoldDisplay::point2xya));
+      return tensor;
+    }
+    case S2: {
+      Distribution distribution = UniformDistribution.of(-0.5, 0.5);
+      return Tensor.of(RandomVariate.of(distribution, n, 2).stream() //
+          .map(Tensor::copy) //
+          .map(row -> row.append(RealScalar.ZERO)));
+    }
+    case H2: {
+      return Tensor.of(CirclePoints.of(n).multiply(RealScalar.of(2)).stream().map(row -> row.append(RealScalar.ZERO)));
+    }
+    case Se2C:
+    case Se2: {
+      ManifoldDisplay manifoldDisplay = manifoldDisplay();
+      Distribution distributionp = UniformDistribution.of(-1, 7);
+      Distribution distributiona = UniformDistribution.of(-1, 1);
+      return Tensors.vector(_ -> manifoldDisplay.xya2point( //
+          RandomVariate.of(distributionp, 2).append(RandomVariate.of(distributiona))), n);
+    }
+    default:
+      throw new IllegalArgumentException();
+    }
+  }
 
-  protected abstract Tensor shapeOrigin();
+  protected final MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
+    switch (getSelectedMD()) {
+    case R2: {
+      ManifoldDisplay manifoldDisplay = manifoldDisplay();
+      CoordinateBoundingBox coordinateBoundingBox = manifoldDisplay.d2Raster_coordinateBoundingBox();
+      Tensor domain = StaticHelper.of(coordinateBoundingBox, manifoldDisplay, res);
+      Sedarim sedarim = operator(movingOrigin);
+      return
+      // param2.mls //
+      // ? new RnFittedMovingDomain2D(movingOrigin, sedarim, domain)
+      // :
+      new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
+          manifoldDisplay().indetPoint());
+    }
+    case S2: {
+      Tensor dx = Subdivide.of(-1, 1, res - 1);
+      Tensor dy = Subdivide.of(-1, 1, res - 1);
+      Tensor domain = Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, RealScalar.of(1.0))), dx, dy);
+      Sedarim sedarim = operator(movingOrigin);
+      return new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
+          manifoldDisplay().indetPoint());
+    }
+    case H2: {
+      Tensor domain = StaticHelper.of(Box2D.xy(Clips.absolute(1.0)), manifoldDisplay(), res);
+      Sedarim sedarim = operator(movingOrigin);
+      return new AveragedMovingDomain2D( //
+          movingOrigin, sedarim, domain, //
+          manifoldDisplay().indetPoint());
+    }
+    case Se2C:
+    case Se2: {
+      Tensor dx = Subdivide.of(0, 6, res - 1);
+      Tensor dy = Subdivide.of(0, 6, res - 1);
+      Tensor domain = Outer.of((cx, cy) -> Tensors.of(cx, cy, RealScalar.ZERO), dx, dy);
+      return new AveragedMovingDomain2D(movingOrigin, operator(movingOrigin), domain, //
+          manifoldDisplay().indetPoint());
+    }
+    default:
+      throw new IllegalArgumentException();
+    }
+  }
+
+  static void main() {
+    new DeformationDemo().runStandalone();
+  }
 }

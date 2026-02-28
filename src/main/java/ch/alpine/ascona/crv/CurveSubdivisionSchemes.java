@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.ref.d1;
+package ch.alpine.ascona.crv;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.R2Display;

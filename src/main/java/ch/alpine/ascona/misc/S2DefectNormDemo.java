@@ -32,6 +32,8 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.ConstantArray;
+import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -58,7 +60,13 @@ class S2DefectNormDemo extends ControlPointsDemo {
     public ColorDataGradients colorDataGradients = ColorDataGradients.PARULA;
     public Boolean vector = true;
     @FieldLabel("weights")
-    public Tensor user_weights = Tensors.vector(3, 2, -2, 1, 1, 1, 1);
+    public Tensor user_weights = Tensors.vector(3, 2, -2);
+
+    public Tensor weights(int n) {
+      return n <= user_weights.length() //
+          ? user_weights.extract(0, n)
+          : Join.of(user_weights, ConstantArray.of(RealScalar.ONE, n - user_weights.length()));
+    }
   }
 
   public final Param param;
@@ -91,7 +99,7 @@ class S2DefectNormDemo extends ControlPointsDemo {
     public TSF() {
       sequence = getGeodesicControlPoints();
       int n = sequence.length();
-      weights = NormalizeTotal.FUNCTION.apply(param.user_weights.extract(0, n).maps(N.DOUBLE));
+      weights = NormalizeTotal.FUNCTION.apply(param.weights(n).maps(N.DOUBLE));
     }
 
     @Override

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.ref.d1;
+package ch.alpine.ascona.crv;
 
 import ch.alpine.sophis.ref.d1.BSpline4CurveSubdivision;
 import ch.alpine.sophis.ref.d1.CurveSubdivision;

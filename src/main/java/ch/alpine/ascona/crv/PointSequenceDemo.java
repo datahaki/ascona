@@ -18,7 +18,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.io.Get;
 import ch.alpine.tensor.io.Put;
 
-public abstract class PointSequenceDemo extends ControlPointsDemo {
+abstract class PointSequenceDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class SaveParam {
     @FieldFuse

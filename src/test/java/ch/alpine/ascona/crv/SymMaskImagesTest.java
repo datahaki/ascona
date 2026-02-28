@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.ref.d1;
+package ch.alpine.ascona.crv;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

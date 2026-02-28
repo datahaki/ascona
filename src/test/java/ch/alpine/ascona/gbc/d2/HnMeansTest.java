@@ -7,6 +7,7 @@ import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.h.HManifold;
 import ch.alpine.sophus.hs.h.HWeierstrassCoordinate;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
@@ -21,14 +22,12 @@ class HnMeansTest {
   void testSimple() {
     RandomGenerator randomGenerator = new Random(3);
     Distribution distribution = NormalDistribution.standard();
-    for (HnMeans hnMeans : HnMeans.values()) {
-      BiinvariantMean biinvariantMean = hnMeans.get();
-      for (int d = 1; d < 5; ++d) {
-        final int fd = d;
-        Tensor sequence = Array.of(_ -> new HWeierstrassCoordinate(RandomVariate.of(distribution, randomGenerator, fd)).toPoint(), 10);
-        Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), randomGenerator, 10));
-        biinvariantMean.mean(sequence, weights);
-      }
+    BiinvariantMean biinvariantMean = HManifold.INSTANCE.biinvariantMean();
+    for (int d = 1; d < 5; ++d) {
+      final int fd = d;
+      Tensor sequence = Array.of(_ -> new HWeierstrassCoordinate(RandomVariate.of(distribution, randomGenerator, fd)).toPoint(), 10);
+      Tensor weights = NormalizeTotal.FUNCTION.apply(RandomVariate.of(UniformDistribution.unit(), randomGenerator, 10));
+      biinvariantMean.mean(sequence, weights);
     }
   }
 }
