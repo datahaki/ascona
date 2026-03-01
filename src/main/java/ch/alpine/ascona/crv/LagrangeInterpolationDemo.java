@@ -56,8 +56,6 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
 
   public LagrangeInterpolationDemo() {
     super(param = new Param0(), param1 = new Param1());
-    addButtonDubins();
-    // ---
     {
       Tensor tensor = Tensors.fromString("{{1, 0, 0}, {1, 0, 2.1}}");
       setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //

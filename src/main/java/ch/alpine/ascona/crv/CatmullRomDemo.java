@@ -59,9 +59,6 @@ class CatmullRomDemo extends PointSequenceDemo {
   public CatmullRomDemo(Param param) {
     super(param);
     this.param = param;
-    // ---
-    addButtonDubins();
-    // ---
     setManifoldDisplay(ManifoldDisplays.R2);
   }
 

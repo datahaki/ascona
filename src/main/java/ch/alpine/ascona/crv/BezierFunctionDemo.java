@@ -40,7 +40,6 @@ class BezierFunctionDemo extends PointSequenceDemo {
 
   public BezierFunctionDemo() {
     super(param = new Param());
-    addButtonDubins();
   }
 
   @Override

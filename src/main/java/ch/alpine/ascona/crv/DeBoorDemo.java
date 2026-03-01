@@ -31,8 +31,6 @@ class DeBoorDemo extends AbstractCurveDemo implements BufferedImageSupplier {
 
   public DeBoorDemo() {
     super(new AbstractCurveParam());
-    addButtonDubins();
-    // ---
     setManifoldDisplay(ManifoldDisplays.Se2C);
   }
 
