@@ -111,7 +111,6 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
-    graphics.setClip(null);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor origin = movingDomain2D.origin();
     Tensor target = getGeodesicControlPoints();

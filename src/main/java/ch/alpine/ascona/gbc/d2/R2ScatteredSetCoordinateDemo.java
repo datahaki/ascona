@@ -14,7 +14,7 @@ import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.BoundingBoxRender;
+import ch.alpine.ascony.reg.RegionRenders;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -66,7 +66,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     setControlPointsSe2(Tensors.fromString("{{2, -3, 1.5}, {3, 5, 1}, {-4, -3, 1}, {-5, 3, 2}}"));
     setControlPointsSe2(Tensors.fromString( //
         "{{-1.217, -2.050, 1.309}, {1.783, 1.917, 0.262}, {-3.583, 0.300, -0.262}, {2.200, -0.283, 0.262}, {-4.000, -3.000, 1.000}, {-1.900, 2.117, 1.309}}"));
-    geometricComponent().addRenderInterfaceBackground(new BoundingBoxRender(coordinateBoundingBox));
+    geometricComponent().addRenderInterfaceBackground(RegionRenders.of(coordinateBoundingBox));
     geometricComponent().setOffset(500, 500);
   }
 
