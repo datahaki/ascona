@@ -14,6 +14,7 @@ import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascona.dat.gok.PosHz;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
@@ -110,7 +111,7 @@ class ApproximationDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    geometricComponent().renderGrid(graphics);
+    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Container container = _container;
     if (Objects.isNull(container))
       return;

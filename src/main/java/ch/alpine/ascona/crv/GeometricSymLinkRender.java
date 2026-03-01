@@ -56,7 +56,7 @@ import ch.alpine.tensor.sca.Clips;
           ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(posP, posQ);
           Tensor posM = scalarTensorFunction.apply(symLinkPart.lambda());
           graphics.setColor(new Color(0, 128 + 64, 0, 255));
-          Scalar resolution = RealScalar.of(geometricLayer.pixel2modelWidth(4));
+          Scalar resolution = geometricLayer.pixel2modelWidth(RealScalar.of(4));
           {
             Transition transition = transitionSpace.connect(posP, posM);
             Tensor tensor = transition.linearized(resolution);

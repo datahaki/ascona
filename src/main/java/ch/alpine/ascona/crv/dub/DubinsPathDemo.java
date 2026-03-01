@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2CoveringDisplay;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -75,7 +76,7 @@ class DubinsPathDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    geometricComponent().renderGrid(graphics);
+    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Tensor controlPointsSe2 = getControlPointsSe2();
     Tensor START = controlPointsSe2.get(0);
     Tensor mouse = controlPointsSe2.get(1);

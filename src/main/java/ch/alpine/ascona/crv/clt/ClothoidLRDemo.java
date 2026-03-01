@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.Se2ClothoidDisplay;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -40,7 +41,7 @@ class ClothoidLRDemo extends ClothoidBaseDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    geometricComponent().renderGrid(graphics);
+    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor start = control.get(0);
     Tensor mouse = control.get(1);

@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -41,14 +42,14 @@ class DubinsTransitionDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    geometricComponent().renderGrid(graphics);
+    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Tensor controlPointsSe2 = getControlPointsSe2();
     Tensor START = controlPointsSe2.get(0);
     Tensor mouse = controlPointsSe2.get(1);
     // ---
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(START, mouse, RealScalar.of(1));
     List<DubinsPath> list = dubinsPathGenerator.stream().toList();
-    Scalar minResolution = RealScalar.of(geometricLayer.pixel2modelWidth(5));
+    Scalar minResolution = geometricLayer.pixel2modelWidth(RealScalar.of(5));
     {
       graphics.setStroke(new BasicStroke(1));
       for (DubinsPath dubinsPath : list) {

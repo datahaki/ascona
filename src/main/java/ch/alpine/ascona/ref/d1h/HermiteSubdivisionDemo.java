@@ -13,6 +13,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
@@ -75,7 +76,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    geometricComponent().renderGrid(graphics);
+    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     final Tensor tensor = getControlPointsSe2();
     POINTS_RENDER_0.show(Se2Display.INSTANCE::matrixLift, //
         Se2Display.INSTANCE.shape(), //

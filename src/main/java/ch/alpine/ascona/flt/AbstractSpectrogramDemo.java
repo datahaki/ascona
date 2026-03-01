@@ -13,7 +13,7 @@ import java.util.Optional;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.GridRender;
+import ch.alpine.ascony.ren.FixGridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
@@ -42,7 +42,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 /* package */ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
-  private static final GridRender GRID_RENDER = new GridRender(Subdivide.of(0, 100, 10));
+  private static final FixGridRender GRID_RENDER = new FixGridRender(Subdivide.of(0, 100, 10));
   // ---
   private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
   private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);

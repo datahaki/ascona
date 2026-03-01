@@ -9,6 +9,7 @@ import java.awt.Stroke;
 import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.ren.PointsRender;
@@ -108,7 +109,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    geometricComponent().renderGrid(graphics);
+    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     graphics.setClip(null);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor origin = movingDomain2D.origin();

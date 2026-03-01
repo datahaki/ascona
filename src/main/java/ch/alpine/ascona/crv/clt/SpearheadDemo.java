@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 
 import ch.alpine.ascony.api.Spearhead;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.fig.PolygonPlot;
 import ch.alpine.bridge.fig.Show;
@@ -31,9 +32,9 @@ class SpearheadDemo extends ClothoidBaseDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    geometricComponent().renderGrid(graphics);
+    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
-    Scalar res = RealScalar.of(geometricLayer.pixel2modelWidth(10));
+    Scalar res = geometricLayer.pixel2modelWidth(RealScalar.of(10));
     Tensor polygon = Spearhead.of(control.get(0), res);
     graphics.setColor(COLOR_DATA_INDEXED.getColor(1));
     graphics.fill(geometricLayer.toPath2D(polygon));

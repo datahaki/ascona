@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Objects;
 
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -83,7 +84,7 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    geometricComponent().renderGrid(graphics);
+    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     if (Objects.nonNull(param.font)) {
       graphics.setColor(new Color(164, 164, 64));
       graphics.setFont(param.font);
@@ -100,15 +101,15 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
       Tensor crv1 = cache.apply(Tensors.of(beg1, end1));
       {
         graphics.setColor(new Color(0, 0, 0, 128));
-        float model2pixelWidth = geometricLayer.model2pixelWidth(param.round);
-        graphics.setStroke(new BasicStroke(model2pixelWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        Scalar model2pixelWidth = geometricLayer.model2pixelWidth(param.round);
+        graphics.setStroke(new BasicStroke(model2pixelWidth.number().floatValue(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         Tensor polygon = Join.of(crv0, Reverse.of(crv1));
         {
           Path2D path2d = geometricLayer.toPath2D(polygon, true);
           graphics.draw(path2d);
           graphics.fill(path2d);
         }
-        geometricLayer.pushMatrix(Se2Matrix.translation(11, 0));
+        geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(11, 0)));
         graphics.setColor(new Color(64, 64, 64));
         {
           Path2D path2d = geometricLayer.toPath2D(polygon, true);

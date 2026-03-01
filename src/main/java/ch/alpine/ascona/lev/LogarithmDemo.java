@@ -11,7 +11,7 @@ import java.util.Optional;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.R2Display;
-import ch.alpine.ascony.ren.GridRender;
+import ch.alpine.ascony.ren.FixGridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
@@ -36,7 +36,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 class LogarithmDemo extends ControlPointsDemo {
-  private static final GridRender GRID_RENDER = new GridRender(Tensors.vector(-1, 0, 1), Color.LIGHT_GRAY);
+  private static final FixGridRender GRID_RENDER = new FixGridRender(Tensors.vector(-1, 0, 1), Color.LIGHT_GRAY);
   private static final Color DOMAIN_F = new Color(192, 192, 64, 64);
   private static final Color DOMAIN_D = new Color(192, 192, 64, 192);
 

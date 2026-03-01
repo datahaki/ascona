@@ -8,6 +8,7 @@ import java.util.Objects;
 import ch.alpine.ascona.crv.GeometricSymLinkRender.Link;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLink;
 import ch.alpine.ascony.sym.SymLinkBuilder;
@@ -31,11 +32,13 @@ public abstract class AbstractSplitsDemo extends PointSequenceDemo {
   protected AbstractSplitsDemo(Object... objects) {
     super(objects);
     setManifoldDisplay(ManifoldDisplays.R2);
+    timerFrame.geometricComponent.addRenderInterfaceBackground( //
+        new GridRender(timerFrame.geometricComponent.jComponent::getSize));
   }
 
   @Override // from RenderInterface
   public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    geometricComponent().renderGrid(graphics);
+    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
     // ---
     SymScalar symScalar = symScalar(SymSequence.of(control.length()));
