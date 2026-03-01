@@ -8,7 +8,6 @@ import ch.alpine.ascony.bas.AveragedMovingDomain2D;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -21,14 +20,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
-// TODO ASCONA maps to target every frame right now
 class DeformationDemo extends AbstractDeformationDemo {
-  @ReflectionMarker
-  static class Param0 {
-    @FieldClip(min = "3", max = "12")
-    public Integer length = 8;
-  }
-
   @ReflectionMarker
   static class Param1 {
     public LogWeightings logWeightings = LogWeightings.COORDINATE;
@@ -40,15 +32,13 @@ class DeformationDemo extends AbstractDeformationDemo {
     public transient Boolean snap = true; // true intentional
   }
 
-  private final Param0 param0;
   private final Param1 param1;
   // ---
   /** in coordinate specific to geodesic display */
   private Tensor movingOrigin;
 
   protected DeformationDemo() {
-    super(param0 = new Param0(), param1 = new Param1());
-    fieldsEditor(0).addUniversalListener(this::shuffleSnap);
+    super(param1 = new Param1());
     fieldsEditor(1).addUniversalListener(this::recompute);
     // ---
     addChangeListener(this::shuffleSnap);
@@ -60,8 +50,9 @@ class DeformationDemo extends AbstractDeformationDemo {
     return ManifoldDisplays.DEFORM_2D;
   }
 
+  @Override
   protected final void shuffleSnap() {
-    setGeodesicControlPoints(shufflePoints(param0.length));
+    setGeodesicControlPoints(shufflePoints(param0().length));
     param1.snap = true;
     recompute();
   }

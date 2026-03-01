@@ -28,11 +28,13 @@ import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 
 class SPatchDemo extends ControlPointsDemo {
   @ReflectionMarker
@@ -74,9 +76,8 @@ class SPatchDemo extends ControlPointsDemo {
     Tensor embed = sPatch.getEmbed();
     setControlPointsSe2(Tensor.of(embed.stream() //
         .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
-    Tensor dx = Subdivide.of(-1.0, 1.0, param0.res);
-    Tensor dy = Subdivide.of(-1.0, 1.0, param0.res);
-    Tensor domain = Outer.of(Tensors::of, dx, dy);
+    Clip clip = Clips.absolute(1);
+    Tensor domain = Meshgrid.image(CoordinateBoundingBox.of(clip, clip), param0.res);
     movingDomain2D = new AveragedMovingDomain2D(embed, sPatch, domain, //
         manifoldDisplay().indetPoint());
   }

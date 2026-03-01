@@ -20,6 +20,7 @@ import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
@@ -27,10 +28,8 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Append;
-import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -40,6 +39,7 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 abstract class AbstractDeformationDemo extends ControlPointsDemo {
@@ -51,16 +51,24 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
   static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 10);
 
   @ReflectionMarker
+  static class Param0 {
+    @FieldClip(min = "3", max = "12")
+    public Integer length = 8;
+  }
+
+  @ReflectionMarker
   static class Param2 {
     public ColorDataGradients cdg = ColorDataGradients.RAINBOW;
     public Boolean target = true;
   }
 
+  private final Param0 param0;
   private final Param2 param2;
   MovingDomain2D movingDomain2D;
 
-  public AbstractDeformationDemo(Object obj1, Object obj2) {
-    super(obj1, obj2, param2 = new Param2());
+  public AbstractDeformationDemo(Object obj2) {
+    super(param0 = new Param0(), obj2, param2 = new Param2());
+    fieldsEditor(0).addUniversalListener(this::shuffleSnap);
   }
 
   @Override
@@ -78,27 +86,22 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
   protected final Tensor updateDomain(Tensor movingOrigin, int res, Scalar s2z) {
     switch (getSelectedMD()) {
     case R2: {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      CoordinateBoundingBox coordinateBoundingBox = manifoldDisplay.d2Raster_coordinateBoundingBox();
-      return Meshgrid.image(coordinateBoundingBox, res);
+      CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
+      return Meshgrid.image(cbb, res);
     }
     case S2: {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      CoordinateBoundingBox coordinateBoundingBox = manifoldDisplay.d2Raster_coordinateBoundingBox();
-      TensorUnaryOperator tuo = t->Vector2Norm.NORMALIZE.apply(Append.of(t, s2z));
-      return Meshgrid.image(coordinateBoundingBox, res, tuo);
-//      Tensor dx = Subdivide.of(-1, 1, res);
-//      Tensor dy = Subdivide.of(-1, 1, res);
-//      return Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, s2z)), dx, dy);
+      CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
+      TensorUnaryOperator tuo = xy -> Vector2Norm.NORMALIZE.apply(Append.of(xy, s2z));
+      return Meshgrid.image(cbb, res, tuo);
     }
-    case H2: {
+    case H2:
       return Meshgrid.image(Box2D.xy(Clips.absolute(1.0)), res);
-    }
     case Se2C:
     case Se2: {
-      Tensor dx = Subdivide.of(-2, 2, res);
-      Tensor dy = Subdivide.of(-2, 2, res);
-      return Outer.of((cx, cy) -> Tensors.of(cx, cy, RealScalar.ZERO), dx, dy);
+      Clip clip = Clips.absolute(2);
+      CoordinateBoundingBox cbb = CoordinateBoundingBox.of(clip, clip);
+      TensorUnaryOperator tuo = xy -> Append.of(xy, RealScalar.ONE);
+      return Meshgrid.image(cbb, res, tuo);
     }
     default:
       throw new IllegalArgumentException();
@@ -153,4 +156,11 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       show.render(graphics, new Rectangle(100, 10, 100 + Unprotect.dimension1Hint(weights) * 2, 400));
     }
   }
+
+  protected abstract void shuffleSnap();
+  
+  protected final Param0 param0() {
+    return param0;
+  }
+
 }
