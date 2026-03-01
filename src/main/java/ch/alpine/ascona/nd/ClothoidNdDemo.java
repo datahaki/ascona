@@ -86,7 +86,7 @@ class ClothoidNdDemo extends ControlPointsDemo {
     // ---
     ClothoidBuilder clothoidBuilder = (ClothoidBuilder) manifoldDisplay.geodesicSpace();
     graphics.setColor(new Color(255, 0, 0, 128));
-    Scalar minResolution = geometricLayer.pixel2modelWidth(RealScalar.of(10));
+    Scalar minResolution = geometricLayer.pixel2modelFactor(RealScalar.of(10));
     for (Clothoid clothoid : clothoidNdMap.cl_nearFrom(clothoidBuilder, mouse, _value)) {
       Transition transition = ClothoidTransition.of(clothoid);
       graphics.draw(geometricLayer.toPath2D(transition.linearized(minResolution)));

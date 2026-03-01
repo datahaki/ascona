@@ -49,7 +49,7 @@ class DubinsTransitionDemo extends ControlPointsDemo {
     // ---
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(START, mouse, RealScalar.of(1));
     List<DubinsPath> list = dubinsPathGenerator.stream().toList();
-    Scalar minResolution = geometricLayer.pixel2modelWidth(RealScalar.of(5));
+    Scalar minResolution = geometricLayer.pixel2modelFactor(RealScalar.of(5));
     {
       graphics.setStroke(new BasicStroke(1));
       for (DubinsPath dubinsPath : list) {

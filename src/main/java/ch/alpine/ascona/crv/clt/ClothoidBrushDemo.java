@@ -101,7 +101,7 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
       Tensor crv1 = cache.apply(Tensors.of(beg1, end1));
       {
         graphics.setColor(new Color(0, 0, 0, 128));
-        Scalar model2pixelWidth = geometricLayer.model2pixelWidth(param.round);
+        Scalar model2pixelWidth = geometricLayer.model2pixelFactor(param.round);
         graphics.setStroke(new BasicStroke(model2pixelWidth.number().floatValue(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         Tensor polygon = Join.of(crv0, Reverse.of(crv1));
         {

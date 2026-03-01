@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.ascona.gbc.d2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
