@@ -29,9 +29,11 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.lie.rot.CirclePoints;
@@ -81,9 +83,13 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       return Meshgrid.image(coordinateBoundingBox, res);
     }
     case S2: {
-      Tensor dx = Subdivide.of(-1, 1, res);
-      Tensor dy = Subdivide.of(-1, 1, res);
-      return Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, s2z)), dx, dy);
+      ManifoldDisplay manifoldDisplay = manifoldDisplay();
+      CoordinateBoundingBox coordinateBoundingBox = manifoldDisplay.d2Raster_coordinateBoundingBox();
+      TensorUnaryOperator tuo = t->Vector2Norm.NORMALIZE.apply(Append.of(t, s2z));
+      return Meshgrid.image(coordinateBoundingBox, res, tuo);
+//      Tensor dx = Subdivide.of(-1, 1, res);
+//      Tensor dy = Subdivide.of(-1, 1, res);
+//      return Outer.of((cx, cy) -> Vector2Norm.NORMALIZE.apply(Tensors.of(cx, cy, s2z)), dx, dy);
     }
     case H2: {
       return Meshgrid.image(Box2D.xy(Clips.absolute(1.0)), res);

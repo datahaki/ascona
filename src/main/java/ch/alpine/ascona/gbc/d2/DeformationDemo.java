@@ -24,13 +24,13 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 // TODO ASCONA maps to target every frame right now
 class DeformationDemo extends AbstractDeformationDemo {
   @ReflectionMarker
-  public static class Param0 {
+  static class Param0 {
     @FieldClip(min = "3", max = "12")
     public Integer length = 8;
   }
 
   @ReflectionMarker
-  public static class Param1 {
+  static class Param1 {
     public LogWeightings logWeightings = LogWeightings.COORDINATE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     @FieldSelectionArray({ "20", "30", "50" })

@@ -6,15 +6,15 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
-import ch.alpine.ascony.win.AbstractDemo;
-import ch.alpine.ascony.win.SanityCheckAbstractDemo;
+import ch.alpine.ascony.win.SanityCheckAscony;
 import ch.alpine.bridge.cgr.InstanceDiscovery;
+import ch.alpine.bridge.pro.RunProvider;
 
 class AbstractDemoTest {
   @TestFactory
   Stream<DynamicTest> dynamicTests() {
-    return InstanceDiscovery.of(getClass().getPackageName(), AbstractDemo.class).stream() //
+    return InstanceDiscovery.of(getClass().getPackageName(), RunProvider.class).stream() //
         .map(instanceRecord -> DynamicTest.dynamicTest(instanceRecord.toString(), //
-            () -> SanityCheckAbstractDemo.INSTANCE.accept(instanceRecord.supplier().get())));
+            () -> new SanityCheckAscony().accept(instanceRecord)));
   }
 }
