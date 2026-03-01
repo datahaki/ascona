@@ -51,7 +51,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 class MaAveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param0 {
-    @FieldSelectionArray({ "3", "4", "5", "6" })
+    @FieldSelectionArray({ "3", "4", "5", "6", "8", "10" })
     public Integer numel = 6;
     @FieldFuse
     public Boolean shuffle = false;
