@@ -65,7 +65,7 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
       leversRender.renderIndexX();
       leversRender.renderIndexP();
       try {
-        Sedarim sedarim = param.polygonCoordinates.sedarim(Biinvariants.LEVERAGES.ofSafe(manifold), null, sequence);
+        Sedarim sedarim = param.polygonCoordinates.sedarim(Biinvariants.USANCE.ofSafe(manifold), null, sequence);
         Tensor weights = sedarim.sunder(origin);
         leversRender.renderWeights(weights);
         HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();

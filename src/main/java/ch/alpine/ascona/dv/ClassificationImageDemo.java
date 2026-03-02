@@ -56,7 +56,7 @@ class ClassificationImageDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param1 {
     @FieldSelectionCallback("biinvariants")
-    public Biinvariants biinvariants = Biinvariants.LEVERAGES;
+    public Biinvariants biinvariants = Biinvariants.USANCE;
     public Labels labels = Labels.ARG_MIN;
     @FieldSelectionArray({ "50", "75", "100", "200" })
     public Integer res = 50;

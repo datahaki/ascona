@@ -10,5 +10,5 @@ public class ScatteredSetParam {
   public Integer refine = 20;
   public ColorDataGradients spinnerColorData = ColorDataGradients.CLASSIC;
   public Boolean arrows = false;
-  public Biinvariants biinvariants = Biinvariants.LEVERAGES;
+  public Biinvariants biinvariants = Biinvariants.USANCE;
 }

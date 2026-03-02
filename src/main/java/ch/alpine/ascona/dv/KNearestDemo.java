@@ -47,7 +47,7 @@ class KNearestDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param1 {
-    public Biinvariants biinvariants = Biinvariants.LEVERAGES;
+    public Biinvariants biinvariants = Biinvariants.USANCE;
     public Tensor tensor = Tensors.vector(.3, 0, .6);
     @FieldClip(min = "2", max = "5")
     public Integer k = 3;

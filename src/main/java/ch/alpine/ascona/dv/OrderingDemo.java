@@ -47,7 +47,7 @@ class OrderingDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param1 {
     @FieldSelectionCallback("biinvariants")
-    public Biinvariants biinvariants = Biinvariants.LEVERAGES;
+    public Biinvariants biinvariants = Biinvariants.USANCE;
     public ColorDataGradients cdg = ColorDataGradients.THERMOMETER;
     @FieldSelectionArray({ "1", "3", "5", "8" })
     public Integer closest = 1;

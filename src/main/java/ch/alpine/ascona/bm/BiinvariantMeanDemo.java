@@ -64,7 +64,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param0 {
-    public Biinvariants biinvariants = Biinvariants.LEVERAGES;
+    public Biinvariants biinvariants = Biinvariants.USANCE;
     public Boolean median = false;
     public Boolean vehicle = false;
   }
@@ -140,7 +140,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
     graphics.setStroke(new BasicStroke(1));
     if (param0.median) {
       Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
-      Biinvariant biinvariant = map.getOrDefault(param0.biinvariants, Biinvariants.LEVERAGES.ofSafe(homogeneousSpace));
+      Biinvariant biinvariant = map.getOrDefault(param0.biinvariants, Biinvariants.USANCE.ofSafe(homogeneousSpace));
       Sedarim sedarim = biinvariant.weighting(InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(), sedarim, Chop._05);
       Optional<Tensor> optional = spatialMedian.uniform(sequence);

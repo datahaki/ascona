@@ -86,7 +86,7 @@ class Se2AnimationDemo extends ControlPointsDemo {
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics));
       TensorUnaryOperator actionL = lieGroup.actionL(Tensors.vector(7, 0, 0));
       LeversHud.render( //
-          Biinvariants.LEVERAGES, //
+          Biinvariants.USANCE, //
           LeversRender.of(manifoldDisplay, Tensor.of(sequence.stream().map(actionL)), actionL.apply(origin), geometricLayer, graphics));
     }
   }

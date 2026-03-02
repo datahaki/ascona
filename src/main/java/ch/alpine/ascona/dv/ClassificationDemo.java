@@ -46,7 +46,7 @@ class ClassificationDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param1 {
     @FieldSelectionCallback("biinvariants")
-    public Biinvariants biinvariants = Biinvariants.LEVERAGES;
+    public Biinvariants biinvariants = Biinvariants.USANCE;
     public ColorDataLists cdg = ColorDataLists._097;
     public Boolean connect = true;
     public Boolean weights = true;

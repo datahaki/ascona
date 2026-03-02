@@ -105,7 +105,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = manifoldDisplay.manifold();
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(manifold);
-    return map.getOrDefault(scatteredSetParam.biinvariants, Biinvariants.LEVERAGES.ofSafe(manifold));
+    return map.getOrDefault(scatteredSetParam.biinvariants, Biinvariants.USANCE.ofSafe(manifold));
   }
 
   protected final Sedarim operator(Tensor sequence) {

@@ -35,7 +35,7 @@ final class GrassmannDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param1 {
-    public Biinvariants biinvariants = Biinvariants.LEVERAGES;
+    public Biinvariants biinvariants = Biinvariants.USANCE;
     public ColorDataGradients cdg = ColorDataGradients.TEMPERATURE;
   }
 
