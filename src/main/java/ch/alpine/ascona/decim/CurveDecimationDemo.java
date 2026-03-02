@@ -97,7 +97,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
       }
     }
     Scalar epsilon = Power.of(Rational.HALF, param.level.number().intValue());
-    // epsilon = RationalScalar.of(jSlider.getValue(), jSlider.getMaximum() * 3);
+    // epsilon = Rational.of(jSlider.getValue(), jSlider.getMaximum() * 3);
     HomogeneousSpace geodesicSpace = manifoldDisplay.homogeneousSpace();
     CurveDecimation curveDecimation = CurveDecimation.of( //
         param.type.supply(geodesicSpace), epsilon);

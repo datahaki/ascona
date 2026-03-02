@@ -158,9 +158,8 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
   }
 
   protected abstract void shuffleSnap();
-  
+
   protected final Param0 param0() {
     return param0;
   }
-
 }
