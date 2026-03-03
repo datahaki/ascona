@@ -44,7 +44,7 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
 
   @ReflectionMarker
   static class Param {
-    @FieldSelectionArray({"200","500","1000"})
+    @FieldSelectionArray({ "200", "500", "1000" })
     public Integer numel = 200;
     @FieldSlider
     @FieldClip(min = "0", max = "1")
@@ -130,15 +130,15 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
       }
     }
     Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
-    int WIDTH = dimension.width/4;
-    int HEIGHT = dimension.height/2;
+    int WIDTH = dimension.width / 4;
+    int HEIGHT = dimension.height / 2;
     {
-      int ofs = dimension.width/2;
+      int ofs = dimension.width / 2;
       snDeltaRaw.show1.render_autoIndent(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
       snDeltaRaw.shows[0].render_autoIndent(graphics, new Rectangle(ofs, HEIGHT, WIDTH, HEIGHT));
     }
     {
-      int ofs = dimension.width*3/4;
+      int ofs = dimension.width * 3 / 4;
       snDeltaFil.show1.render_autoIndent(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
       snDeltaFil.shows[0].render_autoIndent(graphics, new Rectangle(ofs, HEIGHT, WIDTH, HEIGHT));
     }

@@ -14,6 +14,8 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.fft.SpectrogramArray;
+import ch.alpine.tensor.fft.SpectrogramArrays;
 import ch.alpine.tensor.img.ColorDataGradients;
 
 public class SnDeltaContainer {
@@ -35,11 +37,12 @@ public class SnDeltaContainer {
         index -> tSnMemberQ.require(endos.get(index).dot(differences.get(index, 1)))));
     // ---
     Tensor domain = Range.of(0, t0_deltas.length());
+    SpectrogramArray spectrogramArray = SpectrogramArrays.FOURIER.operator().config(window);
     for (int d = 1; d < 3; ++d) {
       Tensor values = t0_deltas.get(Tensor.ALL, d);
       // spectrogram[d - 1] = Spectrogram.vector(values, window, ColorDataGradients.VISIBLE_SPECTRUM);
       // bufferedImage[d - 1] = ImageFormat.of(spectrogram[d - 1]);
-      shows[d - 1].add(Spectrogram.of(values, RealScalar.ONE, window, ColorDataGradients.VISIBLE_SPECTRUM));
+      shows[d - 1].add(Spectrogram.of(spectrogramArray, values, RealScalar.ONE, ColorDataGradients.VISIBLE_SPECTRUM));
       show1.add(ListLinePlot.of(domain, values));
     }
   }

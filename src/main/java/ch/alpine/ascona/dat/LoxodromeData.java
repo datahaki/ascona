@@ -9,7 +9,6 @@ import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.s.S2Loxodrome;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Subdivide;

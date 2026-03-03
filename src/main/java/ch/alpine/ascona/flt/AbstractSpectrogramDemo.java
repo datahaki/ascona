@@ -33,6 +33,8 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.fft.SpectrogramArray;
+import ch.alpine.tensor.fft.SpectrogramArrays;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.qty.Quantity;
@@ -169,8 +171,9 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
           // ---
           if (spectrogram) {
             ScalarUnaryOperator window = gokartPoseSpec.kernel.get();
+            SpectrogramArray spectrogramArray = SpectrogramArrays.FOURIER.operator().config(window);
             Show show2 = new Show();
-            show2.add(Spectrogram.of(signal, sampleRate, window, COLOR_DATA_GRADIENT));
+            show2.add(Spectrogram.of(spectrogramArray, signal, sampleRate, COLOR_DATA_GRADIENT));
             show2.render_autoIndent(graphics, new Rectangle(width - 400, offset_y, 400, 200));
             offset_y += 200;
           }
