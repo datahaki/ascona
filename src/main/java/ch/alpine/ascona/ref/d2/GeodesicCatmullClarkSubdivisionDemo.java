@@ -39,7 +39,8 @@ class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   public GeodesicCatmullClarkSubdivisionDemo() {
     super(param = new Param());
     // ---
-    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {0, 1, 0}, {1, 1, 0}, {2, 1, 0}}").multiply(RealScalar.of(0.3)));
+    Tensor vrt = Tensors.fromString("{{-1, 0, 0}, {0, 0, 0}, {1, 0, 0}, {-1, 1, 0}, {0, 1, 0}, {1, 1, 0}}");
+    setControlPointsSe2(vrt.multiply(RealScalar.of(0.3)));
   }
 
   @Override

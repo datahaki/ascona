@@ -8,8 +8,9 @@ import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.ascony.win.AbstractDemo;
+import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -29,7 +30,7 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Mod;
 
 // TODO ASCONA REV add more parameters
-class SnRotationDemo extends AbstractDemo {
+class SnRotationDemo extends ManifoldDisplayDemo {
   private static class SnRotationChunk implements RenderInterface {
     private final ColorDataGradient colorDataGradient;
     private final BoundedLinkedList<Tensor> boundedLinkedList;
@@ -65,7 +66,7 @@ class SnRotationDemo extends AbstractDemo {
   }
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     // TODO ASCONA shuffle not effective
     @FieldFuse
     public transient Boolean shuffle = false;
@@ -78,6 +79,11 @@ class SnRotationDemo extends AbstractDemo {
     super(param = new Param());
     list.add(new SnRotationChunk(3, 200, 3, 0.1, ColorDataGradients.PARULA.deriveWithOpacity(RealScalar.of(0.3))));
     // list.add(new SnRotationChunk(3, 50, 20, 0.02, ColorDataGradients.SOLAR.deriveWithOpacity(RealScalar.of(0.5))));
+  }
+
+  @Override
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+    return ManifoldDisplays.S2_ONLY;
   }
 
   @Override

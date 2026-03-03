@@ -7,10 +7,10 @@ import java.awt.Rectangle;
 
 import ch.alpine.ascony.api.HermiteSubdivisions;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.R2Display;
 import ch.alpine.ascony.ren.Curvature2DRender;
-import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.ascony.win.AbstractDemo;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
+import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -30,12 +30,11 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.chq.FiniteTensorQ;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.ply.Polynomial;
 
-class SeriesHermiteSubdivisionDemo extends AbstractDemo {
+class SeriesHermiteSubdivisionDemo extends EuclideanPlaneDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
 
@@ -60,12 +59,16 @@ class SeriesHermiteSubdivisionDemo extends AbstractDemo {
     compute();
   }
 
+  @Override
+  protected ControlPointType controlPointType() {
+    return ControlPointTypes.HEAD_TAIL;
+  }
+
   Tensor _control = Tensors.empty();
-  Tensor geo_ctrl = Tensors.empty();
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     if (1 < _control.length()) {
       HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
@@ -86,18 +89,16 @@ class SeriesHermiteSubdivisionDemo extends AbstractDemo {
         }
       }
     }
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, geo_ctrl, null, geometricLayer, graphics);
-      leversRender.renderSequence();
-    }
   }
 
   private void compute() {
     Tensor _coeffs = param.coeffs;
+    Tensor geo_ctrl = Tensors.empty();
     if (VectorQ.of(_coeffs) && //
+        0 < _coeffs.length() && //
         FiniteTensorQ.of(_coeffs)) {
       Polynomial f0 = Polynomial.of(_coeffs);
-      ScalarUnaryOperator f1 = f0.derivative();
+      Polynomial f1 = f0.derivative();
       Tensor vx0 = Range.of(-4, 5);
       Tensor vd0 = vx0.maps(f0);
       Tensor vx1 = ConstantArray.of(RealScalar.ONE, vx0.length());
@@ -107,6 +108,7 @@ class SeriesHermiteSubdivisionDemo extends AbstractDemo {
       _control = Transpose.of(Tensors.of(p0, p1));
       geo_ctrl = Tensor.of(p0.stream().map(Tensor::copy));
     }
+    setGeodesicControlPoints(geo_ctrl);
   }
 
   static void main() {
