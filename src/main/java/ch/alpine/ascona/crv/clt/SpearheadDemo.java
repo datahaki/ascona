@@ -9,6 +9,7 @@ import java.awt.geom.Point2D;
 import ch.alpine.ascony.api.Spearhead;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.bridge.fig.PlotOption;
 import ch.alpine.bridge.fig.PolygonPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -52,7 +53,7 @@ class SpearheadDemo extends ClothoidBaseDemo {
     Tensor tensor = PolygonNormalize.of(polygon, RealScalar.ONE);
     try {
       Show show = new Show();
-      show.add(PolygonPlot.of(tensor)).setAlpha(64);
+      show.add(PolygonPlot.of(tensor, PlotOption.FILL)).setAlpha(64);
       show.render_autoIndent(graphics, new Rectangle(0, 0, 300, 300));
     } catch (Exception e) {
       e.printStackTrace();
