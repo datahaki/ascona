@@ -62,6 +62,7 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
   Tensor pointsAll;
 
   public DbscanDemo() {
+    geometricComponent.addRenderInterfaceBackground(new GridRender(geometricComponent::getSize));
     geometricComponent.addRenderInterface(this);
     geometricComponent.setOffset(100, 600);
     geometricComponent.setPerPixel(RealScalar.of(50));
@@ -88,7 +89,6 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Timing timing = Timing.started();
     Tensor points = Tensor.of(pointsAll.stream().limit(count));
     Integer[] labels = Dbscan.of(points, centerNorms::ndCenterInterface, radius, minPts);
@@ -136,7 +136,7 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
       pointsAll = recomp1();
       shuffle = false;
     }
-    return geometricComponent.jComponent;
+    return geometricComponent;
   }
 
   static void main() {

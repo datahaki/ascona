@@ -37,11 +37,11 @@ class ClothoidLRDemo extends ClothoidBaseDemo {
 
   public ClothoidLRDemo() {
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {-3,0,0}}"));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor start = control.get(0);
     Tensor mouse = control.get(1);

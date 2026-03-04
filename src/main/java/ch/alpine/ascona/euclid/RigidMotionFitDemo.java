@@ -57,6 +57,7 @@ class RigidMotionFitDemo extends EuclideanPlaneDemo {
     fieldsEditor(0).addUniversalListener(this::shufflePoints);
     // ---
     shufflePoints();
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override
@@ -76,7 +77,6 @@ class RigidMotionFitDemo extends EuclideanPlaneDemo {
 
   @Override // from RenderInterface
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Tensor sequence = getGeodesicControlPoints();
     {
       Tensor target = Tensor.of(sequence.stream().map(R2Display.INSTANCE::xya2point));

@@ -150,7 +150,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   // @Override
   protected final void differences_render( //
       Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor refined, boolean spectrogram) {
-    Dimension dimension = geometricComponent().jComponent.getSize();
+    Dimension dimension = getSize();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     if (geodesicSpace instanceof LieGroup lieGroup) {
       TensorUnaryOperator lieDifferences = LieDifferences.of(lieGroup);
@@ -163,7 +163,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
         show.setPlotLabel(plotLabel());
         // show.getAxisX().setLabel("sample no.");
         Tensor domain = Range.of(0, speeds.length());
-        final int width = timerFrame.geometricComponent.jComponent.getWidth();
+        final int width = timerFrame.geometricComponent.getWidth();
         int offset_y = 0;
         for (int index = 0; index < dimensions; ++index) {
           Tensor signal = speeds.get(Tensor.ALL, index).unmodifiable();

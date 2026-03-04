@@ -47,6 +47,7 @@ class R2ParametricResampleDemo extends EuclideanPlaneDemo {
     // ---
     int n = 20;
     setControlPointsSe2(PadRight.zeros(n, 3).apply(CirclePoints.of(n).multiply(RealScalar.of(3))));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override
@@ -56,7 +57,6 @@ class R2ParametricResampleDemo extends EuclideanPlaneDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
     graphics.setColor(COLOR_DATA_INDEXED.getColor(0));

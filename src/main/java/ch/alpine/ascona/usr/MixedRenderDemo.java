@@ -34,14 +34,14 @@ class MixedRenderDemo implements ManipulateProvider {
       geometricComponent.addRenderInterface(renderInterface);
     }
     {
-      GridRender gridRender = new GridRender(geometricComponent.jComponent::getSize);
+      GridRender gridRender = new GridRender(geometricComponent::getSize);
       geometricComponent.addRenderInterfaceBackground(gridRender);
     }
   }
 
   @Override
   public Container getContainer() {
-    return geometricComponent.jComponent;
+    return geometricComponent;
   }
 
   static void main() {

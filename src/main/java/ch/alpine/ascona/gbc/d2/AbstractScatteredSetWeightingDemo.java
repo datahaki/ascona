@@ -144,8 +144,8 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
       }
     };
     // ---
-    geometricComponent().jComponent.addMouseListener(mouseAdapter);
-    geometricComponent().jComponent.addMouseMotionListener(mouseAdapter);
+    geometricComponent().addMouseListener(mouseAdapter);
+    geometricComponent().addMouseMotionListener(mouseAdapter);
   }
 
   /** Hint: override is possible for customization

@@ -73,7 +73,7 @@ class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo
     if (Objects.isNull(showable))
       recompute();
     if (Objects.nonNull(showable)) {
-      Dimension dimension = geometricComponent().jComponent.getSize();
+      Dimension dimension = getSize();
       Show show = new Show();
       show.add(showable);
       show.render(graphics, new Rectangle(100, 10, dimension.width - 200, 400));

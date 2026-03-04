@@ -29,11 +29,11 @@ class SpearheadDemo extends ClothoidBaseDemo {
 
   public SpearheadDemo() {
     setControlPointsSe2(Tensors.fromString("{{-0.5, -0.5, 0.3}}"));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
     Scalar res = geometricLayer.pixel2modelFactor(RealScalar.of(10));
     Tensor polygon = Spearhead.of(control.get(0), res);

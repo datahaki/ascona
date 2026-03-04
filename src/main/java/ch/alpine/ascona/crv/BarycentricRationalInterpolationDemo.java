@@ -108,7 +108,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
         System.err.println("no can do");
       }
       if (param.basis) {
-        Dimension dimension = geometricComponent().jComponent.getSize();
+        Dimension dimension = getSize();
         {
           Show show = new Show();
           show.setPlotLabel("Basis 1");

@@ -33,12 +33,12 @@ public abstract class AbstractSplitsDemo extends PointSequenceDemo {
     super(objects);
     setManifoldDisplay(ManifoldDisplays.R2);
     timerFrame.geometricComponent.addRenderInterfaceBackground( //
-        new GridRender(timerFrame.geometricComponent.jComponent::getSize));
+        new GridRender(this::getSize));
   }
 
   @Override // from RenderInterface
   public final synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
+    // new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
     // ---
     SymScalar symScalar = symScalar(SymSequence.of(control.length()));

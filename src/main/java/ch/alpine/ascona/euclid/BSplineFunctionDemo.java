@@ -41,6 +41,7 @@ class BSplineFunctionDemo extends EuclideanPlaneDemo {
 
   public BSplineFunctionDemo() {
     super(param = new Param());
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override
@@ -50,7 +51,6 @@ class BSplineFunctionDemo extends EuclideanPlaneDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Tensor control = getGeodesicControlPoints();
     Tensor refined = Tensors.empty();
     int n = control.length();

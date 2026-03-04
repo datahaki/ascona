@@ -45,6 +45,7 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
     super(param = new Param());
     // ---
     setControlPointsSe2(INITIAL);
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override
@@ -54,7 +55,6 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
     Optional<Tensor> optional = placeWrap.getOrigin();

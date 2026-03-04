@@ -82,7 +82,7 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
           RealScalar.of(h).subtract(p.Get(1)), p.Get(0))));
       LinearFractionalTransform lft = lft(points, resw, resh);
       leversRender.renderMatrix2(Tensors.vector(0, 0, 0), lft.matrix());
-      Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+      Dimension dimension = getSize();
       dimension.width /= 2;
       dimension.height /= 2;
       {

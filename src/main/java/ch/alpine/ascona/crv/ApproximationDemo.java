@@ -77,6 +77,7 @@ class ApproximationDemo extends ControlPointsDemo {
     param.string = GokartPos.list().getFirst();
     fieldsEditor(0).addUniversalListener(this::updateState);
     updateState();
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override
@@ -111,7 +112,6 @@ class ApproximationDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     Container container = _container;
     if (Objects.isNull(container))
       return;

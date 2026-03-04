@@ -125,7 +125,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
       }
     }
     if (param.error) {
-      Dimension dimension = geometricComponent().jComponent.getSize();
+      Dimension dimension = getSize();
       Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
       show.setPlotLabel("Reduction from " + control.length() + " to " + simplified.length() + " samples");
       // visualSet.getAxisX().setLabel("sample no.");

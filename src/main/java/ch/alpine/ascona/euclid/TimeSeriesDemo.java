@@ -104,17 +104,16 @@ class TimeSeriesDemo extends EuclideanPlaneDemo {
       show.render(graphics, rectangle);
     }
     TimeSeries product = TsEntrywise.times(timeSeries, custom);
+    Dimension dimension = getSize();
     {
       Show show = new Show();
       show.add(TsPlot.of(TsEntrywise.plus(timeSeries, custom))).setLabel("sum");
       show.add(TsPlot.of(product)).setLabel("times");
-      Dimension dimension = geometricComponent().jComponent.getSize();
       show.render_autoIndent(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 300));
     }
     {
       Show show = new Show();
       show.add(TsPlot.of(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
-      Dimension dimension = geometricComponent().jComponent.getSize();
       show.render_autoIndent(graphics, new Rectangle(dimension.width - 500, row++ * 300, 500, 300));
     }
   }

@@ -62,6 +62,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
 
   public HermiteSubdivisionDemo() {
     super(this.param = new Param());
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override
@@ -76,7 +77,6 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(timerFrame.geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     final Tensor tensor = getControlPointsSe2();
     POINTS_RENDER_0.show(Se2Display.INSTANCE::matrixLift, //
         Se2Display.INSTANCE.shape(), //
@@ -140,7 +140,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
         Tensor deltas = iterate.get(Tensor.ALL, 1);
         if (0 < deltas.length()) {
           Show show = StaticHelper.listPlot(deltas, delta, levels);
-          Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+          Dimension dimension = getSize();
           show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
         }
       }

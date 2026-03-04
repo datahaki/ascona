@@ -125,7 +125,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       }
       Show show = new Show();
       show.add(ListLinePlot.of(points));
-      Dimension dimension = geometricComponent().jComponent.getSize();
+      Dimension dimension = getSize();
       show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, 400));
     } catch (Exception e) {
       System.err.println("mean iteration failed");

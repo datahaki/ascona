@@ -129,7 +129,7 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
         v0 = SnRotationMatrix.of(p, q).dot(v0);
       }
     }
-    Dimension dimension = timerFrame.geometricComponent.jComponent.getSize();
+    Dimension dimension = getSize();
     int WIDTH = dimension.width / 4;
     int HEIGHT = dimension.height / 2;
     {

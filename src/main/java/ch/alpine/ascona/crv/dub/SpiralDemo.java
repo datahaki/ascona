@@ -31,13 +31,13 @@ class SpiralDemo implements ManipulateProvider, RenderInterface {
   private final GeometricComponent geometricComponent = new GeometricComponent();
 
   public SpiralDemo() {
+    geometricComponent.addRenderInterfaceBackground(new GridRender(geometricComponent::getSize));
     geometricComponent.addRenderInterface(this);
     geometricComponent.setPerPixel(RealScalar.of(100));
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(geometricComponent.jComponent::getSize).render(geometricLayer, graphics);
     {
       Tensor points = Subdivide.increasing(clip, samples).maps(spiralParam.scalarTensorFunction);
       new PathRender(Color.BLUE, 1f).setCurve(points, false).render(geometricLayer, graphics);
@@ -52,7 +52,7 @@ class SpiralDemo implements ManipulateProvider, RenderInterface {
 
   @Override
   public Container getContainer() {
-    return geometricComponent.jComponent;
+    return geometricComponent;
   }
 
   static void main() {

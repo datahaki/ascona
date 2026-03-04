@@ -56,14 +56,14 @@ public class RegionRenderDemo implements ManipulateProvider {
       geometricComponent.addRenderInterface(new PolygonRegionRender(polygon));
     }
     {
-      GridRender gridRender = new GridRender(geometricComponent.jComponent::getSize);
+      GridRender gridRender = new GridRender(geometricComponent::getSize);
       geometricComponent.addRenderInterfaceBackground(gridRender);
     }
   }
 
   @Override
   public Container getContainer() {
-    return geometricComponent.jComponent;
+    return geometricComponent;
   }
 
   static void main() {

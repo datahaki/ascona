@@ -82,7 +82,7 @@ class StMeetsClothoids implements ManipulateProvider, RenderInterface {
 
   @Override
   public Container getContainer() {
-    return geometricComponent.jComponent;
+    return geometricComponent;
   }
 
   static void main() {
