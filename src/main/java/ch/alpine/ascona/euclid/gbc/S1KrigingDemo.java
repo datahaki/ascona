@@ -1,0 +1,142 @@
+// code by jph
+package ch.alpine.ascona.euclid.gbc;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Path2D;
+import java.util.List;
+
+import ch.alpine.ascony.api.Box2D;
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.reg.RegionRenders;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
+import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Kriging;
+import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophus.api.Manifold;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.lie.so2.ArcTan2D;
+import ch.alpine.tensor.Rational;
+import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Drop;
+import ch.alpine.tensor.alg.Join;
+import ch.alpine.tensor.alg.Reverse;
+import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.lie.rot.CirclePoints;
+import ch.alpine.tensor.mat.DiagonalMatrix;
+import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.num.Pi;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.red.Times;
+import ch.alpine.tensor.sca.Abs;
+import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.N;
+
+// FIXME ASCONA DEMO what does this demo do: there is no curve shown
+public class S1KrigingDemo extends ControlPointsDemo {
+  private static final double RANGE = 2;
+  private static final Tensor DOMAIN = Drop.tail(CirclePoints.of(161).maps(N.DOUBLE), 80);
+  private static final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
+
+  @ReflectionMarker
+  public static class Param {
+    public LogWeightings logWeightings = LogWeightings.KRIGING;
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public Boolean type = false;
+    @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
+    public Integer resolution = 40;
+    public ColorDataGradients cdg = ColorDataGradients.PARULA;
+  }
+
+  private final Param param;
+
+  public S1KrigingDemo() {
+    this(new Param());
+  }
+
+  public S1KrigingDemo(Param param) {
+    super(param);
+    this.param = param;
+    // ---
+    setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-1, 1, 0}}"));
+    geometricComponent().addRenderInterfaceBackground(RegionRenders.of(coordinateBoundingBox));
+    geometricComponent().addRenderInterfaceBackground(S1FrameRender.INSTANCE);
+    geometricComponent().setOffset(500, 500);
+  }
+
+  @Override
+  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+    return ManifoldDisplays.R2_ONLY;
+  }
+
+  @Override
+  protected ControlPointType controlPointType() {
+    return ControlPointTypes.SCATTERED;
+  }
+
+  @Override // from RenderInterface
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    Tensor control = getGeodesicControlPoints();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Manifold manifold = manifoldDisplay.manifold();
+    final Tensor shape = manifoldDisplay.shape(); // .multiply(RealScalar.of(0.3));
+    if (1 < control.length()) {
+      // TODO ASCONA ALG check for zero norm below
+      Tensor sequence = Tensor.of(control.stream().map(Vector2Norm.NORMALIZE));
+      Tensor funceva = Tensor.of(control.stream().map(Vector2Norm::of));
+      Tensor cvarian = getControlPointsSe2().get(Tensor.ALL, 2).multiply(Rational.HALF).maps(Abs.FUNCTION);
+      // ---
+      graphics.setColor(new Color(0, 128, 128));
+      Scalar IND = RealScalar.of(0.1);
+      for (int index = 0; index < sequence.length(); ++index) {
+        Tensor xy = control.get(index).copy();
+        xy.append(ArcTan2D.of(xy).add(Pi.HALF));
+        geometricLayer.pushMatrix(Se2Matrix.of(xy));
+        Scalar v = cvarian.Get(index);
+        graphics.draw(geometricLayer.toLine2D(Tensors.of(v.zero(), v), Tensors.of(v.zero(), v.negate())));
+        graphics.draw(geometricLayer.toLine2D(Tensors.of(IND, v), Tensors.of(IND.negate(), v)));
+        graphics.draw(geometricLayer.toLine2D(Tensors.of(IND, v.negate()), Tensors.of(IND.negate(), v.negate())));
+        geometricLayer.popMatrix();
+      }
+      // ---
+      graphics.setColor(Color.GREEN);
+      for (int index = 0; index < sequence.length(); ++index)
+        graphics.draw(geometricLayer.toLine2D(control.get(index), sequence.get(index)));
+      new PointsRender(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255)) //
+          .show(manifoldDisplay()::matrixLift, shape, sequence) //
+          .render(geometricLayer, graphics);
+      Tensor covariance = DiagonalMatrix.sparse(cvarian);
+      // if (isDeterminate())
+      {
+        Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), s -> s, sequence);
+        Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
+        Tensor estimate = Tensor.of(DOMAIN.stream().map(kriging::estimate));
+        Tensor curve = Times.of(estimate, DOMAIN);
+        new PathRender(Color.BLUE, 1.25f).setCurve(curve, false).render(geometricLayer, graphics);
+        Tensor errors = Tensor.of(DOMAIN.stream().map(kriging::variance));
+        // ---
+        Path2D path2d = geometricLayer.toPath2D(Join.of( //
+            Times.of(estimate.add(errors), DOMAIN), //
+            Reverse.of(Times.of(estimate.subtract(errors), DOMAIN))));
+        graphics.setColor(new Color(128, 128, 128, 32));
+        graphics.fill(path2d);
+      }
+    }
+  }
+
+  static void main() {
+    new S1KrigingDemo().runStandalone();
+  }
+}

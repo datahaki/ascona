@@ -1,0 +1,93 @@
+// code by jph
+package ch.alpine.ascona.euclid.gbc;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
+import ch.alpine.ascony.win.ControlPointType;
+import ch.alpine.ascony.win.ControlPointTypes;
+import ch.alpine.ascony.win.EuclideanPlaneDemo;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophus.api.Manifold;
+import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.img.ColorDataIndexed;
+import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.sca.var.InversePowerVariogram;
+
+/* package */ abstract class A1BarycentricCoordinateDemo extends EuclideanPlaneDemo {
+  @ReflectionMarker
+  public static class Param {
+    public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+    @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
+    public Integer resolution = 50;
+    public ColorDataGradients cdg = ColorDataGradients.PARULA;
+  }
+
+  private final Param param;
+
+  protected A1BarycentricCoordinateDemo() {
+    this(new Param());
+  }
+
+  protected A1BarycentricCoordinateDemo(Param param) {
+    super(param);
+    this.param = param;
+    // ---
+    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 2, 0}}"));
+  }
+
+  @Override
+  protected ControlPointType controlPointType() {
+    return ControlPointTypes.SCATTERED;
+  }
+
+  @Override // from RenderInterface
+  public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    Tensor control = getGeodesicControlPoints();
+    if (1 < control.length()) {
+      Tensor support = control.get(Tensor.ALL, 0);
+      Tensor funceva = control.get(Tensor.ALL, 1);
+      // ---
+      Tensor domain = domain(support);
+      // ---
+      Tensor sequence = support.maps(this::lift);
+      Manifold manifold = manifoldDisplay().manifold();
+      Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
+      ScalarTensorFunction scalarTensorFunction = //
+          point -> sedarim.sunder(lift(point));
+      Tensor basis = domain.maps(scalarTensorFunction);
+      {
+        Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));
+        new PathRender(Color.BLUE, 1.25f).setCurve(curve, false).render(geometricLayer, graphics);
+      }
+      ColorDataIndexed colorDataIndexed = ColorDataLists._097.cyclic();
+      for (int index = 0; index < funceva.length(); ++index) {
+        Color color = colorDataIndexed.getColor(index);
+        Tensor curve = Transpose.of(Tensors.of(domain, basis.get(Tensor.ALL, index)));
+        new PathRender(color, 1f).setCurve(curve, false).render(geometricLayer, graphics);
+      }
+      {
+        LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
+        // leversRender.renderSequence();
+        leversRender.renderIndexP();
+      }
+    }
+  }
+
+  abstract Tensor domain(Tensor support);
+
+  abstract Tensor lift(Scalar x);
+}

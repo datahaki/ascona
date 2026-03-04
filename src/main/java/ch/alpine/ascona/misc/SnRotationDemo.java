@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.s.Sphere;

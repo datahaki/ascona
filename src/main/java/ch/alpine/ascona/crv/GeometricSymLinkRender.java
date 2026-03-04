@@ -9,10 +9,10 @@ import java.awt.geom.Path2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.AreaRender;
-import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.ascony.sym.SymLink;
 import ch.alpine.ascony.sym.SymLinkPart;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.ts.Transition;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.api.GeodesicSpace;
