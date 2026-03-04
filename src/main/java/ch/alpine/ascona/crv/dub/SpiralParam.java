@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.crv.se2c;
+package ch.alpine.ascona.crv.dub;
 
 import ch.alpine.sophus.lie.se2.EulerSpiral;
 import ch.alpine.sophus.lie.se2.LogarithmicSpiral;
