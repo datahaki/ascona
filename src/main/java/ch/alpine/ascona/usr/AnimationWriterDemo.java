@@ -3,8 +3,8 @@ package ch.alpine.ascona.usr;
 
 import java.util.concurrent.TimeUnit;
 
-import ch.alpine.ascony.io.AnimationWriter;
-import ch.alpine.ascony.io.GifAnimationWriter;
+import ch.alpine.bridge.io.AnimationWriter;
+import ch.alpine.bridge.io.GifAnimationWriter;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.HomeDirectory;
