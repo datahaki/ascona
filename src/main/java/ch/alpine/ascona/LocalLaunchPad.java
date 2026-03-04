@@ -5,10 +5,10 @@ import ch.alpine.bridge.io.FileBlock;
 import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.pro.RunLaunchPad;
 
-enum AsconaLaunchPad {
+enum LocalLaunchPad {
   ;
   static void main() {
-    if (!FileBlock.of(ResourceLocator.of(AsconaLaunchPad.class).resolve("")))
-      RunLaunchPad.create(AsconaLaunchPad.class.getPackageName()).runStandalone();
+    if (!FileBlock.of(ResourceLocator.of(LocalLaunchPad.class).resolve("")))
+      RunLaunchPad.create(LocalLaunchPad.class.getPackageName()).runStandalone();
   }
 }
