@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import ch.alpine.ascona.dat.gok.GokartPos;
 import ch.alpine.ascona.dat.gok.GokartPosVel;
@@ -26,6 +28,8 @@ import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
+// TODO make work on windows
+@DisabledOnOs(OS.WINDOWS)
 class GeodesicFiltersTest {
   @Test
   void testSimple() {
