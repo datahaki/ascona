@@ -21,6 +21,7 @@ import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 
 // TODO does not really work
 class ThreePointBarycenterDemo extends ControlPointsDemo {
@@ -64,7 +65,9 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
       leversRender.renderLevers();
       leversRender.renderIndexX();
       leversRender.renderIndexP();
-      try {
+      // check is necessary due to originEnclosure
+      // TODO could do tangent space projection in case of S2
+      if (Unprotect.dimension1Hint(sequence) == 2) {
         Sedarim sedarim = param.polygonCoordinates.sedarim(Biinvariants.USANCE.ofSafe(manifold), null, sequence);
         Tensor weights = sedarim.sunder(origin);
         leversRender.renderWeights(weights);
@@ -74,8 +77,6 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
         LeversRender.ORIGIN_RENDER_0 //
             .show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)) //
             .render(geometricLayer, graphics);
-      } catch (Exception e) {
-        System.err.println(e);
       }
     } else {
       LeversRender leversRender = //

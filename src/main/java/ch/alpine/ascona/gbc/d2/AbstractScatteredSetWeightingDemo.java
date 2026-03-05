@@ -61,8 +61,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     }
   };
 
-  protected AbstractScatteredSetWeightingDemo( //
-      List<LogWeighting> array) {
+  protected AbstractScatteredSetWeightingDemo(List<LogWeighting> array) {
     this(array, new ScatteredSetParam());
   }
 

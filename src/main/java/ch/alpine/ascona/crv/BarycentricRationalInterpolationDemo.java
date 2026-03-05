@@ -91,21 +91,23 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
           ? BarycentricMetricInterpolation.la(knots, InversePowerVariogram.of(2))
           : BarycentricMetricInterpolation.of(knots, InversePowerVariogram.of(2)));
       try {
-        Tensor curve = Tensor.of(basis2.stream().map(weights -> homogeneousSpace.biinvariantMean().mean(control, weights)));
+        Tensor curve = Tensor.of(basis2.stream() //
+            .map(weights -> homogeneousSpace.biinvariantMean().mean(control, weights)));
         new PathRender(Color.RED) //
             .setCurve(curve, false) //
             .render(geometricLayer, graphics);
       } catch (Exception exception) {
-        System.err.println("no can do");
+        System.err.println("no mean " + manifoldDisplay);
       }
       Tensor basis1 = domain.maps(BarycentricRationalInterpolation.of(knots, param.degree));
       try {
-        Tensor curve = Tensor.of(basis1.stream().map(weights -> homogeneousSpace.biinvariantMean().mean(control, weights)));
+        Tensor curve = Tensor.of(basis1.stream() //
+            .map(weights -> homogeneousSpace.biinvariantMean().mean(control, weights)));
         new PathRender(Color.BLUE) //
             .setCurve(curve, false) //
             .render(geometricLayer, graphics);
       } catch (Exception exception) {
-        System.err.println("no can do");
+        System.err.println("no mean " + manifoldDisplay);
       }
       if (param.basis) {
         Dimension dimension = getSize();

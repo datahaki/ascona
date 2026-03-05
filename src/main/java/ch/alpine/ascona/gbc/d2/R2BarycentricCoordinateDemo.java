@@ -49,7 +49,6 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Entrywise;
 import ch.alpine.tensor.sca.Sign;
 
-// TODO ASCONA cannot always compute the biinvariant mean (for S2)
 public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
@@ -70,14 +69,13 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
     {
       timerFrame.jToolBar.add(jToggleEntire);
     }
-    // setManifoldDisplay(ManifoldDisplays.S2);
     setManifoldDisplay(ManifoldDisplays.R2);
     setControlPointsSe2(Tensors.fromString("{{0, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}}"));
   }
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.manifolds();
+    return ManifoldDisplays.R2_ONLY;
   }
 
   @Override

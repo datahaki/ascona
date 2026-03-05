@@ -9,6 +9,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
 import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.sophis.flt.bm.BiinvariantMeanCenter;
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.so2.So2BiinvariantMeans;
 import ch.alpine.tensor.Tensor;
@@ -54,8 +55,11 @@ final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ScalarUnaryOperator smoothingKernel = gokartPoseSpec.kernel.get();
-    Se2BiinvariantMeans se2BiinvariantMean = spinnerFilters.getValue();
-    TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(se2BiinvariantMean, smoothingKernel);
+    BiinvariantMean biinvariantMean = spinnerFilters.getValue();
+    if (getSelectedMD().equals(ManifoldDisplays.R2)) {
+      biinvariantMean =  manifoldDisplay().homogeneousSpace().biinvariantMean();
+    }
+    TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(biinvariantMean, smoothingKernel);
     return Nest.of( //
         new CenterFilter(tensorUnaryOperator, param.radius), //
         control(), spinnerConvolution.getValue());

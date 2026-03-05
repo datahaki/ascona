@@ -41,7 +41,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-/* package */ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
+abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final FixGridRender GRID_RENDER = new FixGridRender(Subdivide.of(0, 100, 10));
@@ -55,9 +55,9 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   protected Tensor _control = null;
 
   @ReflectionMarker
-  public static class Param {
+   static class Param {
     @FieldClip(min = "0", max = "10")
-    public Integer radius = 0;
+    public Integer radius = 3;
   }
 
   protected final Param param;
