@@ -10,7 +10,7 @@ import ch.alpine.ascony.win.SanityCheckAscony;
 import ch.alpine.bridge.cgr.InstanceDiscovery;
 import ch.alpine.bridge.pro.RunProvider;
 
-class AbstractDemoTest {
+class RunProviderTest {
   @TestFactory
   Stream<DynamicTest> dynamicTests() {
     return InstanceDiscovery.of(getClass().getPackageName(), RunProvider.class).stream() //
