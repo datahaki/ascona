@@ -17,6 +17,7 @@ import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.fig.ImagePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.api.Genesis;
 import ch.alpine.sophis.gbc.d2.ThreePointCoordinate;
 import ch.alpine.sophis.gbc.d2.ThreePointScalings;
@@ -38,7 +39,15 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
   private Tensor REF;
   final BufferedImage bi = ResourceData.bufferedImage("/ch/alpine/ascona/image/album_it.jpg");
 
+  @ReflectionMarker
+  static class Param {
+    public ThreePointScalings tps = ThreePointScalings.MEAN_VALUE;
+  }
+
+  private final Param param;
+
   public LinearFractionalTransformDemo() {
+    super(param = new Param());
     int w = bi.getWidth() - 1;
     int h = bi.getHeight() - 1;
     REF = Tensors.fromString("{{1,1,0}, {" + w + ",1,0}, {" + w + "," + h + ",0}, {1," + h + ",0}}");
@@ -87,11 +96,13 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
       dimension.height /= 2;
       {
         Show show = new Show();
+        show.setPlotLabel("Mean Value");
         show.add(ImagePlot.of(ImageFormat.of(rectify1(src, points, resw, resh))));
         show.render_autoIndent(graphics, new Rectangle(dimension.width, dimension.height, dimension.width, dimension.height));
       }
       {
         Show show = new Show();
+        show.setPlotLabel("Linear Fractional Transform");
         show.add(ImagePlot.of(ImageFormat.of(rectify2(src, points, resw, resh))));
         show.render_autoIndent(graphics, new Rectangle(dimension.width, 0, dimension.width, dimension.height));
       }
@@ -105,11 +116,11 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
     return LinearFractionalTransform.fit(reference, points);
   }
 
-  private static Tensor rectify1(Tensor src, Tensor points, int width, int height) {
+  private Tensor rectify1(Tensor src, Tensor points, int width, int height) {
     Tensor reference = Tensors.matrixInt( //
         new int[][] { { height, 0 }, { height, width }, { 0, width }, { 0, 0 } });
     Tensor ref2 = reference.maps(RealScalar.of(-0.5)::add);
-    Genesis genesis = ThreePointCoordinate.of(ThreePointScalings.MEAN_VALUE);
+    Genesis genesis = ThreePointCoordinate.of(param.tps);
     Interpolation interpolation = LinearInterpolation.of(src);
     try {
       return Tensors.matrix((i, j) -> {

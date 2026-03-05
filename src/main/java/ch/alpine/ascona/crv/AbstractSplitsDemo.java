@@ -32,8 +32,7 @@ public abstract class AbstractSplitsDemo extends PointSequenceDemo {
   protected AbstractSplitsDemo(Object... objects) {
     super(objects);
     setManifoldDisplay(ManifoldDisplays.R2);
-    timerFrame.geometricComponent.addRenderInterfaceBackground( //
-        new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override // from RenderInterface

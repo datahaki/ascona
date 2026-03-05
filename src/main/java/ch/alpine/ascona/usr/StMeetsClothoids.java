@@ -50,6 +50,7 @@ class StMeetsClothoids implements ManipulateProvider, RenderInterface {
 
   public StMeetsClothoids() {
     geometricComponent.addRenderInterface(this);
+    geometricComponent.setPerPixel(RealScalar.of(100));
   }
 
   @Override
@@ -61,7 +62,7 @@ class StMeetsClothoids implements ManipulateProvider, RenderInterface {
         RandomVariate.of(NormalDistribution.of(0, 0.4), randomGenerator, Dimensions.of(p)));
     TangentSpace exponential = stiefelManifold.tangentSpace(p);
     ScalarTensorFunction stf = s -> exponential.exp(v.multiply(s));
-    Tensor beg = Tensors.vector(-5, 0, 0);
+    Tensor beg = Tensors.vector(-3, 0, 0);
     Tensor sequence = Transpose.of(stf.apply(split)).multiply(RealScalar.of(3));
     // IO.println(Pretty.of(sequence.maps(Round._3)));
     graphics.setColor(Color.BLUE);
