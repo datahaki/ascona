@@ -27,9 +27,9 @@ import ch.alpine.tensor.sca.Clips;
 
 /** <p>inspired by
  * <a href="https://reference.wolfram.com/language/ref/BarLegend.html">BarLegend</a> */
-class BarLegend {
-  public static BarLegend of(ScalarTensorFunction colorDataGradient, Clip clip, Set<Scalar> set) {
-    return new BarLegend(colorDataGradient, clip, set.stream().collect(Collectors.toMap(s -> s, UnicodeString::of)));
+class BarLegend2 {
+  public static BarLegend2 of(ScalarTensorFunction colorDataGradient, Clip clip, Set<Scalar> set) {
+    return new BarLegend2(colorDataGradient, clip, set.stream().collect(Collectors.toMap(s -> s, UnicodeString::of)));
   }
 
   private final ScalarTensorFunction colorDataGradient;
@@ -39,7 +39,7 @@ class BarLegend {
   public Font font = new Font(Font.DIALOG, Font.PLAIN, 12);
   public Color color = Color.DARK_GRAY;
 
-  public BarLegend(ScalarTensorFunction colorDataGradient, Clip clip, Map<Scalar, String> map) {
+  public BarLegend2(ScalarTensorFunction colorDataGradient, Clip clip, Map<Scalar, String> map) {
     this.colorDataGradient = colorDataGradient;
     this.clip = clip;
     this.map = map;

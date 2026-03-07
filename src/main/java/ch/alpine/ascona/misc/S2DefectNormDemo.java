@@ -73,6 +73,7 @@ class S2DefectNormDemo extends ControlPointsDemo {
 
   public S2DefectNormDemo() {
     super(param = new Param());
+    geometricComponent().setRotatable(false);
     // ---
     setControlPointsSe2(INITIAL);
     // ---
@@ -127,7 +128,7 @@ class S2DefectNormDemo extends ControlPointsDemo {
     Showable showable = arrayPlot(res);
     Show show = new Show();
     show.add(showable);
-    show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()));
+    show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()).orElseThrow());
     graphics.setStroke(STROKE);
     // Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
     graphics.setColor(new Color(192, 192, 192));

@@ -54,6 +54,7 @@ class LineDistanceDemo extends ControlPointsDemo {
 
   public LineDistanceDemo() {
     super(param = new Param());
+    geometricComponent().setRotatable(false);
     // ---
     setControlPointsSe2(INITIAL);
     // ---
@@ -101,7 +102,7 @@ class LineDistanceDemo extends ControlPointsDemo {
     Show show = new Show();
     Showable showable = arrayPlot(param.resolution);
     show.add(showable);
-    show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()));
+    show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()).orElseThrow());
     // ---
     Tensor cp = getGeodesicControlPoints();
     ScalarTensorFunction scalarTensorFunction = homogeneousSpace.curve(cp.get(0), cp.get(1));

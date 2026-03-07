@@ -70,6 +70,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
 
   public D2AveragingDemo(Param param) {
     super(param);
+    geometricComponent().setRotatable(false);
     this.param = param;
     setManifoldDisplay(ManifoldDisplays.S2);
     // ---
@@ -137,7 +138,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
       Show show = new Show();
       show.add(showable);
       CoordinateBoundingBox cbb = showable.fullPlotRange().orElseThrow();
-      show.render(graphics, geometricLayer.toRectangle(cbb));
+      show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
     }
     LeversRender leversRender = //
         LeversRender.of(manifoldDisplay, sequence, values, geometricLayer, graphics);

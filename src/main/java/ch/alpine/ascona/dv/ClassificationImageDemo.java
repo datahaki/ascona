@@ -2,10 +2,12 @@
 package ch.alpine.ascona.dv;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
@@ -77,6 +79,7 @@ class ClassificationImageDemo extends ControlPointsDemo {
 
   public ClassificationImageDemo() {
     super(param0 = new Param0(), param1 = new Param1());
+    geometricComponent().setRotatable(false);
     addChangeListener(_ -> shuffle());
     setManifoldDisplay(ManifoldDisplays.R2);
     fieldsEditor(0).addUniversalListener(this::shuffle);
@@ -139,9 +142,12 @@ class ClassificationImageDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     if (Objects.nonNull(showable)) {
-      Show show = new Show();
-      show.add(showable);
-      show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()));
+      Optional<Rectangle> optional = geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow());
+      if (optional.isPresent()) {
+        Show show = new Show();
+        show.add(showable);
+        show.render(graphics, optional.orElseThrow());
+      }
     }
     // ---
     render(geometricLayer, graphics, manifoldDisplay(), getGeodesicControlPoints(), vector, param1.cdg.cyclic());

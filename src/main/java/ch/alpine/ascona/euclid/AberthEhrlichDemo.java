@@ -72,6 +72,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
     setGeodesicControlPoints(RandomSample.of(randomSampleInterface, 3));
+    geometricComponent().setRotatable(false);
   }
 
   @Override
@@ -124,7 +125,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
       Tensor raster = manifoldDisplay().d2Raster().of(arrayFunction, cbb, param.resolution);
       Show show = new Show();
       show.add(ArrayPlot.of(raster, cbb, param.cdg));
-      show.render(graphics, geometricLayer.toRectangle(cbb));
+      show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     {

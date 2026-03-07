@@ -78,6 +78,7 @@ class MaAveragingDemo extends ControlPointsDemo {
 
   public MaAveragingDemo() {
     super(param0 = new Param0(), param1 = new Param1(), param2 = new Param2());
+    geometricComponent().setRotatable(false);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
     fieldsEditor(0).addUniversalListener(this::shuffle);
     fieldsEditor(1).addUniversalListener(this::recompute);
@@ -146,7 +147,7 @@ class MaAveragingDemo extends ControlPointsDemo {
       CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
       Show show = new Show();
       Showable showable = show.add(ArrayPlot.of(tensor, cbb, param2.cdg));
-      show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()));
+      show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()).orElseThrow());
     }
     // ---
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));

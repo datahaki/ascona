@@ -57,7 +57,7 @@ final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
     ScalarUnaryOperator smoothingKernel = gokartPoseSpec.kernel.get();
     BiinvariantMean biinvariantMean = spinnerFilters.getValue();
     if (getSelectedMD().equals(ManifoldDisplays.R2)) {
-      biinvariantMean =  manifoldDisplay().homogeneousSpace().biinvariantMean();
+      biinvariantMean = manifoldDisplay().homogeneousSpace().biinvariantMean();
     }
     TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(biinvariantMean, smoothingKernel);
     return Nest.of( //

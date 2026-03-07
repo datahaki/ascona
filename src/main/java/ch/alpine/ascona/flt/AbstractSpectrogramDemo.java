@@ -55,7 +55,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   protected Tensor _control = null;
 
   @ReflectionMarker
-   static class Param {
+  static class Param {
     @FieldClip(min = "0", max = "10")
     public Integer radius = 3;
   }
