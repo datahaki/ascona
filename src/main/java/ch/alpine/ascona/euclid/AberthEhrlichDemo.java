@@ -12,7 +12,7 @@ import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
-import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.DensityPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -124,7 +124,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
       CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
       Tensor raster = manifoldDisplay().d2Raster().of(arrayFunction, cbb, param.resolution);
       Show show = new Show();
-      show.add(ArrayPlot.of(raster, cbb, param.cdg));
+      show.add(DensityPlot.of(raster, cbb, param.cdg));
       show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();

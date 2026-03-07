@@ -17,7 +17,7 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.DensityPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -77,6 +77,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
     fieldsEditor(0).addUniversalListener(this::recompute);
     // ---
+    addChangeListener(this::recompute);
     geometricComponent().setOffset(400, 400);
   }
 
@@ -121,7 +122,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
         Range.of(Ceiling.intValueExact(clip.min()), Floor.intValueExact(clip.max()) + 1).stream() //
             .map(Scalar.class::cast) //
             .forEach(set::add);
-        return ArrayPlot.of(matrix, cbb, colorDataGradient);
+        return DensityPlot.of(matrix, cbb, colorDataGradient);
       } catch (Exception exception) {
         exception.printStackTrace();
       }

@@ -14,7 +14,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.DensityPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -146,7 +146,7 @@ class MaAveragingDemo extends ControlPointsDemo {
     if (Objects.nonNull(tensor)) {
       CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
       Show show = new Show();
-      Showable showable = show.add(ArrayPlot.of(tensor, cbb, param2.cdg));
+      Showable showable = show.add(DensityPlot.of(tensor, cbb, param2.cdg));
       show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()).orElseThrow());
     }
     // ---

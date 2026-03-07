@@ -14,7 +14,7 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.DensityPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -88,7 +88,7 @@ class LineDistanceDemo extends ControlPointsDemo {
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tsf, DoubleScalar.INDETERMINATE);
     CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
     Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
-    return ArrayPlot.of(matrix, cbb, param.colorDataGradients);
+    return DensityPlot.of(matrix, cbb, param.colorDataGradients);
   }
 
   double rad() {
