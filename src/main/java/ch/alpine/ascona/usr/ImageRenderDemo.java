@@ -8,6 +8,7 @@ import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.win.AbstractDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -20,7 +21,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.red.Mean;
 import ch.alpine.tensor.sca.Clips;
 
-class ImageRenderDemo extends AbstractDemo {
+class ImageRenderDemo extends AbstractDemo implements RenderInterface {
   private static final CoordinateBoundingBox COORDINATE_BOUNDING_BOX = //
       CoordinateBoundingBox.of(Clips.interval(-0.4, 1), Clips.interval(-0.35, 0.35));
   private static final Scalar SHIFT = RealScalar.of(1.5);
@@ -41,6 +42,7 @@ class ImageRenderDemo extends AbstractDemo {
       Tensor graysc = TensorMap.of(rgba -> Mean.of(rgba.extract(0, 3)), tensor, 2);
       grayscale = ImageFormat.of(graysc);
     }
+    geometricComponent().addRenderInterface(this);
   }
 
   @Override // from RenderInterface
