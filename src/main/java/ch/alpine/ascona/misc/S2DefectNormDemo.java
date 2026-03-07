@@ -6,8 +6,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.IntStream;
 
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -16,9 +14,10 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.ImagePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
+import ch.alpine.bridge.fig.VectorPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -32,12 +31,13 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Join;
-import ch.alpine.tensor.alg.Subdivide;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.nrm.NormalizeTotal;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
@@ -110,32 +110,32 @@ class S2DefectNormDemo extends ControlPointsDemo {
     }
   }
 
-  private Showable arrayPlot(int resolution) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(new TSF(), DoubleScalar.INDETERMINATE);
-    CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
-    Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
-    return ArrayPlot.of(matrix, cbb, param.colorDataGradients);
-  }
-
   double rad() {
     return 1;
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    int res = param.resolution;
-    Showable showable = arrayPlot(res);
+    TSF tsf = new TSF();
+    int resolution = param.resolution;
     Show show = new Show();
-    show.add(showable);
-    show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()).orElseThrow());
+    {
+      ManifoldDisplay manifoldDisplay = manifoldDisplay();
+      ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(new TSF(), DoubleScalar.INDETERMINATE);
+      CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+      Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
+      Showable showable = ImagePlot.of(ImageFormat.of(Rescale.of(raster).maps(param.colorDataGradients)), cbb);
+      show.add(showable);
+      if (param.vector)
+        show.add(VectorPlot.of(p -> arrow(tsf, p), cbb));
+      show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
+    }
     graphics.setStroke(STROKE);
     // Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
     graphics.setColor(new Color(192, 192, 192));
     // graphics.draw(geometricLayer.toPath2D(ms));
     graphics.setStroke(new BasicStroke());
     // ---
-    TSF tsf = new TSF();
     Tensor mean = null;
     try {
       mean = SnManifold.INSTANCE.biinvariantMean().mean(tsf.sequence, tsf.weights);
@@ -144,42 +144,21 @@ class S2DefectNormDemo extends ControlPointsDemo {
       graphics.drawString("no mean avaiable", 0, 25);
       // ---
     }
-    if (param.vector) {
-      double rad = 1;
-      Tensor dx = Subdivide.of(-rad, +rad, res);
-      Tensor dy = Subdivide.of(+rad, -rad, res);
-      int rows = dy.length();
-      int cols = dx.length();
-      Scalar[][] array = new Scalar[rows][cols];
-      IntStream.range(0, rows).forEach(cx -> {
-        for (int cy = 0; cy < cols; ++cy) {
-          Tensor point = Tensors.of(dx.get(cx), dy.get(cy)); // in R2
-          Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
-          if (Sign.isPositive(z2)) {
-            Scalar z = Sqrt.FUNCTION.apply(z2);
-            Tensor xyz = point.append(z);
-            MeanDefect meanDefect = MeanDefect.of(tsf.sequence, tsf.weights, new STangentSpace(xyz));
-            Tensor v = meanDefect.tangent();
-            renderTangentsPtoX(geometricLayer, graphics, xyz, v.multiply(RealScalar.of(0.2)));
-          } else
-            array[cy][cx] = DoubleScalar.INDETERMINATE;
-        }
-      });
-    }
     LeversRender leversRender = LeversRender.of(manifoldDisplay(), tsf.sequence, mean, geometricLayer, graphics);
     leversRender.renderOrigin();
     leversRender.renderSequence();
     leversRender.renderWeights(tsf.weights);
   }
 
-  public void renderTangentsPtoX(GeometricLayer geometricLayer, Graphics2D graphics, Tensor p, Tensor v) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    geometricLayer.pushMatrix(manifoldDisplay.matrixLift(p));
-    TensorUnaryOperator tangentProjection = manifoldDisplay.tangentProjection(p);
-    if (Objects.nonNull(tangentProjection))
-      graphics.draw(geometricLayer.toLine2D(tangentProjection.apply(v)));
-    // ---
-    geometricLayer.popMatrix();
+  public static Tensor arrow(TSF tsf, Tensor p) {
+    Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(p));
+    if (Sign.isPositive(z2)) {
+      Scalar z = Sqrt.FUNCTION.apply(z2);
+      Tensor xyz = Append.of(p, z);
+      MeanDefect meanDefect = MeanDefect.of(tsf.sequence, tsf.weights, new STangentSpace(xyz));
+      return meanDefect.tangent().extract(0, 2);
+    }
+    return DoubleScalar.INDETERMINATE;
   }
 
   public final Tensor iterationPath(Tensor sequence, Tensor weights, Tensor shifted, int iter) {
