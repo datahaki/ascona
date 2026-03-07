@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.List;
 
+import ch.alpine.ascony.api.Meshgrid;
 import ch.alpine.ascony.bas.AveragedMovingDomain2D;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -77,7 +78,7 @@ class SPatchDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensor.of(embed.stream() //
         .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
     Clip clip = Clips.absolute(1);
-    Tensor domain = Meshgrid.image(CoordinateBoundingBox.of(clip, clip), param0.res);
+    Tensor domain = new Meshgrid(CoordinateBoundingBox.of(clip, clip)).image( param0.res);
     movingDomain2D = new AveragedMovingDomain2D(embed, sPatch, domain, //
         manifoldDisplay().indetPoint());
   }
