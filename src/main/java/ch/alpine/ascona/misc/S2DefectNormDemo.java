@@ -58,6 +58,7 @@ class S2DefectNormDemo extends ControlPointsDemo {
     public Integer resolution = 20;
     @FieldLabel("color data gradient")
     public ColorDataGradients colorDataGradients = ColorDataGradients.PARULA;
+    public ColorDataGradients cdg = ColorDataGradients.EMBER;
     public Boolean vector = true;
     @FieldLabel("weights")
     public Tensor user_weights = Tensors.vector(3, 2, -2);
@@ -127,7 +128,7 @@ class S2DefectNormDemo extends ControlPointsDemo {
       Showable showable = ImagePlot.of(ImageFormat.of(Rescale.of(raster).maps(param.colorDataGradients)), cbb);
       show.add(showable);
       if (param.vector)
-        show.add(VectorPlot.of(p -> arrow(tsf, p), cbb));
+        show.add(VectorPlot.of(p -> arrow(tsf, p), cbb, param.cdg));
       show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
     }
     graphics.setStroke(STROKE);
