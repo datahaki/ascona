@@ -40,8 +40,8 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.Sign;
 
-// TODO allDubins causes demo to crash sometimes. also:
 class DubinsPathDemo extends ControlPointsDemo {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
   private static final int POINTS = 200;
@@ -89,11 +89,11 @@ class DubinsPathDemo extends ControlPointsDemo {
       if (param.relax) { // draw shortest path
         for (DubinsType dubinsType : DubinsType.values()) {
           Scalar maxRadius = DubinsRadius.getMax(mouse, dubinsType, Clips.interval(0.5, 2));
-          if (FiniteScalarQ.of(maxRadius)) {
+          if (FiniteScalarQ.of(maxRadius) && //
+              Sign.isPositive(maxRadius)) {
             Optional<DubinsPath> optional = FixedRadiusDubins.of(mouse, dubinsType, maxRadius);
-            if (optional.isPresent()) {
+            if (optional.isPresent())
               graphics.draw(geometricLayer.toPath2D(sample(optional.get())));
-            }
           }
         }
       } else

@@ -9,7 +9,6 @@ import java.util.List;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.BaseCurvatureParam;
-import ch.alpine.ascony.ref.BaseGraphParam;
 import ch.alpine.ascony.ren.AreaRender;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
@@ -48,7 +47,9 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  static class Param1 extends BaseGraphParam {
+  static class Param1  {
+    public Boolean graph = true;
+
   }
 
   private final Param0 param;

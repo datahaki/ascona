@@ -20,14 +20,12 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.fit.IntUndirectedEdge;
 import ch.alpine.sophis.fit.MinimumSpanningTree;
 import ch.alpine.sophis.fit.Tsp2OptHeuristic;
+import ch.alpine.sophis.ts.Transition;
 import ch.alpine.sophis.ts.TransitionSpace;
-import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
@@ -87,40 +85,34 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
       points.append(Tensors.of(RealScalar.of(points.length()), tsp2OptHeuristic.cost()));
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    manifoldDisplay.background().render(geometricLayer, graphics);
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
+    TransitionSpace transitionSpace = manifoldDisplay.transitionSpace();
     graphics.setColor(Color.BLACK);
     graphics.drawString(tsp2OptHeuristic.cost().maps(Round._5).toString(), 3, 450);
     Tensor sequence = control;
-    {
-      // TODO ASCONA should use transition !?
-      Tensor domain = Subdivide.of(0.0, 1.0, 10);
-      graphics.setColor(new Color(128, 128, 128, 128));
-      graphics.setStroke(new BasicStroke(1f));
-      for (IntUndirectedEdge directedEdge : list) {
-        Tensor p = sequence.get(directedEdge.i());
-        Tensor q = sequence.get(directedEdge.j());
-        ScalarTensorFunction curve = geodesicSpace.curve(p, q);
-        Tensor tensor = Tensor.of(domain.maps(curve).stream().map(manifoldDisplay::point2xy));
-        Path2D line = geometricLayer.toPath2D(tensor);
-        graphics.draw(line);
-      }
+    graphics.setColor(new Color(128, 128, 128, 128));
+    graphics.setStroke(new BasicStroke(1f));
+    for (IntUndirectedEdge directedEdge : list) {
+      Tensor p = sequence.get(directedEdge.i());
+      Tensor q = sequence.get(directedEdge.j());
+      Transition transition = transitionSpace.connect(p, q);
+      Tensor linearized = transition.linearized(RealScalar.ONE);
+      Tensor tensor = manifoldDisplay.point2xy().slash(linearized);
+      Path2D line = geometricLayer.toPath2D(tensor);
+      graphics.draw(line);
     }
-    Color color = Color.BLACK;
-    graphics.setColor(color);
+    graphics.setColor(Color.BLACK);
     for (Tensor p : sequence) {
       Point2D point2d = geometricLayer.toPoint2D(manifoldDisplay.point2xy(p));
       graphics.fillRect((int) point2d.getX() - 1, (int) point2d.getY() - 1, 3, 3);
     }
     int[] index = tsp2OptHeuristic.index();
-    TransitionSpace transitionSpace = manifoldDisplay.transitionSpace();
     graphics.setColor(new Color(0, 192, 192));
     graphics.setStroke(new BasicStroke(1.5f));
     TensorUnaryOperator tuo = manifoldDisplay.point2xy();
     for (int i = 0; i < index.length; ++i) {
       Tensor head = sequence.get(index[i]);
       Tensor tail = sequence.get(index[(i + 1) % index.length]);
-      Tensor tensor = transitionSpace.connect(head, tail).linearized(RealScalar.of(0.1));
+      Tensor tensor = transitionSpace.connect(head, tail).linearized(RealScalar.ONE);
       Path2D line = geometricLayer.toPath2D(tuo.slash(tensor));
       graphics.draw(line);
     }

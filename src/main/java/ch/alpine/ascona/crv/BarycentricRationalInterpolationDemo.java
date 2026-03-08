@@ -32,7 +32,6 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
-// TODO ASCONA what is this?
 class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   private static final int WIDTH = 400;
   private static final int HEIGHT = 300;

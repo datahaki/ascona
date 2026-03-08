@@ -102,8 +102,6 @@ class NdTreeMapDemo extends ManifoldDisplayDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    manifoldDisplay.background().render(geometricLayer, graphics);
     Tensor mouse = geometricComponent().getMouseSe2CState();
     Tensor xyz = center(mouse);
     // normal rendering quality
