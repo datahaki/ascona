@@ -47,7 +47,7 @@ class AffineCoordinateDemo extends EuclideanPlaneDemo {
       leversRender.renderSequence();
       leversRender.renderIndexP();
     }
-    Tensor levers = Tensor.of(sequence.stream().map(Vector2Norm.NORMALIZE));
+    Tensor levers = Vector2Norm.NORMALIZE.slash(sequence);
     {
       LeversRender leversRender = LeversRender.of( //
           manifoldDisplay, sequence, Array.zeros(2), geometricLayer, graphics);

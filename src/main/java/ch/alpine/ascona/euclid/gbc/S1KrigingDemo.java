@@ -28,6 +28,7 @@ import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Drop;
@@ -88,13 +89,13 @@ public class S1KrigingDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Tensor control = getGeodesicControlPoints();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = manifoldDisplay.manifold();
     final Tensor shape = manifoldDisplay.shape(); // .multiply(RealScalar.of(0.3));
+    Tensor control = Tensor.of(getGeodesicControlPoints().stream() //
+        .filter(v -> Scalars.nonZero(Vector2Norm.of(v))));
     if (1 < control.length()) {
-      // TODO ASCONA ALG check for zero norm below
-      Tensor sequence = Tensor.of(control.stream().map(Vector2Norm.NORMALIZE));
+      Tensor sequence = Vector2Norm.NORMALIZE.slash(control);
       Tensor funceva = Tensor.of(control.stream().map(Vector2Norm::of));
       Tensor cvarian = getControlPointsSe2().get(Tensor.ALL, 2).multiply(Rational.HALF).maps(Abs.FUNCTION);
       // ---

@@ -73,12 +73,17 @@ class GeodesicFiltersDemo extends ControlPointsDemo {
       ScalarUnaryOperator smoothingKernel = param.windowFunctions.get();
       for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
         int ordinal = geodesicFilters.ordinal();
-        Tensor mean = geodesicFilters.supply(manifoldDisplay.geodesicSpace(), smoothingKernel).apply(control);
-        Color color = COLOR_DRAW.getColor(ordinal);
-        PointsRender pointsRender = new PointsRender(COLOR_FILL.getColor(ordinal), color);
-        pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)).render(geometricLayer, graphics);
-        graphics.setColor(color);
-        graphics.drawString("" + geodesicFilters, 0, 32 + ordinal * 16);
+        try {
+          Tensor mean = geodesicFilters.supply(manifoldDisplay.geodesicSpace(), smoothingKernel).apply(control);
+          Color color = COLOR_DRAW.getColor(ordinal);
+          PointsRender pointsRender = new PointsRender(COLOR_FILL.getColor(ordinal), color);
+          pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)).render(geometricLayer, graphics);
+          graphics.setColor(color);
+          graphics.drawString("" + geodesicFilters, 0, 32 + ordinal * 16);
+        } catch (Exception e) {
+          graphics.setColor(Color.RED);
+          graphics.drawString("" + geodesicFilters + "  fail", 0, 32 + ordinal * 16);
+        }
       }
     }
   }

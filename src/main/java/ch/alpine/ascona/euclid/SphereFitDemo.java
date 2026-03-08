@@ -7,6 +7,7 @@ import java.awt.geom.Path2D;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -39,8 +40,6 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
-// TODO ASCONA REV name of demo !?
-// ... toggle convex hull, matching, median ...
 class SphereFitDemo extends EuclideanPlaneDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
   private static final Tensor CIRCLE = CirclePoints.of(10).multiply(RealScalar.of(3));
@@ -55,6 +54,7 @@ class SphereFitDemo extends EuclideanPlaneDemo {
         "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
         Tensor.of(blub.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override

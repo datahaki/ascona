@@ -47,9 +47,8 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  static class Param1  {
+  static class Param1 {
     public Boolean graph = true;
-
   }
 
   private final Param0 param;

@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
     Export.of(path.resolve("loxodrome_exact.csv"), tensor);
     Tensor noise = RandomVariate.of(NormalDistribution.of(0, 0.05), Dimensions.of(tensor));
     tensor = tensor.add(noise);
-    tensor = Tensor.of(tensor.stream().map(Vector2Norm.NORMALIZE));
+    tensor = Vector2Norm.NORMALIZE.slash(tensor);
     Export.of(path.resolve("loxodrome_noise.csv"), tensor);
     GeodesicSpace geodesicSpace = S2Display.INSTANCE.geodesicSpace();
     for (WindowFunctions windowFunctions : WindowFunctions.values()) {

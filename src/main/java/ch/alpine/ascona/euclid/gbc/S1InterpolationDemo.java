@@ -24,6 +24,7 @@ import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Reverse;
@@ -88,11 +89,11 @@ public class S1InterpolationDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = SnManifold.INSTANCE;
-    Tensor control = getGeodesicControlPoints();
+    Tensor control = Tensor.of(getGeodesicControlPoints().stream() //
+        .filter(v -> Scalars.nonZero(Vector2Norm.of(v))));
     final Tensor shape = manifoldDisplay.shape(); // .multiply(RealScalar.of(0.3));
     if (0 < control.length()) {
-      // TODO ASCONA ALG check for zero norm below
-      Tensor sequence = Tensor.of(control.stream().map(Vector2Norm.NORMALIZE));
+      Tensor sequence = Vector2Norm.NORMALIZE.slash(control);
       Tensor target = sequence;
       graphics.setColor(Color.GREEN);
       for (int index = 0; index < target.length(); ++index)
