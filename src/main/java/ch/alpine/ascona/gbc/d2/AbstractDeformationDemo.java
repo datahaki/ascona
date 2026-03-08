@@ -97,7 +97,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       return new Meshgrid(cbb).image(res, tuo);
     }
     case H2:
-      return new Meshgrid(Box2D.xy(Clips.absolute(1.0))).image( res);
+      return new Meshgrid(Box2D.xy(Clips.absolute(1.0))).image(res);
     case Se2C:
     case Se2: {
       Clip clip = Clips.absolute(2);
