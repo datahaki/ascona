@@ -25,7 +25,7 @@ class ImageRenderDemo extends AbstractDemo implements RenderInterface {
   private static final CoordinateBoundingBox COORDINATE_BOUNDING_BOX = //
       CoordinateBoundingBox.of(Clips.interval(-0.4, 1), Clips.interval(-0.35, 0.35));
   private static final Scalar SHIFT = RealScalar.of(1.5);
-  private final BufferedImage bufferedImage_c = ResourceData.bufferedImage("/ch/alpine/curios/man/vehicle_c.png");
+  private final BufferedImage bufferedImage_c = ResourceData.bufferedImage("ch/alpine/curios/man/vehicle_c.png");
   private final BufferedImage bufferedImage;
   private final BufferedImage grayscale_alpha;
   private final BufferedImage grayscale;

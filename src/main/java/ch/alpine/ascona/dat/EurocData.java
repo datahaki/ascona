@@ -34,7 +34,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
   }
 
   static void main() throws IOException {
-    Path resourcePath = Unprotect.resourcePath("/ch/alpine/ascona/euroc/tpq/200Hz/MH_04_difficult.csv");
+    Path resourcePath = Unprotect.resourcePath("ch/alpine/ascona/euroc/tpq/200Hz/MH_04_difficult.csv");
     Tensor tensor = Import.of(resourcePath);
     Path path = HomeDirectory.Ephemeral.mk_dirs(EurocData.class.getSimpleName());
     IO.println("data = " + Dimensions.of(tensor));

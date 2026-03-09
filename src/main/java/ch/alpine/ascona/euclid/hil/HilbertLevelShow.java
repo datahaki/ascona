@@ -30,7 +30,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBounds;
       try {
         return tsf.apply(t);
       } catch (Exception e) {
-        System.err.println("fail: "+t);
+        System.err.println("fail: " + t);
         return DoubleScalar.INDETERMINATE;
       }
     }, DoubleScalar.INDETERMINATE);

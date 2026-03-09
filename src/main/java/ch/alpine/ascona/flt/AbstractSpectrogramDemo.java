@@ -49,7 +49,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   private static final FixGridRender GRID_RENDER = new FixGridRender(Subdivide.of(0, 100, 10));
 
   @ReflectionMarker
-   static class SpecParam {
+  static class SpecParam {
     public Boolean diff = true;
     public Boolean spec = false;
     public Boolean data = true;
@@ -58,7 +58,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     public WindowFunctions kernel = WindowFunctions.GAUSSIAN;
     @FieldClip(min = "0", max = "10")
     public Integer radius = 3;
-    }
+  }
 
   protected final GokartPosParam gokartPosParam;
   protected final SpecParam specParam;

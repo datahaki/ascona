@@ -37,7 +37,7 @@ import ch.alpine.tensor.sca.Clips;
 
 class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
   private Tensor REF;
-  final BufferedImage bi = ResourceData.bufferedImage("/ch/alpine/ascona/image/album_it.jpg");
+  final BufferedImage bi = ResourceData.bufferedImage("ch/alpine/ascona/image/album_it.jpg");
 
   @ReflectionMarker
   static class Param {

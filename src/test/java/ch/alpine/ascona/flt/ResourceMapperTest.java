@@ -11,7 +11,7 @@ class ResourceMapperTest {
   @Test
   void test() {
     ResourceMapper resourceMapper = //
-        ResourceMapper.of("/ch/alpine/ascona/gokart/tpqv/resource_index.vector");
+        ResourceMapper.of("ch/alpine/ascona/gokart/tpqv/resource_index.vector");
     for (String string : resourceMapper.list()) {
       Tensor tensor = resourceMapper.importResource(string);
       MatrixQ.require(tensor);

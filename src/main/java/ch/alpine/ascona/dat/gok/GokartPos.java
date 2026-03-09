@@ -10,7 +10,7 @@ public enum GokartPos {
   INSTANCE;
 
   private final ResourceMapper resourceMapper = //
-      ResourceMapper.of("/ch/alpine/ascona/gokart/resource_index.vector");
+      ResourceMapper.of("ch/alpine/ascona/gokart/resource_index.vector");
 
   public List<String> keys() {
     return resourceMapper.list();

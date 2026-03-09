@@ -8,10 +8,10 @@ import ch.alpine.tensor.ext.ResourceData;
 enum VehicleStatic {
   INSTANCE;
 
-  private final BufferedImage bufferedImage_c = ResourceData.bufferedImage("/ch/alpine/ascona/image/vehicle_c.png");
-  private final BufferedImage bufferedImage_o = ResourceData.bufferedImage("/ch/alpine/ascona/image/vehicle_o.png");
-  private final BufferedImage bufferedImage_g = ResourceData.bufferedImage("/ch/alpine/ascona/image/vehicle_g.png");
-  private final BufferedImage bufferedImage_r = ResourceData.bufferedImage("/ch/alpine/ascona/image/vehicle_r.png");
+  private final BufferedImage bufferedImage_c = ResourceData.bufferedImage("ch/alpine/ascona/image/vehicle_c.png");
+  private final BufferedImage bufferedImage_o = ResourceData.bufferedImage("ch/alpine/ascona/image/vehicle_o.png");
+  private final BufferedImage bufferedImage_g = ResourceData.bufferedImage("ch/alpine/ascona/image/vehicle_g.png");
+  private final BufferedImage bufferedImage_r = ResourceData.bufferedImage("ch/alpine/ascona/image/vehicle_r.png");
 
   public BufferedImage bufferedImage_c() {
     return bufferedImage_c;
