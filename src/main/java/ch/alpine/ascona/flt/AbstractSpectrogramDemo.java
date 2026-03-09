@@ -51,13 +51,13 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   @ReflectionMarker
   static class SpecParam {
     public Boolean diff = true;
-    public Boolean spec = false;
+    public Boolean spec = true;
     public Boolean data = true;
     public Boolean conv = true;
     public Boolean symi = false;
     public WindowFunctions kernel = WindowFunctions.GAUSSIAN;
     @FieldClip(min = "0", max = "10")
-    public Integer radius = 3;
+    public Integer radius = 2;
   }
 
   protected final GokartPosParam gokartPosParam;
@@ -147,22 +147,20 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   // @Override
   protected final void differences_render( //
       Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor refined, boolean spectrogram) {
-    Dimension dimension = getSize();
+    final Dimension dimension = getSize();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     if (geodesicSpace instanceof LieGroup lieGroup) {
       TensorUnaryOperator lieDifferences = LieDifferences.of(lieGroup);
       Scalar sampleRate = UnitSystem.SI().apply(posHz.getSamplingRate());
       Tensor speeds = lieDifferences.apply(refined).multiply(sampleRate);
       if (0 < speeds.length()) {
-        int dimensions = speeds.get(0).length();
+        int dims = speeds.get(0).length();
         Show show = new Show();
         show.setPlotLabel(plotLabel());
         // show.getAxisX().setLabel("sample no.");
         Tensor domain = Range.of(0, speeds.length()).divide(sampleRate);
-        final int width = timerFrame.geometricComponent.getWidth();
-        int offset_y = 0;
         String[] labels = { "vx", "vy", "va" };
-        for (int index = 0; index < dimensions; ++index) {
+        for (int index = 0; index < dims; ++index) {
           Tensor signal = speeds.get(Tensor.ALL, index).unmodifiable();
           show.add(ListLinePlot.of(domain, signal)).setLabel(labels[index]);
           // ---
@@ -171,15 +169,12 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
             SpectrogramArray spectrogramArray = SpectrogramArrays.FOURIER.operator().config(window);
             Show show2 = new Show();
             show2.add(Spectrogram.of(spectrogramArray, signal, sampleRate, COLOR_DATA_GRADIENT));
-            show2.render_autoIndent(graphics, new Rectangle(width - 400, offset_y, 400, 200));
-            offset_y += 200;
+            show2.render_autoIndent(graphics, new Rectangle( //
+                2 * dimension.width / 3, index * dimension.height / 3, dimension.width / 3, dimension.height / 3));
           }
         }
-        int dwidth = 80 + speeds.length();
-        int height = 400;
         show.render_autoIndent(graphics, new Rectangle( //
-            dimension.width - dwidth, dimension.height - height, //
-            80 + speeds.length(), height));
+            0, dimension.height / 2, 2 * dimension.width / 3, dimension.height / 2));
       }
     }
   }

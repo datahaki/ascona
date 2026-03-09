@@ -20,7 +20,8 @@ public final class GokartPosParam {
   public Integer limit = 1000;
 
   public GokartPosParam() {
-    string = keys().getFirst();
+    String name = "tpq/20Hz/20180827T170643_5.csv";
+    string = name; // keys().getFirst();
   }
 
   public PosHz getPosHz() {
