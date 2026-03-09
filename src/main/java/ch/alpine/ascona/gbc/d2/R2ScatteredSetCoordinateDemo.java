@@ -43,7 +43,7 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 // TODO ASCONA ALG possibly only recompute when points have changed
-public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
+final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final double RANGE = 5;
   private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
   // ---
@@ -53,7 +53,7 @@ public class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   private Tensor snapshot;
 
   public R2ScatteredSetCoordinateDemo() {
-    super(LogWeightings.list());
+    super(List.of(LogWeightings.values()));
     {
       jToggleAnimate.addActionListener(_ -> {
         if (jToggleAnimate.isSelected())

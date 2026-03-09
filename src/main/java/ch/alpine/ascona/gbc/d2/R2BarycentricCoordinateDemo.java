@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -15,10 +16,7 @@ import java.util.stream.IntStream;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascony.api.ImageTiling;
-import ch.alpine.ascony.api.LogWeighting;
 import ch.alpine.ascony.api.LogWeightings;
-import ch.alpine.ascony.api.MixedLogWeightings;
-import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
@@ -49,15 +47,15 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.red.Entrywise;
 import ch.alpine.tensor.sca.Sign;
 
-public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDemo {
+final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
 
-  public static List<LogWeighting> list() {
-    List<LogWeighting> list = new ArrayList<>();
-    list.addAll(List.of(PolygonCoordinates.values()));
-    list.addAll(LogWeightings.list());
-    list.addAll(List.of(MixedLogWeightings.values()));
+  public static List<LogWeightings> list() {
+    List<LogWeightings> list = new ArrayList<>();
+    // list.addAll(List.of(PolygonCoordinates.values()));
+    Arrays.stream(LogWeightings.values()).forEach(list::add);
+    // list.addAll(List.of(MixedLogWeightings.values()));
     return list;
   }
 
@@ -66,6 +64,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
 
   public R2BarycentricCoordinateDemo() {
     super(list());
+    weightingsParam.logWeightings = LogWeightings.COORDINATE;
     {
       timerFrame.jToolBar.add(jToggleEntire);
     }
@@ -107,7 +106,7 @@ public class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDe
         graphics.draw(path2d);
         graphics.setStroke(new BasicStroke(1));
       }
-      Sedarim sedarim = operator(domain);
+      Sedarim sedarim = weightingsParam.operator(manifoldDisplay.manifold(), domain);
       Tensor min = Entrywise.min().of(hull).maps(RealScalar.of(0.01)::add);
       Tensor max = Entrywise.max().of(hull).maps(RealScalar.of(0.01)::subtract).negate();
       final int n = scatteredSetParam.refine;

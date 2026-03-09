@@ -20,7 +20,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.N;
 
-// TODO demo offers too many options
 class Regularization2StepDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
   @ReflectionMarker
   static class Ratio {

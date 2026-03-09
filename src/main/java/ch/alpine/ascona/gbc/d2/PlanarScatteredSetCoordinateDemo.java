@@ -10,8 +10,6 @@ import java.util.Objects;
 
 import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.ImageTiling;
-import ch.alpine.ascony.api.InsideConvexHullLogWeighting;
-import ch.alpine.ascony.api.LogWeighting;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -36,13 +34,12 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
 // FIXME ASCONA SPIN
-class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
+final class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private final GenesisDequeParam dequeGenesisProperties = new GenesisDequeParam();
 
   // FIXME ASCONA the class structure is not correct, since log weighting is empty and not visible
   public PlanarScatteredSetCoordinateDemo() {
     super(List.of(LogWeightings.WEIGHTING));
-    spinnerLogWeighting.setVisible(false);
     FieldsEditor fieldsEditor = ToolbarFieldsEditor.addToComponent(dequeGenesisProperties, timerFrame.jToolBar);
     fieldsEditor.addUniversalListener(this::recompute);
     // ---
@@ -88,18 +85,17 @@ class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo
     Tensor sequence = getGeodesicControlPoints();
     if (manifoldDisplay.dimensions() < sequence.length()) {
       Tensor fallback = ConstantArray.of(DoubleScalar.INDETERMINATE, sequence.length());
-      ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(operator(sequence)::sunder, fallback);
+      ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(weightingsParam.operator(manifoldDisplay.manifold(), sequence)::sunder, fallback);
       CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
       Tensor wgs = manifoldDisplay.d2Raster().of(arrayFunction, cbb, scatteredSetParam.refine);
       showable = ArrayPlot.of(ImageTiling.of(wgs), scatteredSetParam.spinnerColorData);
     } else
       showable = null;
   }
-
-  @Override
-  protected LogWeighting logWeighting() {
-    return new InsideConvexHullLogWeighting(dequeGenesisProperties.genesis());
-  }
+  // @Override
+  // protected LogWeighting logWeighting() {
+  // return new InsideConvexHullLogWeighting(dequeGenesisProperties.genesis());
+  // }
   // @Override
   // public void spun(ManifoldDisplays manifoldDisplay) {
   // if (manifoldDisplay.equals(ManifoldDisplays.R2)) {

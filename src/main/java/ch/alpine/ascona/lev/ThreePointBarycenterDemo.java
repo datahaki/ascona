@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.lev;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 
-// TODO does not really work
 class ThreePointBarycenterDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param {
@@ -34,6 +34,7 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
 
   public ThreePointBarycenterDemo() {
     super(param = new Param());
+    addChangeListener(this::spun);
     spun();
   }
 
@@ -66,17 +67,20 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
       leversRender.renderIndexX();
       leversRender.renderIndexP();
       // check is necessary due to originEnclosure
-      // TODO could do tangent space projection in case of S2
       if (Unprotect.dimension1Hint(sequence) == 2) {
         Sedarim sedarim = param.polygonCoordinates.sedarim(Biinvariants.USANCE.ofSafe(manifold), null, sequence);
         Tensor weights = sedarim.sunder(origin);
         leversRender.renderWeights(weights);
         HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-        // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
-        Tensor mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
-        LeversRender.ORIGIN_RENDER_0 //
-            .show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)) //
-            .render(geometricLayer, graphics);
+        try {
+          Tensor mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
+          LeversRender.ORIGIN_RENDER_0 //
+              .show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)) //
+              .render(geometricLayer, graphics);
+        } catch (Exception e) {
+          graphics.setColor(Color.RED);
+          graphics.drawString("mean does not exist", 0, 20);
+        }
       }
     } else {
       LeversRender leversRender = //
@@ -86,7 +90,6 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
     }
   }
 
-  @SuppressWarnings("incomplete-switch")
   public void spun() {
     switch (getSelectedMD()) {
     case R2:
@@ -106,6 +109,8 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
           "{{-0.363, 0.388, 0.000}, {-0.825, -0.271, 0.000}, {-0.513, 0.804, 0.000}, {0.646, 0.667, 0.000}, {0.704, -0.100, 0.000}, {-0.075, -0.733, 0.000}}"));
       break;
     }
+    default:
+      throw new IllegalArgumentException();
     }
   }
 

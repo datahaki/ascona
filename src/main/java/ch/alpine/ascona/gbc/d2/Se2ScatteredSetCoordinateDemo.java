@@ -31,12 +31,12 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
+final class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final Clip RANGE_X = Clips.absolute(3);
   private static final Clip RANGE_A = Clips.absolute(Pi.VALUE);
 
   public Se2ScatteredSetCoordinateDemo() {
-    super(LogWeightings.list());
+    super(List.of(LogWeightings.values()));
     scatteredSetParam.refine = 15;
     Tensor se2 = Tensors.fromString("{{-1.5, 1.3, -2.3}, {+1.5, +1.3, 2.3}, {0.3, 1.5, 1.2}, {0.0, 0.5, -0.5}, {-1.4, -1.3, 0.1}, {1.2, -1.3, -1.2}}");
     // Tensor del = RandomVariate.of(UniformDistribution.of(0.00, 0.1),Dimensions.of(se2));
@@ -69,7 +69,7 @@ public class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeighting
     if (manifoldDisplay.dimensions() < controlPoints.length()) { // render basis functions
       Tensor origin = getGeodesicControlPoints();
       // TODO ASCONA use cache
-      Tensor wgs = compute(operator(origin), scatteredSetParam.refine);
+      Tensor wgs = compute(weightingsParam.operator(manifoldDisplay.manifold(), origin), scatteredSetParam.refine);
       Tensor weights = ImageTiling.of(wgs);
       Show show = new Show();
       show.add(ArrayPlot.of(weights, colorDataGradient));

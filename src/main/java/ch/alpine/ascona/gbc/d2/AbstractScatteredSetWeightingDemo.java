@@ -6,90 +6,108 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
 
-import ch.alpine.ascony.api.LogWeighting;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.bridge.swing.SpinnerLabel;
-import ch.alpine.bridge.swing.SpinnerListener;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
-import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
+import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.sca.var.VariogramFunctions;
 
 public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDemo {
-  protected final ScatteredSetParam scatteredSetParam;
-  protected final SpinnerLabel<LogWeighting> spinnerLogWeighting;
-  private final SpinnerLabel<VariogramFunctions> spinnerVariogram = SpinnerLabel.of(VariogramFunctions.class);
-  private final SpinnerLabel<Scalar> spinnerBeta;
-  private final SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
-    @Override
-    public void spun(LogWeighting logWeighting) {
-      {
-        boolean enabled = !logWeighting.equals(LogWeightings.DISTANCES);
-        spinnerVariogram.setEnabled(enabled);
-        spinnerBeta.setEnabled(enabled);
-      }
-      if (logWeighting.equals(LogWeightings.DISTANCES)) {
-        spinnerVariogram.setValue(VariogramFunctions.POWER);
-        spinnerBeta.setValue(RealScalar.of(1));
-      }
-      if ( //
-      logWeighting.equals(LogWeightings.WEIGHTING) || //
-          logWeighting.equals(LogWeightings.COORDINATE) || //
-          logWeighting.equals(LogWeightings.LAGRAINATE)) {
-        spinnerVariogram.setValue(VariogramFunctions.INVERSE_POWER);
-        spinnerBeta.setValue(RealScalar.of(2));
-      }
-      if ( //
-      logWeighting.equals(LogWeightings.KRIGING) || //
-          logWeighting.equals(LogWeightings.KRIGING_COORDINATE)) {
-        spinnerVariogram.setValue(VariogramFunctions.POWER);
-        scatteredSetParam.biinvariants = Biinvariants.HARBOR;
-        spinnerBeta.setValue(Rational.of(3, 2));
-      }
-    }
-  };
+  @ReflectionMarker
+  static class WeightingsParam {
+    private final List<LogWeightings> list;
+    @FieldSelectionCallback("list")
+    public LogWeightings logWeightings = LogWeightings.DISTANCES;
+    public VariogramFunctions variogramFunctions = VariogramFunctions.POWER;
+    @FieldSelectionArray({ "0", "1/2", "1", "3/2", "7/4", "2", "5/2", "3" })
+    public Scalar beta = RealScalar.of(1);
+    public Biinvariants biinvariants = Biinvariants.USANCE;
 
-  protected AbstractScatteredSetWeightingDemo(List<LogWeighting> array) {
-    this(array, new ScatteredSetParam());
+    public WeightingsParam(List<LogWeightings> list) {
+      this.list = list;
+    }
+
+    @ReflectionMarker
+    public List<LogWeightings> list() {
+      return list;
+    }
+
+    public Sedarim operator(Manifold manifold, Tensor sequence) {
+      return logWeightings.sedarim(biinvariants.ofSafe(manifold), variogram(), sequence);
+    }
+
+    protected final ScalarUnaryOperator variogram() {
+      return variogramFunctions.of(beta);
+    }
+
+    protected final TensorScalarFunction function(Manifold manifold, Tensor sequence, Tensor values) {
+      return logWeightings.function(biinvariants.ofSafe(manifold), variogram(), sequence, values);
+    }
   }
 
-  protected AbstractScatteredSetWeightingDemo( //
-      List<LogWeighting> array, ScatteredSetParam scatteredSetParam) {
-    super(scatteredSetParam);
+  @ReflectionMarker
+  static class ScatteredSetParam {
+    @FieldSelectionArray({ "20", "30", "50" })
+    public Integer refine = 20;
+    public ColorDataGradients spinnerColorData = ColorDataGradients.CLASSIC;
+    public Boolean arrows = false;
+  }
+
+  protected final WeightingsParam weightingsParam;
+  protected final ScatteredSetParam scatteredSetParam;
+  // protected final SpinnerLabel<LogWeighting> spinnerLogWeighting;
+  // private final SpinnerLabel<VariogramFunctions> spinnerVariogram = SpinnerLabel.of(VariogramFunctions.class);
+  // private final SpinnerLabel<Scalar> spinnerBeta;
+  // private final SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
+  // @Override
+  // public void spun(LogWeighting logWeighting) {
+  // {
+  // boolean enabled = !logWeighting.equals(LogWeightings.DISTANCES);
+  // spinnerVariogram.setEnabled(enabled);
+  // spinnerBeta.setEnabled(enabled);
+  // }
+  // if (logWeighting.equals(LogWeightings.DISTANCES)) {
+  // spinnerVariogram.setValue(VariogramFunctions.POWER);
+  // spinnerBeta.setValue(RealScalar.of(1));
+  // }
+  // if ( //
+  // logWeighting.equals(LogWeightings.WEIGHTING) || //
+  // logWeighting.equals(LogWeightings.COORDINATE) || //
+  // logWeighting.equals(LogWeightings.LAGRAINATE)) {
+  // spinnerVariogram.setValue(VariogramFunctions.INVERSE_POWER);
+  // spinnerBeta.setValue(RealScalar.of(2));
+  // }
+  // if ( //
+  // logWeighting.equals(LogWeightings.KRIGING) || //
+  // logWeighting.equals(LogWeightings.KRIGING_COORDINATE)) {
+  // spinnerVariogram.setValue(VariogramFunctions.POWER);
+  // scatteredSetParam.biinvariants = Biinvariants.HARBOR;
+  // spinnerBeta.setValue(Rational.of(3, 2));
+  // }
+  // }
+  // };
+
+  protected AbstractScatteredSetWeightingDemo(List<LogWeightings> array) {
+    this(new WeightingsParam(array));
+  }
+
+  protected AbstractScatteredSetWeightingDemo(WeightingsParam weightingsParam) {
+    super(this.weightingsParam = weightingsParam, scatteredSetParam = new ScatteredSetParam());
     fieldsEditor(0).addUniversalListener(this::recompute);
-    this.scatteredSetParam = scatteredSetParam;
-    {
-      spinnerLogWeighting = SpinnerLabel.of(array);
-      if (array.contains(LogWeightings.COORDINATE))
-        spinnerLogWeighting.setValue(LogWeightings.COORDINATE);
-      else
-        spinnerLogWeighting.setValue(array.getFirst());
-      if (1 < array.size())
-        spinnerLogWeighting.addToComponent(timerFrame.jToolBar, "weights");
-    }
-    spinnerLogWeighting.addSpinnerListener(spinnerListener);
-    spinnerVariogram.setValue(VariogramFunctions.INVERSE_POWER);
-    spinnerVariogram.addToComponent(timerFrame.jToolBar, "variograms");
-    spinnerVariogram.addSpinnerListener(_ -> recompute());
-    {
-      spinnerBeta = SpinnerLabel.of(BETAS.stream().map(Scalar.class::cast).toList());
-      spinnerBeta.setValue(RealScalar.of(2));
-      spinnerBeta.addToComponent(timerFrame.jToolBar, "beta");
-      spinnerBeta.addSpinnerListener(_ -> recompute());
-    }
-    spinnerLogWeighting.addSpinnerListener(_ -> recompute());
   }
 
   @Override
@@ -97,26 +115,11 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     return ControlPointTypes.HEAD_TAIL;
   }
 
-  private static final Tensor BETAS = Tensors.fromString("{0, 1/2, 1, 3/2, 7/4, 2, 5/2, 3}");
-  // ---
-
   protected final Biinvariant biinvariant() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = manifoldDisplay.manifold();
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(manifold);
-    return map.getOrDefault(scatteredSetParam.biinvariants, Biinvariants.USANCE.ofSafe(manifold));
-  }
-
-  protected final Sedarim operator(Tensor sequence) {
-    return logWeighting().sedarim(biinvariant(), variogram(), sequence);
-  }
-
-  protected final ScalarUnaryOperator variogram() {
-    return spinnerVariogram.getValue().of(spinnerBeta.getValue());
-  }
-
-  protected final TensorScalarFunction function(Tensor sequence, Tensor values) {
-    return logWeighting().function(biinvariant(), variogram(), sequence, values);
+    return map.getOrDefault(weightingsParam.biinvariants, Biinvariants.USANCE.ofSafe(manifold));
   }
 
   protected void recompute() {
@@ -145,17 +148,5 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     // ---
     geometricComponent().addMouseListener(mouseAdapter);
     geometricComponent().addMouseMotionListener(mouseAdapter);
-  }
-
-  /** Hint: override is possible for customization
-   * 
-   * @return */
-  protected LogWeighting logWeighting() {
-    return spinnerLogWeighting.getValue();
-  }
-
-  protected final void setLogWeighting(LogWeighting logWeighting) {
-    spinnerLogWeighting.setValue(logWeighting);
-    spinnerLogWeighting.reportToAll();
   }
 }

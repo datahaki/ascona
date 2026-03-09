@@ -5,22 +5,24 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.util.ArrayList;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
+import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.ref.ann.FieldFuse;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.ext.BoundedLinkedList;
-import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.ColorFormat;
 import ch.alpine.tensor.lie.TensorWedge;
@@ -29,21 +31,43 @@ import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Mod;
 
-// TODO ASCONA REV add more parameters
-class SnRotationDemo extends ManifoldDisplayDemo {
+class SnRotationDemo extends ManifoldDisplayDemo implements RenderInterface {
+  @ReflectionMarker
+  static class Param {
+    @FieldSelectionArray({ "2", "3", "4", "5", "6", "7", "8", "10", "15", "20" })
+    public Integer dims = 3;
+    @FieldSelectionArray({ "100", "200", "300", "500" })
+    public Integer numel = 200;
+    @FieldSelectionArray({ "3", "4", "5", "10" })
+    public Integer max_size = 3;
+    @FieldSelectionArray({ "0.005", "0.01", "0.02", "0.03" })
+    public Scalar speed = RealScalar.of(0.01);
+    @FieldFuse
+    public Boolean shuffle = false;
+
+    public SnRotationChunk create(Paran paran) {
+      return new SnRotationChunk(dims, numel, max_size, speed, paran);
+    }
+  }
+
+  @ReflectionMarker
+  static class Paran {
+    public ColorDataGradients cdg = ColorDataGradients.PARULA;
+  }
+
   private static class SnRotationChunk implements RenderInterface {
-    private final ColorDataGradient colorDataGradient;
     private final BoundedLinkedList<Tensor> boundedLinkedList;
     private final Tensor rotation;
+    private final Paran paran;
     private Tensor samples;
 
-    public SnRotationChunk(int dimension, int numel, int max_size, double speed, ColorDataGradient colorDataGradient) {
-      this.colorDataGradient = colorDataGradient;
+    public SnRotationChunk(int dimension, int numel, int max_size, Scalar speed, Paran paran) {
       boundedLinkedList = new BoundedLinkedList<>(max_size);
       RandomSampleInterface randomSampleInterface = new Sphere(dimension);
       samples = RandomSample.of(randomSampleInterface, numel);
-      Tensor angle = RandomSample.of(randomSampleInterface).multiply(RealScalar.of(speed));
+      Tensor angle = RandomSample.of(randomSampleInterface).multiply(speed);
       rotation = MatrixExp.of(TensorWedge.of(angle, ConstantArray.of(RealScalar.ONE, dimension + 1)));
+      this.paran = paran;
     }
 
     public void integrate() {
@@ -54,7 +78,7 @@ class SnRotationDemo extends ManifoldDisplayDemo {
     @Override
     public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
       for (int count = 0; count < samples.length(); ++count) {
-        Tensor rgba = colorDataGradient.apply(Mod.function(1).apply(Rational.of(count, 20)));
+        Tensor rgba = paran.cdg.apply(Mod.function(1).apply(Rational.of(count, 20)));
         Color color = ColorFormat.toColor(rgba);
         int fi = count;
         Tensor trace = Tensor.of(boundedLinkedList.stream().map(p -> p.get(fi)));
@@ -65,20 +89,17 @@ class SnRotationDemo extends ManifoldDisplayDemo {
     }
   }
 
-  @ReflectionMarker
-  static class Param {
-    // TODO ASCONA shuffle not effective
-    @FieldFuse
-    public transient Boolean shuffle = false;
-  }
-
+  private SnRotationChunk snRotationChunk = null;
   private final Param param;
-  private final List<SnRotationChunk> list = new ArrayList<>();
+  private final Paran paran;
 
   public SnRotationDemo() {
-    super(param = new Param());
-    list.add(new SnRotationChunk(3, 200, 3, 0.1, ColorDataGradients.PARULA.deriveWithOpacity(RealScalar.of(0.3))));
-    // list.add(new SnRotationChunk(3, 50, 20, 0.02, ColorDataGradients.SOLAR.deriveWithOpacity(RealScalar.of(0.5))));
+    super(param = new Param(), paran = new Paran());
+    fieldsEditor(0).addUniversalListener(this::update);
+    update();
+    GeometricComponent geometricComponent = timerFrame.geometricComponent;
+    geometricComponent.addRenderInterfaceBackground(S2Display.INSTANCE.background());
+    geometricComponent.addRenderInterface(this);
   }
 
   @Override
@@ -88,12 +109,13 @@ class SnRotationDemo extends ManifoldDisplayDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    // graphics.setColor(new Color(128, 128, 128, 64));
-    list.forEach(SnRotationChunk::integrate);
+    snRotationChunk.integrate();
     graphics.setStroke(new BasicStroke(1.5f));
-    list.getFirst().render(geometricLayer, graphics);
-    // graphics.setStroke(new BasicStroke(2.5f));
-    // list.get(1).render(geometricLayer, graphics);
+    snRotationChunk.render(geometricLayer, graphics);
+  }
+
+  private void update() {
+    snRotationChunk = param.create(paran);
   }
 
   static void main() {
