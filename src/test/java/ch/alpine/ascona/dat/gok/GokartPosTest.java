@@ -27,7 +27,7 @@ class GokartPosTest {
     Tensor tensor = posHz.getPoseSequence();
     ArrayQ.require(tensor);
     Scalar scalar = posHz.getSamplingRate();
-    String number = key.substring(0, key.indexOf("Hz"));
+    String number = key.substring(key.indexOf('/') + 1, key.indexOf("Hz"));
     Scalar folder = Scalars.fromString(number + "[Hz]");
     assertTrue(Scalars.lessThan(Abs.between(scalar, folder), Quantity.of(2, "Hz")));
   }

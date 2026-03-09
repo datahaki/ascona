@@ -2,6 +2,7 @@
 package ch.alpine.ascona.crv;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
@@ -56,12 +57,13 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
 
   private void loadOrShuffle() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor tensor;
-    try {
-      tensor = Get.of(getClass().getResourceAsStream(getSelectedMD().toString().toLowerCase()));
+    Tensor tensor = RandomPoints.on_line(manifoldDisplay, 3);
+    String name = getSelectedMD().toString().toLowerCase();
+    try (InputStream inputStream = getClass().getResourceAsStream(name)) {
+      if (Objects.nonNull(inputStream))
+        tensor = Get.of(inputStream);
     } catch (Exception exception) {
-      System.err.println("cannot load");
-      tensor = RandomPoints.on_line(manifoldDisplay, 3);
+      System.err.println("cannot load: " + name);
     }
     setGeodesicControlPoints(tensor);
   }
