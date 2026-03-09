@@ -20,7 +20,7 @@ public enum GokartPosVel {
   private static final ResourceMapper RESOURCE_MAPPER = //
       ResourceMapper.of("/ch/alpine/ascona/gokart/tpqv/resource_index.vector");
 
-  public static List<String> list() {
+  public static List<String> keys() {
     return RESOURCE_MAPPER.list();
   }
 

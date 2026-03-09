@@ -18,6 +18,7 @@ public class PosVelHz implements Serializable {
     this.tensor = tensor;
   }
 
+  /** @return n x 2 x 3 array */
   public Tensor getPosVelSequence() {
     TensorUnaryOperator extract = row -> Tensors.of(row.extract(1, 4), row.extract(5, 8));
     return extract.slash(tensor);

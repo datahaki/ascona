@@ -74,7 +74,7 @@ class ApproximationDemo extends ControlPointsDemo {
   public ApproximationDemo() {
     super(param = new Param());
     geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
-    param.string = GokartPos.list().getFirst();
+    param.string = GokartPos.keys().getFirst();
     fieldsEditor(0).addUniversalListener(this::updateState);
     updateState();
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));

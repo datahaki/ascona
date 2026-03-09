@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 class GeodesicFiltersTest {
   @Test
   void testSimple() {
-    List<String> lines = GokartPos.list();
+    List<String> lines = GokartPos.keys();
     PosHz posHz = GokartPos.get(lines.getFirst(), 250); // limit , 250
     Tensor control = posHz.getPoseSequence();
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;

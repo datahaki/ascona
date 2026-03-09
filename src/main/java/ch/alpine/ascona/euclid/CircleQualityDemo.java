@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.usr;
+package ch.alpine.ascona.euclid;
 
 import java.util.List;
 

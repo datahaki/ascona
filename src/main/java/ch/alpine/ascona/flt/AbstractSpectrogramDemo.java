@@ -140,12 +140,9 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   protected final Tensor control() {
     return Tensor.of(_control.stream().map(manifoldDisplay()::xya2point)).unmodifiable();
   }
-  // /** @return */
-  // protected abstract String plotLabel();
 
   private static final ColorDataGradient COLOR_DATA_GRADIENT = //
       ColorDataGradients.VISIBLE_SPECTRUM.deriveWithOpacity(RealScalar.of(0.75));
-  // private static final int MAGNIFY = 4;
 
   // @Override
   protected final void differences_render( //

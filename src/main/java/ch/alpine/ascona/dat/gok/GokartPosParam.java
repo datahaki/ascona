@@ -9,17 +9,18 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 
 @ReflectionMarker
 public class GokartPosParam {
-  @FieldSelectionCallback("gokartPoseData")
+  @ReflectionMarker
+  public static List<String> keys() {
+    return GokartPos.keys();
+  }
+
+  @FieldSelectionCallback("keys")
   public String string;
   @FieldSelectionArray({ "100", "250", "500", "1000", "2000", "5000" })
   public Integer limit = 1000;
 
   public GokartPosParam() {
-    string = GokartPos.list().getFirst();
-  }
-
-  public static List<String> gokartPoseData() {
-    return GokartPos.list();
+    string = GokartPos.keys().getFirst();
   }
 
   public final PosHz getPosHz() {
