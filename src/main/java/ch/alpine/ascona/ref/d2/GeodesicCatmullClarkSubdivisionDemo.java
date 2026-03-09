@@ -3,7 +3,6 @@ package ch.alpine.ascona.ref.d2;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,18 +67,9 @@ class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         catmullClarkSubdivision::refine, //
         ArrayReshape.of(control, dims), //
         param.refine);
-    Tensor shape = manifoldDisplay.shape();
-    for (Tensor point : Flatten.of(refined, 1)) {
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-      Path2D path2d = geometricLayer.toPath2D(shape);
-      geometricLayer.popMatrix();
-      int rgb = 128 + 32;
-      path2d.closePath();
-      graphics.setColor(new Color(rgb, rgb, rgb, 128 + 64));
-      graphics.fill(path2d);
-      graphics.setColor(Color.BLACK);
-      graphics.draw(path2d);
-    }
+    int rgb = 128 + 32;
+    manifoldDisplay.showPoints(new Color(rgb, rgb, rgb, 128 + 64), Color.BLACK, RealScalar.of(0.5), Flatten.of(refined, 1)) //
+        .render(geometricLayer, graphics);
   }
 
   static void main() {

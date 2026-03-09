@@ -18,6 +18,7 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Clips;
@@ -77,20 +78,17 @@ class GeometricSymLinkRender {
             Tensor tensor = Subdivide.increasing(Clips.unit(), steps).extract(1, steps) //
                 .maps(scalarTensorFunction);
             manifoldDisplay.showPoints( //
-                new Color(64, 128 + 64, 64, 128), // 
+                new Color(64, 128 + 64, 64, 128), //
                 new Color(64, 128 + 64, 64, 128), //
                 RealScalar.of(0.5), tensor) //
-            .render(geometricLayer, graphics);
+                .render(geometricLayer, graphics);
           }
         }
         // ---
         Tensor p = symLink.position(geodesicSpace);
-        graphics.setColor(new Color(0, 0, 255, 192));
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(p));
-        Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape().multiply(RealScalar.of(0.7)));
-        path2d.closePath();
-        graphics.fill(path2d);
-        geometricLayer.popMatrix();
+        manifoldDisplay.showPoints( //
+            new Color(0, 0, 255, 192), new Color(0, 0, 255, 192), RealScalar.of(0.7), Tensors.of(p)) //
+            .render(geometricLayer, graphics);
       }
     }
   }

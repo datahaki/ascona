@@ -29,6 +29,7 @@ class HilbertBenchmarkDemo implements ManipulateProvider {
   @FieldClip(min = "20", max = "100")
   @FieldSelectionArray({ "20", "30", "50" })
   public Integer resolution = 20;
+  public Integer max = 64;
   public IterativeGenesis iterativeGenesis = IterativeGenesis.INVERSE_DISTANCE;
   public ColorDataGradients cdg = ColorDataGradients.CLASSIC;
 
@@ -36,7 +37,7 @@ class HilbertBenchmarkDemo implements ManipulateProvider {
   public Container getContainer() {
     Tensor polygon = unit(levels);
     Show show = new Show();
-    show.add(HilbertLevelShow.of(iterativeGenesis, polygon, resolution, cdg, 32));
+    show.add(HilbertLevelShow.of(iterativeGenesis, polygon, resolution, cdg, max));
     Showable showable = show.add(PolygonPlot.of(polygon));
     showable.setStroke(new BasicStroke(2f));
     showable.setColor(Color.RED);

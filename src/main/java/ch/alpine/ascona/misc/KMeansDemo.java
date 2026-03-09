@@ -57,7 +57,7 @@ class KMeansDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param1 {
-    @FieldSelectionArray({ "METRIC", "LEVERAGES", "GARDEN" })
+    @FieldSelectionArray({ "METRIC", "USANCE", "GARDEN" })
     public Biinvariants biinvariants = Biinvariants.METRIC;
     @FieldFuse
     public transient Boolean recomp = false;

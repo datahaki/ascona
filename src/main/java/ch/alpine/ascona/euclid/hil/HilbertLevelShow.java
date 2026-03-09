@@ -17,11 +17,23 @@ import ch.alpine.tensor.opt.nd.CoordinateBounds;
 
 /* package */ enum HilbertLevelShow {
   ;
-  public static Showable of(IterativeGenesis iterativeGenesis, Tensor sequence, int res, ColorDataGradient colorDataGradient, int max) {
+  public static Showable of( //
+      IterativeGenesis iterativeGenesis, //
+      Tensor sequence, //
+      int res, //
+      ColorDataGradient colorDataGradient, //
+      int max) {
     ManifoldDisplay manifoldDisplay = R2Display.INSTANCE;
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    TensorScalarFunction tuo = iterativeGenesis.counts(homogeneousSpace, sequence, max);
-    ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(t -> tuo.apply(t), DoubleScalar.INDETERMINATE);
+    TensorScalarFunction tsf = iterativeGenesis.counts(homogeneousSpace, sequence, max);
+    ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(t -> {
+      try {
+        return tsf.apply(t);
+      } catch (Exception e) {
+        System.err.println("fail: "+t);
+        return DoubleScalar.INDETERMINATE;
+      }
+    }, DoubleScalar.INDETERMINATE);
     CoordinateBoundingBox cbb = CoordinateBounds.of(sequence);
     Tensor array = manifoldDisplay.d2Raster().of(arrayFunction, cbb, res);
     return DensityPlot.of(array, cbb, colorDataGradient);
