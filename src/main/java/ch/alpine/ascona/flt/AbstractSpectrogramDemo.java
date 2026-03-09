@@ -51,8 +51,19 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
   // ---
   private static final ScalarUnaryOperator MAGNITUDE_PER_SECONDS = QuantityMagnitude.SI().in("s^-1");
+
   // ---
-  protected final GokartPosSpec gokartPoseSpec;
+  @ReflectionMarker
+  public static class SpecParam {
+    public Boolean diff = true;
+    public Boolean spec = false;
+    public Boolean data = true;
+    public Boolean conv = true;
+    public Boolean symi = false;
+    public WindowFunctions kernel = WindowFunctions.GAUSSIAN;
+  }
+
+  protected final SpecParam gokartPoseSpec;
   protected Tensor _control = null;
 
   @ReflectionMarker
@@ -65,16 +76,10 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   protected final Param param;
 
   protected AbstractSpectrogramDemo(Object object) {
-    this(new GokartPosSpec(), new Param(), object);
+    this(new SpecParam(), new Param(), object);
   }
 
-  protected String plotLabel() {
-    WindowFunctions windowFunctions = gokartPoseSpec.kernel;
-    int radius = param.radius;
-    return windowFunctions + " [" + (2 * radius + 1) + "]";
-  }
-
-  protected AbstractSpectrogramDemo(GokartPosSpec gokartPoseSpec, Param param, Object object) {
+  private AbstractSpectrogramDemo(SpecParam gokartPoseSpec, Param param, Object object) {
     super(gokartPosParam = new GokartPosParam(), gokartPoseSpec, param, object);
     this.gokartPoseSpec = gokartPoseSpec;
     this.param = param;
@@ -128,6 +133,12 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     }
     if (gokartPoseSpec.diff)
       differences_render(graphics, manifoldDisplay, refined, gokartPoseSpec.spec);
+  }
+
+  protected String plotLabel() {
+    WindowFunctions windowFunctions = gokartPoseSpec.kernel;
+    int radius = param.radius;
+    return windowFunctions + " [" + (2 * radius + 1) + "]";
   }
 
   public Scalar markerScale() {

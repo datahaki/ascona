@@ -19,7 +19,6 @@ import ch.alpine.sophis.flt.ga.GeodesicFIRnFilter;
 import ch.alpine.sophis.flt.ga.GeodesicIIRnFilter;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
-import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -54,10 +53,10 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
     final int radius = param.radius;
+    GeodesicSpace geodesicSpace = manifoldDisplay().geodesicSpace();
     if (0 < radius) {
       ScalarUnaryOperator windowFunctions = gokartPoseSpec.kernel.get();
       Se2BiinvariantMeans se2BiinvariantMean = Se2BiinvariantMeans.FILTER;
-      GeodesicSpace geodesicSpace = Se2Group.INSTANCE;
       TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicSpace, windowFunctions);
       // ---
       GeodesicCausalFilters geodesicCausalFilters = spinnerCausalFilter.getValue();
@@ -67,9 +66,9 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
       case GEODESIC_FIR -> GeodesicFIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
       case GEODESIC_IIR -> GeodesicIIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
       case BIINVARIANT_MEAN_FIR -> BiinvariantMeanFIRnFilter.of( //
-          se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), Se2Group.INSTANCE, radius, alpha());
+          se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), geodesicSpace, radius, alpha());
       case BIINVARIANT_MEAN_IIR -> BiinvariantMeanIIRnFilter.of( //
-          se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), Se2Group.INSTANCE, radius, alpha());
+          se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), geodesicSpace, radius, alpha());
       };
       return tensorUnaryOperator.apply(control());
     }
