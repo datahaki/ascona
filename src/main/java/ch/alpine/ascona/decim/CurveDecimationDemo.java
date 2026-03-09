@@ -5,13 +5,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.Path2D;
 import java.util.List;
 
 import ch.alpine.ascona.dat.gok.GokartPosParam;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsSe2;
@@ -52,9 +52,13 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
 
   @ReflectionMarker
-  public static class Param {
-    @FieldSelectionArray({ "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })
-    public Scalar width = RealScalar.of(0);
+  static class Param {
+    @FieldSelectionArray({ "0", "1", "2", "3", "5" })
+    public Scalar width = RealScalar.of(2);
+  }
+
+  @ReflectionMarker
+  static class Paran {
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5" })
     public Scalar level = RealScalar.of(2);
     @FieldSelectionArray({ "1", "2", "3" })
@@ -65,14 +69,18 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
 
   private final GokartPosParam gokartPosParam;
   private final Param param;
+  private final Paran paran;
+  /** smoothed data set for rendering and input to decimation */
   protected Tensor control = Tensors.empty();
 
   public CurveDecimationDemo() {
-    super(gokartPosParam = new GokartPosParam(), param = new Param());
+    super(gokartPosParam = new GokartPosParam(), param = new Param(), paran = new Paran());
     fieldsEditor(0).addUniversalListener(this::updateState);
-    // ---
-    geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
+    fieldsEditor(1).addUniversalListener(this::updateState);
     updateState();
+    // ---
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
   }
 
   @Override
@@ -82,10 +90,10 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
 
   protected void updateState() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
-        GeodesicCenter.of( //
-            manifoldDisplay.geodesicSpace(), WindowFunctions.GAUSSIAN.get()),
-        param.width.number().intValue());
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
+    // TODO make use of biinv mean
+    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(homogeneousSpace, WindowFunctions.GAUSSIAN.get());
+    TensorUnaryOperator tensorUnaryOperator = new CenterFilter(geodesicCenter, param.width.number().intValue());
     ControlPointsSe2 controlPointsSe2 = gokartPosParam.getPosHz().getPoseSequence();
     control = tensorUnaryOperator.apply(controlPointsSe2.getGeodesicControlPoints(manifoldDisplay));
   }
@@ -93,50 +101,40 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    {
-      final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
-      pathRenderCurve.setCurve(control, false).render(geometricLayer, graphics);
-      if (control.length() <= 1000) {
-        new PointsRender(new Color(255, 128, 128, 64), COLOR_CURVE) //
-            .show(manifoldDisplay::matrixLift, shape, control) //
-            .render(geometricLayer, graphics);
-      }
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
+    // render dataset
+    pathRenderCurve.setCurve(control, false).render(geometricLayer, graphics);
+    if (control.length() <= 1000) {
+      Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
+      new PointsRender(new Color(255, 128, 128, 64), COLOR_CURVE) //
+          .show(manifoldDisplay::matrixLift, shape, control) //
+          .render(geometricLayer, graphics);
     }
-    Scalar epsilon = Power.of(Rational.HALF, param.level.number().intValue());
-    // epsilon = Rational.of(jSlider.getValue(), jSlider.getMaximum() * 3);
-    HomogeneousSpace geodesicSpace = manifoldDisplay.homogeneousSpace();
-    CurveDecimation curveDecimation = CurveDecimation.of( //
-        param.type.supply(geodesicSpace), epsilon);
-    DecimationResult result = curveDecimation.evaluate(control);
-    Tensor simplified = result.result();
-    graphics.setColor(Color.DARK_GRAY);
-    // graphics.drawString("SIMPL=" + control.length(), 0, 20);
-    // graphics.drawString("SIMPL=" + , 0, 30);
+    Scalar epsilon = Power.of(Rational.HALF, paran.level.number().intValue());
+    CurveDecimation curveDecimation = CurveDecimation.of(paran.type.supply(homogeneousSpace), epsilon);
+    DecimationResult decimationResult = curveDecimation.evaluate(control);
+    Tensor simplified = decimationResult.result();
+    // ---
+    int level = getSelectedMD().equals(ManifoldDisplays.R2) ? 0 : 4;
     Tensor refined = Nest.of( //
-        LaneRiesenfeldCurveSubdivision.of(manifoldDisplay.geodesicSpace(), param.degre.number().intValue())::string, //
-        simplified, 5);
+        LaneRiesenfeldCurveSubdivision.of(homogeneousSpace, paran.degre.number().intValue())::string, //
+        simplified, level);
+    graphics.setColor(Color.DARK_GRAY);
     pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
     {
-      final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.8));
-      for (Tensor point : simplified) {
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-        Path2D path2d = geometricLayer.toPath2D(shape);
-        path2d.closePath();
-        graphics.setColor(COLOR_SHAPE);
-        graphics.fill(path2d);
-        graphics.setColor(Color.BLACK);
-        graphics.draw(path2d);
-        geometricLayer.popMatrix();
-      }
+      Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.8));
+      new PointsRender(COLOR_SHAPE, Color.BLACK) //
+          .show(manifoldDisplay::matrixLift, shape, simplified) //
+          .render(geometricLayer, graphics);
     }
-    if (param.error) {
+    if (paran.error) {
       Dimension dimension = getSize();
       Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
       show.setPlotLabel("Reduction from " + control.length() + " to " + simplified.length() + " samples");
       // visualSet.getAxisX().setLabel("sample no.");
       // visualSet.getAxisY().setLabel("error");
       // visualSet.setPlotLabel("error");
-      show.add(ListLinePlot.of(Range.of(0, control.length()), result.errors()));
+      show.add(ListLinePlot.of(Range.of(0, control.length()), decimationResult.errors()));
       show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }
   }
