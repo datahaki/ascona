@@ -27,6 +27,7 @@ import ch.alpine.sophis.decim.LineDistances;
 import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophis.ref.d1.LaneRiesenfeldCurveSubdivision;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
@@ -52,19 +53,25 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
 
   @ReflectionMarker
-  static class Param {
+  static class Param { // for data pre-processing
+    public WindowFunctions windowFunctions = WindowFunctions.GAUSSIAN;
     @FieldSelectionArray({ "0", "1", "2", "3", "5" })
-    public Scalar width = RealScalar.of(2);
+    public Integer width = 2;
+
+    public TensorUnaryOperator filter(GeodesicSpace geodesicSpace) {
+      // the use of geodesic center gives the option to a greater filter radius
+      TensorUnaryOperator geodesicCenter = GeodesicCenter.of(geodesicSpace, windowFunctions.get());
+      // geodesicCenter = BiinvariantMeanCenter.of(homogeneousSpace.biinvariantMean(), WindowFunctions.GAUSSIAN.get());
+      return new CenterFilter(geodesicCenter, width);
+    }
   }
 
   @ReflectionMarker
-  static class Paran {
+  static class Paran { // for decimation and display
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5" })
-    public Scalar level = RealScalar.of(2);
-    @FieldSelectionArray({ "1", "2", "3" })
-    public Scalar degre = RealScalar.of(1);
+    public Integer level = 2;
     public LineDistances type = LineDistances.STANDARD;
-    public Boolean error = false;
+    public Boolean error = true;
   }
 
   private final GokartPosParam gokartPosParam;
@@ -91,11 +98,8 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   protected void updateState() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    // TODO make use of biinv mean
-    TensorUnaryOperator geodesicCenter = GeodesicCenter.of(homogeneousSpace, WindowFunctions.GAUSSIAN.get());
-    TensorUnaryOperator tensorUnaryOperator = new CenterFilter(geodesicCenter, param.width.number().intValue());
     ControlPointsSe2 controlPointsSe2 = gokartPosParam.getPosHz().getPoseSequence();
-    control = tensorUnaryOperator.apply(controlPointsSe2.getGeodesicControlPoints(manifoldDisplay));
+    control = param.filter(homogeneousSpace).apply(controlPointsSe2.getGeodesicControlPoints(manifoldDisplay));
   }
 
   @Override
@@ -110,14 +114,14 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
           .show(manifoldDisplay::matrixLift, shape, control) //
           .render(geometricLayer, graphics);
     }
-    Scalar epsilon = Power.of(Rational.HALF, paran.level.number().intValue());
+    Scalar epsilon = Power.of(Rational.HALF, paran.level);
     CurveDecimation curveDecimation = CurveDecimation.of(paran.type.supply(homogeneousSpace), epsilon);
     DecimationResult decimationResult = curveDecimation.evaluate(control);
     Tensor simplified = decimationResult.result();
     // ---
     int level = getSelectedMD().equals(ManifoldDisplays.R2) ? 0 : 4;
     Tensor refined = Nest.of( //
-        LaneRiesenfeldCurveSubdivision.of(homogeneousSpace, paran.degre.number().intValue())::string, //
+        LaneRiesenfeldCurveSubdivision.of(homogeneousSpace, 1)::string, //
         simplified, level);
     graphics.setColor(Color.DARK_GRAY);
     pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
@@ -131,9 +135,6 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
       Dimension dimension = getSize();
       Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
       show.setPlotLabel("Reduction from " + control.length() + " to " + simplified.length() + " samples");
-      // visualSet.getAxisX().setLabel("sample no.");
-      // visualSet.getAxisY().setLabel("error");
-      // visualSet.setPlotLabel("error");
       show.add(ListLinePlot.of(Range.of(0, control.length()), decimationResult.errors()));
       show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }
