@@ -24,14 +24,15 @@ class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implements Buffe
   public GeodesicExtrapolationDemo() {
     super(new Object());
     fieldsEditor(0).addUniversalListener(this::updateStateSpec);
+    fieldsEditor(1).addUniversalListener(this::updateStateSpec);
     updateStateSpec();
   }
 
   private void updateStateSpec() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = //
-        GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), gokartPoseSpec.kernel.get());
-    refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesicSpace(), param.radius).apply(control());
+        GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), specParam.kernel.get());
+    refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesicSpace(), specParam.radius).apply(control());
   }
 
   @Override // from RenderInterface
@@ -41,8 +42,8 @@ class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implements Buffe
 
   @Override // from BufferedImageSupplier
   public BufferedImage bufferedImage() {
-    ScalarUnaryOperator smoothingKernel = gokartPoseSpec.kernel.get();
-    int radius = param.radius;
+    ScalarUnaryOperator smoothingKernel = specParam.kernel.get();
+    int radius = specParam.radius;
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(SymGeodesic.INSTANCE, smoothingKernel);
     Tensor vector = SymSequence.of(radius + 1);
     Tensor tensor = tensorUnaryOperator.apply(vector);

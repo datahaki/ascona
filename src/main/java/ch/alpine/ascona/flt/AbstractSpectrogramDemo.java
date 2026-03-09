@@ -49,34 +49,29 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   private static final FixGridRender GRID_RENDER = new FixGridRender(Subdivide.of(0, 100, 10));
 
   @ReflectionMarker
-  public static class SpecParam {
+   static class SpecParam {
     public Boolean diff = true;
     public Boolean spec = false;
     public Boolean data = true;
     public Boolean conv = true;
     public Boolean symi = false;
     public WindowFunctions kernel = WindowFunctions.GAUSSIAN;
-  }
-
-  @ReflectionMarker
-  static class Param {
     @FieldClip(min = "0", max = "10")
     public Integer radius = 3;
-  }
+    }
 
   protected final GokartPosParam gokartPosParam;
-  protected final SpecParam gokartPoseSpec;
+  protected final SpecParam specParam;
   private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
   private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
-  protected final Param param;
   private PosHz posHz = null;
 
   protected AbstractSpectrogramDemo(Object object) {
-    this(new SpecParam(), new Param(), object);
+    this(new SpecParam(), object);
   }
 
-  private AbstractSpectrogramDemo(SpecParam gokartPoseSpec, Param param, Object object) {
-    super(gokartPosParam = new GokartPosParam(), this.gokartPoseSpec = gokartPoseSpec, this.param = param, object);
+  private AbstractSpectrogramDemo(SpecParam specParam, Object object) {
+    super(gokartPosParam = new GokartPosParam(), this.specParam = specParam, object);
     // gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
     fieldsEditor(0).addUniversalListener(this::updateState);
     updateState();
@@ -95,8 +90,8 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     Tensor control = control();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     final Tensor shape = manifoldDisplay.shape().multiply(markerScale());
-    boolean conv = gokartPoseSpec.conv;
-    if (gokartPoseSpec.data) {
+    boolean conv = specParam.conv;
+    if (specParam.data) {
       pathRenderCurve.setCurve(control, false).render(geometricLayer, graphics);
       Color fill = conv //
           ? new Color(255, 128, 128, 32)
@@ -108,10 +103,10 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
           .show(manifoldDisplay::matrixLift, shape, control) //
           .render(geometricLayer, graphics);
     }
-    Tensor refined = protected_render(geometricLayer, graphics);
+    final Tensor refined = protected_render(geometricLayer, graphics);
     // ---
     if (this instanceof BufferedImageSupplier bufferedImageSupplier && //
-        gokartPoseSpec.symi) {
+        specParam.symi) {
       Optional<BufferedImage> optional = Optional.ofNullable(bufferedImageSupplier.bufferedImage());
       if (optional.isPresent())
         graphics.drawImage(optional.orElseThrow(), 0, 0, null);
@@ -124,13 +119,13 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
           .show(manifoldDisplay::matrixLift, shape, refined) //
           .render(geometricLayer, graphics);
     }
-    if (gokartPoseSpec.diff)
-      differences_render(graphics, manifoldDisplay, refined, gokartPoseSpec.spec);
+    if (specParam.diff)
+      differences_render(graphics, manifoldDisplay, refined, specParam.spec);
   }
 
   protected String plotLabel() {
-    WindowFunctions windowFunctions = gokartPoseSpec.kernel;
-    int radius = param.radius;
+    WindowFunctions windowFunctions = specParam.kernel;
+    int radius = specParam.radius;
     return windowFunctions + " [" + (2 * radius + 1) + "]";
   }
 
@@ -172,7 +167,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
           show.add(ListLinePlot.of(domain, signal)).setLabel(labels[index]);
           // ---
           if (spectrogram) {
-            ScalarUnaryOperator window = gokartPoseSpec.kernel.get();
+            ScalarUnaryOperator window = specParam.kernel.get();
             SpectrogramArray spectrogramArray = SpectrogramArrays.FOURIER.operator().config(window);
             Show show2 = new Show();
             show2.add(Spectrogram.of(spectrogramArray, signal, sampleRate, COLOR_DATA_GRADIENT));

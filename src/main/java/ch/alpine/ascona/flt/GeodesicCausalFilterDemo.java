@@ -44,10 +44,10 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
 
   @Override // from RenderInterface
   protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    final int radius = param.radius;
+    final int radius = specParam.radius;
     GeodesicSpace geodesicSpace = manifoldDisplay().geodesicSpace();
     if (0 < radius) {
-      ScalarUnaryOperator windowFunctions = gokartPoseSpec.kernel.get();
+      ScalarUnaryOperator windowFunctions = specParam.kernel.get();
       BiinvariantMean biinvariantMean = geodesicSpace instanceof HomogeneousSpace homogeneousSpace //
           ? homogeneousSpace.biinvariantMean()
           : null;
