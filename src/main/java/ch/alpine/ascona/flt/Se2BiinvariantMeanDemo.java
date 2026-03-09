@@ -2,7 +2,6 @@
 package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
-import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -40,16 +39,6 @@ final class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
     }
     // ---
     updateState();
-  }
-
-  @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2_R2;
-  }
-
-  @Override
-  protected void updateState() {
-    super.updateState();
   }
 
   @Override // from RenderInterface

@@ -3,10 +3,8 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymLinkImages;
@@ -23,7 +21,6 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.N;
 
 // TODO demo offers too many options
-@ReflectionMarker
 class Regularization2StepDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
   @ReflectionMarker
   static class Ratio {
@@ -39,11 +36,6 @@ class Regularization2StepDemo extends AbstractSpectrogramDemo implements Buffere
     super(ratio = new Ratio());
     // ---
     updateState();
-  }
-
-  @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2_R2;
   }
 
   @Override // from AbstractDatasetFilterDemo

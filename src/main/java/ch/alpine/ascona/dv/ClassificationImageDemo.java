@@ -32,6 +32,7 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -159,7 +160,7 @@ class ClassificationImageDemo extends ControlPointsDemo {
     int index = 0;
     ColorDataIndexed colorDataIndexedO = colorDataIndexedT.deriveWithAlpha(128);
     for (Tensor point : sequence) {
-      int label = vector.Get(index).number().intValue();
+      int label = Scalars.intValueExact(vector.Get(index));
       PointsRender pointsRender = new PointsRender( //
           colorDataIndexedO.getColor(label), //
           colorDataIndexedT.getColor(label));

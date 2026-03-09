@@ -76,17 +76,15 @@ class SutherlandHodgmanAlgorithmDemo extends EuclideanPlaneDemo {
       Tensor result = polyclipResult.tensor();
       graphics.fill(geometricLayer.toPath2D(result));
       new PathRender(COLOR_DATA_INDEXED.getColor(1), 3.5f).setCurve(result, true).render(geometricLayer, graphics);
-      {
-        for (int index = 0; index < result.length(); ++index) {
-          int cind = polyclipResult.belong().Get(index).number().intValue();
-          Color color = COLOR_DATA_INDEXED.getColor(cind);
-          PointsRender pointsRender = new PointsRender(color, Color.BLACK);
-          pointsRender.show( //
-              manifoldDisplay::matrixLift, //
-              manifoldDisplay.shape().multiply(RealScalar.of(2)), //
-              Tensors.of(result.get(index))) //
-              .render(geometricLayer, graphics);
-        }
+      for (int index = 0; index < result.length(); ++index) {
+        int cind = polyclipResult.belong().Get(index).number().intValue();
+        Color color = COLOR_DATA_INDEXED.getColor(cind);
+        PointsRender pointsRender = new PointsRender(color, Color.BLACK);
+        pointsRender.show( //
+            manifoldDisplay::matrixLift, //
+            manifoldDisplay.shape().multiply(RealScalar.of(2)), //
+            Tensors.of(result.get(index))) //
+            .render(geometricLayer, graphics);
       }
       Tensor nsum = Array.zeros(2);
       {

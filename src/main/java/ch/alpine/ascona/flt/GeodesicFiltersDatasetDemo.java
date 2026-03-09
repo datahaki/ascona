@@ -3,12 +3,10 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.api.GeodesicFilters;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.sym.SymLinkImages;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.swing.SpinnerLabel;
@@ -36,16 +34,6 @@ class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implements Buff
     }
     // ---
     updateState();
-  }
-
-  @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2_R2;
-  }
-
-  @Override // from UniformDatasetFilterDemo
-  protected void updateState() {
-    super.updateState();
   }
 
   @Override // from RenderInterface

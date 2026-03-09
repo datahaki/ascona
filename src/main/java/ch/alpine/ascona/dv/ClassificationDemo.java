@@ -25,6 +25,7 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataIndexed;
@@ -125,7 +126,7 @@ class ClassificationDemo extends ControlPointsDemo {
     Tensor shape = manifoldDisplay.shape();
     int index = 0;
     for (Tensor point : sequence) {
-      int label = vector.Get(index).number().intValue();
+      int label = Scalars.intValueExact(vector.Get(index));
       PointsRender pointsRender = new PointsRender( //
           COLOR_DATA_INDEXED_T.getColor(label), //
           COLOR_DATA_INDEXED_O.getColor(label));

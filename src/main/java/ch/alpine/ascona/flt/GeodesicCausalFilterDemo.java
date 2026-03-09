@@ -1,16 +1,13 @@
 // code by ob
 package ch.alpine.ascona.flt;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.List;
-
-import javax.swing.JSlider;
 
 import ch.alpine.ascony.api.GeodesicCausalFilters;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.swing.SpinnerLabel;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.flt.WindowSideExtrapolation;
 import ch.alpine.sophis.flt.bm.BiinvariantMeanFIRnFilter;
 import ch.alpine.sophis.flt.bm.BiinvariantMeanIIRnFilter;
@@ -18,36 +15,31 @@ import ch.alpine.sophis.flt.ga.GeodesicExtrapolation;
 import ch.alpine.sophis.flt.ga.GeodesicFIRnFilter;
 import ch.alpine.sophis.flt.ga.GeodesicIIRnFilter;
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
+import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-// TODO ASCONA nope: 2x radius
 class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
-  protected final SpinnerLabel<GeodesicCausalFilters> spinnerCausalFilter = SpinnerLabel.of(GeodesicCausalFilters.class);
-  /** parameter to blend extrapolation with measurement */
-  private final JSlider jSlider = new JSlider(1, 999, 500);
-
-  public GeodesicCausalFilterDemo() {
-    super(new Object());
-    {
-      spinnerCausalFilter.setValue(GeodesicCausalFilters.BIINVARIANT_MEAN_IIR);
-      spinnerCausalFilter.addToComponent(timerFrame.jToolBar, "smoothing kernel");
-      spinnerCausalFilter.addSpinnerListener(_ -> updateState());
-    }
-    jSlider.setPreferredSize(new Dimension(500, 28));
-    // ---
-    timerFrame.jToolBar.add(jSlider);
-    // ---
-    updateState();
+  @ReflectionMarker
+  static class Paraf {
+    public GeodesicCausalFilters gcf = GeodesicCausalFilters.BIINVARIANT_MEAN_FIR;
+    /** parameter to blend extrapolation with measurement */
+    @FieldSlider
+    @FieldClip(min = "0", max = "1")
+    public Scalar value = Rational.HALF;
   }
 
-  @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2_ONLY; // TODO
+  private final Paraf paraf;
+
+  public GeodesicCausalFilterDemo() {
+    super(paraf = new Paraf());
+    fieldsEditor(0).addUniversalListener(this::updateState);
+    // ---
+    updateState();
   }
 
   @Override // from RenderInterface
@@ -56,27 +48,28 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
     GeodesicSpace geodesicSpace = manifoldDisplay().geodesicSpace();
     if (0 < radius) {
       ScalarUnaryOperator windowFunctions = gokartPoseSpec.kernel.get();
-      Se2BiinvariantMeans se2BiinvariantMean = Se2BiinvariantMeans.FILTER;
-      TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicSpace, windowFunctions);
-      // ---
-      GeodesicCausalFilters geodesicCausalFilters = spinnerCausalFilter.getValue();
+      BiinvariantMean biinvariantMean = geodesicSpace instanceof HomogeneousSpace homogeneousSpace //
+          ? homogeneousSpace.biinvariantMean()
+          : null;
+      ;
+      GeodesicCausalFilters geodesicCausalFilters = paraf.gcf.ofSafe(geodesicSpace);
       // TODO ASCONA ALG should be able to do with geodesicCausalFilters.supply, but doesn't
-      TensorUnaryOperator tensorUnaryOperator = geodesicCausalFilters.supply(manifoldDisplay(), windowFunctions, radius, alpha());
-      tensorUnaryOperator = switch (geodesicCausalFilters) {
+      TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicSpace, windowFunctions);
+      TensorUnaryOperator tuo = switch (geodesicCausalFilters) {
       case GEODESIC_FIR -> GeodesicFIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
       case GEODESIC_IIR -> GeodesicIIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());
       case BIINVARIANT_MEAN_FIR -> BiinvariantMeanFIRnFilter.of( //
-          se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), geodesicSpace, radius, alpha());
+          biinvariantMean, WindowSideExtrapolation.of(windowFunctions), geodesicSpace, radius, alpha());
       case BIINVARIANT_MEAN_IIR -> BiinvariantMeanIIRnFilter.of( //
-          se2BiinvariantMean, WindowSideExtrapolation.of(windowFunctions), geodesicSpace, radius, alpha());
+          biinvariantMean, WindowSideExtrapolation.of(windowFunctions), geodesicSpace, radius, alpha());
       };
-      return tensorUnaryOperator.apply(control());
+      return tuo.apply(control());
     }
     return control();
   }
 
   private Scalar alpha() {
-    return Rational.of(jSlider.getValue(), 1000);
+    return paraf.value;
   }
 
   @Override

@@ -3,11 +3,9 @@ package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymLinkImages;
@@ -25,18 +23,11 @@ class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implements Buffe
 
   public GeodesicExtrapolationDemo() {
     super(new Object());
-    updateState();
+    fieldsEditor(0).addUniversalListener(this::updateStateSpec);
+    updateStateSpec();
   }
 
-  @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2_R2;
-  }
-
-  @Override
-  protected void updateState() {
-    super.updateState();
-    // ---
+  private void updateStateSpec() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = //
         GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), gokartPoseSpec.kernel.get());

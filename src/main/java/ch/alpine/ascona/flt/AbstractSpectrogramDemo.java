@@ -6,18 +6,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascona.dat.gok.GokartPosParam;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
+import ch.alpine.ascona.dat.gok.PosHz;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.FixGridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
-import ch.alpine.ascony.win.ControlPointsSe2;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -39,21 +40,14 @@ import ch.alpine.tensor.fft.SpectrogramArray;
 import ch.alpine.tensor.fft.SpectrogramArrays;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.qty.Quantity;
-import ch.alpine.tensor.qty.QuantityMagnitude;
+import ch.alpine.tensor.qty.UnitSystem;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
   private static final FixGridRender GRID_RENDER = new FixGridRender(Subdivide.of(0, 100, 10));
-  // ---
-  private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
-  private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
-  // ---
-  private static final ScalarUnaryOperator MAGNITUDE_PER_SECONDS = QuantityMagnitude.SI().in("s^-1");
 
-  // ---
   @ReflectionMarker
   public static class SpecParam {
     public Boolean diff = true;
@@ -64,9 +58,6 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     public WindowFunctions kernel = WindowFunctions.GAUSSIAN;
   }
 
-  protected final SpecParam gokartPoseSpec;
-  protected ControlPointsSe2 _control = null;
-
   @ReflectionMarker
   static class Param {
     @FieldClip(min = "0", max = "10")
@@ -74,21 +65,29 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   }
 
   protected final GokartPosParam gokartPosParam;
+  protected final SpecParam gokartPoseSpec;
+  private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
+  private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
   protected final Param param;
+  private PosHz posHz = null;
 
   protected AbstractSpectrogramDemo(Object object) {
     this(new SpecParam(), new Param(), object);
   }
 
   private AbstractSpectrogramDemo(SpecParam gokartPoseSpec, Param param, Object object) {
-    super(gokartPosParam = new GokartPosParam(), gokartPoseSpec, param, object);
-    this.gokartPoseSpec = gokartPoseSpec;
-    this.param = param;
+    super(gokartPosParam = new GokartPosParam(), this.gokartPoseSpec = gokartPoseSpec, this.param = param, object);
     // gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
     fieldsEditor(0).addUniversalListener(this::updateState);
-    geometricComponent().addRenderInterfaceBackground(GRID_RENDER);
+    updateState();
     // ---
+    geometricComponent().addRenderInterfaceBackground(GRID_RENDER);
     geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
+  }
+
+  @Override
+  protected final List<ManifoldDisplays> permitted_manifoldDisplays() {
+    return ManifoldDisplays.SE2_R2;
   }
 
   @Override
@@ -121,16 +120,9 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     graphics.setStroke(new BasicStroke(1f));
     if (conv) {
       pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
-      for (Tensor point : refined) {
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-        Path2D path2d = geometricLayer.toPath2D(shape);
-        path2d.closePath();
-        graphics.setColor(COLOR_SHAPE);
-        graphics.fill(path2d);
-        graphics.setColor(Color.BLACK);
-        graphics.draw(path2d);
-        geometricLayer.popMatrix();
-      }
+      new PointsRender(COLOR_SHAPE, Color.BLACK) //
+          .show(manifoldDisplay::matrixLift, shape, refined) //
+          .render(geometricLayer, graphics);
     }
     if (gokartPoseSpec.diff)
       differences_render(graphics, manifoldDisplay, refined, gokartPoseSpec.spec);
@@ -142,18 +134,16 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     return windowFunctions + " [" + (2 * radius + 1) + "]";
   }
 
-  public Scalar markerScale() {
+  public final Scalar markerScale() {
     return RealScalar.of(0.2);
   }
 
-  protected void updateState() {
-    _control = gokartPosParam.getPosHz().getPoseSequence();
+  protected final void updateState() {
+    posHz = gokartPosParam.getPosHz();
   }
 
-  // @Override
   protected final Tensor control() {
-    return _control.getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
-    // return Tensor.of(_control.stream().map(manifoldDisplay()::xya2point)).unmodifiable();
+    return posHz.getPoseSequence().getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
   }
 
   private static final ColorDataGradient COLOR_DATA_GRADIENT = //
@@ -166,20 +156,20 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     if (geodesicSpace instanceof LieGroup lieGroup) {
       TensorUnaryOperator lieDifferences = LieDifferences.of(lieGroup);
-      // FIXME ASCONA gokartPoseSpec.gpd().getSampleRate()
-      Scalar sampleRate = MAGNITUDE_PER_SECONDS.apply(Quantity.of(50, "Hz"));
+      Scalar sampleRate = UnitSystem.SI().apply(posHz.getSamplingRate());
       Tensor speeds = lieDifferences.apply(refined).multiply(sampleRate);
       if (0 < speeds.length()) {
         int dimensions = speeds.get(0).length();
         Show show = new Show();
         show.setPlotLabel(plotLabel());
         // show.getAxisX().setLabel("sample no.");
-        Tensor domain = Range.of(0, speeds.length());
+        Tensor domain = Range.of(0, speeds.length()).divide(sampleRate);
         final int width = timerFrame.geometricComponent.getWidth();
         int offset_y = 0;
+        String[] labels = { "vx", "vy", "va" };
         for (int index = 0; index < dimensions; ++index) {
           Tensor signal = speeds.get(Tensor.ALL, index).unmodifiable();
-          show.add(ListLinePlot.of(domain, signal));
+          show.add(ListLinePlot.of(domain, signal)).setLabel(labels[index]);
           // ---
           if (spectrogram) {
             ScalarUnaryOperator window = gokartPoseSpec.kernel.get();
@@ -192,7 +182,6 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
         }
         int dwidth = 80 + speeds.length();
         int height = 400;
-        // Show.defaultInsets(dimension, height);
         show.render_autoIndent(graphics, new Rectangle( //
             dimension.width - dwidth, dimension.height - height, //
             80 + speeds.length(), height));
