@@ -47,7 +47,7 @@ import ch.alpine.tensor.red.Nest;
   public HermiteDataExport(String name, Scalar period, int levels) throws IOException {
     this.levels = Integers.requirePositive(levels);
     folder = HomeDirectory.Ephemeral.mk_dirs(name);
-    PosVelHz posVelHz = GokartPosVel.get(name, 2000); // limit , 2_000);
+    PosVelHz posVelHz = GokartPosVel.INSTANCE.get(name, 2000); // limit , 2_000);
     Tensor data = posVelHz.getPosVelSequence();
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     {

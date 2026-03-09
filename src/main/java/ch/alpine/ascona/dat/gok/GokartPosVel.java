@@ -16,15 +16,16 @@ import ch.alpine.tensor.Tensor;
  * vy
  * vangle */
 public enum GokartPosVel {
-  ;
-  private static final ResourceMapper RESOURCE_MAPPER = //
+  INSTANCE;
+
+  private final ResourceMapper resourceMapper = //
       ResourceMapper.of("/ch/alpine/ascona/gokart/tpqv/resource_index.vector");
 
-  public static List<String> keys() {
-    return RESOURCE_MAPPER.list();
+  public List<String> keys() {
+    return resourceMapper.list();
   }
 
-  public static PosVelHz get(String key, int limit) {
-    return new PosVelHz(Tensor.of(RESOURCE_MAPPER.importResource(key).stream().limit(limit)));
+  public PosVelHz get(String key, int limit) {
+    return new PosVelHz(Tensor.of(resourceMapper.importResource(key).stream().limit(limit)));
   }
 }

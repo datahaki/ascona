@@ -43,7 +43,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
    * @param levels 4 */
   protected HermiteArrayShow(String name, Scalar period, int levels) {
     this.levels = Integers.requirePositive(levels);
-    PosVelHz posVelHz = GokartPosVel.get(name, 1000);
+    PosVelHz posVelHz = GokartPosVel.INSTANCE.get(name, 1000);
     Tensor data = posVelHz.getPosVelSequence();
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     Scalar rate = posVelHz.getSamplingRate();

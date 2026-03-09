@@ -14,6 +14,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsSe2;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -27,7 +28,6 @@ import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophis.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -40,6 +40,7 @@ import ch.alpine.tensor.red.Nest;
 import ch.alpine.tensor.sca.pow.Power;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
+/** demonstrates Ramer Douglas Peucker on gokart data */
 class CurveDecimationDemo extends ManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 160);
@@ -64,7 +65,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
 
   private final GokartPosParam gokartPosParam;
   private final Param param;
-  protected Tensor _control = Tensors.empty();
+  protected Tensor control = Tensors.empty();
 
   public CurveDecimationDemo() {
     super(gokartPosParam = new GokartPosParam(), param = new Param());
@@ -80,9 +81,13 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   }
 
   protected void updateState() {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
-        GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), param.width.number().intValue());
-    _control = tensorUnaryOperator.apply(gokartPosParam.getPosHz().getPoseSequence());
+        GeodesicCenter.of( //
+            manifoldDisplay.geodesicSpace(), WindowFunctions.GAUSSIAN.get()),
+        param.width.number().intValue());
+    ControlPointsSe2 controlPointsSe2 = gokartPosParam.getPosHz().getPoseSequence();
+    control = tensorUnaryOperator.apply(controlPointsSe2.getGeodesicControlPoints(manifoldDisplay));
   }
 
   @Override
@@ -90,10 +95,10 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     {
       final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
-      pathRenderCurve.setCurve(_control, false).render(geometricLayer, graphics);
-      if (_control.length() <= 1000) {
+      pathRenderCurve.setCurve(control, false).render(geometricLayer, graphics);
+      if (control.length() <= 1000) {
         new PointsRender(new Color(255, 128, 128, 64), COLOR_CURVE) //
-            .show(manifoldDisplay::matrixLift, shape, _control) //
+            .show(manifoldDisplay::matrixLift, shape, control) //
             .render(geometricLayer, graphics);
       }
     }
@@ -102,7 +107,6 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     HomogeneousSpace geodesicSpace = manifoldDisplay.homogeneousSpace();
     CurveDecimation curveDecimation = CurveDecimation.of( //
         param.type.supply(geodesicSpace), epsilon);
-    Tensor control = Tensor.of(_control.stream().map(manifoldDisplay::xya2point));
     DecimationResult result = curveDecimation.evaluate(control);
     Tensor simplified = result.result();
     graphics.setColor(Color.DARK_GRAY);

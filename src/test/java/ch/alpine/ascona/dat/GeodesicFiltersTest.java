@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledOnOs;
-import org.junit.jupiter.api.condition.OS;
 
 import ch.alpine.ascona.dat.gok.GokartPos;
 import ch.alpine.ascona.dat.gok.GokartPosVel;
@@ -16,6 +14,7 @@ import ch.alpine.ascona.dat.gok.PosVelHz;
 import ch.alpine.ascony.api.GeodesicFilters;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.Se2Display;
+import ch.alpine.ascony.win.ControlPointsSe2;
 import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.so2.So2;
@@ -28,14 +27,12 @@ import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-// TODO make work on windows
-@DisabledOnOs(OS.WINDOWS)
 class GeodesicFiltersTest {
   @Test
   void testSimple() {
-    List<String> lines = GokartPos.keys();
-    PosHz posHz = GokartPos.get(lines.getFirst(), 250); // limit , 250
-    Tensor control = posHz.getPoseSequence();
+    List<String> lines = GokartPos.INSTANCE.keys();
+    PosHz posHz = GokartPos.INSTANCE.get(lines.getFirst(), 250); // limit , 250
+    ControlPointsSe2 control = posHz.getPoseSequence();
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     ScalarUnaryOperator smoothingKernel = WindowFunctions.GAUSSIAN.get();
@@ -44,7 +41,8 @@ class GeodesicFiltersTest {
     for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
       TensorUnaryOperator tensorUnaryOperator = //
           geodesicFilters.supply(homogeneousSpace, smoothingKernel);
-      Tensor filtered = new CenterFilter(tensorUnaryOperator, radius).apply(control);
+      CenterFilter centerFilter = new CenterFilter(tensorUnaryOperator, radius);
+      Tensor filtered = centerFilter.apply(control.getGeodesicControlPoints(manifoldDisplay));
       map.put(geodesicFilters, filtered);
     }
     for (GeodesicFilters lieGroupFilters : GeodesicFilters.values()) {
@@ -58,7 +56,7 @@ class GeodesicFiltersTest {
   @Test
   void testTiming() {
     String name = "50Hz/20190701T170957_06.csv";
-    PosVelHz posVelHz = GokartPosVel.get(name, 100_000);
+    PosVelHz posVelHz = GokartPosVel.INSTANCE.get(name, 100_000);
     Tensor control = posVelHz.getPosSequence();
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();

@@ -3,6 +3,7 @@ package ch.alpine.ascona.dat.gok;
 
 import java.io.Serializable;
 
+import ch.alpine.ascony.win.ControlPointsSe2;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Differences;
@@ -18,8 +19,8 @@ public class PosHz implements Serializable {
     this.tensor = tensor;
   }
 
-  public Tensor getPoseSequence() {
-    return EXTRACT.slash(tensor);
+  public ControlPointsSe2 getPoseSequence() {
+    return new ControlPointsSe2(EXTRACT.slash(tensor));
   }
 
   public Scalar getSamplingRate() {

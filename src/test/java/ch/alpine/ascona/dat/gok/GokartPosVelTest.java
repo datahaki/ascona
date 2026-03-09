@@ -17,13 +17,13 @@ import ch.alpine.tensor.sca.Abs;
 
 class GokartPosVelTest {
   static Stream<String> list() {
-    return GokartPosVel.keys().stream();
+    return GokartPosVel.INSTANCE.keys().stream();
   }
 
   @ParameterizedTest
   @MethodSource("list")
   void testImport(String key) {
-    PosVelHz posHz = GokartPosVel.get(key, 1_000_000);
+    PosVelHz posHz = GokartPosVel.INSTANCE.get(key, 1_000_000);
     Tensor tensor = posHz.getPosVelSequence();
     ArrayQ.require(tensor);
     Scalar scalar = posHz.getSamplingRate();

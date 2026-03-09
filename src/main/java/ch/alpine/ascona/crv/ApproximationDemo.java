@@ -18,6 +18,7 @@ import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.ascony.win.ControlPointsSe2;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
@@ -90,12 +91,12 @@ class ApproximationDemo extends ControlPointsDemo {
   }
 
   private void updateState() {
-    PosHz posHz = gokartPosParam.getPosHz();
-    Tensor rawdata = posHz.getPoseSequence();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    PosHz posHz = gokartPosParam.getPosHz();
+    ControlPointsSe2 rawdata = posHz.getPoseSequence();
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(manifoldDisplay.geodesicSpace(), GaussianWindow.FUNCTION);
     TensorUnaryOperator centerFilter = new CenterFilter(tensorUnaryOperator, param.width);
-    Tensor tracked = centerFilter.apply(rawdata);
+    Tensor tracked = centerFilter.apply(rawdata.getGeodesicControlPoints(manifoldDisplay));
     int level = param.level;
     int steps = 1 << level;
     // IO.println(DoubleScalar.of(steps).divide(posHz.getSamplingRate()).maps(Round._3)); // param.gpd().getSampleRate()

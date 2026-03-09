@@ -17,6 +17,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.FixGridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
+import ch.alpine.ascony.win.ControlPointsSe2;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -64,7 +65,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   }
 
   protected final SpecParam gokartPoseSpec;
-  protected Tensor _control = null;
+  protected ControlPointsSe2 _control = null;
 
   @ReflectionMarker
   static class Param {
@@ -151,7 +152,8 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
 
   // @Override
   protected final Tensor control() {
-    return Tensor.of(_control.stream().map(manifoldDisplay()::xya2point)).unmodifiable();
+    return _control.getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
+    // return Tensor.of(_control.stream().map(manifoldDisplay()::xya2point)).unmodifiable();
   }
 
   private static final ColorDataGradient COLOR_DATA_GRADIENT = //
