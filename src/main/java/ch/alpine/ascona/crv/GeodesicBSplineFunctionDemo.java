@@ -3,7 +3,6 @@ package ch.alpine.ascona.crv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
@@ -56,11 +55,8 @@ class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedI
         GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, effective);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(selected));
-      Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape());
-      graphics.setColor(Color.DARK_GRAY);
-      graphics.fill(path2d);
-      geometricLayer.popMatrix();
+      manifoldDisplay.showPoints(Color.DARK_GRAY, Color.BLACK, RealScalar.ONE, Tensors.of(selected)) //
+          .render(geometricLayer, graphics);
     }
     Tensor refined = Subdivide.of(0, upper, Math.max(1, upper * (1 << levels))).maps(scalarTensorFunction);
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));

@@ -4,7 +4,6 @@ package ch.alpine.ascona.crv;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.Path2D;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -27,6 +26,7 @@ import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -91,11 +91,8 @@ class CatmullRomDemo extends PointSequenceDemo {
       Tensor refined = Subdivide.increasing(interval, Math.max(1, levels * control.length())).maps(scalarTensorFunction);
       {
         Tensor selected = scalarTensorFunction.apply(parameter);
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(selected));
-        Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape());
-        graphics.setColor(Color.DARK_GRAY);
-        graphics.fill(path2d);
-        geometricLayer.popMatrix();
+        manifoldDisplay.showPoints(Color.DARK_GRAY, Color.BLACK, RealScalar.ONE, Tensors.of(selected)) //
+            .render(geometricLayer, graphics);
       }
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);

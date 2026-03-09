@@ -3,7 +3,6 @@ package ch.alpine.ascona.crv;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -15,8 +14,10 @@ import ch.alpine.ascony.sym.SymLinkImages;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Rational;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -51,11 +52,8 @@ class DeBoorDemo extends AbstractCurveDemo {
         Math.max(1, upper * (1 << levels))).maps(scalarTensorFunction);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(selected));
-      Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape());
-      graphics.setColor(Color.DARK_GRAY);
-      graphics.fill(path2d);
-      geometricLayer.popMatrix();
+      manifoldDisplay.showPoints(Color.DARK_GRAY, Color.BLACK, RealScalar.ONE, Tensors.of(selected)) //
+          .render(geometricLayer, graphics);
     }
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     Curvature2DRender.of(render, false).render(geometricLayer, graphics);

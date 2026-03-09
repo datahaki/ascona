@@ -9,7 +9,6 @@ import java.util.List;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AreaRender;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -80,12 +79,9 @@ class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImag
     }
     // ---
     Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << levels))).maps(scalarTensorFunction);
-    new AreaRender( //
-        Color.DARK_GRAY, //
-        manifoldDisplay::matrixLift, //
-        manifoldDisplay.shape(), //
-        Unprotect.byRef(scalarTensorFunction.apply(parameter))) //
-            .render(geometricLayer, graphics);
+    manifoldDisplay.showPoints(Color.DARK_GRAY, Color.BLACK, //
+        RealScalar.ONE, Unprotect.byRef(scalarTensorFunction.apply(parameter))) //
+        .render(geometricLayer, graphics);
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (levels < 5)

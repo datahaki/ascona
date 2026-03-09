@@ -16,18 +16,10 @@ import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymScalar;
 import ch.alpine.ascony.sym.SymSequence;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldFuse;
-import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.Tensor;
 
 public abstract class AbstractSplitsDemo extends PointSequenceDemo {
   private static final Font FONT = new Font(Font.DIALOG, Font.PLAIN, 13);
-
-  @ReflectionMarker
-  static class SaveParam {
-    @FieldFuse
-    public transient Boolean save = false;
-  }
 
   protected AbstractSplitsDemo(Object... objects) {
     super(objects);

@@ -8,7 +8,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
-import java.awt.geom.Path2D;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -54,7 +53,7 @@ import ch.alpine.tensor.sca.exp.Log10;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 class BiinvariantMeanDemo extends ControlPointsDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(192);
+  private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(255);
   private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
@@ -65,7 +64,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param0 {
     public Biinvariants biinvariants = Biinvariants.USANCE;
-    public Boolean median = false;
+    public Boolean median = true;
     public Boolean vehicle = false;
   }
 
@@ -145,13 +144,9 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       Optional<Tensor> optional = spatialMedian.uniform(sequence);
       if (optional.isPresent()) {
         Tensor median = optional.orElseThrow();
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(median));
-        Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape().multiply(RealScalar.of(0.7)), true);
-        graphics.setColor(COLOR_DATA_INDEXED_FILL.getColor(1));
-        graphics.fill(path2d);
-        graphics.setColor(COLOR_DATA_INDEXED_DRAW.getColor(1));
-        graphics.draw(path2d);
-        geometricLayer.popMatrix();
+        new PointsRender(COLOR_DATA_INDEXED_FILL.getColor(1), COLOR_DATA_INDEXED_DRAW.getColor(1)) //
+            .show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.7)), Tensors.of(median)) //
+            .render(geometricLayer, graphics);
       }
     }
     if (param0.vehicle) {
@@ -189,12 +184,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
           graphics.drawString(string, pix, piy - fheight / 3);
         }
         geometricLayer.popMatrix();
-        PointsRender ORIGIN_RENDER_0 = //
-            new PointsRender(new Color(128, 64, 64, 128), new Color(128, 64, 64, 255));
-        ORIGIN_RENDER_0.show( //
-            manifoldDisplay::matrixLift, //
-            shape.multiply(RealScalar.of(1.0)), //
-            Tensors.of(origin)) //
+        manifoldDisplay.showPoints(new Color(128, 64, 64, 128), new Color(128, 64, 64, 255), RealScalar.of(1.0), Tensors.of(origin)) //
             .render(geometricLayer, graphics);
       }
     }

@@ -8,7 +8,6 @@ import java.awt.Stroke;
 import java.awt.geom.Path2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.AreaRender;
 import ch.alpine.ascony.sym.SymLink;
 import ch.alpine.ascony.sym.SymLinkPart;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -25,7 +24,7 @@ import ch.alpine.tensor.sca.Clips;
 
 /** visualization of the geometric geodesic average
  * with curves on the manifolds */
-/* package */ class GeometricSymLinkRender {
+class GeometricSymLinkRender {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   // ---
@@ -77,10 +76,11 @@ import ch.alpine.tensor.sca.Clips;
           {
             Tensor tensor = Subdivide.increasing(Clips.unit(), steps).extract(1, steps) //
                 .maps(scalarTensorFunction);
-            new AreaRender( //
+            manifoldDisplay.showPoints( //
+                new Color(64, 128 + 64, 64, 128), // 
                 new Color(64, 128 + 64, 64, 128), //
-                manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.5)), tensor) //
-                    .render(geometricLayer, graphics);
+                RealScalar.of(0.5), tensor) //
+            .render(geometricLayer, graphics);
           }
         }
         // ---

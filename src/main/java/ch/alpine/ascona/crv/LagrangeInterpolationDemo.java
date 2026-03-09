@@ -9,7 +9,6 @@ import java.util.List;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ref.BaseCurvatureParam;
-import ch.alpine.ascony.ren.AreaRender;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -94,12 +93,9 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
       Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).maps(interpolation::at);
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
-      new AreaRender( //
-          Color.DARK_GRAY, //
-          manifoldDisplay::matrixLift, //
-          manifoldDisplay.shape(), //
-          Unprotect.byRef(interpolation.at(parameter))) //
-              .render(geometricLayer, graphics);
+      manifoldDisplay.showPoints(Color.DARK_GRAY, Color.BLACK, //
+          RealScalar.ONE, Unprotect.byRef(interpolation.at(parameter))) //
+          .render(geometricLayer, graphics);
       if (levels < 5)
         ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
       {

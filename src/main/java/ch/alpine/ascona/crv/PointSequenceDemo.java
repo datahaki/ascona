@@ -28,8 +28,9 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
 
   protected PointSequenceDemo(Object... objects) {
     super(objects);
-    if (objects[0] instanceof SaveParam)
-      fieldsEditor(0).addUniversalListener(this::save);
+    for (int index = 0; index < objects.length; ++index)
+      if (objects[index] instanceof SaveParam)
+        fieldsEditor(index).addUniversalListener(this::save);
     addChangeListener(this::loadOrShuffle);
     setManifoldDisplay(ManifoldDisplays.R2);
   }

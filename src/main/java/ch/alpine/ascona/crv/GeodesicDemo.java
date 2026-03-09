@@ -8,7 +8,6 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AreaRender;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -71,10 +70,8 @@ class GeodesicDemo extends ControlPointsDemo {
     Tensor p = points.get(0);
     Tensor q = points.get(1);
     ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(p, q);
-    new AreaRender( //
-        COLOR, //
-        manifoldDisplay::matrixLift, manifoldDisplay.shape(), Subdivide.of(0, 1, param.splits).maps(scalarTensorFunction)) //
-            .render(geometricLayer, graphics);
+    manifoldDisplay.showPoints(COLOR, COLOR, RealScalar.ONE, Subdivide.of(0, 1, param.splits).maps(scalarTensorFunction)) //
+        .render(geometricLayer, graphics);
     {
       Tensor sequence = Subdivide.of(0, 1, 1).maps(scalarTensorFunction);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
@@ -93,10 +90,10 @@ class GeodesicDemo extends ControlPointsDemo {
         pathRender.setCurve(render, false);
         pathRender.render(geometricLayer, graphics);
       }
-      new AreaRender( //
-          new Color(255, 128, 128), //
-          manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.3)), Subdivide.of(1, 1.5, param.splits).maps(scalarTensorFunction)) //
-              .render(geometricLayer, graphics);
+      manifoldDisplay.showPoints( //
+          new Color(255, 128, 128), COLOR, RealScalar.of(0.3), //
+          Subdivide.of(1, 1.5, param.splits).maps(scalarTensorFunction)) //
+          .render(geometricLayer, graphics);
     }
   }
 

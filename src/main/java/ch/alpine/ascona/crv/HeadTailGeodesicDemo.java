@@ -9,7 +9,6 @@ import java.util.List;
 import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.AreaRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -19,6 +18,7 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
@@ -83,10 +83,10 @@ class HeadTailGeodesicDemo extends ControlPointsDemo {
       graphics.drawString("" + pseudoDistance.maps(Round._4), 10, 20);
     }
     // ---
-    new AreaRender( //
-        Color.LIGHT_GRAY, //
-        manifoldDisplay::matrixLift, manifoldDisplay.shape(), domain.maps(scalarTensorFunction)) //
-            .render(geometricLayer, graphics);
+    manifoldDisplay.showPoints( //
+        Color.LIGHT_GRAY, Color.DARK_GRAY, //
+        RealScalar.ONE, domain.maps(scalarTensorFunction)) //
+        .render(geometricLayer, graphics);
     graphics.setColor(Color.BLUE);
     for (Tensor _t : Subdivide.of(0, 1, 1)) {
       Tensor pq = scalarTensorFunction.apply((Scalar) _t);
