@@ -24,7 +24,6 @@ class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implements Buff
 
   public GeodesicFiltersDatasetDemo() {
     super(new Object());
-    gokartPoseSpec.string = "20190215/20190215T144349_01";
     {
       spinnerFilters.setValue(GeodesicFilters.GEODESIC);
       spinnerFilters.addToComponent(timerFrame.jToolBar, "filter type");

@@ -1,12 +1,11 @@
 // code by ob, jph
 package ch.alpine.ascona.flt;
 
-import ch.alpine.ascona.dat.gok.GokartPosParam;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 @ReflectionMarker
-public class GokartPosSpec extends GokartPosParam {
+public class GokartPosSpec {
   public Boolean diff = true;
   public Boolean spec = false;
   public Boolean data = true;

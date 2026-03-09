@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascona.dat.gok.GokartPos;
 import ch.alpine.ascona.dat.gok.GokartPosParam;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascona.dat.gok.PosHz;
@@ -54,7 +53,7 @@ class ApproximationDemo extends ControlPointsDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
 
   @ReflectionMarker
-  static class Param extends GokartPosParam {
+  static class Param {
     @FieldSelectionArray({ "0", "2", "4", "6", "8", "10", "12", "14" })
     public Integer width = 12;
     @FieldSelectionCallback("schemes")
@@ -69,12 +68,12 @@ class ApproximationDemo extends ControlPointsDemo {
 
   // ---
   private Container _container = null;
+  private final GokartPosParam gokartPosParam;
   private final Param param;
 
   public ApproximationDemo() {
-    super(param = new Param());
+    super(gokartPosParam = new GokartPosParam(), param = new Param());
     geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
-    param.string = GokartPos.keys().getFirst();
     fieldsEditor(0).addUniversalListener(this::updateState);
     updateState();
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
@@ -91,8 +90,7 @@ class ApproximationDemo extends ControlPointsDemo {
   }
 
   private void updateState() {
-    // Tensor rawdata =
-    PosHz posHz = param.getPosHz();
+    PosHz posHz = gokartPosParam.getPosHz();
     Tensor rawdata = posHz.getPoseSequence();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorUnaryOperator tensorUnaryOperator = GeodesicCenter.of(manifoldDisplay.geodesicSpace(), GaussianWindow.FUNCTION);

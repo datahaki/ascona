@@ -51,7 +51,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
 
   @ReflectionMarker
-  public static class Param extends GokartPosParam {
+  public static class Param {
     @FieldSelectionArray({ "0", "1", "5", "8", "10", "15", "20", "25", "30", "35" })
     public Scalar width = RealScalar.of(0);
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5" })
@@ -62,11 +62,12 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     public Boolean error = false;
   }
 
+  private final GokartPosParam gokartPosParam;
   private final Param param;
   protected Tensor _control = Tensors.empty();
 
   public CurveDecimationDemo() {
-    super(param = new Param());
+    super(gokartPosParam = new GokartPosParam(), param = new Param());
     fieldsEditor(0).addUniversalListener(this::updateState);
     // ---
     geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
@@ -81,7 +82,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   protected void updateState() {
     TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
         GeodesicCenter.of(Se2Group.INSTANCE, WindowFunctions.GAUSSIAN.get()), param.width.number().intValue());
-    _control = tensorUnaryOperator.apply(param.getPosHz().getPoseSequence());
+    _control = tensorUnaryOperator.apply(gokartPosParam.getPosHz().getPoseSequence());
   }
 
   @Override

@@ -10,6 +10,7 @@ import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
 
+import ch.alpine.ascona.dat.gok.GokartPosParam;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -60,6 +61,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     public Integer radius = 3;
   }
 
+  protected final GokartPosParam gokartPosParam;
   protected final Param param;
 
   protected AbstractSpectrogramDemo(Object object) {
@@ -73,7 +75,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   }
 
   protected AbstractSpectrogramDemo(GokartPosSpec gokartPoseSpec, Param param, Object object) {
-    super(gokartPoseSpec, param, object);
+    super(gokartPosParam = new GokartPosParam(), gokartPoseSpec, param, object);
     this.gokartPoseSpec = gokartPoseSpec;
     this.param = param;
     // gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
@@ -133,7 +135,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   }
 
   protected void updateState() {
-    _control = gokartPoseSpec.getPosHz().getPoseSequence();
+    _control = gokartPosParam.getPosHz().getPoseSequence();
   }
 
   // @Override

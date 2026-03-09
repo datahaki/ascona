@@ -8,7 +8,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 
 @ReflectionMarker
-public class GokartPosVelParam {
+public final class GokartPosVelParam {
   @ReflectionMarker
   public static List<String> keys() {
     return GokartPosVel.keys();
@@ -20,7 +20,7 @@ public class GokartPosVelParam {
   public Integer limit = 1000;
 
   public GokartPosVelParam() {
-    string = GokartPosVel.keys().getFirst();
+    string = keys().getFirst();
   }
 
   public final PosVelHz getPosVelHz() {
