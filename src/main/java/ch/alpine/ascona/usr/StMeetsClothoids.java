@@ -51,7 +51,7 @@ class StMeetsClothoids implements ManipulateProvider, RenderInterface {
 
   public StMeetsClothoids() {
     geometricComponent.addRenderInterface(this);
-    Tensor digest = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(100).digest();
+    Tensor digest = PvmBuilder.rhs().setOffset(600, 300).setPerPixel(100).digest();
     geometricComponent.setModel2Pixel(digest);
   }
 

@@ -18,6 +18,7 @@ import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -34,7 +35,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.red.Times;
 
 class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   // TODO ASCONA redundant
@@ -63,12 +63,10 @@ class S2HermiteSubdivisionDemo extends ControlPointsDemo {
 
   public S2HermiteSubdivisionDemo() {
     super(param = new Param());
-    // ---
-    Tensor model2pixel = geometricComponent().getModel2Pixel();
-    geometricComponent().setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
-    // geometricComponent().setOffset(400, 400);
-    // ---
     setControlPointsSe2(Tensors.fromString("{{-0.3, 0.0, 0}, {0.0, 0.5, 0.0}, {0.5, 0.5, 1}, {0.5, -0.4, 0}}"));
+    // ---
+    Tensor pvm = PvmBuilder.rhs().setOffset(300, 300).setPerPixel(200).digest();
+    geometricComponent().setModel2Pixel(pvm);
   }
 
   @Override

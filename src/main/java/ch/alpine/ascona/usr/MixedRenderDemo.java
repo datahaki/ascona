@@ -22,8 +22,7 @@ class MixedRenderDemo implements ManipulateProvider {
   private final GeometricComponent geometricComponent = new GeometricComponent();
 
   public MixedRenderDemo() {
-    // MvpBuilder mvpBuilder = new MvpBuilder();
-    Tensor digest = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(Quantity.of(60, "m^-1"), Quantity.of(30, "s^-1")).digest();
+    Tensor digest = PvmBuilder.rhs().setOffset(300, 600).setPerPixel(Quantity.of(60, "m^-1"), Quantity.of(30, "s^-1")).digest();
     geometricComponent.setModel2Pixel(digest);
     {
       EllipsoidRegion ellipsoidRegion = //

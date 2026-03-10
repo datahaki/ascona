@@ -14,6 +14,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -67,9 +68,10 @@ class NdTreeMapDemo extends ManifoldDisplayDemo {
     super(param0 = new Param0(), param1 = new Param1());
     fieldsEditor(0).addUniversalListener(this::shuffle);
     geometricComponent().setModel2Pixel(DiagonalMatrix.of(200, -200, 1));
-    // geometricComponent().setOffset(300, 300);
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.S2);
+    Tensor pvm = PvmBuilder.rhs().setOffset(300, 300).setPerPixel(100).digest();
+    geometricComponent().setModel2Pixel(pvm);
   }
 
   @Override

@@ -13,6 +13,7 @@ import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.sophus.hs.s.S3Hopf;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -25,6 +26,8 @@ import ch.alpine.tensor.sca.Clips;
 class S3HopfDemo extends ControlPointsDemo {
   public S3HopfDemo() {
     setGeodesicControlPoints(RandomSample.of(manifoldDisplay().randomSampleInterface(), 3));
+    Tensor pvm = PvmBuilder.rhs().setOffset(400, 400).setPerPixel(400).digest();
+    geometricComponent().setModel2Pixel(pvm);
   }
 
   @Override

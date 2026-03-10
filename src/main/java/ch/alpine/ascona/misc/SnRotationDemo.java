@@ -12,6 +12,7 @@ import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -36,9 +37,9 @@ class SnRotationDemo extends ManifoldDisplayDemo implements RenderInterface {
   static class Param {
     @FieldSelectionArray({ "2", "3", "4", "5", "6", "7", "8", "10", "15", "20" })
     public Integer dims = 3;
-    @FieldSelectionArray({ "100", "200", "300", "500" })
+    @FieldSelectionArray({ "10", "100", "200", "300", "500" })
     public Integer numel = 200;
-    @FieldSelectionArray({ "3", "4", "5", "10" })
+    @FieldSelectionArray({ "3", "4", "5", "10", "20", "50", "200" })
     public Integer max_size = 3;
     @FieldSelectionArray({ "0.005", "0.01", "0.02", "0.03" })
     public Scalar speed = RealScalar.of(0.01);
@@ -100,6 +101,8 @@ class SnRotationDemo extends ManifoldDisplayDemo implements RenderInterface {
     GeometricComponent geometricComponent = timerFrame.geometricComponent;
     geometricComponent.addRenderInterfaceBackground(S2Display.INSTANCE.background());
     geometricComponent.addRenderInterface(this);
+    Tensor pvm = PvmBuilder.rhs().setOffset(400, 400).setPerPixel(400).digest();
+    geometricComponent.setModel2Pixel(pvm);
   }
 
   @Override

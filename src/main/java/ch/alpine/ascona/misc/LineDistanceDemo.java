@@ -18,6 +18,7 @@ import ch.alpine.bridge.fig.DensityPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.ref.ann.FieldLabel;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -34,7 +35,6 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.red.Times;
 
 class LineDistanceDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
@@ -58,10 +58,8 @@ class LineDistanceDemo extends ControlPointsDemo {
     // ---
     setControlPointsSe2(INITIAL);
     // ---
-    Tensor model2pixel = geometricComponent().getModel2Pixel();
-    geometricComponent().setModel2Pixel(Times.of(Tensors.vector(5, 5, 1), model2pixel));
-    // ---
-    // geometricComponent().setOffset(400, 400);
+    Tensor pvm = PvmBuilder.rhs().setOffset(400, 400).setPerPixel(100).digest();
+    geometricComponent().setModel2Pixel(pvm);
   }
 
   @Override

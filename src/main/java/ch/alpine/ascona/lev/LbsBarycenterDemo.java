@@ -13,6 +13,7 @@ import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -25,6 +26,8 @@ class LbsBarycenterDemo extends ControlPointsDemo {
     setManifoldDisplay(ManifoldDisplays.S2);
     setControlPointsSe2(Tensors.fromString( //
         "{{-0.314, 0.662, 0.000}, {-0.809, 0.426, 0.000}, {-0.261, 0.927, 0.000}, {0.564, 0.685, 0.000}, {0.694, 0.220, 0.000}}"));
+    Tensor pvm = PvmBuilder.rhs().setOffset(400, 400).setPerPixel(200).digest();
+    geometricComponent().setModel2Pixel(pvm);
   }
 
   @Override
