@@ -74,7 +74,7 @@ public class S1KrigingDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-1, 1, 0}}"));
     geometricComponent().addRenderInterfaceBackground(RegionRenders.of(coordinateBoundingBox));
     geometricComponent().addRenderInterfaceBackground(S1FrameRender.INSTANCE);
-    geometricComponent().setOffset(500, 500);
+    // geometricComponent().setOffset(500, 500);
   }
 
   @Override

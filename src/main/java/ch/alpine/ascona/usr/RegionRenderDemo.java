@@ -9,6 +9,7 @@ import ch.alpine.ascony.reg.PolygonRegionRender;
 import ch.alpine.ascony.reg.RegionRenders;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -28,7 +29,9 @@ public class RegionRenderDemo implements ManipulateProvider {
   private final GeometricComponent geometricComponent = new GeometricComponent();
 
   public RegionRenderDemo() {
-    geometricComponent.setPerPixel(Quantity.of(60, "m^-1"));
+    Tensor digest = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(Quantity.of(60, "m^-1")).digest();
+    geometricComponent.setModel2Pixel(digest);
+    // geometricComponent.setPerPixel(Quantity.of(60, "m^-1"));
     {
       BallRegion ballRegion = new BallRegion(Tensors.fromString("{2[m],3[m]}"), Quantity.of(1, "m"));
       BallRegionRender ballRegionRender = new BallRegionRender(ballRegion);

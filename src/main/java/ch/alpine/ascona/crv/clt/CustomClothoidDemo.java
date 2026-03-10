@@ -44,7 +44,7 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
   public CustomClothoidDemo() {
     setControlPointsSe2(INITIAL);
     timerFrame.jToolBar.add(jLabel);
-    geometricComponent().setOffset(300, 700);
+    // geometricComponent().setOffset(300, 700);
   }
 
   @Override

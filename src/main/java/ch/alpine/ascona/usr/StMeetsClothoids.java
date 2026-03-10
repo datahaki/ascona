@@ -13,6 +13,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -50,7 +51,8 @@ class StMeetsClothoids implements ManipulateProvider, RenderInterface {
 
   public StMeetsClothoids() {
     geometricComponent.addRenderInterface(this);
-    geometricComponent.setPerPixel(RealScalar.of(100));
+    Tensor digest = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(100).digest();
+    geometricComponent.setModel2Pixel(digest);
   }
 
   @Override

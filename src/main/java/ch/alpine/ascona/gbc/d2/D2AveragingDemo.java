@@ -78,7 +78,7 @@ public final class D2AveragingDemo extends ControlPointsDemo {
     fieldsEditor(0).addUniversalListener(this::recompute);
     // ---
     addChangeListener(this::recompute);
-    geometricComponent().setOffset(400, 400);
+    // geometricComponent().setOffset(400, 400);
   }
 
   @Override

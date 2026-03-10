@@ -15,7 +15,6 @@ import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.sca.Clip;
@@ -33,7 +32,7 @@ class SpiralDemo implements ManipulateProvider, RenderInterface {
   public SpiralDemo() {
     geometricComponent.addRenderInterfaceBackground(new GridRender(geometricComponent::getSize));
     geometricComponent.addRenderInterface(this);
-    geometricComponent.setPerPixel(RealScalar.of(100));
+    // geometricComponent.setPerPixel(RealScalar.of(100));
   }
 
   @Override

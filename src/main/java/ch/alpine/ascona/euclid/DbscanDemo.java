@@ -64,8 +64,8 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
   public DbscanDemo() {
     geometricComponent.addRenderInterfaceBackground(new GridRender(geometricComponent::getSize));
     geometricComponent.addRenderInterface(this);
-    geometricComponent.setOffset(100, 600);
-    geometricComponent.setPerPixel(RealScalar.of(50));
+    // geometricComponent.setOffset(100, 600);
+    // geometricComponent.setPerPixel(RealScalar.of(50));
   }
 
   Tensor recomp1() {

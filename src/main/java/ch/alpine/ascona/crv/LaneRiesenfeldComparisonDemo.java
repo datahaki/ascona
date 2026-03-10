@@ -54,7 +54,7 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i)
       pathRenders.add(new PathRender(COLORS.getColor(i)));
     // ---
-    geometricComponent().setOffset(100, 600);
+    // geometricComponent().setOffset(100, 600);
   }
 
   @Override

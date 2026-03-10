@@ -70,7 +70,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
     this.param = param;
     // ---
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-0.5, 0.8, 0}}"));
-    geometricComponent().setOffset(500, 500);
+    // geometricComponent().setOffset(500, 500);
     geometricComponent().addRenderInterfaceBackground(RegionRenders.of(coordinateBoundingBox));
     geometricComponent().addRenderInterfaceBackground(S1FrameRender.INSTANCE);
   }

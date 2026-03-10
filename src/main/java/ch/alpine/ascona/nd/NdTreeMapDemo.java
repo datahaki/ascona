@@ -67,7 +67,7 @@ class NdTreeMapDemo extends ManifoldDisplayDemo {
     super(param0 = new Param0(), param1 = new Param1());
     fieldsEditor(0).addUniversalListener(this::shuffle);
     geometricComponent().setModel2Pixel(DiagonalMatrix.of(200, -200, 1));
-    geometricComponent().setOffset(300, 300);
+    // geometricComponent().setOffset(300, 300);
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.S2);
   }
