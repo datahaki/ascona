@@ -46,7 +46,7 @@ class Se2AnimationDemo extends ControlPointsDemo {
       } else
         setControlPointsSe2(snapshotUncentered);
     });
-    timerFrame.jToolBar.add(jToggleAnimate);
+    jToolBar().add(jToggleAnimate);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1.5, -1, -1}, {2, 1, 1}, {-0.5, 1.5, 2}, {-1, -1.5, -2}, {-1.5, 0, 0.3}}"));
   }
 

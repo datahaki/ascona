@@ -127,10 +127,10 @@ class ClassificationDemo extends ControlPointsDemo {
     int index = 0;
     for (Tensor point : sequence) {
       int label = Scalars.intValueExact(vector.Get(index));
-      PointsRender pointsRender = new PointsRender( //
+      new PointsRender( //
           COLOR_DATA_INDEXED_T.getColor(label), //
-          COLOR_DATA_INDEXED_O.getColor(label));
-      pointsRender.show(manifoldDisplay::matrixLift, shape, Tensors.of(point)).render(geometricLayer, graphics);
+          COLOR_DATA_INDEXED_O.getColor(label)) //
+              .show(manifoldDisplay::matrixLift, shape, Tensors.of(point)).render(geometricLayer, graphics);
       ++index;
     }
     // ---

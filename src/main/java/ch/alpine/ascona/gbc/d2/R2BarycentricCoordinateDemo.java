@@ -65,9 +65,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
   public R2BarycentricCoordinateDemo() {
     super(list());
     weightingsParam.logWeightings = LogWeightings.COORDINATE;
-    {
-      timerFrame.jToolBar.add(jToggleEntire);
-    }
+    jToolBar().add(jToggleEntire);
     setManifoldDisplay(ManifoldDisplays.R2);
     setControlPointsSe2(Tensors.fromString("{{0, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}}"));
   }

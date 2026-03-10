@@ -4,6 +4,7 @@ package ch.alpine.ascona.gbc.d2;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -61,7 +62,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
         else
           setControlPointsSe2(snapshot);
       });
-      timerFrame.jToolBar.add(jToggleAnimate);
+      jToolBar().add(jToggleAnimate);
     }
     setControlPointsSe2(Tensors.fromString("{{2, -3, 1.5}, {3, 5, 1}, {-4, -3, 1}, {-5, 3, 2}}"));
     setControlPointsSe2(Tensors.fromString( //
@@ -134,18 +135,12 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
         show.render(graphics, new Rectangle(100, 10, 100 + Unprotect.dimension1Hint(weights) * 2, 400));
       }
       // render grid lines functions
-      if (scatteredSetParam.arrows) {
-        graphics.setColor(Color.LIGHT_GRAY);
-        Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(Math.min(1, 3.0 / Math.sqrt(scatteredSetParam.refine))));
-        for (Tensor[] tensors : array)
-          for (int i1 = 0; i1 < array.length; ++i1) {
-            Tensor mean = tensors[i1];
-            geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
-            graphics.setColor(new Color(128, 128, 128, 64));
-            graphics.fill(geometricLayer.toPath2D(shape, true));
-            geometricLayer.popMatrix();
-          }
-      }
+      if (scatteredSetParam.arrows)
+        manifoldDisplay.showPoints( //
+            new Color(128, 128, 128, 64), new Color(128, 128, 128, 128), //
+            RealScalar.of(Math.min(1, 3.0 / Math.sqrt(scatteredSetParam.refine))), //
+            Tensor.of(Arrays.stream(array).flatMap(Arrays::stream))) //
+            .render(geometricLayer, graphics);
     }
     LeversRender leversRender = //
         LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);

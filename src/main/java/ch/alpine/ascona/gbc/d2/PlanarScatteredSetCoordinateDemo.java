@@ -40,7 +40,7 @@ final class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeighti
   // FIXME ASCONA the class structure is not correct, since log weighting is empty and not visible
   public PlanarScatteredSetCoordinateDemo() {
     super(List.of(LogWeightings.WEIGHTING));
-    FieldsEditor fieldsEditor = ToolbarFieldsEditor.addToComponent(dequeGenesisProperties, timerFrame.jToolBar);
+    FieldsEditor fieldsEditor = ToolbarFieldsEditor.addToComponent(dequeGenesisProperties, jToolBar());
     fieldsEditor.addUniversalListener(this::recompute);
     // ---
     TensorUnaryOperator tuo = PadRight.zeros(3);

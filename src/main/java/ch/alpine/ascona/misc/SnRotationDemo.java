@@ -98,7 +98,7 @@ class SnRotationDemo extends ManifoldDisplayDemo implements RenderInterface {
     super(param = new Param(), paran = new Paran());
     fieldsEditor(0).addUniversalListener(this::update);
     update();
-    GeometricComponent geometricComponent = timerFrame.geometricComponent;
+    GeometricComponent geometricComponent = geometricComponent();
     geometricComponent.addRenderInterfaceBackground(S2Display.INSTANCE.background());
     geometricComponent.addRenderInterface(this);
     Tensor pvm = PvmBuilder.rhs().setOffset(400, 400).setPerPixel(400).digest();

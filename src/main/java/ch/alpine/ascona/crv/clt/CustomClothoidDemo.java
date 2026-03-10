@@ -8,8 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
-import javax.swing.JLabel;
-
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.fig.ListPlot;
@@ -35,16 +33,11 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
 class CustomClothoidDemo extends ClothoidBaseDemo {
-  private static final Tensor INITIAL = Tensors.fromString("{{0,0,0},{3,0,0}}");
-  private final JLabel jLabel = new JLabel();
   private static final Scalar MIN_RESOLUTION = RealScalar.of(0.05);
   private static final Scalar SCALE = RealScalar.of(0.1);
-  // ---
 
   public CustomClothoidDemo() {
-    setControlPointsSe2(INITIAL);
-    timerFrame.jToolBar.add(jLabel);
-    // geometricComponent().setOffset(300, 700);
+    setControlPointsSe2(Tensors.fromString("{{0,0,0},{3,0,0}}"));
   }
 
   @Override
@@ -56,7 +49,7 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
     final ClothoidTangentDefect clothoidTangentDefect = ClothoidTangentDefect.of(clothoidContext);
     final ClothoidSolutions clothoidSolutions = new ClothoidSolutions(clothoidTangentDefect, clip);
     // ---
-    jLabel.setText("s1=" + clothoidContext.s1().maps(Round._4) + " s2=" + clothoidContext.s2().maps(Round._4));
+    String params = "s1=" + clothoidContext.s1().maps(Round._4) + " s2=" + clothoidContext.s2().maps(Round._4);
     // ---
     {
       geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.of(clothoidContext.s1(), clothoidContext.s2())));
@@ -78,6 +71,7 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
       leversRender.renderIndexP();
     }
     Show show = ClothoidTangentDefectShow.of(clothoidContext, clip).getShow();
+    show.setPlotLabel(params);
     Tensor lambdas = clothoidSolutions.lambdas();
     List<Clothoid> clothoids = ClothoidEmit.stream(clothoidContext, lambdas).toList();
     {
