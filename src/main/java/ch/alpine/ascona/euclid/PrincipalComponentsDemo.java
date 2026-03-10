@@ -10,6 +10,8 @@ import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -21,29 +23,51 @@ import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 class PrincipalComponentsDemo extends EuclideanPlaneDemo {
-  public PrincipalComponentsDemo() {
-    SpdNManifold spdNManifold = new SpdNManifold(2);
-    Tensor p = RandomSample.of(spdNManifold);
-    RandomSampleInterface rsi = MultinormalDistribution.of(p);
-    Tensor t = Tensors.vector(2, 0);
-    Tensor points = RandomSample.of(rsi, 30);
-    TensorUnaryOperator tuo = t::add;
-    setGeodesicControlPoints(tuo.slash(points));
-    geometricComponent().addRenderInterfaceBackground(AxesRender.INSTANCE);
+  @ReflectionMarker
+  static class Param {
+    @FieldSelectionArray({ "5", "10", "20", "30" })
+    public Integer numel = 30;
+    public transient Boolean shuffle = true;
   }
 
-  @Override
-  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Tensor points = getGeodesicControlPoints();
-    Tensor tensor = PrincipalComponents.of(points);
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    manifoldDisplay.showPoints(Color.LIGHT_GRAY, Color.GRAY, RealScalar.of(0.6), tensor) //
-        .render(geometricLayer, graphics);
+  private final Param param;
+
+  public PrincipalComponentsDemo() {
+    super(param = new Param());
+    fieldsEditor(0).addUniversalListener(this::shuffle);
+    geometricComponent().addRenderInterfaceBackground(AxesRender.INSTANCE);
+    shuffle();
+  }
+
+  void shuffle() {
+    SpdNManifold spdNManifold = new SpdNManifold(2);
+    Tensor p = RandomSample.of(spdNManifold);
+    p = Tensors.fromString("{{2,2},{2,1}}");
+    RandomSampleInterface rsi = MultinormalDistribution.of(p);
+    Tensor t = Tensors.vector(4, 0);
+    Tensor points = RandomSample.of(rsi, param.numel);
+    TensorUnaryOperator tuo = t::add;
+    setGeodesicControlPoints(tuo.slash(points));
   }
 
   @Override
   protected ControlPointType controlPointType() {
     return ControlPointTypes.SCATTERED;
+  }
+
+  @Override
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    Tensor points = getGeodesicControlPoints();
+    PrincipalComponents pc = PrincipalComponents.of(points);
+    Tensor tensor = pc.unscaled();
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    manifoldDisplay.showPoints(Color.LIGHT_GRAY, Color.GRAY, RealScalar.of(0.8), tensor) //
+        .render(geometricLayer, graphics);
+    Tensor slash = pc.scaled_directions();
+    graphics.setColor(Color.BLUE);
+    Tensor mean = pc.mean();
+    graphics.draw(geometricLayer.toLine2D(mean, mean.add(slash.get(0))));
+    graphics.draw(geometricLayer.toLine2D(mean, mean.add(slash.get(1))));
   }
 
   static void main() {
