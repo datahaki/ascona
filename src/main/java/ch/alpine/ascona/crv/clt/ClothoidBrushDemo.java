@@ -116,7 +116,7 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
           graphics.fill(path2d);
         }
         geometricLayer.popMatrix();
-        graphics.setStroke(new BasicStroke(1));
+        graphics.setStroke(new BasicStroke());
       }
     }
     {

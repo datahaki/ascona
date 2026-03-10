@@ -128,14 +128,15 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
     } catch (Exception e) {
       System.err.println("mean iteration failed");
     }
-    graphics.setColor(Color.LIGHT_GRAY);
-    graphics.setStroke(STROKE);
-    if (Objects.nonNull(mean))
+    if (Objects.nonNull(mean)) {
+      graphics.setColor(Color.LIGHT_GRAY);
+      graphics.setStroke(STROKE);
       for (Tensor point : sequence) {
         Tensor curve = Subdivide.of(0, 1, 20).maps(homogeneousSpace.curve(point, mean));
-        graphics.draw(geometricLayer.toPath2D(Tensor.of(curve.stream().map(manifoldDisplay::point2xy))));
+        graphics.draw(geometricLayer.toPath2D(manifoldDisplay.point2xy().slash(curve)));
       }
-    graphics.setStroke(new BasicStroke(1));
+    }
+    graphics.setStroke(new BasicStroke());
     if (param0.median) {
       Map<Biinvariants, Biinvariant> map = Biinvariants.all(homogeneousSpace);
       Biinvariant biinvariant = map.getOrDefault(param0.biinvariants, Biinvariants.USANCE.ofSafe(homogeneousSpace));

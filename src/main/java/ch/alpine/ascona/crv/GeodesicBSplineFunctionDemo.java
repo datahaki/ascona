@@ -59,7 +59,7 @@ class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedI
           .render(geometricLayer, graphics);
     }
     Tensor refined = Subdivide.of(0, upper, Math.max(1, upper * (1 << levels))).maps(scalarTensorFunction);
-    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
+    Tensor render = manifoldDisplay.point2xy().slash(refined);
     Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (levels < 5)
       ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);

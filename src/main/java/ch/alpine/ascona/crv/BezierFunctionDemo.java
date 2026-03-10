@@ -69,12 +69,12 @@ class BezierFunctionDemo extends PointSequenceDemo {
           // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
           if (Objects.nonNull(homogeneousSpace)) {
             Tensor refined = domain.maps(BezierCurve.of(homogeneousSpace.biinvariantMean(), sequence));
-            Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
+            Tensor render = manifoldDisplay.point2xy().slash(refined);
             new PathRender(Color.RED, 1.25f).setCurve(render, false).render(geometricLayer, graphics);
           }
         }
         Tensor refined = domain.maps(new BezierFunction(geodesicSpace, sequence));
-        Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
+        Tensor render = manifoldDisplay.point2xy().slash(refined);
         Curvature2DRender.of(render, false).render(geometricLayer, graphics);
         if (levels < 5)
           ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);

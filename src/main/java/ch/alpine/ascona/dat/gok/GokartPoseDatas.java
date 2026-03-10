@@ -1,11 +1,11 @@
 // code by jph
 package ch.alpine.ascona.dat.gok;
 
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 
 public enum GokartPoseDatas {
   ;
   public static final Tensor HANGAR_MODEL2PIXEL = //
-      Tensors.fromString("{{7.5, 0, 100}, {0, -7.5, 800}, {0, 0, 1}}");
+      PvmBuilder.rhs().setOffset(100, 800).setPerPixel(7.5).digest();
 }

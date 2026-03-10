@@ -141,7 +141,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
             .map(manifoldDisplay::point2xy));
         graphics.draw(geometricLayer.toPath2D(points));
       }
-      graphics.setStroke(new BasicStroke(1));
+      graphics.setStroke(new BasicStroke());
     }
     POINTS_RENDER_POINTS //
         .show(manifoldDisplay::matrixLift, shapeOrigin(), origin) //

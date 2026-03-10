@@ -92,7 +92,7 @@ class ClothoidTransitionDemo extends ClothoidSequenceDemo {
         Tensor lo = Tensor.of(center.stream().map(ofs.negate()::add));
         graphics.setColor(new Color(128, 128, 128, 64));
         Path2D path2d = geometricLayer.toPath2D(Join.of(hi, Reverse.of(lo)), true);
-        graphics.setStroke(new BasicStroke(1));
+        graphics.setStroke(new BasicStroke());
         graphics.fill(path2d);
       }
     }

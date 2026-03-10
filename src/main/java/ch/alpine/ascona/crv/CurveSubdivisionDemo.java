@@ -2,6 +2,7 @@
 package ch.alpine.ascona.crv;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,7 @@ import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
@@ -43,6 +45,14 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
 
   public CurveSubdivisionDemo() {
     super(param = new Param());
+  }
+
+  // this runnable causes to center (0,0) in the component center
+  void center() {
+    Dimension dimension = getSize();
+    // IO.println("CALLED " + geometricComponent().getSize());
+    Tensor pvm = PvmBuilder.rhs().setOffset(dimension.width / 2, dimension.height / 2).setPerPixel(100).digest();
+    geometricComponent().setModel2Pixel(pvm);
   }
 
   @Override
@@ -82,7 +92,7 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
         GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
         PATH_RENDER.setCurve(Nest.of(new BSpline1CurveSubdivision(geodesicSpace).auto(cyclic), control, 8), cyclic).render(geometricLayer, graphics);
       }
-      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
+      Tensor render = manifoldDisplay.point2xy().slash(refined);
       Curvature2DRender.of(render, cyclic, param.comb).render(geometricLayer, graphics);
       if (levels < 5)
         ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);

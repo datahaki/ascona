@@ -51,7 +51,7 @@ class DubinsTransitionDemo extends ControlPointsDemo {
     List<DubinsPath> list = dubinsPathGenerator.stream().toList();
     Scalar minResolution = geometricLayer.pixel2modelFactor(RealScalar.of(5));
     {
-      graphics.setStroke(new BasicStroke(1));
+      graphics.setStroke(new BasicStroke());
       for (DubinsPath dubinsPath : list) {
         DubinsType dubinsType = dubinsPath.dubinsType();
         graphics.setColor(COLOR_DATA_INDEXED.getColor(dubinsType.ordinal()));

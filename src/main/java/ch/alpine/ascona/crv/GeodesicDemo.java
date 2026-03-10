@@ -19,11 +19,14 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.sca.Round;
 
 class GeodesicDemo extends ControlPointsDemo {
   private static final Color COLOR = new Color(128, 128, 128, 128);
@@ -70,6 +73,19 @@ class GeodesicDemo extends ControlPointsDemo {
     Tensor p = points.get(0);
     Tensor q = points.get(1);
     ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(p, q);
+    {
+      Tensor domain = Subdivide.of(0, 1, 30);
+      Tensor points2 = domain.maps(scalarTensorFunction);
+      Tensor xys = manifoldDisplay.point2xy().slash(points2);
+      graphics.setColor(new Color(128, 255, 0));
+      graphics.setStroke(new BasicStroke(1.5f));
+      graphics.draw(geometricLayer.toPath2D(xys));
+    }
+    if (geodesicSpace instanceof TensorMetric tensorMetric) {
+      Scalar pseudoDistance = tensorMetric.distance(p, q);
+      graphics.setColor(Color.DARK_GRAY);
+      graphics.drawString("" + pseudoDistance.maps(Round._4), 10, 20);
+    }
     manifoldDisplay.showPoints(COLOR, COLOR, RealScalar.ONE, Subdivide.of(0, 1, param.splits).maps(scalarTensorFunction)) //
         .render(geometricLayer, graphics);
     {
@@ -79,13 +95,13 @@ class GeodesicDemo extends ControlPointsDemo {
     }
     if (param.comb) {
       Tensor refined = Subdivide.of(0, 1, param.splits * 6).maps(scalarTensorFunction);
-      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
+      Tensor render = manifoldDisplay.point2xy().slash(refined);
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     }
     if (param.extrapolation) {
       {
         Tensor refined = Subdivide.of(1, 1.5, param.splits * 3).maps(scalarTensorFunction);
-        Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
+        Tensor render = manifoldDisplay.point2xy().slash(refined);
         // CurveCurvatureRender.of(render, false, geometricLayer, graphics);
         pathRender.setCurve(render, false);
         pathRender.render(geometricLayer, graphics);

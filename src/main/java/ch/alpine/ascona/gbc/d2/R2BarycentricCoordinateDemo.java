@@ -104,7 +104,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
         Path2D path2d = geometricLayer.toPath2D(hull);
         path2d.closePath();
         graphics.draw(path2d);
-        graphics.setStroke(new BasicStroke(1));
+        graphics.setStroke(new BasicStroke());
       }
       Sedarim sedarim = weightingsParam.operator(manifoldDisplay.manifold(), domain);
       Tensor min = Entrywise.min().of(hull).maps(RealScalar.of(0.01)::add);

@@ -55,7 +55,7 @@ class DeBoorDemo extends AbstractCurveDemo {
       manifoldDisplay.showPoints(Color.DARK_GRAY, Color.BLACK, RealScalar.ONE, Tensors.of(selected)) //
           .render(geometricLayer, graphics);
     }
-    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
+    Tensor render = manifoldDisplay.point2xy().slash(refined);
     Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (levels < 5)
       ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
