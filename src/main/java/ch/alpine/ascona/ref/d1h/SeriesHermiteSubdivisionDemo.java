@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascony.api.HermiteSubdivisions;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.win.ControlPointType;

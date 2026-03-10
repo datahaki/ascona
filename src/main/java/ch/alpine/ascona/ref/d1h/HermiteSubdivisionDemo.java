@@ -7,8 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
-import ch.alpine.ascony.api.HermiteSubdivisionParam;
-import ch.alpine.ascony.api.HermiteSubdivisions;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2Display;

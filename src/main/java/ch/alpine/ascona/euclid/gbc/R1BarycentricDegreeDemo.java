@@ -33,12 +33,12 @@ import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.ply.InterpolatingPolynomial;
 
-public class R1BarycentricDegreeDemo extends ControlPointsDemo {
+class R1BarycentricDegreeDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public Boolean lagrange = true;
     @FieldClip(min = "0", max = "4")
     public Integer degree = 1;

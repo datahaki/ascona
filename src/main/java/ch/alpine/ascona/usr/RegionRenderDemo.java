@@ -23,6 +23,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.Round;
 
 @ReflectionMarker
 public class RegionRenderDemo implements ManipulateProvider {
@@ -62,6 +63,7 @@ public class RegionRenderDemo implements ManipulateProvider {
       GridRender gridRender = new GridRender(geometricComponent::getSize);
       geometricComponent.addRenderInterfaceBackground(gridRender);
     }
+    geometricComponent.addRenderInterfaceBackground(new MatRender(g -> g.getMatrix().maps(Round._1)));
   }
 
   @Override

@@ -27,7 +27,7 @@ import ch.alpine.tensor.pdf.RandomSample;
 
 class BipartiteMatchingDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldClip(min = "1", max = "200")
     public Integer n = 5;
     @FieldFuse

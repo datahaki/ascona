@@ -48,7 +48,7 @@ class DubinsPathDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public Boolean allDubins = false;
     public Boolean relax = true;
     public Boolean shortest = true;

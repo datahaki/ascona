@@ -49,9 +49,9 @@ import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
-public final class D2AveragingDemo extends ControlPointsDemo {
+final class D2AveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })

@@ -29,9 +29,9 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** TODO ASCONA ALG investigate, this produces some nice results for kriging+metric+power */
-public class R1RadialBasisFunctionDemo extends ControlPointsDemo {
+class R1RadialBasisFunctionDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public LogWeightings logWeightings = LogWeightings.WEIGHTING;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;

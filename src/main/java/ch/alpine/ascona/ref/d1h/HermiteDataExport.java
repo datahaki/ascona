@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.aurora;
+package ch.alpine.ascona.ref.d1h;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,7 +7,6 @@ import java.nio.file.Path;
 
 import ch.alpine.ascona.dat.gok.GokartPosVel;
 import ch.alpine.ascona.dat.gok.PosVelHz;
-import ch.alpine.ascony.api.HermiteSubdivisions;
 import ch.alpine.sophis.crv.d2.Curvature2D;
 import ch.alpine.sophis.math.Do;
 import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
