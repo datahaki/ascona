@@ -11,6 +11,7 @@ import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -32,7 +33,8 @@ class SpiralDemo implements ManipulateProvider, RenderInterface {
   public SpiralDemo() {
     geometricComponent.addRenderInterfaceBackground(new GridRender(geometricComponent::getSize));
     geometricComponent.addRenderInterface(this);
-    // geometricComponent.setPerPixel(RealScalar.of(100));
+    Tensor pvm = PvmBuilder.rhs().setOffset(300, 300).setPerPixel(150).digest();
+    geometricComponent.setModel2Pixel(pvm);
   }
 
   @Override

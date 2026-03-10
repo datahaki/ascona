@@ -14,6 +14,7 @@ import ch.alpine.ascony.arp.CenterNorms;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -64,8 +65,8 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
   public DbscanDemo() {
     geometricComponent.addRenderInterfaceBackground(new GridRender(geometricComponent::getSize));
     geometricComponent.addRenderInterface(this);
-    // geometricComponent.setOffset(100, 600);
-    // geometricComponent.setPerPixel(RealScalar.of(50));
+    Tensor pvm = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(50).digest();
+    geometricComponent.setModel2Pixel(pvm);
   }
 
   Tensor recomp1() {
