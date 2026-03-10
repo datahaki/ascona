@@ -8,4 +8,6 @@ public enum GokartPoseDatas {
   ;
   public static final Tensor HANGAR_MODEL2PIXEL = //
       PvmBuilder.rhs().setOffset(100, 800).setPerPixel(7.5).digest();
+  // public static final Tensor HANGAR_MODEL2PIXEL = //
+  // PvmBuilder.rhs().setOffset(100, 800).setPerPixel(Quantity.of(7.5, "m^-1")).digest();
 }

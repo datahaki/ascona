@@ -142,12 +142,17 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       Biinvariant biinvariant = map.getOrDefault(param0.biinvariants, Biinvariants.USANCE.ofSafe(homogeneousSpace));
       Sedarim sedarim = biinvariant.weighting(InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(), sedarim, Chop._05);
-      Optional<Tensor> optional = spatialMedian.uniform(sequence);
-      if (optional.isPresent()) {
-        Tensor median = optional.orElseThrow();
-        new PointsRender(COLOR_DATA_INDEXED_FILL.getColor(1), COLOR_DATA_INDEXED_DRAW.getColor(1)) //
-            .show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.7)), Tensors.of(median)) //
-            .render(geometricLayer, graphics);
+      try {
+        Optional<Tensor> optional = spatialMedian.uniform(sequence);
+        if (optional.isPresent()) {
+          Tensor median = optional.orElseThrow();
+          new PointsRender(COLOR_DATA_INDEXED_FILL.getColor(1), COLOR_DATA_INDEXED_DRAW.getColor(1)) //
+              .show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.7)), Tensors.of(median)) //
+              .render(geometricLayer, graphics);
+        }
+      } catch (Exception e) {
+        graphics.setColor(Color.RED);
+        graphics.drawString("spatial mean does not exist", 0, 50);
       }
     }
     if (param0.vehicle) {

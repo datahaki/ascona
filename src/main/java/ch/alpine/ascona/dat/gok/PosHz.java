@@ -13,6 +13,10 @@ import ch.alpine.tensor.red.Mean;
 
 public class PosHz implements Serializable {
   private static final TensorUnaryOperator EXTRACT = row -> row.extract(1, 4);
+  // private static final TensorUnaryOperator EXTRACT_WITH_UNITS = row -> Tensors.of( //
+  // Quantity.of(row.Get(1), "m"), //
+  // Quantity.of(row.Get(2), "m"), //
+  // row.Get(3));
   private final Tensor tensor;
 
   public PosHz(Tensor tensor) {

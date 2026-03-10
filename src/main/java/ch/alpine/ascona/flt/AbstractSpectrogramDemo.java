@@ -16,7 +16,7 @@ import ch.alpine.ascona.dat.gok.PosHz;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.FixGridRender;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
@@ -33,7 +33,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Range;
-import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.fft.SpectrogramArray;
@@ -46,7 +45,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
   private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
-  private static final FixGridRender GRID_RENDER = new FixGridRender(Subdivide.of(0, 100, 10));
 
   @ReflectionMarker
   static class SpecParam {
@@ -76,7 +74,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     fieldsEditor(0).addUniversalListener(this::updateState);
     updateState();
     // ---
-    geometricComponent().addRenderInterfaceBackground(GRID_RENDER);
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
     geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
   }
 

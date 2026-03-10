@@ -21,7 +21,7 @@ public final class GokartPosParam {
 
   public GokartPosParam() {
     String name = "tpq/20Hz/20180827T170643_5.csv";
-    string = name; // keys().getFirst();
+    string = keys().contains(name) ? name : keys().getFirst();
   }
 
   public PosHz getPosHz() {
