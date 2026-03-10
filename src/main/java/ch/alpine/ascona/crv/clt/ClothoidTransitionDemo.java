@@ -34,7 +34,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class ClothoidTransitionDemo extends ClothoidSequenceDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public Boolean ctrl = true;
     @FieldSlider
     @FieldClip(min = "0.01", max = "1")

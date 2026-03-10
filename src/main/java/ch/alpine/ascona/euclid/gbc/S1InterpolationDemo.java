@@ -40,7 +40,7 @@ import ch.alpine.tensor.sca.Clips;
 
 public class S1InterpolationDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSelectionCallback("logWeightings")
     public LogWeightings logWeightings = LogWeightings.WEIGHTING;
     @FieldSelectionCallback("biinvariants")

@@ -7,7 +7,7 @@ import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
 
 @ReflectionMarker
-public class CurveSubdivisionParam {
+class CurveSubdivisionParam {
   public static final CurveSubdivisionParam GLOBAL = new CurveSubdivisionParam();
   // ---
   @FieldSelectionArray({ "1/100", "1/10", "1/8", "1/6", "1/4", "1/3", "1/2", "2/3", "9/10", "99/100" })

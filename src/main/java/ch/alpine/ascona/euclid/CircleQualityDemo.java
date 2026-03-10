@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 @ReflectionMarker
-public class CircleQualityDemo implements ManipulateProvider {
+class CircleQualityDemo implements ManipulateProvider {
   @FieldSlider
   @FieldClip(min = "1", max = "40")
   public Scalar quality = RealScalar.of(10);

@@ -46,13 +46,13 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.N;
 
 // FIXME ASCONA DEMO what does this demo do: there is no curve shown
-public class S1KrigingDemo extends ControlPointsDemo {
+class S1KrigingDemo extends ControlPointsDemo {
   private static final double RANGE = 2;
   private static final Tensor DOMAIN = Drop.tail(CirclePoints.of(161).maps(N.DOUBLE), 80);
   private static final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public LogWeightings logWeightings = LogWeightings.KRIGING;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;

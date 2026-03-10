@@ -35,9 +35,9 @@ import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 // TODO ASCONA DEMO behaves counter intuitively!?
-public class R1KrigingDemo extends ControlPointsDemo {
+class R1KrigingDemo extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public LogWeightings logWeightings = LogWeightings.WEIGHTING;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean type = false;

@@ -29,9 +29,9 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Timing;
 
-public class ClothoidEvolution extends ControlPointsDemo {
+class ClothoidEvolution extends ControlPointsDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     @FieldSelectionArray({ "0.05", "0.1", "0.2", "0.3", "0.4", "0.5" })
     public Scalar beta = RealScalar.of(0.05);
     public Boolean animate = true;

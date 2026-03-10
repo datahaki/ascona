@@ -26,7 +26,7 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
 @ReflectionMarker
-public class RegionRenderDemo implements ManipulateProvider {
+class RegionRenderDemo implements ManipulateProvider {
   private final GeometricComponent geometricComponent = new GeometricComponent();
 
   public RegionRenderDemo() {

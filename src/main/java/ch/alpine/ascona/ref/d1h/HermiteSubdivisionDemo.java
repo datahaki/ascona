@@ -38,7 +38,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.red.Mean;
 
-public class HermiteSubdivisionDemo extends ControlPointsDemo {
+class HermiteSubdivisionDemo extends ControlPointsDemo {
   // TODO ASCONA redundant
   private static final PointsRender POINTS_RENDER_0 = //
       new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
@@ -47,7 +47,7 @@ public class HermiteSubdivisionDemo extends ControlPointsDemo {
 
   // ---
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
     public final HermiteSubdivisionParam hsp = HermiteSubdivisionParam.GLOBAL;
     @FieldSlider

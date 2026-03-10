@@ -26,9 +26,9 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
-/* package */ abstract class A1BarycentricCoordinateDemo extends EuclideanPlaneDemo {
+abstract class A1BarycentricCoordinateDemo extends EuclideanPlaneDemo {
   @ReflectionMarker
-  public static class Param {
+  static class Param {
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
