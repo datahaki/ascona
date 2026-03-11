@@ -1,10 +1,7 @@
 // code by jph, ob
 package ch.alpine.ascona.flt;
 
-import java.awt.Graphics2D;
-
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.flt.CenterFilter;
@@ -36,7 +33,7 @@ class BiinvariantMeanCenterDemo extends AbstractSpectrogramDemo {
   }
 
   @Override // from RenderInterface
-  protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  protected Tensor process(Tensor control) {
     ScalarUnaryOperator smoothingKernel = specParam.kernel.get();
     BiinvariantMean biinvariantMean = param.means;
     if (getSelectedMD().equals(ManifoldDisplays.R2)) {
@@ -45,7 +42,7 @@ class BiinvariantMeanCenterDemo extends AbstractSpectrogramDemo {
     TensorUnaryOperator tensorUnaryOperator = BiinvariantMeanCenter.of(biinvariantMean, smoothingKernel);
     return Nest.of( //
         new CenterFilter(tensorUnaryOperator, specParam.radius), //
-        control(), param.radius);
+        control, param.radius);
   }
 
   static void main() {

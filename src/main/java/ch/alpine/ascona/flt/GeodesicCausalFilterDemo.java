@@ -1,10 +1,7 @@
 // code by ob
 package ch.alpine.ascona.flt;
 
-import java.awt.Graphics2D;
-
 import ch.alpine.ascony.api.GeodesicCausalFilters;
-import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -43,7 +40,7 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
   }
 
   @Override // from RenderInterface
-  protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  protected Tensor process(Tensor control) {
     final int radius = specParam.radius;
     GeodesicSpace geodesicSpace = manifoldDisplay().geodesicSpace();
     if (0 < radius) {
@@ -63,9 +60,9 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
       case BIINVARIANT_MEAN_IIR -> BiinvariantMeanIIRnFilter.of( //
           biinvariantMean, WindowSideExtrapolation.of(windowFunctions), geodesicSpace, radius, alpha());
       };
-      return tuo.apply(control());
+      return tuo.apply(control);
     }
-    return control();
+    return control;
   }
 
   private Scalar alpha() {

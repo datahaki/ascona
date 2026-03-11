@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.flt;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
@@ -9,7 +8,6 @@ import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymLinkImages;
 import ch.alpine.ascony.sym.SymSequence;
-import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -38,10 +36,10 @@ class Regularization2StepDemo extends AbstractSpectrogramDemo implements Buffere
   }
 
   @Override // from AbstractDatasetFilterDemo
-  public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  public Tensor process(Tensor control) {
     Regularization2Step regularization2Step = new Regularization2Step(manifoldDisplay().geodesicSpace(), //
         N.DOUBLE.apply(ratio.ratio));
-    return regularization2Step.string(control());
+    return regularization2Step.string(control);
   }
 
   @Override // from UniformDatasetFilterDemo

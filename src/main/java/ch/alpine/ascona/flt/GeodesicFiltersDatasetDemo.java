@@ -1,14 +1,12 @@
 // code by jph, ob
 package ch.alpine.ascona.flt;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.api.GeodesicFilters;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.sym.SymLinkImages;
-import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.flt.CenterFilter;
@@ -32,14 +30,14 @@ class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implements Buff
   }
 
   @Override // from RenderInterface
-  protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
+  protected Tensor process(Tensor control) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     ScalarUnaryOperator smoothingKernel = specParam.kernel.get();
     GeodesicFilters geodesicFilters = param.gf;
     TensorUnaryOperator tensorUnaryOperator = geodesicFilters.supply(manifoldDisplay.geodesicSpace(), smoothingKernel);
     return Nest.of( //
         new CenterFilter(tensorUnaryOperator, specParam.radius), //
-        control(), param.radius);
+        control, param.radius);
   }
 
   @Override // from BufferedImageSupplier

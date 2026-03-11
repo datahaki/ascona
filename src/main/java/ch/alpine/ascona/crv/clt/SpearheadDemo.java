@@ -13,6 +13,9 @@ import ch.alpine.bridge.fig.PlotOption;
 import ch.alpine.bridge.fig.PolygonPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldSlider;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.d2.PolygonArea;
 import ch.alpine.sophis.crv.d2.PolygonCentroid;
 import ch.alpine.sophis.crv.d2.PolygonNormalize;
@@ -27,7 +30,17 @@ import ch.alpine.tensor.sca.Round;
 class SpearheadDemo extends ClothoidBaseDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(128);
 
+  @ReflectionMarker
+  static class Param {
+    @FieldSlider
+    @FieldClip(min = "0.1", max = "30")
+    public Scalar pix2mod = RealScalar.of(10);
+  }
+
+  private final Param param;
+
   public SpearheadDemo() {
+    super(param = new Param());
     setControlPointsSe2(Tensors.fromString("{{-0.5, -0.5, 0.3}}"));
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
@@ -35,7 +48,7 @@ class SpearheadDemo extends ClothoidBaseDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();
-    Scalar res = geometricLayer.pixel2modelFactor(RealScalar.of(10));
+    Scalar res = geometricLayer.pixel2modelFactor(param.pix2mod);
     Tensor polygon = Spearhead.of(control.get(0), res);
     graphics.setColor(COLOR_DATA_INDEXED.getColor(1));
     graphics.fill(geometricLayer.toPath2D(polygon));

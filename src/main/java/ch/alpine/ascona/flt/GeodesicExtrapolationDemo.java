@@ -1,7 +1,6 @@
 // code by ob
 package ch.alpine.ascona.flt;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.api.BufferedImageSupplier;
@@ -10,34 +9,23 @@ import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymLinkImages;
 import ch.alpine.ascony.sym.SymSequence;
-import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.flt.ga.GeodesicExtrapolation;
 import ch.alpine.sophis.flt.ga.GeodesicExtrapolationFilter;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
-  private Tensor refined = Tensors.empty();
-
   public GeodesicExtrapolationDemo() {
     super(new Object());
-    fieldsEditor(0).addUniversalListener(this::updateStateSpec);
-    fieldsEditor(1).addUniversalListener(this::updateStateSpec);
-    updateStateSpec();
-  }
-
-  private void updateStateSpec() {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    TensorUnaryOperator tensorUnaryOperator = //
-        GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), specParam.kernel.get());
-    refined = GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesicSpace(), specParam.radius).apply(control());
   }
 
   @Override // from RenderInterface
-  protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    return refined;
+  protected Tensor process(Tensor control) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    TensorUnaryOperator tensorUnaryOperator = //
+        GeodesicExtrapolation.of(manifoldDisplay.geodesicSpace(), specParam.kernel.get());
+    return GeodesicExtrapolationFilter.of(tensorUnaryOperator, manifoldDisplay.geodesicSpace(), specParam.radius).apply(control);
   }
 
   @Override // from BufferedImageSupplier

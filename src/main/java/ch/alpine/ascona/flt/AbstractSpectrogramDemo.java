@@ -85,7 +85,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Tensor control = control();
+    final Tensor control = posHz.getPoseSequence().getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     final Tensor shape = manifoldDisplay.shape().multiply(markerScale());
     boolean conv = specParam.conv;
@@ -101,7 +101,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
           .show(manifoldDisplay::matrixLift, shape, control) //
           .render(geometricLayer, graphics);
     }
-    final Tensor refined = protected_render(geometricLayer, graphics);
+    final Tensor refined = process(control);
     // ---
     if (this instanceof BufferedImageSupplier bufferedImageSupplier && //
         specParam.symi) {
@@ -133,10 +133,6 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
 
   protected final void updateState() {
     posHz = gokartPosParam.getPosHz();
-  }
-
-  protected final Tensor control() {
-    return posHz.getPoseSequence().getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
   }
 
   private static final ColorDataGradient COLOR_DATA_GRADIENT = //
@@ -177,5 +173,5 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     }
   }
 
-  protected abstract Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics);
+  protected abstract Tensor process(Tensor control);
 }
