@@ -59,10 +59,8 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     public Integer width = 2;
 
     public TensorUnaryOperator filter(GeodesicSpace geodesicSpace) {
-      // the use of geodesic center gives the option to a greater filter radius
-      TensorUnaryOperator geodesicCenter = GeodesicCenter.of(geodesicSpace, windowFunctions.get());
-      // geodesicCenter = BiinvariantMeanCenter.of(homogeneousSpace.biinvariantMean(), WindowFunctions.GAUSSIAN.get());
-      return new CenterFilter(geodesicCenter, width);
+      // the use of GeodesicCenter gives the option to a greater filter radius
+      return new CenterFilter(GeodesicCenter.of(geodesicSpace, windowFunctions.get()), width);
     }
   }
 
@@ -84,6 +82,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     super(gokartPosParam = new GokartPosParam(), param = new Param(), paran = new Paran());
     fieldsEditor(0).addUniversalListener(this::updateState);
     fieldsEditor(1).addUniversalListener(this::updateState);
+    addChangeListener(this::updateState);
     updateState();
     // ---
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));

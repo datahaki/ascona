@@ -9,6 +9,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -47,12 +48,8 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
   private final Param param;
 
   public R1BarycentricDegreeDemo() {
-    this(new Param());
-  }
-
-  public R1BarycentricDegreeDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(this.param = new Param());
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 2, 0}}"));
   }
@@ -86,7 +83,7 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
       // ---
       Tensor domain = domain(support);
       if (param.lagrange) {
-        ScalarTensorFunction geodesicNeville = InterpolatingPolynomial.of(manifoldDisplay.geodesicSpace(), support).scalarTensorFunction(funceva);
+        ScalarTensorFunction geodesicNeville = InterpolatingPolynomial.of(support).scalarTensorFunction(funceva);
         Tensor basis = domain.maps(geodesicNeville);
         {
           Tensor curve = Transpose.of(Tensors.of(domain, basis));
@@ -99,7 +96,7 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
       Tensor basis = domain.maps(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));
-        new PathRender(Color.BLUE, 1.25f).setCurve(curve, false).render(geometricLayer, graphics);
+        new PathRender(Color.BLUE, 2f).setCurve(curve, false).render(geometricLayer, graphics);
       }
       ColorDataIndexed colorDataIndexed = ColorDataLists._097.cyclic();
       for (int index = 0; index < funceva.length(); ++index) {
