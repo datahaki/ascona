@@ -36,6 +36,8 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
+import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 
 @ReflectionMarker
 class StMeetsClothoids implements ManipulateProvider, RenderInterface {
@@ -46,6 +48,7 @@ class StMeetsClothoids implements ManipulateProvider, RenderInterface {
   @FieldSlider
   @FieldClip(min = "-10", max = "10")
   public Scalar split = RealScalar.of(0.2);
+  public Clip clip = Clips.absolute(15.0);
   // ---
   private final GeometricComponent geometricComponent = new GeometricComponent();
 
@@ -69,7 +72,7 @@ class StMeetsClothoids implements ManipulateProvider, RenderInterface {
     // IO.println(Pretty.of(sequence.maps(Round._3)));
     graphics.setColor(Color.BLUE);
     graphics.setStroke(new BasicStroke(1.5f));
-    ClothoidBuilder clothoidBuilder = PriorityClothoid.of(cc);
+    ClothoidBuilder clothoidBuilder = new PriorityClothoid(cc, clip);
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor end = sequence.get(index);
       Clothoid clothoid = clothoidBuilder.curve(beg, end);

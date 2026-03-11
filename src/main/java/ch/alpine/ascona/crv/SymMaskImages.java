@@ -8,12 +8,12 @@ import java.util.function.Function;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymSequence;
+import ch.alpine.sophis.api.CurveOperator;
 import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophis.ref.d1.BSpline2CurveSubdivision;
 import ch.alpine.sophis.ref.d1.BSpline3CurveSubdivision;
 import ch.alpine.sophis.ref.d1.BSpline4CurveSubdivision;
 import ch.alpine.sophis.ref.d1.BSpline5CurveSubdivision;
-import ch.alpine.sophis.ref.d1.CurveSubdivision;
 import ch.alpine.sophis.ref.d1.DualC2FourPointCurveSubdivision;
 import ch.alpine.sophis.ref.d1.HormannSabinCurveSubdivision;
 import ch.alpine.sophis.ref.d1.LaneRiesenfeld3CurveSubdivision;
@@ -42,12 +42,12 @@ import ch.alpine.tensor.Tensor;
   C2CUBIC(DualC2FourPointCurveSubdivision::cubic, 6, 2, 3), //
   SIXPOINT(SixPointCurveSubdivision::new, 6, 0, 5);
 
-  private final Function<GeodesicSpace, CurveSubdivision> function;
+  private final Function<GeodesicSpace, CurveOperator> function;
   private final int support;
   private final int index0;
   private final int index1;
 
-  SymMaskImages(Function<GeodesicSpace, CurveSubdivision> function, int support, int index0, int index1) {
+  SymMaskImages(Function<GeodesicSpace, CurveOperator> function, int support, int index0, int index1) {
     this.function = function;
     this.support = support;
     this.index0 = index0;
@@ -55,7 +55,7 @@ import ch.alpine.tensor.Tensor;
   }
 
   private BufferedImage bufferedImage(int index) {
-    CurveSubdivision curveSubdivision = function.apply(SymGeodesic.INSTANCE);
+    CurveOperator curveSubdivision = function.apply(SymGeodesic.INSTANCE);
     Tensor vector = SymSequence.of(support);
     Tensor tensor = curveSubdivision.cyclic(vector);
     return new SymLinkImage(tensor.Get(index)).bufferedImage();

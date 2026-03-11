@@ -7,11 +7,11 @@ import java.nio.file.Path;
 
 import ch.alpine.ascona.dat.gok.GokartPosVel;
 import ch.alpine.ascona.dat.gok.PosVelHz;
+import ch.alpine.sophis.api.CurveOperator;
 import ch.alpine.sophis.crv.d2.Curvature2D;
 import ch.alpine.sophis.math.Do;
 import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophis.ref.d1.BSpline2CurveSubdivision;
-import ch.alpine.sophis.ref.d1.CurveSubdivision;
 import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
 import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.lie.LieGroup;
@@ -64,7 +64,7 @@ import ch.alpine.tensor.red.Nest;
     Export.of(folder.resolve("control_domain.mathematica"), domain);
   }
 
-  private void process(HermiteSubdivision hermiteSubdivision, CurveSubdivision curveSubdivision, String name) throws IOException {
+  private void process(HermiteSubdivision hermiteSubdivision, CurveOperator curveSubdivision, String name) throws IOException {
     TensorIteration tensorIteration = //
         hermiteSubdivision.string(delta, control);
     Path dst = folder.resolve(name);
@@ -87,37 +87,37 @@ import ch.alpine.tensor.red.Nest;
     {
       HermiteSubdivision hermiteSubdivision = //
           HermiteSubdivisions.H1STANDARD.supply(lieGroup);
-      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RGroup.INSTANCE);
+      CurveOperator curveSubdivision = new BSpline1CurveSubdivision(RGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h1standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
           HermiteSubdivisions.H2STANDARD.supply(lieGroup);
-      CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(RGroup.INSTANCE);
+      CurveOperator curveSubdivision = new BSpline2CurveSubdivision(RGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h2standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
           HermiteSubdivisions.H2MANIFOLD.supply(lieGroup);
-      CurveSubdivision curveSubdivision = new BSpline2CurveSubdivision(RGroup.INSTANCE);
+      CurveOperator curveSubdivision = new BSpline2CurveSubdivision(RGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h2manifold");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
           HermiteSubdivisions.H3STANDARD.supply(lieGroup);
-      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RGroup.INSTANCE);
+      CurveOperator curveSubdivision = new BSpline1CurveSubdivision(RGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3standard");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
           HermiteSubdivisions.H3A1.supply(lieGroup);
-      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RGroup.INSTANCE);
+      CurveOperator curveSubdivision = new BSpline1CurveSubdivision(RGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3a1");
     }
     {
       HermiteSubdivision hermiteSubdivision = //
           HermiteSubdivisions.H3A2.supply(lieGroup);
-      CurveSubdivision curveSubdivision = new BSpline1CurveSubdivision(RGroup.INSTANCE);
+      CurveOperator curveSubdivision = new BSpline1CurveSubdivision(RGroup.INSTANCE);
       process(hermiteSubdivision, curveSubdivision, "h3a2");
     }
   }

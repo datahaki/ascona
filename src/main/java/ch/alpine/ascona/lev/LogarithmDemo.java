@@ -20,8 +20,8 @@ import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.api.CurveOperator;
 import ch.alpine.sophis.itp.ArcLengthParameterization;
-import ch.alpine.sophis.ref.d1.CurveSubdivision;
 import ch.alpine.sophis.ref.d1.FourPointCurveSubdivision;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.rn.RGroup;
@@ -87,7 +87,7 @@ class LogarithmDemo extends ControlPointsDemo {
         }
       }
       // ---
-      CurveSubdivision curveSubdivision = //
+      CurveOperator curveSubdivision = //
           new FourPointCurveSubdivision(homogeneousSpace);
       if (2 < sequence.length()) {
         Tensor refined = sequence;
