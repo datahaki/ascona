@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.alpine.ascony.api.CurveVisualSet;
+import ch.alpine.ascona.crv.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;

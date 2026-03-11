@@ -4,7 +4,7 @@ package ch.alpine.ascona.euclid;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascony.ref.BaseCurvatureParam;
+import ch.alpine.ascona.crv.BaseCurvatureParam;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;

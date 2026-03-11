@@ -7,9 +7,9 @@ import java.awt.Rectangle;
 import java.util.List;
 import java.util.Objects;
 
+import ch.alpine.ascona.crv.BaseCurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.BaseCurvatureParam;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;

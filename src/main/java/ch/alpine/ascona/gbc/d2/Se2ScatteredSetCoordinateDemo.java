@@ -8,7 +8,6 @@ import java.awt.geom.Path2D;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -17,6 +16,7 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;

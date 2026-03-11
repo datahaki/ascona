@@ -23,6 +23,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.d2.alg.ConvexHull2D;
+import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.noise.NoiseFilteredSample;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
@@ -33,7 +34,6 @@ import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.opt.nd.BoxRandomSample;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.opt.nd.Dbscan;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSample;
@@ -83,7 +83,7 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
 
   Tensor recomp2() {
     Clip clip = Clips.positive(10);
-    BoxRandomSample rsi = new BoxRandomSample(CoordinateBoundingBox.of(clip, clip));
+    BoxRandomSample rsi = new BoxRandomSample(Box2D.xy(clip));
     NoiseFilteredSample noiseFilteredSample = new NoiseFilteredSample(rsi, threshold);
     return RandomSample.of(noiseFilteredSample, 3000);
   }

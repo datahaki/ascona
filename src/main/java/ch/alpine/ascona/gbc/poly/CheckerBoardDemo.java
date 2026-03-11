@@ -10,7 +10,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.LogWeighting;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.api.PolygonCoordinates;
@@ -28,6 +27,7 @@ import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
@@ -148,7 +148,7 @@ class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     graphics.setColor(Color.LIGHT_GRAY);
-    graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));
+    graphics.draw(geometricLayer.toPath2D(Box2D.ABSOLUTE_ONE, true));
     // ---
     if (param1.freeze) {
       LeversRender leversRender = LeversRender.of( //

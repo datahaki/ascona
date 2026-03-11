@@ -7,7 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascony.api.CurveVisualSet;
+import ch.alpine.ascona.crv.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.Se2CoveringClothoidDisplay;
 import ch.alpine.ascony.ren.AxesRender;

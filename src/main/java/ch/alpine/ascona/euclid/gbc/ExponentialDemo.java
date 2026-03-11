@@ -9,8 +9,8 @@ import java.awt.geom.Line2D;
 import java.util.Deque;
 import java.util.Optional;
 
+import ch.alpine.ascona.gbc.GenesisDequeParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ref.GenesisDequeParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;

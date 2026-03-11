@@ -20,6 +20,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.api.Genesis;
+import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.gbc.d2.InsidePolygonCoordinate;
 import ch.alpine.sophis.gbc.d2.SPatch;
 import ch.alpine.sophis.gbc.d2.ThreePointCoordinate;
@@ -33,7 +34,6 @@ import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
@@ -78,7 +78,7 @@ class SPatchDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensor.of(embed.stream() //
         .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
     Clip clip = Clips.absolute(1);
-    Tensor domain = new Meshgrid(CoordinateBoundingBox.of(clip, clip)).image(param0.res);
+    Tensor domain = new Meshgrid(Box2D.xy(clip)).image(param0.res);
     movingDomain2D = new AveragedMovingDomain2D(embed, sPatch, domain, //
         manifoldDisplay().indetPoint());
   }

@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 
-import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.api.Meshgrid;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -23,6 +22,7 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -101,7 +101,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
     case Se2C:
     case Se2: {
       Clip clip = Clips.absolute(2);
-      CoordinateBoundingBox cbb = CoordinateBoundingBox.of(clip, clip);
+      CoordinateBoundingBox cbb = Box2D.xy(clip);
       TensorUnaryOperator tuo = xy -> Append.of(xy, RealScalar.ONE);
       return new Meshgrid(cbb).image(res, tuo);
     }

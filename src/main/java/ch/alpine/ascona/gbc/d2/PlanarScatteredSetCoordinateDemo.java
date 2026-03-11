@@ -8,13 +8,12 @@ import java.awt.Rectangle;
 import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.ascony.api.Box2D;
+import ch.alpine.ascona.gbc.GenesisDequeParam;
 import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.GenesisDequeParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -22,6 +21,7 @@ import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -58,7 +58,7 @@ final class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeighti
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     graphics.setColor(Color.LIGHT_GRAY);
-    graphics.draw(geometricLayer.toPath2D(Box2D.CORNERS, true));
+    graphics.draw(geometricLayer.toPath2D(Box2D.ABSOLUTE_ONE, true));
     {
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);

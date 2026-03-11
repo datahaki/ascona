@@ -4,7 +4,7 @@ package ch.alpine.ascona.crv.sub;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascony.ref.BaseCurvatureParam;
+import ch.alpine.ascona.crv.BaseCurvatureParam;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
