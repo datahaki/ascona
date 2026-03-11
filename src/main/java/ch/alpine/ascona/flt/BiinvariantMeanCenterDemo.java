@@ -21,7 +21,7 @@ import ch.alpine.tensor.red.Nest;
  * 
  * illustration of three ways to average the angular component:
  * {@link So2BiinvariantMeans} */
-class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
+class BiinvariantMeanCenterDemo extends AbstractSpectrogramDemo {
   @ReflectionMarker
   static class Param {
     public Se2BiinvariantMeans means = Se2BiinvariantMeans.LINEAR;
@@ -31,7 +31,7 @@ class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
 
   private final Param param;
 
-  public Se2BiinvariantMeanDemo() {
+  public BiinvariantMeanCenterDemo() {
     super(param = new Param());
   }
 
@@ -49,6 +49,6 @@ class Se2BiinvariantMeanDemo extends AbstractSpectrogramDemo {
   }
 
   static void main() {
-    new Se2BiinvariantMeanDemo().runStandalone();
+    new BiinvariantMeanCenterDemo().runStandalone();
   }
 }

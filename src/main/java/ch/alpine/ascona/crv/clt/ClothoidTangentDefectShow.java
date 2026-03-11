@@ -13,18 +13,13 @@ import ch.alpine.bridge.pro.ShowProvider;
 import ch.alpine.sophis.crv.clt.ClothoidContext;
 import ch.alpine.sophis.crv.clt.ClothoidSolutions;
 import ch.alpine.sophis.crv.clt.ClothoidTangentDefect;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Clip;
-import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
 record ClothoidTangentDefectShow(Scalar s1, Scalar s2, Clip clip) implements ShowProvider {
-  public static final ClothoidTangentDefectShow ZEROS = //
-      new ClothoidTangentDefectShow(RealScalar.ZERO, RealScalar.ZERO, Clips.absolute(30.0));
-
   public static ClothoidTangentDefectShow of(ClothoidContext clothoidContext, Clip clip) {
     return new ClothoidTangentDefectShow(clothoidContext.s1(), clothoidContext.s2(), clip);
   }
@@ -45,9 +40,5 @@ record ClothoidTangentDefectShow(Scalar s1, Scalar s2, Clip clip) implements Sho
     show.add(StringPlot.of(list));
     show.setPlotLabel("Clothoid Tangent Defect");
     return show;
-  }
-
-  static void main() {
-    ZEROS.runStandalone();
   }
 }

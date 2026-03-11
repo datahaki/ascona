@@ -2,9 +2,7 @@
 package ch.alpine.ascona.misc;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -30,7 +28,6 @@ import ch.alpine.tensor.lie.TensorWedge;
 import ch.alpine.tensor.mat.ex.MatrixExp;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
-import ch.alpine.tensor.sca.Mod;
 
 class SnRotationDemo extends ManifoldDisplayDemo implements RenderInterface {
   @ReflectionMarker
@@ -79,20 +76,18 @@ class SnRotationDemo extends ManifoldDisplayDemo implements RenderInterface {
     @Override
     public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
       for (int count = 0; count < samples.length(); ++count) {
-        Tensor rgba = paran.cdg.apply(Mod.function(1).apply(Rational.of(count, 20)));
-        Color color = ColorFormat.toColor(rgba);
+        Tensor rgba = paran.cdg.apply(Rational.of(count, samples.length()));
         int fi = count;
         Tensor trace = Tensor.of(boundedLinkedList.stream().map(p -> p.get(fi)));
-        Path2D path2d = geometricLayer.toPath2D(trace);
-        graphics.setColor(color);
-        graphics.draw(path2d);
+        graphics.setColor(ColorFormat.toColor(rgba));
+        graphics.draw(geometricLayer.toPath2D(trace));
       }
     }
   }
 
-  private SnRotationChunk snRotationChunk = null;
   private final Param param;
   private final Paran paran;
+  private SnRotationChunk snRotationChunk = null;
 
   public SnRotationDemo() {
     super(param = new Param(), paran = new Paran());

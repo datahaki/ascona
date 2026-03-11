@@ -23,6 +23,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.util.DisjointSets;
 import ch.alpine.sophis.dv.Biinvariants;
@@ -66,11 +67,17 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param1 {
+    @FieldSelectionCallback("biinvariants")
     public Biinvariants biinvariants = Biinvariants.METRIC;
     @FieldClip(min = "1", max = "8")
     public Integer refine = 2;
     public ColorDataLists colorDataLists = ColorDataLists._097;
     public ColorDataGradients cdg = ColorDataGradients.TEMPERATURE_LIGHT;
+
+    @ReflectionMarker
+    public List<Biinvariants> biinvariants() {
+      return Biinvariants.OKAY;
+    }
   }
 
   private final Param0 param0;
