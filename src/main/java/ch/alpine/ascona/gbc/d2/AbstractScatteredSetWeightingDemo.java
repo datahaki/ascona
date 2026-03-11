@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
 
@@ -124,29 +122,5 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
 
   protected void recompute() {
     // ---
-  }
-
-  public final void addMouseRecomputation() {
-    MouseAdapter mouseAdapter = new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent mouseEvent) {
-        switch (mouseEvent.getButton()) {
-        case MouseEvent.BUTTON1: // insert point
-          if (!isPositioningOngoing())
-            recompute();
-          break;
-        default:
-        }
-      }
-
-      @Override
-      public void mouseMoved(MouseEvent e) {
-        if (isPositioningOngoing())
-          recompute();
-      }
-    };
-    // ---
-    geometricComponent().addMouseListener(mouseAdapter);
-    geometricComponent().addMouseMotionListener(mouseAdapter);
   }
 }
