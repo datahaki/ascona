@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.ascony.api.Meshgrid;
+import ch.alpine.ascony.arp.Meshgrid;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -17,7 +17,7 @@ class MeshgridTest {
   @Test
   void testSimple() {
     CoordinateBoundingBox cbb = CoordinateBoundingBox.of(Clips.absolute(2), Clips.absolute(3));
-    Tensor tensor = new Meshgrid(cbb).image(20);
+    Tensor tensor = new Meshgrid(cbb, 20).image();
     List<Integer> list = Dimensions.of(tensor);
     assertEquals(list, List.of(20, 20, 2));
   }

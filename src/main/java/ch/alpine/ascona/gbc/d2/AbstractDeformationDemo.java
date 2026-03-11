@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 
-import ch.alpine.ascony.api.Meshgrid;
+import ch.alpine.ascony.arp.Meshgrid;
 import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.GridRender;
@@ -89,21 +89,21 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
     switch (getSelectedMD()) {
     case R2: {
       CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
-      return new Meshgrid(cbb).image(res);
+      return new Meshgrid(cbb, res).image();
     }
     case S2: {
       CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
       TensorUnaryOperator tuo = xy -> Vector2Norm.NORMALIZE.apply(Append.of(xy, s2z));
-      return new Meshgrid(cbb).image(res, tuo);
+      return new Meshgrid(cbb, res).image(tuo);
     }
     case H2:
-      return new Meshgrid(Box2D.xy(Clips.absolute(1.0))).image(res);
+      return new Meshgrid(Box2D.xy(Clips.absolute(1.0)), res).image();
     case Se2C:
     case Se2: {
       Clip clip = Clips.absolute(2);
       CoordinateBoundingBox cbb = Box2D.xy(clip);
       TensorUnaryOperator tuo = xy -> Append.of(xy, RealScalar.ONE);
-      return new Meshgrid(cbb).image(res, tuo);
+      return new Meshgrid(cbb, res).image(tuo);
     }
     default:
       throw new IllegalArgumentException();
