@@ -1,5 +1,5 @@
 // code by ob, jph
-package ch.alpine.ascona.crv;
+package ch.alpine.ascona.crv.sub;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

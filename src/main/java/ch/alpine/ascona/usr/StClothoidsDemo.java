@@ -40,7 +40,7 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 @ReflectionMarker
-class StMeetsClothoids implements ManipulateProvider, RenderInterface {
+class StClothoidsDemo implements ManipulateProvider, RenderInterface {
   @FieldSlider
   @FieldClip(min = "4", max = "20")
   public Integer n = 10;
@@ -52,7 +52,7 @@ class StMeetsClothoids implements ManipulateProvider, RenderInterface {
   // ---
   private final GeometricComponent geometricComponent = new GeometricComponent();
 
-  public StMeetsClothoids() {
+  public StClothoidsDemo() {
     geometricComponent.addRenderInterface(this);
     Tensor digest = PvmBuilder.rhs().setOffset(600, 300).setPerPixel(100).digest();
     geometricComponent.setModel2Pixel(digest);
@@ -92,6 +92,6 @@ class StMeetsClothoids implements ManipulateProvider, RenderInterface {
   }
 
   static void main() {
-    new StMeetsClothoids().runStandalone();
+    new StClothoidsDemo().runStandalone();
   }
 }

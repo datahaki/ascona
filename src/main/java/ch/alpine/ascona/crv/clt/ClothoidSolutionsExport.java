@@ -21,7 +21,7 @@ import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Clips;
 
-/* package */ class ClothoidSolutionsExport {
+class ClothoidSolutionsExport {
   private static final Scalar LAMBDA_THRES = RealScalar.of(1.0);
   // ---
   final TableBuilder tableBuilder = new TableBuilder();

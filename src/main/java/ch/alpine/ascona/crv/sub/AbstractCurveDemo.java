@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.crv;
+package ch.alpine.ascona.crv.sub;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

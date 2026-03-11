@@ -1,5 +1,5 @@
 // code by gjoel, jph
-package ch.alpine.ascona.crv;
+package ch.alpine.ascona.crv.sub;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;

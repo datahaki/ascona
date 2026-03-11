@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.crv;
+package ch.alpine.ascona.crv.sub;
 
 import java.io.IOException;
 import java.io.InputStream;

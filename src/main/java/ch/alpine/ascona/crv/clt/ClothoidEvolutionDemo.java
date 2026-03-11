@@ -31,7 +31,7 @@ import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-class ClothoidEvolution extends ControlPointsDemo {
+class ClothoidEvolutionDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param {
     @FieldSelectionArray({ "0.05", "0.1", "0.2", "0.3", "0.4", "0.5" })
@@ -43,11 +43,11 @@ class ClothoidEvolution extends ControlPointsDemo {
   private final Timing timing = Timing.started();
   public final Param param;
 
-  public ClothoidEvolution() {
+  public ClothoidEvolutionDemo() {
     this(new Param());
   }
 
-  public ClothoidEvolution(Param param) {
+  public ClothoidEvolutionDemo(Param param) {
     super(param);
     this.param = param;
     // ---
@@ -97,6 +97,6 @@ class ClothoidEvolution extends ControlPointsDemo {
   }
 
   static void main() {
-    new ClothoidEvolution().runStandalone();
+    new ClothoidEvolutionDemo().runStandalone();
   }
 }

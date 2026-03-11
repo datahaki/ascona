@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.crv;
+package ch.alpine.ascona.crv.sub;
 
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymScalar;

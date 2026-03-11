@@ -1,11 +1,11 @@
 // code by jph
-package ch.alpine.ascona.crv;
+package ch.alpine.ascona.crv.sub;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
-import ch.alpine.ascona.crv.GeometricSymLinkRender.Link;
+import ch.alpine.ascona.crv.sub.GeometricSymLinkRender.Link;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.GridRender;
