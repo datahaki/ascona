@@ -132,6 +132,11 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
         }
       }
       show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, Math.min(dimension.height, 300)));
+      {
+        // TODO gives points of dimensions n x n-1
+        // Tensor points = DistanceMatrixToPoints.of(Symmetrize.of(matrix), Chop._04);
+        // IO.println(Dimensions.of(points));
+      }
       List<IntUndirectedEdge> list = MinimumSpanningTree.of(Symmetrize.of(matrix));
       list.sort(new EdgeComparator(matrix));
       int count = Math.max(0, list.size() - splits);

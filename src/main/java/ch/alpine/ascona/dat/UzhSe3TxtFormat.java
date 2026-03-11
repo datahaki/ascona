@@ -32,12 +32,12 @@ import ch.alpine.tensor.lie.rot.QuaternionToRotationMatrix;
  * http://rpg.ifi.uzh.ch/uzh-fpv.html */
 public enum UzhSe3TxtFormat {
   ;
-  /** @param file with extension txt
+  /** @param path with extension txt
    * @return tensor of affine matrices
    * @throws IOException
    * @throws FileNotFoundException */
-  public static Tensor of(Path file) throws FileNotFoundException, IOException {
-    try (InputStream inputStream = Files.newInputStream(file)) {
+  public static Tensor of(Path path) throws FileNotFoundException, IOException {
+    try (InputStream inputStream = Files.newInputStream(path)) {
       return Tensor.of(ReadLine.of(inputStream).skip(1).map(UzhSe3TxtFormat::parse));
     }
   }

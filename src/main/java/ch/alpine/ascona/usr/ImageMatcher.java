@@ -80,7 +80,7 @@ enum ImageMatcher {
         throw new RuntimeException("dimensions bad " + list);
       }
     }
-    final Path file = folder.resolve("bm");
+    final Path path = folder.resolve("bm");
     Tensor b_src = blocks(src);
     Tensor b_dst = blocks(dst);
     Timing timing = Timing.started();
@@ -90,11 +90,11 @@ enum ImageMatcher {
       System.out.println(MIN.apply(timing.seconds()));
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
       System.out.println(MIN.apply(timing.seconds()));
-      Export.object(file, bipartiteMatching);
+      Export.object(path, bipartiteMatching);
     }
     // else
     {
-      BipartiteMatching bipartiteMatching = Import.object(file);
+      BipartiteMatching bipartiteMatching = Import.object(path);
       int[] matching = bipartiteMatching.matching();
       int[] inverse = new int[matching.length];
       for (int i = 0; i < matching.length; ++i) {

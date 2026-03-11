@@ -84,8 +84,8 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   public static void export(Path directory, Tensor matrix) throws IOException {
     Files.createDirectories(directory);
     for (ColorDataGradients colorDataGradients : ColorDataGradients.values()) {
-      Path file = directory.resolve(String.format("%s.png", colorDataGradients));
-      Export.of(file, Raster.of(matrix, colorDataGradients));
+      Path path = directory.resolve(String.format("%s.png", colorDataGradients));
+      Export.of(path, Raster.of(matrix, colorDataGradients));
     }
   }
 }
