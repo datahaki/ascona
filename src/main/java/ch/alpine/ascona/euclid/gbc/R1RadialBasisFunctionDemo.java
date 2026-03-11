@@ -14,12 +14,13 @@ import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.itp.CrossAveraging;
 import ch.alpine.sophis.itp.RadialBasisFunctionInterpolation;
-import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Sort;
@@ -72,8 +73,8 @@ class R1RadialBasisFunctionDemo extends ControlPointsDemo {
       // ---
       Tensor sequence = support.maps(Tensors::of);
       Tensor domain = StaticHelper.domain(getControlPointsSe2());
-      Manifold manifold = manifoldDisplay().manifold();
-      Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
+      Biinvariant biinvariant = param.biinvariants.ofSafe(new RnGroup(1));
+      Sedarim sedarim = param.logWeightings.sedarim(biinvariant, InversePowerVariogram.of(2), sequence);
       try {
         TensorUnaryOperator tensorUnaryOperator = //
             RadialBasisFunctionInterpolation.of(sedarim, sequence, funceva);

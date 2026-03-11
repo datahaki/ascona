@@ -22,7 +22,7 @@ public class R1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
 
   @Override
   Tensor lift(Scalar x) {
-    return Tensors.of(x);
+    return Tensors.of(x, x.zero());
   }
 
   static void main() {

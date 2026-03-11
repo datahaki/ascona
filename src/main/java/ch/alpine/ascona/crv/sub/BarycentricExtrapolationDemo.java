@@ -21,6 +21,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -41,18 +42,13 @@ class BarycentricExtrapolationDemo extends ControlPointsDemo {
   private final Param param;
 
   public BarycentricExtrapolationDemo() {
-    this(new Param());
-  }
-
-  public BarycentricExtrapolationDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     setManifoldDisplay(ManifoldDisplays.R2);
   }
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.R2_ONLY;
+    return ManifoldDisplays.R2_H2_S2_SE2C;
   }
 
   @Override
@@ -63,7 +59,6 @@ class BarycentricExtrapolationDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     Tensor sequence = getGeodesicControlPoints();
     int length = sequence.length();
     Tensor domain = Range.of(-sequence.length(), 0).maps(Tensors::of).unmodifiable();
@@ -77,8 +72,10 @@ class BarycentricExtrapolationDemo extends ControlPointsDemo {
     }
     graphics.setStroke(new BasicStroke());
     if (1 < length) {
+      RnGroup r1Group = new RnGroup(1);
+      HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       Tensor samples = Subdivide.of(-length, 0, 127).maps(Tensors::of);
-      Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(homogeneousSpace), s -> s, domain);
+      Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(r1Group), s -> s, domain);
       Tensor curve = Tensor.of(samples.stream() //
           .map(sedarim::sunder) //
           .map(weights -> homogeneousSpace.biinvariantMean().mean(sequence, weights)));

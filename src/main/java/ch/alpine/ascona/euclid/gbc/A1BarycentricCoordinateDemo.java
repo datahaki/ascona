@@ -13,6 +13,7 @@ import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
@@ -65,7 +66,8 @@ abstract class A1BarycentricCoordinateDemo extends EuclideanPlaneDemo {
       // ---
       Tensor sequence = support.maps(this::lift);
       Manifold manifold = manifoldDisplay().manifold();
-      Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
+      Biinvariant biinvariant = param.biinvariants.ofSafe(manifold);
+      Sedarim sedarim = param.logWeightings.sedarim(biinvariant, InversePowerVariogram.of(2), sequence);
       ScalarTensorFunction scalarTensorFunction = //
           point -> sedarim.sunder(lift(point));
       Tensor basis = domain.maps(scalarTensorFunction);
