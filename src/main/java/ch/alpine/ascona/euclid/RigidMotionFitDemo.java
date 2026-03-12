@@ -11,7 +11,6 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -62,7 +61,7 @@ class RigidMotionFitDemo extends EuclideanPlaneDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.HEAD_TAIL;
+    return ControlPointType.HEAD_TAIL;
   }
 
   private synchronized void shufflePoints() {

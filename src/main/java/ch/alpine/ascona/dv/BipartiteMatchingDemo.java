@@ -10,7 +10,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -51,7 +50,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.SCATTERED;
+    return ControlPointType.SCATTERED;
   }
 
   private synchronized void shuffle() {

@@ -13,7 +13,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -67,7 +66,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
+    return ControlPointType.CURVYCURV;
   }
 
   private void shuffle() {

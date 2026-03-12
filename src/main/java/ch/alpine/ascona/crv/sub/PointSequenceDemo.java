@@ -11,7 +11,6 @@ import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -42,7 +41,7 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
 
   @Override
   protected final ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
+    return ControlPointType.CURVYCURV;
   }
 
   private void save() {

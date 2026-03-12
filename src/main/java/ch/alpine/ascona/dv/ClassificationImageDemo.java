@@ -18,7 +18,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ImagePlot;
 import ch.alpine.bridge.fig.Show;
@@ -109,7 +108,7 @@ class ClassificationImageDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.DELEGATED;
+    return ControlPointType.DELEGATED;
   }
 
   private void shuffle() {

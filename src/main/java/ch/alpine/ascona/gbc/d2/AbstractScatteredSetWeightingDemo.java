@@ -7,7 +7,6 @@ import java.util.Map;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
@@ -110,7 +109,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.HEAD_TAIL;
+    return ControlPointType.HEAD_TAIL;
   }
 
   protected final Biinvariant biinvariant() {

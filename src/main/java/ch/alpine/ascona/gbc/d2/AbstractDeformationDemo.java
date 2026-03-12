@@ -16,7 +16,6 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -77,7 +76,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
 
   @Override
   protected final ControlPointType controlPointType() {
-    return ControlPointTypes.HEAD_TAIL;
+    return ControlPointType.HEAD_TAIL;
   }
 
   protected final Tensor shufflePoints(int n) {

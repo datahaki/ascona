@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -52,7 +51,7 @@ class PrincipalComponentsDemo extends EuclideanPlaneDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.SCATTERED;
+    return ControlPointType.SCATTERED;
   }
 
   @Override

@@ -19,7 +19,6 @@ import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -83,7 +82,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.SCATTERED;
+    return ControlPointType.SCATTERED;
   }
 
   private void shuffle() {

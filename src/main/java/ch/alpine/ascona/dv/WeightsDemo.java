@@ -12,7 +12,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -63,7 +62,7 @@ class WeightsDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.ADDREMOVE;
+    return ControlPointType.ADDREMOVE;
   }
 
   private void shuffle() {

@@ -11,7 +11,6 @@ import java.util.List;
 
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.awt.ScreenRectangles;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -20,7 +19,7 @@ import ch.alpine.tensor.Tensor;
 class ScreenRectanglesDemo extends EuclideanPlaneDemo {
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
+    return ControlPointType.CURVYCURV;
   }
 
   private static Rectangle here(Point2D p, Point2D q) {

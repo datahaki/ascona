@@ -13,7 +13,6 @@ import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
@@ -74,7 +73,7 @@ class S2HermiteSubdivisionDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
+    return ControlPointType.CURVYCURV;
   }
 
   @Override

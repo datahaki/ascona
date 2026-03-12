@@ -9,7 +9,6 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -61,7 +60,7 @@ class R1RadialBasisFunctionDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.SCATTERED;
+    return ControlPointType.SCATTERED;
   }
 
   @Override

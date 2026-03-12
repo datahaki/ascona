@@ -5,7 +5,6 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 
 abstract class ClothoidBaseDemo extends ControlPointsDemo {
@@ -20,6 +19,6 @@ abstract class ClothoidBaseDemo extends ControlPointsDemo {
 
   @Override
   protected final ControlPointType controlPointType() {
-    return ControlPointTypes.HEAD_TAIL;
+    return ControlPointType.HEAD_TAIL;
   }
 }

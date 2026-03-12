@@ -9,7 +9,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -45,7 +44,7 @@ class Se2InvarianceDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.ADDREMOVE;
+    return ControlPointType.ADDREMOVE;
   }
 
   @Override // from RenderInterface

@@ -17,7 +17,6 @@ import ch.alpine.ascony.msh.MovingDomain2D;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -78,7 +77,7 @@ class SPatchDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.HEAD_TAIL;
+    return ControlPointType.HEAD_TAIL;
   }
 
   void shuffle() {

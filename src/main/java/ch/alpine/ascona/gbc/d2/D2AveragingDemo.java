@@ -15,7 +15,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.DensityPlot;
 import ch.alpine.bridge.fig.Show;
@@ -88,7 +87,7 @@ final class D2AveragingDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.SCATTERED;
+    return ControlPointType.SCATTERED;
   }
 
   private final Cache<Tensor, Showable> cache = Cache.of(this::computeImage, 1);

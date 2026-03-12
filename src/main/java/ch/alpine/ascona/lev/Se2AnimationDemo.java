@@ -12,7 +12,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -57,7 +56,7 @@ class Se2AnimationDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.DELEGATED;
+    return ControlPointType.DELEGATED;
   }
 
   private static Tensor random(double toc, int index) {

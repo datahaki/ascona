@@ -15,7 +15,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.MatrixPlot;
 import ch.alpine.bridge.fig.Show;
@@ -98,7 +97,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.ADDREMOVE;
+    return ControlPointType.ADDREMOVE;
   }
 
   private void shuffle() {

@@ -19,7 +19,6 @@ import ch.alpine.ascony.msh.ArrayFunction;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;
@@ -91,7 +90,7 @@ class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
+    return ControlPointType.CURVYCURV;
   }
 
   public void actionPerformed(ActionEvent actionEvent) {

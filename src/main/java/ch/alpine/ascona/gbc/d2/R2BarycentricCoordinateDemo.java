@@ -24,7 +24,6 @@ import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.PolygonPlot;
 import ch.alpine.bridge.fig.Show;
@@ -76,7 +75,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
+    return ControlPointType.CURVYCURV;
   }
 
   @Override

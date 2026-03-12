@@ -17,7 +17,6 @@ import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymScalar;
 import ch.alpine.ascony.sym.SymSequence;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -71,7 +70,7 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
 
   @Override
   protected final ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
+    return ControlPointType.CURVYCURV;
   }
 
   @Override // from RenderInterface

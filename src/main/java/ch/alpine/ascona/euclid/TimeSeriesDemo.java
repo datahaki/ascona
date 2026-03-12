@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 import java.util.Optional;
 
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -58,7 +57,7 @@ class TimeSeriesDemo extends EuclideanPlaneDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.CURVYCURV;
+    return ControlPointType.CURVYCURV;
   }
 
   @Override

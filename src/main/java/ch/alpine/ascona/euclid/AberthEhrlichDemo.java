@@ -10,7 +10,6 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.fig.DensityPlot;
 import ch.alpine.bridge.fig.Show;
@@ -77,7 +76,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.SCATTERED;
+    return ControlPointType.SCATTERED;
   }
 
   private static final TensorScalarFunction V2S = t -> ComplexScalar.of(t.Get(0), t.Get(1));

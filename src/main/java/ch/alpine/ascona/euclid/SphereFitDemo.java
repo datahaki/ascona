@@ -11,7 +11,6 @@ import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
-import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.d2.alg.ConvexHull2D;
@@ -59,7 +58,7 @@ class SphereFitDemo extends EuclideanPlaneDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointTypes.SCATTERED;
+    return ControlPointType.SCATTERED;
   }
 
   @Override // from RenderInterface
