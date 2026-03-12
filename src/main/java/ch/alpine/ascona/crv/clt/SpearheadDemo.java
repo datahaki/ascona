@@ -18,7 +18,6 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.d2.PolygonArea;
 import ch.alpine.sophis.crv.d2.PolygonCentroid;
-import ch.alpine.sophis.crv.d2.PolygonNormalize;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -35,6 +34,9 @@ class SpearheadDemo extends ClothoidBaseDemo {
     @FieldSlider
     @FieldClip(min = "0.1", max = "30")
     public Scalar pix2mod = RealScalar.of(10);
+    @FieldSlider
+    @FieldClip(min = "0.1", max = "2")
+    public Scalar area = RealScalar.of(1);
   }
 
   private final Param param;
@@ -48,8 +50,9 @@ class SpearheadDemo extends ClothoidBaseDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();
+    Tensor xya = control.get(0);
     Scalar res = geometricLayer.pixel2modelFactor(param.pix2mod);
-    Tensor polygon = Spearhead.of(control.get(0), res);
+    Tensor polygon = Spearhead.of(xya, res);
     graphics.setColor(COLOR_DATA_INDEXED.getColor(1));
     graphics.fill(geometricLayer.toPath2D(polygon));
     new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f) //
@@ -59,14 +62,15 @@ class SpearheadDemo extends ClothoidBaseDemo {
     Tensor centroid = PolygonCentroid.of(polygon);
     graphics.setColor(Color.DARK_GRAY);
     graphics.drawString("" + area.maps(Round._5), 100, 100);
-    graphics.drawString("" + control.get(0).maps(Round._5), 100, 120);
+    graphics.drawString("" + xya.maps(Round._5), 100, 120);
     graphics.drawString("" + res.maps(Round._5), 100, 140);
     Point2D point2d = geometricLayer.toPoint2D(centroid);
     graphics.drawRect((int) point2d.getX() - 2, (int) point2d.getY() - 2, 4, 4);
-    Tensor tensor = PolygonNormalize.of(polygon, RealScalar.ONE);
+    Tensor tensor = Spearhead.normal(xya, res, param.area);
     try {
       Show show = new Show();
       show.add(PolygonPlot.of(tensor, PlotOption.FILL)).setAlpha(64);
+      show.setAspectRatioOne();
       show.render_autoIndent(graphics, new Rectangle(0, 0, 300, 300));
     } catch (Exception e) {
       e.printStackTrace();
