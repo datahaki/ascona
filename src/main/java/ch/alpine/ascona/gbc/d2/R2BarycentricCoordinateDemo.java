@@ -3,6 +3,7 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
@@ -10,42 +11,36 @@ import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.msh.ImageTiling;
+import ch.alpine.ascony.msh.AveragedMovingDomain2D;
+import ch.alpine.ascony.msh.Meshgrid;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.PolygonPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.d2.alg.ConvexHull2D;
 import ch.alpine.sophis.crv.d2.alg.PolygonRegion;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Unprotect;
-import ch.alpine.tensor.alg.Array;
-import ch.alpine.tensor.alg.Subdivide;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
-import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.img.ColorFormat;
-import ch.alpine.tensor.nrm.VectorAngle;
-import ch.alpine.tensor.num.Boole;
-import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.red.Entrywise;
-import ch.alpine.tensor.sca.Sign;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.opt.nd.CoordinateBounds;
+import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 
 final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final Stroke STROKE = //
@@ -105,50 +100,32 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
         graphics.setStroke(new BasicStroke());
       }
       Sedarim sedarim = weightingsParam.operator(manifoldDisplay.manifold(), domain);
-      Tensor min = Entrywise.min().of(hull).maps(RealScalar.of(0.01)::add);
-      Tensor max = Entrywise.max().of(hull).maps(RealScalar.of(0.01)::subtract).negate();
-      final int n = scatteredSetParam.refine;
-      Tensor sX = Subdivide.of(min.Get(0), max.Get(0), n - 1);
-      Tensor sY = Subdivide.of(max.Get(1), min.Get(1), n - 1);
-      Tensor[][] array = new Tensor[n][n];
-      Tensor wgs = Array.of(_ -> DoubleScalar.INDETERMINATE, n, n, domain.length());
-      Tensor neg = Array.of(_ -> DoubleScalar.INDETERMINATE, n, n);
-      boolean[][] nag = new boolean[n][n];
-      IntStream.range(0, sX.length()).parallel().forEach(c0 -> {
-        Scalar x = sX.Get(c0);
-        int c1 = 0;
-        for (Tensor y : sY) {
-          Tensor px = Tensors.of(x, y);
-          if (jToggleEntire.isSelected() || polygonRegion.test(px)) {
-            Tensor weights = sedarim.sunder(px);
-            wgs.set(weights, c1, c0);
-            boolean anyNegative = weights.stream().map(Scalar.class::cast).anyMatch(Sign::isNegative);
-            neg.set(Boole.of(anyNegative), c1, c0);
-            nag[c0][c1] = anyNegative;
-            Tensor mean = homogeneousSpace.biinvariantMean().mean(controlPoints, weights);
-            array[c0][c1] = mean;
-          }
-          ++c1;
-        }
-        // ++c0;
-      });
+      CoordinateBoundingBox cbb = CoordinateBounds.of(hull);
+      Tensor weights = new Meshgrid(cbb, scatteredSetParam.refine).image(sedarim::sunder);
+      Tensor fallback = manifoldDisplay.indetPoint();
+      AveragedMovingDomain2D averagedMovingDomain2D = new AveragedMovingDomain2D(weights, homogeneousSpace.biinvariantMean(), fallback);
+      Tensor[][] array = averagedMovingDomain2D.forward(controlPoints);
       { // render basis functions
         {
+          int n = weights.get(0, 0).length();
+          Clip clip = cbb.clip(0);
+          Clip clipx = Clips.interval(clip.min(), clip.min().add(clip.width().multiply(RealScalar.of(n))));
+          CoordinateBoundingBox cbb_ext = CoordinateBoundingBox.of(clipx, cbb.clip(1));
           Show show = new Show();
-          show.add(ArrayPlot.of(ImageTiling.of(wgs), colorDataGradient));
-          show.render(graphics, new Rectangle(100, 10, 400, 400));
+          // show.add(MatrixPlot.of(averagedMovingDomain2D.arrayReshape_weights(), true));
+          show.add(ArrayPlot.of(averagedMovingDomain2D.arrayReshape_weights(), cbb_ext, colorDataGradient, false));
+          for (int i = 0; i < n; ++i) {
+            final int fi = i;
+            TensorUnaryOperator tuo = p -> p.add(Tensors.of(clip.width().multiply(RealScalar.of(fi)), RealScalar.ZERO));
+            show.add(PolygonPlot.of(tuo.slash(controlPoints))).setColor(Color.BLACK);
+          }
+          Dimension dimension = getSize();
+          show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width - 100, 300));
         }
         {
-          // BufferedImage bufferedImage = ImageFormat.of(ArrayPlot.of(_wgs, colorDataGradient));
-          // graphics.drawImage(bufferedImage, //
-          // 0, 32, //
-          // bufferedImage.getWidth() * 2, bufferedImage.getHeight() * 2, null);
-          // pix = bufferedImage.getWidth() * 2;
-        }
-        {
-          Show show = new Show();
-          show.add(ArrayPlot.of(neg, ColorDataGradients.TEMPERATURE));
-          show.render(graphics, new Rectangle(100, 400, 200, 200));
+          // Show show = new Show();
+          // show.add(ArrayPlot.of(neg, ColorDataGradients.TEMPERATURE));
+          // show.render(graphics, new Rectangle(100, 400, 200, 200));
         }
         {
           // TODO ASCONA occurrences of raster replace with matrix/arrayplot
@@ -161,41 +138,19 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
       }
       // render grid lines functions
       ColorDataGradient cdg = colorDataGradient.deriveWithOpacity(Rational.HALF);
-      for (int i0 = 1; i0 < n; ++i0)
-        for (int i1 = 1; i1 < n; ++i1) {
-          Tensor ao = array[i0][i1];
-          if (Objects.nonNull(ao)) {
-            Tensor po = manifoldDisplay.point2xy(ao);
-            Tensor a0 = array[i0 - 1][i1];
-            Tensor a1 = array[i0][i1 - 1];
-            Tensor ac = array[i0 - 1][i1 - 1];
-            if (Objects.nonNull(a0) && Objects.nonNull(a1) && Objects.nonNull(ac)) {
-              Tensor p0 = manifoldDisplay.point2xy(a0);
-              Tensor p1 = manifoldDisplay.point2xy(a1);
-              Tensor pc = manifoldDisplay.point2xy(ac);
-              Scalar scalar = VectorAngle.of(p0.subtract(po), p1.subtract(po)).orElseThrow();
-              Tensor rgba = cdg.apply(scalar.divide(Pi.VALUE));
-              graphics.setColor(ColorFormat.toColor(rgba));
-              graphics.fill(geometricLayer.toPath2D(Unprotect.byRef(po, p0, pc, p1)));
-            }
-            if (Objects.nonNull(a0))
-              graphics.draw(geometricLayer.toPath2D(Tensors.of(manifoldDisplay.point2xy(a0), po)));
-            if (Objects.nonNull(a1))
-              graphics.draw(geometricLayer.toPath2D(Tensors.of(manifoldDisplay.point2xy(a1), po)));
-          }
-        }
+      new MeshRender(array, cdg).render(geometricLayer, graphics);
       if (scatteredSetParam.arrows) {
-        Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
-        for (int i0 = 0; i0 < n; ++i0)
-          for (int i1 = 0; i1 < n; ++i1) {
-            Tensor mean = array[i0][i1];
-            if (Objects.nonNull(mean)) {
-              geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
-              graphics.setColor(nag[i0][i1] ? new Color(255, 128, 128, 128 + 32) : new Color(128, 128, 128, 64));
-              graphics.fill(geometricLayer.toPath2D(shape));
-              geometricLayer.popMatrix();
-            }
-          }
+        // Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
+        // for (int i0 = 0; i0 < n; ++i0)
+        // for (int i1 = 0; i1 < n; ++i1) {
+        // Tensor mean = array[i0][i1];
+        // if (Objects.nonNull(mean)) {
+        // geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
+        // graphics.setColor(nag[i0][i1] ? new Color(255, 128, 128, 128 + 32) : new Color(128, 128, 128, 64));
+        // graphics.fill(geometricLayer.toPath2D(shape));
+        // geometricLayer.popMatrix();
+        // }
+        // }
       }
     }
   }
