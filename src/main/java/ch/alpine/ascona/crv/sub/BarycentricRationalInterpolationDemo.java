@@ -91,7 +91,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
           : BarycentricMetricInterpolation.of(knots, InversePowerVariogram.of(2)));
       try {
         Tensor curve = Tensor.of(basis2.stream() //
-            .map(weights -> homogeneousSpace.biinvariantMean().mean(control, weights)));
+            .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));
         new PathRender(Color.RED) //
             .setCurve(curve, false) //
             .render(geometricLayer, graphics);
@@ -101,7 +101,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       Tensor basis1 = domain.maps(BarycentricRationalInterpolation.of(knots, param.degree));
       try {
         Tensor curve = Tensor.of(basis1.stream() //
-            .map(weights -> homogeneousSpace.biinvariantMean().mean(control, weights)));
+            .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));
         new PathRender(Color.BLUE) //
             .setCurve(curve, false) //
             .render(geometricLayer, graphics);

@@ -143,7 +143,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       Optional<Tensor> optionalSM = spatialMedian.uniform(sequence);
       if (optionalSM.isPresent()) {
         Tensor median = optionalSM.orElseThrow();
-        new PointsRender(COLOR_DATA_INDEXED_FILL.getColor(1), COLOR_DATA_INDEXED_DRAW.getColor(1)) //
+        new PointsRender(new Color(192, 0, 255, 192), new Color(192, 0, 255, 255)) //
             .show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.7)), Tensors.of(median)) //
             .render(geometricLayer, graphics);
       } else {

@@ -72,8 +72,9 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
         Tensor weights = sedarim.sunder(origin);
         leversRender.renderWeights(weights);
         HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
+        Optional<Tensor> optionalMean = homogeneousSpace.biinvariantMean().optional(sequence, weights);
         try {
-          Tensor mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
+          Tensor mean = optionalMean.orElseThrow();
           LeversRender.ORIGIN_RENDER_0 //
               .show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)) //
               .render(geometricLayer, graphics);

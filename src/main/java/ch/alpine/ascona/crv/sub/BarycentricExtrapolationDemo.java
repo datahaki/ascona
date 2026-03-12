@@ -27,6 +27,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
+import ch.alpine.tensor.pdf.RandomSample;
 
 // TODO what does this demo do? crashes for other than R2
 class BarycentricExtrapolationDemo extends ControlPointsDemo {
@@ -43,7 +44,12 @@ class BarycentricExtrapolationDemo extends ControlPointsDemo {
 
   public BarycentricExtrapolationDemo() {
     super(param = new Param());
-    setManifoldDisplay(ManifoldDisplays.R2);
+    addChangeListener(this::shuffle);
+    shuffle();
+  }
+
+  private void shuffle() {
+    setGeodesicControlPoints(RandomSample.of(manifoldDisplay().randomSampleInterface(), 3));
   }
 
   @Override
@@ -78,7 +84,7 @@ class BarycentricExtrapolationDemo extends ControlPointsDemo {
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(r1Group), s -> s, domain);
       Tensor curve = Tensor.of(samples.stream() //
           .map(sedarim::sunder) //
-          .map(weights -> homogeneousSpace.biinvariantMean().mean(sequence, weights)));
+          .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(sequence, weights).stream()));
       new PathRender(Color.BLUE, 1.5f) //
           .setCurve(curve, false) //
           .render(geometricLayer, graphics);

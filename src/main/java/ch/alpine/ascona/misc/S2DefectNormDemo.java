@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.List;
+import java.util.Objects;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -135,13 +136,10 @@ class S2DefectNormDemo extends ControlPointsDemo {
     // graphics.draw(geometricLayer.toPath2D(ms));
     graphics.setStroke(new BasicStroke());
     // ---
-    Tensor mean = null;
-    try {
-      mean = SnManifold.INSTANCE.biinvariantMean().mean(tsf.sequence, tsf.weights);
-    } catch (Exception e) {
+    Tensor mean = SnManifold.INSTANCE.biinvariantMean().optional(tsf.sequence, tsf.weights).orElse(null);
+    if (Objects.isNull(mean)) {
       graphics.setColor(Color.RED);
       graphics.drawString("no mean avaiable", 0, 25);
-      // ---
     }
     LeversRender leversRender = LeversRender.of(manifoldDisplay(), tsf.sequence, mean, geometricLayer, graphics);
     leversRender.renderOrigin();

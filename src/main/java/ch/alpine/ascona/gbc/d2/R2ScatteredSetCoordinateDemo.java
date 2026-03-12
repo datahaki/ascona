@@ -110,6 +110,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
       int n = sX.length();
       Tensor[][] array = new Tensor[n][n];
       Tensor[][] point = new Tensor[n][n];
+      Tensor fallback = manifoldDisplay.indetPoint();
       Tensor wgs = Array.of(_ -> DoubleScalar.INDETERMINATE, n, n, domain.length());
       IntStream.range(0, sX.length()).parallel().forEach(c0 -> {
         Tensor x = sX.get(c0);
@@ -118,7 +119,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
           Tensor px = Tensors.of(x, y);
           Tensor weights = sedarim.sunder(px);
           wgs.set(weights, c1, c0);
-          Tensor mean = homogeneousSpace.biinvariantMean().mean(controlPoints, weights);
+          Tensor mean = homogeneousSpace.biinvariantMean().optional(controlPoints, weights).orElse(fallback);
           array[c0][c1] = mean;
           point[c0][c1] = manifoldDisplay.point2xy(mean);
           ++c1;
