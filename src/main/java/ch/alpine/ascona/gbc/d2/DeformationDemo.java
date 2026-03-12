@@ -17,18 +17,25 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
+import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.sca.var.VariogramFunctions;
 
 class DeformationDemo extends AbstractDeformationDemo {
   @ReflectionMarker
   static class Param1 {
     public LogWeightings logWeightings = LogWeightings.COORDINATE;
     public Biinvariants biinvariants = Biinvariants.METRIC;
+    public VariogramFunctions vf = VariogramFunctions.INVERSE_POWER;
+    public Scalar beta = RealScalar.TWO;
     @FieldSelectionArray({ "20", "30", "50" })
     public Integer refine = 20;
     public Scalar s2z = RealScalar.of(1);
     @FieldFuse
     public transient Boolean snap = true; // true intentional
+
+    public ScalarUnaryOperator variogram() {
+      return vf.of(beta);
+    }
   }
 
   private final Param1 param1;
@@ -71,7 +78,7 @@ class DeformationDemo extends AbstractDeformationDemo {
 
   private Sedarim operator(Tensor sequence) {
     Manifold manifold = manifoldDisplay().manifold();
-    return param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
+    return param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), param1.variogram(), sequence);
   }
 
   /** @return method to compute mean (for instance approximation instead of exact mean) */
