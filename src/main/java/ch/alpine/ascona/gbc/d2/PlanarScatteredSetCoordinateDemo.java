@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascona.gbc.GenesisDequeParam;
-import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.ascony.api.LogWeightings;
-import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.msh.ArrayFunction;
+import ch.alpine.ascony.msh.ImageTiling;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.fig.ArrayPlot;
 import ch.alpine.bridge.fig.Show;

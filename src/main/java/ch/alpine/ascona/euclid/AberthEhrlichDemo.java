@@ -4,8 +4,8 @@ package ch.alpine.ascona.euclid;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.msh.ArrayFunction;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.PointsRender;

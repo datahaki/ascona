@@ -7,9 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 
-import ch.alpine.ascony.arp.Meshgrid;
-import ch.alpine.ascony.bas.MovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.msh.Meshgrid;
+import ch.alpine.ascony.msh.MovingDomain2D;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;

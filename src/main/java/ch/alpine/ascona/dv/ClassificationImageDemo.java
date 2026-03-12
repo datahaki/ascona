@@ -10,12 +10,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 import ch.alpine.ascony.api.LogWeightings;
-import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.cls.Classification;
 import ch.alpine.ascony.cls.ClassificationImage;
 import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.msh.ArrayFunction;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;

@@ -4,11 +4,11 @@ package ch.alpine.ascona.gbc.d2;
 import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
-import ch.alpine.ascony.bas.AveragedMovingDomain2D;
-import ch.alpine.ascony.bas.MovingDomain2D;
-import ch.alpine.ascony.bas.RnFittedMovingDomain2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.msh.AveragedMovingDomain2D;
+import ch.alpine.ascony.msh.MovingDomain2D;
+import ch.alpine.ascony.msh.RnFittedMovingDomain2D;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -72,8 +72,7 @@ class R2MlsDemo extends AbstractDeformationDemo {
       return new RnFittedMovingDomain2D(movingOrigin, sedarim, domain);
     }
     Sedarim sedarim = LogWeightings.COORDINATE.sedarim(biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), movingOrigin);
-    return new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
-        manifoldDisplay().indetPoint());
+    return new AveragedMovingDomain2D(movingOrigin, sedarim, domain, manifoldDisplay().indetPoint());
   }
 
   static void main() {

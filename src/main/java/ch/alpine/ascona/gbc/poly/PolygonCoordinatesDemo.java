@@ -7,11 +7,11 @@ import java.awt.Rectangle;
 import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.ascony.api.PolygonCoordinates;
-import ch.alpine.ascony.arp.ArrayFunction;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.msh.ArrayFunction;
+import ch.alpine.ascony.msh.ImageTiling;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
