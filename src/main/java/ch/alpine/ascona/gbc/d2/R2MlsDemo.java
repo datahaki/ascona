@@ -4,7 +4,6 @@ package ch.alpine.ascona.gbc.d2;
 import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
-import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.MovingDomain2D;
@@ -16,7 +15,6 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 class R2MlsDemo extends AbstractDeformationDemo {
@@ -34,7 +32,7 @@ class R2MlsDemo extends AbstractDeformationDemo {
   /** in coordinate specific to geodesic display */
   private Tensor movingOrigin;
 
-  protected R2MlsDemo() {
+  public R2MlsDemo() {
     super(param1 = new Param1());
     fieldsEditor(1).addUniversalListener(this::recompute);
     // ---
@@ -48,31 +46,37 @@ class R2MlsDemo extends AbstractDeformationDemo {
   }
 
   @Override
+  protected Tensor movingOrigin() {
+    return movingOrigin;
+  }
+
+  @Override
   protected final void shuffleSnap() {
     setGeodesicControlPoints(shufflePoints(param0().length));
     param1.snap = true;
     recompute();
   }
 
-  protected final void recompute() {
+  private final void recompute() {
     if (param1.snap) {
       param1.snap = false;
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      movingOrigin = Tensor.of(getControlPointsSe2().maps(N.DOUBLE).stream().map(manifoldDisplay::xya2point));
+      movingOrigin = getGeodesicControlPoints();
     }
-    movingDomain2D = updateMovingDomain2D(movingOrigin, param1.refine);
+    movingDomain2D = updateMovingDomain2D(param1.refine);
   }
 
-  protected MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
-    Tensor domain = updateDomain(movingOrigin, res, null);
+  private MovingDomain2D updateMovingDomain2D(int res) {
     Biinvariants biinvariants = Biinvariants.METRIC;
     Manifold manifold = manifoldDisplay().manifold();
     if (param1.r2Mls) {
       Sedarim sedarim = LogWeightings.WEIGHTING.sedarim(biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), movingOrigin);
-      return new RnFittedMovingDomain2D(movingOrigin, sedarim, domain);
+      Tensor weights = updateWeights(movingOrigin, res, null, sedarim);
+      Tensor domain = updateWeights(movingOrigin, res, null, t -> t);
+      return new RnFittedMovingDomain2D(movingOrigin, weights, domain);
     }
     Sedarim sedarim = LogWeightings.COORDINATE.sedarim(biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), movingOrigin);
-    return new AveragedMovingDomain2D(movingOrigin, sedarim, domain, manifoldDisplay().indetPoint());
+    Tensor weights = updateWeights(movingOrigin, res, null, sedarim);
+    return new AveragedMovingDomain2D(weights, manifoldDisplay().indetPoint());
   }
 
   static void main() {

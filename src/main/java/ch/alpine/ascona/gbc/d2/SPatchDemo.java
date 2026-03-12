@@ -78,8 +78,8 @@ class SPatchDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensor.of(embed.stream() //
         .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
     Clip clip = Clips.absolute(1);
-    Tensor domain = new Meshgrid(Box2D.xy(clip), param0.res).image();
-    movingDomain2D = new AveragedMovingDomain2D(embed, sPatch, domain, manifoldDisplay().indetPoint());
+    Tensor domain = new Meshgrid(Box2D.xy(clip), param0.res).image(sPatch::sunder);
+    movingDomain2D = new AveragedMovingDomain2D(domain, manifoldDisplay().indetPoint());
   }
 
   @Override

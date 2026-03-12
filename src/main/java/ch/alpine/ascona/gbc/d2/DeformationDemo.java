@@ -4,7 +4,6 @@ package ch.alpine.ascona.gbc.d2;
 import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
-import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.MovingDomain2D;
@@ -17,7 +16,6 @@ import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 class DeformationDemo extends AbstractDeformationDemo {
@@ -51,32 +49,34 @@ class DeformationDemo extends AbstractDeformationDemo {
   }
 
   @Override
+  protected Tensor movingOrigin() {
+    return movingOrigin;
+  }
+
+  @Override
   protected final void shuffleSnap() {
     setGeodesicControlPoints(shufflePoints(param0().length));
     param1.snap = true;
     recompute();
   }
 
-  protected final void recompute() {
+  private void recompute() {
     if (param1.snap) {
       param1.snap = false;
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      movingOrigin = Tensor.of(getControlPointsSe2().maps(N.DOUBLE).stream().map(manifoldDisplay::xya2point));
+      movingOrigin = getGeodesicControlPoints();
     }
-    movingDomain2D = updateMovingDomain2D(movingOrigin, param1.refine);
+    movingDomain2D = updateMovingDomain2D(param1.refine);
   }
 
-  protected Sedarim operator(Tensor sequence) {
+  private Sedarim operator(Tensor sequence) {
     Manifold manifold = manifoldDisplay().manifold();
     return param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
   }
 
   /** @return method to compute mean (for instance approximation instead of exact mean) */
-  protected MovingDomain2D updateMovingDomain2D(Tensor movingOrigin, int res) {
-    Tensor domain = updateDomain(movingOrigin, res, param1.s2z);
-    Sedarim sedarim = operator(movingOrigin);
-    return new AveragedMovingDomain2D(movingOrigin, sedarim, domain, //
-        manifoldDisplay().indetPoint());
+  private MovingDomain2D updateMovingDomain2D(int res) {
+    Tensor weights = updateWeights(movingOrigin, res, param1.s2z, operator(movingOrigin));
+    return new AveragedMovingDomain2D(weights, manifoldDisplay().indetPoint());
   }
 
   static void main() {

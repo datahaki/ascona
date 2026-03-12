@@ -17,7 +17,7 @@ class MeshgridTest {
   @Test
   void testSimple() {
     CoordinateBoundingBox cbb = CoordinateBoundingBox.of(Clips.absolute(2), Clips.absolute(3));
-    Tensor tensor = new Meshgrid(cbb, 20).image();
+    Tensor tensor = new Meshgrid(cbb, 20).image(t -> t);
     List<Integer> list = Dimensions.of(tensor);
     assertEquals(list, List.of(20, 20, 2));
   }

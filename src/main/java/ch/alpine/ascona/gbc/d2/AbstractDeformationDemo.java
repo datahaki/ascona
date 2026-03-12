@@ -23,6 +23,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.d2.ex.Box2D;
+import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -85,25 +86,25 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
     };
   }
 
-  protected final Tensor updateDomain(Tensor movingOrigin, int res, Scalar s2z) {
+  protected final Tensor updateWeights(Tensor movingOrigin, int res, Scalar s2z, Sedarim sedarim) {
     switch (getSelectedMD()) {
     case R2: {
       CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
-      return new Meshgrid(cbb, res).image();
+      return new Meshgrid(cbb, res).image(sedarim::sunder);
     }
     case S2: {
       CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
       TensorUnaryOperator tuo = xy -> Vector2Norm.NORMALIZE.apply(Append.of(xy, s2z));
-      return new Meshgrid(cbb, res).image(tuo);
+      return new Meshgrid(cbb, res).image(tuo.andThen(sedarim::sunder));
     }
     case H2:
-      return new Meshgrid(Box2D.xy(Clips.absolute(1.0)), res).image();
+      return new Meshgrid(Box2D.xy(Clips.absolute(1.0)), res).image(sedarim::sunder);
     case Se2C:
     case Se2: {
       Clip clip = Clips.absolute(2);
       CoordinateBoundingBox cbb = Box2D.xy(clip);
       TensorUnaryOperator tuo = xy -> Append.of(xy, RealScalar.ONE);
-      return new Meshgrid(cbb, res).image(tuo);
+      return new Meshgrid(cbb, res).image(tuo.andThen(sedarim::sunder));
     }
     default:
       throw new IllegalArgumentException();
@@ -122,7 +123,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor origin = movingDomain2D.origin();
+    Tensor origin = movingOrigin();
     Tensor target = getGeodesicControlPoints();
     // ---
     {
@@ -157,6 +158,8 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       show.render(graphics, new Rectangle(100, 10, 100 + Unprotect.dimension1Hint(weights) * 2, 400));
     }
   }
+
+  protected abstract Tensor movingOrigin();
 
   protected abstract void shuffleSnap();
 
