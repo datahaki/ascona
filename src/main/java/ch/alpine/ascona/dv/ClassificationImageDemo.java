@@ -16,7 +16,6 @@ import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ImagePlot;
@@ -155,15 +154,13 @@ class ClassificationImageDemo extends ControlPointsDemo {
 
   static void render(GeometricLayer geometricLayer, Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor sequence, Tensor vector,
       ColorDataIndexed colorDataIndexedT) {
-    Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(1.0));
     int index = 0;
     ColorDataIndexed colorDataIndexedO = colorDataIndexedT.deriveWithAlpha(128);
     for (Tensor point : sequence) {
       int label = Scalars.intValueExact(vector.Get(index));
-      PointsRender pointsRender = new PointsRender( //
-          colorDataIndexedO.getColor(label), //
-          colorDataIndexedT.getColor(label));
-      pointsRender.show(manifoldDisplay::matrixLift, shape, Tensors.of(point)).render(geometricLayer, graphics);
+      manifoldDisplay.showPoints(colorDataIndexedO.getColor(label), //
+          colorDataIndexedT.getColor(label), RealScalar.ONE, Tensors.of(point)) //
+          .render(geometricLayer, graphics);
       ++index;
     }
   }

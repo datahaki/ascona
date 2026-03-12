@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -78,11 +77,7 @@ class SutherlandHodgmanAlgorithmDemo extends EuclideanPlaneDemo {
       for (int index = 0; index < result.length(); ++index) {
         int cind = polyclipResult.belong().Get(index).number().intValue();
         Color color = COLOR_DATA_INDEXED.getColor(cind);
-        PointsRender pointsRender = new PointsRender(color, Color.BLACK);
-        pointsRender.show( //
-            manifoldDisplay::matrixLift, //
-            manifoldDisplay.shape().multiply(RealScalar.of(2)), //
-            Tensors.of(result.get(index))) //
+        manifoldDisplay.showPoints(color, Color.BLACK, RealScalar.of(2), Tensors.of(result.get(index))) //
             .render(geometricLayer, graphics);
       }
       Tensor nsum = Array.zeros(2);

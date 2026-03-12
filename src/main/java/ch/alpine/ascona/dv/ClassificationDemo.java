@@ -1,9 +1,8 @@
 // code by jph
 package ch.alpine.ascona.dv;
 
-import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
 import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
@@ -12,7 +11,6 @@ import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -54,7 +52,7 @@ class ClassificationDemo extends ControlPointsDemo {
 
     @ReflectionMarker
     public List<Biinvariants> biinvariants() {
-      return Biinvariants.FAST;
+      return Biinvariants.OKAY;
     }
   }
 
@@ -122,27 +120,18 @@ class ClassificationDemo extends ControlPointsDemo {
     // ---
     ColorDataIndexed COLOR_DATA_INDEXED_O = param1.cdg.cyclic();
     ColorDataIndexed COLOR_DATA_INDEXED_T = COLOR_DATA_INDEXED_O.deriveWithAlpha(128);
-    Tensor shape = manifoldDisplay.shape();
     int index = 0;
     for (Tensor point : sequence) {
       int label = Scalars.intValueExact(vector.Get(index));
-      new PointsRender( //
-          COLOR_DATA_INDEXED_T.getColor(label), //
-          COLOR_DATA_INDEXED_O.getColor(label)) //
-              .show(manifoldDisplay::matrixLift, shape, Tensors.of(point)).render(geometricLayer, graphics);
+      manifoldDisplay.showPoints(COLOR_DATA_INDEXED_T.getColor(label), COLOR_DATA_INDEXED_O.getColor(label), RealScalar.ONE, Tensors.of(point)) //
+          .render(geometricLayer, graphics);
       ++index;
     }
     // ---
     Classification classification = param1.labels.apply(vector);
     int bestLabel = classification.result(weights).label();
-    geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
-    Path2D path2d = geometricLayer.toPath2D(shape.multiply(RealScalar.of(1.4)), true);
-    graphics.setColor(COLOR_DATA_INDEXED_O.getColor(bestLabel));
-    graphics.fill(path2d);
-    // ---
-    graphics.setStroke(new BasicStroke(1.5f));
-    graphics.draw(path2d);
-    geometricLayer.popMatrix();
+    manifoldDisplay.showPoints(COLOR_DATA_INDEXED_O.getColor(bestLabel), Color.DARK_GRAY, RealScalar.of(1.2), Tensors.of(origin)) //
+        .render(geometricLayer, graphics);
   }
 
   static void main() {

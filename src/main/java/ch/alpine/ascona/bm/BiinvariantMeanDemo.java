@@ -17,7 +17,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
@@ -142,8 +141,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       Optional<Tensor> optionalSM = spatialMedian.uniform(sequence);
       if (optionalSM.isPresent()) {
         Tensor median = optionalSM.orElseThrow();
-        new PointsRender(new Color(192, 0, 255, 192), new Color(192, 0, 255, 255)) //
-            .show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.7)), Tensors.of(median)) //
+        manifoldDisplay.showPoints(new Color(192, 0, 255, 192), new Color(192, 0, 255, 255), RealScalar.of(0.7), Tensors.of(median)) //
             .render(geometricLayer, graphics);
       } else {
         graphics.setColor(Color.RED);

@@ -11,7 +11,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.reg.RegionRenders;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -90,7 +89,6 @@ class S1KrigingDemo extends ControlPointsDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = manifoldDisplay.manifold();
-    final Tensor shape = manifoldDisplay.shape(); // .multiply(RealScalar.of(0.3));
     Tensor control = Tensor.of(getGeodesicControlPoints().stream() //
         .filter(v -> Scalars.nonZero(Vector2Norm.of(v))));
     if (1 < control.length()) {
@@ -114,8 +112,7 @@ class S1KrigingDemo extends ControlPointsDemo {
       graphics.setColor(Color.GREEN);
       for (int index = 0; index < sequence.length(); ++index)
         graphics.draw(geometricLayer.toLine2D(control.get(index), sequence.get(index)));
-      new PointsRender(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255)) //
-          .show(manifoldDisplay()::matrixLift, shape, sequence) //
+      manifoldDisplay.showPoints(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255), RealScalar.ONE, sequence) //
           .render(geometricLayer, graphics);
       Tensor covariance = DiagonalMatrix.sparse(cvarian);
       // if (isDeterminate())

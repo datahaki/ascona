@@ -13,7 +13,6 @@ import ch.alpine.ascona.gbc.GenesisDequeParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.ascony.win.PlaceWrap;
@@ -37,8 +36,6 @@ import ch.alpine.tensor.red.Times;
 
 class ExponentialDemo extends EuclideanPlaneDemo {
   private static final int WIDTH = 300;
-  private static final PointsRender POINTS_RENDER = //
-      new PointsRender(new Color(0, 128, 128, 64), new Color(0, 128, 128, 96));
   // ---
   private final GenesisDequeParam genesisDequeProperties;
 
@@ -85,13 +82,8 @@ class ExponentialDemo extends EuclideanPlaneDemo {
               graphics.draw(line2d);
             }
           }
-          {
-            LeversRender leversRender = LeversRender.of( //
-                manifoldDisplay, leversVirtual, origin.maps(Scalar::zero), geometricLayer, graphics);
-            leversRender.renderSequence(POINTS_RENDER);
-            // Tensor weights = iterativeAffineCoordinate.origin(deque, levers2);
-            // leversRender.renderWeights(weights);
-          }
+          manifoldDisplay.showPoints(new Color(0, 128, 128, 64), new Color(0, 128, 128, 96), RealScalar.ONE, leversVirtual) //
+              .render(geometricLayer, graphics);
           geometricLayer.popMatrix();
           {
             // FIXME BRIDGE this should not affect Show appearance!!!

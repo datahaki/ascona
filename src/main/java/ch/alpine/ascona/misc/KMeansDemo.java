@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -150,21 +149,17 @@ class KMeansDemo extends ControlPointsDemo {
           graphics.setColor(colorFillIndexed.getColor(index));
           graphics.fill(geometricLayer.toPath2D(tensor, true));
         }
-        PointsRender pointsRender = new PointsRender( //
-            colorFillIndexed.getColor(index), //
-            colorDataIndexed.getColor(index));
-        pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.2)), subset) //
+        manifoldDisplay.showPoints(colorFillIndexed.getColor(index), colorDataIndexed.getColor(index), RealScalar.of(0.2), subset) //
             .render(geometricLayer, graphics);
         // ---
         if (seeds2.length() == partition.length()) {
-          pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.5)), Tensors.of(seeds2.get(index))) //
+          manifoldDisplay.showPoints(colorFillIndexed.getColor(index), colorDataIndexed.getColor(index), RealScalar.of(0.5), Tensors.of(seeds2.get(index))) //
               .render(geometricLayer, graphics);
         }
         ++index;
       }
     } else {
-      PointsRender pointsRender = new PointsRender(Color.GRAY, Color.BLACK);
-      pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.2)), sequence) //
+      manifoldDisplay.showPoints(Color.GRAY, Color.DARK_GRAY, RealScalar.of(0.2), sequence) //
           .render(geometricLayer, graphics);
     }
   }

@@ -13,7 +13,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointsSe2;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.ListLinePlot;
@@ -107,12 +106,9 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     // render dataset
     pathRenderCurve.setCurve(control, false).render(geometricLayer, graphics);
-    if (control.length() <= 1000) {
-      Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
-      new PointsRender(new Color(255, 128, 128, 64), COLOR_CURVE) //
-          .show(manifoldDisplay::matrixLift, shape, control) //
+    if (control.length() <= 1000)
+      manifoldDisplay.showPoints(new Color(255, 128, 128, 64), COLOR_CURVE, RealScalar.of(0.3), control) //
           .render(geometricLayer, graphics);
-    }
     Scalar epsilon = Power.of(Rational.HALF, paran.level);
     CurveDecimation curveDecimation = CurveDecimation.of(paran.type.supply(homogeneousSpace), epsilon);
     DecimationResult decimationResult = curveDecimation.evaluate(control);
@@ -124,12 +120,8 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
         simplified, level);
     graphics.setColor(Color.DARK_GRAY);
     pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
-    {
-      Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.8));
-      new PointsRender(COLOR_SHAPE, Color.BLACK) //
-          .show(manifoldDisplay::matrixLift, shape, simplified) //
-          .render(geometricLayer, graphics);
-    }
+    manifoldDisplay.showPoints(COLOR_SHAPE, Color.BLACK, RealScalar.of(0.8), simplified) //
+        .render(geometricLayer, graphics);
     if (paran.error) {
       Dimension dimension = getSize();
       Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));

@@ -8,7 +8,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.msh.ArrayFunction;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.fig.DensityPlot;
@@ -20,6 +19,7 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.DoubleScalar;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -41,9 +41,6 @@ import ch.alpine.tensor.sca.ply.Polynomial;
 import ch.alpine.tensor.sca.ply.Roots;
 
 class AberthEhrlichDemo extends EuclideanPlaneDemo {
-  private static final PointsRender POINTS_RENDER_0 = //
-      new PointsRender(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255));
-
   @ReflectionMarker
   static class Param {
     @FieldClip(min = "3", max = "20")
@@ -130,7 +127,8 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     {
       Tensor sequence = complexZeros.extract(0, length).maps(S2V);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderSequence(POINTS_RENDER_0);
+      manifoldDisplay.showPoints(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255), RealScalar.ONE, sequence) //
+          .render(geometricLayer, graphics);
       leversRender.renderIndexP("z");
     }
     if (1 < length) {

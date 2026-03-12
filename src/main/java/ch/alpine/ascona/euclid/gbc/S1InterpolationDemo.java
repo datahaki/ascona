@@ -11,7 +11,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.reg.RegionRenders;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -22,6 +21,7 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -90,16 +90,13 @@ public class S1InterpolationDemo extends ControlPointsDemo {
     Manifold manifold = SnManifold.INSTANCE;
     Tensor control = Tensor.of(getGeodesicControlPoints().stream() //
         .filter(v -> Scalars.nonZero(Vector2Norm.of(v))));
-    final Tensor shape = manifoldDisplay.shape(); // .multiply(RealScalar.of(0.3));
     if (0 < control.length()) {
       Tensor sequence = Vector2Norm.NORMALIZE.slash(control);
       Tensor target = sequence;
       graphics.setColor(Color.GREEN);
       for (int index = 0; index < target.length(); ++index)
         graphics.draw(geometricLayer.toLine2D(control.get(index), target.get(index)));
-      new PointsRender(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255))
-          // new PointsRender(new Color(128, 255, 128, 64), new Color(128, 255, 128, 255)) //
-          .show(manifoldDisplay::matrixLift, shape, target) //
+      manifoldDisplay.showPoints(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255), RealScalar.ONE, target) //
           .render(geometricLayer, graphics);
       // ---
       Tensor values = Tensor.of(control.stream().map(Vector2Norm::of));

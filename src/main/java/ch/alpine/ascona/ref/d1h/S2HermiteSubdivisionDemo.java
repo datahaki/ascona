@@ -11,7 +11,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -35,8 +34,6 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 
 class S2HermiteSubdivisionDemo extends ControlPointsDemo {
   // TODO ASCONA redundant
-  private static final PointsRender POINTS_RENDER_0 = //
-      new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   private static final Stroke STROKE = //
       new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final Tensor GEODESIC_DOMAIN = Subdivide.of(0.0, 1.0, 11);
@@ -88,8 +85,8 @@ class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           s2Display.xya2point(xy0), //
           s2Display.createTangent(xy0, xya.Get(2)).multiply(vscale));
     }));
-    POINTS_RENDER_0.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), control.get(Tensor.ALL, 0)).render(geometricLayer, graphics);
-    // GeodesicSpace geodesicSpace = s2Display.geodesicSpace();
+    manifoldDisplay.showPoints(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255), RealScalar.ONE, control.get(Tensor.ALL, 0)) //
+        .render(geometricLayer, graphics);
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     { // render tangents as geodesic on sphere
       for (Tensor ctrl : control) {

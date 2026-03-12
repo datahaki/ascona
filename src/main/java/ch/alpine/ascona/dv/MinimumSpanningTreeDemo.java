@@ -13,7 +13,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.MatrixPlot;
@@ -31,6 +30,7 @@ import ch.alpine.sophis.fit.IntUndirectedEdge;
 import ch.alpine.sophis.fit.MinimumSpanningTree;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.Manifold;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -154,12 +154,11 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
       }
     }
     Map<Integer, Integer> map = disjointSets.createMap(new AtomicInteger()::getAndIncrement);
-    Tensor shape = manifoldDisplay.shape();
     for (int index = 0; index < sequence.length(); ++index) {
       int unique = map.get(disjointSets.key(index));
       Color color = param1.colorDataLists.cyclic().getColor(unique);
-      PointsRender pointsRender = new PointsRender(color, color);
-      pointsRender.show(manifoldDisplay::matrixLift, shape, Tensors.of(sequence.get(index))).render(geometricLayer, graphics);
+      manifoldDisplay.showPoints(color, Color.DARK_GRAY, RealScalar.ONE, Tensors.of(sequence.get(index))) //
+          .render(geometricLayer, graphics);
     }
   }
 

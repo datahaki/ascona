@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -26,7 +25,6 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
 
 class R2ParametricResampleDemo extends EuclideanPlaneDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict().deriveWithAlpha(128);
-  private static final PointsRender POINTS_RENDER = new PointsRender(new Color(0, 128, 128, 64), new Color(0, 128, 128, 255));
 
   @ReflectionMarker
   static class Param {
@@ -70,7 +68,7 @@ class R2ParametricResampleDemo extends EuclideanPlaneDemo {
     ParametricResample parametricResample = param.parametricResample();
     ResampleResult resampleResult = parametricResample.apply(control);
     for (Tensor points : resampleResult.getPoints())
-      POINTS_RENDER.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), points) //
+      manifoldDisplay.showPoints(new Color(0, 128, 128, 64), new Color(0, 128, 128, 255), RealScalar.ONE, points) //
           .render(geometricLayer, graphics);
   }
 

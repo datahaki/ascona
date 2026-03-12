@@ -12,7 +12,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.GridRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.Show;
@@ -38,9 +37,6 @@ import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.red.Mean;
 
 class HermiteSubdivisionDemo extends ControlPointsDemo {
-  // TODO ASCONA redundant
-  private static final PointsRender POINTS_RENDER_0 = //
-      new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
 
@@ -75,10 +71,8 @@ class HermiteSubdivisionDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     final Tensor tensor = getControlPointsSe2();
-    POINTS_RENDER_0.show(Se2Display.INSTANCE::matrixLift, //
-        Se2Display.INSTANCE.shape(), //
-        tensor).render(geometricLayer, graphics);
-    // renderControlPoints(geometricLayer, graphics);
+    Se2Display.INSTANCE.showPoints(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255), RealScalar.ONE, tensor) //
+        .render(geometricLayer, graphics);
     if (1 < tensor.length()) {
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
       Tensor control;

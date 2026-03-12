@@ -14,7 +14,6 @@ import ch.alpine.ascony.msh.MovingDomain2D;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -30,7 +29,6 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -45,8 +43,6 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 abstract class AbstractDeformationDemo extends ControlPointsDemo {
-  static final PointsRender POINTS_RENDER_POINTS = //
-      new PointsRender(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255));
   static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   /** for parameterization of geodesic */
@@ -116,10 +112,6 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
     return homogeneousSpace.biinvariantMean();
   }
 
-  protected final Tensor shapeOrigin() {
-    return manifoldDisplay().shape().multiply(RealScalar.of(0.8));
-  }
-
   @Override // from RenderInterface
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
@@ -144,8 +136,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       }
       graphics.setStroke(new BasicStroke());
     }
-    POINTS_RENDER_POINTS //
-        .show(manifoldDisplay::matrixLift, shapeOrigin(), origin) //
+    manifoldDisplay.showPoints(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255), RealScalar.of(0.8), origin) //
         .render(geometricLayer, graphics);
     LeversRender leversRender = LeversRender.of(manifoldDisplay, param2.target //
         ? getGeodesicControlPoints()
@@ -156,7 +147,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       Show show = new Show();
       show.add(ArrayPlot.of(weights, param2.cdg));
       Dimension dimension = getSize();
-      show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width-100, 300));
+      show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width - 100, 300));
     }
   }
 

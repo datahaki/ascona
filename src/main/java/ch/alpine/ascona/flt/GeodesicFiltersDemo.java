@@ -9,7 +9,6 @@ import ch.alpine.ascony.api.GeodesicFilters;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -65,7 +64,6 @@ class GeodesicFiltersDemo extends ControlPointsDemo {
     Tensor control = getGeodesicControlPoints();
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      // leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     if (Integers.isOdd(control.length())) {
@@ -75,8 +73,7 @@ class GeodesicFiltersDemo extends ControlPointsDemo {
         try {
           Tensor mean = geodesicFilters.supply(manifoldDisplay.geodesicSpace(), smoothingKernel).apply(control);
           Color color = COLOR_DRAW.getColor(ordinal);
-          PointsRender pointsRender = new PointsRender(COLOR_FILL.getColor(ordinal), color);
-          pointsRender.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)).render(geometricLayer, graphics);
+          manifoldDisplay.showPoints(COLOR_FILL.getColor(ordinal), color, RealScalar.ONE, Tensors.of(mean)).render(geometricLayer, graphics);
           graphics.setColor(color);
           graphics.drawString("" + geodesicFilters, 0, 32 + ordinal * 16);
         } catch (Exception e) {

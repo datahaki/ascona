@@ -4,10 +4,8 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascony.dis.Se2ClothoidDisplay;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.api.CurveOperator;
 import ch.alpine.sophis.crv.clt.Clothoid;
@@ -16,6 +14,7 @@ import ch.alpine.sophis.crv.clt.ClothoidBuilders;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophis.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -32,8 +31,6 @@ class ClothoidLRDemo extends ClothoidBaseDemo {
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 100);
   private static final Tensor ARROWS = Subdivide.of(0.0, 1.0, 8);
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic().deriveWithAlpha(192);
-  private static final PointsRender POINTS_RENDER_C = new PointsRender(new Color(0, 0, 0, 0), new Color(128, 128, 128, 64));
-  private static final PointsRender POINTS_RENDER_S = new PointsRender(new Color(0, 0, 0), Color.BLACK);
 
   public ClothoidLRDemo() {
     setControlPointsSe2(Tensors.fromString("{{0,0,0}, {-3,0,0}}"));
@@ -59,7 +56,7 @@ class ClothoidLRDemo extends ClothoidBaseDemo {
       Tensor points = DOMAIN.maps(clothoid);
       new PathRender(COLOR_DATA_INDEXED.getColor(index), 1.5f) //
           .setCurve(points, false).render(geometricLayer, graphics);
-      POINTS_RENDER_C.show(Se2ClothoidDisplay.ANALYTIC::matrixLift, Arrowhead.of(0.3), ARROWS.maps(clothoid)) //
+      manifoldDisplay().showPoints(new Color(0, 0, 0, 64), new Color(128, 128, 128, 64), RealScalar.ONE, ARROWS.maps(clothoid)) //
           .render(geometricLayer, graphics);
       ++index;
     }
@@ -68,7 +65,7 @@ class ClothoidLRDemo extends ClothoidBaseDemo {
       Tensor points = Nest.of(curveSubdivision::string, Tensors.of(start, mouse), 2); // length == 129
       new PathRender(COLOR_DATA_INDEXED.getColor(2), 2.5f) //
           .setCurve(points, false).render(geometricLayer, graphics);
-      POINTS_RENDER_S.show(Se2ClothoidDisplay.ANALYTIC::matrixLift, Arrowhead.of(0.3), points) //
+      manifoldDisplay().showPoints(new Color(0, 0, 0, 64), new Color(128, 128, 128, 64), RealScalar.ONE, points) //
           .render(geometricLayer, graphics);
     }
     {
@@ -76,7 +73,7 @@ class ClothoidLRDemo extends ClothoidBaseDemo {
       Tensor points = Nest.of(curveSubdivision::string, Tensors.of(start, mouse), 2); // length == 129
       new PathRender(COLOR_DATA_INDEXED.getColor(2), 2.5f) //
           .setCurve(points, false).render(geometricLayer, graphics);
-      POINTS_RENDER_S.show(Se2ClothoidDisplay.ANALYTIC::matrixLift, Arrowhead.of(0.3), points) //
+      manifoldDisplay().showPoints(new Color(0, 0, 0, 64), new Color(128, 128, 128, 64), RealScalar.ONE, points) //
           .render(geometricLayer, graphics);
     }
   }
