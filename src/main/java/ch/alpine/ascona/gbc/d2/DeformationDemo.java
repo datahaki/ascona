@@ -13,6 +13,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -75,8 +76,9 @@ class DeformationDemo extends AbstractDeformationDemo {
 
   /** @return method to compute mean (for instance approximation instead of exact mean) */
   private MovingDomain2D updateMovingDomain2D(int res) {
+    BiinvariantMean biinvariantMean = manifoldDisplay().homogeneousSpace().biinvariantMean();
     Tensor weights = updateWeights(movingOrigin, res, param1.s2z, operator(movingOrigin));
-    return new AveragedMovingDomain2D(weights, manifoldDisplay().indetPoint());
+    return new AveragedMovingDomain2D(weights, biinvariantMean, manifoldDisplay().indetPoint());
   }
 
   static void main() {

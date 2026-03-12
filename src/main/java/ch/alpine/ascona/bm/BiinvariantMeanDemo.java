@@ -10,7 +10,6 @@ import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 import ch.alpine.ascona.RandomPoints;
@@ -101,10 +100,8 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     Tensor mean_approximation = new ReducingMeanEstimate(homogeneousSpace).estimate(sequence, weights);
-    Tensor mean = null;
-    try {
-      mean = homogeneousSpace.biinvariantMean().mean(sequence, weights);
-    } catch (Exception e) {
+    Optional<Tensor> optional = homogeneousSpace.biinvariantMean().optional(sequence, weights);
+    if (optional.isEmpty()) {
       graphics.setColor(Color.RED);
       graphics.drawString("mean does not exist", 0, 30);
     }
@@ -128,7 +125,8 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
     } catch (Exception e) {
       System.err.println("mean iteration failed");
     }
-    if (Objects.nonNull(mean)) {
+    if (optional.isPresent()) {
+      Tensor mean = optional.orElseThrow();
       graphics.setColor(Color.LIGHT_GRAY);
       graphics.setStroke(STROKE);
       for (Tensor point : sequence) {
@@ -142,15 +140,13 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       Biinvariant biinvariant = map.getOrDefault(param0.biinvariants, Biinvariants.USANCE.ofSafe(homogeneousSpace));
       Sedarim sedarim = biinvariant.weighting(InversePowerVariogram.of(1), sequence);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(), sedarim, Chop._05);
-      try {
-        Optional<Tensor> optional = spatialMedian.uniform(sequence);
-        if (optional.isPresent()) {
-          Tensor median = optional.orElseThrow();
-          new PointsRender(COLOR_DATA_INDEXED_FILL.getColor(1), COLOR_DATA_INDEXED_DRAW.getColor(1)) //
-              .show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.7)), Tensors.of(median)) //
-              .render(geometricLayer, graphics);
-        }
-      } catch (Exception e) {
+      Optional<Tensor> optionalSM = spatialMedian.uniform(sequence);
+      if (optionalSM.isPresent()) {
+        Tensor median = optionalSM.orElseThrow();
+        new PointsRender(COLOR_DATA_INDEXED_FILL.getColor(1), COLOR_DATA_INDEXED_DRAW.getColor(1)) //
+            .show(manifoldDisplay::matrixLift, manifoldDisplay.shape().multiply(RealScalar.of(0.7)), Tensors.of(median)) //
+            .render(geometricLayer, graphics);
+      } else {
         graphics.setColor(Color.RED);
         graphics.drawString("spatial mean does not exist", 0, 50);
       }
@@ -161,13 +157,15 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
         new ImageRender(VehicleStatic.INSTANCE.bufferedImage_o(), BOX).render(geometricLayer, graphics);
         geometricLayer.popMatrix();
       }
-      if (Objects.nonNull(mean)) {
+      if (optional.isPresent()) {
+        Tensor mean = optional.orElseThrow();
         geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
         new ImageRender(VehicleStatic.INSTANCE.bufferedImage_g(), BOX).render(geometricLayer, graphics);
         geometricLayer.popMatrix();
       }
     } else {
       {
+        Tensor mean = optional.orElse(null);
         LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, mean, geometricLayer, graphics);
         leversRender.renderOrigin();
         leversRender.renderIndexP();

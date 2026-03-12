@@ -14,6 +14,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
@@ -75,7 +76,8 @@ class R2MlsDemo extends AbstractDeformationDemo {
     }
     Sedarim sedarim = LogWeightings.COORDINATE.sedarim(biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), movingOrigin);
     Tensor weights = updateWeights(movingOrigin, res, null, sedarim);
-    return new AveragedMovingDomain2D(weights, manifoldDisplay().indetPoint());
+    BiinvariantMean biinvariantMean = manifoldDisplay().homogeneousSpace().biinvariantMean();
+    return new AveragedMovingDomain2D(weights, biinvariantMean, manifoldDisplay().indetPoint());
   }
 
   static void main() {

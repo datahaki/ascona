@@ -2,9 +2,12 @@
 package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -16,6 +19,8 @@ import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointTypes;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.fig.ArrayPlot;
+import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -25,11 +30,13 @@ import ch.alpine.sophis.gbc.d2.InsidePolygonCoordinate;
 import ch.alpine.sophis.gbc.d2.SPatch;
 import ch.alpine.sophis.gbc.d2.ThreePointCoordinate;
 import ch.alpine.sophis.gbc.d2.ThreePointScalings;
+import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -40,6 +47,7 @@ import ch.alpine.tensor.sca.Clips;
 class SPatchDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param0 {
+    public Integer n = 5;
     @FieldSelectionArray({ "20", "30", "50" })
     public Integer res = 34;
   }
@@ -49,18 +57,17 @@ class SPatchDemo extends ControlPointsDemo {
     public ColorDataGradients cdg = ColorDataGradients.CLASSIC;
   }
 
-  private final SPatch sPatch;
   private final Param0 param0;
   private final Param1 param1;
+  private SPatch sPatch;
   private MovingDomain2D movingDomain2D;
 
   public SPatchDemo() {
     super(param0 = new Param0(), param1 = new Param1());
     fieldsEditor(0).addUniversalListener(this::shuffle);
-    Genesis genesis = new InsidePolygonCoordinate(ThreePointCoordinate.of(ThreePointScalings.MEAN_VALUE));
-    sPatch = SPatch.of(5, genesis, 2);
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.R2);
+    shuffle();
   }
 
   @Override
@@ -74,12 +81,15 @@ class SPatchDemo extends ControlPointsDemo {
   }
 
   void shuffle() {
+    Genesis genesis = new InsidePolygonCoordinate(ThreePointCoordinate.of(ThreePointScalings.MEAN_VALUE));
+    sPatch = SPatch.of(param0.n, genesis, 2);
     Tensor embed = sPatch.getEmbed();
     setControlPointsSe2(Tensor.of(embed.stream() //
         .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
     Clip clip = Clips.absolute(1);
     Tensor domain = new Meshgrid(Box2D.xy(clip), param0.res).image(sPatch::sunder);
-    movingDomain2D = new AveragedMovingDomain2D(domain, manifoldDisplay().indetPoint());
+    BiinvariantMean biinvariantMean = manifoldDisplay().homogeneousSpace().biinvariantMean();
+    movingDomain2D = new AveragedMovingDomain2D(domain, biinvariantMean, manifoldDisplay().indetPoint());
   }
 
   @Override
@@ -88,30 +98,23 @@ class SPatchDemo extends ControlPointsDemo {
     Tensor sequence = getGeodesicControlPoints();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     {
-      Tensor[][] forward = movingDomain2D.forward(sequence, homogeneousSpace.biinvariantMean());
+      Tensor[][] forward = movingDomain2D.forward(sequence);
+      Tensor points = Unprotect.using(IntStream.range(0, forward.length).filter(i -> i % 2 == 0) //
+          .boxed().flatMap(i -> IntStream.range(0, forward[i].length).filter(j -> j % 2 == 0).mapToObj(j -> forward[i][j])).toList());
+      manifoldDisplay.showPoints(new Color(128, 128, 128, 64), new Color(128, 128, 128, 128), RealScalar.of(0.4), points) //
+          .render(geometricLayer, graphics);
       new MeshRender(forward, param1.cdg.deriveWithOpacity(Rational.HALF)) //
           .render(geometricLayer, graphics);
-      Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
-      int x = 0;
-      for (Tensor[] row : forward) {
-        if (x % 2 == 0) {
-          int y = 0;
-          for (Tensor xya : row) {
-            if (y % 2 == 0) {
-              geometricLayer.pushMatrix(manifoldDisplay.matrixLift(xya));
-              Path2D path2d = geometricLayer.toPath2D(shape);
-              graphics.setColor(new Color(128, 128, 128, 64));
-              graphics.fill(path2d);
-              geometricLayer.popMatrix();
-            }
-            ++y;
-          }
-        }
-        ++x;
-      }
     }
     {
-      int n = 5;
+      Tensor weights = movingDomain2D.arrayReshape_weights();
+      Show show = new Show();
+      show.add(ArrayPlot.of(weights, param1.cdg));
+      Dimension dimension = getSize();
+      show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width - 100, 300));
+    }
+    {
+      int n = sPatch.n();
       Tensor domain = Subdivide.of(0.0, 1.0, 15);
       graphics.setColor(new Color(0, 0, 0, 128));
       for (int i = 0; i < n; ++i)

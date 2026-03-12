@@ -128,7 +128,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
     // ---
     {
       ColorDataGradient colorDataGradient = param2.cdg.deriveWithOpacity(RealScalar.of(0.5));
-      new MeshRender(movingDomain2D.forward(target, biinvariantMean()), colorDataGradient) //
+      new MeshRender(movingDomain2D.forward(target), colorDataGradient) //
           .render(geometricLayer, graphics);
     }
     if (param2.target) { // connect origin and target pairs with lines/geodesics
