@@ -18,7 +18,9 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
+import ch.alpine.ascony.msh.MatrixArray;
 import ch.alpine.ascony.msh.Meshgrid;
+import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -35,6 +37,7 @@ import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -59,6 +62,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
 
   public R2BarycentricCoordinateDemo() {
     super(list());
+    geometricComponent().addRenderInterfaceBackground(AxesRender.INSTANCE);
     weightingsParam.logWeightings = LogWeightings.COORDINATE;
     jToolBar().add(jToggleEntire);
     setManifoldDisplay(ManifoldDisplays.R2);
@@ -106,51 +110,27 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
       AveragedMovingDomain2D averagedMovingDomain2D = new AveragedMovingDomain2D(weights, homogeneousSpace.biinvariantMean(), fallback);
       Tensor[][] array = averagedMovingDomain2D.forward(controlPoints);
       { // render basis functions
-        {
-          int n = weights.get(0, 0).length();
-          Clip clip = cbb.clip(0);
-          Clip clipx = Clips.interval(clip.min(), clip.min().add(clip.width().multiply(RealScalar.of(n))));
-          CoordinateBoundingBox cbb_ext = CoordinateBoundingBox.of(clipx, cbb.clip(1));
-          Show show = new Show();
-          // show.add(MatrixPlot.of(averagedMovingDomain2D.arrayReshape_weights(), true));
-          show.add(ArrayPlot.of(averagedMovingDomain2D.arrayReshape_weights(), cbb_ext, colorDataGradient, false));
-          for (int i = 0; i < n; ++i) {
-            final int fi = i;
-            TensorUnaryOperator tuo = p -> p.add(Tensors.of(clip.width().multiply(RealScalar.of(fi)), RealScalar.ZERO));
-            show.add(PolygonPlot.of(tuo.slash(controlPoints))).setColor(Color.BLACK);
-          }
-          Dimension dimension = getSize();
-          show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width - 100, 300));
+        int n = weights.get(0, 0).length();
+        Clip clip = cbb.clip(0);
+        Clip clipx = Clips.interval(clip.min(), clip.min().add(clip.width().multiply(RealScalar.of(n))));
+        CoordinateBoundingBox cbb_ext = CoordinateBoundingBox.of(clipx, cbb.clip(1));
+        Show show = new Show();
+        show.add(ArrayPlot.of(averagedMovingDomain2D.arrayReshape_weights(), cbb_ext, colorDataGradient, false));
+        for (int i = 0; i < n; ++i) {
+          final int fi = i;
+          TensorUnaryOperator tuo = p -> p.add(Tensors.of(clip.width().multiply(RealScalar.of(fi)), RealScalar.ZERO));
+          show.add(PolygonPlot.of(tuo.slash(controlPoints))).setColor(Color.BLACK);
         }
-        {
-          // Show show = new Show();
-          // show.add(ArrayPlot.of(neg, ColorDataGradients.TEMPERATURE));
-          // show.render(graphics, new Rectangle(100, 400, 200, 200));
-        }
-        {
-          // TODO ASCONA occurrences of raster replace with matrix/arrayplot
-          // Show show = new Show();
-          // show.add(MatrixPlot.of(neg, ColorDataGradients.TEMPERATURE));
-          // List<Integer> list = Dimensions.of(neg);
-          // System.out.println();
-          // show.render(graphics, new Rectangle(0,0,2*list.get(1),2*list.get(0)));
-        }
+        Dimension dimension = getSize();
+        show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width - 100, 300));
       }
       // render grid lines functions
-      ColorDataGradient cdg = colorDataGradient.deriveWithOpacity(Rational.HALF);
-      new MeshRender(array, cdg).render(geometricLayer, graphics);
+      new MeshRender(array, colorDataGradient.deriveWithOpacity(Rational.HALF)) //
+          .render(geometricLayer, graphics);
       if (scatteredSetParam.arrows) {
-        // Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
-        // for (int i0 = 0; i0 < n; ++i0)
-        // for (int i1 = 0; i1 < n; ++i1) {
-        // Tensor mean = array[i0][i1];
-        // if (Objects.nonNull(mean)) {
-        // geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
-        // graphics.setColor(nag[i0][i1] ? new Color(255, 128, 128, 128 + 32) : new Color(128, 128, 128, 64));
-        // graphics.fill(geometricLayer.toPath2D(shape));
-        // geometricLayer.popMatrix();
-        // }
-        // }
+        Tensor points = Flatten.of(new MatrixArray(array).unwrap(), 1);
+        manifoldDisplay.showPoints(new Color(255, 128, 128, 128 + 32), new Color(255, 128, 128, 128 + 64), RealScalar.of(0.5), points) //
+            .render(geometricLayer, graphics);
       }
     }
   }

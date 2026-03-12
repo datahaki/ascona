@@ -3,6 +3,7 @@ package ch.alpine.ascona.gbc.d2;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
@@ -155,7 +156,8 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       Tensor weights = movingDomain2D.arrayReshape_weights();
       Show show = new Show();
       show.add(ArrayPlot.of(weights, param2.cdg));
-      show.render(graphics, new Rectangle(100, 10, 100 + Unprotect.dimension1Hint(weights) * 2, 400));
+      Dimension dimension = getSize();
+      show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width-100, 300));
     }
   }
 
