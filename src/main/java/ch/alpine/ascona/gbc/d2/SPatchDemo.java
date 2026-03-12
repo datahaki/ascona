@@ -47,6 +47,7 @@ import ch.alpine.tensor.sca.Clips;
 class SPatchDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param0 {
+    @FieldSelectionArray({ "3", "4", "5", "6", "7" })
     public Integer n = 5;
     @FieldSelectionArray({ "20", "30", "50" })
     public Integer res = 34;

@@ -2,18 +2,20 @@
 package ch.alpine.ascona.gbc.d2;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.msh.ImageTiling;
+import ch.alpine.ascony.msh.AveragedMovingDomain2D;
+import ch.alpine.ascony.msh.MatrixArray;
+import ch.alpine.ascony.msh.Meshgrid;
 import ch.alpine.ascony.reg.RegionRenders;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
@@ -26,14 +28,10 @@ import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.noise.SimplexContinuousNoise;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.rn.RGroup;
-import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Unprotect;
-import ch.alpine.tensor.alg.Array;
-import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.qty.Quantity;
@@ -43,10 +41,9 @@ import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */
-// TODO ASCONA ALG possibly only recompute when points have changed
 final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private static final double RANGE = 5;
-  private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
+  private final CoordinateBoundingBox cbb = Box2D.xy(Clips.absolute(RANGE));
   // ---
   private final JToggleButton jToggleAnimate = new JToggleButton("animate");
   private final Timing timing = Timing.started();
@@ -64,11 +61,10 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
       });
       jToolBar().add(jToggleAnimate);
     }
+    geometricComponent().addRenderInterfaceBackground(RegionRenders.of(cbb));
     setControlPointsSe2(Tensors.fromString("{{2, -3, 1.5}, {3, 5, 1}, {-4, -3, 1}, {-5, 3, 2}}"));
     setControlPointsSe2(Tensors.fromString( //
         "{{-1.217, -2.050, 1.309}, {1.783, 1.917, 0.262}, {-3.583, 0.300, -0.262}, {2.200, -0.283, 0.262}, {-4.000, -3.000, 1.000}, {-1.900, 2.117, 1.309}}"));
-    geometricComponent().addRenderInterfaceBackground(RegionRenders.of(coordinateBoundingBox));
-    // geometricComponent().setOffset(500, 500);
   }
 
   @Override
@@ -99,41 +95,22 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       // ---
+      // TODO inv pow var configurable!?
       Sedarim sedarim = Biinvariants.METRIC.ofSafe(RGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), domain);
-      // operator(domain);
-      Tensor sX = Subdivide.increasing(coordinateBoundingBox.clip(0), scatteredSetParam.refine);
-      Tensor sY = Subdivide.decreasing(coordinateBoundingBox.clip(1), scatteredSetParam.refine);
-      int n = sX.length();
-      Tensor[][] array = new Tensor[n][n];
-      Tensor[][] point = new Tensor[n][n];
+      Tensor weights = new Meshgrid(cbb, scatteredSetParam.refine).image(sedarim::sunder);
       Tensor fallback = manifoldDisplay.indetPoint();
-      Tensor wgs = Array.of(_ -> DoubleScalar.INDETERMINATE, n, n, domain.length());
-      IntStream.range(0, sX.length()).parallel().forEach(c0 -> {
-        Tensor x = sX.get(c0);
-        int c1 = 0;
-        for (Tensor y : sY) {
-          Tensor px = Tensors.of(x, y);
-          Tensor weights = sedarim.sunder(px);
-          wgs.set(weights, c1, c0);
-          Tensor mean = homogeneousSpace.biinvariantMean().optional(controlPoints, weights).orElse(fallback);
-          array[c0][c1] = mean;
-          point[c0][c1] = manifoldDisplay.point2xy(mean);
-          ++c1;
-        }
-        ++c0;
-      });
-      // ---
+      AveragedMovingDomain2D averagedMovingDomain2D = new AveragedMovingDomain2D(weights, homogeneousSpace.biinvariantMean(), fallback);
+      Tensor[][] array = averagedMovingDomain2D.forward(controlPoints);
+      Tensor[][] point = new MatrixArray(array).maps(manifoldDisplay.point2xy());
       new MeshRender(point, colorDataGradient.deriveWithOpacity(Rational.HALF)).render(geometricLayer, graphics);
-      // ---
       {
-        Tensor weights = ImageTiling.of(wgs);
+        Dimension dimension = getSize();
         Show show = new Show();
-        show.add(ArrayPlot.of(weights, colorDataGradient));
-        show.render(graphics, new Rectangle(100, 10, 100 + Unprotect.dimension1Hint(weights) * 2, 400));
+        show.add(ArrayPlot.of(averagedMovingDomain2D.arrayReshape_weights(), colorDataGradient));
+        show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width, 300));
       }
       // render grid lines functions
       if (scatteredSetParam.arrows)
