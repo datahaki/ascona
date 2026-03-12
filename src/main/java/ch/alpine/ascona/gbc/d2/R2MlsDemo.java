@@ -28,7 +28,6 @@ class R2MlsDemo extends AbstractDeformationDemo {
   }
 
   private final Param1 param1;
-  // ---
   /** in coordinate specific to geodesic display */
   private Tensor movingOrigin;
 

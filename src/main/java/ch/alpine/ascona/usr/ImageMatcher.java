@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.zip.DataFormatException;
 
+import ch.alpine.ascony.msh.MatrixArray;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
