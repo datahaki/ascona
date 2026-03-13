@@ -7,9 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
+import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.clt.Clothoid;
 import ch.alpine.sophis.crv.clt.ClothoidBuilders;

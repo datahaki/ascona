@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.ref.d1h;
 
-import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;

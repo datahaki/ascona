@@ -8,9 +8,9 @@ import java.util.Optional;
 
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
-import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
-import ch.alpine.bridge.fig.TsPlot;
+import ch.alpine.bridge.fig.plt.ListLinePlot;
+import ch.alpine.bridge.fig.plt.TsPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;

@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.ascona.crv;
 
-import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
+import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.sophis.crv.d2.Curvature2D;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.sophus.lie.so2.So2;

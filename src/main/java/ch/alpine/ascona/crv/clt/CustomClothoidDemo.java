@@ -10,8 +10,8 @@ import java.util.List;
 
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.bridge.fig.ListPlot;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.plt.ListPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.clt.Clothoid;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;

@@ -4,11 +4,11 @@ package ch.alpine.ascona.crv.clt;
 import java.util.LinkedList;
 import java.util.List;
 
-import ch.alpine.bridge.fig.ListPlot;
-import ch.alpine.bridge.fig.ReImPlot;
 import ch.alpine.bridge.fig.Show;
-import ch.alpine.bridge.fig.StringPlot;
-import ch.alpine.bridge.fig.StringPlot.StringItem;
+import ch.alpine.bridge.fig.plt.ListPlot;
+import ch.alpine.bridge.fig.plt.ReImPlot;
+import ch.alpine.bridge.fig.plt.StringPlot;
+import ch.alpine.bridge.fig.plt.StringPlot.StringItem;
 import ch.alpine.bridge.pro.ShowProvider;
 import ch.alpine.sophis.crv.clt.ClothoidContext;
 import ch.alpine.sophis.crv.clt.ClothoidSolutions;

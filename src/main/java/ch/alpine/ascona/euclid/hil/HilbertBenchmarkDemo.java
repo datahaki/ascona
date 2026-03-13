@@ -6,10 +6,10 @@ import java.awt.Color;
 import java.awt.Container;
 
 import ch.alpine.ascony.api.IterativeGenesis;
-import ch.alpine.bridge.fig.PolygonPlot;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowGridComponent;
 import ch.alpine.bridge.fig.Showable;
+import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;

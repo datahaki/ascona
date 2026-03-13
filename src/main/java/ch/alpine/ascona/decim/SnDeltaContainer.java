@@ -4,9 +4,9 @@ package ch.alpine.ascona.decim;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
-import ch.alpine.bridge.fig.Spectrogram;
+import ch.alpine.bridge.fig.plt.ListLinePlot;
+import ch.alpine.bridge.fig.plt.Spectrogram;
 import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.sophus.hs.s.TSnMemberQ;
 import ch.alpine.sophus.math.ManifoldDifferences;
