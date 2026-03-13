@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import ch.alpine.ascona.gbc.GenesisDequeParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -82,7 +83,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
               graphics.draw(line2d);
             }
           }
-          manifoldDisplay.showPoints(new Color(0, 128, 128, 64), new Color(0, 128, 128, 96), RealScalar.ONE, leversVirtual) //
+          manifoldDisplay.showPoints(ColorPair.EXP, RealScalar.ONE, leversVirtual) //
               .render(geometricLayer, graphics);
           geometricLayer.popMatrix();
           {

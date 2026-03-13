@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -17,6 +16,7 @@ import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.MatrixArray;
 import ch.alpine.ascony.msh.Meshgrid;
 import ch.alpine.ascony.reg.RegionRenders;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.bridge.fig.ArrayPlot;
@@ -115,7 +115,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
       // render grid lines functions
       if (scatteredSetParam.arrows)
         manifoldDisplay.showPoints( //
-            new Color(128, 128, 128, 64), new Color(128, 128, 128, 128), //
+            ColorPair.RMD, //
             RealScalar.of(Math.min(1, 3.0 / Math.sqrt(scatteredSetParam.refine))), //
             Tensor.of(Arrays.stream(array).flatMap(Arrays::stream))) //
             .render(geometricLayer, graphics);

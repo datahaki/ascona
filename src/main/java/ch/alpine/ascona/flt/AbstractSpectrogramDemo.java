@@ -16,6 +16,7 @@ import ch.alpine.ascona.dat.gok.PosHz;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
@@ -89,13 +90,8 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     boolean conv = specParam.conv;
     if (specParam.data) {
       pathRenderCurve.setCurve(control, false).render(geometricLayer, graphics);
-      Color fill = conv //
-          ? new Color(255, 128, 128, 32)
-          : new Color(255, 128, 128, 64);
-      Color draw = conv //
-          ? new Color(255, 128, 128, 128)
-          : new Color(255, 128, 128, 255);
-      manifoldDisplay.showPoints(fill, draw, markerScale(), control) //
+      ColorPair colorPair = conv ? ColorPair.ASC : ColorPair.ASN;
+      manifoldDisplay.showPoints(colorPair, markerScale(), control) //
           .render(geometricLayer, graphics);
     }
     final Tensor refined = process(control);
@@ -110,7 +106,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     graphics.setStroke(new BasicStroke(1f));
     if (conv) {
       pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
-      manifoldDisplay.showPoints(COLOR_SHAPE, Color.BLACK, markerScale(), refined) //
+      manifoldDisplay.showPoints(ColorPair.ASD, markerScale(), refined) //
           .render(geometricLayer, graphics);
     }
     if (specParam.diff)

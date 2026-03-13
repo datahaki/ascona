@@ -86,8 +86,8 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
     ScalarTensorFunction stf = new S2Loxodrome(param.angle);
     Tensor domain = Subdivide.of(0, 20, param.numel);
     Tensor sequence = domain.maps(stf);
-    CurveOperator curveSubdivision = UniformResample.of(SnManifold.INSTANCE, SnManifold.INSTANCE, param.delta);
-    sequence = curveSubdivision.string(sequence);
+    CurveOperator curveOperator = UniformResample.of(SnManifold.INSTANCE, SnManifold.INSTANCE, param.delta);
+    sequence = curveOperator.string(sequence);
     TensorUnaryOperator tuo = t -> t; // SnPerturbation.of(NormalDistribution.of(param.noise.zero(), param.noise));
     sequence = Tensor.of(sequence.stream().map(tuo));
     ScalarUnaryOperator s_window = param.s_window.get();

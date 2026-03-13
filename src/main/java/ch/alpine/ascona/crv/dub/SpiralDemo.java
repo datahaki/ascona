@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
@@ -44,7 +45,7 @@ class SpiralDemo implements ManipulateProvider, RenderInterface {
     {
       Tensor points = Subdivide.increasing(clip, 50).maps(spiralParam.scalarTensorFunction);
       ManifoldDisplay manifoldDisplay = ManifoldDisplays.ClA.manifoldDisplay();
-      manifoldDisplay.showPoints(new Color(128, 128, 128, 64), new Color(128, 128, 128, 128), RealScalar.of(0.1), points) //
+      manifoldDisplay.showPoints(ColorPair.SPI, RealScalar.of(0.1), points) //
           .render(geometricLayer, graphics);
     }
     graphics.drawString(spiralParam.scalarTensorFunction.toString(), 100, 50);

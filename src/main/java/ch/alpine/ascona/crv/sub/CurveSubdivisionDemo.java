@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Optional;
 
-import ch.alpine.ascona.crv.BaseCurvatureParam;
+import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ControlPointsStatic;
@@ -30,7 +30,8 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
   private static final PathRender PATH_RENDER = new PathRender(new Color(0, 128, 0, 128));
 
   @ReflectionMarker
-  static class Param extends BaseCurvatureParam {
+  static class Param {
+    public final CurvatureParam cp = new CurvatureParam();
     public CurveSubdivisionSchemes scheme = CurveSubdivisionSchemes.BSPLINE1;
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
     public Integer refine = 5;
@@ -96,7 +97,7 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
       Curvature2DRender.of(render, cyclic, param.comb).render(geometricLayer, graphics);
       if (levels < 5)
         ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
-      param.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
+      param.cp.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     } catch (Exception exception) {
       // ---

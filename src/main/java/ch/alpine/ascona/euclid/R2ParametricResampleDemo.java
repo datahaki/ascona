@@ -2,10 +2,10 @@
 package ch.alpine.ascona.euclid;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -68,7 +68,7 @@ class R2ParametricResampleDemo extends EuclideanPlaneDemo {
     ParametricResample parametricResample = param.parametricResample();
     ResampleResult resampleResult = parametricResample.apply(control);
     for (Tensor points : resampleResult.getPoints())
-      manifoldDisplay.showPoints(new Color(0, 128, 128, 64), new Color(0, 128, 128, 255), RealScalar.ONE, points) //
+      manifoldDisplay.showPoints(ColorPair.R2P, RealScalar.ONE, points) //
           .render(geometricLayer, graphics);
   }
 

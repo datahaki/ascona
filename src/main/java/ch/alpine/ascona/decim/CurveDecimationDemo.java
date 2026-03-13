@@ -11,6 +11,7 @@ import ch.alpine.ascona.dat.gok.GokartPosParam;
 import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointsSe2;
@@ -43,7 +44,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 /** demonstrates Ramer Douglas Peucker on gokart data */
 class CurveDecimationDemo extends ManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
-  private static final Color COLOR_SHAPE = new Color(160, 160, 160, 160);
   private static final Color COLOR_RECON = new Color(128, 128, 128, 255);
   private static final int WIDTH = 480;
   private static final int HEIGHT = 360;
@@ -107,7 +107,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     // render dataset
     pathRenderCurve.setCurve(control, false).render(geometricLayer, graphics);
     if (control.length() <= 1000)
-      manifoldDisplay.showPoints(new Color(255, 128, 128, 64), COLOR_CURVE, RealScalar.of(0.3), control) //
+      manifoldDisplay.showPoints(ColorPair.DEC, RealScalar.of(0.3), control) //
           .render(geometricLayer, graphics);
     Scalar epsilon = Power.of(Rational.HALF, paran.level);
     CurveDecimation curveDecimation = CurveDecimation.of(paran.type.supply(homogeneousSpace), epsilon);
@@ -120,7 +120,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
         simplified, level);
     graphics.setColor(Color.DARK_GRAY);
     pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
-    manifoldDisplay.showPoints(COLOR_SHAPE, Color.BLACK, RealScalar.of(0.8), simplified) //
+    manifoldDisplay.showPoints(ColorPair.DED, RealScalar.of(0.8), simplified) //
         .render(geometricLayer, graphics);
     if (paran.error) {
       Dimension dimension = getSize();

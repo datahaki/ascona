@@ -1,14 +1,14 @@
 // code by jph
 package ch.alpine.ascona.crv.sub;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
-import ch.alpine.ascona.crv.BaseCurvatureParam;
+import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -38,7 +38,8 @@ import ch.alpine.tensor.sca.N;
 /** LagrangeInterpolation with extrapolation */
 class LagrangeInterpolationDemo extends ControlPointsDemo {
   @ReflectionMarker
-  static class Param0 extends BaseCurvatureParam {
+  static class Param0 {
+    public final CurvatureParam cp = new CurvatureParam();
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" })
     public Integer refine = 7;
     public Scalar ratio = Rational.HALF;
@@ -54,12 +55,9 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
 
   public LagrangeInterpolationDemo() {
     super(param = new Param0(), param1 = new Param1());
-    {
-      Tensor tensor = Tensors.fromString("{{1, 0, 0}, {1, 0, 2.1}}");
-      setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
-          Tensor.of(tensor.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
-    }
-    // ---
+    Tensor tensor = Tensors.fromString("{{1, 0, 0}, {1, 0, 2.1}}");
+    setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
+        Tensor.of(tensor.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
     setManifoldDisplay(ManifoldDisplays.R2);
   }
 
@@ -92,8 +90,7 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
       Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).maps(interpolation::at);
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
-      manifoldDisplay.showPoints(Color.DARK_GRAY, Color.BLACK, //
-          RealScalar.ONE, Unprotect.byRef(interpolation.at(parameter))) //
+      manifoldDisplay.showPoints(ColorPair.DAR, RealScalar.ONE, Unprotect.byRef(interpolation.at(parameter))) //
           .render(geometricLayer, graphics);
       if (levels < 5)
         ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
@@ -101,7 +98,7 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
         LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
         leversRender.renderIndexP();
       }
-      param.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
+      param.cp.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     }
   }

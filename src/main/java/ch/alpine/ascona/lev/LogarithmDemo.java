@@ -86,12 +86,11 @@ class LogarithmDemo extends ControlPointsDemo {
         }
       }
       // ---
-      CurveOperator curveSubdivision = //
-          new FourPointCurveSubdivision(homogeneousSpace);
+      CurveOperator curveOperator = new FourPointCurveSubdivision(homogeneousSpace);
       if (2 < sequence.length()) {
         Tensor refined = sequence;
         while (refined.length() < 100)
-          refined = curveSubdivision.cyclic(refined);
+          refined = curveOperator.cyclic(refined);
         // ---
         if (manifoldDisplay instanceof R2Display)
           GRID_RENDER.render(geometricLayer, graphics);

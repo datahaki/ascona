@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.ascona.ref.d2;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -67,7 +67,7 @@ class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         ArrayReshape.of(control, dims), //
         param.refine);
     int rgb = 128 + 32;
-    manifoldDisplay.showPoints(new Color(rgb, rgb, rgb, 128 + 64), Color.BLACK, RealScalar.of(0.5), Flatten.of(refined, 1)) //
+    manifoldDisplay.showPoints(ColorPair.ABE, RealScalar.of(0.5), Flatten.of(refined, 1)) //
         .render(geometricLayer, graphics);
   }
 

@@ -1,12 +1,11 @@
 // code by jph
 package ch.alpine.ascona.crv.sub;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -30,7 +29,6 @@ import ch.alpine.tensor.sca.N;
 class DeBoorDemo extends AbstractCurveDemo {
   public DeBoorDemo() {
     super(new AbstractCurveParam());
-//    setManifoldDisplay(ManifoldDisplays.Se2C);
   }
 
   @Override // from RenderInterface
@@ -45,14 +43,12 @@ class DeBoorDemo extends AbstractCurveDemo {
     graphics.drawImage(bufferedImage, 0, 0, null);
     // ---
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    ScalarTensorFunction scalarTensorFunction = //
-        DeBoor.of(geodesicSpace, knots, control);
-    // GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, control);
+    ScalarTensorFunction scalarTensorFunction = DeBoor.of(geodesicSpace, knots, control);
     Tensor refined = Subdivide.of(upper - 1, upper, //
         Math.max(1, upper * (1 << levels))).maps(scalarTensorFunction);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
-      manifoldDisplay.showPoints(Color.DARK_GRAY, Color.BLACK, RealScalar.ONE, Tensors.of(selected)) //
+      manifoldDisplay.showPoints(ColorPair.DAR, RealScalar.ONE, Tensors.of(selected)) //
           .render(geometricLayer, graphics);
     }
     Tensor render = manifoldDisplay.point2xy().slash(refined);

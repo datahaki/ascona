@@ -8,6 +8,8 @@ import java.util.Objects;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -138,28 +140,27 @@ class KMeansDemo extends ControlPointsDemo {
       graphics.drawString("" + timing.seconds().maps(Round._6), 0, 20);
       Tensor partition = kMeans.partition();
       ColorDataIndexed cdi = param2.cdl.cyclic();
-      ColorDataIndexed colorDataIndexed = cdi.deriveWithAlpha(128);
-      ColorDataIndexed colorFillIndexed = cdi.deriveWithAlpha(64);
+      ColorPairIndexed colorPairIndexed = new ColorPairIndexed(cdi, 64, 128);
       int index = 0;
       Tensor seeds2 = kMeans.seeds();
       for (Tensor subset : partition) {
         if (homogeneousSpace instanceof MetricManifold && 1 < manifoldDisplay.dimensions()) {
           Tensor projected = manifoldDisplay.point2xy().slash(subset);
           Tensor tensor = ConvexHull2D.of(projected, Tolerance.CHOP);
-          graphics.setColor(colorFillIndexed.getColor(index));
+          graphics.setColor(colorPairIndexed.getColorPair(index).fill());
           graphics.fill(geometricLayer.toPath2D(tensor, true));
         }
-        manifoldDisplay.showPoints(colorFillIndexed.getColor(index), colorDataIndexed.getColor(index), RealScalar.of(0.2), subset) //
+        manifoldDisplay.showPoints(colorPairIndexed.getColorPair(index), RealScalar.of(0.2), subset) //
             .render(geometricLayer, graphics);
         // ---
         if (seeds2.length() == partition.length()) {
-          manifoldDisplay.showPoints(colorFillIndexed.getColor(index), colorDataIndexed.getColor(index), RealScalar.of(0.5), Tensors.of(seeds2.get(index))) //
+          manifoldDisplay.showPoints(colorPairIndexed.getColorPair(index), RealScalar.of(0.5), Tensors.of(seeds2.get(index))) //
               .render(geometricLayer, graphics);
         }
         ++index;
       }
     } else {
-      manifoldDisplay.showPoints(Color.GRAY, Color.DARK_GRAY, RealScalar.of(0.2), sequence) //
+      manifoldDisplay.showPoints(ColorPair.PCD, RealScalar.of(0.2), sequence) //
           .render(geometricLayer, graphics);
     }
   }

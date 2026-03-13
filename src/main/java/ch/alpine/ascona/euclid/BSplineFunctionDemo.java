@@ -4,7 +4,7 @@ package ch.alpine.ascona.euclid;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascona.crv.BaseCurvatureParam;
+import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -28,7 +28,8 @@ import ch.alpine.tensor.sca.Clips;
  * {@link GeodesicBSplineFunction} */
 class BSplineFunctionDemo extends EuclideanPlaneDemo {
   @ReflectionMarker
-  static class Param extends BaseCurvatureParam {
+  static class Param {
+    public final CurvatureParam cp = new CurvatureParam();
     @FieldClip(min = "0", max = "9")
     public Integer degree = 3;
     @FieldClip(min = "1", max = "1000")
@@ -70,7 +71,7 @@ class BSplineFunctionDemo extends EuclideanPlaneDemo {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     }
-    param.spawn(manifoldDisplay(), refined, new Rectangle(0, 0, 400, 300)) //
+    param.cp.spawn(manifoldDisplay(), refined, new Rectangle(0, 0, 400, 300)) //
         .render(geometricLayer, graphics);
   }
 

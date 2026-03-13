@@ -8,6 +8,7 @@ import java.awt.Stroke;
 import java.awt.geom.Path2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.sym.SymLink;
 import ch.alpine.ascony.sym.SymLinkPart;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -77,17 +78,13 @@ class GeometricSymLinkRender {
           {
             Tensor tensor = Subdivide.increasing(Clips.unit(), steps).extract(1, steps) //
                 .maps(scalarTensorFunction);
-            manifoldDisplay.showPoints( //
-                new Color(64, 128 + 64, 64, 128), //
-                new Color(64, 128 + 64, 64, 128), //
-                RealScalar.of(0.5), tensor) //
+            manifoldDisplay.showPoints(ColorPair.GSL, RealScalar.of(0.5), tensor) //
                 .render(geometricLayer, graphics);
           }
         }
         // ---
         Tensor p = symLink.position(geodesicSpace);
-        manifoldDisplay.showPoints( //
-            new Color(0, 0, 255, 192), new Color(0, 0, 255, 192), RealScalar.of(0.7), Tensors.of(p)) //
+        manifoldDisplay.showPoints(ColorPair.GSY, RealScalar.of(0.7), Tensors.of(p)) //
             .render(geometricLayer, graphics);
       }
     }

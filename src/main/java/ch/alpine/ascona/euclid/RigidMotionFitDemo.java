@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.R2Display;
 import ch.alpine.ascony.dis.Se2Display;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -70,7 +71,7 @@ class RigidMotionFitDemo extends EuclideanPlaneDemo {
     {
       Tensor target = Tensor.of(sequence.stream().map(R2Display.INSTANCE::xya2point));
       Tensor solve = Se2RigidMotionFit.of(points, target);
-      Se2Display.INSTANCE.showPoints(new Color(128, 128, 255, 64), new Color(128, 128, 255, 255), RealScalar.ONE, Tensors.of(solve)) //
+      Se2Display.INSTANCE.showPoints(ColorPair.RMF, RealScalar.ONE, Tensors.of(solve)) //
           .render(geometricLayer, graphics);
       {
         Tensor domain = Subdivide.increasing(Clips.unit(), 10);
@@ -91,9 +92,9 @@ class RigidMotionFitDemo extends EuclideanPlaneDemo {
       leversRender.renderSequence();
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    manifoldDisplay.showPoints(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255), RealScalar.of(0.8), Array.zeros(1, 2)) //
+    manifoldDisplay.showPoints(ColorPair.RMD, RealScalar.of(0.8), Array.zeros(1, 2)) //
         .render(geometricLayer, graphics);
-    manifoldDisplay.showPoints(new Color(64, 255, 64, 64), new Color(64, 255, 64, 255), RealScalar.of(0.9), points) //
+    manifoldDisplay.showPoints(ColorPair.RIG, RealScalar.of(0.9), points) //
         .render(geometricLayer, graphics);
   }
 

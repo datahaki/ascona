@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -57,10 +58,10 @@ class PolygonClipDemo extends EuclideanPlaneDemo {
     graphics.fill(geometricLayer.toPath2D(result));
     new PathRender(COLOR_DATA_INDEXED.getColor(1), 3.5f).setCurve(result, true).render(geometricLayer, graphics);
     {
+      ColorPairIndexed colorPairIndexed = new ColorPairIndexed(COLOR_DATA_INDEXED, 128, 255);
       for (int index = 0; index < result.length(); ++index) {
         int cind = polyclipResult.belong().Get(index).number().intValue();
-        Color color = COLOR_DATA_INDEXED.getColor(cind);
-        manifoldDisplay.showPoints(color, Color.BLACK, RealScalar.of(2), Tensors.of(result.get(index))) //
+        manifoldDisplay.showPoints(colorPairIndexed.getColorPair(cind), RealScalar.of(2), Tensors.of(result.get(index))) //
             .render(geometricLayer, graphics);
       }
     }

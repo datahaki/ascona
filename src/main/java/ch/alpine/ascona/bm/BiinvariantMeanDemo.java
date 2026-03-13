@@ -15,6 +15,7 @@ import java.util.Optional;
 import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -39,8 +40,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.img.ColorDataIndexed;
-import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.AveragingWeights;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
@@ -50,8 +49,6 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.exp.Log10;
 
 class BiinvariantMeanDemo extends ControlPointsDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(255);
-  private static final ColorDataIndexed COLOR_DATA_INDEXED_FILL = ColorDataLists._097.cyclic().deriveWithAlpha(182);
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final CoordinateBoundingBox BOX = CoordinateBoundingBox.of( //
@@ -141,7 +138,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       Optional<Tensor> optionalSM = spatialMedian.uniform(sequence);
       if (optionalSM.isPresent()) {
         Tensor median = optionalSM.orElseThrow();
-        manifoldDisplay.showPoints(new Color(192, 0, 255, 192), new Color(192, 0, 255, 255), RealScalar.of(0.7), Tensors.of(median)) //
+        manifoldDisplay.showPoints(ColorPair.BIM, RealScalar.of(0.7), Tensors.of(median)) //
             .render(geometricLayer, graphics);
       } else {
         graphics.setColor(Color.RED);
@@ -185,7 +182,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
           graphics.drawString(string, pix, piy - fheight / 3);
         }
         geometricLayer.popMatrix();
-        manifoldDisplay.showPoints(new Color(128, 64, 64, 128), new Color(128, 64, 64, 255), RealScalar.of(1.0), Tensors.of(origin)) //
+        manifoldDisplay.showPoints(ColorPair.BMD, RealScalar.of(1.0), Tensors.of(origin)) //
             .render(geometricLayer, graphics);
       }
     }

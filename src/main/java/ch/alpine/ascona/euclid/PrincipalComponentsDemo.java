@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -60,7 +61,7 @@ class PrincipalComponentsDemo extends EuclideanPlaneDemo {
     PrincipalComponents pc = PrincipalComponents.of(points);
     Tensor tensor = pc.unscaled();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    manifoldDisplay.showPoints(Color.LIGHT_GRAY, Color.GRAY, RealScalar.of(0.8), tensor) //
+    manifoldDisplay.showPoints(ColorPair.PCD, RealScalar.of(0.8), tensor) //
         .render(geometricLayer, graphics);
     Tensor slash = pc.scaled_directions();
     graphics.setColor(Color.BLUE);

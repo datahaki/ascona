@@ -4,6 +4,7 @@ package ch.alpine.ascona.crv.clt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -56,24 +57,24 @@ class ClothoidLRDemo extends ClothoidBaseDemo {
       Tensor points = DOMAIN.maps(clothoid);
       new PathRender(COLOR_DATA_INDEXED.getColor(index), 1.5f) //
           .setCurve(points, false).render(geometricLayer, graphics);
-      manifoldDisplay().showPoints(new Color(0, 0, 0, 64), new Color(128, 128, 128, 64), RealScalar.ONE, ARROWS.maps(clothoid)) //
+      manifoldDisplay().showPoints(ColorPair.BLC, RealScalar.ONE, ARROWS.maps(clothoid)) //
           .render(geometricLayer, graphics);
       ++index;
     }
     {
-      CurveOperator curveSubdivision = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder(), 1);
-      Tensor points = Nest.of(curveSubdivision::string, Tensors.of(start, mouse), 2); // length == 129
+      CurveOperator curveOperator = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder(), 1);
+      Tensor points = Nest.of(curveOperator::string, Tensors.of(start, mouse), 2); // length == 129
       new PathRender(COLOR_DATA_INDEXED.getColor(2), 2.5f) //
           .setCurve(points, false).render(geometricLayer, graphics);
-      manifoldDisplay().showPoints(new Color(0, 0, 0, 64), new Color(128, 128, 128, 64), RealScalar.ONE, points) //
+      manifoldDisplay().showPoints(ColorPair.BLC, RealScalar.ONE, points) //
           .render(geometricLayer, graphics);
     }
     {
-      CurveOperator curveSubdivision = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder(), 1);
-      Tensor points = Nest.of(curveSubdivision::string, Tensors.of(start, mouse), 2); // length == 129
+      CurveOperator curveOperator = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder(), 1);
+      Tensor points = Nest.of(curveOperator::string, Tensors.of(start, mouse), 2); // length == 129
       new PathRender(COLOR_DATA_INDEXED.getColor(2), 2.5f) //
           .setCurve(points, false).render(geometricLayer, graphics);
-      manifoldDisplay().showPoints(new Color(0, 0, 0, 64), new Color(128, 128, 128, 64), RealScalar.ONE, points) //
+      manifoldDisplay().showPoints(ColorPair.BLC, RealScalar.ONE, points) //
           .render(geometricLayer, graphics);
     }
   }

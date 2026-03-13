@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.msh.ArrayFunction;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -127,7 +128,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     {
       Tensor sequence = complexZeros.extract(0, length).maps(S2V);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      manifoldDisplay.showPoints(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255), RealScalar.ONE, sequence) //
+      manifoldDisplay.showPoints(ColorPair.ABE, RealScalar.ONE, sequence) //
           .render(geometricLayer, graphics);
       leversRender.renderIndexP("z");
     }

@@ -4,7 +4,7 @@ package ch.alpine.ascona.crv.sub;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascona.crv.BaseCurvatureParam;
+import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -18,7 +18,8 @@ import ch.alpine.tensor.Tensors;
 
 abstract class AbstractCurveDemo extends PointSequenceDemo {
   @ReflectionMarker
-  static class AbstractCurveParam extends BaseCurvatureParam {
+  static class AbstractCurveParam {
+    public final CurvatureParam cp = new CurvatureParam();
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
     public Integer degree = 3;
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" })
@@ -32,8 +33,7 @@ abstract class AbstractCurveDemo extends PointSequenceDemo {
   protected final AbstractCurveParam abstractCurveParam;
 
   protected AbstractCurveDemo(AbstractCurveParam abstractCurveParam) {
-    super(new SaveParam(), abstractCurveParam);
-    this.abstractCurveParam = abstractCurveParam;
+    super(new SaveParam(), this.abstractCurveParam = abstractCurveParam);
   }
 
   @Override
@@ -41,7 +41,7 @@ abstract class AbstractCurveDemo extends PointSequenceDemo {
     Tensor control = getGeodesicControlPoints();
     if (!Tensors.isEmpty(control)) {
       Tensor refined = protected_render(geometricLayer, graphics, abstractCurveParam.degree, abstractCurveParam.refine, control);
-      abstractCurveParam.spawn(manifoldDisplay(), refined, new Rectangle(0, 0, 400, 300)) //
+      abstractCurveParam.cp.spawn(manifoldDisplay(), refined, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     }
   }

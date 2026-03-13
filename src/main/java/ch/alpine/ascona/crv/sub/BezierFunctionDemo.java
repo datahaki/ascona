@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import java.util.List;
 import java.util.Objects;
 
-import ch.alpine.ascona.crv.BaseCurvatureParam;
+import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ControlPointsStatic;
@@ -29,7 +29,8 @@ import ch.alpine.tensor.itp.BezierFunction;
 /** Bezier function with extrapolation */
 class BezierFunctionDemo extends PointSequenceDemo {
   @ReflectionMarker
-  static class Param extends BaseCurvatureParam {
+  static class Param {
+    public final CurvatureParam cp = new CurvatureParam();
     @FieldSlider
     @FieldClip(min = "0", max = "10")
     public Integer refine = 6;
@@ -78,7 +79,7 @@ class BezierFunctionDemo extends PointSequenceDemo {
         Curvature2DRender.of(render, false).render(geometricLayer, graphics);
         if (levels < 5)
           ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
-        param.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
+        param.cp.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
             .render(geometricLayer, graphics);
       } catch (Exception e) {
         System.err.println("unstable");

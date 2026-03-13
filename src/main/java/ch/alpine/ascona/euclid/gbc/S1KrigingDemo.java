@@ -10,6 +10,7 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.reg.RegionRenders;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -112,7 +113,7 @@ class S1KrigingDemo extends ControlPointsDemo {
       graphics.setColor(Color.GREEN);
       for (int index = 0; index < sequence.length(); ++index)
         graphics.draw(geometricLayer.toLine2D(control.get(index), sequence.get(index)));
-      manifoldDisplay.showPoints(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255), RealScalar.ONE, sequence) //
+      manifoldDisplay.showPoints(ColorPair.S1I, RealScalar.ONE, sequence) //
           .render(geometricLayer, graphics);
       Tensor covariance = DiagonalMatrix.sparse(cvarian);
       // if (isDeterminate())

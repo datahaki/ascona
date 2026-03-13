@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.dv;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import ch.alpine.ascony.cls.Classification;
 import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -25,7 +25,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
@@ -118,19 +117,18 @@ class ClassificationDemo extends ControlPointsDemo {
     if (param1.weights)
       leversRender.renderWeights(weights);
     // ---
-    ColorDataIndexed COLOR_DATA_INDEXED_O = param1.cdg.cyclic();
-    ColorDataIndexed COLOR_DATA_INDEXED_T = COLOR_DATA_INDEXED_O.deriveWithAlpha(128);
+    ColorPairIndexed colorPairIndexed = new ColorPairIndexed(param1.cdg.cyclic(), 128, 255);
     int index = 0;
     for (Tensor point : sequence) {
       int label = Scalars.intValueExact(vector.Get(index));
-      manifoldDisplay.showPoints(COLOR_DATA_INDEXED_T.getColor(label), COLOR_DATA_INDEXED_O.getColor(label), RealScalar.ONE, Tensors.of(point)) //
+      manifoldDisplay.showPoints(colorPairIndexed.getColorPair(label), RealScalar.ONE, Tensors.of(point)) //
           .render(geometricLayer, graphics);
       ++index;
     }
     // ---
     Classification classification = param1.labels.apply(vector);
     int bestLabel = classification.result(weights).label();
-    manifoldDisplay.showPoints(COLOR_DATA_INDEXED_O.getColor(bestLabel), Color.DARK_GRAY, RealScalar.of(1.2), Tensors.of(origin)) //
+    manifoldDisplay.showPoints(colorPairIndexed.getColorPair(bestLabel).solid(), RealScalar.of(1.2), Tensors.of(origin)) //
         .render(geometricLayer, graphics);
   }
 

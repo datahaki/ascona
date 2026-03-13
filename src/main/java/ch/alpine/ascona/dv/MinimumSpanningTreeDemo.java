@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.MatrixPlot;
@@ -143,7 +144,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
         for (IntUndirectedEdge directedEdge : list.subList(0, count))
           disjointSets.union(directedEdge.i(), directedEdge.j());
       }
-      graphics.setColor(Color.BLACK);
+      graphics.setColor(Color.DARK_GRAY);
       for (IntUndirectedEdge directedEdge : list.subList(0, count)) {
         Tensor p = sequence.get(directedEdge.i());
         Tensor q = sequence.get(directedEdge.j());
@@ -154,10 +155,10 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
       }
     }
     Map<Integer, Integer> map = disjointSets.createMap(new AtomicInteger()::getAndIncrement);
+    ColorPairIndexed colorPairIndexed = new ColorPairIndexed(param1.colorDataLists.cyclic(), 128, 255);
     for (int index = 0; index < sequence.length(); ++index) {
       int unique = map.get(disjointSets.key(index));
-      Color color = param1.colorDataLists.cyclic().getColor(unique);
-      manifoldDisplay.showPoints(color, Color.DARK_GRAY, RealScalar.ONE, Tensors.of(sequence.get(index))) //
+      manifoldDisplay.showPoints(colorPairIndexed.getColorPair(unique), RealScalar.ONE, Tensors.of(sequence.get(index))) //
           .render(geometricLayer, graphics);
     }
   }

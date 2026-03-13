@@ -14,7 +14,7 @@ import ch.alpine.tensor.Tensor;
 
 /** class is used in other projects outside of owl */
 @ReflectionMarker
-public class BaseCurvatureParam {
+public final class CurvatureParam {
   public Boolean curvt = true;
 
   public final RenderInterface spawn(ManifoldDisplay manifoldDisplay, Tensor refined, Rectangle rectangle) {

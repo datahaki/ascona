@@ -22,7 +22,7 @@ import ch.alpine.sophis.ref.d1.SixPointCurveSubdivision;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 
-/* package */ enum SymMaskImages {
+enum SymMaskImages {
   BSPLINE1(BSpline1CurveSubdivision::new, 2, 0, 1), //
   BSPLINE2(BSpline2CurveSubdivision::new, 2, 0, 1), //
   BSPLINE3(BSpline3CurveSubdivision::new, 3, 1, 2), //
@@ -55,9 +55,9 @@ import ch.alpine.tensor.Tensor;
   }
 
   private BufferedImage bufferedImage(int index) {
-    CurveOperator curveSubdivision = function.apply(SymGeodesic.INSTANCE);
+    CurveOperator curveOperator = function.apply(SymGeodesic.INSTANCE);
     Tensor vector = SymSequence.of(support);
-    Tensor tensor = curveSubdivision.cyclic(vector);
+    Tensor tensor = curveOperator.cyclic(vector);
     return new SymLinkImage(tensor.Get(index)).bufferedImage();
   }
 

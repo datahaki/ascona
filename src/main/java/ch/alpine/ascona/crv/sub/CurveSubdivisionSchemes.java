@@ -210,17 +210,10 @@ import ch.alpine.tensor.ext.Integers;
     return false;
   }
 
-  /** @param control
-   * @param levels
-   * @param curveSubdivision
-   * @param isDual
-   * @param cyclic
-   * @param geodesicSpace
-   * @return */
   public Tensor refine(ManifoldDisplay manifoldDisplay, Tensor control, int levels, boolean cyclic) {
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    CurveOperator curveSubdivision = of(manifoldDisplay);
-    TensorUnaryOperator tensorUnaryOperator = curveSubdivision.auto(cyclic);
+    CurveOperator curveOperator = of(manifoldDisplay);
+    TensorUnaryOperator tensorUnaryOperator = curveOperator.auto(cyclic);
     Tensor refined = control;
     for (int level = 0; level < levels; ++level) {
       Tensor prev = refined;

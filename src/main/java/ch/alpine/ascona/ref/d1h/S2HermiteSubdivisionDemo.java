@@ -10,6 +10,7 @@ import java.util.List;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.S2Display;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -85,7 +86,7 @@ class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           s2Display.xya2point(xy0), //
           s2Display.createTangent(xy0, xya.Get(2)).multiply(vscale));
     }));
-    manifoldDisplay.showPoints(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255), RealScalar.ONE, control.get(Tensor.ALL, 0)) //
+    manifoldDisplay.showPoints(ColorPair.DEC, RealScalar.ONE, control.get(Tensor.ALL, 0)) //
         .render(geometricLayer, graphics);
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     { // render tangents as geodesic on sphere

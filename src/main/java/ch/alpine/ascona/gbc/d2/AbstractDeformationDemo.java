@@ -11,6 +11,7 @@ import java.awt.Stroke;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.msh.Meshgrid;
 import ch.alpine.ascony.msh.MovingDomain2D;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
@@ -136,7 +137,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       }
       graphics.setStroke(new BasicStroke());
     }
-    manifoldDisplay.showPoints(new Color(64, 128, 64, 64), new Color(64, 128, 64, 255), RealScalar.of(0.8), origin) //
+    manifoldDisplay.showPoints(ColorPair.ADE, RealScalar.of(0.8), origin) //
         .render(geometricLayer, graphics);
     LeversRender leversRender = LeversRender.of(manifoldDisplay, param2.target //
         ? getGeodesicControlPoints()

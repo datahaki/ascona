@@ -8,6 +8,7 @@ import java.util.List;
 import ch.alpine.ascony.api.GeodesicFilters;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -28,7 +29,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 // TODO ASCONA DEMO visualization can be improved much
 class GeodesicFiltersDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DRAW = ColorDataLists._001.strict();
-  private static final ColorDataIndexed COLOR_FILL = COLOR_DRAW.deriveWithAlpha(64);
 
   @ReflectionMarker
   static class Param {
@@ -68,12 +68,13 @@ class GeodesicFiltersDemo extends ControlPointsDemo {
     }
     if (Integers.isOdd(control.length())) {
       ScalarUnaryOperator smoothingKernel = param.windowFunctions.get();
+      ColorPairIndexed colorPairIndexed = new ColorPairIndexed(COLOR_DRAW, 64, 255);
       for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
         int ordinal = geodesicFilters.ordinal();
         try {
           Tensor mean = geodesicFilters.supply(manifoldDisplay.geodesicSpace(), smoothingKernel).apply(control);
+          manifoldDisplay.showPoints(colorPairIndexed.getColorPair(ordinal), RealScalar.ONE, Tensors.of(mean)).render(geometricLayer, graphics);
           Color color = COLOR_DRAW.getColor(ordinal);
-          manifoldDisplay.showPoints(COLOR_FILL.getColor(ordinal), color, RealScalar.ONE, Tensors.of(mean)).render(geometricLayer, graphics);
           graphics.setColor(color);
           graphics.drawString("" + geodesicFilters, 0, 32 + ordinal * 16);
         } catch (Exception e) {

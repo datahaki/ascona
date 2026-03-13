@@ -1,14 +1,14 @@
 // code by ob, jph
 package ch.alpine.ascona.crv.sub;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
-import ch.alpine.ascona.crv.BaseCurvatureParam;
+import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -36,7 +36,8 @@ import ch.alpine.tensor.sca.Clips;
 
 class CatmullRomDemo extends PointSequenceDemo {
   @ReflectionMarker
-  static class Param extends BaseCurvatureParam {
+  static class Param {
+    public final CurvatureParam cp = new CurvatureParam();
     @FieldPreferredWidth(100)
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20" })
     public Integer refine = 5;
@@ -91,12 +92,12 @@ class CatmullRomDemo extends PointSequenceDemo {
       Tensor refined = Subdivide.increasing(interval, Math.max(1, levels * control.length())).maps(scalarTensorFunction);
       {
         Tensor selected = scalarTensorFunction.apply(parameter);
-        manifoldDisplay.showPoints(Color.DARK_GRAY, Color.BLACK, RealScalar.ONE, Tensors.of(selected)) //
+        manifoldDisplay.showPoints(ColorPair.DAR, RealScalar.ONE, Tensors.of(selected)) //
             .render(geometricLayer, graphics);
       }
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
-      param.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
+      param.cp.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     }
   }
