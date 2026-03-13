@@ -1,15 +1,14 @@
 // code by jph
 package ch.alpine.ascona.dv;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
 import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -24,6 +23,8 @@ import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.math.Permute;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -116,27 +117,14 @@ class KNearestDemo extends ControlPointsDemo {
     Tensor weights = sedarim.sunder(origin);
     // ---
     int[] integers = Ordering.INCREASING.of(weights);
-    Tensor shape = manifoldDisplay.shape();
+    Tensor seq = Permute.of(integers).apply(sequence);
     int k = param1.k;
-    for (int index = 0; index < sequence.length(); ++index) {
-      Tensor point = sequence.get(integers[index]);
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-      Path2D path2d = geometricLayer.toPath2D(shape, true);
-      graphics.setColor(index < k ? new Color(64, 192, 64, 64) : new Color(192, 64, 64, 64));
-      graphics.fill(path2d);
-      graphics.setColor(index < k ? new Color(64, 192, 64, 255) : new Color(192, 64, 64, 255));
-      graphics.draw(path2d);
-      geometricLayer.popMatrix();
-    }
-    {
-      geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
-      Path2D path2d = geometricLayer.toPath2D(shape, true);
-      graphics.setColor(Color.DARK_GRAY);
-      graphics.fill(path2d);
-      graphics.setColor(Color.BLACK);
-      graphics.draw(path2d);
-      geometricLayer.popMatrix();
-    }
+    manifoldDisplay.showPoints(ColorPair.KNE, RealScalar.ONE, seq.extract(0, k)) //
+        .render(geometricLayer, graphics);
+    manifoldDisplay.showPoints(ColorPair.KFA, RealScalar.ONE, seq.extract(k, sequence.length())) //
+        .render(geometricLayer, graphics);
+    manifoldDisplay.showPoints(ColorPair.DAR, RealScalar.ONE, Tensors.of(origin)) //
+        .render(geometricLayer, graphics);
     LeversRender leversRender = //
         LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
     leversRender.renderIndexX("x" + p);
