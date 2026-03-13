@@ -9,7 +9,9 @@ import java.util.Optional;
 import ch.alpine.ascony.api.PolygonCoordinates;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
@@ -74,8 +76,7 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
         Optional<Tensor> optionalMean = homogeneousSpace.biinvariantMean().optional(sequence, weights);
         try {
           Tensor mean = optionalMean.orElseThrow();
-          LeversRender.ORIGIN_RENDER_0 //
-              .show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)) //
+          new PointsRender(ColorPair.LEV, manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)) //
               .render(geometricLayer, graphics);
         } catch (Exception e) {
           graphics.setColor(Color.RED);
