@@ -18,7 +18,7 @@ public final class CurvatureParam {
   public Boolean curvt = true;
 
   public final RenderInterface spawn(ManifoldDisplay manifoldDisplay, Tensor refined, Rectangle rectangle) {
-    return curvt && 1 < refined.length() //
+    return curvt && manifoldDisplay.isXYeuclid() && 1 < refined.length() //
         ? new RenderInterface() {
           @Override
           public void render(GeometricLayer geometricLayer, Graphics2D graphics) {

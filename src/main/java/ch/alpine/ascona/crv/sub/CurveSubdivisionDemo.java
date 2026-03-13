@@ -99,8 +99,10 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
         GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
         PATH_RENDER.setCurve(Nest.of(new BSpline1CurveSubdivision(geodesicSpace).auto(cyclic), control, 8), cyclic).render(geometricLayer, graphics);
       }
-      Tensor render = manifoldDisplay.point2xy().slash(refined);
-      Curvature2DRender.of(render, cyclic, param.comb).render(geometricLayer, graphics);
+      if (manifoldDisplay.isXYeuclid()) {
+        Tensor render = manifoldDisplay.point2xy().slash(refined);
+        Curvature2DRender.of(render, cyclic, param.comb).render(geometricLayer, graphics);
+      }
       if (levels < 5)
         manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
       param.cp.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
