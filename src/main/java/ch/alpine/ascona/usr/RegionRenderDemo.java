@@ -2,6 +2,8 @@
 package ch.alpine.ascona.usr;
 
 import java.awt.Container;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import ch.alpine.ascony.reg.BallRegionRender;
 import ch.alpine.ascony.reg.ConeRegionRender;
@@ -32,7 +34,6 @@ class RegionRenderDemo implements ManipulateProvider {
   public RegionRenderDemo() {
     Tensor digest = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(Quantity.of(60, "m^-1")).digest();
     geometricComponent.setModel2Pixel(digest);
-    // geometricComponent.setPerPixel(Quantity.of(60, "m^-1"));
     {
       BallRegion ballRegion = new BallRegion(Tensors.fromString("{2[m],3[m]}"), Quantity.of(1, "m"));
       BallRegionRender ballRegionRender = new BallRegionRender(ballRegion);
@@ -64,6 +65,12 @@ class RegionRenderDemo implements ManipulateProvider {
       geometricComponent.addRenderInterfaceBackground(gridRender);
     }
     geometricComponent.addRenderInterfaceBackground(new MatRender(g -> g.getMatrix().maps(Round._1)));
+    geometricComponent.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mousePressed(MouseEvent e) {
+        IO.println(geometricComponent.getMouseSe2CState());
+      }
+    });
   }
 
   @Override
