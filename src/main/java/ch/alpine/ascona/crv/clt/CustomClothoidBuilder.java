@@ -9,6 +9,6 @@ import ch.alpine.tensor.Scalar;
 public enum CustomClothoidBuilder {
   ;
   public static ClothoidBuilder of(Scalar lambda) {
-    return new ClothoidBuilderImpl(CustomClothoidQuadratic.of(lambda), ClothoidIntegrations.ANALYTIC);
+    return ClothoidBuilderImpl.custom(lambda, ClothoidIntegrations.ANALYTIC);
   }
 }
