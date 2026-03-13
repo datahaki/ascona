@@ -9,7 +9,6 @@ import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
-import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymGeodesic;
@@ -90,10 +89,10 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
       Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).maps(interpolation::at);
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
-      manifoldDisplay.showPoints(ColorPair.DAR, RealScalar.ONE, Unprotect.byRef(interpolation.at(parameter))) //
+      manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Unprotect.byRef(interpolation.at(parameter))) //
           .render(geometricLayer, graphics);
       if (levels < 5)
-        ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
+        manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
       {
         LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
         leversRender.renderIndexP();

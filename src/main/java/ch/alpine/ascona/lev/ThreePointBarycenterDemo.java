@@ -11,7 +11,6 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.LeversRender;
-import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
@@ -21,6 +20,7 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
@@ -46,7 +46,7 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.HEAD_TAIL;
+    return ControlPointType.CURVYCURV;
   }
 
   @Override // from RenderInterface
@@ -74,11 +74,11 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
         leversRender.renderWeights(weights);
         HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
         Optional<Tensor> optionalMean = homogeneousSpace.biinvariantMean().optional(sequence, weights);
-        try {
+        if (optionalMean.isPresent()) {
           Tensor mean = optionalMean.orElseThrow();
-          new PointsRender(ColorPair.LEV, manifoldDisplay::matrixLift, manifoldDisplay.shape(), Tensors.of(mean)) //
+          manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Tensors.of(mean)) //
               .render(geometricLayer, graphics);
-        } catch (Exception e) {
+        } else {
           graphics.setColor(Color.RED);
           graphics.drawString("mean does not exist", 0, 20);
         }

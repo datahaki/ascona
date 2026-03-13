@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPair;
-import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLinkImages;
@@ -31,6 +30,11 @@ class DeBoorDemo extends AbstractCurveDemo {
     super(new AbstractCurveParam());
   }
 
+  @Override
+  protected int initialCount() {
+    return 5;
+  }
+
   @Override // from RenderInterface
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
@@ -48,13 +52,14 @@ class DeBoorDemo extends AbstractCurveDemo {
         Math.max(1, upper * (1 << levels))).maps(scalarTensorFunction);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
-      manifoldDisplay.showPoints(ColorPair.DAR, RealScalar.ONE, Tensors.of(selected)) //
+      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, Tensors.of(selected)) //
           .render(geometricLayer, graphics);
     }
     Tensor render = manifoldDisplay.point2xy().slash(refined);
     Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (levels < 5)
-      ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
+      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined) //
+          .render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
       leversRender.renderIndexP();

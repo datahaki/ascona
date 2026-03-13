@@ -8,7 +8,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -62,9 +62,9 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
     if (0 < control.length()) {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
       Manifold manifold = manifoldDisplay.manifold();
       Tensor matrix = StaticHelper.distanceMatrix(manifold, control, ground);
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
@@ -81,7 +81,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
           graphics.draw(path2d);
         }
     }
-    ControlPointsStatic.gray(manifoldDisplay(), ground).render(geometricLayer, graphics);
+    manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, ground).render(geometricLayer, graphics);
   }
 
   static void main() {

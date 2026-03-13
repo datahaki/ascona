@@ -68,6 +68,11 @@ class CatmullRomDemo extends PointSequenceDemo {
     return ManifoldDisplays.metricManifolds();
   }
 
+  @Override
+  protected int initialCount() {
+    return 4;
+  }
+
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
@@ -92,7 +97,7 @@ class CatmullRomDemo extends PointSequenceDemo {
       Tensor refined = Subdivide.increasing(interval, Math.max(1, levels * control.length())).maps(scalarTensorFunction);
       {
         Tensor selected = scalarTensorFunction.apply(parameter);
-        manifoldDisplay.showPoints(ColorPair.DAR, RealScalar.ONE, Tensors.of(selected)) //
+        manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, Tensors.of(selected)) //
             .render(geometricLayer, graphics);
       }
       Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));

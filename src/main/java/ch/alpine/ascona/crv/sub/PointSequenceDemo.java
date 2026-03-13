@@ -57,7 +57,7 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
 
   private void loadOrShuffle() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor tensor = RandomPoints.on_line(manifoldDisplay, 3);
+    Tensor tensor = RandomPoints.on_line(manifoldDisplay, initialCount());
     String name = getSelectedMD().toString().toLowerCase();
     try (InputStream inputStream = getClass().getResourceAsStream(name)) {
       if (Objects.nonNull(inputStream))
@@ -67,6 +67,8 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
     }
     setGeodesicControlPoints(tensor);
   }
+
+  protected abstract int initialCount();
 
   private Path getResPath() {
     Path user_dir = Path.of(System.getProperty("user.dir"));

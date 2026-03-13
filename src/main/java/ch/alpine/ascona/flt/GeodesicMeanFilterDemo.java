@@ -6,7 +6,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -17,6 +17,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.flt.ga.GeodesicMeanFilter;
 import ch.alpine.sophis.ref.d1.BSpline4CurveSubdivision;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -67,11 +68,9 @@ class GeodesicMeanFilterDemo extends ControlPointsDemo {
     Tensor render = Tensor.of(curve.stream().map(manifoldDisplay::point2xy));
     // ---
     Curvature2DRender.of(render, false).render(geometricLayer, graphics);
-    ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderIndexP();
-    }
+    manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
+    leversRender.renderIndexP();
   }
 
   static void main() {

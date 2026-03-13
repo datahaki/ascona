@@ -8,12 +8,10 @@ import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophis.api.CurveOperator;
 import ch.alpine.sophis.crv.clt.Clothoid;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.crv.clt.ClothoidBuilders;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
-import ch.alpine.sophis.ref.d1.LaneRiesenfeldCurveSubdivision;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -21,7 +19,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
-import ch.alpine.tensor.red.Nest;
 
 /** The demo shows that when using LaneRiesenfeldCurveSubdivision(Clothoid.INSTANCE, degree)
  * in order to connect two points p and q, then the (odd) degree has little influence on the
@@ -57,25 +54,9 @@ class ClothoidLRDemo extends ClothoidBaseDemo {
       Tensor points = DOMAIN.maps(clothoid);
       new PathRender(COLOR_DATA_INDEXED.getColor(index), 1.5f) //
           .setCurve(points, false).render(geometricLayer, graphics);
-      manifoldDisplay().showPoints(ColorPair.BLC, RealScalar.ONE, ARROWS.maps(clothoid)) //
+      manifoldDisplay().showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, ARROWS.maps(clothoid)) //
           .render(geometricLayer, graphics);
       ++index;
-    }
-    {
-      CurveOperator curveOperator = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder(), 1);
-      Tensor points = Nest.of(curveOperator::string, Tensors.of(start, mouse), 2); // length == 129
-      new PathRender(COLOR_DATA_INDEXED.getColor(2), 2.5f) //
-          .setCurve(points, false).render(geometricLayer, graphics);
-      manifoldDisplay().showPoints(ColorPair.BLC, RealScalar.ONE, points) //
-          .render(geometricLayer, graphics);
-    }
-    {
-      CurveOperator curveOperator = LaneRiesenfeldCurveSubdivision.of(ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder(), 1);
-      Tensor points = Nest.of(curveOperator::string, Tensors.of(start, mouse), 2); // length == 129
-      new PathRender(COLOR_DATA_INDEXED.getColor(2), 2.5f) //
-          .setCurve(points, false).render(geometricLayer, graphics);
-      manifoldDisplay().showPoints(ColorPair.BLC, RealScalar.ONE, points) //
-          .render(geometricLayer, graphics);
     }
   }
 

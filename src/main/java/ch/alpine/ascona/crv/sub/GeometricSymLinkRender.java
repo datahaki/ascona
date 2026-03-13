@@ -20,9 +20,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.sca.Clips;
 
 /** visualization of the geometric geodesic average
  * with curves on the manifolds */
@@ -31,7 +29,6 @@ class GeometricSymLinkRender {
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   // ---
   private final ManifoldDisplay manifoldDisplay;
-  public int steps = 9;
 
   public GeometricSymLinkRender(ManifoldDisplay manifoldDisplay) {
     this.manifoldDisplay = manifoldDisplay;
@@ -73,18 +70,11 @@ class GeometricSymLinkRender {
             Path2D path2d = geometricLayer.toPath2D(points);
             graphics.setStroke(STROKE);
             graphics.draw(path2d);
-            graphics.setStroke(new BasicStroke(1f));
-          }
-          {
-            Tensor tensor = Subdivide.increasing(Clips.unit(), steps).extract(1, steps) //
-                .maps(scalarTensorFunction);
-            manifoldDisplay.showPoints(ColorPair.GSL, RealScalar.of(0.5), tensor) //
-                .render(geometricLayer, graphics);
+            graphics.setStroke(new BasicStroke());
           }
         }
-        // ---
         Tensor p = symLink.position(geodesicSpace);
-        manifoldDisplay.showPoints(ColorPair.GSY, RealScalar.of(0.7), Tensors.of(p)) //
+        manifoldDisplay.showPoints(ColorPair.SUPPORT, RealScalar.ONE, Tensors.of(p)) //
             .render(geometricLayer, graphics);
       }
     }

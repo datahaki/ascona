@@ -24,6 +24,11 @@ class GeodesicSplitsDemo extends AbstractSplitsDemo {
   }
 
   @Override
+  protected int initialCount() {
+    return 3;
+  }
+
+  @Override
   SymScalar symScalar(Tensor vector) {
     if (param.prediction)
       return 0 < vector.length() //

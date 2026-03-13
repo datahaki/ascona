@@ -45,7 +45,7 @@ class SpiralDemo implements ManipulateProvider, RenderInterface {
     {
       Tensor points = Subdivide.increasing(clip, 50).maps(spiralParam.scalarTensorFunction);
       ManifoldDisplay manifoldDisplay = ManifoldDisplays.ClA.manifoldDisplay();
-      manifoldDisplay.showPoints(ColorPair.SPI, RealScalar.of(0.1), points) //
+      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.of(0.1), points) //
           .render(geometricLayer, graphics);
     }
     graphics.drawString(spiralParam.scalarTensorFunction.toString(), 100, 50);

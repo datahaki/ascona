@@ -10,7 +10,7 @@ import java.util.Objects;
 import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -21,6 +21,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.BezierCurve;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -46,6 +47,11 @@ class BezierFunctionDemo extends PointSequenceDemo {
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
+  }
+
+  @Override
+  protected int initialCount() {
+    return 3;
   }
 
   @Override // from RenderInterface
@@ -78,7 +84,7 @@ class BezierFunctionDemo extends PointSequenceDemo {
         Tensor render = manifoldDisplay.point2xy().slash(refined);
         Curvature2DRender.of(render, false).render(geometricLayer, graphics);
         if (levels < 5)
-          ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
+          manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
         param.cp.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
             .render(geometricLayer, graphics);
       } catch (Exception e) {

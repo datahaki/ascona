@@ -41,7 +41,6 @@ public abstract class AbstractSplitsDemo extends PointSequenceDemo {
       symLink = SymLinkBuilder.of(control, symScalar);
       // ---
       GeometricSymLinkRender geometricSymLinkRender = new GeometricSymLinkRender(manifoldDisplay);
-      geometricSymLinkRender.steps = 1;
       Link link = geometricSymLinkRender.new Link(symLink);
       // link.steps=1;
       link.render(geometricLayer, graphics);

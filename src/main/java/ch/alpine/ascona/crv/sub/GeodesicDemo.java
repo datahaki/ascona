@@ -26,6 +26,8 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.pdf.RandomSample;
+import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
 class GeodesicDemo extends ControlPointsDemo {
@@ -84,7 +86,7 @@ class GeodesicDemo extends ControlPointsDemo {
       graphics.setColor(Color.DARK_GRAY);
       graphics.drawString("" + pseudoDistance.maps(Round._4), 10, 20);
     }
-    manifoldDisplay.showPoints(ColorPair.GRY, RealScalar.ONE, Subdivide.of(0, 1, param.splits).maps(scalarTensorFunction)) //
+    manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, Subdivide.of(0, 1, param.splits).maps(scalarTensorFunction)) //
         .render(geometricLayer, graphics);
     {
       Tensor sequence = Subdivide.of(0, 1, 1).maps(scalarTensorFunction);
@@ -97,15 +99,16 @@ class GeodesicDemo extends ControlPointsDemo {
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     }
     if (param.extrapolation) {
+      Clip clip = Clips.interval(1, 2);
       {
-        Tensor refined = Subdivide.of(1, 1.5, param.splits * 3).maps(scalarTensorFunction);
+        Tensor refined = Subdivide.increasing(clip, param.splits * 3).maps(scalarTensorFunction);
         Tensor render = manifoldDisplay.point2xy().slash(refined);
         // CurveCurvatureRender.of(render, false, geometricLayer, graphics);
         pathRender.setCurve(render, false);
         pathRender.render(geometricLayer, graphics);
       }
-      manifoldDisplay.showPoints(ColorPair.GEO, RealScalar.of(0.3), //
-          Subdivide.of(1, 1.5, param.splits).maps(scalarTensorFunction)) //
+      Tensor extrap = Subdivide.increasing(clip, param.splits).maps(scalarTensorFunction);
+      manifoldDisplay.showPoints(ColorPair.EXTRAPOLATION, RealScalar.of(0.8), extrap) //
           .render(geometricLayer, graphics);
     }
   }

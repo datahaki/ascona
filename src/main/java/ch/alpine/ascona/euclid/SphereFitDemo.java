@@ -7,6 +7,7 @@ import java.awt.geom.Path2D;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -91,18 +92,14 @@ class SphereFitDemo extends EuclideanPlaneDemo {
     }
     if (!Tensors.isEmpty(control)) {
       Tensor weiszfeld = new WeiszfeldMethod(Chop._04).uniform(control).get();
-      geometricLayer.pushMatrix(Se2Matrix.translation(weiszfeld));
-      Path2D path2d = geometricLayer.toPath2D(manifoldDisplay.shape());
-      path2d.closePath();
-      graphics.setColor(new Color(128, 128, 255, 64));
-      graphics.fill(path2d);
-      graphics.setColor(new Color(128, 128, 255, 255));
-      graphics.draw(path2d);
-      geometricLayer.popMatrix();
+      manifoldDisplay.showPoints(ColorPair.FIT, RealScalar.of(2), Tensors.of(weiszfeld)) //
+          .render(geometricLayer, graphics);
     }
     if (!Tensors.isEmpty(control)) {
       HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(homogeneousSpace);
+      // TODO CONFIGURABLE
+      // TODO dont change shape but color
       Sedarim sedarim = biinvariant.weighting(InversePowerVariogram.of(1), control);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(), sedarim, Chop._06);
       Optional<Tensor> optional = spatialMedian.uniform(control);

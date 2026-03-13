@@ -9,8 +9,7 @@ import java.awt.geom.Path2D;
 
 import ch.alpine.ascony.api.RnLineTrim;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.Se2Display;
-import ch.alpine.ascony.ren.ControlPointsStatic;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.fig.ListLinePlot;
 import ch.alpine.bridge.fig.Show;
@@ -81,7 +80,8 @@ class ClothoidTransitionDemo extends ClothoidSequenceDemo {
       graphics.setStroke(new BasicStroke(2));
       graphics.draw(geometricLayer.toPath2D(linearized));
       if (param.smpl)
-        ControlPointsStatic.gray(Se2Display.INSTANCE, linearized).render(geometricLayer, graphics);
+        manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, linearized) //
+            .render(geometricLayer, graphics);
       if (param.plot)
         show.add(ListLinePlot.of(samples, RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
             Tensor.of(linearized.stream().map(Extract2D.FUNCTION)))));

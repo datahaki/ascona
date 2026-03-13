@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPair;
-import ch.alpine.ascony.ren.ControlPointsStatic;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLinkImages;
@@ -38,6 +37,11 @@ class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedI
         Tensor.of(dubins.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
   }
 
+  @Override
+  protected int initialCount() {
+    return 3;
+  }
+
   @Override // from RenderInterface
   public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
     final int upper = control.length() - 1;
@@ -55,14 +59,14 @@ class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedI
         GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, effective);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
-      manifoldDisplay.showPoints(ColorPair.DAR, RealScalar.ONE, Tensors.of(selected)) //
+      manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Tensors.of(selected)) //
           .render(geometricLayer, graphics);
     }
     Tensor refined = Subdivide.of(0, upper, Math.max(1, upper * (1 << levels))).maps(scalarTensorFunction);
     Tensor render = manifoldDisplay.point2xy().slash(refined);
     Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (levels < 5)
-      ControlPointsStatic.gray(manifoldDisplay, refined).render(geometricLayer, graphics);
+      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
     return refined;
   }
 

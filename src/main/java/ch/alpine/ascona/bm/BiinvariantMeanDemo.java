@@ -138,7 +138,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       Optional<Tensor> optionalSM = spatialMedian.uniform(sequence);
       if (optionalSM.isPresent()) {
         Tensor median = optionalSM.orElseThrow();
-        manifoldDisplay.showPoints(ColorPair.BIM, RealScalar.of(0.7), Tensors.of(median)) //
+        manifoldDisplay.showPoints(ColorPair.SPACIAL_MEDIAN, RealScalar.of(0.7), Tensors.of(median)) //
             .render(geometricLayer, graphics);
       } else {
         graphics.setColor(Color.RED);
@@ -182,7 +182,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
           graphics.drawString(string, pix, piy - fheight / 3);
         }
         geometricLayer.popMatrix();
-        manifoldDisplay.showPoints(ColorPair.BMD, RealScalar.of(1.0), Tensors.of(origin)) //
+        manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.of(1.0), Tensors.of(origin)) //
             .render(geometricLayer, graphics);
       }
     }

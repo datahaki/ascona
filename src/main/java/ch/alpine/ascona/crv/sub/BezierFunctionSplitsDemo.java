@@ -42,6 +42,11 @@ class BezierFunctionSplitsDemo extends AbstractSplitsDemo {
     return null;
   }
 
+  @Override
+  protected int initialCount() {
+    return 3;
+  }
+
   static void main() {
     new BezierFunctionSplitsDemo().runStandalone();
   }

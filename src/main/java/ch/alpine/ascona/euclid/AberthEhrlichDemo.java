@@ -16,6 +16,7 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.ComplexScalar;
@@ -49,6 +50,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     public Integer depth = 5;
     @FieldFuse
     public Boolean shuffle = false;
+    @FieldSelectionArray({ "20", "30", "40", "50", "60" })
     public Integer resolution = 30;
     public ColorDataGradients cdg = ColorDataGradients.HUE;
   }

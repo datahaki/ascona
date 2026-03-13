@@ -66,7 +66,6 @@ class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         catmullClarkSubdivision::refine, //
         ArrayReshape.of(control, dims), //
         param.refine);
-    int rgb = 128 + 32;
     manifoldDisplay.showPoints(ColorPair.ABE, RealScalar.of(0.5), Flatten.of(refined, 1)) //
         .render(geometricLayer, graphics);
   }
