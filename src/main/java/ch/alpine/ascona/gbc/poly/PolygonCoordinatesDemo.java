@@ -23,6 +23,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
@@ -30,7 +31,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */

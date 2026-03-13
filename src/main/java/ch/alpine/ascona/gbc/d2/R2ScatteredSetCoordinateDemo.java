@@ -26,6 +26,7 @@ import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.noise.SimplexContinuousNoise;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.Rational;
@@ -37,7 +38,6 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Clips;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** transfer weights from barycentric coordinates defined by set of control points
  * in the square domain (subset of R^2) to means in non-linear spaces */

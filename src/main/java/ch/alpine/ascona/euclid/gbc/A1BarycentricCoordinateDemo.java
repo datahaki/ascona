@@ -15,6 +15,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -24,7 +25,6 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 abstract class A1BarycentricCoordinateDemo extends EuclideanPlaneDemo {
   @ReflectionMarker

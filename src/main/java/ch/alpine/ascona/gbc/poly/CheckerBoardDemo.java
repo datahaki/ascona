@@ -30,6 +30,7 @@ import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.var.VariogramFunctions;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
@@ -41,7 +42,6 @@ import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.sca.var.VariogramFunctions;
 
 /** transfe
  * weights from barycentric coordinates defined by set of control points*in the square domain(subset of R^2)to means in non-linear spaces */

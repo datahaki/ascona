@@ -7,11 +7,11 @@ import ch.alpine.sophis.dv.MetricBiinvariant;
 import ch.alpine.sophis.gbc.amp.Amplifiers;
 import ch.alpine.sophis.gbc.it.IterativeAffineCoordinate;
 import ch.alpine.sophis.gbc.it.IterativeTargetCoordinate;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 @ReflectionMarker
 public final class GenesisDequeParam {

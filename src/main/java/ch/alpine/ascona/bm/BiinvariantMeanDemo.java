@@ -28,6 +28,7 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.fit.HsWeiszfeldMethod;
 import ch.alpine.sophis.fit.SpatialMedian;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.bm.ReducingMeanEstimate;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -47,7 +48,6 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.exp.Log10;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 class BiinvariantMeanDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = ColorDataLists._097.cyclic().deriveWithAlpha(255);

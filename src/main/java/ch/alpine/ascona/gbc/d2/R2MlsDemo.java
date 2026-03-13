@@ -13,10 +13,10 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 class R2MlsDemo extends AbstractDeformationDemo {
   @ReflectionMarker

@@ -23,6 +23,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.math.DistanceMatrix;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.DoubleScalar;
@@ -42,7 +43,6 @@ import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.AbsSquared;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** Reference:
  * "Circumscribed Quadrics in Barycentric Coordinates"

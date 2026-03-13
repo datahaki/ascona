@@ -23,6 +23,7 @@ import ch.alpine.sophis.fit.HsWeiszfeldMethod;
 import ch.alpine.sophis.fit.SpatialMedian;
 import ch.alpine.sophis.fit.SphereFit;
 import ch.alpine.sophis.fit.WeiszfeldMethod;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
@@ -37,7 +38,6 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 class SphereFitDemo extends EuclideanPlaneDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();

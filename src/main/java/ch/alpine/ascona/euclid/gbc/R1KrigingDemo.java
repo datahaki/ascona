@@ -17,6 +17,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Kriging;
 import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Rational;
@@ -31,7 +32,6 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 // TODO ASCONA DEMO behaves counter intuitively!?
 class R1KrigingDemo extends ControlPointsDemo {

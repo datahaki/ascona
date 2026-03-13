@@ -36,11 +36,12 @@ public enum RandomPoints {
   }
 
   public static Tensor on_line(ManifoldDisplay manifoldDisplay, int n) {
+    Scalar SIGMA = RealScalar.of(0.3);
     Manifold manifold = manifoldDisplay.manifold();
     if (Objects.isNull(manifold))
       return scattered(manifoldDisplay, n);
     RandomSampleInterface rsi = manifoldDisplay.randomSampleInterface();
     Tensor p = RandomSample.of(rsi);
-    return Tensor.of(CurveRandomProcess.stream(manifold, RealScalar.of(0.2), p).limit(n));
+    return Tensor.of(CurveRandomProcess.stream(manifold, SIGMA, p).limit(n));
   }
 }

@@ -21,6 +21,7 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.itp.BarycentricMetricInterpolation;
 import ch.alpine.sophis.itp.BarycentricRationalInterpolation;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophis.win.KnotSpacing;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -29,7 +30,6 @@ import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
   private static final int WIDTH = 400;

@@ -25,6 +25,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
@@ -46,7 +47,6 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Floor;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Round;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 final class D2AveragingDemo extends ControlPointsDemo {
   @ReflectionMarker

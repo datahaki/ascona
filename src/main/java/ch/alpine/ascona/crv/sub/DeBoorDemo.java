@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.N;
 class DeBoorDemo extends AbstractCurveDemo {
   public DeBoorDemo() {
     super(new AbstractCurveParam());
-    setManifoldDisplay(ManifoldDisplays.Se2C);
+//    setManifoldDisplay(ManifoldDisplays.Se2C);
   }
 
   @Override // from RenderInterface

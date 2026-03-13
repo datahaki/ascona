@@ -18,6 +18,7 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.itp.CrossAveraging;
 import ch.alpine.sophis.itp.RadialBasisFunctionInterpolation;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.Tensor;
@@ -26,7 +27,6 @@ import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 /** TODO ASCONA ALG investigate, this produces some nice results for kriging+metric+power */
 class R1RadialBasisFunctionDemo extends ControlPointsDemo {

@@ -14,6 +14,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.var.VariogramFunctions;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -21,7 +22,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.sca.var.VariogramFunctions;
 
 public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDemo {
   @ReflectionMarker
