@@ -61,7 +61,6 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       leversRender.renderSurfaceP();
-      leversRender.renderSequence();
       leversRender.renderTangentsXtoP(false);
       leversRender.renderPolygonXtoP();
       leversRender.renderLevers();
@@ -86,7 +85,6 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
     } else {
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, placeWrap.getSequence(), null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
   }

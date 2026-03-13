@@ -160,7 +160,7 @@ class KMeansDemo extends ControlPointsDemo {
         ++index;
       }
     } else {
-      manifoldDisplay.showPoints(ColorPair.PCD, RealScalar.of(0.2), sequence) //
+      manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.of(0.2), sequence) //
           .render(geometricLayer, graphics);
     }
   }

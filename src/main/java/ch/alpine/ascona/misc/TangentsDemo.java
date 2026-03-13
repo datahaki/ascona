@@ -40,7 +40,6 @@ class TangentsDemo extends ControlPointsDemo {
           LeversRender.of(manifoldDisplay(), sequence, origin, geometricLayer, graphics);
       leversRender.renderLevers();
       leversRender.renderOrigin();
-      leversRender.renderSequence();
       leversRender.renderTangentsPtoX(true);
       leversRender.renderTangentsXtoP(true);
       leversRender.renderIndexP();

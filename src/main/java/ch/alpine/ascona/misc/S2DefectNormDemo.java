@@ -142,7 +142,6 @@ class S2DefectNormDemo extends ControlPointsDemo {
     }
     LeversRender leversRender = LeversRender.of(manifoldDisplay(), tsf.sequence, mean, geometricLayer, graphics);
     leversRender.renderOrigin();
-    leversRender.renderSequence();
     leversRender.renderWeights(tsf.weights);
   }
 

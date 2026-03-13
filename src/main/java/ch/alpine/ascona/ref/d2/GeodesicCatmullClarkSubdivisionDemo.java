@@ -17,6 +17,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.ref.d2.GeodesicCatmullClarkSubdivision;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ArrayReshape;
@@ -37,8 +38,16 @@ class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
   public GeodesicCatmullClarkSubdivisionDemo() {
     super(param = new Param());
     // ---
+    addChangeListener(this::reset);
+    reset();
+  }
+
+  private void reset() {
+    Scalar factor = ManifoldDisplays.S2_TYPES.contains(getSelectedMD()) //
+        ? RealScalar.of(0.6)
+        : RealScalar.ONE;
     Tensor vrt = Tensors.fromString("{{-1, 0, 0}, {0, 0, 0}, {1, 0, 0}, {-1, 1, 0}, {0, 1, 0}, {1, 1, 0}}");
-    setControlPointsSe2(vrt.multiply(RealScalar.of(0.3)));
+    setControlPointsSe2(vrt.multiply(factor));
   }
 
   @Override
@@ -66,7 +75,7 @@ class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         catmullClarkSubdivision::refine, //
         ArrayReshape.of(control, dims), //
         param.refine);
-    manifoldDisplay.showPoints(ColorPair.ABE, RealScalar.of(0.5), Flatten.of(refined, 1)) //
+    manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.of(0.5), Flatten.of(refined, 1)) //
         .render(geometricLayer, graphics);
   }
 

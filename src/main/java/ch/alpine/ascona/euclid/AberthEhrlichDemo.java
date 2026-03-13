@@ -130,7 +130,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     {
       Tensor sequence = complexZeros.extract(0, length).maps(S2V);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      manifoldDisplay.showPoints(ColorPair.ABE, RealScalar.ONE, sequence) //
+      manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.ONE, sequence) //
           .render(geometricLayer, graphics);
       leversRender.renderIndexP("z");
     }

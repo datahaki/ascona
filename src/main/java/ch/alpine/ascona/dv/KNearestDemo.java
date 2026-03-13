@@ -119,9 +119,9 @@ class KNearestDemo extends ControlPointsDemo {
     int[] integers = Ordering.INCREASING.of(weights);
     Tensor seq = Permute.of(integers).apply(sequence);
     int k = param1.k;
-    manifoldDisplay.showPoints(ColorPair.KNE, RealScalar.ONE, seq.extract(0, k)) //
+    manifoldDisplay.showPoints(ColorPair.GROUP_NEAR, RealScalar.ONE, seq.extract(0, k)) //
         .render(geometricLayer, graphics);
-    manifoldDisplay.showPoints(ColorPair.KFA, RealScalar.ONE, seq.extract(k, sequence.length())) //
+    manifoldDisplay.showPoints(ColorPair.GROUP_AFAR, RealScalar.ONE, seq.extract(k, sequence.length())) //
         .render(geometricLayer, graphics);
     manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Tensors.of(origin)) //
         .render(geometricLayer, graphics);

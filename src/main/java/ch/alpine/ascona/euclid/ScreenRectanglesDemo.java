@@ -55,7 +55,6 @@ class ScreenRectanglesDemo extends EuclideanPlaneDemo {
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
   }

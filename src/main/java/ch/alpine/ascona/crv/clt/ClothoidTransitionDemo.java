@@ -101,7 +101,6 @@ class ClothoidTransitionDemo extends ClothoidSequenceDemo {
     }
     if (param.ctrl) {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
   }

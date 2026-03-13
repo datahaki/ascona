@@ -50,7 +50,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.CURVYCURV;
+    return ControlPointType.DELEGATED;
   }
 
   @Override
@@ -59,7 +59,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
     PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
     Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
-      Tensor origin = optional.get();
+      final Tensor origin = optional.get();
       HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       Manifold manifold = homogeneousSpace;
       final Tensor sequence = placeWrap.getSequence();
@@ -83,7 +83,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
               graphics.draw(line2d);
             }
           }
-          manifoldDisplay.showPoints(ColorPair.EXP, RealScalar.ONE, leversVirtual) //
+          manifoldDisplay.showPoints(ColorPair.SPLIT_PROCESS, RealScalar.ONE, leversVirtual) //
               .render(geometricLayer, graphics);
           geometricLayer.popMatrix();
           {
@@ -118,6 +118,8 @@ class ExponentialDemo extends EuclideanPlaneDemo {
         LeversRender leversRender = LeversRender.of( //
             manifoldDisplay, sequence, origin, geometricLayer, graphics);
         leversRender.renderSequence();
+        leversRender.renderIndexP();
+        leversRender.renderIndexX();
         leversRender.renderOrigin();
       }
     }

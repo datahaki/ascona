@@ -75,15 +75,10 @@ class LogarithmDemo extends ControlPointsDemo {
       Tensor sequence = placeWrap.getSequence();
       Tensor origin = optional.get();
       {
-        LeversRender leversRender = //
-            LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
-        leversRender.renderOrigin();
+        LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
         leversRender.renderIndexX();
-        // ---
-        if (param.ctrl) {
+        if (param.ctrl)
           leversRender.renderIndexP();
-          leversRender.renderSequence(); // toggle show
-        }
       }
       // ---
       CurveOperator curveOperator = new FourPointCurveSubdivision(homogeneousSpace);

@@ -52,7 +52,6 @@ class MinTriangleAreaSquaredDemo extends EuclideanPlaneDemo {
         Tensor origin = weights.dot(polygon).extract(0, 2);
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
-        leversRender.renderSequence();
         leversRender.renderIndexP();
         leversRender.renderWeights(weights);
         leversRender.renderOrigin();

@@ -168,7 +168,6 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       {
         Tensor origin = mean_approximation;
         Tensor shape = manifoldDisplay.shape();
-        // graphics.setFont(FONT_LABELS);
         FontMetrics fontMetrics = graphics.getFontMetrics();
         int fheight = fontMetrics.getAscent();
         graphics.setColor(Color.BLACK);
@@ -182,7 +181,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
           graphics.drawString(string, pix, piy - fheight / 3);
         }
         geometricLayer.popMatrix();
-        manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.of(1.0), Tensors.of(origin)) //
+        manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.ONE, Tensors.of(origin)) //
             .render(geometricLayer, graphics);
       }
     }

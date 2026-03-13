@@ -117,7 +117,6 @@ class SutherlandHodgmanAlgorithmDemo extends EuclideanPlaneDemo {
       new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f).setCurve(sequence, true).render(geometricLayer, graphics);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
       leversRender.renderSurfaceP();
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     // RenderQuality.setDefault(graphics);

@@ -90,7 +90,6 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     try {

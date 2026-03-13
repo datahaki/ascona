@@ -115,7 +115,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
       // render grid lines functions
       if (scatteredSetParam.arrows)
         manifoldDisplay.showPoints( //
-            ColorPair.RMD, //
+            ColorPair.INTERMEDIATE, //
             RealScalar.of(Math.min(1, 3.0 / Math.sqrt(scatteredSetParam.refine))), //
             Tensor.of(Arrays.stream(array).flatMap(Arrays::stream))) //
             .render(geometricLayer, graphics);

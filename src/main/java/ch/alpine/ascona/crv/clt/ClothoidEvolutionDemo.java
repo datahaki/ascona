@@ -90,7 +90,6 @@ class ClothoidEvolutionDemo extends ControlPointsDemo {
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
   }

@@ -92,7 +92,7 @@ class SphereFitDemo extends EuclideanPlaneDemo {
     }
     if (!Tensors.isEmpty(control)) {
       Tensor weiszfeld = new WeiszfeldMethod(Chop._04).uniform(control).get();
-      manifoldDisplay.showPoints(ColorPair.FIT, RealScalar.of(2), Tensors.of(weiszfeld)) //
+      manifoldDisplay.showPoints(ColorPair.SPACIAL_MEDIAN, RealScalar.of(2), Tensors.of(weiszfeld)) //
           .render(geometricLayer, graphics);
     }
     if (!Tensors.isEmpty(control)) {

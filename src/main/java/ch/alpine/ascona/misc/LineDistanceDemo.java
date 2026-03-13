@@ -10,7 +10,6 @@ import java.util.List;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.DensityPlot;
@@ -107,10 +106,6 @@ class LineDistanceDemo extends ControlPointsDemo {
     graphics.setColor(new Color(192, 192, 192));
     Tensor ms = Tensor.of(GEODESIC_DOMAIN.maps(scalarTensorFunction).stream().map(manifoldDisplay::point2xy));
     graphics.draw(geometricLayer.toPath2D(ms));
-    graphics.setStroke(new BasicStroke());
-    // ---
-    LeversRender leversRender = LeversRender.of(manifoldDisplay, cp, null, geometricLayer, graphics);
-    leversRender.renderSequence();
   }
 
   static void main() {

@@ -55,7 +55,6 @@ class S3HopfDemo extends ControlPointsDemo {
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
   }

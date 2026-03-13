@@ -15,7 +15,6 @@ import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.Meshgrid;
 import ch.alpine.ascony.msh.MovingDomain2D;
 import ch.alpine.ascony.ren.ColorPair;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -102,7 +101,7 @@ class SPatchDemo extends ControlPointsDemo {
       Tensor[][] forward = movingDomain2D.forward(sequence);
       Tensor points = Unprotect.using(IntStream.range(0, forward.length).filter(i -> i % 2 == 0) //
           .boxed().flatMap(i -> IntStream.range(0, forward[i].length).filter(j -> j % 2 == 0).mapToObj(j -> forward[i][j])).toList());
-      manifoldDisplay.showPoints(ColorPair.SPA, RealScalar.of(0.4), points) //
+      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.of(0.4), points) //
           .render(geometricLayer, graphics);
       new MeshRender(forward, param1.cdg.deriveWithOpacity(Rational.HALF)) //
           .render(geometricLayer, graphics);
@@ -130,8 +129,6 @@ class SPatchDemo extends ControlPointsDemo {
           graphics.draw(path2d);
         }
     }
-    LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-    leversRender.renderSequence();
   }
 
   static void main() {

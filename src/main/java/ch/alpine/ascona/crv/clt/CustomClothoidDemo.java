@@ -67,7 +67,6 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
     // ---
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     Show show = ClothoidTangentDefectShow.of(clothoidContext, clip).getShow();

@@ -97,7 +97,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
       graphics.setColor(Color.GREEN);
       for (int index = 0; index < target.length(); ++index)
         graphics.draw(geometricLayer.toLine2D(control.get(index), target.get(index)));
-      manifoldDisplay.showPoints(ColorPair.S1I, RealScalar.ONE, target) //
+      manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.ONE, target) //
           .render(geometricLayer, graphics);
       // ---
       Tensor values = Tensor.of(control.stream().map(Vector2Norm::of));
@@ -127,7 +127,6 @@ public class S1InterpolationDemo extends ControlPointsDemo {
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     // POINTS_RENDER_0.show(geodesicDisplay()::matrixLift, shape, getGeodesicControlPoints()).render(geometricLayer, graphics);

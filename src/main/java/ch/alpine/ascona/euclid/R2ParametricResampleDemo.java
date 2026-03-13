@@ -61,14 +61,13 @@ class R2ParametricResampleDemo extends EuclideanPlaneDemo {
     graphics.draw(geometricLayer.toPath2D(control));
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     // ---
     ParametricResample parametricResample = param.parametricResample();
     ResampleResult resampleResult = parametricResample.apply(control);
     for (Tensor points : resampleResult.getPoints())
-      manifoldDisplay.showPoints(ColorPair.R2P, RealScalar.ONE, points) //
+      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, points) //
           .render(geometricLayer, graphics);
   }
 

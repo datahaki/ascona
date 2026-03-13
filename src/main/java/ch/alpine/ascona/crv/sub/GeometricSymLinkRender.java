@@ -70,11 +70,10 @@ class GeometricSymLinkRender {
             Path2D path2d = geometricLayer.toPath2D(points);
             graphics.setStroke(STROKE);
             graphics.draw(path2d);
-            graphics.setStroke(new BasicStroke());
           }
         }
         Tensor p = symLink.position(geodesicSpace);
-        manifoldDisplay.showPoints(ColorPair.SUPPORT, RealScalar.ONE, Tensors.of(p)) //
+        manifoldDisplay.showPoints(ColorPair.SPLIT_PROCESS, RealScalar.ONE, Tensors.of(p)) //
             .render(geometricLayer, graphics);
       }
     }

@@ -49,10 +49,8 @@ public abstract class AbstractSplitsDemo extends PointSequenceDemo {
     if (Objects.nonNull(symLink))
       origin = symLink.position(manifoldDisplay.geodesicSpace());
     LeversRender leversRender = LeversRender.of(manifoldDisplay, control, origin, geometricLayer, graphics);
-    leversRender.renderSequence();
     leversRender.renderIndexP();
-    leversRender.renderOrigin();
-    leversRender.renderIndexX();
+    leversRender.renderIndexX(); // label result with "x"
   }
 
   /** evaluates geodesic average on symbolic leaf sequence

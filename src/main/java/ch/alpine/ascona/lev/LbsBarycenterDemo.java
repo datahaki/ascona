@@ -51,8 +51,6 @@ class LbsBarycenterDemo extends ControlPointsDemo {
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       // ---
       leversRender.renderSurfaceP();
-      leversRender.renderSequence();
-      leversRender.renderOrigin();
       leversRender.renderLbsS2();
       leversRender.renderLevers();
       leversRender.renderIndexX();
@@ -71,11 +69,6 @@ class LbsBarycenterDemo extends ControlPointsDemo {
       leversRender.renderIndexP();
       // ---
       geometricLayer.popMatrix();
-    } else {
-      {
-        LeversRender leversRender = LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
-        leversRender.renderSequence();
-      }
     }
   }
 

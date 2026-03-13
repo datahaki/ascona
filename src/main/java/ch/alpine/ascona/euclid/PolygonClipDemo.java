@@ -47,10 +47,6 @@ class PolygonClipDemo extends EuclideanPlaneDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     new PathRender(COLOR_DATA_INDEXED.getColor(3), 1.5f).setCurve(CIRCLE, true).render(geometricLayer, graphics);
     Tensor sequence = getGeodesicControlPoints();
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderSequence();
-    }
     new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f).setCurve(sequence, true).render(geometricLayer, graphics);
     PolyclipResult polyclipResult = POLYGON_CLIP.apply(sequence);
     graphics.setColor(new Color(128, 255, 128, 128));

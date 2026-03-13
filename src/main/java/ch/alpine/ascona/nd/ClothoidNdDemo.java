@@ -80,7 +80,6 @@ class ClothoidNdDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     LeversRender leversRender = //
         LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), mouse, geometricLayer, graphics);
-    leversRender.renderSequence();
     leversRender.renderOrigin();
     // ---
     ClothoidBuilder clothoidBuilder = (ClothoidBuilder) manifoldDisplay.geodesicSpace();

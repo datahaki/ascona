@@ -137,7 +137,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       }
       graphics.setStroke(new BasicStroke());
     }
-    manifoldDisplay.showPoints(ColorPair.ADE, RealScalar.of(0.8), origin) //
+    manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.of(0.8), origin) //
         .render(geometricLayer, graphics);
     LeversRender leversRender = LeversRender.of(manifoldDisplay, param2.target //
         ? getGeodesicControlPoints()

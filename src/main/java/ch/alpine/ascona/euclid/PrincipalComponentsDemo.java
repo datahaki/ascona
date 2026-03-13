@@ -61,7 +61,7 @@ class PrincipalComponentsDemo extends EuclideanPlaneDemo {
     PrincipalComponents pc = PrincipalComponents.of(points);
     Tensor tensor = pc.unscaled();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    manifoldDisplay.showPoints(ColorPair.PCD, RealScalar.of(0.8), tensor) //
+    manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.of(0.8), tensor) //
         .render(geometricLayer, graphics);
     Tensor slash = pc.scaled_directions();
     graphics.setColor(Color.BLUE);

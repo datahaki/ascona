@@ -86,7 +86,6 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
     Tensor controlPoints = getGeodesicControlPoints();
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
-      leversRender.renderSequence();
       leversRender.renderIndexP();
     }
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
@@ -129,7 +128,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
           .render(geometricLayer, graphics);
       if (scatteredSetParam.arrows) {
         Tensor points = Flatten.of(new MatrixArray(array).unwrap(), 1);
-        manifoldDisplay.showPoints(ColorPair.R2B, RealScalar.of(0.5), points) //
+        manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.of(0.5), points) //
             .render(geometricLayer, graphics);
       }
     }

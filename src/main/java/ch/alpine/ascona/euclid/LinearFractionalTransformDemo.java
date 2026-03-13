@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -70,13 +71,12 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
     {
       LeversRender leversRender = LeversRender.of( //
           manifoldDisplay, REF, REF.get(0), geometricLayer, graphics);
-      leversRender.renderSequence();
+      leversRender.renderSequence(ColorPair.REFERENCE);
     }
     Tensor sequence = getGeodesicControlPoints();
     {
       LeversRender leversRender = //
-          LeversRender.of(manifoldDisplay, sequence, sequence.get(0), geometricLayer, graphics);
-      leversRender.renderSequence();
+          LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
       PathRender pathRender = new PathRender(Color.BLUE);
       pathRender.setCurve(sequence, true);
       pathRender.render(geometricLayer, graphics);
@@ -121,27 +121,27 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
     Tensor ref2 = reference.maps(RealScalar.of(-0.5)::add);
     Genesis genesis = ThreePointCoordinate.of(param.tps);
     Interpolation interpolation = LinearInterpolation.of(src);
-    try {
-      return Tensors.matrix((i, j) -> {
-        Tensor p = Tensors.vectorDouble(-i, -j);
-        Tensor ref = Tensor.of(ref2.stream().map(p::add));
+    return Tensors.matrix((i, j) -> {
+      Tensor p = Tensors.vectorDouble(-i, -j);
+      Tensor ref = Tensor.of(ref2.stream().map(p::add));
+      try {
         return interpolation.get(genesis.origin(ref).dot(points));
-      }, height, width);
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
-    }
-    return Array.zeros(1, 1, 4);
+      } catch (Exception e) {
+        return Array.zeros(4);
+      }
+    }, height, width);
   }
 
   private static Tensor rectify2(Tensor src, Tensor points, int width, int height) {
     LinearFractionalTransform lft = lft(points, width, height);
     Interpolation interpolation = LinearInterpolation.of(src);
-    try {
-      return Tensors.matrix((i, j) -> interpolation.get(lft.apply(Tensors.vectorDouble(i, j))), height, width);
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
-    }
-    return Array.zeros(1, 1, 4);
+    return Tensors.matrix((i, j) -> {
+      try {
+        return interpolation.get(lft.apply(Tensors.vectorDouble(i, j)));
+      } catch (Exception e) {
+        return Array.zeros(4);
+      }
+    }, height, width);
   }
 
   static void main() {

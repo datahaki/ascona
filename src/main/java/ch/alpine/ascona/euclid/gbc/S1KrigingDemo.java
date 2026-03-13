@@ -73,7 +73,6 @@ class S1KrigingDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-1, 1, 0}}"));
     geometricComponent().addRenderInterfaceBackground(RegionRenders.of(coordinateBoundingBox));
     geometricComponent().addRenderInterfaceBackground(S1FrameRender.INSTANCE);
-    // geometricComponent().setOffset(500, 500);
   }
 
   @Override
@@ -113,10 +112,9 @@ class S1KrigingDemo extends ControlPointsDemo {
       graphics.setColor(Color.GREEN);
       for (int index = 0; index < sequence.length(); ++index)
         graphics.draw(geometricLayer.toLine2D(control.get(index), sequence.get(index)));
-      manifoldDisplay.showPoints(ColorPair.S1I, RealScalar.ONE, sequence) //
+      manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.ONE, sequence) //
           .render(geometricLayer, graphics);
       Tensor covariance = DiagonalMatrix.sparse(cvarian);
-      // if (isDeterminate())
       {
         Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), s -> s, sequence);
         Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
