@@ -137,18 +137,16 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     if (1 < length) {
       {
         Scalar bound = bounds(complexZeros.extract(0, length), seeds);
-        PathRender pathRender = new PathRender(Color.RED);
-        pathRender.setCurve(CirclePoints.of(70).multiply(bound), true) //
+        new PathRender(Color.RED, 1, CirclePoints.of(70).multiply(bound), true) //
             .render(geometricLayer, graphics);
       }
       Tensor table = table(complexZeros.extract(0, length), seeds, param.depth);
       int dimension1 = Unprotect.dimension1(table);
       // IO.println(Pretty.of(table.maps(Round._1)));
       for (int index = 0; index < dimension1; ++index) {
-        PathRender pathRender = new PathRender(Color.BLACK);
         TensorUnaryOperator tuo = manifoldDisplay::point2xya;
         Tensor points = tuo.slash(table.get(Tensor.ALL, index).maps(S2V));
-        pathRender.setCurve(points, false).render(geometricLayer, graphics);
+        new PathRender(Color.BLACK, 1, points, false).render(geometricLayer, graphics);
       }
     }
   }

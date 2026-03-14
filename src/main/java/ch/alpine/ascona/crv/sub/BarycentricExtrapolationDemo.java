@@ -84,9 +84,7 @@ class BarycentricExtrapolationDemo extends ControlPointsDemo {
       Tensor curve = Tensor.of(samples.stream() //
           .map(sedarim::sunder) //
           .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(sequence, weights).stream()));
-      new PathRender(Color.BLUE, 1.5f) //
-          .setCurve(curve, false) //
-          .render(geometricLayer, graphics);
+      new PathRender(Color.BLUE, 1.5, curve, false).render(geometricLayer, graphics);
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);

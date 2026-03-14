@@ -60,8 +60,6 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
 
   protected final GokartPosParam gokartPosParam;
   protected final SpecParam specParam;
-  private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
-  private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
   private PosHz posHz = null;
 
   protected AbstractSpectrogramDemo(Object object) {
@@ -89,7 +87,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     boolean conv = specParam.conv;
     if (specParam.data) {
-      pathRenderCurve.setCurve(control, false).render(geometricLayer, graphics);
+      new PathRender(COLOR_CURVE, 1, control, false).render(geometricLayer, graphics);
       ColorPair colorPair = conv ? ColorPair.ASC : ColorPair.ASN;
       manifoldDisplay.showPoints(colorPair, markerScale(), control) //
           .render(geometricLayer, graphics);
@@ -105,7 +103,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     // ---
     graphics.setStroke(new BasicStroke(1f));
     if (conv) {
-      pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
+      new PathRender(COLOR_SHAPE, 1, refined, false).render(geometricLayer, graphics);
       manifoldDisplay.showPoints(ColorPair.ASD, markerScale(), refined) //
           .render(geometricLayer, graphics);
     }

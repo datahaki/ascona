@@ -66,9 +66,8 @@ class ExponentialDemo extends EuclideanPlaneDemo {
       final Tensor levers2 = manifold.tangentSpace(origin).log().slash(sequence);
       {
         Tensor hull = ConvexHull2D.of(sequence);
-        PathRender pathRender = new PathRender(new Color(0, 0, 255, 128));
-        pathRender.setCurve(hull, true);
-        pathRender.render(geometricLayer, graphics);
+        new PathRender(new Color(0, 0, 255, 128), 1, hull, true) //
+            .render(geometricLayer, graphics);
       }
       if (OriginEnclosureQ.INSTANCE.test(levers2)) {
         GenesisDeque dequeGenesis = (GenesisDeque) genesisDequeProperties.genesis();

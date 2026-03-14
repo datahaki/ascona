@@ -51,6 +51,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
     @FieldSelectionCallback("biinvariants")
     public Biinvariants biinvariants = Biinvariants.METRIC;
 
+    @ReflectionMarker
     public static List<Biinvariants> biinvariants() {
       return Biinvariants.OKAY;
     }

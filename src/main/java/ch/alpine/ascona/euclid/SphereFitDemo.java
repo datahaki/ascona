@@ -43,13 +43,8 @@ import ch.alpine.tensor.sca.Chop;
 class SphereFitDemo extends EuclideanPlaneDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
   private static final Tensor CIRCLE = CirclePoints.of(10).multiply(RealScalar.of(3));
-  // ---
-  private final PathRender pathRenderBall = new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f);
-  private final PathRender pathRenderHull = new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5f);
 
   public SphereFitDemo() {
-    geometricComponent().addRenderInterface(pathRenderHull);
-    // ---
     Tensor blub = Tensors.fromString(
         "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
@@ -72,13 +67,13 @@ class SphereFitDemo extends EuclideanPlaneDemo {
         Tensor center = optional.get().center();
         Scalar radius = optional.get().radius();
         geometricLayer.pushMatrix(Se2Matrix.translation(center));
-        pathRenderBall.setCurve(CirclePoints.of(40).multiply(radius), true);
-        pathRenderBall.render(geometricLayer, graphics);
+        new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5, CirclePoints.of(40).multiply(radius), true) //
+            .render(geometricLayer, graphics);
         geometricLayer.popMatrix();
       }
     }
-    pathRenderHull.setCurve(ConvexHull2D.of(control), true);
-    new PathRender(Color.GRAY).setCurve(CIRCLE, true).render(geometricLayer, graphics);
+    new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5, ConvexHull2D.of(control), true).render(geometricLayer, graphics);
+    new PathRender(Color.GRAY, 1, CIRCLE, true).render(geometricLayer, graphics);
     if (!Tensors.isEmpty(control)) {
       Tensor matrix = Outer.of(Vector2Norm::between, control, CIRCLE);
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
@@ -117,7 +112,6 @@ class SphereFitDemo extends EuclideanPlaneDemo {
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      // leversRender.renderSequence();
       leversRender.renderIndexP();
     }
   }

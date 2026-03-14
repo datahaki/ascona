@@ -55,8 +55,7 @@ class SpearheadDemo extends ClothoidBaseDemo {
     Tensor polygon = Spearhead.of(xya, res);
     graphics.setColor(COLOR_DATA_INDEXED.getColor(1));
     graphics.fill(geometricLayer.toPath2D(polygon));
-    new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f) //
-        .setCurve(polygon, false) //
+    new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5, polygon, false) //
         .render(geometricLayer, graphics);
     Scalar area = PolygonArea.of(polygon);
     Tensor centroid = PolygonCentroid.of(polygon);

@@ -4,6 +4,7 @@ package ch.alpine.ascona.crv.sub;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -31,8 +32,8 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
 class GeodesicDemo extends ControlPointsDemo {
-  private final PathRender pathRender = new PathRender(new Color(128, 128, 255), //
-      new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0));
+  static final Stroke STROKE = //
+      new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
 
   @ReflectionMarker
   static class Param {
@@ -104,8 +105,8 @@ class GeodesicDemo extends ControlPointsDemo {
         Tensor refined = Subdivide.increasing(clip, param.splits * 3).maps(scalarTensorFunction);
         Tensor render = manifoldDisplay.point2xy().slash(refined);
         // CurveCurvatureRender.of(render, false, geometricLayer, graphics);
-        pathRender.setCurve(render, false);
-        pathRender.render(geometricLayer, graphics);
+        new PathRender(new Color(128, 128, 255), 1, render, false) //
+            .render(geometricLayer, graphics);
       }
       Tensor extrap = Subdivide.increasing(clip, param.splits).maps(scalarTensorFunction);
       manifoldDisplay.showPoints(ColorPair.EXTRAPOLATION, RealScalar.of(0.8), extrap) //

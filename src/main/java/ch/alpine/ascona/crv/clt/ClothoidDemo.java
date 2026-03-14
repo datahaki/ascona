@@ -60,7 +60,7 @@ class ClothoidDemo extends ClothoidBaseDemo {
       Clothoid clothoid = clothoidBuilders.clothoidBuilder().curve(start, mouse);
       Tensor points = DOMAIN.maps(clothoid);
       Color color = COLOR_DATA_INDEXED.getColor(index);
-      new PathRender(color, 1.0f).setCurve(points, false).render(geometricLayer, graphics);
+      new PathRender(color, 1.0, points, false).render(geometricLayer, graphics);
       graphics.setColor(color);
       {
         Scalar angle = ArcTan2D.of(clothoid.apply(RealScalar.of(1e-8)));

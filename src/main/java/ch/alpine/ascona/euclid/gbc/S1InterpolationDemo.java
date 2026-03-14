@@ -116,7 +116,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
             point -> sedarim.sunder(AngleVector.of(point));
         Tensor basis = Tensor.of(domain.stream().parallel().map(Scalar.class::cast).map(scalarTensorFunction));
         Tensor curve = Times.of(basis.dot(values), spherics);
-        new PathRender(Color.BLUE, 1.25f).setCurve(curve, true).render(geometricLayer, graphics);
+        new PathRender(Color.BLUE, 1.25, curve, true).render(geometricLayer, graphics);
         // ---
         Reverse.of(spherics).forEach(curve::append);
         graphics.setColor(new Color(0, 0, 255, 32));

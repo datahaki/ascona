@@ -68,13 +68,13 @@ class SutherlandHodgmanAlgorithmDemo extends EuclideanPlaneDemo {
       Tensor CIRCLE = CirclePoints.of(param.n).multiply(RealScalar.of(2));
       SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);
       // ---
-      new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f).setCurve(sequence, true).render(geometricLayer, graphics);
-      new PathRender(COLOR_DATA_INDEXED.getColor(3), 1.5f).setCurve(CIRCLE, true).render(geometricLayer, graphics);
+      new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5, sequence, true).render(geometricLayer, graphics);
+      new PathRender(COLOR_DATA_INDEXED.getColor(3), 1.5, CIRCLE, true).render(geometricLayer, graphics);
       PolyclipResult polyclipResult = POLYGON_CLIP.apply(sequence);
       graphics.setColor(new Color(128, 255, 128, 128));
       Tensor result = polyclipResult.tensor();
       graphics.fill(geometricLayer.toPath2D(result));
-      new PathRender(COLOR_DATA_INDEXED.getColor(1), 3.5f).setCurve(result, true).render(geometricLayer, graphics);
+      new PathRender(COLOR_DATA_INDEXED.getColor(1), 3.5, result, true).render(geometricLayer, graphics);
       ColorPairIndexed colorPairIndexed = new ColorPairIndexed(COLOR_DATA_INDEXED, 128, 255);
       for (int index = 0; index < result.length(); ++index) {
         int cind = polyclipResult.belong().Get(index).number().intValue();
@@ -114,7 +114,8 @@ class SutherlandHodgmanAlgorithmDemo extends EuclideanPlaneDemo {
       leversRender.renderIndexP();
     } else {
       Tensor sequence = getGeodesicControlPoints();
-      new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5f).setCurve(sequence, true).render(geometricLayer, graphics);
+      new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5, sequence, true) //
+          .render(geometricLayer, graphics);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
       leversRender.renderSurfaceP();
       leversRender.renderIndexP();

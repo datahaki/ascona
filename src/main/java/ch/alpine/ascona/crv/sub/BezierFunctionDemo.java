@@ -77,7 +77,7 @@ class BezierFunctionDemo extends PointSequenceDemo {
           if (Objects.nonNull(homogeneousSpace)) {
             Tensor refined = domain.maps(BezierCurve.of(homogeneousSpace.biinvariantMean(), sequence));
             Tensor render = manifoldDisplay.point2xy().slash(refined);
-            new PathRender(Color.RED, 1.25f).setCurve(render, false).render(geometricLayer, graphics);
+            new PathRender(Color.RED, 1.25, render, false).render(geometricLayer, graphics);
           }
         }
         Tensor refined = domain.maps(new BezierFunction(geodesicSpace, sequence));

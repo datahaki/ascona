@@ -28,8 +28,6 @@ import ch.alpine.tensor.red.Nest;
 
 /** split interface and biinvariant mean based curve subdivision */
 class CurveSubdivisionDemo extends PointSequenceDemo {
-  private static final PathRender PATH_RENDER = new PathRender(new Color(0, 128, 0, 128));
-
   @ReflectionMarker
   static class Param {
     public final CurvatureParam cp = new CurvatureParam();
@@ -51,7 +49,7 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
 
   @Override
   protected int initialCount() {
-    return 5;
+    return 2;
   }
 
   // this runnable causes to center (0,0) in the component center
@@ -94,12 +92,15 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
     }
     try {
       Tensor refined = param.scheme.refine(manifoldDisplay, control, levels, cyclic);
+      Tensor render = manifoldDisplay.point2xy().slash(refined);
+      new PathRender(Color.BLUE, 1.25, render, cyclic).render(geometricLayer, graphics);
       if (param.line) {
         GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-        PATH_RENDER.setCurve(Nest.of(new BSpline1CurveSubdivision(geodesicSpace).auto(cyclic), control, 8), cyclic).render(geometricLayer, graphics);
+        Tensor refined2 = Nest.of(new BSpline1CurveSubdivision(geodesicSpace).auto(cyclic), control, 8);
+        new PathRender(new Color(0, 128, 0, 128), 1, refined2, cyclic) //
+            .render(geometricLayer, graphics);
       }
       if (manifoldDisplay.isXYeuclid()) {
-        Tensor render = manifoldDisplay.point2xy().slash(refined);
         Curvature2DRender.of(render, cyclic, param.comb).render(geometricLayer, graphics);
       }
       if (levels < 5)
@@ -108,6 +109,9 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
           .render(geometricLayer, graphics);
     } catch (Exception exception) {
       // ---
+      graphics.setColor(Color.RED);
+      graphics.drawString("ERROR: " + exception.getMessage(), 0, 100);
+      exception.printStackTrace();
     }
   }
 

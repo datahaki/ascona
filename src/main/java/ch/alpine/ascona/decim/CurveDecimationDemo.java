@@ -47,9 +47,6 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   private static final Color COLOR_RECON = new Color(128, 128, 128, 255);
   private static final int WIDTH = 480;
   private static final int HEIGHT = 360;
-  // ---
-  private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
-  private final PathRender pathRenderShape = new PathRender(COLOR_RECON, 2f);
 
   @ReflectionMarker
   static class Param { // for data pre-processing
@@ -105,7 +102,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     // render dataset
-    pathRenderCurve.setCurve(control, false).render(geometricLayer, graphics);
+    new PathRender(COLOR_CURVE, 1, control, false).render(geometricLayer, graphics);
     if (control.length() <= 1000)
       manifoldDisplay.showPoints(ColorPair.DEC, RealScalar.of(0.3), control) //
           .render(geometricLayer, graphics);
@@ -119,7 +116,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
         LaneRiesenfeldCurveSubdivision.of(homogeneousSpace, 1)::string, //
         simplified, level);
     graphics.setColor(Color.DARK_GRAY);
-    pathRenderShape.setCurve(refined, false).render(geometricLayer, graphics);
+    new PathRender(COLOR_RECON, 1, refined, false).render(geometricLayer, graphics);
     manifoldDisplay.showPoints(ColorPair.DED, RealScalar.of(0.8), simplified) //
         .render(geometricLayer, graphics);
     if (paran.error) {

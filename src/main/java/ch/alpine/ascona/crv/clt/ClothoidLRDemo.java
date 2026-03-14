@@ -52,8 +52,7 @@ class ClothoidLRDemo extends ClothoidBaseDemo {
         ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder(), ClothoidBuilders.SE2_LEGENDRE.clothoidBuilder() }) {
       Clothoid clothoid = clothoidBuilder.curve(start, mouse);
       Tensor points = DOMAIN.maps(clothoid);
-      new PathRender(COLOR_DATA_INDEXED.getColor(index), 1.5f) //
-          .setCurve(points, false).render(geometricLayer, graphics);
+      new PathRender(COLOR_DATA_INDEXED.getColor(index), 1.5, points, false).render(geometricLayer, graphics);
       manifoldDisplay().showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, ARROWS.maps(clothoid)) //
           .render(geometricLayer, graphics);
       ++index;

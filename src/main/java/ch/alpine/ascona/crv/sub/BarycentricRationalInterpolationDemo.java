@@ -91,9 +91,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       try {
         Tensor curve = Tensor.of(basis2.stream() //
             .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));
-        new PathRender(Color.RED) //
-            .setCurve(curve, false) //
-            .render(geometricLayer, graphics);
+        new PathRender(Color.RED, 1, curve, false).render(geometricLayer, graphics);
       } catch (Exception exception) {
         System.err.println("no mean " + manifoldDisplay);
       }
@@ -101,9 +99,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       try {
         Tensor curve = Tensor.of(basis1.stream() //
             .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));
-        new PathRender(Color.BLUE) //
-            .setCurve(curve, false) //
-            .render(geometricLayer, graphics);
+        new PathRender(Color.BLUE, 1, curve, false).render(geometricLayer, graphics);
       } catch (Exception exception) {
         System.err.println("no mean " + manifoldDisplay);
       }

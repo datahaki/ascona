@@ -62,7 +62,8 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
       ClothoidBuilder clothoidBuilder = CustomClothoidBuilder.of((Scalar) _lambda);
       ClothoidTransition clothoidTransition = ClothoidTransition.of(clothoidBuilder, clothoidContext.p(), clothoidContext.q());
       Tensor points = clothoidTransition.linearized(MIN_RESOLUTION);
-      new PathRender(new Color(64, 128, 64, 128 + 32)).setCurve(points, false).render(geometricLayer, graphics);
+      new PathRender(new Color(64, 128, 64, 128 + 32), 1, points, false) //
+          .render(geometricLayer, graphics);
     }
     // ---
     {

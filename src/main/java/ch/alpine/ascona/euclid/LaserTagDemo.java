@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
-import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -27,8 +26,6 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 class LaserTagDemo extends EuclideanPlaneDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict().deriveWithAlpha(128);
-  // ---
-  private final PathRender pathRenderHull = new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5f);
 
   @ReflectionMarker
   static class Param {
@@ -40,8 +37,6 @@ class LaserTagDemo extends EuclideanPlaneDemo {
 
   public LaserTagDemo() {
     super(param = new Param());
-    // ---
-    geometricComponent().addRenderInterface(pathRenderHull);
     // ---
     Distribution distribution = UniformDistribution.of(-4, 4);
     setControlPointsSe2(RandomVariate.of(distribution, param.TEXT.length() + 2, 3));

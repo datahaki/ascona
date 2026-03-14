@@ -86,7 +86,7 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
         Tensor basis = domain.maps(geodesicNeville);
         {
           Tensor curve = Transpose.of(Tensors.of(domain, basis));
-          new PathRender(new Color(255, 0, 0, 128), STROKE).setCurve(curve, false).render(geometricLayer, graphics);
+          new PathRender(new Color(255, 0, 0, 128), 1, curve, false).render(geometricLayer, graphics);
         }
       }
       // ---
@@ -95,13 +95,13 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
       Tensor basis = domain.maps(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));
-        new PathRender(Color.BLUE, 2f).setCurve(curve, false).render(geometricLayer, graphics);
+        new PathRender(Color.BLUE, 2, curve, false).render(geometricLayer, graphics);
       }
       ColorDataIndexed colorDataIndexed = ColorDataLists._097.cyclic();
       for (int index = 0; index < funceva.length(); ++index) {
         Color color = colorDataIndexed.getColor(index);
         Tensor curve = Transpose.of(Tensors.of(domain, basis.get(Tensor.ALL, index)));
-        new PathRender(color, 1f).setCurve(curve, false).render(geometricLayer, graphics);
+        new PathRender(color, 1, curve, false).render(geometricLayer, graphics);
       }
     }
     {

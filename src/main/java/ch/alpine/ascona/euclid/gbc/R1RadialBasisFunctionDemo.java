@@ -78,8 +78,7 @@ class R1RadialBasisFunctionDemo extends ControlPointsDemo {
         TensorUnaryOperator tensorUnaryOperator = //
             RadialBasisFunctionInterpolation.of(sedarim, sequence, funceva);
         Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(tensorUnaryOperator));
-        new PathRender(Color.BLUE, 1.25f) //
-            .setCurve(Transpose.of(Tensors.of(domain, result)), false) //
+        new PathRender(Color.BLUE, 1.25, Transpose.of(Tensors.of(domain, result)), false) //
             .render(geometricLayer, graphics);
       } catch (Exception exception) {
         // ---
@@ -89,8 +88,7 @@ class R1RadialBasisFunctionDemo extends ControlPointsDemo {
         TensorUnaryOperator operator = //
             new CrossAveraging(sedarim, LinearBiinvariantMean.INSTANCE, funceva);
         Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(operator));
-        new PathRender(Color.RED, 1.25f) //
-            .setCurve(Transpose.of(Tensors.of(domain, result)), false) //
+        new PathRender(Color.RED, 1.25, Transpose.of(Tensors.of(domain, result)), false) //
             .render(geometricLayer, graphics);
       } catch (Exception exception) {
         exception.printStackTrace();

@@ -120,7 +120,7 @@ class S1KrigingDemo extends ControlPointsDemo {
         Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
         Tensor estimate = Tensor.of(DOMAIN.stream().map(kriging::estimate));
         Tensor curve = Times.of(estimate, DOMAIN);
-        new PathRender(Color.BLUE, 1.25f).setCurve(curve, false).render(geometricLayer, graphics);
+        new PathRender(Color.BLUE, 1.25, curve, false).render(geometricLayer, graphics);
         Tensor errors = Tensor.of(DOMAIN.stream().map(kriging::variance));
         // ---
         Path2D path2d = geometricLayer.toPath2D(Join.of( //

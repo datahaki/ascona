@@ -24,12 +24,8 @@ import ch.alpine.tensor.red.Times;
  * by Astrid Bunge, Philipp Herholz, Misha Kazhdan, Mario Botsch, 2020 */
 class MinTriangleAreaSquaredDemo extends EuclideanPlaneDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
-  // ---
-  private final PathRender pathRender = new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5f);
 
   public MinTriangleAreaSquaredDemo() {
-    geometricComponent().addRenderInterface(pathRender);
-    // ---
     Tensor blub = Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {2, 0, 2.5708}, {1, 0, 2.1}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 0), //
         Tensor.of(blub.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
@@ -44,8 +40,8 @@ class MinTriangleAreaSquaredDemo extends EuclideanPlaneDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
-    pathRender.setCurve(sequence, true);
     if (0 < sequence.length()) {
+      new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5, sequence, true).render(geometricLayer, graphics);
       Tensor polygon = Tensor.of(sequence.stream().map(AppendOne.FUNCTION));
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       {

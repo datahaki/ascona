@@ -55,8 +55,6 @@ class DubinsPathDemo extends ControlPointsDemo {
   }
 
   private final Param param;
-  private final PathRender pathRender = new PathRender(Color.RED, 2f);
-  private final PathRender pathRenderClothoid = new PathRender(Color.CYAN, 2f);
 
   public DubinsPathDemo() {
     super(param = new Param());
@@ -120,14 +118,13 @@ class DubinsPathDemo extends ControlPointsDemo {
       BSpline3CurveSubdivision bSpline3CurveSubdivision = //
           new BSpline3CurveSubdivision(Se2CoveringGroup.INSTANCE);
       Tensor points = Nest.of(bSpline3CurveSubdivision::string, map, 5);
-      // graphics.setStroke(new BasicStroke(2f));
-      pathRender.setCurve(points, false).render(geometricLayer, graphics);
+      new PathRender(Color.RED, 2, points, false).render(geometricLayer, graphics);
     }
     if (param.clothoid) { // draw clothoid
       ClothoidTransition clothoidTransition = //
           ClothoidTransition.of(CLOTHOID_BUILDER, START, mouse);
       Tensor tensor = clothoidTransition.linearized(RealScalar.of(0.1));
-      pathRenderClothoid.setCurve(tensor, false).render(geometricLayer, graphics);
+      new PathRender(Color.CYAN, 2, tensor, false).render(geometricLayer, graphics);
     }
     { // draw least curved path
       graphics.setColor(COLOR_DATA_INDEXED.getColor(2));

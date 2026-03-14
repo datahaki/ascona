@@ -57,8 +57,7 @@ class ClothoidStrokeDemo extends ClothoidBaseDemo {
       Clothoid clothoid = clothoidBuilder.curve(start, mouse);
       Tensor points = DOMAIN.maps(clothoid);
       Color color = COLOR_DATA_INDEXED.getColor(0);
-      new PathRender(color, 1.5f) //
-          .setCurve(points, false).render(geometricLayer, graphics);
+      new PathRender(color, 1.5, points, false).render(geometricLayer, graphics);
       LagrangeQuadraticD lagrangeQuadraticD = clothoid.curvature();
       Tensor above = Tensors.empty();
       Tensor below = Tensors.empty();
@@ -70,10 +69,8 @@ class ClothoidStrokeDemo extends ClothoidBaseDemo {
         above.append(Se2Group.INSTANCE.combine(p, Tensors.of(radius.zero(), radius, RealScalar.ZERO)));
         below.append(Se2Group.INSTANCE.combine(p, Tensors.of(radius.zero(), radius.negate(), RealScalar.ZERO)));
       }
-      new PathRender(color, 1.5f) //
-          .setCurve(above, false).render(geometricLayer, graphics);
-      new PathRender(color, 1.5f) //
-          .setCurve(below, false).render(geometricLayer, graphics);
+      new PathRender(color, 1.5, above, false).render(geometricLayer, graphics);
+      new PathRender(color, 1.5, below, false).render(geometricLayer, graphics);
       Tensor tensor = Join.of(above, Reverse.of(below));
       graphics.fill(geometricLayer.toPath2D(tensor));
     }

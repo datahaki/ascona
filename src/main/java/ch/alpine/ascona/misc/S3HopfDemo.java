@@ -44,13 +44,12 @@ class S3HopfDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     {
       Tensor domain = Subdivide.increasing(Clips.absolute(Pi.VALUE), 30);
-      PathRender pathRender = new PathRender(Color.BLUE);
       TensorUnaryOperator tuo = t -> Tensors.of(t.Get(1), t.Get(3));
       for (Tensor xyz : getGeodesicControlPoints()) {
         S3Hopf s3Hopf = S3Hopf.northernHemisphereGauge(xyz);
         Tensor tensor = tuo.slash(domain.maps(s3Hopf::lift));
-        pathRender.setCurve(tensor, true);
-        pathRender.render(geometricLayer, graphics);
+        new PathRender(Color.BLUE, 1, tensor, true) //
+            .render(geometricLayer, graphics);
       }
     }
     {

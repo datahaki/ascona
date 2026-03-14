@@ -52,8 +52,8 @@ class ClothoidEmitDemo extends ClothoidBaseDemo {
     for (Clothoid clothoid : list) {
       ClothoidTransition clothoidTransition = ClothoidTransition.of(start, mouse, clothoid);
       Tensor points = clothoidTransition.linearized(minResolution);
-      new PathRender(COLOR_DATA_INDEXED.getColor(index++), 1.5f) //
-          .setCurve(points, false).render(geometricLayer, graphics);
+      new PathRender(COLOR_DATA_INDEXED.getColor(index++), 1.5, points, false) //
+          .render(geometricLayer, graphics);
     }
     // ---
     Optional<Clothoid> optional = list.stream().min(ClothoidComparators.CURVATURE_HEAD);
@@ -61,8 +61,8 @@ class ClothoidEmitDemo extends ClothoidBaseDemo {
       Clothoid clothoid = optional.orElseThrow();
       ClothoidTransition clothoidTransition = ClothoidTransition.of(start, mouse, clothoid);
       Tensor points = clothoidTransition.linearized(minResolution);
-      new PathRender(Color.BLACK, 2.5f) //
-          .setCurve(points, false).render(geometricLayer, graphics);
+      new PathRender(Color.BLACK, 2.5, points, false) //
+          .render(geometricLayer, graphics);
     }
   }
 

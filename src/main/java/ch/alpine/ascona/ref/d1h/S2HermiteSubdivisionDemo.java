@@ -118,7 +118,7 @@ class S2HermiteSubdivisionDemo extends ControlPointsDemo {
       int n = param.refine;
       Tensor result = Do.of(control, tensorIteration::iterate, n);
       Tensor points = result.get(Tensor.ALL, 0);
-      new PathRender(Color.BLUE).setCurve(points, param.cyclic).render(geometricLayer, graphics);
+      new PathRender(Color.BLUE, 1, points, param.cyclic).render(geometricLayer, graphics);
       if (param.derivatives && result.length() < 100) {
         for (Tensor pv : result) {
           Tensor p = pv.get(0);

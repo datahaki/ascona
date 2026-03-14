@@ -72,13 +72,13 @@ abstract class A1BarycentricCoordinateDemo extends EuclideanPlaneDemo {
       Tensor basis = domain.maps(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));
-        new PathRender(Color.BLUE, 1.25f).setCurve(curve, false).render(geometricLayer, graphics);
+        new PathRender(Color.BLUE, 1.25, curve, false).render(geometricLayer, graphics);
       }
       ColorDataIndexed colorDataIndexed = ColorDataLists._097.cyclic();
       for (int index = 0; index < funceva.length(); ++index) {
         Color color = colorDataIndexed.getColor(index);
         Tensor curve = Transpose.of(Tensors.of(domain, basis.get(Tensor.ALL, index)));
-        new PathRender(color, 1f).setCurve(curve, false).render(geometricLayer, graphics);
+        new PathRender(color, 1, curve, false).render(geometricLayer, graphics);
       }
       {
         LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);

@@ -64,11 +64,10 @@ class BulkDecimationDemo extends ControlPointsDemo {
     graphics.setColor(Color.LIGHT_GRAY);
     Tensor domain = Subdivide.of(0, 1, 10);
     {
-      PathRender pathRender = new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(0));
       for (int index = 1; index < sequence.length(); ++index) {
         Tensor tensor = domain.maps(geodesicSpace.curve(sequence.get(index - 1), sequence.get(index)));
-        pathRender.setCurve(tensor, false);
-        pathRender.render(geometricLayer, graphics);
+        new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(0), 1, tensor, false) //
+            .render(geometricLayer, graphics);
       }
     }
     CurveDecimation curveDecimation = CurveDecimation.of( //
@@ -76,11 +75,10 @@ class BulkDecimationDemo extends ControlPointsDemo {
         RealScalar.ONE);
     Tensor decimate = curveDecimation.apply(sequence);
     {
-      PathRender pathRender = new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(1));
       for (int index = 1; index < decimate.length(); ++index) {
         Tensor tensor = domain.maps(geodesicSpace.curve(decimate.get(index - 1), decimate.get(index)));
-        pathRender.setCurve(tensor, false);
-        pathRender.render(geometricLayer, graphics);
+        new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(1), 1, tensor, false) //
+            .render(geometricLayer, graphics);
       }
     }
     {

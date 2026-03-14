@@ -4,7 +4,6 @@ package ch.alpine.ascona.crv.sub;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 
 import ch.alpine.ascona.crv.CurveVisualSet;
@@ -40,7 +39,6 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     public Integer refine = 3;
   }
 
-  private final List<PathRender> pathRenders = new ArrayList<>();
   private final Param param;
 
   public LaneRiesenfeldComparisonDemo() {
@@ -49,11 +47,6 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     // ---
     Tensor control = Tensors.fromString("{{0, 0, 0}, {1, 0, 0}, {2, 0, 0}, {3, 1, 0}, {4, 1, 0}, {5, 0, 0}, {6, 0, 0}, {7, 0, 0}}").multiply(RealScalar.of(2));
     setControlPointsSe2(control);
-    // ---
-    for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i)
-      pathRenders.add(new PathRender(COLORS.getColor(i)));
-    // ---
-    // geometricComponent().setOffset(100, 600);
   }
 
   @Override
@@ -92,7 +85,6 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
 
   public Tensor curve(GeometricLayer geometricLayer, Graphics2D graphics, int index) {
     CurveSubdivisionSchemes scheme = CURVE_SUBDIVISION_SCHEMES.get(index);
-    PathRender pathRender = pathRenders.get(index);
     // ---
     Tensor control = getGeodesicControlPoints();
     int levels = param.refine;
@@ -100,8 +92,8 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     Tensor refined = scheme.refine(manifoldDisplay, control, levels, false);
     // ---
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-    pathRender.setCurve(render, false);
-    pathRender.render(geometricLayer, graphics);
+    new PathRender(COLORS.getColor(index), 1, render, false) //
+        .render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
       leversRender.renderIndexP();

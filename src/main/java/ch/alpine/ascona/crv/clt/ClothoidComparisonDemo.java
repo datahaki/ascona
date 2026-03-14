@@ -60,7 +60,7 @@ class ClothoidComparisonDemo extends ClothoidBaseDemo {
       ClothoidTransition clothoidTransition = clothoidTransitionSpace.connect(start, mouse);
       Clothoid clothoid = clothoidTransition.clothoid();
       Tensor points = clothoidTransition.linearized(geometricLayer.pixel2modelFactor(RealScalar.of(5)));
-      new PathRender(color, 1.5f).setCurve(points, false).render(geometricLayer, graphics);
+      new PathRender(color, 1.5f, points, false).render(geometricLayer, graphics);
       // ---
       Tensor tensor = Tensor.of(points.stream().map(manifoldDisplay::point2xy));
       CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);

@@ -40,7 +40,7 @@ class SpiralDemo implements ManipulateProvider, RenderInterface {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     {
       Tensor points = Subdivide.increasing(clip, samples).maps(spiralParam.scalarTensorFunction);
-      new PathRender(Color.BLUE, 1f).setCurve(points, false).render(geometricLayer, graphics);
+      new PathRender(Color.BLUE, 1, points, false).render(geometricLayer, graphics);
     }
     {
       Tensor points = Subdivide.increasing(clip, 50).maps(spiralParam.scalarTensorFunction);

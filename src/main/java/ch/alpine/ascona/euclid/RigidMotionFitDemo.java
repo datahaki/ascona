@@ -79,7 +79,7 @@ class RigidMotionFitDemo extends EuclideanPlaneDemo {
           Tensor xya_1 = Se2CoveringGroup.INSTANCE.combine(solve, xya_0);
           ScalarTensorFunction scalarTensorFunction = Se2CoveringGroup.INSTANCE.curve(xya_0, xya_1);
           Tensor tensor = domain.maps(scalarTensorFunction);
-          new PathRender(Color.CYAN, 1.5f).setCurve(tensor, false).render(geometricLayer, graphics);
+          new PathRender(Color.CYAN, 1.5, tensor, false).render(geometricLayer, graphics);
         }
       }
       graphics.setColor(Color.RED);

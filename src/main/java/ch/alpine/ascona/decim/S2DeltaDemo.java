@@ -37,10 +37,6 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 class S2DeltaDemo extends ManifoldDisplayDemo {
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 128 + 64);
   private static final Color COLOR_SHAPE = new Color(128, 255, 128, 128 + 64);
-  // ---
-  private final PathRender pathRenderCurve = new PathRender(COLOR_CURVE);
-  private final PathRender pathRenderShape = new PathRender(COLOR_SHAPE);
-  // ---
 
   @ReflectionMarker
   static class Param {
@@ -100,8 +96,8 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    pathRenderCurve.setCurve(Tensor.of(snDeltaRaw.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
-    pathRenderShape.setCurve(Tensor.of(snDeltaFil.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
+    new PathRender(COLOR_CURVE, 1, Tensor.of(snDeltaRaw.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
+    new PathRender(COLOR_SHAPE, 1, Tensor.of(snDeltaFil.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
     if (param.differences)
       for (Tensor ctrl : snDeltaRaw.differences) {
         Tensor p = ctrl.get(0); // point
