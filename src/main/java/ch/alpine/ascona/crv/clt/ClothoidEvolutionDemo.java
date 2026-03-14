@@ -30,6 +30,7 @@ import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
+/** tree of clothoids including some noise-based wiggling of control points */
 class ClothoidEvolutionDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param {

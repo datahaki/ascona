@@ -23,11 +23,7 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.sca.Clips;
 
-/** The demo shows that when using LaneRiesenfeldCurveSubdivision(Clothoid.INSTANCE, degree)
- * in order to connect two points p and q, then the (odd) degree has little influence on the
- * resulting curve. The difference is only noticeable for S shaped curves.
- * 
- * Therefore, for simplicity in algorithms we use degree == 1. */
+/** shows several solutions to the clothoid fit problem */
 class ClothoidEmitDemo extends ClothoidBaseDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //
       ColorDataLists._097.cyclic().deriveWithAlpha(192);

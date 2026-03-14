@@ -28,6 +28,7 @@ import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.ext.Cache;
 
+/** allows the user to contour letters of a font using clothoids */
 class ClothoidBrushDemo extends ClothoidSequenceDemo {
   public static final Scalar BETA = RealScalar.of(0.05);
 

@@ -48,6 +48,8 @@ import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.exp.Log10;
 
+/** shows biinvariant mean of scattered set of points
+ * also spatial median and mean approximation */
 class BiinvariantMeanDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
