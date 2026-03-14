@@ -50,7 +50,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.DELEGATED;
+    return ControlPointType.SCATTERED;
   }
 
   @Override
@@ -117,7 +117,6 @@ class ExponentialDemo extends EuclideanPlaneDemo {
       {
         LeversRender leversRender = LeversRender.of( //
             manifoldDisplay, sequence, origin, geometricLayer, graphics);
-        leversRender.renderSequence();
         leversRender.renderIndexP();
         leversRender.renderIndexX();
         leversRender.renderOrigin();

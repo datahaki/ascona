@@ -26,7 +26,6 @@ import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.util.DisjointSets;
 import ch.alpine.sophis.dv.Biinvariants;
-import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.fit.IntUndirectedEdge;
 import ch.alpine.sophis.fit.MinimumSpanningTree;
 import ch.alpine.sophus.api.GeodesicSpace;
@@ -119,7 +118,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
     final int splits = param1.refine;
     DisjointSets disjointSets = DisjointSets.allocate(sequence.length());
     if (0 < sequence.length()) {
-      Tensor matrix = distanceMatrix(manifold, sequence);
+      Tensor matrix = StaticHelper.distanceMatrix(param1.biinvariants.ofSafe(manifold), sequence);
       Dimension dimension = geometricComponent().getSize();
       Show show = new Show();
       show.add(MatrixPlot.of(matrix, param1.cdg, false));
@@ -161,11 +160,6 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
       manifoldDisplay.showPoints(colorPairIndexed.getColorPair(unique), RealScalar.ONE, Tensors.of(sequence.get(index))) //
           .render(geometricLayer, graphics);
     }
-  }
-
-  public Tensor distanceMatrix(Manifold manifold, Tensor sequence) {
-    Sedarim sedarim = param1.biinvariants.ofSafe(manifold).relative_distances(sequence);
-    return Tensor.of(sequence.stream().map(sedarim::sunder));
   }
 
   static void main() {

@@ -3,20 +3,26 @@ package ch.alpine.ascona.dv;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
-import java.awt.geom.Point2D;
 import java.util.List;
+import java.util.Objects;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
+import ch.alpine.bridge.fig.plt.MatrixPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.fit.IntUndirectedEdge;
 import ch.alpine.sophis.fit.MinimumSpanningTree;
 import ch.alpine.sophis.fit.Tsp2OptHeuristic;
@@ -30,30 +36,50 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Round;
-import ch.alpine.tensor.sca.exp.Log;
 
 class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
   @ReflectionMarker
   static class Param0 {
     @FieldSelectionArray({ "25", "50", "100", "150", "200" })
     public Integer numel = 50;
+    @FieldFuse
     public transient Boolean shuffle = false;
   }
 
   @ReflectionMarker
   static class Param1 {
-    public Integer attempts = 20;
-    public Boolean active = false;
+    @FieldSelectionCallback("biinvariants")
+    public Biinvariants biinvariants = Biinvariants.METRIC;
+
+    public static List<Biinvariants> biinvariants() {
+      return Biinvariants.OKAY;
+    }
+  }
+
+  @ReflectionMarker
+  static class Param2 {
+    @FieldSelectionArray({ "10", "20", "40" })
+    public Integer factor = 10;
+    @FieldFuse
+    public transient Boolean active = false;
   }
 
   private final Param0 param0;
   private final Param1 param1;
+  private final Param2 param2;
+  // ---
+  private Tensor control;
+  private Tensor matrix;
+  private List<IntUndirectedEdge> list;
   private Tsp2OptHeuristic tsp2OptHeuristic;
+  /* points for plotting */
   private Tensor points = Tensors.empty();
+  private int total = 0;
 
   public Tsp2OptHeuristicDemo() {
-    super(param0 = new Param0(), param1 = new Param1());
+    super(param0 = new Param0(), param1 = new Param1(), param2 = new Param2());
     fieldsEditor(0).addUniversalListener(this::shuffle);
+    fieldsEditor(1).addUniversalListener(this::distances);
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.R2);
   }
@@ -63,25 +89,34 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
     return ManifoldDisplays.manifolds();
   }
 
-  private List<IntUndirectedEdge> list;
-  private Tensor control;
-
   private void shuffle() {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
+    total = 0;
+    RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
     control = RandomSample.of(randomSampleInterface, param0.numel);
-    Manifold manifold = manifoldDisplay.manifold();
-    Tensor matrix = StaticHelper.distanceMatrix(manifold, control);
-    list = MinimumSpanningTree.of(matrix);
-    tsp2OptHeuristic = new Tsp2OptHeuristic(matrix);
+    tsp2OptHeuristic = null;
+    distances();
     points = Tensors.empty();
+  }
+
+  private void distances() {
+    Manifold manifold = manifoldDisplay().manifold();
+    matrix = StaticHelper.distanceMatrix_symmetrized(param1.biinvariants.ofSafe(manifold), control);
+    list = MinimumSpanningTree.of(matrix);
+    tsp2OptHeuristic = Objects.isNull(tsp2OptHeuristic) //
+        ? Tsp2OptHeuristic.of(matrix)
+        : new Tsp2OptHeuristic(matrix, tsp2OptHeuristic.index());
   }
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (param1.active) {
-      for (int i = 0; i < param1.attempts; ++i)
-        tsp2OptHeuristic.next();
+    if (param2.active) {
+      boolean improved = false;
+      int m = control.length() * param2.factor;
+      for (int i = 0; i < m; ++i) {
+        improved |= tsp2OptHeuristic.next();
+        ++total;
+      }
+      param2.active = improved;
       points.append(Tensors.of(RealScalar.of(points.length()), tsp2OptHeuristic.cost()));
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
@@ -90,7 +125,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
     graphics.drawString(tsp2OptHeuristic.cost().maps(Round._5).toString(), 3, 450);
     Tensor sequence = control;
     graphics.setColor(new Color(128, 128, 128, 128));
-    graphics.setStroke(new BasicStroke(1f));
+    graphics.setStroke(new BasicStroke());
     for (IntUndirectedEdge directedEdge : list) {
       Tensor p = sequence.get(directedEdge.i());
       Tensor q = sequence.get(directedEdge.j());
@@ -100,11 +135,8 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
       Path2D line = geometricLayer.toPath2D(tensor);
       graphics.draw(line);
     }
-    graphics.setColor(Color.BLACK);
-    for (Tensor p : sequence) {
-      Point2D point2d = geometricLayer.toPoint2D(manifoldDisplay.point2xy(p));
-      graphics.fillRect((int) point2d.getX() - 1, (int) point2d.getY() - 1, 3, 3);
-    }
+    manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.of(0.3), sequence) //
+        .render(geometricLayer, graphics);
     int[] index = tsp2OptHeuristic.index();
     graphics.setColor(new Color(0, 192, 192));
     graphics.setStroke(new BasicStroke(1.5f));
@@ -116,15 +148,20 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
       Path2D line = geometricLayer.toPath2D(tuo.slash(tensor));
       graphics.draw(line);
     }
+    Dimension dimension = getSize();
+    dimension.width /= 2;
+    dimension.height /= 2;
     {
       Show show = new Show();
-      show.add(ListLinePlot.of(points));
-      show.render_autoIndent(graphics, new Rectangle(0, 0, 300, 200));
+      show.setPlotLabel("Distance matrix");
+      show.add(MatrixPlot.of(matrix));
+      show.render_autoIndent(graphics, new Rectangle(dimension.width, 0, dimension.width, dimension.height));
     }
     {
       Show show = new Show();
-      show.add(ListLinePlot.of(Tensor.of(points.stream().map(v -> Tensors.of(v.Get(0), v.Get(1).maps(Log.FUNCTION))))));
-      show.render_autoIndent(graphics, new Rectangle(0, 200, 300, 200));
+      show.setPlotLabel("Route length (search=" + total + ")");
+      show.add(ListLinePlot.of(points));
+      show.render_autoIndent(graphics, new Rectangle(dimension.width, dimension.height, dimension.width, dimension.height));
     }
   }
 
