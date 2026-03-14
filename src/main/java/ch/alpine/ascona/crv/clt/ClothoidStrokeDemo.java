@@ -25,11 +25,7 @@ import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.sca.exp.Exp;
 
-/** The demo shows that when using LaneRiesenfeldCurveSubdivision(Clothoid.INSTANCE, degree)
- * in order to connect two points p and q, then the (odd) degree has little influence on the
- * resulting curve. The difference is only noticeable for S shaped curves.
- * 
- * Therefore, for simplicity in algorithms we use degree == 1. */
+/** attempt to emulate a paintbrush along clothoid */
 class ClothoidStrokeDemo extends ClothoidBaseDemo {
   private static final Tensor DOMAIN = Subdivide.of(0.0, 1.0, 100);
   private static final ColorDataIndexed COLOR_DATA_INDEXED = //

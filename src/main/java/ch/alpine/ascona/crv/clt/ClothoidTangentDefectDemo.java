@@ -13,6 +13,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
+/** complex function along the real line of which the zeros are solutions
+ * to the clothoid fit problem */
 @ReflectionMarker
 class ClothoidTangentDefectDemo implements ManipulateProvider {
   public Clip clip = Clips.absolute(30.0);

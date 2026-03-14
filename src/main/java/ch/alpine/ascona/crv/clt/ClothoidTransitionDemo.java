@@ -31,6 +31,7 @@ import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
+/** calligraphic brushes using clothoids */
 class ClothoidTransitionDemo extends ClothoidSequenceDemo {
   @ReflectionMarker
   static class Param {

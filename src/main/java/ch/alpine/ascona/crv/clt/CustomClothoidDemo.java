@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.crv.clt;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -27,11 +26,15 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.img.ColorDataIndexed;
+import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
+/** shows several solutions to the clothoid fit problem
+ * including the complex function over the real line */
 class CustomClothoidDemo extends ClothoidBaseDemo {
   private static final Scalar MIN_RESOLUTION = RealScalar.of(0.05);
   private static final Scalar SCALE = RealScalar.of(0.1);
@@ -57,13 +60,17 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
       graphics.fill(geometricLayer.toPath2D(CirclePoints.of(8).multiply(RealScalar.of(0.1))));
       geometricLayer.popMatrix();
     }
-    graphics.setStroke(new BasicStroke(1.5f));
-    for (Tensor _lambda : clothoidSolutions.lambdas()) {
-      ClothoidBuilder clothoidBuilder = CustomClothoidBuilder.of((Scalar) _lambda);
-      ClothoidTransition clothoidTransition = ClothoidTransition.of(clothoidBuilder, clothoidContext.p(), clothoidContext.q());
-      Tensor points = clothoidTransition.linearized(MIN_RESOLUTION);
-      new PathRender(new Color(64, 128, 64, 128 + 32), 1, points, false) //
-          .render(geometricLayer, graphics);
+    {
+      ColorDataIndexed colorDataIndexed = ColorDataLists._097.cyclic().deriveWithAlpha(192);
+      int index = 0;
+      for (Tensor _lambda : clothoidSolutions.lambdas()) {
+        ClothoidBuilder clothoidBuilder = CustomClothoidBuilder.of((Scalar) _lambda);
+        ClothoidTransition clothoidTransition = ClothoidTransition.of(clothoidBuilder, clothoidContext.p(), clothoidContext.q());
+        Tensor points = clothoidTransition.linearized(MIN_RESOLUTION);
+        new PathRender(colorDataIndexed.getColor(index), 1.25, points, false) //
+            .render(geometricLayer, graphics);
+        ++index;
+      }
     }
     // ---
     {
