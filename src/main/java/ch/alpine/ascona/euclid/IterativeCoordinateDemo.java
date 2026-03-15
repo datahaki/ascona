@@ -19,6 +19,7 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.gbc.d2.IterativeCoordinateMatrix;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -58,11 +59,15 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     {
       Tensor points = getControlPointsSe2();
-      if (0 < points.length())
+      if (0 < points.length()) {
         points.set(Array.zeros(3), 0);
+        manifoldDisplay().showPoints(ColorPair.IMMOVABLE, RealScalar.ONE, Tensors.of(points.get(0))) //
+            .render(geometricLayer, graphics);
+      }
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
+    Tensor geodesicControlPoints = getGeodesicControlPoints();
+    PlaceWrap placeWrap = new PlaceWrap(geodesicControlPoints);
     Optional<Tensor> optional = placeWrap.getOrigin();
     Tensor sequence = placeWrap.getSequence();
     if (optional.isPresent() && 2 < sequence.length()) {
@@ -87,7 +92,7 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
       }
     } else {
       LeversRender leversRender = //
-          LeversRender.of(manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
+          LeversRender.of(manifoldDisplay, geodesicControlPoints, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     }
   }
