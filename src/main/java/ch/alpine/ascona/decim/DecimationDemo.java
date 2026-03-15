@@ -13,35 +13,39 @@ import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.decim.CurveDecimation;
 import ch.alpine.sophis.decim.LineDistances;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.NormalDistribution;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
+import ch.alpine.tensor.pdf.RandomSample;
 
 /** playground for curve decimation */
+// TODO needs different thresholds
 class DecimationDemo extends ControlPointsDemo {
+  @ReflectionMarker
+  static class Param {
+    public Integer n = 5;
+  }
+
+  private final Param param;
+
   public DecimationDemo() {
-    Distribution dX = UniformDistribution.of(-3, 3);
-    Distribution dY = NormalDistribution.of(0, .3);
-    Distribution dA = NormalDistribution.of(1, .5);
-    Tensor tensor = Tensor.of(Array.of(_ -> Tensors.of( //
-        RandomVariate.of(dX), RandomVariate.of(dY), RandomVariate.of(dA)), 4).stream() //
-        .map(Se2CoveringGroup.INSTANCE.lieExponential()::exp));
-    setControlPointsSe2(tensor);
+    super(param = new Param());
+    fieldsEditor(param).addUniversalListener(this::shuffle);
+    addChangeListener(this::shuffle);
+    shuffle();
+  }
+
+  private void shuffle() {
+    setGeodesicControlPoints(RandomSample.of(manifoldDisplay().randomSampleInterface(), param.n));
   }
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2_R2;
+    return ManifoldDisplays.SE2_R2_S2;
   }
 
   @Override
@@ -58,7 +62,7 @@ class DecimationDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     graphics.setColor(Color.LIGHT_GRAY);
-    Tensor domain = Subdivide.of(0, 1, 10);
+    Tensor domain = Subdivide.of(0.0, 1.0, 10);
     {
       for (int index = 1; index < sequence.length(); ++index) {
         Tensor tensor = domain.maps(homogeneousSpace.curve(sequence.get(index - 1), sequence.get(index)));

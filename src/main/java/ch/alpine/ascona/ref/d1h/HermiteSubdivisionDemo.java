@@ -37,6 +37,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.red.Mean;
 
+// TODO display in R2 does not seem correct
 class HermiteSubdivisionDemo extends ControlPointsDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;

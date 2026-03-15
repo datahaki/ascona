@@ -26,7 +26,6 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.bm.MeanDefect;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.s.STangentSpace;
-import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -84,7 +83,7 @@ class S2DefectNormDemo extends ControlPointsDemo {
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.S2_ONLY;
+    return ManifoldDisplays.S2_RP2;
   }
 
   @Override
@@ -118,24 +117,22 @@ class S2DefectNormDemo extends ControlPointsDemo {
     TSF tsf = new TSF();
     int resolution = param.resolution;
     Show show = new Show();
-    {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
-      ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(new TSF(), DoubleScalar.INDETERMINATE);
-      CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
-      Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
-      Showable showable = ImagePlot.of(ImageFormat.of(Rescale.of(raster).maps(param.colorDataGradients)), cbb);
-      show.add(showable);
-      if (param.vector)
-        show.add(VectorPlot.of(p -> arrow(tsf, p), cbb, param.cdg));
-      show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
-    }
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(new TSF(), DoubleScalar.INDETERMINATE);
+    CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+    Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
+    Showable showable = ImagePlot.of(ImageFormat.of(Rescale.of(raster).maps(param.colorDataGradients)), cbb);
+    show.add(showable);
+    if (param.vector)
+      show.add(VectorPlot.of(p -> arrow(tsf, p), cbb, param.cdg));
+    show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
     graphics.setStroke(STROKE);
     // Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
     graphics.setColor(new Color(192, 192, 192));
     // graphics.draw(geometricLayer.toPath2D(ms));
     graphics.setStroke(new BasicStroke());
     // ---
-    Tensor mean = SnManifold.INSTANCE.biinvariantMean().optional(tsf.sequence, tsf.weights).orElse(null);
+    Tensor mean = manifoldDisplay.homogeneousSpace().biinvariantMean().optional(tsf.sequence, tsf.weights).orElse(null);
     if (Objects.isNull(mean)) {
       graphics.setColor(Color.RED);
       graphics.drawString("no mean avaiable", 0, 25);

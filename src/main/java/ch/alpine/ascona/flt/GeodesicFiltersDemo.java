@@ -20,39 +20,45 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-// TODO ASCONA DEMO visualization can be improved much
+/** comparison of geodesic mean, and biinvariant mean */
 class GeodesicFiltersDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DRAW = ColorDataLists._001.strict();
 
   @ReflectionMarker
   static class Param {
+    public Integer n = 5;
+  }
+
+  @ReflectionMarker
+  static class Paran {
     public WindowFunctions windowFunctions = WindowFunctions.DIRICHLET;
   }
 
   private final Param param;
+  private final Paran paran;
 
   public GeodesicFiltersDemo() {
-    this(new Param());
+    super(this.param = new Param(), this.paran = new Paran());
+    fieldsEditor(param).addUniversalListener(this::shuffle);
+    addChangeListener(this::shuffle);
+    shuffle();
   }
 
-  public GeodesicFiltersDemo(Param param) {
-    super(param);
-    this.param = param;
-    // ---
-    Tensor tensor = Tensors.fromString("{{0, 0, 0}, {2, 2, 0}, {4, 0, 0}, {6, 0, 0}, {8, 0, -1}}");
-    setControlPointsSe2(tensor);
+  private void shuffle() {
+    setGeodesicControlPoints(RandomSample.of(manifoldDisplay().randomSampleInterface(), param.n));
   }
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2C_SE2_R2;
+    return ManifoldDisplays.homogeneousSpaces();
   }
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.CURVYCURV;
+    return ControlPointType.SCATTERED;
   }
 
   @Override // from RenderInterface
@@ -60,13 +66,14 @@ class GeodesicFiltersDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor control = getGeodesicControlPoints();
     if (Integers.isOdd(control.length())) {
-      ScalarUnaryOperator smoothingKernel = param.windowFunctions.get();
+      ScalarUnaryOperator smoothingKernel = paran.windowFunctions.get();
       ColorPairIndexed colorPairIndexed = new ColorPairIndexed(COLOR_DRAW, 64, 255);
       for (GeodesicFilters geodesicFilters : GeodesicFilters.values()) {
         int ordinal = geodesicFilters.ordinal();
         try {
           Tensor mean = geodesicFilters.supply(manifoldDisplay.geodesicSpace(), smoothingKernel).apply(control);
-          manifoldDisplay.showPoints(colorPairIndexed.getColorPair(ordinal), RealScalar.ONE, Tensors.of(mean)).render(geometricLayer, graphics);
+          manifoldDisplay.showPoints(colorPairIndexed.getColorPair(ordinal), RealScalar.ONE, Tensors.of(mean)) //
+              .render(geometricLayer, graphics);
           Color color = COLOR_DRAW.getColor(ordinal);
           graphics.setColor(color);
           graphics.drawString("" + geodesicFilters, 0, 32 + ordinal * 16);

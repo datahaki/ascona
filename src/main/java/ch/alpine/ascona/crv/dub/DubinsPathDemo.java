@@ -71,7 +71,7 @@ class DubinsPathDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.HEAD_TAIL;
+    return ControlPointType.DELEGATED;
   }
 
   @Override // from RenderInterface
