@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
-import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,11 +17,13 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
-import ch.alpine.ascony.msh.MatrixArray;
 import ch.alpine.ascony.msh.Meshgrid;
+import ch.alpine.ascony.msh.Thinning;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.MeshRender;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ArrayPlot;
@@ -36,7 +37,6 @@ import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -89,14 +89,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       PolygonRegion polygonRegion = new PolygonRegion(domain);
       Tensor hull = ConvexHull2D.of(domain);
-      {
-        graphics.setColor(Color.LIGHT_GRAY);
-        graphics.setStroke(STROKE);
-        Path2D path2d = geometricLayer.toPath2D(hull);
-        path2d.closePath();
-        graphics.draw(path2d);
-        graphics.setStroke(new BasicStroke());
-      }
+      new PathRender(ColorStroke.AREA_SELECTION, hull, true).render(geometricLayer, graphics);
       Sedarim sedarim = weightingsParam.operator(manifoldDisplay.manifold(), domain);
       CoordinateBoundingBox cbb = CoordinateBounds.of(hull);
       Tensor weights = new Meshgrid(cbb, scatteredSetParam.refine).image(sedarim::sunder);
@@ -111,7 +104,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
         Show show = new Show();
         show.add(ArrayPlot.of(averagedMovingDomain2D.arrayReshape_weights(), cbb_ext, colorDataGradient, false));
         for (int i = 0; i < n; ++i) {
-          final int fi = i;
+          final int fi = i; // render polygon on top of basis function
           TensorUnaryOperator tuo = p -> p.add(Tensors.of(clip.width().multiply(RealScalar.of(fi)), RealScalar.ZERO));
           show.add(PolygonPlot.of(tuo.slash(controlPoints))).setColor(Color.BLACK);
         }
@@ -122,7 +115,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
       new MeshRender(array, colorDataGradient.deriveWithOpacity(Rational.HALF)) //
           .render(geometricLayer, graphics);
       if (scatteredSetParam.arrows) {
-        Tensor points = Flatten.of(new MatrixArray(array).unwrap(), 1);
+        Tensor points = Thinning.flatten(array, 2, 2);
         manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.of(0.5), points) //
             .render(geometricLayer, graphics);
       }

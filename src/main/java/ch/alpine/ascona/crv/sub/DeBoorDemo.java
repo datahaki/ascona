@@ -32,7 +32,7 @@ class DeBoorDemo extends AbstractCurveDemo {
 
   @Override
   protected int initialCount() {
-    return 5;
+    return 4;
   }
 
   @Override // from RenderInterface

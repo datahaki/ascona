@@ -4,7 +4,6 @@ package ch.alpine.ascona.gbc.d2;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JToggleButton;
@@ -15,6 +14,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.MatrixArray;
 import ch.alpine.ascony.msh.Meshgrid;
+import ch.alpine.ascony.msh.Thinning;
 import ch.alpine.ascony.reg.RegionRenders;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.LeversRender;
@@ -113,12 +113,14 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
         show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width, 300));
       }
       // render grid lines functions
-      if (scatteredSetParam.arrows)
+      if (scatteredSetParam.arrows) {
+        Tensor points = Thinning.flatten(array, 2, 2);
         manifoldDisplay.showPoints( //
             ColorPair.INTERMEDIATE, //
             RealScalar.of(Math.min(1, 3.0 / Math.sqrt(scatteredSetParam.refine))), //
-            Tensor.of(Arrays.stream(array).flatMap(Arrays::stream))) //
+            points) //
             .render(geometricLayer, graphics);
+      }
     }
     LeversRender leversRender = //
         LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);

@@ -94,6 +94,7 @@ class R1KrigingDemo extends ControlPointsDemo {
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
       // Sedarim sedarim = operator(sequence);
       try {
+        // TODO this crashes gloriously
         Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
         // ---
         Tensor domain = StaticHelper.domain(getControlPointsSe2());
@@ -108,7 +109,7 @@ class R1KrigingDemo extends ControlPointsDemo {
         new PathRender(ColorStroke.CURVE, Transpose.of(Tensors.of(domain, result)), false) //
             .render(geometricLayer, graphics);
       } catch (Exception exception) {
-        // ---
+        exception.printStackTrace();
       }
     }
   }

@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 import ch.alpine.ascona.dat.gok.GokartPosVel;
 import ch.alpine.ascona.dat.gok.PosVelHz;
+import ch.alpine.ascony.msh.Thinning;
 import ch.alpine.sophis.math.Do;
 import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
 import ch.alpine.sophis.ref.d1h.TensorIteration;

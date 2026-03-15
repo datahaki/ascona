@@ -43,12 +43,7 @@ class R1RadialBasisFunctionDemo extends ControlPointsDemo {
   private final Param param;
 
   public R1RadialBasisFunctionDemo() {
-    this(new Param());
-  }
-
-  public R1RadialBasisFunctionDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 2, 0}, {2, -1, 0}}"));
   }

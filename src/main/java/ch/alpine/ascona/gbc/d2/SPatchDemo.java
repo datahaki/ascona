@@ -7,13 +7,13 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.Meshgrid;
 import ch.alpine.ascony.msh.MovingDomain2D;
+import ch.alpine.ascony.msh.Thinning;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -35,7 +35,6 @@ import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -99,8 +98,7 @@ class SPatchDemo extends ControlPointsDemo {
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     {
       Tensor[][] forward = movingDomain2D.forward(sequence);
-      Tensor points = Unprotect.using(IntStream.range(0, forward.length).filter(i -> i % 2 == 0) //
-          .boxed().flatMap(i -> IntStream.range(0, forward[i].length).filter(j -> j % 2 == 0).mapToObj(j -> forward[i][j])).toList());
+      Tensor points = Thinning.flatten(forward, 3, 3);
       manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.of(0.4), points) //
           .render(geometricLayer, graphics);
       new MeshRender(forward, param1.cdg.deriveWithOpacity(Rational.HALF)) //
