@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import ch.alpine.ascony.win.ControlPointsSe2;
+import ch.alpine.ascony.win.ControlPosSe2;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.alg.ArrayQ;
@@ -24,7 +24,7 @@ class GokartPosTest {
   @MethodSource("list")
   void testImport(String key) {
     PosHz posHz = GokartPos.INSTANCE.get(key, 1_000_000);
-    ControlPointsSe2 tensor = posHz.getPoseSequence();
+    ControlPosSe2 tensor = posHz.getPosSequence();
     ArrayQ.require(tensor.points_se2());
     Scalar scalar = posHz.getSamplingRate();
     String number = key.substring(key.indexOf('/') + 1, key.indexOf("Hz"));

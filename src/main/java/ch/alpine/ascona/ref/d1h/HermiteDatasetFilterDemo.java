@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.Path2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPair;
@@ -19,8 +18,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.math.Do;
 import ch.alpine.sophis.ref.d1h.Hermite3Filter;
 import ch.alpine.sophis.ref.d1h.TensorIteration;
-import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
-import ch.alpine.sophus.lie.se2.Se2Group;
+import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -49,26 +47,16 @@ class HermiteDatasetFilterDemo extends AbstractHermiteDatasetDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    {
-      final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
-      new PathRender(ColorStroke.CURVE, _control.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
-      if (_control.length() <= 1000)
-        for (Tensor point : _control.get(Tensor.ALL, 0)) {
-          geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-          Path2D path2d = geometricLayer.toPath2D(shape);
-          path2d.closePath();
-          graphics.setColor(new Color(255, 128, 128, 64));
-          graphics.fill(path2d);
-          graphics.setColor(COLOR_CURVE);
-          graphics.draw(path2d);
-          geometricLayer.popMatrix();
-        }
-    }
+    LieGroup lieGroup = manifoldDisplay.lieGroup();
+    new PathRender(ColorStroke.CURVE, _control.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
+    if (_control.length() <= 1000)
+      manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.of(0.3), _control.get(Tensor.ALL, 0)) //
+          .render(geometricLayer, graphics);
     graphics.setColor(Color.DARK_GRAY);
     Scalar delta = getDelta();
     TensorIteration tensorIteration = //
         // new Hermite1Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE).string(delta, _control);
-        new Hermite3Filter(Se2Group.INSTANCE, Se2BiinvariantMeans.FILTER) //
+        new Hermite3Filter(lieGroup, lieGroup.biinvariantMean()) //
             .string(delta, _control);
     int levels = 2 * paran.level;
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);

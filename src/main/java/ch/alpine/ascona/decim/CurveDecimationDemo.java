@@ -15,7 +15,7 @@ import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.win.ControlPointsSe2;
+import ch.alpine.ascony.win.ControlPosSe2;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
@@ -92,7 +92,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   protected void updateState() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    ControlPointsSe2 controlPointsSe2 = gokartPosParam.getPosHz().getPoseSequence();
+    ControlPosSe2 controlPointsSe2 = gokartPosParam.getPosHz().getPosSequence();
     control = param.filter(homogeneousSpace).apply(controlPointsSe2.getGeodesicControlPoints(manifoldDisplay));
   }
 

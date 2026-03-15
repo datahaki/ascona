@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.dat.gok;
 
+import ch.alpine.ascony.win.ControlPosVelSe2;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -16,10 +17,10 @@ public class PosVelHz extends PosHz {
   }
 
   /** @return n x 2 x 3 array */
-  public Tensor getPosVelSequence() {
+  public ControlPosVelSe2 getPosVelSequence() {
     TensorUnaryOperator extract = row -> Tensors.of( //
         EXTRACT_POS.apply(row), //
         EXTRACT_VEL.apply(row).multiply(UNIT));
-    return extract.slash(tensor);
+    return new ControlPosVelSe2(extract.slash(tensor));
   }
 }

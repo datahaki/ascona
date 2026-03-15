@@ -80,7 +80,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    final Tensor control = posHz.getPoseSequence().getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
+    final Tensor control = posHz.getPosSequence().getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     boolean conv = specParam.conv;
     if (specParam.data) {

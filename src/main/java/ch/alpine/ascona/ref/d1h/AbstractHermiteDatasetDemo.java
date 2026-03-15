@@ -8,6 +8,7 @@ import ch.alpine.ascona.dat.gok.GokartPoseDatas;
 import ch.alpine.ascona.dat.gok.PosVelHz;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.Thinning;
+import ch.alpine.ascony.win.ControlPosVelSe2;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -26,20 +27,23 @@ abstract class AbstractHermiteDatasetDemo extends ManifoldDisplayDemo {
 
   private final GokartPosVelParam gokartPosVelParam;
   protected final Param param;
-  protected PosVelHz posVelHz;
+  private PosVelHz posVelHz;
   protected Tensor _control = Tensors.empty();
 
   public AbstractHermiteDatasetDemo(Object object) {
     super(gokartPosVelParam = new GokartPosVelParam(), param = new Param(), object);
     fieldsEditor(gokartPosVelParam).addUniversalListener(this::updateState);
     fieldsEditor(param).addUniversalListener(this::updateState);
+    addChangeListener(this::updateState);
     geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     updateState();
   }
 
   private final void updateState() {
+    // IO.println("update state");
     posVelHz = gokartPosVelParam.getPosVelHz();
-    _control = Thinning.of(posVelHz.getPosVelSequence(), param.skips);
+    ControlPosVelSe2 posVelSequence = posVelHz.getPosVelSequence();
+    _control = Thinning.of(posVelSequence.getGeodesicControlPoints(manifoldDisplay()), param.skips);
   }
 
   protected final Scalar getDelta() {
@@ -48,6 +52,6 @@ abstract class AbstractHermiteDatasetDemo extends ManifoldDisplayDemo {
 
   @Override
   protected final List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2_ONLY;
+    return ManifoldDisplays.SE2_R2;
   }
 }

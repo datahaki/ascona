@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -24,9 +25,10 @@ class GokartPosVelTest {
   @MethodSource("list")
   void testImport(String key) {
     PosVelHz posHz = GokartPosVel.INSTANCE.get(key, 1_000_000);
-    Tensor tensor = posHz.getPosVelSequence();
+    Tensor tensor = posHz.getPosVelSequence().getGeodesicControlPoints(Se2Display.INSTANCE);
     ArrayQ.require(tensor);
     Scalar scalar = posHz.getSamplingRate();
+    IO.println(scalar);
     String number = key.substring(0, key.indexOf("Hz"));
     Scalar folder = Scalars.fromString(number + "[Hz]");
     assertTrue(Scalars.lessThan(Abs.between(scalar, folder), Quantity.of(2, "Hz")));

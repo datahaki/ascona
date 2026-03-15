@@ -7,6 +7,7 @@ import java.nio.file.Path;
 
 import ch.alpine.ascona.dat.gok.GokartPosVel;
 import ch.alpine.ascona.dat.gok.PosVelHz;
+import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.sophis.api.CurveOperator;
 import ch.alpine.sophis.crv.d2.Curvature2D;
 import ch.alpine.sophis.math.Do;
@@ -47,7 +48,7 @@ import ch.alpine.tensor.red.Nest;
     this.levels = Integers.requirePositive(levels);
     folder = HomeDirectory.Ephemeral.mk_dirs(name);
     PosVelHz posVelHz = GokartPosVel.INSTANCE.get(name, 2000); // limit , 2_000);
-    Tensor data = posVelHz.getPosVelSequence();
+    Tensor data = posVelHz.getPosVelSequence().getGeodesicControlPoints(Se2Display.INSTANCE);
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     {
       Export.of(folder.resolve("gndtrth.mathematica"), data);

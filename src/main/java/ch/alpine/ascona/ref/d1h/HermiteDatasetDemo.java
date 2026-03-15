@@ -1,12 +1,12 @@
 // code by jph
 package ch.alpine.ascona.ref.d1h;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
@@ -30,7 +30,6 @@ import ch.alpine.tensor.qty.Quantity;
 class HermiteDatasetDemo extends AbstractHermiteDatasetDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
-  private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
 
   @ReflectionMarker
   static class Paran {
@@ -72,16 +71,18 @@ class HermiteDatasetDemo extends AbstractHermiteDatasetDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     new PathRender(ColorStroke.CURVE, _control.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
     if (_control.length() <= 1000)
-      manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.ONE, _control.get(Tensor.ALL, 0));
-    graphics.setColor(Color.DARK_GRAY);
+      manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.ONE, _control.get(Tensor.ALL, 0)) //
+          .render(geometricLayer, graphics);
     Scalar delta = getDelta();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     HermiteSubdivision hermiteSubdivision = paran.scheme.supply(homogeneousSpace);
+    // IO.println(Dimensions.of(_control));
     TensorIteration tensorIteration = hermiteSubdivision.string(delta, _control);
     int levels = paran.level;
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);
     new PathRender(ColorStroke.SECONDARY_CURVE, refined.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
-    new Se2HermiteRender(refined, Quantity.of(0.3, "s")).render(geometricLayer, graphics);
+    if (getSelectedMD().equals(ManifoldDisplays.Se2))
+      new Se2HermiteRender(refined, Quantity.of(0.3, "s")).render(geometricLayer, graphics);
     if (paran.diff) {
       Tensor deltas = refined.get(Tensor.ALL, 1);
       int dims = deltas.get(0).length();
