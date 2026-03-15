@@ -57,7 +57,7 @@ class GeodesicFiltersTest {
   void testTiming() {
     String name = "50Hz/20190701T170957_06.csv";
     PosVelHz posVelHz = GokartPosVel.INSTANCE.get(name, 100_000);
-    Tensor control = posVelHz.getPosSequence();
+    Tensor control = posVelHz.getPosVelSequence().get(Tensor.ALL, 0);
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     ScalarUnaryOperator smoothingKernel = WindowFunctions.GAUSSIAN.get();

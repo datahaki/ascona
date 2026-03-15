@@ -1,15 +1,13 @@
 // code by jph
 package ch.alpine.ascona.ref.d1h;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Stroke;
-import java.awt.geom.Path2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -24,18 +22,15 @@ import ch.alpine.sophis.math.Do;
 import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
 import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.qty.Quantity;
 
 class HermiteDatasetDemo extends AbstractHermiteDatasetDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
   private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
-  private static final Color COLOR_RECON = new Color(128, 128, 128, 255);
-  // ---
-  private static final Stroke STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
 
   @ReflectionMarker
   static class Paran {
@@ -75,30 +70,18 @@ class HermiteDatasetDemo extends AbstractHermiteDatasetDemo {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     RenderQuality.setQuality(graphics);
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    {
-      final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(1));
-      new PathRender(ColorStroke.CURVE, _control.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
-      if (_control.length() <= 1000)
-        for (Tensor point : _control.get(Tensor.ALL, 0)) {
-          geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-          Path2D path2d = geometricLayer.toPath2D(shape);
-          path2d.closePath();
-          graphics.setColor(new Color(255, 128, 128, 64));
-          graphics.fill(path2d);
-          graphics.setColor(COLOR_CURVE);
-          graphics.draw(path2d);
-          geometricLayer.popMatrix();
-        }
-    }
+    new PathRender(ColorStroke.CURVE, _control.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
+    if (_control.length() <= 1000)
+      manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.ONE, _control.get(Tensor.ALL, 0));
     graphics.setColor(Color.DARK_GRAY);
-    Scalar delta = Rational.of(param.skips, 50);
+    Scalar delta = getDelta();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     HermiteSubdivision hermiteSubdivision = paran.scheme.supply(homogeneousSpace);
     TensorIteration tensorIteration = hermiteSubdivision.string(delta, _control);
     int levels = paran.level;
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);
     new PathRender(ColorStroke.SECONDARY_CURVE, refined.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
-    new Se2HermiteRender(refined, RealScalar.of(0.3)).render(geometricLayer, graphics);
+    new Se2HermiteRender(refined, Quantity.of(0.3, "s")).render(geometricLayer, graphics);
     if (paran.diff) {
       Tensor deltas = refined.get(Tensor.ALL, 1);
       int dims = deltas.get(0).length();

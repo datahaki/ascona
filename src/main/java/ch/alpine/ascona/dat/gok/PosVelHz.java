@@ -1,35 +1,25 @@
 // code by jph
 package ch.alpine.ascona.dat.gok;
 
-import java.io.Serializable;
-
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Differences;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.qty.Quantity;
-import ch.alpine.tensor.red.Mean;
 
-public class PosVelHz implements Serializable {
-  private final Tensor tensor;
+public class PosVelHz extends PosHz {
+  static final Scalar UNIT = Quantity.of(1.0, "s^-1");
+  static final TensorUnaryOperator EXTRACT_VEL = row -> row.extract(5, 8);
 
   public PosVelHz(Tensor tensor) {
-    this.tensor = tensor;
+    super(tensor);
   }
 
   /** @return n x 2 x 3 array */
   public Tensor getPosVelSequence() {
-    TensorUnaryOperator extract = row -> Tensors.of(row.extract(1, 4), row.extract(5, 8));
+    TensorUnaryOperator extract = row -> Tensors.of( //
+        EXTRACT_POS.apply(row), //
+        EXTRACT_VEL.apply(row).multiply(UNIT));
     return extract.slash(tensor);
-  }
-
-  public Tensor getPosSequence() {
-    TensorUnaryOperator extract = row -> row.extract(1, 4);
-    return extract.slash(tensor);
-  }
-
-  public Scalar getSamplingRate() {
-    return Quantity.of(Mean.ofVector(Differences.of(tensor.get(Tensor.ALL, 0))).reciprocal(), "Hz");
   }
 }

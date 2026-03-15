@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -20,7 +21,6 @@ import ch.alpine.sophis.ref.d1h.Hermite3Filter;
 import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.lie.se2.Se2BiinvariantMeans;
 import ch.alpine.sophus.lie.se2.Se2Group;
-import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -65,26 +65,14 @@ class HermiteDatasetFilterDemo extends AbstractHermiteDatasetDemo {
         }
     }
     graphics.setColor(Color.DARK_GRAY);
-    Scalar delta = Rational.of(param.skips, 50); // FIXME magic const
+    Scalar delta = getDelta();
     TensorIteration tensorIteration = //
         // new Hermite1Filter(Se2Group.INSTANCE, Se2CoveringExponential.INSTANCE).string(delta, _control);
         new Hermite3Filter(Se2Group.INSTANCE, Se2BiinvariantMeans.FILTER) //
             .string(delta, _control);
     int levels = 2 * paran.level;
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);
-    {
-      final Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.3));
-      for (Tensor point : refined.get(Tensor.ALL, 0)) {
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(point));
-        Path2D path2d = geometricLayer.toPath2D(shape);
-        path2d.closePath();
-        graphics.setColor(new Color(128, 255, 128, 64));
-        graphics.fill(path2d);
-        graphics.setColor(COLOR_CURVE);
-        graphics.draw(path2d);
-        geometricLayer.popMatrix();
-      }
-    }
+    manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.of(0.3), refined.get(Tensor.ALL, 0));
     new PathRender(ColorStroke.SECONDARY_CURVE, refined.get(Tensor.ALL, 0), false) //
         .render(geometricLayer, graphics);
     if (paran.derivat) {

@@ -11,8 +11,11 @@ import ch.alpine.ascony.msh.Thinning;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.qty.UnitSystem;
 
 abstract class AbstractHermiteDatasetDemo extends ManifoldDisplayDemo {
   @ReflectionMarker
@@ -23,6 +26,7 @@ abstract class AbstractHermiteDatasetDemo extends ManifoldDisplayDemo {
 
   private final GokartPosVelParam gokartPosVelParam;
   protected final Param param;
+  protected PosVelHz posVelHz;
   protected Tensor _control = Tensors.empty();
 
   public AbstractHermiteDatasetDemo(Object object) {
@@ -34,8 +38,12 @@ abstract class AbstractHermiteDatasetDemo extends ManifoldDisplayDemo {
   }
 
   private final void updateState() {
-    PosVelHz posVelHz = gokartPosVelParam.getPosVelHz();
+    posVelHz = gokartPosVelParam.getPosVelHz();
     _control = Thinning.of(posVelHz.getPosVelSequence(), param.skips);
+  }
+
+  protected final Scalar getDelta() {
+    return UnitSystem.SI().apply(RealScalar.of(param.skips).divide(posVelHz.getSamplingRate()));
   }
 
   @Override

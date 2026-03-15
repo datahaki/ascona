@@ -17,10 +17,10 @@ import ch.alpine.tensor.lie.rot.Cross;
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     for (Tensor point : points) {
       geometricLayer.pushMatrix(Se2Matrix.of(point.get(0)));
-      Tensor pv = point.get(1);
+      Tensor pv = point.get(1).multiply(scale);
       Color color = Hsluv.of(pv.Get(2).number().doubleValue() * 0.3, 1, 0.5, 0.5);
       graphics.setColor(color);
-      Tensor vec = Cross.of(pv.extract(0, 2).multiply(scale));
+      Tensor vec = Cross.of(pv.extract(0, 2));
       graphics.draw(geometricLayer.toLine2D(vec));
       geometricLayer.popMatrix();
     }

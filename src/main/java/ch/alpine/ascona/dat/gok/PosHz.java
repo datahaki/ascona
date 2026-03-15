@@ -12,22 +12,22 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.red.Mean;
 
 public class PosHz implements Serializable {
-  private static final TensorUnaryOperator EXTRACT = row -> row.extract(1, 4);
+  static final TensorUnaryOperator EXTRACT_POS = row -> row.extract(1, 4);
   // private static final TensorUnaryOperator EXTRACT_WITH_UNITS = row -> Tensors.of( //
   // Quantity.of(row.Get(1), "m"), //
   // Quantity.of(row.Get(2), "m"), //
   // row.Get(3));
-  private final Tensor tensor;
+  protected final Tensor tensor;
 
   public PosHz(Tensor tensor) {
     this.tensor = tensor;
   }
 
-  public ControlPointsSe2 getPoseSequence() {
-    return new ControlPointsSe2(EXTRACT.slash(tensor));
+  public final ControlPointsSe2 getPoseSequence() {
+    return new ControlPointsSe2(EXTRACT_POS.slash(tensor));
   }
 
-  public Scalar getSamplingRate() {
+  public final Scalar getSamplingRate() {
     return Quantity.of(Mean.ofVector(Differences.of(tensor.get(Tensor.ALL, 0))).reciprocal(), "Hz");
   }
 }
