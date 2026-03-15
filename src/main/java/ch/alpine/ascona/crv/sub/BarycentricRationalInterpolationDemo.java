@@ -87,21 +87,18 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._03);
       Tensor basis2 = domain.maps(param.lagrange //
           ? BarycentricMetricInterpolation.la(knots, InversePowerVariogram.of(2))
-          : BarycentricMetricInterpolation.of(knots, InversePowerVariogram.of(2)));
-      try {
-        Tensor curve = Tensor.of(basis2.stream() //
+              : BarycentricMetricInterpolation.of(knots, InversePowerVariogram.of(2)));
+      {
+        Tensor curve1 = Tensor.of(basis2.stream() //
             .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));
-        new PathRender(Color.RED, 1, curve, false).render(geometricLayer, graphics);
-      } catch (Exception exception) {
-        System.err.println("no mean " + manifoldDisplay);
+        new PathRender(Color.RED, 1, manifoldDisplay.point2xy().slash(curve1), false).render(geometricLayer, graphics);
       }
       Tensor basis1 = domain.maps(BarycentricRationalInterpolation.of(knots, param.degree));
-      try {
-        Tensor curve = Tensor.of(basis1.stream() //
+      {
+        Tensor curve2 = Tensor.of(basis1.stream() //
             .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));
-        new PathRender(Color.BLUE, 1, curve, false).render(geometricLayer, graphics);
-      } catch (Exception exception) {
-        System.err.println("no mean " + manifoldDisplay);
+        new PathRender(Color.BLUE, 1, manifoldDisplay.point2xy().slash(curve2), false) //
+            .render(geometricLayer, graphics);
       }
       if (param.basis) {
         Dimension dimension = getSize();

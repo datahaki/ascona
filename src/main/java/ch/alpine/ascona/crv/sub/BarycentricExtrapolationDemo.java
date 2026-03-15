@@ -28,7 +28,7 @@ import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.pdf.RandomSample;
 
-// TODO what does this demo do? crashes for other than R2
+// TODO what does this demo do?
 class BarycentricExtrapolationDemo extends ControlPointsDemo {
   private static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
@@ -81,8 +81,7 @@ class BarycentricExtrapolationDemo extends ControlPointsDemo {
       HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       Tensor samples = Subdivide.of(-length, 0, 127).maps(Tensors::of);
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(r1Group), s -> s, domain);
-      Tensor curve = Tensor.of(samples.stream() //
-          .map(sedarim::sunder) //
+      Tensor curve = Tensor.of(samples.stream().map(sedarim::sunder) //
           .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(sequence, weights).stream()));
       new PathRender(Color.BLUE, 1.5, curve, false).render(geometricLayer, graphics);
     }

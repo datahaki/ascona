@@ -31,6 +31,7 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.PadLeft;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -75,6 +76,7 @@ class DubinsPathDemo extends ControlPointsDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor controlPointsSe2 = getControlPointsSe2();
+    controlPointsSe2.set(Array.zeros(3), 0);
     Tensor START = controlPointsSe2.get(0);
     Tensor mouse = controlPointsSe2.get(1);
     // ---
