@@ -34,6 +34,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.Clip;
@@ -62,7 +63,7 @@ class StClothoidsDemo implements ManipulateProvider, RenderInterface {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     StiefelManifold stiefelManifold = new StiefelManifold(n, 3);
     RandomGenerator randomGenerator = new Random(3);
-    Tensor p = stiefelManifold.randomSample(randomGenerator);
+    Tensor p = RandomSample.of(stiefelManifold.randomSampleInterface());
     Tensor v = new TStMemberQ(p).projection( //
         RandomVariate.of(NormalDistribution.of(0, 0.4), randomGenerator, Dimensions.of(p)));
     TangentSpace exponential = stiefelManifold.tangentSpace(p);

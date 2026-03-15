@@ -27,6 +27,7 @@ public class PosHz implements Serializable {
     return new ControlPosSe2(EXTRACT_POS.slash(tensor));
   }
 
+  /** @return quantity with unit Hz */
   public final Scalar getSamplingRate() {
     return Quantity.of(Mean.ofVector(Differences.of(tensor.get(Tensor.ALL, 0))).reciprocal(), "Hz");
   }

@@ -41,7 +41,7 @@ class PrincipalComponentsDemo extends EuclideanPlaneDemo {
 
   void shuffle() {
     SpdNManifold spdNManifold = new SpdNManifold(2);
-    Tensor p = RandomSample.of(spdNManifold);
+    Tensor p = RandomSample.of(spdNManifold.randomSampleInterface());
     p = Tensors.fromString("{{2,2},{2,1}}");
     RandomSampleInterface rsi = MultinormalDistribution.of(p);
     Tensor t = Tensors.vector(4, 0);

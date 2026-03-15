@@ -28,7 +28,6 @@ class GokartPosVelTest {
     Tensor tensor = posHz.getPosVelSequence().getGeodesicControlPoints(Se2Display.INSTANCE);
     ArrayQ.require(tensor);
     Scalar scalar = posHz.getSamplingRate();
-    IO.println(scalar);
     String number = key.substring(0, key.indexOf("Hz"));
     Scalar folder = Scalars.fromString(number + "[Hz]");
     assertTrue(Scalars.lessThan(Abs.between(scalar, folder), Quantity.of(2, "Hz")));

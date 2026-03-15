@@ -61,7 +61,7 @@ class SnRotationDemo extends ManifoldDisplayDemo implements RenderInterface {
 
     public SnRotationChunk(int dimension, int numel, int max_size, Scalar speed, Paran paran) {
       boundedLinkedList = new BoundedLinkedList<>(max_size);
-      RandomSampleInterface randomSampleInterface = new Sphere(dimension);
+      RandomSampleInterface randomSampleInterface = new Sphere(dimension).randomSampleInterface();
       samples = RandomSample.of(randomSampleInterface, numel);
       Tensor angle = RandomSample.of(randomSampleInterface).multiply(speed);
       rotation = MatrixExp.of(TensorWedge.of(angle, ConstantArray.of(RealScalar.ONE, dimension + 1)));
