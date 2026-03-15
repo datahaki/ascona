@@ -32,8 +32,6 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 /** playground for curve decimation */
 class DecimationDemo extends ControlPointsDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = //
-      ColorDataLists._097.cyclic().deriveWithAlpha(192);
 
   public DecimationDemo() {
     Distribution dX = UniformDistribution.of(-3, 3);
@@ -65,11 +63,10 @@ class DecimationDemo extends ControlPointsDemo {
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     graphics.setColor(Color.LIGHT_GRAY);
     Tensor domain = Subdivide.of(0, 1, 10);
-    ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLOR_DATA_INDEXED_DRAW, new BasicStroke());
     {
       for (int index = 1; index < sequence.length(); ++index) {
         Tensor tensor = domain.maps(homogeneousSpace.curve(sequence.get(index - 1), sequence.get(index)));
-        new PathRender(colorStrokeIndexed.getColorStroke(0), tensor, false) //
+        new PathRender(ColorStrokeIndexed._097.getColorStroke(0), tensor, false) //
             .render(geometricLayer, graphics);
       }
     }
@@ -80,7 +77,7 @@ class DecimationDemo extends ControlPointsDemo {
     {
       for (int index = 1; index < decimate.length(); ++index) {
         Tensor tensor = domain.maps(homogeneousSpace.curve(decimate.get(index - 1), decimate.get(index)));
-        new PathRender(colorStrokeIndexed.getColorStroke(1), tensor, false) //
+        new PathRender(ColorStrokeIndexed._097.getColorStroke(1), tensor, false) //
             .render(geometricLayer, graphics);
       }
     }

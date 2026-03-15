@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.Path2D;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -114,7 +113,6 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     Manifold manifold = manifoldDisplay.manifold();
     Tensor sequence = getGeodesicControlPoints();
-    Tensor domain = Subdivide.of(0.0, 1.0, 10);
     final int splits = param1.refine;
     DisjointSets disjointSets = DisjointSets.allocate(sequence.length());
     if (0 < sequence.length()) {
@@ -122,20 +120,12 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
       Dimension dimension = geometricComponent().getSize();
       Show show = new Show();
       show.add(MatrixPlot.of(matrix, param1.cdg, false));
-      {
-        boolean isSymmetric = SymmetricMatrixQ.INSTANCE.test(matrix);
-        if (!isSymmetric) {
-          Tensor defect = SymmetricMatrixQ.INSTANCE.defect(matrix);
-          Scalar optional = Flatten.scalars(defect).map(Abs.FUNCTION).reduce(Max::of).orElseThrow();
-          show.setPlotLabel("not symmetric: " + optional);
-        }
+      if (!SymmetricMatrixQ.INSTANCE.test(matrix)) {
+        Tensor defect = SymmetricMatrixQ.INSTANCE.defect(matrix);
+        Scalar optional = Flatten.scalars(defect).map(Abs.FUNCTION).reduce(Max::of).orElseThrow();
+        show.setPlotLabel("not symmetric: " + optional);
       }
       show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, Math.min(dimension.height, 300)));
-      {
-        // TODO gives points of dimensions n x n-1
-        // Tensor points = DistanceMatrixToPoints.of(Symmetrize.of(matrix), Chop._04);
-        // IO.println(Dimensions.of(points));
-      }
       List<IntUndirectedEdge> list = MinimumSpanningTree.of(Symmetrize.of(matrix));
       list.sort(new EdgeComparator(matrix));
       int count = Math.max(0, list.size() - splits);
@@ -143,14 +133,14 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
         for (IntUndirectedEdge directedEdge : list.subList(0, count))
           disjointSets.union(directedEdge.i(), directedEdge.j());
       }
-      graphics.setColor(Color.DARK_GRAY);
+      Tensor domain = Subdivide.of(0.0, 1.0, 5);
+      graphics.setColor(Color.GRAY);
       for (IntUndirectedEdge directedEdge : list.subList(0, count)) {
         Tensor p = sequence.get(directedEdge.i());
         Tensor q = sequence.get(directedEdge.j());
         ScalarTensorFunction curve = geodesicSpace.curve(p, q);
         Tensor tensor = Tensor.of(domain.maps(curve).stream().map(manifoldDisplay::point2xy));
-        Path2D line = geometricLayer.toPath2D(tensor);
-        graphics.draw(line);
+        graphics.draw(geometricLayer.toPath2D(tensor));
       }
     }
     Map<Integer, Integer> map = disjointSets.createMap(new AtomicInteger()::getAndIncrement);

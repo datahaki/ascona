@@ -1,13 +1,14 @@
 // code by jph
 package ch.alpine.ascona.euclid;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
+import ch.alpine.ascony.ren.ColorStrokeIndexed;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -50,13 +51,8 @@ class LaserTagDemo extends EuclideanPlaneDemo {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();
-    graphics.setColor(COLOR_DATA_INDEXED.getColor(0));
-    if (param.show) {
-      graphics.setStroke(new BasicStroke(1.5f));
-      graphics.draw(geometricLayer.toPath2D(control));
-    } else {
-      graphics.draw(geometricLayer.toPath2D(control.extract(0, 3)));
-    }
+    new PathRender(ColorStrokeIndexed._097.getColorStroke(0), //
+        param.show ? control : control.extract(0, 3), false).render(geometricLayer, graphics);
     graphics.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
     for (int index = 1; index < control.length() - 1; ++index) {
       Tensor p = control.get(index - 1);

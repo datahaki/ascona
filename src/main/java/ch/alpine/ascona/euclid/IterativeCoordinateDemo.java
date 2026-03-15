@@ -21,6 +21,7 @@ import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Array;
 
 class IterativeCoordinateDemo extends EuclideanPlaneDemo {
   public static final Tensor INITIAL = Tensors.matrix(new Number[][] { //
@@ -55,6 +56,11 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    {
+      Tensor points = getControlPointsSe2();
+      if (0 < points.length())
+        points.set(Array.zeros(3), 0);
+    }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     PlaceWrap placeWrap = new PlaceWrap(getGeodesicControlPoints());
     Optional<Tensor> optional = placeWrap.getOrigin();
@@ -68,13 +74,10 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
       HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       Manifold manifold = homogeneousSpace;
       try {
+        // TODO why does the matrix have such high entries as total grows
         Tensor matrix = new IterativeCoordinateMatrix(param.total).origin( //
             manifold.tangentSpace(origin).log().slash(sequence));
         Tensor circum = matrix.dot(sequence);
-        // new PointsRender(color_fill, color_draw).show(matrixLift, shape, points);
-        // new PointsRender(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255)) //
-        // .show(geodesicDisplay::matrixLift, geodesicDisplay.shape(), circum) //
-        // .render(geometricLayer, graphics);
         leversRender.renderMatrix2(origin, matrix);
         LeversRender lr2 = LeversRender.of(manifoldDisplay, circum, origin, geometricLayer, graphics);
         lr2.renderSequence(ColorPair.SPLIT_PROCESS);

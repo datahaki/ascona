@@ -37,7 +37,7 @@ import ch.alpine.tensor.sca.Clips;
 class OrderingDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param0 {
-    @FieldSelectionArray({ "10", "50", "100", "200" })
+    @FieldSelectionArray({ "10", "20", "50", "100", "200" })
     public Integer size = 100;
     @FieldFuse
     public transient Boolean shuffle;
@@ -53,7 +53,7 @@ class OrderingDemo extends ControlPointsDemo {
 
     @ReflectionMarker
     public List<Biinvariants> biinvariants() {
-      return Biinvariants.FAST;
+      return Biinvariants.OKAY;
     }
   }
 

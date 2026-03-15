@@ -20,6 +20,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.Ceiling;
 import ch.alpine.tensor.sca.Clips;
+import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 @ReflectionMarker
@@ -39,6 +40,7 @@ class CircleQualityDemo implements ManipulateProvider {
       curve.append(curve.get(0));
       show1.add(ListLinePlot.of(Subdivide.increasing(Clips.unit(), curve.length() - 1), //
           RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply(curve)));
+      show1.setPlotLabel("quality = " + N.DOUBLE.apply(quality));
       show2.add(ListLinePlot.of(curve));
     }
     show2.setAspectRatioOne();
