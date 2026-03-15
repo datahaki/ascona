@@ -26,7 +26,7 @@ class TangentsDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.SCATTERED;
+    return ControlPointType.ADDREMOVE;
   }
 
   @Override
@@ -39,6 +39,7 @@ class TangentsDemo extends ControlPointsDemo {
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay(), sequence, origin, geometricLayer, graphics);
       leversRender.renderLevers();
+      leversRender.renderSequence();
       leversRender.renderOrigin();
       leversRender.renderTangentsPtoX(true);
       leversRender.renderTangentsXtoP(true);

@@ -50,7 +50,7 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.SCATTERED;
+    return ControlPointType.ADDREMOVE;
   }
 
   @Override // from RenderInterface

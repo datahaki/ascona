@@ -25,7 +25,6 @@ import ch.alpine.sophis.crv.d2.alg.OriginEnclosureQ;
 import ch.alpine.sophis.gbc.it.GenesisDeque;
 import ch.alpine.sophis.gbc.it.WeightsFactors;
 import ch.alpine.sophus.api.Manifold;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -50,7 +49,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.SCATTERED;
+    return ControlPointType.ADDREMOVE;
   }
 
   @Override
@@ -60,8 +59,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
     Optional<Tensor> optional = placeWrap.getOrigin();
     if (optional.isPresent()) {
       final Tensor origin = optional.get();
-      HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-      Manifold manifold = homogeneousSpace;
+      Manifold manifold = manifoldDisplay.manifold();
       final Tensor sequence = placeWrap.getSequence();
       final Tensor levers2 = manifold.tangentSpace(origin).log().slash(sequence);
       {
@@ -116,9 +114,10 @@ class ExponentialDemo extends EuclideanPlaneDemo {
       {
         LeversRender leversRender = LeversRender.of( //
             manifoldDisplay, sequence, origin, geometricLayer, graphics);
+        leversRender.renderOrigin();
+        leversRender.renderSequence();
         leversRender.renderIndexP();
         leversRender.renderIndexX();
-        leversRender.renderOrigin();
       }
     }
   }

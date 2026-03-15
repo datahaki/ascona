@@ -46,7 +46,7 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.CURVYCURV;
+    return ControlPointType.CURVYHIDE;
   }
 
   @Override // from RenderInterface
@@ -60,6 +60,8 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
       Tensor origin = optional.get();
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
+      leversRender.renderSequence();
+      leversRender.renderOrigin();
       leversRender.renderSurfaceP();
       leversRender.renderTangentsXtoP(false);
       leversRender.renderPolygonXtoP();
@@ -79,7 +81,7 @@ class ThreePointBarycenterDemo extends ControlPointsDemo {
               .render(geometricLayer, graphics);
         } else {
           graphics.setColor(Color.RED);
-          graphics.drawString("mean does not exist", 0, 20);
+          graphics.drawString("mean does not exist", 100, 20);
         }
       }
     } else {

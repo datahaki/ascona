@@ -123,10 +123,8 @@ class KNearestDemo extends ControlPointsDemo {
         .render(geometricLayer, graphics);
     manifoldDisplay.showPoints(ColorPair.GROUP_AFAR, RealScalar.ONE, seq.extract(k, sequence.length())) //
         .render(geometricLayer, graphics);
-    manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Tensors.of(origin)) //
-        .render(geometricLayer, graphics);
-    LeversRender leversRender = //
-        LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
+    LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
+    leversRender.renderOrigin();
     leversRender.renderIndexX("x" + p);
     leversRender.renderIndexP("p" + p);
   }

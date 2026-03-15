@@ -55,7 +55,7 @@ final class GrassmannDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.SCATTERED;
+    return ControlPointType.ADDREMOVE;
   }
 
   private void shuffle() {

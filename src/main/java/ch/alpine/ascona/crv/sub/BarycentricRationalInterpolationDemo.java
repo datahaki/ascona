@@ -87,7 +87,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._03);
       Tensor basis2 = domain.maps(param.lagrange //
           ? BarycentricMetricInterpolation.la(knots, InversePowerVariogram.of(2))
-              : BarycentricMetricInterpolation.of(knots, InversePowerVariogram.of(2)));
+          : BarycentricMetricInterpolation.of(knots, InversePowerVariogram.of(2)));
       {
         Tensor curve1 = Tensor.of(basis2.stream() //
             .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));

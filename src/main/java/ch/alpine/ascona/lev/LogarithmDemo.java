@@ -62,7 +62,7 @@ class LogarithmDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.HEAD_TAIL;
+    return ControlPointType.DELEGATED;
   }
 
   @Override
@@ -76,6 +76,8 @@ class LogarithmDemo extends ControlPointsDemo {
       Tensor origin = optional.get();
       {
         LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
+        leversRender.renderSequence();
+        leversRender.renderOrigin();
         leversRender.renderIndexX();
         if (param.ctrl)
           leversRender.renderIndexP();

@@ -109,7 +109,7 @@ class GeodesicDemo extends ControlPointsDemo {
             .render(geometricLayer, graphics);
       }
       Tensor extrap = Subdivide.increasing(clip, param.splits).maps(scalarTensorFunction);
-      manifoldDisplay.showPoints(ColorPair.EXTRAPOLATION, RealScalar.of(0.8), extrap) //
+      manifoldDisplay.showPoints(ColorPair.GROUP_NEAR, RealScalar.of(0.8), extrap) //
           .render(geometricLayer, graphics);
     }
   }

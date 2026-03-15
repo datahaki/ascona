@@ -36,7 +36,7 @@ class LbsBarycenterDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.HEAD_TAIL;
+    return ControlPointType.DELEGATED;
   }
 
   @Override // from RenderInterface
@@ -51,6 +51,8 @@ class LbsBarycenterDemo extends ControlPointsDemo {
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       // ---
       leversRender.renderSurfaceP();
+      leversRender.renderSequence();
+      leversRender.renderOrigin();
       leversRender.renderLbsS2();
       leversRender.renderLevers();
       leversRender.renderIndexX();
