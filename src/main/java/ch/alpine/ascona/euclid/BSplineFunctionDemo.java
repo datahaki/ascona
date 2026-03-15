@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.euclid;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -8,6 +9,7 @@ import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -67,11 +69,12 @@ class BSplineFunctionDemo extends EuclideanPlaneDemo {
       refined = CirclePoints.of(7);
     }
     Curvature2DRender.of(refined, param.cyclic).render(geometricLayer, graphics);
+    new PathRender(Color.BLUE, 1, refined, param.cyclic).render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     }
-    param.cp.spawn(manifoldDisplay(), refined, new Rectangle(0, 0, 400, 300)) //
+    param.cp.spawnXY(manifoldDisplay(), refined, new Rectangle(0, 0, 400, 300)) //
         .render(geometricLayer, graphics);
   }
 

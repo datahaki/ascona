@@ -1,6 +1,7 @@
 // code by ob, jph
 package ch.alpine.ascona.crv.sub;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
@@ -11,6 +12,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -100,9 +102,10 @@ class CatmullRomDemo extends PointSequenceDemo {
         manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, Tensors.of(selected)) //
             .render(geometricLayer, graphics);
       }
-      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-      Curvature2DRender.of(render, false).render(geometricLayer, graphics);
-      param.cp.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
+      Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
+      Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
+      new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
+      param.cp.spawnXY(manifoldDisplay, euclidXY, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     }
   }

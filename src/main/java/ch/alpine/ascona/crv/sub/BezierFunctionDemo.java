@@ -81,11 +81,12 @@ class BezierFunctionDemo extends PointSequenceDemo {
           }
         }
         Tensor refined = domain.maps(new BezierFunction(geodesicSpace, sequence));
-        Tensor render = manifoldDisplay.point2xy().slash(refined);
-        Curvature2DRender.of(render, false).render(geometricLayer, graphics);
+        Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
+        Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
+        new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
         if (levels < 5)
           manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
-        param.cp.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
+        param.cp.spawnXY(manifoldDisplay, euclidXY, new Rectangle(0, 0, 400, 300)) //
             .render(geometricLayer, graphics);
       } catch (Exception e) {
         System.err.println("unstable");

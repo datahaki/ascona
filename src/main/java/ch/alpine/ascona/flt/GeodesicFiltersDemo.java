@@ -17,13 +17,10 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Range;
-import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
-import ch.alpine.tensor.lie.TensorProduct;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 // TODO ASCONA DEMO visualization can be improved much
@@ -45,7 +42,8 @@ class GeodesicFiltersDemo extends ControlPointsDemo {
     super(param);
     this.param = param;
     // ---
-    setControlPointsSe2(TensorProduct.of(Range.of(0, 5), UnitVector.of(3, 0)).multiply(RealScalar.of(2)));
+    Tensor tensor = Tensors.fromString("{{0, 0, 0}, {2, 2, 0}, {4, 0, 0}, {6, 0, 0}, {8, 0, -1}}");
+    setControlPointsSe2(tensor);
   }
 
   @Override

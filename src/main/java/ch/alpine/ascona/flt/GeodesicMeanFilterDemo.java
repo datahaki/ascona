@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.flt;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -65,9 +67,10 @@ class GeodesicMeanFilterDemo extends ControlPointsDemo {
     TensorUnaryOperator geodesicMeanFilter = GeodesicMeanFilter.of(manifoldDisplay.geodesicSpace(), _radius);
     Tensor refined = geodesicMeanFilter.apply(control);
     Tensor curve = Nest.of(BSpline4CurveSubdivision.split2lo(manifoldDisplay.geodesicSpace())::string, refined, 7);
-    Tensor render = Tensor.of(curve.stream().map(manifoldDisplay::point2xy));
+    Tensor euclidXY = manifoldDisplay.point2xy().slash(curve);
     // ---
-    Curvature2DRender.of(render, false).render(geometricLayer, graphics);
+    Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
+    new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
     manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
     LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
     leversRender.renderIndexP();

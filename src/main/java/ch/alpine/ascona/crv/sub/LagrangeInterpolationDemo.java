@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.crv.sub;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
@@ -11,6 +12,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymScalar;
@@ -87,8 +89,9 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
       Interpolation interpolation = LagrangeInterpolation.of(manifoldDisplay.geodesicSpace(), getGeodesicControlPoints());
       Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).maps(interpolation::at);
-      Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-      Curvature2DRender.of(render, false).render(geometricLayer, graphics);
+      Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
+      Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
+      new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
       manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Unprotect.byRef(interpolation.at(parameter))) //
           .render(geometricLayer, graphics);
       if (levels < 5)
@@ -97,7 +100,7 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
         LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
         leversRender.renderIndexP();
       }
-      param.cp.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
+      param.cp.spawnXY(manifoldDisplay, euclidXY, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     }
   }

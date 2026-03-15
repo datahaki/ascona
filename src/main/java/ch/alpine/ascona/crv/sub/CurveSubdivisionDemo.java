@@ -92,8 +92,8 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
     }
     try {
       Tensor refined = param.scheme.refine(manifoldDisplay, control, levels, cyclic);
-      Tensor render = manifoldDisplay.point2xy().slash(refined);
-      new PathRender(Color.BLUE, 1.25, render, cyclic).render(geometricLayer, graphics);
+      Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
+      new PathRender(Color.BLUE, 1.25, euclidXY, cyclic).render(geometricLayer, graphics);
       if (param.line) {
         GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
         Tensor refined2 = Nest.of(new BSpline1CurveSubdivision(geodesicSpace).auto(cyclic), control, 8);
@@ -101,11 +101,11 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
             .render(geometricLayer, graphics);
       }
       if (manifoldDisplay.isXYeuclid()) {
-        Curvature2DRender.of(render, cyclic, param.comb).render(geometricLayer, graphics);
+        Curvature2DRender.of(euclidXY, cyclic, param.comb).render(geometricLayer, graphics);
       }
       if (levels < 5)
         manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
-      param.cp.spawn(manifoldDisplay, refined, new Rectangle(0, 0, 400, 300)) //
+      param.cp.spawnXY(manifoldDisplay, euclidXY, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     } catch (Exception exception) {
       // ---

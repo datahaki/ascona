@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.ascona.ref.d1h;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.Curvature2DRender;
+import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.fig.Show;
@@ -15,7 +17,6 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.crv.d2.Extract2D;
 import ch.alpine.sophis.math.Do;
 import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
 import ch.alpine.sophis.ref.d1h.TensorIteration;
@@ -75,8 +76,10 @@ class SeriesHermiteSubdivisionDemo extends EuclideanPlaneDemo {
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
       int levels = param.refine;
       Tensor iterate = Do.of(control, tensorIteration::iterate, levels);
-      Tensor curve = Tensor.of(iterate.get(Tensor.ALL, 0).stream().map(Extract2D.FUNCTION));
-      Curvature2DRender.of(curve, false).render(geometricLayer, graphics);
+      Tensor positions = iterate.get(Tensor.ALL, 0);
+      Tensor euclidXY = manifoldDisplay.point2xy().slash(positions);
+      Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
+      new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
       // ---
       if (param.derivatives) {
         Tensor deltas = iterate.get(Tensor.ALL, 1);

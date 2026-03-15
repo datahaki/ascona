@@ -17,13 +17,12 @@ import ch.alpine.tensor.Tensor;
 public final class CurvatureParam {
   public Boolean curvt = true;
 
-  public final RenderInterface spawn(ManifoldDisplay manifoldDisplay, Tensor refined, Rectangle rectangle) {
-    return curvt && manifoldDisplay.isXYeuclid() && 1 < refined.length() //
+  public final RenderInterface spawnXY(ManifoldDisplay manifoldDisplay, Tensor tensor, Rectangle rectangle) {
+    return curvt && manifoldDisplay.isXYeuclid() && 1 < tensor.length() //
         ? new RenderInterface() {
           @Override
           public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
             Show show = new Show();
-            Tensor tensor = manifoldDisplay.point2xy().slash(refined);
             CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
             curveVisualSet.addCurvature(show);
             show.render_autoIndent(graphics, rectangle);

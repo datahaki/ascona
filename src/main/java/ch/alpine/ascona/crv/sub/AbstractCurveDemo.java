@@ -43,8 +43,9 @@ abstract class AbstractCurveDemo extends PointSequenceDemo {
     Tensor control = getGeodesicControlPoints();
     if (!Tensors.isEmpty(control)) {
       Tensor refined = protected_render(geometricLayer, graphics, abstractCurveParam.degree, abstractCurveParam.refine, control);
-      new PathRender(Color.BLUE, 1.25, refined, false).render(geometricLayer, graphics);
-      abstractCurveParam.cp.spawn(manifoldDisplay(), refined, new Rectangle(0, 0, 400, 300)) //
+      Tensor euclidXY = manifoldDisplay().point2xy().slash(refined);
+      new PathRender(Color.BLUE, 1.25, euclidXY, false).render(geometricLayer, graphics);
+      abstractCurveParam.cp.spawnXY(manifoldDisplay(), euclidXY, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     }
   }
