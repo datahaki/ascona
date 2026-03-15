@@ -82,8 +82,8 @@ class ClassificationImageDemo extends ControlPointsDemo {
     geometricComponent().setRotatable(false);
     addChangeListener(_ -> shuffle());
     setManifoldDisplay(ManifoldDisplays.R2);
-    fieldsEditor(0).addUniversalListener(this::shuffle);
-    fieldsEditor(1).addUniversalListener(this::recompute);
+    fieldsEditor(param0).addUniversalListener(this::shuffle);
+    fieldsEditor(param1).addUniversalListener(this::recompute);
     {
       geometricComponent().addMouseMotionListener(new MouseMotionListener() {
         @Override

@@ -79,8 +79,8 @@ class MaAveragingDemo extends ControlPointsDemo {
     super(param0 = new Param0(), param1 = new Param1(), param2 = new Param2());
     geometricComponent().setRotatable(false);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
-    fieldsEditor(0).addUniversalListener(this::shuffle);
-    fieldsEditor(1).addUniversalListener(this::recompute);
+    fieldsEditor(param0).addUniversalListener(this::shuffle);
+    fieldsEditor(param1).addUniversalListener(this::recompute);
     addChangeListener(this::shuffle);
   }
 

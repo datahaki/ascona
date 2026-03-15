@@ -29,7 +29,7 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
     super(objects);
     for (int index = 0; index < objects.length; ++index)
       if (objects[index] instanceof SaveParam)
-        fieldsEditor(index).addUniversalListener(this::save);
+        fieldsEditor(objects[index]).addUniversalListener(this::save);
     addChangeListener(this::loadOrShuffle);
     setManifoldDisplay(ManifoldDisplays.R2);
   }

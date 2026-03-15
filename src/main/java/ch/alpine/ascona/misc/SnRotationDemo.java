@@ -91,7 +91,7 @@ class SnRotationDemo extends ManifoldDisplayDemo implements RenderInterface {
 
   public SnRotationDemo() {
     super(param = new Param(), paran = new Paran());
-    fieldsEditor(0).addUniversalListener(this::update);
+    fieldsEditor(param).addUniversalListener(this::update);
     update();
     GeometricComponent geometricComponent = geometricComponent();
     geometricComponent.addRenderInterfaceBackground(S2Display.INSTANCE.background());

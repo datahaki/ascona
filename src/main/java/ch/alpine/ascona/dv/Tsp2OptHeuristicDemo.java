@@ -79,8 +79,8 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
 
   public Tsp2OptHeuristicDemo() {
     super(param0 = new Param0(), param1 = new Param1(), param2 = new Param2());
-    fieldsEditor(0).addUniversalListener(this::shuffle);
-    fieldsEditor(1).addUniversalListener(this::distances);
+    fieldsEditor(param0).addUniversalListener(this::shuffle);
+    fieldsEditor(param1).addUniversalListener(this::distances);
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.R2);
   }

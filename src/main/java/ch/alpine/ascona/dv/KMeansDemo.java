@@ -78,8 +78,8 @@ class KMeansDemo extends ControlPointsDemo {
 
   public KMeansDemo() {
     super(param0 = new Param0(), param1 = new Param1(), param2 = new Param2());
-    fieldsEditor(0).addUniversalListener(this::shuffle);
-    fieldsEditor(1).addUniversalListener(this::recomp);
+    fieldsEditor(param0).addUniversalListener(this::shuffle);
+    fieldsEditor(param1).addUniversalListener(this::recomp);
     addChangeListener(this::shuffle);
     shuffle();
   }

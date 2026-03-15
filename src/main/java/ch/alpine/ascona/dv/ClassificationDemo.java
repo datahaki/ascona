@@ -66,7 +66,7 @@ class ClassificationDemo extends ControlPointsDemo {
     setManifoldDisplay(ManifoldDisplays.Se2);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}}"));
     addChangeListener(this::shuffle);
-    fieldsEditor(0).addUniversalListener(this::shuffle);
+    fieldsEditor(param0).addUniversalListener(this::shuffle);
     shuffle();
   }
 

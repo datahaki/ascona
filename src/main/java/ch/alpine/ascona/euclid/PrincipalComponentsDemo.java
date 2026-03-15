@@ -34,7 +34,7 @@ class PrincipalComponentsDemo extends EuclideanPlaneDemo {
 
   public PrincipalComponentsDemo() {
     super(param = new Param());
-    fieldsEditor(0).addUniversalListener(this::shuffle);
+    fieldsEditor(param).addUniversalListener(this::shuffle);
     geometricComponent().addRenderInterfaceBackground(AxesRender.INSTANCE);
     shuffle();
   }

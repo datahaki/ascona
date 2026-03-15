@@ -67,7 +67,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
 
   public AbstractDeformationDemo(Object obj2) {
     super(param0 = new Param0(), obj2, param2 = new Param2());
-    fieldsEditor(0).addUniversalListener(this::shuffleSnap);
+    fieldsEditor(param0).addUniversalListener(this::shuffleSnap);
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 

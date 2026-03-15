@@ -104,7 +104,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
 
   protected AbstractScatteredSetWeightingDemo(WeightingsParam weightingsParam) {
     super(this.weightingsParam = weightingsParam, scatteredSetParam = new ScatteredSetParam());
-    fieldsEditor(0).addUniversalListener(this::recompute);
+    fieldsEditor(weightingsParam).addUniversalListener(this::recompute);
   }
 
   @Override

@@ -64,7 +64,7 @@ class OrderingDemo extends ControlPointsDemo {
   public OrderingDemo() {
     super(param0 = new Param0(), param1 = new Param1());
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}}"));
-    fieldsEditor(0).addUniversalListener(this::shuffle);
+    fieldsEditor(param0).addUniversalListener(this::shuffle);
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.Se2);
   }

@@ -85,7 +85,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
   public MinimumSpanningTreeDemo() {
     super(param0 = new Param0(), param1 = new Param1());
     // ---
-    fieldsEditor(0).addUniversalListener(this::shuffle);
+    fieldsEditor(param0).addUniversalListener(this::shuffle);
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.R2);
   }

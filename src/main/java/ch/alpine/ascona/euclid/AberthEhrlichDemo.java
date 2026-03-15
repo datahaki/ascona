@@ -61,7 +61,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
   public AberthEhrlichDemo() {
     super(param = new Param());
     // ---
-    fieldsEditor(0).addUniversalListener(() -> {
+    fieldsEditor(param).addUniversalListener(() -> {
       if (param.shuffle) {
         param.shuffle = false;
         shuffle();

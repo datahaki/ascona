@@ -28,12 +28,12 @@ import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 
-// TODO ASCONA DEMO init properly, draw better, offer configuration of parameters
-class BulkDecimationDemo extends ControlPointsDemo {
+/** playground for curve decimation */
+class DecimationDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED_DRAW = //
       ColorDataLists._097.cyclic().deriveWithAlpha(192);
 
-  public BulkDecimationDemo() {
+  public DecimationDemo() {
     Distribution dX = UniformDistribution.of(-3, 3);
     Distribution dY = NormalDistribution.of(0, .3);
     Distribution dA = NormalDistribution.of(1, .5);
@@ -60,23 +60,23 @@ class BulkDecimationDemo extends ControlPointsDemo {
     if (0 == length)
       return;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    HomogeneousSpace geodesicSpace = manifoldDisplay.homogeneousSpace();
+    HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     graphics.setColor(Color.LIGHT_GRAY);
     Tensor domain = Subdivide.of(0, 1, 10);
     {
       for (int index = 1; index < sequence.length(); ++index) {
-        Tensor tensor = domain.maps(geodesicSpace.curve(sequence.get(index - 1), sequence.get(index)));
+        Tensor tensor = domain.maps(homogeneousSpace.curve(sequence.get(index - 1), sequence.get(index)));
         new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(0), 1, tensor, false) //
             .render(geometricLayer, graphics);
       }
     }
     CurveDecimation curveDecimation = CurveDecimation.of( //
-        LineDistances.STANDARD.supply(geodesicSpace), //
+        LineDistances.STANDARD.supply(homogeneousSpace), //
         RealScalar.ONE);
     Tensor decimate = curveDecimation.apply(sequence);
     {
       for (int index = 1; index < decimate.length(); ++index) {
-        Tensor tensor = domain.maps(geodesicSpace.curve(decimate.get(index - 1), decimate.get(index)));
+        Tensor tensor = domain.maps(homogeneousSpace.curve(decimate.get(index - 1), decimate.get(index)));
         new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(1), 1, tensor, false) //
             .render(geometricLayer, graphics);
       }
@@ -88,6 +88,6 @@ class BulkDecimationDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    new BulkDecimationDemo().runStandalone();
+    new DecimationDemo().runStandalone();
   }
 }

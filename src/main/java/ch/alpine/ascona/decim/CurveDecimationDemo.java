@@ -76,8 +76,8 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
 
   public CurveDecimationDemo() {
     super(gokartPosParam = new GokartPosParam(), param = new Param(), paran = new Paran());
-    fieldsEditor(0).addUniversalListener(this::updateState);
-    fieldsEditor(1).addUniversalListener(this::updateState);
+    fieldsEditor(gokartPosParam).addUniversalListener(this::updateState);
+    fieldsEditor(param).addUniversalListener(this::updateState);
     addChangeListener(this::updateState);
     updateState();
     // ---

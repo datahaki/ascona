@@ -69,7 +69,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   private AbstractSpectrogramDemo(SpecParam specParam, Object object) {
     super(gokartPosParam = new GokartPosParam(), this.specParam = specParam, object);
     // gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
-    fieldsEditor(0).addUniversalListener(this::updateState);
+    fieldsEditor(gokartPosParam).addUniversalListener(this::updateState);
     updateState();
     // ---
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));

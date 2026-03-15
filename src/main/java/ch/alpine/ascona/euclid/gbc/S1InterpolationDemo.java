@@ -108,7 +108,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
       if (param.logWeightings.forceMetric() && //
           !param.biinvariants.equals(Biinvariants.METRIC)) {
         param.biinvariants = Biinvariants.METRIC;
-        fieldsEditor(0).updateJComponents();
+        fieldsEditor(param).updateJComponents();
       }
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), suo, sequence);
       try {

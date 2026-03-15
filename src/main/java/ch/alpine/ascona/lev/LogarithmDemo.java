@@ -51,7 +51,7 @@ class LogarithmDemo extends ControlPointsDemo {
   public LogarithmDemo() {
     super(param = new Param());
     // ---
-    fieldsEditor(0).addUniversalListener(this::spun);
+    fieldsEditor(param).addUniversalListener(this::spun);
     spun();
   }
 

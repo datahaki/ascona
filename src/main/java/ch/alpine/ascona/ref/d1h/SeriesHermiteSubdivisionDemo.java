@@ -54,7 +54,7 @@ class SeriesHermiteSubdivisionDemo extends EuclideanPlaneDemo {
 
   public SeriesHermiteSubdivisionDemo() {
     super(param = new Param());
-    fieldsEditor(0).addUniversalListener(this::compute);
+    fieldsEditor(param).addUniversalListener(this::compute);
     compute();
   }
 

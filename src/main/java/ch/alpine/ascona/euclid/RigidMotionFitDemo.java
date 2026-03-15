@@ -43,7 +43,7 @@ class RigidMotionFitDemo extends EuclideanPlaneDemo {
   public RigidMotionFitDemo() {
     super(param = new Param());
     // ---
-    fieldsEditor(0).addUniversalListener(this::shufflePoints);
+    fieldsEditor(param).addUniversalListener(this::shufflePoints);
     // ---
     shufflePoints();
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));

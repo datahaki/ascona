@@ -74,7 +74,7 @@ final class D2AveragingDemo extends ControlPointsDemo {
     setManifoldDisplay(ManifoldDisplays.S2);
     // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
-    fieldsEditor(0).addUniversalListener(this::recompute);
+    fieldsEditor(param).addUniversalListener(this::recompute);
     // ---
     addChangeListener(this::recompute);
     // geometricComponent().setOffset(400, 400);

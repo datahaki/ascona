@@ -69,7 +69,7 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
 
   public S2DeltaDemo() {
     super(param = new Param());
-    fieldsEditor(0).addUniversalListener(this::compute);
+    fieldsEditor(param).addUniversalListener(this::compute);
     compute();
   }
 

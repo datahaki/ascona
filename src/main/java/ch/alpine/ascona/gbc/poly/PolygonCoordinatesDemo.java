@@ -50,8 +50,8 @@ class PolygonCoordinatesDemo extends ControlPointsDemo {
     super(param = new Param());
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);
-    fieldsEditor(0).addUniversalListener(this::spun);
-    fieldsEditor(0).addUniversalListener(this::recompute);
+    fieldsEditor(param).addUniversalListener(this::spun);
+    fieldsEditor(param).addUniversalListener(this::recompute);
     spun();
   }
 

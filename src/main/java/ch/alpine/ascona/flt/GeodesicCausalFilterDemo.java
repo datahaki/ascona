@@ -34,7 +34,7 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
 
   public GeodesicCausalFilterDemo() {
     super(paraf = new Paraf());
-    fieldsEditor(0).addUniversalListener(this::updateState);
+    fieldsEditor(paraf).addUniversalListener(this::updateState);
     // ---
     updateState();
   }
