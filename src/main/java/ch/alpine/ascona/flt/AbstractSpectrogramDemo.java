@@ -17,6 +17,7 @@ import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
@@ -87,7 +88,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     boolean conv = specParam.conv;
     if (specParam.data) {
-      new PathRender(COLOR_CURVE, 1, control, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.SECONDARY_CURVE, control, false).render(geometricLayer, graphics);
       ColorPair colorPair = conv ? ColorPair.ASC : ColorPair.ASN;
       manifoldDisplay.showPoints(colorPair, markerScale(), control) //
           .render(geometricLayer, graphics);
@@ -103,7 +104,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     // ---
     graphics.setStroke(new BasicStroke(1f));
     if (conv) {
-      new PathRender(COLOR_SHAPE, 1, refined, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, refined, false).render(geometricLayer, graphics);
       manifoldDisplay.showPoints(ColorPair.ASD, markerScale(), refined) //
           .render(geometricLayer, graphics);
     }

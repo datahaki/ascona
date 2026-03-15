@@ -10,6 +10,7 @@ import java.util.List;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -105,7 +106,7 @@ class GeodesicDemo extends ControlPointsDemo {
         Tensor refined = Subdivide.increasing(clip, param.splits * 3).maps(scalarTensorFunction);
         Tensor render = manifoldDisplay.point2xy().slash(refined);
         // CurveCurvatureRender.of(render, false, geometricLayer, graphics);
-        new PathRender(new Color(128, 128, 255), 1, render, false) //
+        new PathRender(ColorStroke.SECONDARY_CURVE, render, false) //
             .render(geometricLayer, graphics);
       }
       Tensor extrap = Subdivide.increasing(clip, param.splits).maps(scalarTensorFunction);

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.crv.clt;
 
-import java.awt.Color;
+import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -11,6 +11,8 @@ import ch.alpine.ascona.crv.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.Se2CoveringClothoidDisplay;
 import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.ColorStroke;
+import ch.alpine.ascony.ren.ColorStrokeIndexed;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
@@ -49,18 +51,20 @@ class ClothoidComparisonDemo extends ClothoidBaseDemo {
     // ---
     ManifoldDisplay manifoldDisplay = Se2CoveringClothoidDisplay.INSTANCE;
     Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
+    ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLOR_DATA_INDEXED, new BasicStroke(1.5f));
     for (ClothoidTransitionSpace clothoidTransitionSpace : ClothoidTransitionSpace.values()) {
       int ordinal = clothoidTransitionSpace.ordinal();
-      Color color = COLOR_DATA_INDEXED.getColor(ordinal);
+      ColorStroke colorStroke = colorStrokeIndexed.getColorStroke(ordinal);
       {
         graphics.setFont(new Font(Font.MONOSPACED, Font.BOLD, 14));
-        graphics.setColor(color);
+        graphics.setColor(colorStroke.color());
         graphics.drawString(clothoidTransitionSpace.name(), 0, 24 + ordinal * 14);
       }
       ClothoidTransition clothoidTransition = clothoidTransitionSpace.connect(start, mouse);
       Clothoid clothoid = clothoidTransition.clothoid();
       Tensor points = clothoidTransition.linearized(geometricLayer.pixel2modelFactor(RealScalar.of(5)));
-      new PathRender(color, 1.5f, points, false).render(geometricLayer, graphics);
+      new PathRender(colorStrokeIndexed.getColorStroke(ordinal), points, false) //
+          .render(geometricLayer, graphics);
       // ---
       Tensor tensor = Tensor.of(points.stream().map(manifoldDisplay::point2xy));
       CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);

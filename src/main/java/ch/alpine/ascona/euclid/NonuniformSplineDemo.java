@@ -1,11 +1,11 @@
 // code by jph
 package ch.alpine.ascona.euclid;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -70,7 +70,7 @@ class NonuniformSplineDemo extends EuclideanPlaneDemo {
       Tensor values = domain.maps(scalarTensorFunction);
       Tensor euclidXY = Transpose.of(Tensors.of(domain, values));
       Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
-      new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
     }
     LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
     leversRender.renderIndexP();

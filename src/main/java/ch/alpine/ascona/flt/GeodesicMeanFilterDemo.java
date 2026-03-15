@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.ascona.flt;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -70,7 +70,7 @@ class GeodesicMeanFilterDemo extends ControlPointsDemo {
     Tensor euclidXY = manifoldDisplay.point2xy().slash(curve);
     // ---
     Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
-    new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
+    new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
     manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
     LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
     leversRender.renderIndexP();

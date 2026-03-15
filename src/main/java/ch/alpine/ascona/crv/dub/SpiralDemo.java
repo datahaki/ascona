@@ -1,13 +1,13 @@
 // code by jph
 package ch.alpine.ascona.crv.dub;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
@@ -40,7 +40,7 @@ class SpiralDemo implements ManipulateProvider, RenderInterface {
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     {
       Tensor points = Subdivide.increasing(clip, samples).maps(spiralParam.scalarTensorFunction);
-      new PathRender(Color.BLUE, 1, points, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, points, false).render(geometricLayer, graphics);
     }
     {
       Tensor points = Subdivide.increasing(clip, 50).maps(spiralParam.scalarTensorFunction);

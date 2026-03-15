@@ -12,6 +12,7 @@ import java.util.Optional;
 import ch.alpine.ascona.gbc.GenesisDequeParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -64,7 +65,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
       final Tensor levers2 = manifold.tangentSpace(origin).log().slash(sequence);
       {
         Tensor hull = ConvexHull2D.of(sequence);
-        new PathRender(new Color(0, 0, 255, 128), 1, hull, true) //
+        new PathRender(ColorStroke.CURVE, hull, true) //
             .render(geometricLayer, graphics);
       }
       if (OriginEnclosureQ.INSTANCE.test(levers2)) {

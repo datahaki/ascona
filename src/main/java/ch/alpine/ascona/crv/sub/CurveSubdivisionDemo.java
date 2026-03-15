@@ -13,6 +13,7 @@ import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -93,11 +94,11 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
     try {
       Tensor refined = param.scheme.refine(manifoldDisplay, control, levels, cyclic);
       Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
-      new PathRender(Color.BLUE, 1.25, euclidXY, cyclic).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, euclidXY, cyclic).render(geometricLayer, graphics);
       if (param.line) {
         GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
         Tensor refined2 = Nest.of(new BSpline1CurveSubdivision(geodesicSpace).auto(cyclic), control, 8);
-        new PathRender(new Color(0, 128, 0, 128), 1, refined2, cyclic) //
+        new PathRender(ColorStroke.SECONDARY_CURVE, refined2, cyclic) //
             .render(geometricLayer, graphics);
       }
       if (manifoldDisplay.isXYeuclid()) {

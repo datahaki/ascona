@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.ascona.crv.clt;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
+import ch.alpine.ascony.ren.ColorStrokeIndexed;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.fig.Show;
@@ -63,11 +65,12 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
     {
       ColorDataIndexed colorDataIndexed = ColorDataLists._097.cyclic().deriveWithAlpha(192);
       int index = 0;
+      ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(colorDataIndexed, new BasicStroke(1.25f));
       for (Tensor _lambda : clothoidSolutions.lambdas()) {
         ClothoidBuilder clothoidBuilder = CustomClothoidBuilder.of((Scalar) _lambda);
         ClothoidTransition clothoidTransition = ClothoidTransition.of(clothoidBuilder, clothoidContext.p(), clothoidContext.q());
         Tensor points = clothoidTransition.linearized(MIN_RESOLUTION);
-        new PathRender(colorDataIndexed.getColor(index), 1.25, points, false) //
+        new PathRender(colorStrokeIndexed.getColorStroke(index), points, false) //
             .render(geometricLayer, graphics);
         ++index;
       }

@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.ascona.decim;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorStrokeIndexed;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -63,10 +65,11 @@ class DecimationDemo extends ControlPointsDemo {
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     graphics.setColor(Color.LIGHT_GRAY);
     Tensor domain = Subdivide.of(0, 1, 10);
+    ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLOR_DATA_INDEXED_DRAW, new BasicStroke());
     {
       for (int index = 1; index < sequence.length(); ++index) {
         Tensor tensor = domain.maps(homogeneousSpace.curve(sequence.get(index - 1), sequence.get(index)));
-        new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(0), 1, tensor, false) //
+        new PathRender(colorStrokeIndexed.getColorStroke(0), tensor, false) //
             .render(geometricLayer, graphics);
       }
     }
@@ -77,7 +80,7 @@ class DecimationDemo extends ControlPointsDemo {
     {
       for (int index = 1; index < decimate.length(); ++index) {
         Tensor tensor = domain.maps(homogeneousSpace.curve(decimate.get(index - 1), decimate.get(index)));
-        new PathRender(COLOR_DATA_INDEXED_DRAW.getColor(1), 1, tensor, false) //
+        new PathRender(colorStrokeIndexed.getColorStroke(1), tensor, false) //
             .render(geometricLayer, graphics);
       }
     }

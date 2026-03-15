@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.crv.sub;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
@@ -11,6 +10,7 @@ import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -77,13 +77,13 @@ class BezierFunctionDemo extends PointSequenceDemo {
           if (Objects.nonNull(homogeneousSpace)) {
             Tensor refined = domain.maps(BezierCurve.of(homogeneousSpace.biinvariantMean(), sequence));
             Tensor render = manifoldDisplay.point2xy().slash(refined);
-            new PathRender(Color.RED, 1.25, render, false).render(geometricLayer, graphics);
+            new PathRender(ColorStroke.SECONDARY_CURVE, render, false).render(geometricLayer, graphics);
           }
         }
         Tensor refined = domain.maps(new BezierFunction(geodesicSpace, sequence));
         Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
         Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
-        new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
+        new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
         if (levels < 5)
           manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
         param.cp.spawnXY(manifoldDisplay, euclidXY, new Rectangle(0, 0, 400, 300)) //

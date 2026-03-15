@@ -1,11 +1,13 @@
 // code by jph
 package ch.alpine.ascona.euclid;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPairIndexed;
+import ch.alpine.ascony.ren.ColorStrokeIndexed;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -45,14 +47,15 @@ class PolygonClipDemo extends EuclideanPlaneDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    new PathRender(COLOR_DATA_INDEXED.getColor(3), 1.5, CIRCLE, true).render(geometricLayer, graphics);
+    ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLOR_DATA_INDEXED, new BasicStroke(1.5f));
+    new PathRender(colorStrokeIndexed.getColorStroke(3), CIRCLE, true).render(geometricLayer, graphics);
     Tensor sequence = getGeodesicControlPoints();
-    new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5, sequence, true).render(geometricLayer, graphics);
+    new PathRender(colorStrokeIndexed.getColorStroke(0), sequence, true).render(geometricLayer, graphics);
     PolyclipResult polyclipResult = POLYGON_CLIP.apply(sequence);
     graphics.setColor(new Color(128, 255, 128, 128));
     Tensor result = polyclipResult.tensor();
     graphics.fill(geometricLayer.toPath2D(result));
-    new PathRender(COLOR_DATA_INDEXED.getColor(1), 3.5, result, true).render(geometricLayer, graphics);
+    new PathRender(colorStrokeIndexed.getColorStroke(1), result, true).render(geometricLayer, graphics);
     {
       ColorPairIndexed colorPairIndexed = new ColorPairIndexed(COLOR_DATA_INDEXED, 128, 255);
       for (int index = 0; index < result.length(); ++index) {

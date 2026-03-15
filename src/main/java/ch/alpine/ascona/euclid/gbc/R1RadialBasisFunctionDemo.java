@@ -1,12 +1,12 @@
 // code by jph
 package ch.alpine.ascona.euclid.gbc;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -78,7 +78,7 @@ class R1RadialBasisFunctionDemo extends ControlPointsDemo {
         TensorUnaryOperator tensorUnaryOperator = //
             RadialBasisFunctionInterpolation.of(sedarim, sequence, funceva);
         Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(tensorUnaryOperator));
-        new PathRender(Color.BLUE, 1.25, Transpose.of(Tensors.of(domain, result)), false) //
+        new PathRender(ColorStroke.CURVE, Transpose.of(Tensors.of(domain, result)), false) //
             .render(geometricLayer, graphics);
       } catch (Exception exception) {
         // ---
@@ -88,7 +88,7 @@ class R1RadialBasisFunctionDemo extends ControlPointsDemo {
         TensorUnaryOperator operator = //
             new CrossAveraging(sedarim, LinearBiinvariantMean.INSTANCE, funceva);
         Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(operator));
-        new PathRender(Color.RED, 1.25, Transpose.of(Tensors.of(domain, result)), false) //
+        new PathRender(ColorStroke.SECONDARY_CURVE, Transpose.of(Tensors.of(domain, result)), false) //
             .render(geometricLayer, graphics);
       } catch (Exception exception) {
         exception.printStackTrace();

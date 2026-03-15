@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.euclid;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -9,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -77,7 +77,7 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
     {
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      new PathRender(Color.BLUE, 1, sequence, true).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, sequence, true).render(geometricLayer, graphics);
       leversRender.renderIndexP();
       Tensor src = ImageFormat.from(bi);
       int h = bi.getHeight();

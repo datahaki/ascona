@@ -4,6 +4,7 @@ package ch.alpine.ascona.euclid;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -41,7 +42,7 @@ class MinTriangleAreaSquaredDemo extends EuclideanPlaneDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     if (0 < sequence.length()) {
-      new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5, sequence, true).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, sequence, true).render(geometricLayer, graphics);
       Tensor polygon = Tensor.of(sequence.stream().map(AppendOne.FUNCTION));
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       {

@@ -1,10 +1,12 @@
 // code by jph
 package ch.alpine.ascona.euclid.gbc;
 
-import java.awt.Color;
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.ren.ColorStroke;
+import ch.alpine.ascony.ren.ColorStrokeIndexed;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -72,13 +74,14 @@ abstract class A1BarycentricCoordinateDemo extends EuclideanPlaneDemo {
       Tensor basis = domain.maps(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));
-        new PathRender(Color.BLUE, 1.25, curve, false).render(geometricLayer, graphics);
+        new PathRender(ColorStroke.CURVE, curve, false).render(geometricLayer, graphics);
       }
       ColorDataIndexed colorDataIndexed = ColorDataLists._097.cyclic();
+      ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(colorDataIndexed, new BasicStroke());
       for (int index = 0; index < funceva.length(); ++index) {
-        Color color = colorDataIndexed.getColor(index);
         Tensor curve = Transpose.of(Tensors.of(domain, basis.get(Tensor.ALL, index)));
-        new PathRender(color, 1, curve, false).render(geometricLayer, graphics);
+        new PathRender(colorStrokeIndexed.getColorStroke(index), curve, false) //
+            .render(geometricLayer, graphics);
       }
       {
         LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);

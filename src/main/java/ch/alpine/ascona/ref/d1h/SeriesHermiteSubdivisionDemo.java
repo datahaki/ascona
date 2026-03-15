@@ -1,12 +1,12 @@
 // code by jph
 package ch.alpine.ascona.ref.d1h;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -79,7 +79,7 @@ class SeriesHermiteSubdivisionDemo extends EuclideanPlaneDemo {
       Tensor positions = iterate.get(Tensor.ALL, 0);
       Tensor euclidXY = manifoldDisplay.point2xy().slash(positions);
       Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
-      new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
       // ---
       if (param.derivatives) {
         Tensor deltas = iterate.get(Tensor.ALL, 1);

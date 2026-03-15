@@ -1,12 +1,12 @@
 // code by jph
 package ch.alpine.ascona.euclid;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.msh.ArrayFunction;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -137,7 +137,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     if (1 < length) {
       {
         Scalar bound = bounds(complexZeros.extract(0, length), seeds);
-        new PathRender(Color.RED, 1, CirclePoints.of(70).multiply(bound), true) //
+        new PathRender(ColorStroke.SECONDARY_CURVE, CirclePoints.of(70).multiply(bound), true) //
             .render(geometricLayer, graphics);
       }
       Tensor table = table(complexZeros.extract(0, length), seeds, param.depth);
@@ -146,7 +146,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
       for (int index = 0; index < dimension1; ++index) {
         TensorUnaryOperator tuo = manifoldDisplay::point2xya;
         Tensor points = tuo.slash(table.get(Tensor.ALL, index).maps(S2V));
-        new PathRender(Color.BLACK, 1, points, false).render(geometricLayer, graphics);
+        new PathRender(ColorStroke.CURVE, points, false).render(geometricLayer, graphics);
       }
     }
   }

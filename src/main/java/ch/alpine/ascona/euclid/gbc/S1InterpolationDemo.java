@@ -10,6 +10,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.reg.RegionRenders;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -116,7 +117,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
             point -> sedarim.sunder(AngleVector.of(point));
         Tensor basis = Tensor.of(domain.stream().parallel().map(Scalar.class::cast).map(scalarTensorFunction));
         Tensor curve = Times.of(basis.dot(values), spherics);
-        new PathRender(Color.BLUE, 1.25, curve, true).render(geometricLayer, graphics);
+        new PathRender(ColorStroke.CURVE, curve, true).render(geometricLayer, graphics);
         // ---
         Reverse.of(spherics).forEach(curve::append);
         graphics.setColor(new Color(0, 0, 255, 32));

@@ -1,6 +1,7 @@
 // code by gjoel, jph
 package ch.alpine.ascona.crv.sub;
 
+import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -9,6 +10,7 @@ import java.util.List;
 import ch.alpine.ascona.crv.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorStrokeIndexed;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -92,7 +94,8 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     Tensor refined = scheme.refine(manifoldDisplay, control, levels, false);
     // ---
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-    new PathRender(COLORS.getColor(index), 1, render, false) //
+    ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLORS, new BasicStroke());
+    new PathRender(colorStrokeIndexed.getColorStroke(index), render, false) //
         .render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);

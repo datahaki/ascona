@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.crv.sub;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
@@ -10,6 +9,7 @@ import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -91,7 +91,7 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
       Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).maps(interpolation::at);
       Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
       Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
-      new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
       manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Unprotect.byRef(interpolation.at(parameter))) //
           .render(geometricLayer, graphics);
       if (levels < 5)

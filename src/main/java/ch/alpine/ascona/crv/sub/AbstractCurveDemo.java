@@ -1,11 +1,11 @@
 // code by jph
 package ch.alpine.ascona.crv.sub;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import ch.alpine.ascona.crv.CurvatureParam;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -44,7 +44,7 @@ abstract class AbstractCurveDemo extends PointSequenceDemo {
     if (!Tensors.isEmpty(control)) {
       Tensor refined = protected_render(geometricLayer, graphics, abstractCurveParam.degree, abstractCurveParam.refine, control);
       Tensor euclidXY = manifoldDisplay().point2xy().slash(refined);
-      new PathRender(Color.BLUE, 1.25, euclidXY, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
       abstractCurveParam.cp.spawnXY(manifoldDisplay(), euclidXY, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     }

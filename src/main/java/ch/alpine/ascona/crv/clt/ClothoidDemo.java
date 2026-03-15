@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.ascona.crv.clt;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStrokeIndexed;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
@@ -53,10 +55,11 @@ class ClothoidDemo extends ClothoidBaseDemo {
     // ---
     {
       int index = 0;
+      ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLOR_DATA_INDEXED, new BasicStroke(1.5f));
       for (ClothoidBuilder clothoidBuilder : clothoidBuilders) {
         Clothoid clothoid = clothoidBuilder.curve(start, mouse);
         Tensor points = DOMAIN.maps(clothoid);
-        new PathRender(COLOR_DATA_INDEXED.getColor(index), 1.5, points, false).render(geometricLayer, graphics);
+        new PathRender(colorStrokeIndexed.getColorStroke(index), points, false).render(geometricLayer, graphics);
         manifoldDisplay().showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, ARROWS.maps(clothoid)) //
             .render(geometricLayer, graphics);
         ++index;
@@ -65,12 +68,13 @@ class ClothoidDemo extends ClothoidBaseDemo {
     Show show = new Show();
     show.setPlotLabel("Curvature Comparison");
     int index = 0;
+    ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLOR_DATA_INDEXED, new BasicStroke());
     TensorUnaryOperator tuo = v -> v.extract(0, 2);
     for (ClothoidBuilder clothoidBuilder : clothoidBuilders) {
       Clothoid clothoid = clothoidBuilder.curve(start, mouse);
       Tensor points = DOMAIN.maps(clothoid);
       Color color = COLOR_DATA_INDEXED.getColor(index);
-      new PathRender(color, 1.0, points, false).render(geometricLayer, graphics);
+      new PathRender(colorStrokeIndexed.getColorStroke(index), points, false).render(geometricLayer, graphics);
       graphics.setColor(color);
       {
         Scalar angle = ArcTan2D.of(clothoid.apply(RealScalar.of(1e-8)));

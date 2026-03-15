@@ -8,6 +8,7 @@ import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -104,7 +105,7 @@ class R1KrigingDemo extends ControlPointsDemo {
             Reverse.of(Transpose.of(Tensors.of(domain, result.subtract(errors))))));
         graphics.setColor(new Color(128, 128, 128, 32));
         graphics.fill(path2d);
-        new PathRender(Color.BLUE, 1.25, Transpose.of(Tensors.of(domain, result)), false) //
+        new PathRender(ColorStroke.CURVE, Transpose.of(Tensors.of(domain, result)), false) //
             .render(geometricLayer, graphics);
       } catch (Exception exception) {
         // ---

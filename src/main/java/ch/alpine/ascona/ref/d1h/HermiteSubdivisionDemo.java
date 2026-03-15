@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.ref.d1h;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -11,6 +10,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -115,7 +115,7 @@ class HermiteSubdivisionDemo extends ControlPointsDemo {
       Tensor positions = iterate.get(Tensor.ALL, 0);
       Tensor euclidXY = manifoldDisplay.point2xy().slash(positions);
       Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
-      new PathRender(Color.BLUE, 1, euclidXY, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
       {
         Scalar scale = RealScalar.of(0.3);
         switch (manifoldDisplay.toString()) {

@@ -11,6 +11,7 @@ import java.util.List;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -83,7 +84,7 @@ class BarycentricExtrapolationDemo extends ControlPointsDemo {
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(r1Group), s -> s, domain);
       Tensor curve = Tensor.of(samples.stream().map(sedarim::sunder) //
           .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(sequence, weights).stream()));
-      new PathRender(Color.BLUE, 1.5, curve, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, curve, false).render(geometricLayer, graphics);
     }
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);

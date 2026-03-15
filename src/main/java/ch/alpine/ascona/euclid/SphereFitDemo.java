@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -32,8 +33,6 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Outer;
-import ch.alpine.tensor.img.ColorDataIndexed;
-import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
@@ -41,7 +40,6 @@ import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 
 class SphereFitDemo extends EuclideanPlaneDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
   private static final Tensor CIRCLE = CirclePoints.of(10).multiply(RealScalar.of(3));
 
   public SphereFitDemo() {
@@ -67,13 +65,13 @@ class SphereFitDemo extends EuclideanPlaneDemo {
         Tensor center = optional.get().center();
         Scalar radius = optional.get().radius();
         geometricLayer.pushMatrix(Se2Matrix.translation(center));
-        new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5, CirclePoints.of(40).multiply(radius), true) //
+        new PathRender(ColorStroke.CURVE, CirclePoints.of(40).multiply(radius), true) //
             .render(geometricLayer, graphics);
         geometricLayer.popMatrix();
       }
     }
-    new PathRender(COLOR_DATA_INDEXED.getColor(1), 1.5, ConvexHull2D.of(control), true).render(geometricLayer, graphics);
-    new PathRender(Color.GRAY, 1, CIRCLE, true).render(geometricLayer, graphics);
+    new PathRender(ColorStroke.SECONDARY_CURVE, ConvexHull2D.of(control), true).render(geometricLayer, graphics);
+    new PathRender(ColorStroke.CURVE, CIRCLE, true).render(geometricLayer, graphics);
     if (!Tensors.isEmpty(control)) {
       Tensor matrix = Outer.of(Vector2Norm::between, control, CIRCLE);
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);

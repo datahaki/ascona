@@ -11,6 +11,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.reg.RegionRenders;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -120,7 +121,7 @@ class S1KrigingDemo extends ControlPointsDemo {
         Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
         Tensor estimate = Tensor.of(DOMAIN.stream().map(kriging::estimate));
         Tensor curve = Times.of(estimate, DOMAIN);
-        new PathRender(Color.BLUE, 1.25, curve, false).render(geometricLayer, graphics);
+        new PathRender(ColorStroke.CURVE, curve, false).render(geometricLayer, graphics);
         Tensor errors = Tensor.of(DOMAIN.stream().map(kriging::variance));
         // ---
         Path2D path2d = geometricLayer.toPath2D(Join.of( //

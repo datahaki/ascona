@@ -1,10 +1,12 @@
 // code by jph
 package ch.alpine.ascona.crv.clt;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.ren.AxesRender;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.clt.Clothoid;
@@ -53,7 +55,8 @@ class ClothoidStrokeDemo extends ClothoidBaseDemo {
       Clothoid clothoid = clothoidBuilder.curve(start, mouse);
       Tensor points = DOMAIN.maps(clothoid);
       Color color = COLOR_DATA_INDEXED.getColor(0);
-      new PathRender(color, 1.5, points, false).render(geometricLayer, graphics);
+      ColorStroke colorStroke = new ColorStroke(color, new BasicStroke(1.5f));
+      new PathRender(colorStroke, points, false).render(geometricLayer, graphics);
       LagrangeQuadraticD lagrangeQuadraticD = clothoid.curvature();
       Tensor above = Tensors.empty();
       Tensor below = Tensors.empty();
@@ -65,8 +68,8 @@ class ClothoidStrokeDemo extends ClothoidBaseDemo {
         above.append(Se2Group.INSTANCE.combine(p, Tensors.of(radius.zero(), radius, RealScalar.ZERO)));
         below.append(Se2Group.INSTANCE.combine(p, Tensors.of(radius.zero(), radius.negate(), RealScalar.ZERO)));
       }
-      new PathRender(color, 1.5, above, false).render(geometricLayer, graphics);
-      new PathRender(color, 1.5, below, false).render(geometricLayer, graphics);
+      new PathRender(colorStroke, above, false).render(geometricLayer, graphics);
+      new PathRender(colorStroke, below, false).render(geometricLayer, graphics);
       Tensor tensor = Join.of(above, Reverse.of(below));
       graphics.fill(geometricLayer.toPath2D(tensor));
     }

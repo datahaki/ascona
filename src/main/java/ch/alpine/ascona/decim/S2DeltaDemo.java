@@ -10,6 +10,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -35,9 +36,6 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class S2DeltaDemo extends ManifoldDisplayDemo {
-  private static final Color COLOR_CURVE = new Color(255, 128, 128, 128 + 64);
-  private static final Color COLOR_SHAPE = new Color(128, 255, 128, 128 + 64);
-
   @ReflectionMarker
   static class Param {
     @FieldSelectionArray({ "200", "500", "1000" })
@@ -96,8 +94,8 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    new PathRender(COLOR_CURVE, 1, Tensor.of(snDeltaRaw.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
-    new PathRender(COLOR_SHAPE, 1, Tensor.of(snDeltaFil.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
+    new PathRender(ColorStroke.CURVE, Tensor.of(snDeltaRaw.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
+    new PathRender(ColorStroke.SECONDARY_CURVE, Tensor.of(snDeltaFil.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
     if (param.differences)
       for (Tensor ctrl : snDeltaRaw.differences) {
         Tensor p = ctrl.get(0); // point

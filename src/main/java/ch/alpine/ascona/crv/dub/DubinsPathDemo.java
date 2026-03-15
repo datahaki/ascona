@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2CoveringDisplay;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -120,13 +121,13 @@ class DubinsPathDemo extends ControlPointsDemo {
       BSpline3CurveSubdivision bSpline3CurveSubdivision = //
           new BSpline3CurveSubdivision(Se2CoveringGroup.INSTANCE);
       Tensor points = Nest.of(bSpline3CurveSubdivision::string, map, 5);
-      new PathRender(Color.RED, 2, points, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.SECONDARY_CURVE, points, false).render(geometricLayer, graphics);
     }
     if (param.clothoid) { // draw clothoid
       ClothoidTransition clothoidTransition = //
           ClothoidTransition.of(CLOTHOID_BUILDER, START, mouse);
       Tensor tensor = clothoidTransition.linearized(RealScalar.of(0.1));
-      new PathRender(Color.CYAN, 2, tensor, false).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CURVE, tensor, false).render(geometricLayer, graphics);
     }
     { // draw least curved path
       graphics.setColor(COLOR_DATA_INDEXED.getColor(2));

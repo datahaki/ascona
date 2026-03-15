@@ -1,12 +1,14 @@
 // code by jph
 package ch.alpine.ascona.crv.clt;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 
 import ch.alpine.ascony.api.Spearhead;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.fig.PlotOption;
@@ -55,8 +57,8 @@ class SpearheadDemo extends ClothoidBaseDemo {
     Tensor polygon = Spearhead.of(xya, res);
     graphics.setColor(COLOR_DATA_INDEXED.getColor(1));
     graphics.fill(geometricLayer.toPath2D(polygon));
-    new PathRender(COLOR_DATA_INDEXED.getColor(0), 1.5, polygon, false) //
-        .render(geometricLayer, graphics);
+    ColorStroke colorStroke = new ColorStroke(COLOR_DATA_INDEXED.getColor(0), new BasicStroke(1.5f));
+    new PathRender(colorStroke, polygon, false).render(geometricLayer, graphics);
     Scalar area = PolygonArea.of(polygon);
     Tensor centroid = PolygonCentroid.of(polygon);
     graphics.setColor(Color.DARK_GRAY);

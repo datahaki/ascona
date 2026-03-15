@@ -2,13 +2,14 @@
 package ch.alpine.ascona.euclid.gbc;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorStroke;
+import ch.alpine.ascony.ren.ColorStrokeIndexed;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -86,7 +87,7 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
         Tensor basis = domain.maps(geodesicNeville);
         {
           Tensor curve = Transpose.of(Tensors.of(domain, basis));
-          new PathRender(new Color(255, 0, 0, 128), 1, curve, false).render(geometricLayer, graphics);
+          new PathRender(ColorStroke.SECONDARY_CURVE, curve, false).render(geometricLayer, graphics);
         }
       }
       // ---
@@ -95,13 +96,13 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
       Tensor basis = domain.maps(scalarTensorFunction);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));
-        new PathRender(Color.BLUE, 2, curve, false).render(geometricLayer, graphics);
+        new PathRender(ColorStroke.CURVE, curve, false).render(geometricLayer, graphics);
       }
       ColorDataIndexed colorDataIndexed = ColorDataLists._097.cyclic();
+      ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(colorDataIndexed, new BasicStroke());
       for (int index = 0; index < funceva.length(); ++index) {
-        Color color = colorDataIndexed.getColor(index);
         Tensor curve = Transpose.of(Tensors.of(domain, basis.get(Tensor.ALL, index)));
-        new PathRender(color, 1, curve, false).render(geometricLayer, graphics);
+        new PathRender(colorStrokeIndexed.getColorStroke(index), curve, false).render(geometricLayer, graphics);
       }
     }
     {

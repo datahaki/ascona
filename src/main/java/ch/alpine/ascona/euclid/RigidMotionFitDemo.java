@@ -8,6 +8,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.R2Display;
 import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -79,7 +80,7 @@ class RigidMotionFitDemo extends EuclideanPlaneDemo {
           Tensor xya_1 = Se2CoveringGroup.INSTANCE.combine(solve, xya_0);
           ScalarTensorFunction scalarTensorFunction = Se2CoveringGroup.INSTANCE.curve(xya_0, xya_1);
           Tensor tensor = domain.maps(scalarTensorFunction);
-          new PathRender(Color.CYAN, 1.5, tensor, false).render(geometricLayer, graphics);
+          new PathRender(ColorStroke.CURVE, tensor, false).render(geometricLayer, graphics);
         }
       }
       graphics.setColor(Color.RED);

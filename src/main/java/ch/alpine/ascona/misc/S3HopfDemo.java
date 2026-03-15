@@ -1,12 +1,12 @@
 // code by jph
 package ch.alpine.ascona.misc;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -48,7 +48,7 @@ class S3HopfDemo extends ControlPointsDemo {
       for (Tensor xyz : getGeodesicControlPoints()) {
         S3Hopf s3Hopf = S3Hopf.northernHemisphereGauge(xyz);
         Tensor tensor = tuo.slash(domain.maps(s3Hopf::lift));
-        new PathRender(Color.BLUE, 1, tensor, true) //
+        new PathRender(ColorStroke.CURVE, tensor, true) //
             .render(geometricLayer, graphics);
       }
     }

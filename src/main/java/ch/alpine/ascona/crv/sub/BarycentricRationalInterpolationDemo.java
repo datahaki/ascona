@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.crv.sub;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -10,6 +9,7 @@ import java.util.List;
 import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -91,13 +91,13 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       {
         Tensor curve1 = Tensor.of(basis2.stream() //
             .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));
-        new PathRender(Color.RED, 1, manifoldDisplay.point2xy().slash(curve1), false).render(geometricLayer, graphics);
+        new PathRender(ColorStroke.SECONDARY_CURVE, manifoldDisplay.point2xy().slash(curve1), false).render(geometricLayer, graphics);
       }
       Tensor basis1 = domain.maps(BarycentricRationalInterpolation.of(knots, param.degree));
       {
         Tensor curve2 = Tensor.of(basis1.stream() //
             .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));
-        new PathRender(Color.BLUE, 1, manifoldDisplay.point2xy().slash(curve2), false) //
+        new PathRender(ColorStroke.CURVE, manifoldDisplay.point2xy().slash(curve2), false) //
             .render(geometricLayer, graphics);
       }
       if (param.basis) {
