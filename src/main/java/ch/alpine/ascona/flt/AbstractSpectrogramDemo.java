@@ -2,7 +2,6 @@
 package ch.alpine.ascona.flt;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -44,9 +43,6 @@ import ch.alpine.tensor.qty.UnitSystem;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
-  private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
-  private static final Color COLOR_SHAPE = new Color(160, 160, 160, 192);
-
   @ReflectionMarker
   static class SpecParam {
     public Boolean diff = true;

@@ -9,7 +9,6 @@ import java.util.List;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.AxesRender;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -88,10 +87,6 @@ class ClothoidEvolutionDemo extends ControlPointsDemo {
       graphics.draw(geometricLayer.toPath2D(clothoidTransition.linearized(param.beta)));
       double split = 0.5 + 0.1 * SimplexContinuousNoise.FUNCTION.at(time, index);
       beg = clothoidTransition.clothoid().apply(RealScalar.of(split));
-    }
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderIndexP();
     }
   }
 

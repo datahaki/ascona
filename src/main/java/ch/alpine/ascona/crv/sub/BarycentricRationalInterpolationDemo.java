@@ -10,7 +10,6 @@ import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorStroke;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -117,10 +116,6 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
           show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, HEIGHT, WIDTH, HEIGHT));
         }
       }
-    }
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderIndexP();
     }
   }
 

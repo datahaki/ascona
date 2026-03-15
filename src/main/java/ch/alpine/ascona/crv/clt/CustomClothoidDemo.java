@@ -9,7 +9,6 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import ch.alpine.ascony.ren.ColorStrokeIndexed;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListPlot;
@@ -76,10 +75,6 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
       }
     }
     // ---
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
-      leversRender.renderIndexP();
-    }
     Show show = ClothoidTangentDefectShow.of(clothoidContext, clip).getShow();
     show.setPlotLabel(params);
     Tensor lambdas = clothoidSolutions.lambdas();

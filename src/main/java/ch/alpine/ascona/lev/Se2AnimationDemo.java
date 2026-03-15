@@ -56,7 +56,7 @@ class Se2AnimationDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.DELEGATED;
+    return ControlPointType.CURVYHIDE;
   }
 
   private static Tensor random(double toc, int index) {

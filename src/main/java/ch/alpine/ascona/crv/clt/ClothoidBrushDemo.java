@@ -9,7 +9,6 @@ import java.awt.geom.Path2D;
 import java.util.Objects;
 
 import ch.alpine.ascony.ren.GridRender;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
@@ -119,10 +118,6 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
         geometricLayer.popMatrix();
         graphics.setStroke(new BasicStroke());
       }
-    }
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay(), sequence, null, geometricLayer, graphics);
-      leversRender.renderIndexP();
     }
   }
 

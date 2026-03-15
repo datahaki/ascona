@@ -9,7 +9,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -72,8 +71,6 @@ class GeodesicMeanFilterDemo extends ControlPointsDemo {
     Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
     new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
     manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
-    LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-    leversRender.renderIndexP();
   }
 
   static void main() {

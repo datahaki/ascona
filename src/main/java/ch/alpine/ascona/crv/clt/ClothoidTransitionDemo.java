@@ -10,7 +10,6 @@ import java.awt.geom.Path2D;
 import ch.alpine.ascony.api.RnLineTrim;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPair;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -35,7 +34,6 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 class ClothoidTransitionDemo extends ClothoidSequenceDemo {
   @ReflectionMarker
   static class Param {
-    public Boolean ctrl = true;
     @FieldSlider
     @FieldClip(min = "0.01", max = "1")
     public Scalar beta = RealScalar.of(0.1);
@@ -99,10 +97,6 @@ class ClothoidTransitionDemo extends ClothoidSequenceDemo {
     }
     if (param.plot) {
       show.render_autoIndent(graphics, new Rectangle(0, 0, 400, 300));
-    }
-    if (param.ctrl) {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      leversRender.renderIndexP();
     }
   }
 

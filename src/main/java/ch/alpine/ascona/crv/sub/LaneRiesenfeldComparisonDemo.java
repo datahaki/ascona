@@ -11,7 +11,6 @@ import ch.alpine.ascona.crv.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorStrokeIndexed;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -97,10 +96,6 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLORS, new BasicStroke());
     new PathRender(colorStrokeIndexed.getColorStroke(index), render, false) //
         .render(geometricLayer, graphics);
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderIndexP();
-    }
     return refined;
   }
 

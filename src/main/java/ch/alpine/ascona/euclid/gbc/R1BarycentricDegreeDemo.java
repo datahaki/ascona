@@ -11,7 +11,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.ColorStrokeIndexed;
 import ch.alpine.ascony.ren.GridRender;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -104,10 +103,6 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.get(Tensor.ALL, index)));
         new PathRender(colorStrokeIndexed.getColorStroke(index), curve, false).render(geometricLayer, graphics);
       }
-    }
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderIndexP();
     }
   }
 

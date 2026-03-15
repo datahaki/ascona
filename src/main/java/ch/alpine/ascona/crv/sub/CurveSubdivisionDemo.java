@@ -15,7 +15,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
@@ -87,10 +86,6 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
     Tensor control = getGeodesicControlPoints();
     int levels = param.refine;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderIndexP();
-    }
     try {
       Tensor refined = param.scheme.refine(manifoldDisplay, control, levels, cyclic);
       Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);

@@ -76,7 +76,7 @@ class OrderingDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.DELEGATED;
+    return ControlPointType.HEAD_TAIL;
   }
 
   private void shuffle() {
@@ -121,7 +121,6 @@ class OrderingDemo extends ControlPointsDemo {
               .mapToObj(sequence::get)), //
           origin, geometricLayer, graphics);
       leversRender.renderLevers();
-      leversRender.renderOrigin();
       leversRender.renderIndexX();
     }
   }

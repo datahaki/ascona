@@ -11,7 +11,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
@@ -96,10 +95,6 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
           .render(geometricLayer, graphics);
       if (levels < 5)
         manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
-      {
-        LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-        leversRender.renderIndexP();
-      }
       param.cp.spawnXY(manifoldDisplay, euclidXY, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     }

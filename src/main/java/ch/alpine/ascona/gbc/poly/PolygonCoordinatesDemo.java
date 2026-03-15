@@ -96,7 +96,6 @@ class PolygonCoordinatesDemo extends ControlPointsDemo {
     LeversRender leversRender = LeversRender.of( //
         manifoldDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
     leversRender.renderSurfaceP();
-    leversRender.renderIndexP();
   }
 
   public void spun() {

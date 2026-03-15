@@ -62,7 +62,7 @@ class LogarithmDemo extends ControlPointsDemo {
 
   @Override
   protected ControlPointType controlPointType() {
-    return ControlPointType.DELEGATED;
+    return ControlPointType.CURVYHIDE;
   }
 
   @Override

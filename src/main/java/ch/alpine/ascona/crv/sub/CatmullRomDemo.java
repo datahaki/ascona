@@ -11,7 +11,6 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -80,10 +79,6 @@ class CatmullRomDemo extends PointSequenceDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     final int levels = param.refine;
     final Tensor control = getGeodesicControlPoints();
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
-      leversRender.renderIndexP();
-    }
     if (4 <= control.length()) {
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();

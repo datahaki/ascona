@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascona.decim;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
@@ -23,8 +22,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.img.ColorDataIndexed;
-import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
@@ -32,7 +29,6 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 /** playground for curve decimation */
 class DecimationDemo extends ControlPointsDemo {
-
   public DecimationDemo() {
     Distribution dX = UniformDistribution.of(-3, 3);
     Distribution dY = NormalDistribution.of(0, .3);

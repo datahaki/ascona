@@ -22,7 +22,6 @@ import ch.alpine.ascony.msh.MatrixArray;
 import ch.alpine.ascony.msh.Meshgrid;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.ColorPair;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.bridge.fig.Show;
@@ -84,10 +83,6 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
     ColorDataGradient colorDataGradient = scatteredSetParam.spinnerColorData;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
-    {
-      LeversRender leversRender = LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
-      leversRender.renderIndexP();
-    }
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
