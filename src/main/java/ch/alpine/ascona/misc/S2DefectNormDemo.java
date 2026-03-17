@@ -1,10 +1,8 @@
 // code by jph
 package ch.alpine.ascona.misc;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,14 +45,12 @@ import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 class S2DefectNormDemo extends ControlPointsDemo {
-  private static final Stroke STROKE = //
-      new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final Tensor INITIAL = Tensors.fromString("{{-0.5, 0, 0}, {0.5, 0, 0}, {0, 0.5, 0}, {0, -0.5, 0}}").unmodifiable();
 
   @ReflectionMarker
   static class Param {
-    @FieldSelectionArray({ "20", "30", "50", "75", "100", "150", "200", "250" })
-    public Integer resolution = 20;
+    @FieldSelectionArray({ "10", "20", "30", "50", "75", "100", "150", "200", "250" })
+    public Integer imgres = 20;
     @FieldLabel("color data gradient")
     public ColorDataGradients colorDataGradients = ColorDataGradients.PARULA;
     public ColorDataGradients cdg = ColorDataGradients.EMBER;
@@ -115,22 +111,20 @@ class S2DefectNormDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     TSF tsf = new TSF();
-    int resolution = param.resolution;
     Show show = new Show();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(new TSF(), DoubleScalar.INDETERMINATE);
     CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
-    Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, resolution);
+    Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param.imgres);
     Showable showable = ImagePlot.of(ImageFormat.of(Rescale.of(raster).maps(param.colorDataGradients)), cbb);
+    showable.setLabel("norm of mean defect");
     show.add(showable);
-    if (param.vector)
-      show.add(VectorPlot.of(p -> arrow(tsf, p), cbb, param.cdg));
+    if (param.vector) {
+      VectorPlot vectorPlot = VectorPlot.of(p -> arrow(tsf, p), cbb, param.cdg);
+      vectorPlot.setResolution(param.imgres / 2);
+      show.add(vectorPlot);
+    }
     show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
-    graphics.setStroke(STROKE);
-    // Tensor ms = Tensor.of(GEODESIC_DOMAIN.map(scalarTensorFunction).stream().map(manifoldDisplay::toPoint));
-    graphics.setColor(new Color(192, 192, 192));
-    // graphics.draw(geometricLayer.toPath2D(ms));
-    graphics.setStroke(new BasicStroke());
     // ---
     Tensor mean = manifoldDisplay.homogeneousSpace().biinvariantMean().optional(tsf.sequence, tsf.weights).orElse(null);
     if (Objects.isNull(mean)) {

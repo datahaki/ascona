@@ -54,6 +54,7 @@ class LineDistanceDemo extends ControlPointsDemo {
     super(param = new Param());
     geometricComponent().setRotatable(false);
     // ---
+    addChangeListener(() -> setControlPointsSe2(INITIAL));
     setControlPointsSe2(INITIAL);
     // ---
     Tensor pvm = PvmBuilder.rhs().setOffset(400, 400).setPerPixel(100).digest();
