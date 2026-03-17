@@ -36,12 +36,10 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 // FIXME ASCONA SPIN
 final class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
   private final GenesisDequeParam dequeGenesisProperties = new GenesisDequeParam();
-  private final List<LogWeightings> list;
 
   // FIXME ASCONA the class structure is not correct, since log weighting is empty and not visible
   public PlanarScatteredSetCoordinateDemo() {
-    super(list = List.of(LogWeightings.WEIGHTING));
-    fieldsEditor(list).addUniversalListener(this::recompute);
+    super(List.of(LogWeightings.WEIGHTING));
     {
       FieldsEditor fieldsEditor = ToolbarFieldsEditor.addToComponent(dequeGenesisProperties, jToolBar());
       fieldsEditor.addUniversalListener(this::recompute);

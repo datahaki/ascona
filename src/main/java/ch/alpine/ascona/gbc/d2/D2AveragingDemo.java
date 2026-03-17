@@ -56,7 +56,7 @@ final class D2AveragingDemo extends ControlPointsDemo {
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
     public Integer resolution = 50;
     @FieldSlider
-    @FieldClip(min = "0.001", max = "0.2")
+    @FieldClip(min = "0.001", max = "1")
     public Scalar radius = RealScalar.of(0.1);
     public ColorDataGradients cdg = ColorDataGradients.PARULA;
   }

@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.gbc.d2;
+package ch.alpine.ascona.def;
 
 import java.util.List;
 
@@ -7,43 +7,32 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.MovingDomain2D;
+import ch.alpine.ascony.msh.RnFittedMovingDomain2D;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
-import ch.alpine.sophis.var.VariogramFunctions;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.api.ScalarUnaryOperator;
 
-class DeformationDemo extends AbstractDeformationDemo {
+class R2MlsDemo extends AbstractDeformationDemo {
   @ReflectionMarker
   static class Param1 {
-    public LogWeightings logWeightings = LogWeightings.COORDINATE;
-    public Biinvariants biinvariants = Biinvariants.METRIC;
-    public VariogramFunctions vf = VariogramFunctions.INVERSE_POWER;
-    public Scalar beta = RealScalar.TWO;
     @FieldSelectionArray({ "20", "30", "50" })
     public Integer refine = 20;
-    public Scalar s2z = RealScalar.of(1);
+    public Boolean r2Mls = false;
     @FieldFuse
     public transient Boolean snap = true; // true intentional
-
-    public ScalarUnaryOperator variogram() {
-      return vf.of(beta);
-    }
   }
 
   private final Param1 param1;
-  // ---
   /** in coordinate specific to geodesic display */
   private Tensor movingOrigin;
 
-  protected DeformationDemo() {
+  public R2MlsDemo() {
     super(param1 = new Param1());
     fieldsEditor(param1).addUniversalListener(this::recompute);
     // ---
@@ -53,7 +42,7 @@ class DeformationDemo extends AbstractDeformationDemo {
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.DEFORM_2D;
+    return ManifoldDisplays.R2_ONLY;
   }
 
   @Override
@@ -68,7 +57,7 @@ class DeformationDemo extends AbstractDeformationDemo {
     recompute();
   }
 
-  private void recompute() {
+  private final void recompute() {
     if (param1.snap) {
       param1.snap = false;
       movingOrigin = getGeodesicControlPoints();
@@ -76,19 +65,22 @@ class DeformationDemo extends AbstractDeformationDemo {
     movingDomain2D = updateMovingDomain2D(param1.refine);
   }
 
-  private Sedarim operator(Tensor sequence) {
-    Manifold manifold = manifoldDisplay().manifold();
-    return param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), param1.variogram(), sequence);
-  }
-
-  /** @return method to compute mean (for instance approximation instead of exact mean) */
   private MovingDomain2D updateMovingDomain2D(int res) {
+    Biinvariants biinvariants = Biinvariants.METRIC;
+    Manifold manifold = manifoldDisplay().manifold();
+    if (param1.r2Mls) {
+      Sedarim sedarim = LogWeightings.WEIGHTING.sedarim(biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), movingOrigin);
+      Tensor weights = updateWeights(movingOrigin, res, null, sedarim);
+      Tensor domain = updateWeights(movingOrigin, res, null, t -> t);
+      return new RnFittedMovingDomain2D(movingOrigin, weights, domain);
+    }
+    Sedarim sedarim = LogWeightings.COORDINATE.sedarim(biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), movingOrigin);
+    Tensor weights = updateWeights(movingOrigin, res, null, sedarim);
     BiinvariantMean biinvariantMean = manifoldDisplay().homogeneousSpace().biinvariantMean();
-    Tensor weights = updateWeights(movingOrigin, res, param1.s2z, operator(movingOrigin));
     return new AveragedMovingDomain2D(weights, biinvariantMean, manifoldDisplay().indetPoint());
   }
 
   static void main() {
-    new DeformationDemo().runStandalone();
+    new R2MlsDemo().runStandalone();
   }
 }

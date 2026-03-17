@@ -1,12 +1,10 @@
 // code by jph
 package ch.alpine.ascona.gbc.d2;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,9 +43,6 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDemo {
-  private static final Stroke STROKE = //
-      new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
-
   public static List<LogWeightings> list() {
     List<LogWeightings> list = new ArrayList<>();
     // list.addAll(List.of(PolygonCoordinates.values()));
