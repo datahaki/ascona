@@ -9,6 +9,7 @@ import ch.alpine.ascony.cls.Classification;
 import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -16,9 +17,7 @@ import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
-import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
@@ -42,17 +41,11 @@ class ClassificationDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param1 {
-    @FieldSelectionCallback("biinvariants")
-    public Biinvariants biinvariants = Biinvariants.USANCE;
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.okay();
     public ColorDataLists cdg = ColorDataLists._097;
     public Boolean connect = true;
     public Boolean weights = true;
     public Labels labels = Labels.ARG_MIN;
-
-    @ReflectionMarker
-    public List<Biinvariants> biinvariants() {
-      return Biinvariants.OKAY;
-    }
   }
 
   private final Param0 param0;
@@ -93,7 +86,7 @@ class ClassificationDemo extends ControlPointsDemo {
     Tensor origin = getGeodesicControlPoints().get(0);
     Manifold manifold = manifoldDisplay.manifold();
     // ---
-    Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), null, sequence);
+    Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariantsParam.biinvariants.ofSafe(manifold), null, sequence);
     Tensor weights = sedarim.sunder(origin);
     // leversRender.renderInfluenceX(ColorDataGradients.JET);
     // Tensor influence = new HsInfluence( //

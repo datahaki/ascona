@@ -13,6 +13,7 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -24,7 +25,6 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.DoubleScalar;
@@ -52,7 +52,7 @@ final class D2AveragingDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param {
     public LogWeightings logWeightings = LogWeightings.LAGRAINATE;
-    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.fast();
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
     public Integer resolution = 50;
     @FieldSlider
@@ -106,7 +106,7 @@ final class D2AveragingDemo extends ControlPointsDemo {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
         Manifold manifold = manifoldDisplay.manifold();
         TensorScalarFunction tensorScalarFunction = param.logWeightings.function( //
-            param.biinvariants.ofSafe(manifold), //
+            param.biinvariantsParam.biinvariants.ofSafe(manifold), //
             InversePowerVariogram.of(2), sequence, values);
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(t -> Round._1.apply(tensorScalarFunction.apply(t)), DoubleScalar.INDETERMINATE);

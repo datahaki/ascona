@@ -7,10 +7,10 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.MovingDomain2D;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.var.VariogramFunctions;
 import ch.alpine.sophus.api.Manifold;
@@ -24,7 +24,7 @@ class DeformationDemo extends AbstractDeformationDemo {
   @ReflectionMarker
   static class Param1 {
     public LogWeightings logWeightings = LogWeightings.COORDINATE;
-    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.okay();
     public VariogramFunctions vf = VariogramFunctions.INVERSE_POWER;
     public Scalar beta = RealScalar.TWO;
     @FieldSelectionArray({ "20", "30", "50" })
@@ -78,7 +78,7 @@ class DeformationDemo extends AbstractDeformationDemo {
 
   private Sedarim operator(Tensor sequence) {
     Manifold manifold = manifoldDisplay().manifold();
-    return param1.logWeightings.sedarim(param1.biinvariants.ofSafe(manifold), param1.variogram(), sequence);
+    return param1.logWeightings.sedarim(param1.biinvariantsParam.biinvariants.ofSafe(manifold), param1.variogram(), sequence);
   }
 
   /** @return method to compute mean (for instance approximation instead of exact mean) */

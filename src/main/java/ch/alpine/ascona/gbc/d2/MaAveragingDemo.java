@@ -11,6 +11,7 @@ import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.Show;
@@ -20,7 +21,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.math.DistanceMatrix;
 import ch.alpine.sophis.var.InversePowerVariogram;
@@ -58,7 +58,7 @@ class MaAveragingDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param1 {
-    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.okay();
     public Boolean type = false;
     @FieldSelectionArray({ "30", "40", "50", "75", "100", "150", "200", "250" })
     public Integer resolution = 50;
@@ -119,7 +119,7 @@ class MaAveragingDemo extends ControlPointsDemo {
           TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(tensorMetric.distance(p, q));
           dist = DistanceMatrix.of(sequence, msq);
         }
-        Sedarim sedarim = param1.biinvariants.ofSafe(homogeneousSpace).coordinate(InversePowerVariogram.of(2), sequence);
+        Sedarim sedarim = param1.biinvariantsParam.biinvariants.ofSafe(homogeneousSpace).coordinate(InversePowerVariogram.of(2), sequence);
         TensorScalarFunction tsf = p -> {
           Tensor b = sedarim.sunder(p);
           return Abs.FUNCTION.apply((Scalar) dist.dot(b).dot(b));

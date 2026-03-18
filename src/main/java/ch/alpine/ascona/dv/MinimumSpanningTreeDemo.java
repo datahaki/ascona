@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -21,10 +22,8 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
-import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.util.DisjointSets;
-import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.fit.IntUndirectedEdge;
 import ch.alpine.sophis.fit.MinimumSpanningTree;
 import ch.alpine.sophus.api.GeodesicSpace;
@@ -65,17 +64,11 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param1 {
-    @FieldSelectionCallback("biinvariants")
-    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.okay();
     @FieldClip(min = "1", max = "8")
     public Integer refine = 2;
     public ColorDataLists colorDataLists = ColorDataLists._097;
     public ColorDataGradients cdg = ColorDataGradients.TEMPERATURE_LIGHT;
-
-    @ReflectionMarker
-    public List<Biinvariants> biinvariants() {
-      return Biinvariants.OKAY;
-    }
   }
 
   private final Param0 param0;
@@ -116,7 +109,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
     final int splits = param1.refine;
     DisjointSets disjointSets = DisjointSets.allocate(sequence.length());
     if (0 < sequence.length()) {
-      Tensor matrix = StaticHelper.distanceMatrix(param1.biinvariants.ofSafe(manifold), sequence);
+      Tensor matrix = StaticHelper.distanceMatrix(param1.biinvariantsParam.biinvariants.ofSafe(manifold), sequence);
       Dimension dimension = geometricComponent().getSize();
       Show show = new Show();
       show.add(MatrixPlot.of(matrix, param1.cdg, false));

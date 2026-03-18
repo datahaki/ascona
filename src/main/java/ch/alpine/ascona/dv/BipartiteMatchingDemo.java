@@ -10,6 +10,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -18,9 +19,7 @@ import ch.alpine.bridge.fig.plt.MatrixPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
-import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.ts.Transition;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.api.Manifold;
@@ -34,14 +33,7 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 class BipartiteMatchingDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param {
-    @FieldSelectionCallback("biinvariants")
-    public Biinvariants biinvariants = Biinvariants.METRIC;
-
-    @ReflectionMarker
-    public static List<Biinvariants> biinvariants() {
-      return Biinvariants.OKAY;
-    }
-
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.okay();
     @FieldSelectionArray({ "5", "10", "20", "50" })
     public Integer n = 5;
     @FieldSelectionArray({ "0", "5", "10", "20", "50" })
@@ -82,7 +74,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
     Tensor control = getGeodesicControlPoints();
     if (0 < control.length()) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor matrix = param.biinvariants.ofSafe(manifold).relative_distances(ground).sunder().slash(control);
+      Tensor matrix = param.biinvariantsParam.biinvariants.ofSafe(manifold).relative_distances(ground).sunder().slash(control);
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
       int[] matching = bipartiteMatching.matching();
       graphics.setColor(Color.RED);

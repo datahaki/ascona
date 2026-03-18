@@ -12,15 +12,14 @@ import java.util.stream.IntStream;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
-import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
@@ -45,16 +44,10 @@ class OrderingDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param1 {
-    @FieldSelectionCallback("biinvariants")
-    public Biinvariants biinvariants = Biinvariants.USANCE;
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.okay();
     public ColorDataGradients cdg = ColorDataGradients.THERMOMETER;
     @FieldSelectionArray({ "1", "3", "5", "8" })
     public Integer closest = 1;
-
-    @ReflectionMarker
-    public List<Biinvariants> biinvariants() {
-      return Biinvariants.OKAY;
-    }
   }
 
   private final Param0 param0;
@@ -89,7 +82,7 @@ class OrderingDemo extends ControlPointsDemo {
     Tensor origin = getGeodesicControlPoints().get(0);
     Manifold manifold = manifoldDisplay.manifold();
     // ---
-    Tensor weights = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), null, sequence) //
+    Tensor weights = LogWeightings.DISTANCES.sedarim(param1.biinvariantsParam.biinvariants.ofSafe(manifold), null, sequence) //
         .sunder(origin);
     // ---
     int[] integers = Ordering.INCREASING.of(weights);

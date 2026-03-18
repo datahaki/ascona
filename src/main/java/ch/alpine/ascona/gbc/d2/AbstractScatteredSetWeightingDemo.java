@@ -6,6 +6,7 @@ import java.util.Map;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -32,7 +33,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     public VariogramFunctions variogramFunctions = VariogramFunctions.POWER;
     @FieldSelectionArray({ "0", "1/2", "1", "3/2", "7/4", "2", "5/2", "3" })
     public Scalar beta = RealScalar.of(1);
-    public Biinvariants biinvariants = Biinvariants.USANCE;
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.fast();
 
     public WeightingsParam(List<LogWeightings> list) {
       this.list = list;
@@ -44,7 +45,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     }
 
     public Sedarim operator(Manifold manifold, Tensor sequence) {
-      return logWeightings.sedarim(biinvariants.ofSafe(manifold), variogram(), sequence);
+      return logWeightings.sedarim(biinvariantsParam.biinvariants.ofSafe(manifold), variogram(), sequence);
     }
 
     protected final ScalarUnaryOperator variogram() {
@@ -52,7 +53,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     }
 
     protected final TensorScalarFunction function(Manifold manifold, Tensor sequence, Tensor values) {
-      return logWeightings.function(biinvariants.ofSafe(manifold), variogram(), sequence, values);
+      return logWeightings.function(biinvariantsParam.biinvariants.ofSafe(manifold), variogram(), sequence, values);
     }
   }
 
@@ -116,7 +117,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Manifold manifold = manifoldDisplay.manifold();
     Map<Biinvariants, Biinvariant> map = Biinvariants.all(manifold);
-    return map.getOrDefault(weightingsParam.biinvariants, Biinvariants.USANCE.ofSafe(manifold));
+    return map.getOrDefault(weightingsParam.biinvariantsParam.biinvariants, Biinvariants.USANCE.ofSafe(manifold));
   }
 
   protected void recompute() {

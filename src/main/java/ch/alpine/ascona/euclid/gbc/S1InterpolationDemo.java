@@ -8,6 +8,7 @@ import java.util.List;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.reg.RegionRenders;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
@@ -44,17 +45,11 @@ public class S1InterpolationDemo extends ControlPointsDemo {
   static class Param {
     @FieldSelectionCallback("logWeightings")
     public LogWeightings logWeightings = LogWeightings.WEIGHTING;
-    @FieldSelectionCallback("biinvariants")
-    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.fast();
 
     @ReflectionMarker
     public List<LogWeightings> logWeightings() {
       return LogWeightings.noDistances();
-    }
-
-    @ReflectionMarker
-    public List<Biinvariants> biinvariants() {
-      return Biinvariants.FAST;
     }
   }
 
@@ -106,12 +101,13 @@ public class S1InterpolationDemo extends ControlPointsDemo {
       Tensor spherics = domain.maps(AngleVector::of);
       // ---
       ScalarUnaryOperator suo = param.logWeightings.variogramForInterpolation();
+      Biinvariants biinvariants = param.biinvariantsParam.biinvariants;
       if (param.logWeightings.forceMetric() && //
-          !param.biinvariants.equals(Biinvariants.METRIC)) {
-        param.biinvariants = Biinvariants.METRIC;
+          !biinvariants.equals(Biinvariants.METRIC)) {
+        biinvariants = Biinvariants.METRIC;
         fieldsEditor(param).updateJComponents();
       }
-      Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), suo, sequence);
+      Sedarim sedarim = param.logWeightings.sedarim(biinvariants.ofSafe(manifold), suo, sequence);
       try {
         ScalarTensorFunction scalarTensorFunction = //
             point -> sedarim.sunder(AngleVector.of(point));

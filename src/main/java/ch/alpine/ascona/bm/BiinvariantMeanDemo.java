@@ -59,7 +59,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param0 {
-    public Biinvariants biinvariants = Biinvariants.USANCE;
+    public Biinvariants biinvariants = Biinvariants.METRIC;
     public Boolean median = true;
     public Boolean vehicle = false;
   }

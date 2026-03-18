@@ -16,6 +16,7 @@ import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -25,9 +26,7 @@ import ch.alpine.bridge.fig.plt.ImagePlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
-import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
@@ -57,18 +56,12 @@ class ClassificationImageDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param1 {
-    @FieldSelectionCallback("biinvariants")
-    public Biinvariants biinvariants = Biinvariants.USANCE;
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.fast();
     public Labels labels = Labels.ARG_MIN;
     @FieldSelectionArray({ "50", "75", "100", "200" })
     public Integer res = 50;
     public ColorDataLists cdg = ColorDataLists._097;
     public ClassificationImage classificationImage = ClassificationImage.BLENDED;
-
-    @ReflectionMarker
-    public List<Biinvariants> biinvariants() {
-      return Biinvariants.FAST;
-    }
   }
 
   private final Param0 param0;
@@ -128,7 +121,7 @@ class ClassificationImageDemo extends ControlPointsDemo {
     Manifold manifold = manifoldDisplay.manifold();
     Objects.requireNonNull(vector);
     Classification classification = param1.labels.apply(vector);
-    Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariants.ofSafe(manifold), null, getGeodesicControlPoints());
+    Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariantsParam.biinvariants.ofSafe(manifold), null, getGeodesicControlPoints());
     ColorDataLists colorDataLists = param1.cdg;
     TensorUnaryOperator tensorUnaryOperator = //
         param1.classificationImage.operator(classification, sedarim, colorDataLists.cyclic());

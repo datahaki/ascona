@@ -12,6 +12,7 @@ import java.util.Objects;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.Show;
@@ -20,9 +21,7 @@ import ch.alpine.bridge.fig.plt.MatrixPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
-import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.fit.IntUndirectedEdge;
 import ch.alpine.sophis.fit.MinimumSpanningTree;
 import ch.alpine.sophis.fit.Tsp2OptHeuristic;
@@ -47,17 +46,6 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
   }
 
   @ReflectionMarker
-  static class Param1 {
-    @FieldSelectionCallback("biinvariants")
-    public Biinvariants biinvariants = Biinvariants.METRIC;
-
-    @ReflectionMarker
-    public static List<Biinvariants> biinvariants() {
-      return Biinvariants.OKAY;
-    }
-  }
-
-  @ReflectionMarker
   static class Param2 {
     @FieldSelectionArray({ "10", "20", "40" })
     public Integer factor = 10;
@@ -66,7 +54,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
   }
 
   private final Param0 param0;
-  private final Param1 param1;
+  public final BiinvariantsParam biinvariantsParam;
   private final Param2 param2;
   // ---
   private Tensor control;
@@ -78,9 +66,9 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
   private int total = 0;
 
   public Tsp2OptHeuristicDemo() {
-    super(param0 = new Param0(), param1 = new Param1(), param2 = new Param2());
+    super(param0 = new Param0(), biinvariantsParam = BiinvariantsParam.okay(), param2 = new Param2());
     fieldsEditor(param0).addUniversalListener(this::shuffle);
-    fieldsEditor(param1).addUniversalListener(this::distances);
+    fieldsEditor(biinvariantsParam).addUniversalListener(this::distances);
     addChangeListener(this::shuffle);
     setManifoldDisplay(ManifoldDisplays.R2);
   }
@@ -101,7 +89,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
 
   private void distances() {
     Manifold manifold = manifoldDisplay().manifold();
-    matrix = StaticHelper.distanceMatrix_symmetrized(param1.biinvariants.ofSafe(manifold), control);
+    matrix = StaticHelper.distanceMatrix_symmetrized(biinvariantsParam.biinvariants.ofSafe(manifold), control);
     list = MinimumSpanningTree.of(matrix);
     tsp2OptHeuristic = Objects.isNull(tsp2OptHeuristic) //
         ? Tsp2OptHeuristic.of(matrix)

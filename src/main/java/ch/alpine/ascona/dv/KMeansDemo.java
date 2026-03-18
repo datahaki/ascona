@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.win.ControlPointType;
@@ -18,7 +19,6 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.d2.alg.ConvexHull2D;
 import ch.alpine.sophis.dv.Biinvariant;
-import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.fit.KMeans;
 import ch.alpine.sophis.noise.SimplexContinuousNoise;
 import ch.alpine.sophus.api.MetricManifold;
@@ -57,8 +57,7 @@ class KMeansDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param1 {
-    @FieldSelectionArray({ "METRIC", "USANCE", "GARDEN" })
-    public Biinvariants biinvariants = Biinvariants.METRIC;
+    public final BiinvariantsParam biinvariantsParam = BiinvariantsParam.fast();
     @FieldFuse
     public transient Boolean recomp = false;
   }
@@ -118,7 +117,7 @@ class KMeansDemo extends ControlPointsDemo {
   private void recomp() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    Biinvariant biinvariant = param1.biinvariants.ofSafe(homogeneousSpace);
+    Biinvariant biinvariant = param1.biinvariantsParam.biinvariants.ofSafe(homogeneousSpace);
     Tensor seeds = getGeodesicControlPoints();
     if (0 < seeds.length()) {
       timing = Timing.started();
