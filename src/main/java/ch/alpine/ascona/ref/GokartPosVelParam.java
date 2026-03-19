@@ -4,7 +4,7 @@ package ch.alpine.ascona.ref;
 import java.util.List;
 
 import ch.alpine.ascona.dat.GokartPosVel;
-import ch.alpine.ascony.dat.ControlPosVelSe2Hz;
+import ch.alpine.ascony.dat.Se2PosVelHz;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -25,7 +25,7 @@ public final class GokartPosVelParam {
     string = keys().getFirst();
   }
 
-  public ControlPosVelSe2Hz getPosVelHz() {
+  public Se2PosVelHz getPosVelHz() {
     return GokartPosVel.INSTANCE.get(string, limit);
   }
 }

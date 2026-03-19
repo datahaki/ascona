@@ -7,8 +7,8 @@ import java.nio.file.Path;
 import java.util.function.Function;
 
 import ch.alpine.ascona.dat.GokartPosVel;
-import ch.alpine.ascony.dat.ControlPosVelSe2;
-import ch.alpine.ascony.dat.ControlPosVelSe2Hz;
+import ch.alpine.ascony.dat.Se2PosVel;
+import ch.alpine.ascony.dat.Se2PosVelHz;
 import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.sophis.crv.d2.Curvature2D;
 import ch.alpine.sophis.math.Do;
@@ -45,9 +45,9 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
    * @param levels 4 */
   protected HermiteArrayShow(String name, Scalar period, int levels) {
     this.levels = Integers.requirePositive(levels);
-    ControlPosVelSe2Hz posVelHz = GokartPosVel.INSTANCE.get(name, 1000);
-    ControlPosVelSe2 dataT = posVelHz.controlPosVelSe2();
-    Tensor data = dataT.getGeodesicControlPoints(Se2Display.INSTANCE);
+    Se2PosVelHz posVelHz = GokartPosVel.INSTANCE.get(name, 1000);
+    Se2PosVel dataT = posVelHz.se2PosVel();
+    Tensor data = dataT.getHermiteControlPoints(Se2Display.INSTANCE);
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     Scalar rate = posVelHz.samplingRate();
     delta = QuantityMagnitude.SI().in("s").apply(period);

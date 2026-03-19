@@ -4,7 +4,7 @@ package ch.alpine.ascona.ref;
 import java.util.List;
 
 import ch.alpine.ascona.dat.GokartPos;
-import ch.alpine.ascony.dat.ControlPosSe2Hz;
+import ch.alpine.ascony.dat.Se2PosHz;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -26,7 +26,7 @@ public final class GokartPosParam {
     string = keys().contains(name) ? name : keys().getFirst();
   }
 
-  public ControlPosSe2Hz getPosHz() {
+  public Se2PosHz getPosHz() {
     return GokartPos.INSTANCE.get(string, limit);
   }
 }

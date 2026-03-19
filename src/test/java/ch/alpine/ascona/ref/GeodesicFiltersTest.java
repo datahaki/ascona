@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import ch.alpine.ascona.dat.GokartPos;
 import ch.alpine.ascona.dat.GokartPosVel;
 import ch.alpine.ascony.api.GeodesicFilters;
-import ch.alpine.ascony.dat.ControlPosSe2;
-import ch.alpine.ascony.dat.ControlPosSe2Hz;
-import ch.alpine.ascony.dat.ControlPosVelSe2Hz;
+import ch.alpine.ascony.dat.Se2Pos;
+import ch.alpine.ascony.dat.Se2PosHz;
+import ch.alpine.ascony.dat.Se2PosVelHz;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.sophis.flt.CenterFilter;
@@ -31,8 +31,8 @@ class GeodesicFiltersTest {
   @Test
   void testSimple() {
     List<String> lines = GokartPos.INSTANCE.keys();
-    ControlPosSe2Hz posHz = GokartPos.INSTANCE.get(lines.getFirst(), 250); // limit , 250
-    ControlPosSe2 control = posHz.controlPosSe2();
+    Se2PosHz posHz = GokartPos.INSTANCE.get(lines.getFirst(), 250); // limit , 250
+    Se2Pos control = posHz.se2Pos();
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     ScalarUnaryOperator smoothingKernel = WindowFunctions.GAUSSIAN.get();
@@ -56,8 +56,9 @@ class GeodesicFiltersTest {
   @Test
   void testTiming() {
     String name = "50Hz/20190701T170957_06.csv";
-    ControlPosVelSe2Hz posVelHz = GokartPosVel.INSTANCE.get(name, 100_000);
-    Tensor control = posVelHz.controlPosVelSe2().getGeodesicControlPoints(Se2Display.INSTANCE);
+    Se2PosVelHz controlPosVelSe2Hz = GokartPosVel.INSTANCE.get(name, 100_000);
+    Tensor control = controlPosVelSe2Hz.se2PosVel().getHermiteControlPoints(Se2Display.INSTANCE);
+    control = control.get(Tensor.ALL, 0); // keep only position
     ManifoldDisplay manifoldDisplay = Se2Display.INSTANCE;
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     ScalarUnaryOperator smoothingKernel = WindowFunctions.GAUSSIAN.get();

@@ -12,7 +12,7 @@ import java.util.Optional;
 import ch.alpine.ascona.dat.GokartPoseDatas;
 import ch.alpine.ascona.ref.GokartPosParam;
 import ch.alpine.ascony.api.BufferedImageSupplier;
-import ch.alpine.ascony.dat.ControlPosSe2Hz;
+import ch.alpine.ascony.dat.Se2PosHz;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
@@ -57,7 +57,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
 
   protected final GokartPosParam gokartPosParam;
   protected final SpecParam specParam;
-  private ControlPosSe2Hz posHz = null;
+  private Se2PosHz posHz = null;
 
   protected AbstractSpectrogramDemo(Object object) {
     this(new SpecParam(), object);
@@ -80,7 +80,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    final Tensor control = posHz.controlPosSe2().getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
+    final Tensor control = posHz.se2Pos().getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     boolean conv = specParam.conv;
     if (specParam.data) {

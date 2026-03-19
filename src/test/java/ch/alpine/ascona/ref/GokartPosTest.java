@@ -9,8 +9,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.alpine.ascona.dat.GokartPos;
-import ch.alpine.ascony.dat.ControlPosSe2;
-import ch.alpine.ascony.dat.ControlPosSe2Hz;
+import ch.alpine.ascony.dat.Se2Pos;
+import ch.alpine.ascony.dat.Se2PosHz;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.alg.ArrayQ;
@@ -25,8 +25,8 @@ class GokartPosTest {
   @ParameterizedTest
   @MethodSource("list")
   void testImport(String key) {
-    ControlPosSe2Hz posHz = GokartPos.INSTANCE.get(key, 1_000_000);
-    ControlPosSe2 tensor = posHz.controlPosSe2();
+    Se2PosHz posHz = GokartPos.INSTANCE.get(key, 1_000_000);
+    Se2Pos tensor = posHz.se2Pos();
     ArrayQ.require(tensor.points_se2());
     Scalar scalar = posHz.samplingRate();
     String number = key.substring(key.indexOf('/') + 1, key.indexOf("Hz"));

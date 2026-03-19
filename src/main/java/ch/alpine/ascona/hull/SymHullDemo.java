@@ -5,12 +5,10 @@ import java.awt.Container;
 import java.awt.Graphics2D;
 import java.util.List;
 
-import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.R3Display;
-import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.SurfaceMeshRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -29,13 +27,14 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 public class SymHullDemo implements ManipulateProvider, RenderInterface {
   public final SymParam hullParam = new SymParam();
   // ---
-  private final ManifoldDisplay manifoldDisplay = R3Display.INSTANCE;
   private Tensor tensor;
   private List<int[]> faces;
   private final GeometricComponent geometricComponent = new GeometricComponent();
 
   public SymHullDemo() {
     geometricComponent.addRenderInterface(this);
+    Tensor pvm = PvmBuilder.rhs().setPerPixel(RealScalar.of(200)).setOffset(300, 300).digest();
+    geometricComponent.setModel2Pixel(pvm);
   }
 
   @Override
@@ -50,8 +49,6 @@ public class SymHullDemo implements ManipulateProvider, RenderInterface {
     }
     faces = ConvexHull3D.of(tensor);
     Tensor rotate = this.tensor.dot(hullParam.rotParam.rotation());
-    LeversRender leversRender = LeversRender.of(manifoldDisplay, rotate, null, geometricLayer, graphics);
-    leversRender.renderSequence();
     SurfaceMesh surfaceMesh = new SurfaceMesh(rotate, faces);
     new SurfaceMeshRender(surfaceMesh, ColorDataGradients.AURORA).render(geometricLayer, graphics);
   }

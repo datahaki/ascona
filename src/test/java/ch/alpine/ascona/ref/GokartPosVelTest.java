@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import ch.alpine.ascona.dat.GokartPosVel;
-import ch.alpine.ascony.dat.ControlPosVelSe2Hz;
+import ch.alpine.ascony.dat.Se2PosVelHz;
 import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -26,8 +26,8 @@ class GokartPosVelTest {
   @ParameterizedTest
   @MethodSource("list")
   void testImport(String key) {
-    ControlPosVelSe2Hz posHz = GokartPosVel.INSTANCE.get(key, 1_000_000);
-    Tensor tensor = posHz.controlPosVelSe2().getGeodesicControlPoints(Se2Display.INSTANCE);
+    Se2PosVelHz posHz = GokartPosVel.INSTANCE.get(key, 1_000_000);
+    Tensor tensor = posHz.se2PosVel().getHermiteControlPoints(Se2Display.INSTANCE);
     ArrayQ.require(tensor);
     Scalar scalar = posHz.samplingRate();
     String number = key.substring(0, key.indexOf("Hz"));

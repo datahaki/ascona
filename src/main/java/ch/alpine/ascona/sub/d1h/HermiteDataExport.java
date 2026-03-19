@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import ch.alpine.ascona.dat.GokartPosVel;
-import ch.alpine.ascony.dat.ControlPosVelSe2Hz;
+import ch.alpine.ascony.dat.Se2PosVelHz;
 import ch.alpine.ascony.dis.Se2Display;
 import ch.alpine.sophis.api.CurveOperator;
 import ch.alpine.sophis.crv.d2.Curvature2D;
@@ -47,8 +47,8 @@ import ch.alpine.tensor.red.Nest;
   public HermiteDataExport(String name, Scalar period, int levels) throws IOException {
     this.levels = Integers.requirePositive(levels);
     folder = HomeDirectory.Ephemeral.mk_dirs(name);
-    ControlPosVelSe2Hz posVelHz = GokartPosVel.INSTANCE.get(name, 2000); // limit , 2_000);
-    Tensor data = posVelHz.controlPosVelSe2().getGeodesicControlPoints(Se2Display.INSTANCE);
+    Se2PosVelHz posVelHz = GokartPosVel.INSTANCE.get(name, 2000); // limit , 2_000);
+    Tensor data = posVelHz.se2PosVel().getHermiteControlPoints(Se2Display.INSTANCE);
     data.set(new So2Lift(), Tensor.ALL, 0, 2);
     {
       Export.of(folder.resolve("gndtrth.mathematica"), data);

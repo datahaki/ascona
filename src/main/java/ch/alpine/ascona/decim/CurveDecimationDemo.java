@@ -9,7 +9,7 @@ import java.util.List;
 
 import ch.alpine.ascona.dat.GokartPoseDatas;
 import ch.alpine.ascona.ref.GokartPosParam;
-import ch.alpine.ascony.dat.ControlPosSe2;
+import ch.alpine.ascony.dat.Se2Pos;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
@@ -92,7 +92,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   protected void updateState() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    ControlPosSe2 controlPointsSe2 = gokartPosParam.getPosHz().controlPosSe2();
+    Se2Pos controlPointsSe2 = gokartPosParam.getPosHz().se2Pos();
     control = param.filter(homogeneousSpace).apply(controlPointsSe2.getGeodesicControlPoints(manifoldDisplay));
   }
 

@@ -3,8 +3,8 @@ package ch.alpine.ascona.dat;
 
 import java.util.List;
 
-import ch.alpine.ascony.dat.ControlPosSe2;
-import ch.alpine.ascony.dat.ControlPosSe2Hz;
+import ch.alpine.ascony.dat.Se2Pos;
+import ch.alpine.ascony.dat.Se2PosHz;
 import ch.alpine.ascony.res.ResourceMapper;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -24,10 +24,10 @@ public enum GokartPos {
     return resourceMapper.list();
   }
 
-  public ControlPosSe2Hz get(String key, int limit) {
+  public Se2PosHz get(String key, int limit) {
     Tensor tensor = Tensor.of(resourceMapper.importResource(key).stream().limit(limit));
     /** @return quantity with unit Hz */
     Scalar samplingRate = Quantity.of(Mean.ofVector(Differences.of(tensor.get(Tensor.ALL, 0))).reciprocal(), "Hz");
-    return new ControlPosSe2Hz(new ControlPosSe2(EXTRACT_POS.slash(tensor)), samplingRate);
+    return new Se2PosHz(new Se2Pos(EXTRACT_POS.slash(tensor)), samplingRate);
   }
 }
