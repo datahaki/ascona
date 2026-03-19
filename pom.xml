@@ -22,7 +22,12 @@
 			<artifactId>ascony</artifactId>
 			<version>0.0.1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>io.github.datahaki</groupId>
+			<artifactId>qhull3</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
