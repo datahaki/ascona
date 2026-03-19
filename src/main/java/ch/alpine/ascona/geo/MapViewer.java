@@ -41,6 +41,9 @@ import ch.alpine.tensor.alg.Partition;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.io.Import;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.opt.nd.BoxRandomSample;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.UnitConvert;
 import ch.alpine.tensor.sca.Clip;
@@ -89,8 +92,8 @@ class MapViewer implements ManipulateProvider {
             lat_lon.set(tick, 0);
             TilePixel from = tilePixel.from(lat_lon);
             graphics.setColor(new Color(255, 255, 255, 128));
-            int x = dimension.width - 50; // (int) (from.absx() - origin.absx());
-            int y = (int) (from.absy() - origin.absy());
+            int x = dimension.width - 50;
+            int y = (int) (from.absY() - origin.absY());
             graphics.setStroke(new BasicStroke()); // thickness of outline
             graphics.setColor(Color.BLACK);
             RenderQuality.smoothLine(graphics, false);
@@ -110,9 +113,8 @@ class MapViewer implements ManipulateProvider {
             lat_lon.set(tick, 1);
             TilePixel from = tilePixel.from(lat_lon);
             graphics.setColor(new Color(255, 255, 255, 128));
-            int x = (int) (from.absx() - origin.absx());
+            int x = (int) (from.absX() - origin.absX());
             int y = dimension.height - 50;
-            // (int) (from.absy() - origin.absy());
             graphics.setStroke(new BasicStroke()); // thickness of outline
             graphics.setColor(Color.BLACK);
             graphics.drawLine(x, y - 10, x, y + 10);
@@ -121,8 +123,8 @@ class MapViewer implements ManipulateProvider {
         }
       }
       if (availability) {
-        TilePixel zoom = origin.zoom(1);
         MapImagesCache mapImagesCache = tileServers.cache();
+        TilePixel zoom = origin.zoom(1);
         graphics.setColor(new Color(255, 0, 0, 16));
         for (int ix = 0; ix < dimension.width * 2 + 256; ix += 256)
           for (int iy = 0; iy < dimension.height * 2 + 256; iy += 256) {
@@ -142,10 +144,10 @@ class MapViewer implements ManipulateProvider {
         for (Tensor seg : segments) {
           TilePixel beg = tilePixel.from(seg.get(0));
           TilePixel end = tilePixel.from(seg.get(1));
-          int p1x = (int) (beg.absx() - origin.absx());
-          int p1y = (int) (beg.absy() - origin.absy());
-          int p2x = (int) (end.absx() - origin.absx());
-          int p2y = (int) (end.absy() - origin.absy());
+          int p1x = (int) (beg.absX() - origin.absX());
+          int p1y = (int) (beg.absY() - origin.absY());
+          int p2x = (int) (end.absX() - origin.absX());
+          int p2y = (int) (end.absY() - origin.absY());
           graphics.drawLine(p1x, p1y, p2x, p2y);
         }
       }
@@ -190,7 +192,12 @@ class MapViewer implements ManipulateProvider {
   private final Tensor segments = segments();
 
   public MapViewer() {
-    tilePixel = TilePixel.from(7, Quantity.of(38.343373, "deg"), Quantity.of(-0.762800, "deg"));
+    CoordinateBoundingBox cbb = CoordinateBoundingBox.of( //
+        Clips.interval(Quantity.of(37, "deg"), Quantity.of(44, "deg")), //
+        Clips.interval(Quantity.of(-9, "deg"), Quantity.of(0, "deg")));
+    // Quantity.of(38.343373, "deg"), Quantity.of(-0.762800, "deg") // Aspe
+    BoxRandomSample boxRandomSample = new BoxRandomSample(cbb);
+    tilePixel = TilePixel.from(11, RandomSample.of(boxRandomSample));
     geoComponent.tilePixel = tilePixel;
   }
 

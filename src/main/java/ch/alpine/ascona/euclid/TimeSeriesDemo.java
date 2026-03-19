@@ -61,7 +61,6 @@ class TimeSeriesDemo extends EuclideanPlaneDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Dimension dimension = getSize();
     TimeSeries custom = TimeSeries.empty(param.rm.get());
     for (Tensor row : getGeodesicControlPoints()) {
       Scalar key = row.Get(0);
@@ -84,6 +83,7 @@ class TimeSeriesDemo extends EuclideanPlaneDemo {
     show.add(TsPlot.of(TsEntrywise.plus(timeSeries, custom))).setLabel("sum");
     show.add(TsPlot.of(product)).setLabel("times");
     show.add(TsPlot.of(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
+    Dimension dimension = getSize();
     Optional<Rectangle> optional = Show.optionalDefaultInsets(dimension, graphics.getFont().getSize());
     if (optional.isPresent()) {
       Rectangle rectangle = optional.orElseThrow();

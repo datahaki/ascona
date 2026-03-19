@@ -2,6 +2,8 @@
 package ch.alpine.ascona.euclid;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.msh.ArrayFunction;
@@ -26,6 +28,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -50,8 +53,9 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     public Integer depth = 5;
     @FieldFuse
     public Boolean shuffle = false;
-    @FieldSelectionArray({ "20", "30", "40", "50", "60" })
-    public Integer resolution = 30;
+    public Boolean radius = true;
+    @FieldSelectionArray({ "20", "30", "40", "50", "60", "100", "150", "200" })
+    public transient Integer resolution = 30;
     public ColorDataGradients cdg = ColorDataGradients.HUE;
   }
 
@@ -68,9 +72,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
       }
     });
     shuffle();
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
-    setGeodesicControlPoints(RandomSample.of(randomSampleInterface, 3));
+    setGeodesicControlPoints(RandomSample.of(manifoldDisplay().randomSampleInterface(), 3));
     geometricComponent().setRotatable(false);
   }
 
@@ -89,58 +91,48 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor seeds = V2S.slash(getGeodesicControlPoints());
     final int length = seeds.length();
+    final Tensor _zeros = complexZeros.extract(0, length).unmodifiable();
     if (2 < length) {
-      Tensor _zeros = complexZeros.extract(0, length);
       TensorUnaryOperator tuo = tv -> {
         Scalar t = V2S.apply(tv);
         Tensor _seeds = seeds.copy();
         _seeds.set(t, 0);
         Tensor table = table(_zeros, _seeds, param.depth);
-        try {
-          // return table.get(Tensor.ALL, 0).stream() //
-          // .map(Scalar.class::cast) //
-          // .map(Abs.FUNCTION) //
-          // .reduce(Scalar::add) //
-          // .orElseThrow();
-          return table.get(Tensor.ALL, 0).stream() //
-              .map(Scalar.class::cast) //
-              .map(Arg.FUNCTION) //
-              .reduce(Scalar::add) //
-              .orElseThrow();
-          // return table.flatten(1) //
-          // .map(Scalar.class::cast) //
-          // .map(Abs.FUNCTION) //
-          // .reduce(Scalar::add) //
-          // .orElseThrow();
-        } catch (Exception e) {
-          // e
-        }
-        return DoubleScalar.INDETERMINATE;
+        return
+        // table.get(Tensor.ALL, 0).stream() //
+        // .map(Scalar.class::cast) //
+        Flatten.scalars(table).map(Arg.FUNCTION) //
+            .reduce(Scalar::add) //
+            .orElseThrow();
       };
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
-      CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
-      Tensor raster = manifoldDisplay().d2Raster().of(arrayFunction, cbb, param.resolution);
-      Show show = new Show();
-      show.add(DensityPlot.of(raster, cbb, param.cdg));
-      show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
+      Optional<Rectangle> optional = Show.optionalDefaultInsets(getSize(), graphics.getFont().getSize());
+      if (optional.isPresent()) {
+        Rectangle rectangle = optional.orElseThrow();
+        CoordinateBoundingBox cbb = geometricLayer.fromRectangle(rectangle).orElseThrow();
+        Show show = new Show();
+        Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param.resolution);
+        show.add(DensityPlot.of(raster, cbb, param.cdg));
+        show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
+      }
     }
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     {
-      Tensor sequence = complexZeros.extract(0, length).maps(S2V);
+      Tensor sequence = _zeros.maps(S2V);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
       manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.ONE, sequence) //
           .render(geometricLayer, graphics);
       leversRender.renderIndexP("z");
     }
     if (1 < length) {
-      {
-        Scalar bound = bounds(complexZeros.extract(0, length), seeds);
+      if (param.radius) {
+        Scalar bound = bounds(_zeros, seeds);
         new PathRender(ColorStroke.SECONDARY_CURVE, CirclePoints.of(70).multiply(bound), true) //
             .render(geometricLayer, graphics);
       }
-      Tensor table = table(complexZeros.extract(0, length), seeds, param.depth);
+      Tensor table = table(_zeros, seeds, param.depth);
       int dimension1 = Unprotect.dimension1(table);
       // IO.println(Pretty.of(table.maps(Round._1)));
       for (int index = 0; index < dimension1; ++index) {
