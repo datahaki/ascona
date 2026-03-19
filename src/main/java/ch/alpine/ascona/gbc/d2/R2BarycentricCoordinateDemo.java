@@ -75,7 +75,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ColorDataGradient colorDataGradient = scatteredSetParam.spinnerColorData;
+    ColorDataGradient colorDataGradient = scatteredSetParam.cdg;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor controlPoints = getGeodesicControlPoints();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();

@@ -51,7 +51,7 @@ final class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    ColorDataGradient colorDataGradient = scatteredSetParam.spinnerColorData;
+    ColorDataGradient colorDataGradient = scatteredSetParam.cdg;
     Tensor controlPoints = getGeodesicControlPoints();
     {
       Tensor box = Box2D.polygon(Box2D.xy(RANGE_X));

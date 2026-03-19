@@ -81,7 +81,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ColorDataGradient colorDataGradient = scatteredSetParam.spinnerColorData;
+    ColorDataGradient colorDataGradient = scatteredSetParam.cdg;
     if (jToggleAnimate.isSelected()) {
       double toc = timing.seconds().multiply(Quantity.of(0.3, "s^-1")).number().doubleValue();
       int n = snapshot.length();

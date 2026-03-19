@@ -61,43 +61,12 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
   static class ScatteredSetParam {
     @FieldSelectionArray({ "20", "30", "50" })
     public Integer refine = 20;
-    public ColorDataGradients spinnerColorData = ColorDataGradients.CLASSIC;
+    public ColorDataGradients cdg = ColorDataGradients.CLASSIC;
     public Boolean arrows = false;
   }
 
   protected final WeightingsParam weightingsParam;
   protected final ScatteredSetParam scatteredSetParam;
-  // protected final SpinnerLabel<LogWeighting> spinnerLogWeighting;
-  // private final SpinnerLabel<VariogramFunctions> spinnerVariogram = SpinnerLabel.of(VariogramFunctions.class);
-  // private final SpinnerLabel<Scalar> spinnerBeta;
-  // private final SpinnerListener<LogWeighting> spinnerListener = new SpinnerListener<>() {
-  // @Override
-  // public void spun(LogWeighting logWeighting) {
-  // {
-  // boolean enabled = !logWeighting.equals(LogWeightings.DISTANCES);
-  // spinnerVariogram.setEnabled(enabled);
-  // spinnerBeta.setEnabled(enabled);
-  // }
-  // if (logWeighting.equals(LogWeightings.DISTANCES)) {
-  // spinnerVariogram.setValue(VariogramFunctions.POWER);
-  // spinnerBeta.setValue(RealScalar.of(1));
-  // }
-  // if ( //
-  // logWeighting.equals(LogWeightings.WEIGHTING) || //
-  // logWeighting.equals(LogWeightings.COORDINATE) || //
-  // logWeighting.equals(LogWeightings.LAGRAINATE)) {
-  // spinnerVariogram.setValue(VariogramFunctions.INVERSE_POWER);
-  // spinnerBeta.setValue(RealScalar.of(2));
-  // }
-  // if ( //
-  // logWeighting.equals(LogWeightings.KRIGING) || //
-  // logWeighting.equals(LogWeightings.KRIGING_COORDINATE)) {
-  // spinnerVariogram.setValue(VariogramFunctions.POWER);
-  // scatteredSetParam.biinvariants = Biinvariants.HARBOR;
-  // spinnerBeta.setValue(Rational.of(3, 2));
-  // }
-  // }
-  // };
 
   protected AbstractScatteredSetWeightingDemo(List<LogWeightings> array) {
     this(new WeightingsParam(array));

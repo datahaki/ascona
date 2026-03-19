@@ -108,7 +108,7 @@ final class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeighti
       ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(weightingsParam.operator(manifoldDisplay.manifold(), sequence)::sunder, fallback);
       CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
       Tensor wgs = manifoldDisplay.d2Raster().of(arrayFunction, cbb, scatteredSetParam.refine);
-      showable = ArrayPlot.of(ImageTiling.of(wgs), scatteredSetParam.spinnerColorData);
+      showable = ArrayPlot.of(ImageTiling.of(wgs), scatteredSetParam.cdg);
     } else
       showable = null;
   }
