@@ -2,6 +2,7 @@
 package ch.alpine.ascona.usr;
 
 import java.awt.Container;
+import java.time.Duration;
 
 import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.io.ImageIconRecorder;
@@ -36,7 +37,7 @@ enum So3ExponentialDemo implements ManipulateProvider {
 
   @Override
   public Container getContainer() {
-    ImageIconRecorder imageIconRecorder = new ImageIconRecorder(millis);
+    ImageIconRecorder imageIconRecorder = ImageIconRecorder.loop(Duration.ofMillis(millis));
     for (Tensor _z : Subdivide.of(-4 * Math.PI, 4 * Math.PI, 10)) {
       IO.print(".");
       Slice slice = new Slice((Scalar) _z);

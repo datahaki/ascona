@@ -50,8 +50,8 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
       try {
         IO.println(path);
         Put.of(path, getGeodesicControlPoints());
-      } catch (IOException e) {
-        e.printStackTrace();
+      } catch (IOException ioException) {
+        ioException.printStackTrace();
       }
   }
 
