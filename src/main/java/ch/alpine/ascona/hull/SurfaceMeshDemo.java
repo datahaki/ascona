@@ -64,17 +64,10 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
 
   // TODO ASCONA DEMO needs BM
   public SurfaceMeshDemo() {
-    this(new Param());
-  }
-
-  public SurfaceMeshDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     // ---
     surfaceMesh = surfaceMesh(PlatonicSolid.ICOSAHEDRON);
     setControlPointsSe2(surfaceMesh.vrt);
-    // ---
-    // timerFrame.geometricComponent.setOffset(100, 600);
   }
 
   @Override
@@ -89,7 +82,7 @@ public class SurfaceMeshDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    surfaceMesh.vrt = getControlPointsSe2();
+    surfaceMesh.vrt = getGeodesicControlPoints();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     SurfaceMeshRefinement surfaceMeshRefinement = param.ref.operator(homogeneousSpace.biinvariantMean());
