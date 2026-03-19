@@ -8,9 +8,9 @@ import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.util.List;
 
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -74,7 +74,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
     Tensor control = getGeodesicControlPoints();
     if (0 < control.length()) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor matrix = param.biinvariantsParam.biinvariants.ofSafe(manifold).relative_distances(ground).sunder().slash(control);
+      Tensor matrix = param.biinvariantsParam.ofSafe(manifold).relative_distances(ground).sunder().slash(control);
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
       int[] matching = bipartiteMatching.matching();
       graphics.setColor(Color.RED);

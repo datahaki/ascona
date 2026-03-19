@@ -3,11 +3,11 @@ package ch.alpine.ascona.def;
 
 import java.util.List;
 
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.MovingDomain2D;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -78,7 +78,7 @@ class DeformationDemo extends AbstractDeformationDemo {
 
   private Sedarim operator(Tensor sequence) {
     Manifold manifold = manifoldDisplay().manifold();
-    return param1.logWeightings.sedarim(param1.biinvariantsParam.biinvariants.ofSafe(manifold), param1.variogram(), sequence);
+    return param1.logWeightings.sedarim(param1.biinvariantsParam.ofSafe(manifold), param1.variogram(), sequence);
   }
 
   /** @return method to compute mean (for instance approximation instead of exact mean) */

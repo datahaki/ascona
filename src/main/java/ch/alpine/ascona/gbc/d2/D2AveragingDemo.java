@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -106,7 +106,7 @@ final class D2AveragingDemo extends ControlPointsDemo {
         ManifoldDisplay manifoldDisplay = manifoldDisplay();
         Manifold manifold = manifoldDisplay.manifold();
         TensorScalarFunction tensorScalarFunction = param.logWeightings.function( //
-            param.biinvariantsParam.biinvariants.ofSafe(manifold), //
+            param.biinvariantsParam.ofSafe(manifold), //
             InversePowerVariogram.of(2), sequence, values);
         Timing timing = Timing.started();
         ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(t -> Round._1.apply(tensorScalarFunction.apply(t)), DoubleScalar.INDETERMINATE);

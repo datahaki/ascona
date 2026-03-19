@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -109,7 +109,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
     final int splits = param1.refine;
     DisjointSets disjointSets = DisjointSets.allocate(sequence.length());
     if (0 < sequence.length()) {
-      Tensor matrix = StaticHelper.distanceMatrix(param1.biinvariantsParam.biinvariants.ofSafe(manifold), sequence);
+      Tensor matrix = StaticHelper.distanceMatrix(param1.biinvariantsParam.ofSafe(manifold), sequence);
       Dimension dimension = geometricComponent().getSize();
       Show show = new Show();
       show.add(MatrixPlot.of(matrix, param1.cdg, false));

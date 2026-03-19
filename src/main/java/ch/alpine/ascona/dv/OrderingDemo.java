@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -82,7 +82,7 @@ class OrderingDemo extends ControlPointsDemo {
     Tensor origin = getGeodesicControlPoints().get(0);
     Manifold manifold = manifoldDisplay.manifold();
     // ---
-    Tensor weights = LogWeightings.DISTANCES.sedarim(param1.biinvariantsParam.biinvariants.ofSafe(manifold), null, sequence) //
+    Tensor weights = LogWeightings.DISTANCES.sedarim(param1.biinvariantsParam.ofSafe(manifold), null, sequence) //
         .sunder(origin);
     // ---
     int[] integers = Ordering.INCREASING.of(weights);

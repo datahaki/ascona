@@ -9,10 +9,10 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Optional;
 
-import ch.alpine.ascona.dat.gok.GokartPosParam;
-import ch.alpine.ascona.dat.gok.GokartPoseDatas;
-import ch.alpine.ascona.dat.gok.PosHz;
+import ch.alpine.ascona.dat.GokartPoseDatas;
+import ch.alpine.ascona.ref.GokartPosParam;
 import ch.alpine.ascony.api.BufferedImageSupplier;
+import ch.alpine.ascony.dat.ControlPosSe2Hz;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
@@ -57,7 +57,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
 
   protected final GokartPosParam gokartPosParam;
   protected final SpecParam specParam;
-  private PosHz posHz = null;
+  private ControlPosSe2Hz posHz = null;
 
   protected AbstractSpectrogramDemo(Object object) {
     this(new SpecParam(), object);
@@ -80,7 +80,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    final Tensor control = posHz.getPosSequence().getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
+    final Tensor control = posHz.controlPosSe2().getGeodesicControlPoints(manifoldDisplay()).unmodifiable();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     boolean conv = specParam.conv;
     if (specParam.data) {
@@ -132,7 +132,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     if (geodesicSpace instanceof LieGroup lieGroup) {
       TensorUnaryOperator lieDifferences = LieDifferences.of(lieGroup);
-      Scalar sampleRate = UnitSystem.SI().apply(posHz.getSamplingRate());
+      Scalar sampleRate = UnitSystem.SI().apply(posHz.samplingRate());
       Tensor speeds = lieDifferences.apply(refined).multiply(sampleRate);
       if (0 < speeds.length()) {
         int dims = speeds.get(0).length();

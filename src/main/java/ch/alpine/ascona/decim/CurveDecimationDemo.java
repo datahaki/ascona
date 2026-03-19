@@ -7,15 +7,15 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
-import ch.alpine.ascona.dat.gok.GokartPosParam;
-import ch.alpine.ascona.dat.gok.GokartPoseDatas;
+import ch.alpine.ascona.dat.GokartPoseDatas;
+import ch.alpine.ascona.ref.GokartPosParam;
+import ch.alpine.ascony.dat.ControlPosSe2;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.win.ControlPosSe2;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
@@ -92,7 +92,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   protected void updateState() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    ControlPosSe2 controlPointsSe2 = gokartPosParam.getPosHz().getPosSequence();
+    ControlPosSe2 controlPointsSe2 = gokartPosParam.getPosHz().controlPosSe2();
     control = param.filter(homogeneousSpace).apply(controlPointsSe2.getGeodesicControlPoints(manifoldDisplay));
   }
 

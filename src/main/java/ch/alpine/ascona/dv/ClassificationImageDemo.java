@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.cls.Classification;
 import ch.alpine.ascony.cls.ClassificationImage;
@@ -16,7 +17,6 @@ import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -121,7 +121,7 @@ class ClassificationImageDemo extends ControlPointsDemo {
     Manifold manifold = manifoldDisplay.manifold();
     Objects.requireNonNull(vector);
     Classification classification = param1.labels.apply(vector);
-    Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariantsParam.biinvariants.ofSafe(manifold), null, getGeodesicControlPoints());
+    Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariantsParam.ofSafe(manifold), null, getGeodesicControlPoints());
     ColorDataLists colorDataLists = param1.cdg;
     TensorUnaryOperator tensorUnaryOperator = //
         param1.classificationImage.operator(classification, sedarim, colorDataLists.cyclic());

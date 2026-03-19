@@ -10,9 +10,9 @@ import java.awt.geom.Path2D;
 import java.util.List;
 import java.util.Objects;
 
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.Show;
@@ -89,7 +89,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
 
   private void distances() {
     Manifold manifold = manifoldDisplay().manifold();
-    matrix = StaticHelper.distanceMatrix_symmetrized(biinvariantsParam.biinvariants.ofSafe(manifold), control);
+    matrix = StaticHelper.distanceMatrix_symmetrized(biinvariantsParam.ofSafe(manifold), control);
     list = MinimumSpanningTree.of(matrix);
     tsp2OptHeuristic = Objects.isNull(tsp2OptHeuristic) //
         ? Tsp2OptHeuristic.of(matrix)

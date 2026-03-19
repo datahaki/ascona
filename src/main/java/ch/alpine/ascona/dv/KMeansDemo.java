@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Objects;
 
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.win.ControlPointType;
@@ -117,7 +117,7 @@ class KMeansDemo extends ControlPointsDemo {
   private void recomp() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    Biinvariant biinvariant = param1.biinvariantsParam.biinvariants.ofSafe(homogeneousSpace);
+    Biinvariant biinvariant = param1.biinvariantsParam.ofSafe(homogeneousSpace);
     Tensor seeds = getGeodesicControlPoints();
     if (0 < seeds.length()) {
       timing = Timing.started();

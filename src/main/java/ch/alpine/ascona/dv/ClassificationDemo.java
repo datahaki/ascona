@@ -4,12 +4,12 @@ package ch.alpine.ascona.dv;
 import java.awt.Graphics2D;
 import java.util.List;
 
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.cls.Classification;
 import ch.alpine.ascony.cls.Labels;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -86,7 +86,7 @@ class ClassificationDemo extends ControlPointsDemo {
     Tensor origin = getGeodesicControlPoints().get(0);
     Manifold manifold = manifoldDisplay.manifold();
     // ---
-    Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariantsParam.biinvariants.ofSafe(manifold), null, sequence);
+    Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariantsParam.ofSafe(manifold), null, sequence);
     Tensor weights = sedarim.sunder(origin);
     // leversRender.renderInfluenceX(ColorDataGradients.JET);
     // Tensor influence = new HsInfluence( //

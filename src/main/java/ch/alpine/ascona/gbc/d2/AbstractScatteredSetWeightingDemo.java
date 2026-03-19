@@ -4,9 +4,9 @@ package ch.alpine.ascona.gbc.d2;
 import java.util.List;
 import java.util.Map;
 
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -45,7 +45,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     }
 
     public Sedarim operator(Manifold manifold, Tensor sequence) {
-      return logWeightings.sedarim(biinvariantsParam.biinvariants.ofSafe(manifold), variogram(), sequence);
+      return logWeightings.sedarim(biinvariantsParam.ofSafe(manifold), variogram(), sequence);
     }
 
     protected final ScalarUnaryOperator variogram() {
@@ -53,7 +53,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     }
 
     protected final TensorScalarFunction function(Manifold manifold, Tensor sequence, Tensor values) {
-      return logWeightings.function(biinvariantsParam.biinvariants.ofSafe(manifold), variogram(), sequence, values);
+      return logWeightings.function(biinvariantsParam.ofSafe(manifold), variogram(), sequence, values);
     }
   }
 

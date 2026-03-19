@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascona.RandomPoints;
+import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
-import ch.alpine.ascony.ref.BiinvariantsParam;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.Show;
@@ -119,7 +119,7 @@ class MaAveragingDemo extends ControlPointsDemo {
           TensorMetric msq = (p, q) -> AbsSquared.FUNCTION.apply(tensorMetric.distance(p, q));
           dist = DistanceMatrix.of(sequence, msq);
         }
-        Sedarim sedarim = param1.biinvariantsParam.biinvariants.ofSafe(homogeneousSpace).coordinate(InversePowerVariogram.of(2), sequence);
+        Sedarim sedarim = param1.biinvariantsParam.ofSafe(homogeneousSpace).coordinate(InversePowerVariogram.of(2), sequence);
         TensorScalarFunction tsf = p -> {
           Tensor b = sedarim.sunder(p);
           return Abs.FUNCTION.apply((Scalar) dist.dot(b).dot(b));

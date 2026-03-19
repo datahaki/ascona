@@ -11,6 +11,7 @@ import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.SurfaceMeshRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -45,6 +46,8 @@ class StHullDemo implements ManipulateProvider, RenderInterface {
   public StHullDemo() {
     geometricComponent.addRenderInterfaceBackground(new GridRender(geometricComponent::getSize));
     geometricComponent.addRenderInterface(this);
+    Tensor pvm = PvmBuilder.rhs().setPerPixel(RealScalar.of(200)).setOffset(300, 300).digest();
+    geometricComponent.setModel2Pixel(pvm);
   }
 
   @Override
