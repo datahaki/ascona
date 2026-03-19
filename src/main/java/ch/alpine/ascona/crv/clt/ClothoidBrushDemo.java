@@ -79,7 +79,6 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
     // // timerFrame.geometricComponent.addRenderInterfaceBackground(imageRender);
     // }
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
-    // geometricComponent().setOffset(100, 700);
   }
 
   @Override

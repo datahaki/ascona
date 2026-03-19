@@ -45,7 +45,6 @@ class TimeSeriesDemo extends EuclideanPlaneDemo {
 
   public TimeSeriesDemo() {
     super(param = new Param());
-    // timerFrame.geometricComponent.setOffset(100, 600);
     RandomFunction randomFunction = RandomFunction.of(WienerProcess.standard());
     Distribution distribution = UniformDistribution.of(0, 10);
     RandomVariate.of(distribution, 100).stream() //

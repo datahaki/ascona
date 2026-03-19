@@ -77,7 +77,6 @@ final class D2AveragingDemo extends ControlPointsDemo {
     fieldsEditor(param).addUniversalListener(this::recompute);
     // ---
     addChangeListener(this::recompute);
-    // geometricComponent().setOffset(400, 400);
   }
 
   @Override
@@ -145,7 +144,7 @@ final class D2AveragingDemo extends ControlPointsDemo {
     leversRender.renderWeights(values);
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);
-    graphics.drawString("compute: " + computeTime.maps(Round._3), 0, 30);
+    graphics.drawString("compute: " + computeTime.maps(Round._3), 0, 12);
   }
 
   static void main() {

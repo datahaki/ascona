@@ -151,7 +151,7 @@ class MaAveragingDemo extends ControlPointsDemo {
     // ---
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
     graphics.setColor(Color.GRAY);
-    graphics.drawString("compute: " + computeTime.maps(Round._3), 0, 30);
+    graphics.drawString("compute: " + computeTime.maps(Round._3), 0, 12);
   }
 
   static void main() {
