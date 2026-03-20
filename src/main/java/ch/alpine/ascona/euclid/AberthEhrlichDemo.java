@@ -22,7 +22,6 @@ import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
@@ -112,7 +111,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
         Flatten.scalars(table).map(Arg.FUNCTION) //
             .reduce(Scalar::add) //
             .filter(FiniteScalarQ::of) //
-            .map(So2.MOD) //
+            // .map(So2.MOD) //
             .orElse(DoubleScalar.INDETERMINATE);
       };
       ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
