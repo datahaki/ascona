@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Collection;
 import java.util.List;
 
 import ch.alpine.ascona.crv.CurveVisualSet;
@@ -51,7 +52,7 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
   }
 

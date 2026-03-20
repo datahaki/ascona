@@ -4,6 +4,7 @@ package ch.alpine.ascona.gbc.d2;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JToggleButton;
@@ -68,7 +69,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_SE2;
   }
 

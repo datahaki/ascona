@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JToggleButton;
@@ -64,7 +65,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.R2_ONLY;
   }
 

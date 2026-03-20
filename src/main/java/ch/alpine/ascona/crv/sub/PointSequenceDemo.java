@@ -4,7 +4,7 @@ package ch.alpine.ascona.crv.sub;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 import ch.alpine.ascona.RandomPoints;
@@ -35,7 +35,7 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
   }
 

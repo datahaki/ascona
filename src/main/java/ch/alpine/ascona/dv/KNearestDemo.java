@@ -2,7 +2,7 @@
 package ch.alpine.ascona.dv;
 
 import java.awt.Graphics2D;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 import ch.alpine.ascony.api.LogWeightings;
@@ -63,7 +63,7 @@ class KNearestDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_ONLY;
   }
 

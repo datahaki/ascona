@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascona.crv.CurvatureParam;
@@ -58,11 +57,6 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
     // IO.println("CALLED " + geometricComponent().getSize());
     Tensor pvm = PvmBuilder.rhs().setOffset(dimension.width / 2, dimension.height / 2).setPerPixel(100).digest();
     geometricComponent().setModel2Pixel(pvm);
-  }
-
-  @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.ALL;
   }
 
   @Override

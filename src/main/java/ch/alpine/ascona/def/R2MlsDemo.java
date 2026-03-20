@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.def;
 
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -41,7 +41,7 @@ class R2MlsDemo extends AbstractDeformationDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.R2_ONLY;
   }
 

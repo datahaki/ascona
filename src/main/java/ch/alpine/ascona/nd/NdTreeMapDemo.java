@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -75,7 +74,7 @@ class NdTreeMapDemo extends ManifoldDisplayDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.R2_S2;
   }
 

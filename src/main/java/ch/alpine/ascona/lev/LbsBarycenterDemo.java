@@ -2,7 +2,7 @@
 package ch.alpine.ascona.lev;
 
 import java.awt.Graphics2D;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -30,7 +30,7 @@ class LbsBarycenterDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.S2_ONLY;
   }
 

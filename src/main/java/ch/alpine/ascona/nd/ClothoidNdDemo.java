@@ -3,7 +3,7 @@ package ch.alpine.ascona.nd;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -58,7 +58,7 @@ class ClothoidNdDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.CLA_ONLY;
   }
 

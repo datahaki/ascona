@@ -3,6 +3,7 @@ package ch.alpine.ascona.crv.dub;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.util.Collection;
 import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -31,7 +32,7 @@ class DubinsTransitionDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_ONLY;
   }
 

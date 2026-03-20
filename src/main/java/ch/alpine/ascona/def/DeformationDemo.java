@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.def;
 
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.api.LogWeightings;
@@ -52,7 +52,7 @@ class DeformationDemo extends AbstractDeformationDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.DEFORM_2D;
   }
 

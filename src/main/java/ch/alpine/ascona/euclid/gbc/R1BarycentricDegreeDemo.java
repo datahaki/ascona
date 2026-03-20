@@ -3,8 +3,7 @@ package ch.alpine.ascona.euclid.gbc;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -34,9 +33,6 @@ import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.ply.InterpolatingPolynomial;
 
 class R1BarycentricDegreeDemo extends ControlPointsDemo {
-  private static final Stroke STROKE = //
-      new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
-
   @ReflectionMarker
   static class Param {
     public Boolean lagrange = true;
@@ -54,7 +50,7 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.R2_ONLY;
   }
 

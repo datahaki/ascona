@@ -3,7 +3,7 @@ package ch.alpine.ascona.crv.sub;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -62,7 +62,7 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
   }
 

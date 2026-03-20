@@ -58,7 +58,7 @@ class ClothoidTransitionDemo extends ClothoidSequenceDemo {
     super(param);
     this.param = param;
     // ---
-    setControlPointsSe2(RandomVariate.of(UniformDistribution.of(0, 8), 1 * 2, 3));
+    setControlPointsSe2(RandomVariate.of(UniformDistribution.of(-2, 2), 4, 3));
   }
 
   @Override

@@ -3,7 +3,7 @@ package ch.alpine.ascona.misc;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.S2Display;
@@ -101,7 +101,7 @@ class SnRotationDemo extends ManifoldDisplayDemo implements RenderInterface {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.S2_ONLY;
   }
 

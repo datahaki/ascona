@@ -2,7 +2,7 @@
 package ch.alpine.ascona.flt;
 
 import java.awt.Graphics2D;
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -49,7 +49,7 @@ class GeodesicMeanFilterDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.ALL;
   }
 

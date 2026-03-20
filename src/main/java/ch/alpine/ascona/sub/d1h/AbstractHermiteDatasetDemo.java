@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.sub.d1h;
 
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascona.dat.GokartPoseDatas;
 import ch.alpine.ascona.ref.GokartPosVelParam;
@@ -51,7 +51,7 @@ abstract class AbstractHermiteDatasetDemo extends ManifoldDisplayDemo {
   }
 
   @Override
-  protected final List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected final Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_R2;
   }
 }

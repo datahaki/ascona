@@ -3,12 +3,10 @@ package ch.alpine.ascona.crv.sub;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
@@ -42,11 +40,6 @@ class BezierFunctionDemo extends PointSequenceDemo {
 
   public BezierFunctionDemo() {
     super(param = new Param());
-  }
-
-  @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.ALL;
   }
 
   @Override

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.crv.clt;
 
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.win.ControlPointType;
@@ -13,7 +13,7 @@ abstract class ClothoidBaseDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected final List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected final Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.CLC_ONLY;
   }
 

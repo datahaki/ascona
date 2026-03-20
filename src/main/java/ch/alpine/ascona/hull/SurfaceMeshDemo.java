@@ -1,14 +1,14 @@
 // code by jph
 package ch.alpine.ascona.hull;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.SurfaceMeshRender;
@@ -25,7 +25,7 @@ import ch.alpine.sophis.ref.d2.SurfaceMeshRefinements;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Sort;
@@ -39,8 +39,14 @@ class SurfaceMeshDemo extends ControlPointsDemo {
   }
 
   @ReflectionMarker
-  public static class Param {
+  static class Param {
+    public PlatonicSolid mesh = PlatonicSolid.ICOSAHEDRON;
+  }
+
+  @ReflectionMarker
+  static class Paran {
     public Boolean ctrl = true;
+    public Boolean inter = true;
     public SurfaceMeshRefinements ref = SurfaceMeshRefinements.CATMULL_CLARK;
     @FieldSlider
     @FieldPreferredWidth(100)
@@ -50,18 +56,24 @@ class SurfaceMeshDemo extends ControlPointsDemo {
   }
 
   private final Param param;
-  private final SurfaceMesh surfaceMesh;
+  private final Paran paran;
+  private SurfaceMesh surfaceMesh;
 
   public SurfaceMeshDemo() {
-    super(param = new Param());
+    super(param = new Param(), paran = new Paran());
     // ---
-    surfaceMesh = surfaceMesh(PlatonicSolid.ICOSAHEDRON);
+    fieldsEditor(param).addUniversalListener(this::compute);
+    compute();
+  }
+
+  private void compute() {
+    surfaceMesh = surfaceMesh(param.mesh);
     setControlPointsSe2(surfaceMesh.vrt);
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2C_R2_H2;
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
+    return ManifoldDisplays.SE2C_R3;
   }
 
   @Override
@@ -74,22 +86,15 @@ class SurfaceMeshDemo extends ControlPointsDemo {
     surfaceMesh.vrt = getGeodesicControlPoints();
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    SurfaceMeshRefinement surfaceMeshRefinement = param.ref.operator(homogeneousSpace.biinvariantMean());
+    SurfaceMeshRefinement surfaceMeshRefinement = paran.ref.operator(homogeneousSpace.biinvariantMean());
     SurfaceMesh refine = surfaceMesh;
-    for (int count = 0; count < param.refine; ++count)
+    for (int count = 0; count < paran.refine; ++count)
       refine = surfaceMeshRefinement.refine(refine);
-    new SurfaceMeshRender(refine, param.cdg).render(geometricLayer, graphics);
-    {
-      // TODO ASCONA levers render
-      graphics.setColor(new Color(192, 192, 192, 192));
-      Tensor shape = manifoldDisplay.shape().multiply(RealScalar.of(0.5));
-      for (Tensor mean : refine.vrt) {
-        geometricLayer.pushMatrix(manifoldDisplay.matrixLift(mean));
-        graphics.fill(geometricLayer.toPath2D(shape));
-        geometricLayer.popMatrix();
-      }
-    }
-    if (param.ctrl) {
+    new SurfaceMeshRender(refine, paran.cdg).render(geometricLayer, graphics);
+    if (paran.inter)
+      manifoldDisplay.showPoints(ColorPair.APPROXIMATION, Rational.HALF, refine.vrt) //
+          .render(geometricLayer, graphics);
+    if (paran.ctrl) {
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
       Tensor domain = Subdivide.of(0.0, 1.0, 10);
       Set<Tensor> set = new HashSet<>();

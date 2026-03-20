@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -44,7 +45,7 @@ final class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_SE2;
   }
 

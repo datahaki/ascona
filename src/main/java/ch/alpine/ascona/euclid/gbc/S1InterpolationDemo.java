@@ -3,6 +3,7 @@ package ch.alpine.ascona.euclid.gbc;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Collection;
 import java.util.List;
 
 import ch.alpine.ascona.ref.BiinvariantsParam;
@@ -71,7 +72,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.R2_ONLY;
   }
 

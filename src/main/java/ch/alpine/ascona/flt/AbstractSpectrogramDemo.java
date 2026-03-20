@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 import ch.alpine.ascona.dat.GokartPoseDatas;
@@ -74,7 +74,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   }
 
   @Override
-  protected final List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected final Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_R2;
   }
 

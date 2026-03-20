@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascona.dat.GokartPoseDatas;
 import ch.alpine.ascona.ref.GokartPosParam;
@@ -85,7 +85,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2_R2;
   }
 

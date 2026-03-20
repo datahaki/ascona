@@ -4,7 +4,7 @@ package ch.alpine.ascona.sub.d1h;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.List;
+import java.util.Collection;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -37,12 +37,7 @@ import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.red.Mean;
 
-// TODO display in R2 does not seem correct
 class HermiteSubdivisionDemo extends ControlPointsDemo {
-  private static final int WIDTH = 640;
-  private static final int HEIGHT = 360;
-
-  // ---
   @ReflectionMarker
   static class Param {
     public HermiteSubdivisions scheme = HermiteSubdivisions.HERMITE3;
@@ -58,10 +53,11 @@ class HermiteSubdivisionDemo extends ControlPointsDemo {
   public HermiteSubdivisionDemo() {
     super(this.param = new Param());
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    setControlPointsSe2(Tensors.fromString("{{0,-1,0},{1,1,1.5},{2,2,0}}"));
   }
 
   @Override
-  protected List<ManifoldDisplays> permitted_manifoldDisplays() {
+  protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
     return ManifoldDisplays.SE2C_SE2_R2;
   }
 
@@ -75,16 +71,16 @@ class HermiteSubdivisionDemo extends ControlPointsDemo {
     final Tensor tensor = getControlPointsSe2();
     Se2Display.INSTANCE.showPoints(ColorPair.DEC, RealScalar.ONE, tensor) //
         .render(geometricLayer, graphics);
+    ManifoldDisplays manifoldDisplays = getSelectedMD();
     if (1 < tensor.length()) {
-      ManifoldDisplay manifoldDisplay = manifoldDisplay();
       Tensor control;
-      switch (manifoldDisplay.toString()) {
-      case "SE2C":
-      case "SE2":
+      switch (manifoldDisplays) {
+      case Se2C:
+      case Se2:
         // TODO ASCONA ALG use various options: unit vector, scaled by parametric distance, ...
         control = Tensor.of(tensor.stream().map(xya -> Tensors.of(xya, UnitVector.of(3, 0))));
         break;
-      case "R2":
+      case R2:
         // TODO ASCONA ALG use various options: unit vector, scaled by parametric distance, ...
         control = Tensor.of(tensor.stream().map(xya -> Tensors.of(xya.extract(0, 2), AngleVector.of(xya.Get(2)))));
         break;
@@ -108,6 +104,7 @@ class HermiteSubdivisionDemo extends ControlPointsDemo {
         }
       }
       Scalar delta = RealScalar.ONE;
+      ManifoldDisplay manifoldDisplay = manifoldDisplay();
       HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       HermiteSubdivision hermiteSubdivision = param.scheme.supply(homogeneousSpace);
       TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
@@ -119,12 +116,12 @@ class HermiteSubdivisionDemo extends ControlPointsDemo {
       new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
       {
         Scalar scale = RealScalar.of(0.3);
-        switch (manifoldDisplay.toString()) {
-        case "SE2C":
-        case "SE2":
+        switch (manifoldDisplays) {
+        case Se2C:
+        case Se2:
           new Se2HermiteRender(iterate, scale).render(geometricLayer, graphics);
           break;
-        case "R2":
+        case R2:
           new R2HermiteRender(iterate, scale).render(geometricLayer, graphics);
           break;
         default:
@@ -136,7 +133,7 @@ class HermiteSubdivisionDemo extends ControlPointsDemo {
         if (0 < deltas.length()) {
           Show show = StaticHelper.listPlot(deltas, delta, levels);
           Dimension dimension = getSize();
-          show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+          show.render_autoIndent(graphics, new Rectangle(dimension.width - 500, 0, 500, 400));
         }
       }
     }
