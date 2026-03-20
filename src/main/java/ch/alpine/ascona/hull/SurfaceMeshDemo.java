@@ -61,7 +61,7 @@ class SurfaceMeshDemo extends ControlPointsDemo {
 
   @Override
   protected List<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2C_R2_S2;
+    return ManifoldDisplays.SE2C_R2_H2;
   }
 
   @Override
