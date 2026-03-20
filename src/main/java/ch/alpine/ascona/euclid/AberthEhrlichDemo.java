@@ -16,11 +16,13 @@ import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.DensityPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
@@ -32,6 +34,7 @@ import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.chq.FiniteScalarQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.io.TableBuilder;
@@ -54,7 +57,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     @FieldFuse
     public Boolean shuffle = false;
     public Boolean radius = true;
-    @FieldSelectionArray({ "20", "30", "40", "50", "60", "100", "150", "200" })
+    @FieldSelectionArray({ "20", "30", "50", "100", "150", "200" })
     public transient Integer resolution = 30;
     public ColorDataGradients cdg = ColorDataGradients.HUE;
   }
@@ -74,6 +77,8 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     shuffle();
     setGeodesicControlPoints(RandomSample.of(manifoldDisplay().randomSampleInterface(), 3));
     geometricComponent().setRotatable(false);
+    Tensor pvm = PvmBuilder.rhs().setOffset(500, 500).setPerPixel(RealScalar.of(100)).digest();
+    geometricComponent().setModel2Pixel(pvm);
   }
 
   @Override
@@ -96,7 +101,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     final int length = seeds.length();
     final Tensor _zeros = complexZeros.extract(0, length).unmodifiable();
     if (2 < length) {
-      TensorUnaryOperator tuo = tv -> {
+      TensorScalarFunction tuo = tv -> {
         Scalar t = V2S.apply(tv);
         Tensor _seeds = seeds.copy();
         _seeds.set(t, 0);
@@ -106,9 +111,11 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
         // .map(Scalar.class::cast) //
         Flatten.scalars(table).map(Arg.FUNCTION) //
             .reduce(Scalar::add) //
-            .orElseThrow();
+            .filter(FiniteScalarQ::of) //
+            .map(So2.MOD) //
+            .orElse(DoubleScalar.INDETERMINATE);
       };
-      ArrayFunction<Tensor> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
+      ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
       Optional<Rectangle> optional = Show.optionalDefaultInsets(getSize(), graphics.getFont().getSize());
       if (optional.isPresent()) {
         Rectangle rectangle = optional.orElseThrow();
@@ -138,7 +145,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
       for (int index = 0; index < dimension1; ++index) {
         TensorUnaryOperator tuo = manifoldDisplay::point2xya;
         Tensor points = tuo.slash(table.get(Tensor.ALL, index).maps(S2V));
-        new PathRender(ColorStroke.CURVE, points, false).render(geometricLayer, graphics);
+        new PathRender(ColorStroke.AREA_SELECTION, points, false).render(geometricLayer, graphics);
       }
     }
   }

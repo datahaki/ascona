@@ -28,6 +28,8 @@ import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
+import ch.alpine.bridge.io.FileBlock;
+import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.api.GeoPosition;
@@ -114,7 +116,7 @@ class MapViewer implements ManipulateProvider {
             TilePixel from = tilePixel.from(lat_lon);
             graphics.setColor(new Color(255, 255, 255, 128));
             int x = (int) (from.absX() - origin.absX());
-            int y = dimension.height - 50;
+            int y = dimension.height - 20;
             graphics.setStroke(new BasicStroke()); // thickness of outline
             graphics.setColor(Color.BLACK);
             graphics.drawLine(x, y - 10, x, y + 10);
@@ -197,7 +199,7 @@ class MapViewer implements ManipulateProvider {
         Clips.interval(Quantity.of(-9, "deg"), Quantity.of(0, "deg")));
     // Quantity.of(38.343373, "deg"), Quantity.of(-0.762800, "deg") // Aspe
     BoxRandomSample boxRandomSample = new BoxRandomSample(cbb);
-    tilePixel = TilePixel.from(11, RandomSample.of(boxRandomSample));
+    tilePixel = TilePixel.from(8, RandomSample.of(boxRandomSample));
     geoComponent.tilePixel = tilePixel;
   }
 
@@ -216,6 +218,7 @@ class MapViewer implements ManipulateProvider {
   }
 
   static void main() {
-    new MapViewer().runStandalone();
+    if (!FileBlock.of(ResourceLocator.of(MapViewer.class).resolve("")))
+      new MapViewer().runStandalone();
   }
 }
