@@ -14,12 +14,12 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.MatrixArray;
-import ch.alpine.ascony.msh.Meshgrid;
 import ch.alpine.ascony.msh.Thinning;
 import ch.alpine.ascony.reg.RegionRenders;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
+import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ArrayPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -101,7 +101,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
       // ---
       // TODO inv pow var configurable!?
       Sedarim sedarim = Biinvariants.METRIC.ofSafe(RGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), domain);
-      Tensor weights = new Meshgrid(cbb, scatteredSetParam.refine).image(sedarim::sunder);
+      Tensor weights = Meshgrid.of(cbb, scatteredSetParam.refine).image(sedarim::sunder);
       Tensor fallback = manifoldDisplay.indetPoint();
       AveragedMovingDomain2D averagedMovingDomain2D = new AveragedMovingDomain2D(weights, homogeneousSpace.biinvariantMean(), fallback);
       Tensor[][] array = averagedMovingDomain2D.forward(controlPoints);

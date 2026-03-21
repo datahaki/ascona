@@ -11,13 +11,13 @@ import java.util.Collection;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
-import ch.alpine.ascony.msh.Meshgrid;
 import ch.alpine.ascony.msh.MovingDomain2D;
 import ch.alpine.ascony.msh.Thinning;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ArrayPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -86,7 +86,7 @@ class SPatchDemo extends ControlPointsDemo {
     setControlPointsSe2(Tensor.of(embed.stream() //
         .map(xy -> xy.multiply(RealScalar.of(3))).map(PadRight.zeros(3))));
     Clip clip = Clips.absolute(1);
-    Tensor domain = new Meshgrid(Box2D.xy(clip), param0.res).image(sPatch::sunder);
+    Tensor domain = Meshgrid.of(Box2D.xy(clip), param0.res).image(sPatch::sunder);
     BiinvariantMean biinvariantMean = manifoldDisplay().homogeneousSpace().biinvariantMean();
     movingDomain2D = new AveragedMovingDomain2D(domain, biinvariantMean, manifoldDisplay().indetPoint());
   }

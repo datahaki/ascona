@@ -9,7 +9,6 @@ import java.awt.Rectangle;
 import java.awt.Stroke;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.msh.Meshgrid;
 import ch.alpine.ascony.msh.MovingDomain2D;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
@@ -17,6 +16,7 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ArrayPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -87,21 +87,21 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
     switch (getSelectedMD()) {
     case R2: {
       CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
-      return new Meshgrid(cbb, res).image(sedarim::sunder);
+      return Meshgrid.of(cbb, res).image(sedarim::sunder);
     }
     case S2: {
       CoordinateBoundingBox cbb = manifoldDisplay().d2Raster_coordinateBoundingBox();
       TensorUnaryOperator tuo = xy -> Vector2Norm.NORMALIZE.apply(Append.of(xy, s2z));
-      return new Meshgrid(cbb, res).image(tuo.andThen(sedarim::sunder));
+      return Meshgrid.of(cbb, res).image(tuo.andThen(sedarim::sunder));
     }
     case H2:
-      return new Meshgrid(Box2D.xy(Clips.absolute(1.0)), res).image(sedarim::sunder);
+      return Meshgrid.of(Box2D.xy(Clips.absolute(1.0)), res).image(sedarim::sunder);
     case Se2C:
     case Se2: {
       Clip clip = Clips.absolute(2);
       CoordinateBoundingBox cbb = Box2D.xy(clip);
       TensorUnaryOperator tuo = xy -> Append.of(xy, RealScalar.ONE);
-      return new Meshgrid(cbb, res).image(tuo.andThen(sedarim::sunder));
+      return Meshgrid.of(cbb, res).image(tuo.andThen(sedarim::sunder));
     }
     default:
       throw new IllegalArgumentException();
