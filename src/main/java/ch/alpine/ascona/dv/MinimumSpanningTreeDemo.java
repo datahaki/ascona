@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.ascona.ref.BiinvariantsParam;
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPairIndexed;
@@ -20,7 +21,6 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.MatrixPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.util.DisjointSets;
@@ -58,8 +58,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
   static class Param0 {
     @FieldSelectionArray({ "10", "20", "30", "50" })
     public Integer size = 20;
-    @FieldFuse
-    public transient Boolean shuffle = false;
+    public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
 
   @ReflectionMarker

@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.IntStream;
 
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.msh.CenterNorms;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
@@ -18,7 +19,6 @@ import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -56,8 +56,7 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
   @FieldSlider
   @FieldClip(min = "0", max = "1")
   public Scalar radius = RealScalar.of(0.3);
-  @FieldFuse
-  public transient Boolean shuffle = true;
+  public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   public ColorDataLists cdl = ColorDataLists._097;
   GeometricComponent geometricComponent = new GeometricComponent();
   Tensor pointsAll;
@@ -67,6 +66,7 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
     geometricComponent.addRenderInterface(this);
     Tensor pvm = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(50).digest();
     geometricComponent.setModel2Pixel(pvm);
+    pointsAll = recomp1();
   }
 
   Tensor recomp1() {
@@ -133,9 +133,9 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
 
   @Override
   public Container getContainer() {
-    if (shuffle) {
+    if (shuffleFuse.shuffle) {
+      shuffleFuse.shuffle = false;
       pointsAll = recomp1();
-      shuffle = false;
     }
     return geometricComponent;
   }

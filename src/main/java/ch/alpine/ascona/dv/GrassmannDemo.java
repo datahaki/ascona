@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Optional;
 
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversHud;
@@ -13,7 +14,6 @@ import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
@@ -28,8 +28,7 @@ final class GrassmannDemo extends ControlPointsDemo {
   static class Param0 {
     @FieldSelectionArray({ "4", "6", "8", "10" })
     public Integer size = 6;
-    @FieldFuse
-    public transient Boolean shuffle;
+    public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
 
   @ReflectionMarker

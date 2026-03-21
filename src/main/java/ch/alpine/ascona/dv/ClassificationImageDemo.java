@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import ch.alpine.ascona.ref.BiinvariantsParam;
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.cls.Classification;
 import ch.alpine.ascony.cls.ClassificationImage;
@@ -24,7 +25,6 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.plt.ImagePlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Sedarim;
@@ -50,8 +50,7 @@ class ClassificationImageDemo extends ControlPointsDemo {
     public Integer size = 20;
     @FieldSelectionArray({ "2", "3", "4", "5" })
     public Integer labels = 3;
-    @FieldFuse
-    public transient Boolean shuffle = false;
+    public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
 
   @ReflectionMarker

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascona.ref.BiinvariantsParam;
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
@@ -51,8 +52,7 @@ class KMeansDemo extends ControlPointsDemo {
     public Integer count = 200;
     @FieldSelectionArray({ "2", "3", "4", "5" })
     public Integer initK = 5;
-    @FieldFuse
-    public transient Boolean shuffle = false;
+    public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
 
   @ReflectionMarker

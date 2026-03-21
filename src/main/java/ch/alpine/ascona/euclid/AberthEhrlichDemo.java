@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Optional;
 
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.msh.ArrayFunction;
 import ch.alpine.ascony.ren.ColorPair;
@@ -14,14 +15,14 @@ import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.fig.Show;
-import ch.alpine.bridge.fig.plt.DensityPlot;
+import ch.alpine.bridge.fig.plt.ReliefPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
@@ -53,26 +54,20 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     @FieldClip(min = "3", max = "20")
     @FieldSlider
     public Integer depth = 5;
-    @FieldFuse
-    public Boolean shuffle = false;
     public Boolean radius = true;
-    @FieldSelectionArray({ "20", "30", "50", "100", "150", "200" })
+    @FieldSelectionArray({ "20", "30", "50", "100", "150", "200", "300" })
     public transient Integer resolution = 30;
     public ColorDataGradients cdg = ColorDataGradients.HUE;
   }
 
+  private final ShuffleFuse shuffleFuse;
   private final Param param;
   private Tensor complexZeros;
 
   public AberthEhrlichDemo() {
-    super(param = new Param());
+    super(param = new Param(), shuffleFuse = new ShuffleFuse());
     // ---
-    fieldsEditor(param).addUniversalListener(() -> {
-      if (param.shuffle) {
-        param.shuffle = false;
-        shuffle();
-      }
-    });
+    fieldsEditor(shuffleFuse).addUniversalListener(this::shuffle);
     shuffle();
     setGeodesicControlPoints(RandomSample.of(manifoldDisplay().randomSampleInterface(), 3));
     geometricComponent().setRotatable(false);
@@ -111,7 +106,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
         Flatten.scalars(table).map(Arg.FUNCTION) //
             .reduce(Scalar::add) //
             .filter(FiniteScalarQ::of) //
-            // .map(So2.MOD) //
+            .map(So2.MOD) //
             .orElse(DoubleScalar.INDETERMINATE);
       };
       ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
@@ -121,7 +116,8 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
         CoordinateBoundingBox cbb = geometricLayer.fromRectangle(rectangle).orElseThrow();
         Show show = new Show();
         Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param.resolution);
-        show.add(DensityPlot.of(raster, cbb, param.cdg));
+        raster = raster.maps(s -> FiniteScalarQ.of(s) ? s : RealScalar.ZERO);
+        show.add(ReliefPlot.of(raster, cbb, param.cdg));
         show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
       }
     }

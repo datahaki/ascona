@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.List;
 
 import ch.alpine.ascona.ref.BiinvariantsParam;
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.cls.Classification;
 import ch.alpine.ascony.cls.Labels;
@@ -15,7 +16,6 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Sedarim;
@@ -35,8 +35,7 @@ class ClassificationDemo extends ControlPointsDemo {
   static class Param0 {
     @FieldSelectionArray({ "10", "20", "50" })
     public Integer size = 20;
-    @FieldFuse
-    public transient Boolean shuffle;
+    public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
 
   @ReflectionMarker

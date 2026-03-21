@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.util.Collection;
 
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
@@ -12,7 +13,6 @@ import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
-import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.s.Sphere;
@@ -40,8 +40,7 @@ class SnRotationDemo extends ManifoldDisplayDemo implements RenderInterface {
     public Integer max_size = 3;
     @FieldSelectionArray({ "0.005", "0.01", "0.02", "0.03" })
     public Scalar speed = RealScalar.of(0.01);
-    @FieldFuse
-    public Boolean shuffle = false;
+    public final ShuffleFuse shuffleFuse = new ShuffleFuse();
 
     public SnRotationChunk create(Paran paran) {
       return new SnRotationChunk(dims, numel, max_size, speed, paran);

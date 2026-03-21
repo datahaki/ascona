@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascona.ref.BiinvariantsParam;
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
@@ -18,7 +19,6 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.plt.DensityPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Sedarim;
@@ -52,8 +52,7 @@ class MaAveragingDemo extends ControlPointsDemo {
   static class Param0 {
     @FieldSelectionArray({ "3", "4", "5", "6", "8", "10" })
     public Integer numel = 6;
-    @FieldFuse
-    public Boolean shuffle = false;
+    public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
 
   @ReflectionMarker

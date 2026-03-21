@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -15,7 +16,6 @@ import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariant;
@@ -34,8 +34,7 @@ class WeightsDemo extends ControlPointsDemo {
   static class Param0 {
     @FieldSelectionArray({ "3", "5", "10" })
     public Integer size = 5;
-    @FieldFuse
-    public transient Boolean shuffle;
+    public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
 
   @ReflectionMarker
@@ -66,7 +65,6 @@ class WeightsDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    param0.shuffle = false;
     int n = param0.size;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //

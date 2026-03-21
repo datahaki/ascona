@@ -4,6 +4,7 @@ package ch.alpine.ascona.euclid;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.ColorPair;
@@ -27,7 +28,7 @@ class PrincipalComponentsDemo extends EuclideanPlaneDemo {
   static class Param {
     @FieldSelectionArray({ "5", "10", "20", "30" })
     public Integer numel = 30;
-    public transient Boolean shuffle = true;
+    public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
 
   private final Param param;

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascona.ref.BiinvariantsParam;
+import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
@@ -41,8 +42,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
   static class Param0 {
     @FieldSelectionArray({ "25", "50", "100", "150", "200" })
     public Integer numel = 50;
-    @FieldFuse
-    public transient Boolean shuffle = false;
+    public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
 
   @ReflectionMarker
