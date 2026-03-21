@@ -18,7 +18,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Rotate;
 
-class PlatonicSolidTest {
+class StaticHelperTest {
   @ParameterizedTest
   @EnumSource
   void testBorder(PlatonicSolid platonicSolid) {

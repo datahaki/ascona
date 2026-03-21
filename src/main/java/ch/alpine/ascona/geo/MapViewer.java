@@ -55,11 +55,11 @@ import ch.alpine.tensor.sca.Round;
 @ReflectionMarker
 class MapViewer implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
-  public Color marker = Color.MAGENTA;
   public Boolean crosshair = true;
   public Boolean gridlines = true;
   public Boolean availability = true;
   public Boolean showCycles = false;
+  public Color marker = Color.MAGENTA;
   private final GeoComponent geoComponent = new GeoComponent() {
     @Override
     public void renderMore(Graphics2D graphics) {

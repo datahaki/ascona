@@ -32,6 +32,7 @@ import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.nrm.Vector2Norm;
 
 class SurfaceMeshDemo extends ControlPointsDemo {
   public static SurfaceMesh surfaceMesh(PlatonicSolid platonicSolid) {
@@ -40,19 +41,19 @@ class SurfaceMeshDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param {
-    public PlatonicSolid mesh = PlatonicSolid.ICOSAHEDRON;
+    public transient PlatonicSolid mesh = PlatonicSolid.ICOSAHEDRON;
   }
 
   @ReflectionMarker
   static class Paran {
     public Boolean ctrl = true;
     public Boolean inter = true;
-    public SurfaceMeshRefinements ref = SurfaceMeshRefinements.CATMULL_CLARK;
+    public SurfaceMeshRefinements ref = SurfaceMeshRefinements.DOO_SABIN;
     @FieldSlider
     @FieldPreferredWidth(100)
     @FieldClip(min = "0", max = "4")
-    public Integer refine = 2;
-    public ColorDataGradients cdg = ColorDataGradients.CLASSIC;
+    public transient Integer refine = 1;
+    public transient ColorDataGradients cdg = ColorDataGradients.COPPER;
   }
 
   private final Param param;
@@ -63,17 +64,20 @@ class SurfaceMeshDemo extends ControlPointsDemo {
     super(param = new Param(), paran = new Paran());
     // ---
     fieldsEditor(param).addUniversalListener(this::compute);
+    addChangeListener(this::compute);
     compute();
   }
 
   private void compute() {
     surfaceMesh = surfaceMesh(param.mesh);
+    if (getSelectedMD().equals(ManifoldDisplays.S2))
+      surfaceMesh.vrt = Vector2Norm.NORMALIZE.slash(surfaceMesh.vrt);
     setControlPointsSe2(surfaceMesh.vrt);
   }
 
   @Override
   protected Collection<ManifoldDisplays> permitted_manifoldDisplays() {
-    return ManifoldDisplays.SE2C_R3;
+    return ManifoldDisplays.SE2C_R3_S2;
   }
 
   @Override

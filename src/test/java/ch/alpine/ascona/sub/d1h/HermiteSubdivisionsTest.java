@@ -2,6 +2,8 @@
 package ch.alpine.ascona.sub.d1h;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import ch.alpine.sophis.math.Do;
 import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
@@ -20,59 +22,56 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Chop;
 
 class HermiteSubdivisionsTest {
-  @Test
-  void testStringReverseRn() {
+  @ParameterizedTest
+  @EnumSource
+  void testStringReverseRn(HermiteSubdivisions hermiteSubdivisions) {
     Tensor cp1 = RandomVariate.of(NormalDistribution.standard(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
-    for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
-      HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply(RGroup.INSTANCE);
-      TensorIteration ti1 = hermiteSubdivision.string(RealScalar.ONE, cp1);
-      TensorIteration ti2 = hermiteSubdivision.string(RealScalar.ONE, Reverse.of(cp2));
-      for (int count = 0; count < 3; ++count) {
-        Tensor result1 = ti1.iterate();
-        Tensor result2 = Reverse.of(ti2.iterate());
-        result2.set(Tensor::negate, Tensor.ALL, 1);
-        Tolerance.CHOP.requireClose(result1, result2);
-      }
+    HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply(RGroup.INSTANCE);
+    TensorIteration ti1 = hermiteSubdivision.string(RealScalar.ONE, cp1);
+    TensorIteration ti2 = hermiteSubdivision.string(RealScalar.ONE, Reverse.of(cp2));
+    for (int count = 0; count < 3; ++count) {
+      Tensor result1 = ti1.iterate();
+      Tensor result2 = Reverse.of(ti2.iterate());
+      result2.set(Tensor::negate, Tensor.ALL, 1);
+      Tolerance.CHOP.requireClose(result1, result2);
     }
   }
 
-  @Test
-  void testStringReverseSe2() {
+  @ParameterizedTest
+  @EnumSource
+  void testStringReverseSe2(HermiteSubdivisions hermiteSubdivisions) {
     Tensor cp1 = RandomVariate.of(UniformDistribution.unit(), 7, 2, 3);
     Tensor cp2 = cp1.copy();
     cp2.set(Tensor::negate, Tensor.ALL, 1);
-    for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
-      HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
-          Se2Group.INSTANCE
-      // , //
-      // Se2BiinvariantMeans.LINEAR
-      );
-      TensorIteration ti1 = hermiteSubdivision.string(RealScalar.ONE, cp1);
-      TensorIteration ti2 = hermiteSubdivision.string(RealScalar.ONE, Reverse.of(cp2));
-      for (int count = 0; count < 3; ++count) {
-        Tensor result1 = ti1.iterate();
-        Tensor result2 = Reverse.of(ti2.iterate());
-        result2.set(Tensor::negate, Tensor.ALL, 1);
-        Chop._08.requireClose(result1, result2);
-      }
+    HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
+        Se2Group.INSTANCE
+    // , //
+    // Se2BiinvariantMeans.LINEAR
+    );
+    TensorIteration ti1 = hermiteSubdivision.string(RealScalar.ONE, cp1);
+    TensorIteration ti2 = hermiteSubdivision.string(RealScalar.ONE, Reverse.of(cp2));
+    for (int count = 0; count < 3; ++count) {
+      Tensor result1 = ti1.iterate();
+      Tensor result2 = Reverse.of(ti2.iterate());
+      result2.set(Tensor::negate, Tensor.ALL, 1);
+      Chop._08.requireClose(result1, result2);
     }
   }
 
-  @Test
-  void testSe2ConstantReproduction() {
+  @ParameterizedTest
+  @EnumSource
+  void testSe2ConstantReproduction(HermiteSubdivisions hermiteSubdivisions) {
     Tensor control = ConstantArray.of(Tensors.fromString("{{2, 3, 1}, {0, 0, 0}}"), 10);
-    for (HermiteSubdivisions hermiteSubdivisions : HermiteSubdivisions.values()) {
-      HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
-          Se2Group.INSTANCE
-      // , //
-      // Se2BiinvariantMeans.LINEAR
-      );
-      TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);
-      Tensor iterate = Do.of(tensorIteration::iterate, 2);
-      Chop._13.requireAllZero(iterate.get(Tensor.ALL, 1));
-    }
+    HermiteSubdivision hermiteSubdivision = hermiteSubdivisions.supply( //
+        Se2Group.INSTANCE
+    // , //
+    // Se2BiinvariantMeans.LINEAR
+    );
+    TensorIteration tensorIteration = hermiteSubdivision.string(RealScalar.ONE, control);
+    Tensor iterate = Do.of(tensorIteration::iterate, 2);
+    Chop._13.requireAllZero(iterate.get(Tensor.ALL, 1));
   }
 
   @Test
