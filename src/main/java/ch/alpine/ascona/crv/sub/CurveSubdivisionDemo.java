@@ -90,9 +90,8 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
         new PathRender(ColorStroke.SECONDARY_CURVE, refined2, cyclic) //
             .render(geometricLayer, graphics);
       }
-      if (manifoldDisplay.isXYeuclid()) {
+      if (manifoldDisplay.isXYeuclid())
         Curvature2DRender.of(euclidXY, cyclic, param.comb).render(geometricLayer, graphics);
-      }
       if (levels < 5)
         manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
       param.cp.spawnXY(manifoldDisplay, euclidXY, new Rectangle(0, 0, 400, 300)) //

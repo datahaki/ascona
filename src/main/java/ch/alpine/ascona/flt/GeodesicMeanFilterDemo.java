@@ -68,7 +68,8 @@ class GeodesicMeanFilterDemo extends ControlPointsDemo {
     Tensor curve = Nest.of(BSpline4CurveSubdivision.split2lo(manifoldDisplay.geodesicSpace())::string, refined, 7);
     Tensor euclidXY = manifoldDisplay.point2xy().slash(curve);
     // ---
-    Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
+    if (manifoldDisplay.isXYeuclid())
+      Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
     new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
     manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
   }

@@ -86,7 +86,8 @@ class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImag
     manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Unprotect.byRef(scalarTensorFunction.apply(parameter))) //
         .render(geometricLayer, graphics);
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
-    Curvature2DRender.of(render, false).render(geometricLayer, graphics);
+    if (manifoldDisplay.isXYeuclid())
+      Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (levels < 5)
       manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
     {

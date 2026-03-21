@@ -98,7 +98,8 @@ class CatmullRomDemo extends PointSequenceDemo {
             .render(geometricLayer, graphics);
       }
       Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
-      Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
+      if (manifoldDisplay.isXYeuclid())
+        Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
       new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
       param.cp.spawnXY(manifoldDisplay, euclidXY, new Rectangle(0, 0, 400, 300)) //
           .render(geometricLayer, graphics);

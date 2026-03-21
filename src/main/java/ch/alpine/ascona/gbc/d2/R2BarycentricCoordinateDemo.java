@@ -92,7 +92,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
       Tensor fallback = manifoldDisplay.indetPoint();
       AveragedMovingDomain2D averagedMovingDomain2D = new AveragedMovingDomain2D(weights, homogeneousSpace.biinvariantMean(), fallback);
       Tensor[][] array = averagedMovingDomain2D.forward(controlPoints);
-      { // render basis functions
+      if (scatteredSetParam.show) { // render basis functions
         int n = weights.get(0, 0).length();
         Clip clip = cbb.clip(0);
         Clip clipx = Clips.interval(clip.min(), clip.min().add(clip.width().multiply(RealScalar.of(n))));

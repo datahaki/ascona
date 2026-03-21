@@ -95,7 +95,7 @@ class GeodesicDemo extends ControlPointsDemo {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     }
-    if (param.comb) {
+    if (param.comb && manifoldDisplay.isXYeuclid()) {
       Tensor refined = Subdivide.of(0, 1, param.splits * 6).maps(scalarTensorFunction);
       Tensor render = manifoldDisplay.point2xy().slash(refined);
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);

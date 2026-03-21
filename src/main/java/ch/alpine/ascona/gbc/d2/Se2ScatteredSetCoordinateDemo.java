@@ -64,7 +64,7 @@ final class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
       LeversRender leversRender = LeversRender.of(manifoldDisplay, controlPoints, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     }
-    if (manifoldDisplay.dimensions() < controlPoints.length()) { // render basis functions
+    if (manifoldDisplay.dimensions() < controlPoints.length() && scatteredSetParam.show) { // render basis functions
       Tensor origin = getGeodesicControlPoints();
       // TODO ASCONA use cache
       Tensor wgs = compute(weightingsParam.operator(manifoldDisplay.manifold(), origin), scatteredSetParam.refine);

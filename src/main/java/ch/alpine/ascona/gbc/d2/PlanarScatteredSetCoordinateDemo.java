@@ -89,7 +89,7 @@ final class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeighti
     // ---
     if (Objects.isNull(showable))
       recompute();
-    if (Objects.nonNull(showable)) {
+    if (Objects.nonNull(showable) && scatteredSetParam.show) {
       Dimension dimension = getSize();
       Show show = new Show();
       show.add(showable);

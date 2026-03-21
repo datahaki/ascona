@@ -62,6 +62,7 @@ public abstract class AbstractScatteredSetWeightingDemo extends ControlPointsDem
     @FieldSelectionArray({ "20", "30", "50" })
     public Integer refine = 20;
     public ColorDataGradients cdg = ColorDataGradients.CLASSIC;
+    public Boolean show = true;
     public Boolean arrows = false;
   }
 

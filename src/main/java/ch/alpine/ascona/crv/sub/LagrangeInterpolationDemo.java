@@ -89,7 +89,8 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
       Interpolation interpolation = LagrangeInterpolation.of(manifoldDisplay.geodesicSpace(), getGeodesicControlPoints());
       Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).maps(interpolation::at);
       Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
-      Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
+      if (manifoldDisplay.isXYeuclid())
+        Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
       new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
       manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Unprotect.byRef(interpolation.at(parameter))) //
           .render(geometricLayer, graphics);

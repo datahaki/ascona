@@ -56,7 +56,8 @@ class DeBoorDemo extends AbstractCurveDemo {
           .render(geometricLayer, graphics);
     }
     Tensor render = manifoldDisplay.point2xy().slash(refined);
-    Curvature2DRender.of(render, false).render(geometricLayer, graphics);
+    if (manifoldDisplay.isXYeuclid())
+      Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (levels < 5)
       manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined) //
           .render(geometricLayer, graphics);

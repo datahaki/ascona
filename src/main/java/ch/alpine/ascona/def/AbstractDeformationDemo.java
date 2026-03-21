@@ -58,6 +58,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param2 {
     public ColorDataGradients cdg = ColorDataGradients.RAINBOW;
+    public Boolean show = true;
     public Boolean target = true;
   }
 
@@ -143,7 +144,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
         ? getGeodesicControlPoints()
         : origin, null, geometricLayer, graphics);
     leversRender.renderIndexP(param2.target ? "q" : "p");
-    {
+    if (param2.show) {
       Tensor weights = movingDomain2D.arrayReshape_weights();
       Show show = new Show();
       show.add(ArrayPlot.of(weights, param2.cdg));

@@ -107,7 +107,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
       Tensor[][] array = averagedMovingDomain2D.forward(controlPoints);
       Tensor[][] point = new MatrixArray(array).maps(manifoldDisplay.point2xy());
       new MeshRender(point, colorDataGradient.deriveWithOpacity(Rational.HALF)).render(geometricLayer, graphics);
-      {
+      if (scatteredSetParam.show) {
         Dimension dimension = getSize();
         Show show = new Show();
         show.add(ArrayPlot.of(averagedMovingDomain2D.arrayReshape_weights(), colorDataGradient));
