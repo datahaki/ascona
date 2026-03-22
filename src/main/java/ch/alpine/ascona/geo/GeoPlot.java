@@ -18,8 +18,10 @@ import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.FieldSelectionCallback;
+import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.Tensor;
 
+@ReflectionMarker
 class GeoPlot implements ManipulateProvider {
   static final Tensor segments = StaticHelper.segments();
   public TileServers ts = TileServers.OpenStreetMap;
@@ -36,42 +38,37 @@ class GeoPlot implements ManipulateProvider {
     Tensor ll0 = seg.get(0);
     Tensor ll1 = seg.get(1);
     int z = 0;
-    for (z = 0; z < 18; ++z) {
+    for (z = 3; z < 18; ++z) {
+      TilePixel pr = TilePixel.from(z, ll0);
+      TilePixel qr = TilePixel.from(z, ll1);
+      long dx = Math.abs(pr.absX() - qr.absX());
+      long dy = Math.abs(pr.absY() - qr.absY());
+      long max = Math.max(dx, dy);
+      if (512 < max / 4)
+        break;
       TilePixel p = TilePixel.from(z, ll0);
       TilePixel q = TilePixel.from(z, ll1);
-      long dx = Math.abs(p.absX() - q.absX());
-      long dy = Math.abs(p.absY() - q.absY());
-      long max = Math.max(dx, dy);
-      if (512 < max)
-        break;
-    }
-    --z;
-    IO.println(z);
-    TilePixel p = TilePixel.from(z, ll0);
-    TilePixel q = TilePixel.from(z, ll1);
-    int px = p.tile().x();
-    int qx = q.tile().x();
-    int py = p.tile().y();
-    int qy = q.tile().y();
-    MapImagesCache mapImagesCache = ts.cache();
-    int x0 = Math.min(px, qx) - 1;
-    int x1 = Math.max(px, qx) + 1;
-    int y0 = Math.min(py, qy) - 1;
-    int y1 = Math.max(py, qy) + 1;
-    int xl = x1 - x0 + 1;
-    int yl = y1 - y0 + 1;
-    BufferedImage bufferedImage = new BufferedImage(xl << 8, yl << 8, BufferedImage.TYPE_INT_ARGB);
-    Graphics2D graphics = bufferedImage.createGraphics();
-    if (xl * yl <= 100)
-      for (int x = x0; x <= x1; ++x) {
-        for (int y = y0; y <= y1; ++y) {
-          Tile tile = new Tile(z, x, y);
-          IO.println(tile);
-          graphics.drawImage(mapImagesCache.getTile(tile), (x - x0) << 8, (y - y0) << 8, null);
+      int px = p.tile().x();
+      int qx = q.tile().x();
+      int py = p.tile().y();
+      int qy = q.tile().y();
+      MapImagesCache mapImagesCache = ts.cache();
+      int x0 = Math.min(px, qx) - 1;
+      int x1 = Math.max(px, qx) + 1;
+      int y0 = Math.min(py, qy) - 1;
+      int y1 = Math.max(py, qy) + 1;
+      int xl = x1 - x0 + 1;
+      int yl = y1 - y0 + 1;
+      if (xl * yl <= 100)
+        for (int x = x0; x <= x1; ++x) {
+          for (int y = y0; y <= y1; ++y) {
+            Tile tile = new Tile(z, x, y);
+            mapImagesCache.getTile(tile);
+          }
         }
-      }
-    else
-      System.err.println(index);
+      else
+        System.err.println(index);
+    }
   }
 
   @Override
@@ -90,7 +87,8 @@ class GeoPlot implements ManipulateProvider {
         break;
     }
     --z;
-    IO.println(z);
+    --z;
+    --z;
     TilePixel p = TilePixel.from(z, ll0);
     TilePixel q = TilePixel.from(z, ll1);
     int px = p.tile().x();
@@ -110,7 +108,6 @@ class GeoPlot implements ManipulateProvider {
       for (int x = x0; x <= x1; ++x) {
         for (int y = y0; y <= y1; ++y) {
           Tile tile = new Tile(z, x, y);
-          IO.println(tile);
           graphics.drawImage(mapImagesCache.getTile(tile), (x - x0) << 8, (y - y0) << 8, null);
         }
       }

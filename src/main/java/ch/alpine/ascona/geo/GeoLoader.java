@@ -6,7 +6,9 @@ import ch.alpine.bridge.geo.TileServers;
 enum GeoLoader {
   ;
   static void main() {
-    for (int index = 0; index < GeoPlot.segments.length(); ++index)
+    for (int index = 0; index < GeoPlot.segments.length(); ++index) {
+      IO.println(index);
       GeoPlot.load(index, TileServers.OpenTopoMap);
+    }
   }
 }

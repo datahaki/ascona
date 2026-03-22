@@ -41,7 +41,7 @@ class SurfaceMeshDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param {
-    public transient PlatonicSolid mesh = PlatonicSolid.ICOSAHEDRON;
+    public PlatonicSolid mesh = PlatonicSolid.ICOSAHEDRON;
   }
 
   @ReflectionMarker

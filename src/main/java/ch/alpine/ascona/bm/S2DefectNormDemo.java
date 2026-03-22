@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascona.misc;
+package ch.alpine.ascona.bm;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -121,7 +121,6 @@ class S2DefectNormDemo extends ControlPointsDemo {
     show.add(showable);
     if (param.vector) {
       VectorPlot vectorPlot = VectorPlot.of(p -> arrow(tsf, p), cbb, param.cdg);
-      vectorPlot.setResolution(param.imgres / 2);
       show.add(vectorPlot);
     }
     show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
