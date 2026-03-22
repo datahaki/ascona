@@ -3,6 +3,7 @@ package ch.alpine.ascona.euclid;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.Optional;
 
 import ch.alpine.ascona.ref.ShuffleFuse;
@@ -14,7 +15,9 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
+import ch.alpine.bridge.fig.BarLegend;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.plt.ImagePlot;
 import ch.alpine.bridge.fig.plt.ReliefPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
@@ -31,12 +34,15 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.chq.FiniteScalarQ;
 import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.img.ImageResize;
+import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.io.TableBuilder;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.num.ReIm;
@@ -55,8 +61,9 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     @FieldSlider
     public Integer depth = 5;
     public Boolean radius = true;
+    public Boolean relief = true;
     @FieldSelectionArray({ "20", "30", "50", "100", "150", "200", "300" })
-    public transient Integer resolution = 30;
+    public transient Integer resolution = 100;
     public ColorDataGradients cdg = ColorDataGradients.HUE;
   }
 
@@ -117,7 +124,14 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
         Show show = new Show();
         Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param.resolution);
         raster = raster.maps(s -> FiniteScalarQ.of(s) ? s : RealScalar.ZERO);
-        show.add(ReliefPlot.of(raster, cbb, param.cdg));
+        if (param.relief)
+          show.add(ReliefPlot.of(raster, cbb, param.cdg));
+        else {
+          Rescale rescale = new Rescale(raster);
+          BufferedImage bufferedImage = ImageFormat.of(rescale.result().maps(param.cdg));
+          show.add(ImagePlot.of(bufferedImage, ImageResize.DEGREE_3, cbb, //
+              new BarLegend(rescale.clip(), param.cdg), false, RealScalar.ONE));
+        }
         show.render(graphics, geometricLayer.toRectangle(cbb).orElseThrow());
       }
     }

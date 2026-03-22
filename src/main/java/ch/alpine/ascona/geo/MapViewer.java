@@ -39,9 +39,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Partition;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
-import ch.alpine.tensor.io.Import;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.nd.BoxRandomSample;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -191,7 +189,7 @@ class MapViewer implements ManipulateProvider {
     };
   };
   private TilePixel tilePixel;
-  private final Tensor segments = segments();
+  private final Tensor segments = StaticHelper.segments();
 
   public MapViewer() {
     CoordinateBoundingBox cbb = CoordinateBoundingBox.of( //
@@ -208,13 +206,6 @@ class MapViewer implements ManipulateProvider {
     geoComponent.tileServers = tileServers;
     geoComponent.getCache().debug_print = true;
     return geoComponent;
-  }
-
-  static Tensor segments() {
-    Tensor tensor = Import.of("ch/alpine/ascona/geo/2024_routes.csv");
-    return Tensor.of(tensor.stream() //
-        .filter(r -> r.length() == 8) //
-        .map(r -> Partition.of(r.extract(4, 8).maps(s -> Quantity.of(s, "deg")), 2)));
   }
 
   static void main() {
