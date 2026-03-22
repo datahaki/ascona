@@ -4,7 +4,6 @@ package ch.alpine.ascona.crv.sub;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.Curvature2DRender;
@@ -21,16 +20,8 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.red.Times;
 
-class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
-  private BufferedImage bufferedImage;
-
+class GeodesicBSplineFunctionDemo extends AbstractCurveDemo {
   public GeodesicBSplineFunctionDemo() {
-    this(new AbstractCurveParam());
-  }
-
-  public GeodesicBSplineFunctionDemo(AbstractCurveParam abstractCurveParam) {
-    super(abstractCurveParam);
-    // ---
     Tensor dubins = Tensors.fromString(
         "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
@@ -43,11 +34,9 @@ class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedI
   }
 
   @Override // from RenderInterface
-  public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
+  public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, Tensor control) {
     final int upper = control.length() - 1;
     final Scalar parameter = abstractCurveParam.ratio.multiply(RealScalar.of(upper));
-    bufferedImage = SymLinkImages.symLinkImageGBSF(degree, upper + 1, parameter).bufferedImage();
-    // ---
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
@@ -56,24 +45,27 @@ class GeodesicBSplineFunctionDemo extends AbstractCurveDemo implements BufferedI
     // ---
     Tensor effective = control;
     ScalarTensorFunction scalarTensorFunction = //
-        GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, effective);
+        GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), abstractCurveParam.degree, effective);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
       manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Tensors.of(selected)) //
           .render(geometricLayer, graphics);
     }
-    Tensor refined = Subdivide.of(0, upper, Math.max(1, upper * (1 << levels))).maps(scalarTensorFunction);
+    int max = upper * (1 << abstractCurveParam.refine);
+    Tensor refined = Subdivide.of(0, upper, Math.max(1, max)).maps(scalarTensorFunction);
     Tensor render = manifoldDisplay.point2xy().slash(refined);
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
-    if (levels < 5)
+    if (abstractCurveParam.refine < 5)
       manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
     return refined;
   }
 
   @Override
-  public BufferedImage bufferedImage() {
-    return bufferedImage;
+  protected BufferedImage createImage() {
+    final int upper = getGeodesicControlPoints().length() - 1;
+    final Scalar parameter = abstractCurveParam.ratio.multiply(RealScalar.of(upper));
+    return SymLinkImages.symLinkImageGBSF(abstractCurveParam.degree, upper + 1, parameter).bufferedImage();
   }
 
   static void main() {

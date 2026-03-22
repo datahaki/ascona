@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
@@ -28,15 +27,14 @@ import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.itp.DeBoor;
 
-class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImageSupplier {
+class KnotsBSplineFunctionDemo extends AbstractCurveDemo {
   @ReflectionMarker
-  static class Param extends AbstractCurveParam {
+  static class Param {
     @FieldSlider
     @FieldClip(min = "0", max = "1")
     public Scalar exponent = RealScalar.ONE;
   }
 
-  private BufferedImage bufferedImage;
   private final Param param;
 
   public KnotsBSplineFunctionDemo() {
@@ -48,12 +46,7 @@ class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImag
     this.param = param;
     // ---
     setManifoldDisplay(ManifoldDisplays.R2);
-    param.refine = 5;
-    // ---
-    // Tensor dubins = Tensors.fromString(
-    // "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");
-    // setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
-    // Tensor.of(dubins.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
+    abstractCurveParam.refine = 5;
   }
 
   @Override
@@ -67,28 +60,23 @@ class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImag
   }
 
   @Override // from RenderInterface
-  protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
+  protected Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, Tensor control) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
     Tensor knots = KnotSpacing.centripetal(tensorMetric, param.exponent).apply(control);
     Scalar upper = Last.of(knots);
-    Scalar parameter = param.ratio.multiply(upper);
+    Scalar parameter = abstractCurveParam.ratio.multiply(upper);
     // ---
     GeodesicBSplineFunction scalarTensorFunction = //
-        GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), degree, knots, control);
-    {
-      DeBoor deBoor = scalarTensorFunction.deBoor(parameter);
-      SymLinkImage symLinkImage = SymLinkImages.deboor(deBoor.knots(), deBoor.degree() + 1, parameter);
-      bufferedImage = symLinkImage.bufferedImage();
-    }
+        GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), abstractCurveParam.degree, knots, control);
     // ---
-    Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << levels))).maps(scalarTensorFunction);
+    Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << abstractCurveParam.refine))).maps(scalarTensorFunction);
     manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Unprotect.byRef(scalarTensorFunction.apply(parameter))) //
         .render(geometricLayer, graphics);
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
-    if (levels < 5)
+    if (abstractCurveParam.refine < 5)
       manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
@@ -97,9 +85,19 @@ class KnotsBSplineFunctionDemo extends AbstractCurveDemo implements BufferedImag
     return refined;
   }
 
-  @Override // from BufferedImageSupplier
-  public BufferedImage bufferedImage() {
-    return bufferedImage;
+  @Override
+  protected BufferedImage createImage() {
+    ManifoldDisplay manifoldDisplay = manifoldDisplay();
+    Tensor control = getGeodesicControlPoints();
+    TensorMetric tensorMetric = (TensorMetric) manifoldDisplay.geodesicSpace();
+    Tensor knots = KnotSpacing.centripetal(tensorMetric, param.exponent).apply(control);
+    Scalar upper = Last.of(knots);
+    Scalar parameter = abstractCurveParam.ratio.multiply(upper);
+    GeodesicBSplineFunction scalarTensorFunction = //
+        GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), abstractCurveParam.degree, knots, control);
+    DeBoor deBoor = scalarTensorFunction.deBoor(parameter);
+    SymLinkImage symLinkImage = SymLinkImages.deboor(deBoor.knots(), deBoor.degree() + 1, parameter);
+    return symLinkImage.bufferedImage();
   }
 
   static void main() {

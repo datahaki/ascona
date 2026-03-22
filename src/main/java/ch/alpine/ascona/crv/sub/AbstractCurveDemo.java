@@ -1,8 +1,10 @@
 // code by jph
 package ch.alpine.ascona.crv.sub;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.ren.ColorStroke;
@@ -21,6 +23,7 @@ import ch.alpine.tensor.Tensors;
 abstract class AbstractCurveDemo extends PointSequenceDemo {
   @ReflectionMarker
   static class AbstractCurveParam {
+    public Boolean symb = true;
     public final CurvatureParam cp = new CurvatureParam();
     @FieldSelectionArray({ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" })
     public Integer degree = 3;
@@ -34,22 +37,31 @@ abstract class AbstractCurveDemo extends PointSequenceDemo {
 
   protected final AbstractCurveParam abstractCurveParam;
 
-  protected AbstractCurveDemo(AbstractCurveParam abstractCurveParam) {
-    super(new SaveParam(), this.abstractCurveParam = abstractCurveParam);
+  protected AbstractCurveDemo() {
+    this(new Object());
+  }
+
+  protected AbstractCurveDemo(Object object) {
+    super(new SaveParam(), abstractCurveParam = new AbstractCurveParam(), object);
   }
 
   @Override
   public final void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor control = getGeodesicControlPoints();
     if (!Tensors.isEmpty(control)) {
-      Tensor refined = protected_render(geometricLayer, graphics, abstractCurveParam.degree, abstractCurveParam.refine, control);
+      if (abstractCurveParam.symb)
+        graphics.drawImage(createImage(), 0, 0, null);
+      Tensor refined = protected_render(geometricLayer, graphics, control);
       Tensor euclidXY = manifoldDisplay().point2xy().slash(refined);
       new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
-      abstractCurveParam.cp.spawnXY(manifoldDisplay(), euclidXY, new Rectangle(0, 0, 400, 300)) //
+      Dimension dimension = getSize();
+      abstractCurveParam.cp.spawnXY(manifoldDisplay(), euclidXY, new Rectangle(dimension.width - 400, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     }
   }
 
+  protected abstract BufferedImage createImage();
+
   protected abstract Tensor protected_render( //
-      GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control);
+      GeometricLayer geometricLayer, Graphics2D graphics, Tensor control);
 }

@@ -26,30 +26,24 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.N;
 
 class DeBoorDemo extends AbstractCurveDemo {
-  public DeBoorDemo() {
-    super(new AbstractCurveParam());
-  }
-
   @Override
   protected int initialCount() {
     return 4;
   }
 
   @Override // from RenderInterface
-  public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, int degree, int levels, Tensor control) {
+  public Tensor protected_render(GeometricLayer geometricLayer, Graphics2D graphics, Tensor control) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     int n = control.length();
     final int upper = n - 1;
     Clip clip = Clips.interval(Rational.of(2 * upper - 2 - n + 2, 2), Rational.of(2 * upper + n - 2, 2));
     final Scalar parameter = LinearInterpolation.of(clip).apply(abstractCurveParam.ratio);
     Tensor knots = Range.of(0, 2 * upper);
-    BufferedImage bufferedImage = SymLinkImages.deboor(knots, control.length(), N.DOUBLE.apply(parameter)).bufferedImage();
-    graphics.drawImage(bufferedImage, 0, 0, null);
     // ---
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     ScalarTensorFunction scalarTensorFunction = DeBoor.of(geodesicSpace, knots, control);
     Tensor refined = Subdivide.of(upper - 1, upper, //
-        Math.max(1, upper * (1 << levels))).maps(scalarTensorFunction);
+        Math.max(1, upper * (1 << abstractCurveParam.refine))).maps(scalarTensorFunction);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
       manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, Tensors.of(selected)) //
@@ -58,7 +52,7 @@ class DeBoorDemo extends AbstractCurveDemo {
     Tensor render = manifoldDisplay.point2xy().slash(refined);
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
-    if (levels < 5)
+    if (abstractCurveParam.refine < 5)
       manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined) //
           .render(geometricLayer, graphics);
     {
@@ -66,6 +60,16 @@ class DeBoorDemo extends AbstractCurveDemo {
       leversRender.renderIndexP();
     }
     return refined;
+  }
+
+  @Override
+  protected BufferedImage createImage() {
+    int n = getGeodesicControlPoints().length();
+    final int upper = n - 1;
+    Clip clip = Clips.interval(Rational.of(2 * upper - 2 - n + 2, 2), Rational.of(2 * upper + n - 2, 2));
+    final Scalar parameter = LinearInterpolation.of(clip).apply(abstractCurveParam.ratio);
+    Tensor knots = Range.of(0, 2 * upper);
+    return SymLinkImages.deboor(knots, n, N.DOUBLE.apply(parameter)).bufferedImage();
   }
 
   static void main() {
