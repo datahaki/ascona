@@ -8,14 +8,12 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
-import java.awt.geom.PathIterator;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import ch.alpine.ascony.ren.BezierGlyphRender;
+import ch.alpine.ascony.ren.ClothoidGlyphRender;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
@@ -25,34 +23,22 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.crv.BezierCurve;
-import ch.alpine.sophis.crv.clt.Clothoid;
-import ch.alpine.sophis.crv.clt.ClothoidBuilders;
-import ch.alpine.sophus.bm.LinearBiinvariantMean;
-import ch.alpine.sophus.lie.so2.ArcTan2D;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.TableBuilder;
 
 class GlyphDemo extends EuclideanPlaneDemo {
-  public static Clothoid clothoid(Tensor p0, Tensor p1, Tensor p2, Tensor p3) {
-    return ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder().curve( //
-        Append.of(p0, ArcTan2D.of(p1.subtract(p0))), //
-        Append.of(p3, ArcTan2D.of(p3.subtract(p2))));
-  }
-
   @ReflectionMarker
   static class Param {
-    @FieldSelectionArray({ "0", "8", "16", "24", "32", "40", "48", "56", "64", "72","80","88","96" })
+    @FieldSelectionArray({ "0", "8", "16", "24", "32", "40", "48", "56", "64", "72", "80", "88", "96", "104", "112", "120", "128", "136" })
     public Integer ofs = 0;
     @FieldSlider
     @FieldClip(min = "1", max = "20")
     public Integer res = 20;
-    public Boolean bezier = true;
+    public Font font = new Font(Font.DIALOG, Font.PLAIN, 12);
   }
 
   private final Param param;
@@ -83,64 +69,18 @@ class GlyphDemo extends EuclideanPlaneDemo {
     FontRenderContext frc = new FontRenderContext(null, true, true);
     GlyphVector gv = font.createGlyphVector(frc, collect); // or any string
     for (int index = 0; index < gv.getNumGlyphs(); ++index) {
-      Shape glyphShape = gv.getGlyphOutline(index); // first character
-      PathIterator pathIterator = glyphShape.getPathIterator(new AffineTransform(1, 0, 0, -1, 0, 0));
-      float[] coords = new float[6];
-      Tensor prev = null;
-      Tensor next = null;
-      Tensor stol = null;
-      Tensor last = null;
+      Shape shape = gv.getGlyphOutline(index); // first character
       graphics.setColor(Color.BLACK);
       graphics.setStroke(new BasicStroke(2));
-      while (!pathIterator.isDone()) {
-        int type = pathIterator.currentSegment(coords);
-        switch (type) {
-        case PathIterator.SEG_MOVETO:
-          prev = Tensors.vector(coords[0], coords[1]);
-          tableBuilder.appendRow(prev);
-          break;
-        case PathIterator.SEG_LINETO: {
-          next = Tensors.vector(coords[0], coords[1]);
-          Line2D line2d = geometricLayer.toLine2D(prev, next);
-          graphics.draw(line2d);
-          prev = next;
-          tableBuilder.appendRow(next);
-          break;
-        }
-        case PathIterator.SEG_QUADTO: {
-          next = Tensors.vector(coords[0], coords[1]);
-          last = Tensors.vector(coords[2], coords[3]);
-          Tensor sequence = Tensors.of(prev, next, last);
-          ScalarTensorFunction stf = BezierCurve.of(LinearBiinvariantMean.INSTANCE, sequence);
-          Path2D path2d = geometricLayer.toPath2D(domain.maps(stf));
-          graphics.draw(path2d);
-          prev = last;
-          tableBuilder.appendRow(next);
-          tableBuilder.appendRow(last);
-          break;
-        }
-        case PathIterator.SEG_CUBICTO: {
-          next = Tensors.vector(coords[0], coords[1]);
-          stol = Tensors.vector(coords[2], coords[3]);
-          last = Tensors.vector(coords[4], coords[5]);
-          ScalarTensorFunction clo = clothoid(prev, next, stol, last);
-          ScalarTensorFunction bez = BezierCurve.of(LinearBiinvariantMean.INSTANCE, Tensors.of(prev, next, stol, last));
-          if (param.bezier) {
-            graphics.draw(geometricLayer.toPath2D(domain.maps(bez)));
-          } else {
-            graphics.draw(geometricLayer.toPath2D(domain.maps(clo)));
-          }
-          prev = last;
-          tableBuilder.appendRow(next);
-          tableBuilder.appendRow(stol);
-          tableBuilder.appendRow(last);
-          break;
-        }
-        case PathIterator.SEG_CLOSE:
-          break;
-        }
-        pathIterator.next();
-      }
+      new BezierGlyphRender(shape, domain).render(geometricLayer, graphics);
+      geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(0, -10)));
+      graphics.setColor(Color.RED);
+      graphics.setStroke(new BasicStroke(1));
+      new BezierGlyphRender(shape, domain).render(geometricLayer, graphics);
+      graphics.setColor(Color.BLACK);
+      graphics.setStroke(new BasicStroke(2));
+      new ClothoidGlyphRender(shape, domain).render(geometricLayer, graphics);
+      geometricLayer.popMatrix();
     }
     setGeodesicControlPoints(tableBuilder.getTable());
   }
