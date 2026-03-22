@@ -14,12 +14,16 @@ import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.BezierCurve;
 import ch.alpine.sophis.crv.clt.Clothoid;
@@ -29,14 +33,10 @@ import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Append;
-import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.TableBuilder;
-import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.d.DiscreteUniformDistribution;
 
 class GlyphDemo extends EuclideanPlaneDemo {
   public static Clothoid clothoid(Tensor p0, Tensor p1, Tensor p2, Tensor p3) {
@@ -47,27 +47,27 @@ class GlyphDemo extends EuclideanPlaneDemo {
 
   @ReflectionMarker
   static class Param {
+    @FieldSelectionArray({ "0", "8", "16", "24", "32", "40", "48", "56", "64", "72","80","88","96" })
+    public Integer ofs = 0;
+    @FieldSlider
+    @FieldClip(min = "1", max = "20")
+    public Integer res = 20;
     public Boolean bezier = true;
   }
 
   private final Param param;
-  GlyphVector gv;
+  Font font;
 
   public GlyphDemo() {
     super(param = new Param());
-    FontRenderContext frc = new FontRenderContext(null, true, true);
-    Distribution distribution = DiscreteUniformDistribution.of(0, 128);
-    Tensor tensor = RandomVariate.of(distribution, 50);
-    String collect = Flatten.scalars(tensor).map(s -> s.number().intValue()).map(i -> ' ' + i).map(Character::toString).collect(Collectors.joining());
-    // collect = "$&%";
     Path path = HomeDirectory.Ephemeral.resolve("font", "SourceSerifPro-Regular.otf");
-    Font font = new Font(Font.DIALOG, Font.PLAIN, 12);
+    path = HomeDirectory.Ephemeral.resolve("font", "ArtisticCalligraphy.otf");
+    font = new Font(Font.DIALOG, Font.PLAIN, 12);
     try {
       font = Font.createFont(Font.TRUETYPE_FONT, path.toFile()).deriveFont(12f);
     } catch (Exception exception) {
       exception.printStackTrace();
     }
-    gv = font.createGlyphVector(frc, collect); // or any string
     Tensor pvm = PvmBuilder.rhs().setOffset(100, 400).setPerPixel(50).digest();
     geometricComponent().setModel2Pixel(pvm);
   }
@@ -75,8 +75,13 @@ class GlyphDemo extends EuclideanPlaneDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     new GridRender(this::getSize).render(geometricLayer, graphics);
-    Tensor domain = Subdivide.of(0.0, 1.0, 10);
+    Tensor domain = Subdivide.of(0.0, 1.0, param.res);
     TableBuilder tableBuilder = new TableBuilder();
+    String collect = IntStream.range(0, 8).map(i -> i + param.ofs) //
+        .mapToObj(i -> ' ' + i).map(Character::toString).collect(Collectors.joining());
+    // collect = "$&%";
+    FontRenderContext frc = new FontRenderContext(null, true, true);
+    GlyphVector gv = font.createGlyphVector(frc, collect); // or any string
     for (int index = 0; index < gv.getNumGlyphs(); ++index) {
       Shape glyphShape = gv.getGlyphOutline(index); // first character
       PathIterator pathIterator = glyphShape.getPathIterator(new AffineTransform(1, 0, 0, -1, 0, 0));

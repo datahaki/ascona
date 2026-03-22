@@ -44,7 +44,7 @@ import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
-class S2DefectNormDemo extends ControlPointsDemo {
+class S2MeanDefectDemo extends ControlPointsDemo {
   private static final Tensor INITIAL = Tensors.fromString("{{-0.5, 0, 0}, {0.5, 0, 0}, {0, 0.5, 0}, {0, -0.5, 0}}").unmodifiable();
 
   @ReflectionMarker
@@ -67,7 +67,7 @@ class S2DefectNormDemo extends ControlPointsDemo {
 
   public final Param param;
 
-  public S2DefectNormDemo() {
+  public S2MeanDefectDemo() {
     super(param = new Param());
     geometricComponent().setRotatable(false);
     // ---
@@ -159,6 +159,6 @@ class S2DefectNormDemo extends ControlPointsDemo {
   }
 
   static void main() {
-    new S2DefectNormDemo().runStandalone();
+    new S2MeanDefectDemo().runStandalone();
   }
 }
