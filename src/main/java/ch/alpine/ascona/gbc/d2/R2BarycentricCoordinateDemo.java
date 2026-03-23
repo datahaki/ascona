@@ -85,7 +85,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       PolygonRegion polygonRegion = new PolygonRegion(domain);
       Tensor hull = ConvexHull2D.of(domain);
-      new PathRender(ColorStroke.AREA_SELECTION, hull, true).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CONVEX_HULL, hull, true).render(geometricLayer, graphics);
       Sedarim sedarim = weightingsParam.operator(manifoldDisplay.manifold(), domain);
       CoordinateBoundingBox cbb = CoordinateBounds.of(hull);
       Tensor weights = Meshgrid.of(cbb, scatteredSetParam.refine).image(sedarim::sunder);

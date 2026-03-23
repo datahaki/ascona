@@ -25,7 +25,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
-import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.num.Pi;
@@ -33,7 +32,7 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 final class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDemo {
-  private static final Clip RANGE_X = Clips.absolute(3);
+  private static final Clip RANGE_X = Clips.absolute(3.0);
   private static final Clip RANGE_A = Clips.absolute(Pi.VALUE);
 
   public Se2ScatteredSetCoordinateDemo() {
@@ -67,7 +66,7 @@ final class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     if (manifoldDisplay.dimensions() < controlPoints.length() && scatteredSetParam.show) { // render basis functions
       Tensor origin = getGeodesicControlPoints();
       // TODO ASCONA use cache
-      Tensor wgs = compute(weightingsParam.operator(manifoldDisplay.manifold(), origin), scatteredSetParam.refine);
+      Tensor wgs = compute(weightingsParam.operator(manifoldDisplay.manifold(), origin), scatteredSetParam.refine, controlPoints.length());
       Tensor weights = ImageTiling.of(wgs);
       Show show = new Show();
       show.add(ArrayPlot.of(weights, colorDataGradient));
@@ -75,13 +74,11 @@ final class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     }
   }
 
-  private Tensor compute(Sedarim tensorUnaryOperator, int refinement) {
-    Tensor sX = Subdivide.increasing(RANGE_X, refinement);
-    Tensor sY = Subdivide.decreasing(RANGE_X, refinement);
-    Tensor sA = Drop.tail(Subdivide.increasing(RANGE_A, 6), 1);
-    int n = sX.length();
-    Tensor origin = getGeodesicControlPoints(); // TODO ASCONA ALG
-    Tensor wgs = Array.of(_ -> DoubleScalar.INDETERMINATE, n * sA.length(), n, origin.length());
+  private Tensor compute(Sedarim tensorUnaryOperator, int n, int m) {
+    Tensor sX = Subdivide.intermediate_increasing(RANGE_X, n);
+    Tensor sY = Subdivide.intermediate_decreasing(RANGE_X, n);
+    Tensor sA = Subdivide.intermediate_increasing(RANGE_A, 6);
+    Tensor wgs = Array.of(_ -> DoubleScalar.INDETERMINATE, n * sA.length(), n, m);
     IntStream.range(0, n).parallel().forEach(c0 -> {
       Scalar x = sX.Get(c0);
       int ofs = 0;

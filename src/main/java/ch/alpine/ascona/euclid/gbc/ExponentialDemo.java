@@ -85,9 +85,8 @@ class ExponentialDemo extends EuclideanPlaneDemo {
               .render(geometricLayer, graphics);
           geometricLayer.popMatrix();
           {
-            // FIXME BRIDGE this should not affect Show appearance!!!
-            graphics.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
             Show show = new Show();
+            show.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
             show.setShowLabel("Weights");
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {

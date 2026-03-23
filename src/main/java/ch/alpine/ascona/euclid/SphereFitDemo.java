@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.euclid;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
@@ -70,9 +71,10 @@ class SphereFitDemo extends EuclideanPlaneDemo {
         geometricLayer.popMatrix();
       }
     }
-    new PathRender(ColorStroke.SECONDARY_CURVE, ConvexHull2D.of(control), true).render(geometricLayer, graphics);
-    new PathRender(ColorStroke.CURVE, CIRCLE, true).render(geometricLayer, graphics);
+    new PathRender(ColorStroke.CONVEX_HULL, ConvexHull2D.of(control), true).render(geometricLayer, graphics);
+    manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.ONE, CIRCLE).render(geometricLayer, graphics);
     if (!Tensors.isEmpty(control)) {
+      graphics.setStroke(new BasicStroke());
       Tensor matrix = Outer.of(Vector2Norm::between, control, CIRCLE);
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
       int[] matching = bipartiteMatching.matching();
@@ -85,15 +87,13 @@ class SphereFitDemo extends EuclideanPlaneDemo {
     }
     if (!Tensors.isEmpty(control)) {
       Tensor weiszfeld = new WeiszfeldMethod(Chop._04).uniform(control).get();
-      manifoldDisplay.showPoints(ColorPair.SPACIAL_MEDIAN, RealScalar.of(2), Tensors.of(weiszfeld)) //
+      manifoldDisplay.showPoints(ColorPair.SPACIAL_MEDIAN, RealScalar.of(1.1), Tensors.of(weiszfeld)) //
           .render(geometricLayer, graphics);
     }
     if (!Tensors.isEmpty(control)) {
       HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(homogeneousSpace);
-      // TODO CONFIGURABLE
-      // TODO dont change shape but color
-      Sedarim sedarim = biinvariant.weighting(InversePowerVariogram.of(1), control);
+      Sedarim sedarim = biinvariant.weighting(InversePowerVariogram.of(1.05), control);
       SpatialMedian spatialMedian = new HsWeiszfeldMethod(homogeneousSpace.biinvariantMean(), sedarim, Chop._06);
       Optional<Tensor> optional = spatialMedian.uniform(control);
       if (optional.isPresent()) {
@@ -101,8 +101,6 @@ class SphereFitDemo extends EuclideanPlaneDemo {
         geometricLayer.pushMatrix(Se2Matrix.translation(weiszfeld));
         Path2D path2d = geometricLayer.toPath2D(StarPoints.of(5, 0.2, 0.05));
         path2d.closePath();
-        graphics.setColor(new Color(128, 128, 255, 64));
-        graphics.fill(path2d);
         graphics.setColor(new Color(128, 128, 255, 255));
         graphics.draw(path2d);
         geometricLayer.popMatrix();

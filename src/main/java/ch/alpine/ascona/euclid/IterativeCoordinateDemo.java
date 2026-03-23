@@ -18,7 +18,6 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.gbc.d2.IterativeCoordinateMatrix;
 import ch.alpine.sophus.api.Manifold;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -75,10 +74,8 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
           LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
       leversRender.renderSurfaceP();
       LeversHud.render(Biinvariants.USANCE, leversRender, null);
-      HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-      Manifold manifold = homogeneousSpace;
+      Manifold manifold = manifoldDisplay.manifold();
       try {
-        // TODO why does the matrix have such high entries as total grows
         Tensor matrix = new IterativeCoordinateMatrix(param.total).origin( //
             manifold.tangentSpace(origin).log().slash(sequence));
         Tensor circum = matrix.dot(sequence);

@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.euclid;
 
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -117,11 +118,12 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
             .orElse(DoubleScalar.INDETERMINATE);
       };
       ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
-      Optional<Rectangle> optional = Show.optionalDefaultInsets(getSize(), graphics.getFont().getSize());
+      Show show = new Show();
+      FontMetrics fontMetrics = graphics.getFontMetrics();
+      Optional<Rectangle> optional = show.optionalDefaultInsets(getSize(), fontMetrics);
       if (optional.isPresent()) {
         Rectangle rectangle = optional.orElseThrow();
         CoordinateBoundingBox cbb = geometricLayer.fromRectangle(rectangle).orElseThrow();
-        Show show = new Show();
         Tensor raster = manifoldDisplay.d2Raster().of(arrayFunction, cbb, param.resolution);
         raster = raster.maps(s -> FiniteScalarQ.of(s) ? s : RealScalar.ZERO);
         if (param.relief)
@@ -154,7 +156,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
       for (int index = 0; index < dimension1; ++index) {
         TensorUnaryOperator tuo = manifoldDisplay::point2xya;
         Tensor points = tuo.slash(table.get(Tensor.ALL, index).maps(S2V));
-        new PathRender(ColorStroke.AREA_SELECTION, points, false).render(geometricLayer, graphics);
+        new PathRender(ColorStroke.TRACE, points, false).render(geometricLayer, graphics);
       }
     }
   }

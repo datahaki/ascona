@@ -2,6 +2,7 @@
 package ch.alpine.ascona.euclid;
 
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Optional;
@@ -84,7 +85,8 @@ class TimeSeriesDemo extends EuclideanPlaneDemo {
     show.add(TsPlot.of(product)).setLabel("times");
     show.add(TsPlot.of(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
     Dimension dimension = getSize();
-    Optional<Rectangle> optional = Show.optionalDefaultInsets(dimension, graphics.getFont().getSize());
+    FontMetrics fontMetrics = graphics.getFontMetrics();
+    Optional<Rectangle> optional = show.optionalDefaultInsets(dimension, fontMetrics);
     if (optional.isPresent()) {
       Rectangle rectangle = optional.orElseThrow();
       CoordinateBoundingBox cbb = geometricLayer.fromRectangle(rectangle).orElseThrow();

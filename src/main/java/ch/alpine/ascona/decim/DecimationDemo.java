@@ -18,16 +18,17 @@ import ch.alpine.sophis.decim.CurveDecimation;
 import ch.alpine.sophis.decim.LineDistances;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.pdf.RandomSample;
 
 /** playground for curve decimation */
-// TODO needs different thresholds
 class DecimationDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param {
     public Integer n = 5;
+    public Scalar epsilon = RealScalar.ONE;
   }
 
   private final Param param;
@@ -71,8 +72,7 @@ class DecimationDemo extends ControlPointsDemo {
       }
     }
     CurveDecimation curveDecimation = CurveDecimation.of( //
-        LineDistances.STANDARD.supply(homogeneousSpace), //
-        RealScalar.ONE);
+        LineDistances.STANDARD.supply(homogeneousSpace), param.epsilon);
     Tensor decimate = curveDecimation.apply(sequence);
     {
       for (int index = 1; index < decimate.length(); ++index) {

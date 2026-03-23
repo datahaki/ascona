@@ -65,7 +65,7 @@ import ch.alpine.tensor.qty.QuantityMagnitude;
   final Scalar process(HermiteSubdivision hermiteSubdivision) {
     TensorIteration tensorIteration = hermiteSubdivision.string(delta, control);
     Tensor refined = Do.of(control, tensorIteration::iterate, levels);
-    // TODO ASCONA ALG not a distance
+    // ASCONA ALG not a distance
     if (refined.length() != data.length())
       System.err.println("nonono");
     Scalar total = RealScalar.ZERO;

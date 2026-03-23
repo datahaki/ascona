@@ -77,7 +77,7 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
     {
       LeversRender leversRender = //
           LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      new PathRender(ColorStroke.AREA_SELECTION, sequence, true).render(geometricLayer, graphics);
+      new PathRender(ColorStroke.CONVEX_HULL, sequence, true).render(geometricLayer, graphics);
       leversRender.renderIndexP();
       Tensor src = ImageFormat.from(bi);
       int h = bi.getHeight();
