@@ -86,7 +86,7 @@ class TimeSeriesDemo extends EuclideanPlaneDemo {
     show.add(TsPlot.of(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
     Dimension dimension = getSize();
     FontMetrics fontMetrics = graphics.getFontMetrics();
-    Optional<Rectangle> optional = show.optionalDefaultInsets(dimension, fontMetrics);
+    Optional<Rectangle> optional = Show.optionalDefaultInsets(dimension, fontMetrics);
     if (optional.isPresent()) {
       Rectangle rectangle = optional.orElseThrow();
       CoordinateBoundingBox cbb = geometricLayer.fromRectangle(rectangle).orElseThrow();

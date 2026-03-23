@@ -49,6 +49,7 @@ enum So3ExponentialDemo implements ManipulateProvider {
 
   static void main() {
     // TODO BRIDGE when value was changed... than window close launches listener again!
+    // ... this is probably intentional e.g. in order to ensure saving params
     INSTANCE.runStandalone();
   }
 }
