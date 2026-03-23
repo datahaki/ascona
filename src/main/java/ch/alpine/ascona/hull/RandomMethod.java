@@ -2,8 +2,8 @@
 package ch.alpine.ascona.hull;
 
 import ch.alpine.sophis.hull.d3.ConvexHull3D;
-import ch.alpine.sophis.hull.d3.PlatonicSolid;
 import ch.alpine.sophis.srf.SurfaceMesh;
+import ch.alpine.sophis.srf.d3.PlatonicSolid;
 import ch.alpine.sophus.hs.rpn.HemisphereRandomSample;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.hs.st.StiefelManifold;

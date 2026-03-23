@@ -19,10 +19,10 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldPreferredWidth;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.hull.d3.PlatonicSolid;
 import ch.alpine.sophis.ref.d2.SurfaceMeshRefinement;
 import ch.alpine.sophis.ref.d2.SurfaceMeshRefinements;
 import ch.alpine.sophis.srf.SurfaceMesh;
+import ch.alpine.sophis.srf.d3.PlatonicSolid;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Rational;
@@ -35,9 +35,6 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 class SurfaceMeshDemo extends ControlPointsDemo {
-  public static SurfaceMesh surfaceMesh(PlatonicSolid platonicSolid) {
-    return new SurfaceMesh(platonicSolid.vertices(), platonicSolid.faces());
-  }
 
   @ReflectionMarker
   static class Param {
@@ -69,7 +66,7 @@ class SurfaceMeshDemo extends ControlPointsDemo {
   }
 
   private void compute() {
-    surfaceMesh = surfaceMesh(param.mesh);
+    surfaceMesh = param.mesh.surfaceMesh();
     if (getSelectedMD().equals(ManifoldDisplays.S2))
       surfaceMesh.vrt = Vector2Norm.NORMALIZE.slash(surfaceMesh.vrt);
     setControlPointsSe2(surfaceMesh.vrt);
