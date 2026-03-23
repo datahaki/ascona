@@ -3,7 +3,6 @@ package ch.alpine.ascona.flt;
 
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
@@ -15,7 +14,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
+class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo {
   public GeodesicExtrapolationDemo() {
     super(new Object());
   }
@@ -29,7 +28,7 @@ class GeodesicExtrapolationDemo extends AbstractSpectrogramDemo implements Buffe
   }
 
   @Override // from BufferedImageSupplier
-  public BufferedImage bufferedImage() {
+  protected BufferedImage bufferedImage() {
     ScalarUnaryOperator smoothingKernel = specParam.kernel.get();
     int radius = specParam.radius;
     TensorUnaryOperator tensorUnaryOperator = GeodesicExtrapolation.of(SymGeodesic.INSTANCE, smoothingKernel);

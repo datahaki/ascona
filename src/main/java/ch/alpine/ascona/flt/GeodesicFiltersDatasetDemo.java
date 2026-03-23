@@ -3,7 +3,6 @@ package ch.alpine.ascona.flt;
 
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.api.GeodesicFilters;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.sym.SymLinkImages;
@@ -15,7 +14,7 @@ import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.red.Nest;
 
-class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
+class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo {
   @ReflectionMarker
   static class Param {
     public GeodesicFilters gf = GeodesicFilters.GEODESIC;
@@ -41,7 +40,7 @@ class GeodesicFiltersDatasetDemo extends AbstractSpectrogramDemo implements Buff
   }
 
   @Override // from BufferedImageSupplier
-  public BufferedImage bufferedImage() {
+  protected BufferedImage bufferedImage() {
     GeodesicFilters geodesicFilters = param.gf;
     return switch (geodesicFilters) {
     case GEODESIC -> SymLinkImages.ofGC(specParam.kernel.get(), specParam.radius).bufferedImage();

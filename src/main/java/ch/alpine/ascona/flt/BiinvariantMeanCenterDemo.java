@@ -1,6 +1,8 @@
 // code by jph, ob
 package ch.alpine.ascona.flt;
 
+import java.awt.image.BufferedImage;
+
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -43,6 +45,11 @@ class BiinvariantMeanCenterDemo extends AbstractSpectrogramDemo {
     return Nest.of( //
         new CenterFilter(tensorUnaryOperator, specParam.radius), //
         control, param.radius);
+  }
+
+  @Override
+  protected BufferedImage bufferedImage() {
+    return null;
   }
 
   static void main() {

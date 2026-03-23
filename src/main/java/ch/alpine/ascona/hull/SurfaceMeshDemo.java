@@ -35,7 +35,6 @@ import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 class SurfaceMeshDemo extends ControlPointsDemo {
-
   @ReflectionMarker
   static class Param {
     public PlatonicSolid mesh = PlatonicSolid.ICOSAHEDRON;
@@ -59,7 +58,6 @@ class SurfaceMeshDemo extends ControlPointsDemo {
 
   public SurfaceMeshDemo() {
     super(param = new Param(), paran = new Paran());
-    // ---
     fieldsEditor(param).addUniversalListener(this::compute);
     addChangeListener(this::compute);
     compute();

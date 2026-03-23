@@ -11,7 +11,6 @@ import java.util.Optional;
 
 import ch.alpine.ascona.dat.GokartPoseDatas;
 import ch.alpine.ascona.ref.GokartPosParam;
-import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.dat.Se2PosHz;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -92,9 +91,8 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     }
     final Tensor refined = process(control);
     // ---
-    if (this instanceof BufferedImageSupplier bufferedImageSupplier && //
-        specParam.symi) {
-      Optional<BufferedImage> optional = Optional.ofNullable(bufferedImageSupplier.bufferedImage());
+    if (specParam.symi) {
+      Optional<BufferedImage> optional = Optional.ofNullable(bufferedImage());
       if (optional.isPresent())
         graphics.drawImage(optional.orElseThrow(), 0, 0, null);
     }
@@ -108,6 +106,9 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     if (specParam.diff)
       differences_render(graphics, manifoldDisplay, refined, specParam.spec);
   }
+
+  /** @return bufferedImage may be null */
+  protected abstract BufferedImage bufferedImage();
 
   protected String plotLabel() {
     WindowFunctions windowFunctions = specParam.kernel;

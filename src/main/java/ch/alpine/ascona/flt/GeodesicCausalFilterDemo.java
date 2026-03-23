@@ -1,6 +1,8 @@
 // code by ob
 package ch.alpine.ascona.flt;
 
+import java.awt.image.BufferedImage;
+
 import ch.alpine.ascony.api.GeodesicCausalFilters;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
@@ -63,6 +65,11 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
       return tuo.apply(control);
     }
     return control;
+  }
+
+  @Override
+  protected BufferedImage bufferedImage() {
+    return null;
   }
 
   private Scalar alpha() {

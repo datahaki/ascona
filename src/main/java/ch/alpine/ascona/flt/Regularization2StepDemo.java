@@ -3,7 +3,6 @@ package ch.alpine.ascona.flt;
 
 import java.awt.image.BufferedImage;
 
-import ch.alpine.ascony.api.BufferedImageSupplier;
 import ch.alpine.ascony.sym.SymGeodesic;
 import ch.alpine.ascony.sym.SymLinkImage;
 import ch.alpine.ascony.sym.SymLinkImages;
@@ -18,7 +17,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.N;
 
-class Regularization2StepDemo extends AbstractSpectrogramDemo implements BufferedImageSupplier {
+class Regularization2StepDemo extends AbstractSpectrogramDemo {
   @ReflectionMarker
   static class Ratio {
     /** regularization parameter in the interval [0, 1] */
@@ -48,7 +47,7 @@ class Regularization2StepDemo extends AbstractSpectrogramDemo implements Buffere
   }
 
   @Override // from BufferedImageSupplier
-  public BufferedImage bufferedImage() {
+  protected BufferedImage bufferedImage() {
     Scalar factor = ratio.ratio;
     TensorUnaryOperator tensorUnaryOperator = new Regularization2Step(SymGeodesic.INSTANCE, factor)::string;
     Tensor vector = SymSequence.of(3);
