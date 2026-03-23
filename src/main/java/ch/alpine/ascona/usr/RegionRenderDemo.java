@@ -32,7 +32,7 @@ class RegionRenderDemo implements ManipulateProvider {
   private final GeometricComponent geometricComponent = new GeometricComponent();
 
   public RegionRenderDemo() {
-    Tensor digest = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(Quantity.of(60, "m^-1")).digest();
+    Tensor digest = PvmBuilder.rhs().setOffset(400, 600).setPerPixel(Quantity.of(60, "m^-1")).digest();
     geometricComponent.setModel2Pixel(digest);
     {
       BallRegion ballRegion = new BallRegion(Tensors.fromString("{2[m],3[m]}"), Quantity.of(1, "m"));

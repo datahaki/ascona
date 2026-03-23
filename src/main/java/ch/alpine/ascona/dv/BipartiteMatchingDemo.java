@@ -92,7 +92,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
       dimension.height /= 2;
       {
         Show show = new Show();
-        show.setPlotLabel("Distance Matrix");
+        show.setShowLabel("Distance Matrix");
         show.add(MatrixPlot.of(matrix));
         show.render_autoIndent(graphics, new Rectangle(dimension.width, 0, dimension.width, dimension.height));
       }

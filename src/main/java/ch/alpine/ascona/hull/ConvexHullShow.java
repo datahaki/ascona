@@ -35,7 +35,7 @@ class ConvexHullShow implements ManipulateProvider {
     show.add(PolygonPlot.of(hull)).setAlpha(128);
     show.add(ListPlot.of(points));
     show.add(ListPlot.of(hull));
-    show.setPlotLabel("Hull point count = " + hull.length());
+    show.setShowLabel("Hull point count = " + hull.length());
     return ShowGridComponent.of(show);
   }
 

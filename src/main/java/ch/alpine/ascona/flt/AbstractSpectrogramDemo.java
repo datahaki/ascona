@@ -136,7 +136,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
       if (0 < speeds.length()) {
         int dims = speeds.get(0).length();
         Show show = new Show();
-        show.setPlotLabel(plotLabel());
+        show.setShowLabel(plotLabel());
         // show.getAxisX().setLabel("sample no.");
         Tensor domain = Range.of(0, speeds.length()).divide(sampleRate);
         String[] labels = { "vx", "vy", "va" };

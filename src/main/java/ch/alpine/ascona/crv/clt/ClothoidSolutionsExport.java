@@ -7,8 +7,8 @@ import java.util.Map;
 
 import ch.alpine.bridge.io.DeleteDirectory;
 import ch.alpine.bridge.util.DisjointSets;
-import ch.alpine.sophis.crv.clt.ClothoidSolutions;
-import ch.alpine.sophis.crv.clt.ClothoidTangentDefect;
+import ch.alpine.sophus.clt.ClothoidSolutions;
+import ch.alpine.sophus.clt.ClothoidTangentDefect;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;

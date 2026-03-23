@@ -93,13 +93,13 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
       dimension.height /= 2;
       {
         Show show = new Show();
-        show.setPlotLabel("Mean Value");
+        show.setShowLabel("Mean Value");
         show.add(ImagePlot.of(ImageFormat.of(rectify1(src, points, resw, resh))));
         show.render_autoIndent(graphics, new Rectangle(dimension.width, dimension.height, dimension.width, dimension.height));
       }
       {
         Show show = new Show();
-        show.setPlotLabel("Linear Fractional Transform");
+        show.setShowLabel("Linear Fractional Transform");
         show.add(ImagePlot.of(ImageFormat.of(rectify2(src, points, resw, resh))));
         show.render_autoIndent(graphics, new Rectangle(dimension.width, 0, dimension.width, dimension.height));
       }

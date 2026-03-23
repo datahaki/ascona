@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.ascona.crv.clt;
 
-import ch.alpine.sophis.crv.clt.ClothoidBuilder;
-import ch.alpine.sophis.crv.clt.ClothoidBuilderImpl;
-import ch.alpine.sophis.crv.clt.ClothoidIntegrations;
+import ch.alpine.sophus.clt.ClothoidBuilder;
+import ch.alpine.sophus.clt.ClothoidBuilderImpl;
+import ch.alpine.sophus.clt.ClothoidIntegrations;
 import ch.alpine.tensor.Scalar;
 
 public enum CustomClothoidBuilder {

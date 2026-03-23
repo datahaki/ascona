@@ -88,7 +88,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
             // FIXME BRIDGE this should not affect Show appearance!!!
             graphics.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
             Show show = new Show();
-            show.setPlotLabel("Weights");
+            show.setShowLabel("Weights");
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;
@@ -100,7 +100,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
           }
           {
             Show show = new Show();
-            show.setPlotLabel("Factors");
+            show.setShowLabel("Factors");
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;

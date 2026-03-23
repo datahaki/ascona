@@ -13,14 +13,14 @@ import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophis.crv.clt.Clothoid;
-import ch.alpine.sophis.crv.clt.ClothoidBuilder;
-import ch.alpine.sophis.crv.clt.ClothoidContext;
-import ch.alpine.sophis.crv.clt.ClothoidEmit;
-import ch.alpine.sophis.crv.clt.ClothoidSolutions;
-import ch.alpine.sophis.crv.clt.ClothoidTangentDefect;
-import ch.alpine.sophis.crv.clt.mid.MidpointTangentApproximation;
 import ch.alpine.sophis.ts.ClothoidTransition;
+import ch.alpine.sophus.clt.Clothoid;
+import ch.alpine.sophus.clt.ClothoidBuilder;
+import ch.alpine.sophus.clt.ClothoidContext;
+import ch.alpine.sophus.clt.ClothoidEmit;
+import ch.alpine.sophus.clt.ClothoidSolutions;
+import ch.alpine.sophus.clt.ClothoidTangentDefect;
+import ch.alpine.sophus.clt.mid.MidpointTangentApproximation;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
@@ -76,7 +76,7 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
     }
     // ---
     Show show = ClothoidTangentDefectShow.of(clothoidContext, clip).getShow();
-    show.setPlotLabel(params);
+    show.setShowLabel(params);
     Tensor lambdas = clothoidSolutions.lambdas();
     List<Clothoid> clothoids = ClothoidEmit.stream(clothoidContext, lambdas).toList();
     {

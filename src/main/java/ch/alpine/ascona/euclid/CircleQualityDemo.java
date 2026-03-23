@@ -40,7 +40,7 @@ class CircleQualityDemo implements ManipulateProvider {
       curve.append(curve.get(0));
       show1.add(ListLinePlot.of(Subdivide.increasing(Clips.unit(), curve.length() - 1), //
           RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply(curve)));
-      show1.setPlotLabel("quality = " + N.DOUBLE.apply(quality));
+      show1.setShowLabel("quality = " + N.DOUBLE.apply(quality));
       show2.add(ListLinePlot.of(curve));
     }
     show2.setAspectRatioOne();

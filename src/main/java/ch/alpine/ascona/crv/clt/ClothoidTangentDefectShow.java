@@ -10,9 +10,9 @@ import ch.alpine.bridge.fig.plt.ReImPlot;
 import ch.alpine.bridge.fig.plt.StringPlot;
 import ch.alpine.bridge.fig.plt.StringPlot.StringItem;
 import ch.alpine.bridge.pro.ShowProvider;
-import ch.alpine.sophis.crv.clt.ClothoidContext;
-import ch.alpine.sophis.crv.clt.ClothoidSolutions;
-import ch.alpine.sophis.crv.clt.ClothoidTangentDefect;
+import ch.alpine.sophus.clt.ClothoidContext;
+import ch.alpine.sophus.clt.ClothoidSolutions;
+import ch.alpine.sophus.clt.ClothoidTangentDefect;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -38,7 +38,7 @@ record ClothoidTangentDefectShow(Scalar s1, Scalar s2, Clip clip) implements Sho
       list.add(StringItem.of(Tensors.of(l, l.zero()), "" + l.maps(Round._4)));
     }
     show.add(StringPlot.of(list));
-    show.setPlotLabel("Clothoid Tangent Defect");
+    show.setShowLabel("Clothoid Tangent Defect");
     return show;
   }
 }

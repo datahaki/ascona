@@ -65,10 +65,10 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Show show1 = new Show();
-    show1.setPlotLabel("Curvature");
+    show1.setShowLabel("Curvature");
     // ---
     Show show2 = new Show();
-    show2.setPlotLabel("Curvature d/ds");
+    show2.setShowLabel("Curvature d/ds");
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i) {
       Tensor refined = curve(geometricLayer, graphics, i);
       if (1 < refined.length()) {

@@ -120,7 +120,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     if (paran.error) {
       Dimension dimension = getSize();
       Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
-      show.setPlotLabel("Reduction from " + control.length() + " to " + simplified.length() + " samples");
+      show.setShowLabel("Reduction from " + control.length() + " to " + simplified.length() + " samples");
       show.add(ListLinePlot.of(Range.of(0, control.length()), decimationResult.errors()));
       show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
     }

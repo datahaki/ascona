@@ -14,11 +14,11 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophis.crv.clt.Clothoid;
-import ch.alpine.sophis.crv.clt.ClothoidBuilder;
-import ch.alpine.sophis.crv.clt.ClothoidBuilders;
-import ch.alpine.sophis.crv.clt.LagrangeQuadraticD;
 import ch.alpine.sophis.crv.d2.Curvature2D;
+import ch.alpine.sophus.clt.Clothoid;
+import ch.alpine.sophus.clt.ClothoidBuilder;
+import ch.alpine.sophus.clt.ClothoidBuilders;
+import ch.alpine.sophus.clt.LagrangeQuadraticD;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -66,7 +66,7 @@ class ClothoidDemo extends ClothoidBaseDemo {
       }
     }
     Show show = new Show();
-    show.setPlotLabel("Curvature Comparison");
+    show.setShowLabel("Curvature Comparison");
     int index = 0;
     ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLOR_DATA_INDEXED, new BasicStroke());
     TensorUnaryOperator tuo = v -> v.extract(0, 2);

@@ -3,77 +3,75 @@ package ch.alpine.ascona.misc;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
-import java.nio.file.Path;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
+import ch.alpine.ascony.dat.GlyphMesh;
 import ch.alpine.ascony.ren.BezierGlyphRender;
 import ch.alpine.ascony.ren.ClothoidGlyphRender;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.plt.MatrixPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.ref.ann.FieldClip;
-import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.math.DistanceMatrix;
+import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.ext.HomeDirectory;
+import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.io.TableBuilder;
+import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.sca.Clips;
 
 class GlyphDemo extends EuclideanPlaneDemo {
   @ReflectionMarker
   static class Param {
-    @FieldSelectionArray({ "0", "8", "16", "24", "32", "40", "48", "56", "64", "72", "80", "88", "96", "104", "112", "120", "128", "136" })
-    public Integer ofs = 0;
+    @FieldClip(min = "0", max = "65500")
+    public Integer charIndex = 32;
     @FieldSlider
-    @FieldClip(min = "1", max = "20")
+    @FieldClip(min = "0", max = "20")
     public Integer res = 20;
     public Font font = new Font(Font.DIALOG, Font.PLAIN, 12);
+    public ColorDataGradients cdg = ColorDataGradients.ALPINE;
   }
 
   private final Param param;
-  Font font;
 
   public GlyphDemo() {
     super(param = new Param());
-    Path path = HomeDirectory.Ephemeral.resolve("font", "SourceSerifPro-Regular.otf");
-    path = HomeDirectory.Ephemeral.resolve("font", "ArtisticCalligraphy.otf");
-    font = new Font(Font.DIALOG, Font.PLAIN, 12);
-    try {
-      font = Font.createFont(Font.TRUETYPE_FONT, path.toFile()).deriveFont(12f);
-    } catch (Exception exception) {
-      exception.printStackTrace();
-    }
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
-    Tensor pvm = PvmBuilder.rhs().setOffset(100, 400).setPerPixel(50).digest();
+    Tensor pvm = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(50).digest();
     geometricComponent().setModel2Pixel(pvm);
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Tensor domain = Subdivide.of(0.0, 1.0, param.res);
+    Tensor domain = Subdivide.intermediate_increasing(Clips.unit(), 1 + param.res);
     TableBuilder tableBuilder = new TableBuilder();
-    String collect = IntStream.range(0, 8).map(i -> i + param.ofs) //
-        .mapToObj(i -> ' ' + i).map(Character::toString).collect(Collectors.joining());
+    String collect = new String(Character.toChars(param.charIndex));
     // collect = "$&%";
     FontRenderContext frc = new FontRenderContext(null, true, true);
-    GlyphVector gv = font.createGlyphVector(frc, collect); // or any string
+    GlyphVector gv = param.font.createGlyphVector(frc, collect); // or any string
     for (int index = 0; index < gv.getNumGlyphs(); ++index) {
       Shape shape = gv.getGlyphOutline(index); // first character
       graphics.setColor(Color.BLACK);
       graphics.setStroke(new BasicStroke(2));
       new BezierGlyphRender(shape, domain).render(geometricLayer, graphics);
-      geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(0, -10)));
+      geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(10, 0)));
       graphics.setColor(Color.RED);
       graphics.setStroke(new BasicStroke(1));
       new BezierGlyphRender(shape, domain).render(geometricLayer, graphics);
@@ -81,6 +79,15 @@ class GlyphDemo extends EuclideanPlaneDemo {
       graphics.setStroke(new BasicStroke(2));
       new ClothoidGlyphRender(shape, domain).render(geometricLayer, graphics);
       geometricLayer.popMatrix();
+      SurfaceMesh surfaceMesh = GlyphMesh.of(shape);
+      Tensor matrix = DistanceMatrix.of(surfaceMesh.vrt, Vector2Norm::between);
+      manifoldDisplay().showPoints(ColorPair.CONTROL_POINTS, RealScalar.ONE, surfaceMesh.vrt) //
+          .render(geometricLayer, graphics);
+      Show show = new Show();
+      show.add(MatrixPlot.of(matrix, param.cdg));
+      Dimension dimension = getSize();
+      show.setShowLabel("Distance matrix");
+      show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, 300));
     }
     setGeodesicControlPoints(tableBuilder.getTable());
   }

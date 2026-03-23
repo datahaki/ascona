@@ -21,7 +21,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.crv.clt.ClothoidDistance;
+import ch.alpine.sophis.crv.ClothoidDistance;
 import ch.alpine.sophis.itp.AdjacentDistances;
 import ch.alpine.sophis.math.Do;
 import ch.alpine.sophis.ref.d1h.HermiteSubdivision;

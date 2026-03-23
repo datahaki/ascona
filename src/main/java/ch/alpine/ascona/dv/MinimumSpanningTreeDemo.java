@@ -115,7 +115,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
       if (!SymmetricMatrixQ.INSTANCE.test(matrix)) {
         Tensor defect = SymmetricMatrixQ.INSTANCE.defect(matrix);
         Scalar optional = Flatten.scalars(defect).map(Abs.FUNCTION).reduce(Max::of).orElseThrow();
-        show.setPlotLabel("not symmetric: " + optional);
+        show.setShowLabel("not symmetric: " + optional);
       }
       show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, Math.min(dimension.height, 300)));
       List<IntUndirectedEdge> list = MinimumSpanningTree.of(Symmetrize.of(matrix));
