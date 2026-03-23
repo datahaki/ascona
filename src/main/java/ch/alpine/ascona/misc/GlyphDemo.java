@@ -19,6 +19,7 @@ import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.plt.ListPlot;
 import ch.alpine.bridge.fig.plt.MatrixPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
@@ -28,13 +29,18 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.math.DistanceMatrix;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.math.UpperVectorize;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Flatten;
+import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.io.TableBuilder;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 class GlyphDemo extends EuclideanPlaneDemo {
@@ -80,14 +86,24 @@ class GlyphDemo extends EuclideanPlaneDemo {
       new ClothoidGlyphRender(shape, domain).render(geometricLayer, graphics);
       geometricLayer.popMatrix();
       SurfaceMesh surfaceMesh = GlyphMesh.of(shape);
-      Tensor matrix = DistanceMatrix.of(surfaceMesh.vrt, Vector2Norm::between);
+      Clip clip = Clips.positive(0.05);
+      Tensor matrix = DistanceMatrix.of(surfaceMesh.vrt, Vector2Norm::between).maps(clip);
       manifoldDisplay().showPoints(ColorPair.CONTROL_POINTS, RealScalar.ONE, surfaceMesh.vrt) //
           .render(geometricLayer, graphics);
-      Show show = new Show();
-      show.add(MatrixPlot.of(matrix, param.cdg));
       Dimension dimension = getSize();
-      show.setShowLabel("Distance matrix");
-      show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, 300));
+      {
+        Show show = new Show();
+        show.add(MatrixPlot.of(matrix, param.cdg));
+        show.setShowLabel("Distance matrix");
+        show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, 300));
+      }
+      if (Tensors.nonEmpty(matrix)) {
+        Tensor vec = Tensor.of(Flatten.scalars(UpperVectorize.of(matrix, 1)) //
+            .filter(Scalars.lessThan(RealScalar.of(0.04))).sorted());
+        Show show = new Show();
+        show.add(ListPlot.of(Range.of(0, vec.length()), vec));
+        show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 300, 400, 300));
+      }
     }
     setGeodesicControlPoints(tableBuilder.getTable());
   }
