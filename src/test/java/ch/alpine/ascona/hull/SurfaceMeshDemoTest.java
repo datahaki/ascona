@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import ch.alpine.qhull3.PlatonicSolid;
+import ch.alpine.sophis.hull.d3.PlatonicSolid;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophis.srf.Volume;
 import ch.alpine.tensor.RealScalar;

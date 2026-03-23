@@ -11,7 +11,7 @@ import ch.alpine.bridge.fig.plt.ListPlot;
 import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.crv.d2.alg.ConvexHull2D;
+import ch.alpine.sophis.hull.d2.ConvexHull2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.pdf.RandomVariate;

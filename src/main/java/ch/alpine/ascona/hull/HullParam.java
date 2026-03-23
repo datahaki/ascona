@@ -5,7 +5,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.img.ColorDataGradients;
 
 @ReflectionMarker
-public class HullParam {
+class HullParam {
   public final MeshParam meshParam = new MeshParam();
   public Boolean cuboid = false;
   public final RotParam rotParam = new RotParam();

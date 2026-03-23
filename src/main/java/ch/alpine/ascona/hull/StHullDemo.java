@@ -18,7 +18,7 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.qhull3.ConvexHull3D;
+import ch.alpine.sophis.hull.d3.ConvexHull3D;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.hs.st.StiefelManifold;
 import ch.alpine.sophus.hs.st.TStMemberQ;
@@ -52,8 +52,8 @@ class StHullDemo implements ManipulateProvider, RenderInterface {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    RandomGenerator randomGenerator = new Random(3);
     StiefelManifold stiefelManifold = new StiefelManifold(n, 3);
+    RandomGenerator randomGenerator = new Random(3);
     Tensor p = RandomSample.of(stiefelManifold.randomSampleInterface(), randomGenerator);
     Tensor v = new TStMemberQ(p).projection( //
         RandomVariate.of(NormalDistribution.of(0.0, 0.1), randomGenerator, Dimensions.of(p)));

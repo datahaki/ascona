@@ -1,8 +1,8 @@
 // code by jph
 package ch.alpine.ascona.hull;
 
-import ch.alpine.qhull3.ConvexHull3D;
-import ch.alpine.qhull3.PlatonicSolid;
+import ch.alpine.sophis.hull.d3.ConvexHull3D;
+import ch.alpine.sophis.hull.d3.PlatonicSolid;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.hs.rpn.HemisphereRandomSample;
 import ch.alpine.sophus.hs.s.Sphere;

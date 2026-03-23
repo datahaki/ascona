@@ -6,7 +6,7 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 
 @ReflectionMarker
-public class SymParam {
+final class SymParam {
   @FieldSlider
   @FieldClip(min = "2", max = "10")
   public Integer layers = 5;

@@ -12,7 +12,7 @@ import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.qhull3.ConvexHull3D;
+import ch.alpine.sophis.hull.d3.ConvexHull3D;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -24,8 +24,8 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 @ReflectionMarker
-public class SymHullDemo implements ManipulateProvider, RenderInterface {
-  public final SymParam hullParam = new SymParam();
+class SymHullDemo implements ManipulateProvider, RenderInterface {
+  public final SymParam symParam = new SymParam();
   // ---
   private Tensor tensor;
   private List<int[]> faces;
@@ -39,8 +39,8 @@ public class SymHullDemo implements ManipulateProvider, RenderInterface {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    int layers = hullParam.layers;
-    int n = hullParam.n;
+    int layers = symParam.layers;
+    int n = symParam.n;
     tensor = Tensors.empty();
     for (Tensor _z : Subdivide.of(-0.9, 0.9, layers)) {
       Scalar z = (Scalar) _z;
@@ -48,7 +48,7 @@ public class SymHullDemo implements ManipulateProvider, RenderInterface {
       CirclePoints.of(n).stream().map(xy -> xy.multiply(r).append(z)).forEach(tensor::append);
     }
     faces = ConvexHull3D.of(tensor);
-    Tensor rotate = this.tensor.dot(hullParam.rotParam.rotation());
+    Tensor rotate = this.tensor.dot(symParam.rotParam.rotation());
     SurfaceMesh surfaceMesh = new SurfaceMesh(rotate, faces);
     new SurfaceMeshRender(surfaceMesh, ColorDataGradients.AURORA).render(geometricLayer, graphics);
   }
