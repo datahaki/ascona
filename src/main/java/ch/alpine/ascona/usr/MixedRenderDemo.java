@@ -37,10 +37,7 @@ class MixedRenderDemo implements ManipulateProvider {
           Clips.absolute(Quantity.of(1, "s"))));
       geometricComponent.addRenderInterface(renderInterface);
     }
-    {
-      GridRender gridRender = new GridRender(geometricComponent::getSize);
-      geometricComponent.addRenderInterfaceBackground(gridRender);
-    }
+    geometricComponent.addRenderInterfaceBackground(new GridRender(geometricComponent::getSize));
     geometricComponent.addRenderInterfaceBackground(new MatRender(g -> g.getMatrix().maps(Round._1)));
   }
 

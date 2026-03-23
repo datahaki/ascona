@@ -41,10 +41,9 @@ class R2ParametricResampleDemo extends EuclideanPlaneDemo {
 
   public R2ParametricResampleDemo() {
     super(param = new Param());
-    // ---
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
     int n = 20;
     setControlPointsSe2(PadRight.zeros(n, 3).apply(CirclePoints.of(n).multiply(RealScalar.of(3))));
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
   @Override

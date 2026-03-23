@@ -43,6 +43,9 @@ import ch.alpine.tensor.qty.UnitSystem;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
+  private static final ColorDataGradient COLOR_DATA_GRADIENT = //
+      ColorDataGradients.VISIBLE_SPECTRUM.deriveWithOpacity(RealScalar.of(0.75));
+
   @ReflectionMarker
   static class SpecParam {
     public Boolean diff = true;
@@ -65,12 +68,10 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
 
   private AbstractSpectrogramDemo(SpecParam specParam, Object object) {
     super(gokartPosParam = new GokartPosParam(), this.specParam = specParam, object);
-    // gokartPoseSpec.symi = this instanceof BufferedImageSupplier;
     fieldsEditor(gokartPosParam).addUniversalListener(this::updateState);
-    updateState();
-    // ---
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
     geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
+    updateState();
   }
 
   @Override
@@ -121,9 +122,6 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   protected final void updateState() {
     posHz = gokartPosParam.getPosHz();
   }
-
-  private static final ColorDataGradient COLOR_DATA_GRADIENT = //
-      ColorDataGradients.VISIBLE_SPECTRUM.deriveWithOpacity(RealScalar.of(0.75));
 
   // @Override
   protected final void differences_render( //

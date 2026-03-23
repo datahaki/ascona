@@ -51,13 +51,7 @@ class ClothoidTransitionDemo extends ClothoidSequenceDemo {
   private final Param param;
 
   public ClothoidTransitionDemo() {
-    this(new Param());
-  }
-
-  public ClothoidTransitionDemo(Param param) {
-    super(param);
-    this.param = param;
-    // ---
+    super(param = new Param());
     setControlPointsSe2(RandomVariate.of(UniformDistribution.of(-2, 2), 4, 3));
   }
 

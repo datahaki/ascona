@@ -54,13 +54,13 @@ class GlyphDemo extends EuclideanPlaneDemo {
     } catch (Exception exception) {
       exception.printStackTrace();
     }
+    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
     Tensor pvm = PvmBuilder.rhs().setOffset(100, 400).setPerPixel(50).digest();
     geometricComponent().setModel2Pixel(pvm);
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    new GridRender(this::getSize).render(geometricLayer, graphics);
     Tensor domain = Subdivide.of(0.0, 1.0, param.res);
     TableBuilder tableBuilder = new TableBuilder();
     String collect = IntStream.range(0, 8).map(i -> i + param.ofs) //

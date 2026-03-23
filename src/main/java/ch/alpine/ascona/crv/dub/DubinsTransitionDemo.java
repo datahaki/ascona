@@ -27,8 +27,8 @@ class DubinsTransitionDemo extends ControlPointsDemo {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
 
   public DubinsTransitionDemo() {
-    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {3, 0, 0}}"));
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {3, 0, 0}}"));
   }
 
   @Override

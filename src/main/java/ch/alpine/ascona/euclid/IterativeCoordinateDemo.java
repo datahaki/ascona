@@ -45,9 +45,8 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
 
   public IterativeCoordinateDemo() {
     super(param = new Param());
-    // ---
-    setControlPointsSe2(INITIAL);
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    setControlPointsSe2(INITIAL);
   }
 
   @Override

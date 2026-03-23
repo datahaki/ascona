@@ -5,7 +5,6 @@ import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.util.Collection;
 
-import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.ColorStrokeIndexed;
@@ -45,7 +44,6 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
   public R1BarycentricDegreeDemo() {
     super(this.param = new Param());
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
-    // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 2, 0}}"));
   }
 
@@ -59,7 +57,7 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
     return ControlPointType.CURVYCURV;
   }
 
-  private static final Scalar MARGIN = RealScalar.of(2);
+  private static final Scalar MARGIN = RealScalar.TWO;
 
   static Tensor domain(Tensor support) {
     return Subdivide.of( //
@@ -69,8 +67,6 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    // ---
     Tensor control = Sort.of(getGeodesicControlPoints());
     if (1 < control.length()) {
       Tensor support = control.get(Tensor.ALL, 0);
@@ -86,9 +82,8 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
         }
       }
       // ---
-      ScalarTensorFunction scalarTensorFunction = //
-          BarycentricRationalInterpolation.of(support, param.degree);
-      Tensor basis = domain.maps(scalarTensorFunction);
+      ScalarTensorFunction stf = BarycentricRationalInterpolation.of(support, param.degree);
+      Tensor basis = domain.maps(stf);
       {
         Tensor curve = Transpose.of(Tensors.of(domain, basis.dot(funceva)));
         new PathRender(ColorStroke.CURVE, curve, false).render(geometricLayer, graphics);

@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Collection;
 
-import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -43,15 +42,8 @@ class ClothoidEvolutionDemo extends ControlPointsDemo {
   public final Param param;
 
   public ClothoidEvolutionDemo() {
-    this(new Param());
-  }
-
-  public ClothoidEvolutionDemo(Param param) {
-    super(param);
-    this.param = param;
-    // ---
+    super(param = new Param());
     geometricComponent().addRenderInterfaceBackground(AxesRender.INSTANCE);
-    // ---
     Tensor ctrl = Tensors.fromString( //
         "{{0.017, 0.017, 0.000}, {1.733, 0.967, 4.712}, {3.933, -0.750, -3.665}, {5.567, 1.717, 3.927}, {7.983, 1.500, 4.451}}");
     setControlPointsSe2(ctrl);
@@ -69,20 +61,17 @@ class ClothoidEvolutionDemo extends ControlPointsDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor sequence = getGeodesicControlPoints();
     graphics.setColor(Color.BLUE);
     graphics.setStroke(new BasicStroke(2));
-    // GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    // ClothoidBuilder clothoidBuilder = (ClothoidBuilder) geodesicSpace;
     Tensor beg = sequence.get(0);
-    ClothoidBuilder clothoidBuilder2 = new PriorityClothoid(ClothoidComparators.CURVATURE_HEAD, param.clip);
+    ClothoidBuilder clothoidBuilder = new PriorityClothoid(ClothoidComparators.CURVATURE_HEAD, param.clip);
     double time = param.animate //
         ? timing.seconds().multiply(Quantity.of(0.2, "s^-1")).number().doubleValue()
         : 0;
     for (int index = 1; index < sequence.length(); ++index) {
       Tensor end = sequence.get(index);
-      Clothoid clothoid = clothoidBuilder2.curve(beg, end);
+      Clothoid clothoid = clothoidBuilder.curve(beg, end);
       ClothoidTransition clothoidTransition = ClothoidTransition.of(beg, end, clothoid);
       graphics.draw(geometricLayer.toPath2D(clothoidTransition.linearized(param.beta)));
       double split = 0.5 + 0.1 * SimplexContinuousNoise.FUNCTION.at(time, index);

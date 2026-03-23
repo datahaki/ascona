@@ -29,7 +29,7 @@ import ch.alpine.tensor.ext.Cache;
 
 /** allows the user to contour letters of a font using clothoids */
 class ClothoidBrushDemo extends ClothoidSequenceDemo {
-  public static final Scalar BETA = RealScalar.of(0.05);
+  private static final Scalar BETA = RealScalar.of(0.05);
 
   @ReflectionMarker
   static class Param {
@@ -54,30 +54,7 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
   private final Param param;
 
   public ClothoidBrushDemo() {
-    this(new Param());
-  }
-
-  public ClothoidBrushDemo(Param param) {
-    super(param);
-    this.param = param;
-    try {
-      // Font.TYPE1_FONT
-      // Font[] fonts = Font.createFonts(new File("/usr/share/fonts/urw-base35/Z003-MediumItalic.t1"));
-      // Font[] fonts = Font.createFonts(new File("/home/datahaki/.local/share/fonts/DS Elzevier Initialen.ttf"));
-      // IO.println("fonts.length=" + fonts.length);
-      // if (0 < fonts.length)
-      // param.font = fonts[0].deriveFont(500f);
-    } catch (Exception exception) {
-      exception.printStackTrace();
-    }
-    // ---
-    // Tensor image = ResourceData.of("/letter/cal2/hi/a.png");
-    // if (Objects.nonNull(image)) {
-    // image = image.map(s -> Scalars.isZero(s) ? RealScalar.of(192) : s);
-    // BufferedImage bufferedImage = ImageFormat.of(image);
-    // ImageRender imageRender = ImageRender.range(bufferedImage, Tensors.vector(10, 10));
-    // // timerFrame.geometricComponent.addRenderInterfaceBackground(imageRender);
-    // }
+    super(param = new Param());
     geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
   }
 
@@ -86,37 +63,33 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
     if (Objects.nonNull(param.font)) {
       graphics.setColor(new Color(164, 164, 64));
       graphics.setFont(param.font);
-      graphics.drawString("ABCDEF", 0, 500);
+      graphics.drawString("ABC", 0, 500);
     }
     Tensor sequence = getGeodesicControlPoints();
     for (int index = 1; index < sequence.length(); ++index) {
       Tensor beg0 = sequence.get(index - 1);
       Tensor end0 = sequence.get(index + 0);
-      // Se2CoveringGroupElement shL = Se2CoveringGroup.INSTANCE.element();
       Tensor beg1 = Se2CoveringGroup.INSTANCE.combine(Se2CoveringGroup.INSTANCE.combine(param.shiftL, beg0), param.shiftR);
       Tensor end1 = Se2CoveringGroup.INSTANCE.combine(Se2CoveringGroup.INSTANCE.combine(param.shiftL, end0), param.shiftR);
       Tensor crv0 = cache.apply(Tensors.of(beg0, end0));
       Tensor crv1 = cache.apply(Tensors.of(beg1, end1));
+      graphics.setColor(new Color(0, 0, 0, 128));
+      Scalar model2pixelWidth = geometricLayer.model2pixelFactor(param.round);
+      graphics.setStroke(new BasicStroke(model2pixelWidth.number().floatValue(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+      Tensor polygon = Join.of(crv0, Reverse.of(crv1));
       {
-        graphics.setColor(new Color(0, 0, 0, 128));
-        Scalar model2pixelWidth = geometricLayer.model2pixelFactor(param.round);
-        graphics.setStroke(new BasicStroke(model2pixelWidth.number().floatValue(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        Tensor polygon = Join.of(crv0, Reverse.of(crv1));
-        {
-          Path2D path2d = geometricLayer.toPath2D(polygon, true);
-          graphics.draw(path2d);
-          graphics.fill(path2d);
-        }
-        geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(11, 0)));
-        graphics.setColor(new Color(64, 64, 64));
-        {
-          Path2D path2d = geometricLayer.toPath2D(polygon, true);
-          graphics.draw(path2d);
-          graphics.fill(path2d);
-        }
-        geometricLayer.popMatrix();
-        graphics.setStroke(new BasicStroke());
+        Path2D path2d = geometricLayer.toPath2D(polygon, true);
+        graphics.draw(path2d);
+        graphics.fill(path2d);
       }
+      geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(11, 0)));
+      graphics.setColor(new Color(64, 64, 64));
+      {
+        Path2D path2d = geometricLayer.toPath2D(polygon, true);
+        graphics.draw(path2d);
+        graphics.fill(path2d);
+      }
+      geometricLayer.popMatrix();
     }
   }
 

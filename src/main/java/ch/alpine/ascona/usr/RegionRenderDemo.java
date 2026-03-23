@@ -60,10 +60,7 @@ class RegionRenderDemo implements ManipulateProvider {
       Tensor polygon = HilbertPolygon.of(3).multiply(Quantity.of(0.1, "m"));
       geometricComponent.addRenderInterface(new PolygonRegionRender(polygon));
     }
-    {
-      GridRender gridRender = new GridRender(geometricComponent::getSize);
-      geometricComponent.addRenderInterfaceBackground(gridRender);
-    }
+    geometricComponent.addRenderInterfaceBackground(new GridRender(geometricComponent::getSize));
     geometricComponent.addRenderInterfaceBackground(new MatRender(g -> g.getMatrix().maps(Round._1)));
     geometricComponent.addMouseListener(new MouseAdapter() {
       @Override
