@@ -108,7 +108,7 @@ class SPatchDemo extends ControlPointsDemo {
       Tensor weights = movingDomain2D.arrayReshape_weights();
       Show show = new Show();
       show.add(ArrayPlot.of(weights, param1.cdg));
-      Dimension dimension = getSize();
+      Dimension dimension = geometricComponent().getSize();
       show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width - 100, 300));
     }
     {

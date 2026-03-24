@@ -53,13 +53,14 @@ class GlyphDemo extends EuclideanPlaneDemo {
     public Integer res = 20;
     public Font font = new Font(Font.DIALOG, Font.PLAIN, 12);
     public ColorDataGradients cdg = ColorDataGradients.ALPINE;
+    public Boolean hide = true;
   }
 
   private final Param param;
 
   public GlyphDemo() {
     super(param = new Param());
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
     Tensor pvm = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(50).digest();
     geometricComponent().setModel2Pixel(pvm);
   }
@@ -76,7 +77,8 @@ class GlyphDemo extends EuclideanPlaneDemo {
       Shape shape = gv.getGlyphOutline(index); // first character
       graphics.setColor(Color.BLACK);
       graphics.setStroke(new BasicStroke(2));
-      new BezierGlyphRender(shape, domain).render(geometricLayer, graphics);
+      if (param.hide)
+        new BezierGlyphRender(shape, domain).render(geometricLayer, graphics);
       geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(10, 0)));
       graphics.setColor(Color.RED);
       graphics.setStroke(new BasicStroke(1));
@@ -88,9 +90,10 @@ class GlyphDemo extends EuclideanPlaneDemo {
       SurfaceMesh surfaceMesh = GlyphMesh.of(shape);
       Clip clip = Clips.positive(0.05);
       Tensor matrix = DistanceMatrix.of(surfaceMesh.vrt, Vector2Norm::between).maps(clip);
-      manifoldDisplay().showPoints(ColorPair.CONTROL_POINTS, RealScalar.ONE, surfaceMesh.vrt) //
-          .render(geometricLayer, graphics);
-      Dimension dimension = getSize();
+      if (param.hide)
+        manifoldDisplay().showPoints(ColorPair.CONTROL_POINTS, RealScalar.ONE, surfaceMesh.vrt) //
+            .render(geometricLayer, graphics);
+      Dimension dimension = geometricComponent().getSize();
       {
         Show show = new Show();
         show.add(MatrixPlot.of(matrix, param.cdg));

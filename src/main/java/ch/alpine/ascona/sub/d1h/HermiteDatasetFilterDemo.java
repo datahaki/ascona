@@ -26,7 +26,6 @@ import ch.alpine.tensor.Tensor;
 class HermiteDatasetFilterDemo extends AbstractHermiteDatasetDemo {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 360;
-  private static final Color COLOR_CURVE = new Color(255, 128, 128, 255);
 
   @ReflectionMarker
   static class Paran {
@@ -68,7 +67,7 @@ class HermiteDatasetFilterDemo extends AbstractHermiteDatasetDemo {
       int dims = deltas.get(0).length();
       if (0 < deltas.length()) {
         Show show = StaticHelper.listPlot(deltas, delta, levels);
-        Dimension dimension = getSize();
+        Dimension dimension = geometricComponent().getSize();
         show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
       }
     }

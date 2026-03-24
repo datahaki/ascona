@@ -88,14 +88,18 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
           RealScalar.of(h).subtract(p.Get(1)), p.Get(0))));
       LinearFractionalTransform lft = lft(points, resw, resh);
       leversRender.renderMatrix2(Tensors.vector(0, 0, 0), lft.matrix());
-      Dimension dimension = getSize();
+      Dimension dimension = geometricComponent().getSize();
       dimension.width /= 2;
       dimension.height /= 2;
+      dimension.width -= 10;
+      dimension.height -= 10;
       {
         Show show = new Show();
         show.setShowLabel("Mean Value");
         show.add(ImagePlot.of(ImageFormat.of(rectify1(src, points, resw, resh))));
-        show.render_autoIndent(graphics, new Rectangle(dimension.width, dimension.height, dimension.width, dimension.height));
+        Rectangle rectangle = new Rectangle(dimension.width, dimension.height, dimension.width, dimension.height);
+        show.render_autoIndent(graphics, rectangle);
+        graphics.draw(rectangle);
       }
       {
         Show show = new Show();

@@ -5,11 +5,11 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Optional;
 
+import ch.alpine.ascony.dat.PlaceWrap;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
-import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

@@ -78,7 +78,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     fieldsEditor(gokartPosParam).addUniversalListener(this::updateState);
     fieldsEditor(param).addUniversalListener(this::updateState);
     addChangeListener(this::updateState);
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
     geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     updateState();
   }
@@ -118,7 +118,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     manifoldDisplay.showPoints(ColorPair.DED, RealScalar.of(0.8), simplified) //
         .render(geometricLayer, graphics);
     if (paran.error) {
-      Dimension dimension = getSize();
+      Dimension dimension = geometricComponent().getSize();
       Show show = new Show(ColorDataLists._097.cyclic().deriveWithAlpha(192));
       show.setShowLabel("Reduction from " + control.length() + " to " + simplified.length() + " samples");
       show.add(ListLinePlot.of(Range.of(0, control.length()), decimationResult.errors()));

@@ -103,7 +103,7 @@ class OrderingDemo extends ControlPointsDemo {
       Map<Scalar, String> map = Map.of(RealScalar.ZERO, "near", RealScalar.ONE, "far");
       BarLegend2 barLegend = new BarLegend2(colorDataGradientD, Clips.unit(), map);
       BufferedImage bufferedImage = barLegend.createImage(new Dimension(10, 200));
-      Dimension dimension = getSize();
+      Dimension dimension = geometricComponent().getSize();
       graphics.drawImage(bufferedImage, dimension.width - bufferedImage.getWidth(), 0, null);
     }
     {

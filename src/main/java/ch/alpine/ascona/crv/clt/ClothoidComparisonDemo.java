@@ -78,7 +78,7 @@ class ClothoidComparisonDemo extends ClothoidBaseDemo {
         show.add(ListLinePlot.of(domain, Subdivide.of(0.0, 1.0, domain.length() - 1).maps(clothoid::addAngle))).setLabel("add angle");
       }
     }
-    Dimension canvas_size = getSize();
+    Dimension canvas_size = geometricComponent().getSize();
     show.render_autoIndent(graphics, new Rectangle(canvas_size.width - WIDTH, 0, WIDTH, HEIGHT));
   }
 

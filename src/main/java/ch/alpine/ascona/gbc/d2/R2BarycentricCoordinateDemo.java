@@ -104,7 +104,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
           TensorUnaryOperator tuo = p -> p.add(Tensors.of(clip.width().multiply(RealScalar.of(fi)), RealScalar.ZERO));
           show.add(PolygonPlot.of(tuo.slash(controlPoints))).setColor(Color.BLACK);
         }
-        Dimension dimension = getSize();
+        Dimension dimension = geometricComponent().getSize();
         show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width - 100, 300));
       }
       // render grid lines functions

@@ -87,7 +87,7 @@ class PolygonCoordinatesDemo extends ControlPointsDemo {
     if (Objects.isNull(showable))
       recompute();
     if (Objects.nonNull(showable)) {
-      Dimension dimension = getSize();
+      Dimension dimension = geometricComponent().getSize();
       Rectangle rectangle = new Rectangle(100, 10, dimension.width - 200, 400);
       Show show = new Show();
       show.add(showable);

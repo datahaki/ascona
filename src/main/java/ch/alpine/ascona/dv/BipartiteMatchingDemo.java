@@ -87,7 +87,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
           Path2D path2d = geometricLayer.toPath2D(tuo.slash(transition.linearized(RealScalar.of(0.1))));
           graphics.draw(path2d);
         }
-      Dimension dimension = getSize();
+      Dimension dimension = geometricComponent().getSize();
       dimension.width /= 2;
       dimension.height /= 2;
       {

@@ -62,7 +62,7 @@ class DubinsPathDemo extends ControlPointsDemo {
 
   public DubinsPathDemo() {
     super(param = new Param());
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {3, 0, 0}}"));
   }
 

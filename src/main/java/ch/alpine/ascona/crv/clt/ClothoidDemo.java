@@ -91,7 +91,7 @@ class ClothoidDemo extends ClothoidBaseDemo {
       showable.setLabel(clothoid.toString());
       ++index;
     }
-    Dimension dimension = getSize();
+    Dimension dimension = geometricComponent().getSize();
     show.render_autoIndent(graphics, new Rectangle(dimension.width / 2, 0, dimension.width / 2, dimension.height));
   }
 

@@ -40,7 +40,7 @@ import ch.alpine.tensor.sca.Round;
 class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
   @ReflectionMarker
   static class Param0 {
-    @FieldSelectionArray({ "25", "50", "100", "150", "200" })
+    @FieldSelectionArray({ "25", "50", "100", "150", "200", "500" })
     public Integer numel = 50;
     public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
@@ -137,7 +137,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
       Path2D line = geometricLayer.toPath2D(tuo.slash(tensor));
       graphics.draw(line);
     }
-    Dimension dimension = getSize();
+    Dimension dimension = geometricComponent().getSize();
     dimension.width /= 2;
     dimension.height /= 2;
     {

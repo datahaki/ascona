@@ -4,6 +4,7 @@ package ch.alpine.ascona.euclid;
 import java.awt.Graphics2D;
 import java.util.Optional;
 
+import ch.alpine.ascony.dat.PlaceWrap;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.GridRender;
@@ -11,7 +12,6 @@ import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
-import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -44,7 +44,7 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
 
   public IterativeCoordinateDemo() {
     super(param = new Param());
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
     setControlPointsSe2(INITIAL);
   }
 

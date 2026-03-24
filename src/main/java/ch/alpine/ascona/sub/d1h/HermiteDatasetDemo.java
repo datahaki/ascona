@@ -88,7 +88,7 @@ class HermiteDatasetDemo extends AbstractHermiteDatasetDemo {
       int dims = deltas.get(0).length();
       if (0 < deltas.length()) {
         Show show = StaticHelper.listPlot(deltas, delta, levels);
-        Dimension dimension = getSize();
+        Dimension dimension = geometricComponent().getSize();
         show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
       }
     }

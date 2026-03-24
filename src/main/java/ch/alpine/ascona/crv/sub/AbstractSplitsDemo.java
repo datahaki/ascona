@@ -23,7 +23,7 @@ public abstract class AbstractSplitsDemo extends PointSequenceDemo {
 
   protected AbstractSplitsDemo(Object... objects) {
     super(objects);
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
     setManifoldDisplay(ManifoldDisplays.R2);
   }
 

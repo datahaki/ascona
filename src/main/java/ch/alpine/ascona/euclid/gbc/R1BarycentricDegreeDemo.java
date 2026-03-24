@@ -43,7 +43,7 @@ class R1BarycentricDegreeDemo extends ControlPointsDemo {
 
   public R1BarycentricDegreeDemo() {
     super(this.param = new Param());
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
     setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {1, 1, 0}, {2, 2, 0}}"));
   }
 

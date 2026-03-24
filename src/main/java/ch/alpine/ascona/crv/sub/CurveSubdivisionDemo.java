@@ -53,7 +53,7 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
 
   // this runnable causes to center (0,0) in the component center
   void center() {
-    Dimension dimension = getSize();
+    Dimension dimension = geometricComponent().getSize();
     // IO.println("CALLED " + geometricComponent().getSize());
     Tensor pvm = PvmBuilder.rhs().setOffset(dimension.width / 2, dimension.height / 2).setPerPixel(100).digest();
     geometricComponent().setModel2Pixel(pvm);

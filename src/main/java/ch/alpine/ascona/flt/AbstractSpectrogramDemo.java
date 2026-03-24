@@ -68,7 +68,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   private AbstractSpectrogramDemo(SpecParam specParam, Object object) {
     super(gokartPosParam = new GokartPosParam(), this.specParam = specParam, object);
     fieldsEditor(gokartPosParam).addUniversalListener(this::updateState);
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
     geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
     updateState();
   }
@@ -127,7 +127,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
   // @Override
   protected final void differences_render( //
       Graphics2D graphics, ManifoldDisplay manifoldDisplay, Tensor refined, boolean spectrogram) {
-    final Dimension dimension = getSize();
+    final Dimension dimension = geometricComponent().getSize();
     GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
     if (geodesicSpace instanceof LieGroup lieGroup) {
       TensorUnaryOperator lieDifferences = LieDifferences.of(lieGroup);

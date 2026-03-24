@@ -10,6 +10,7 @@ import java.util.Deque;
 import java.util.Optional;
 
 import ch.alpine.ascona.gbc.GenesisDequeParam;
+import ch.alpine.ascony.dat.PlaceWrap;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorStroke;
@@ -17,7 +18,6 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
-import ch.alpine.ascony.win.PlaceWrap;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.gfx.GeometricLayer;

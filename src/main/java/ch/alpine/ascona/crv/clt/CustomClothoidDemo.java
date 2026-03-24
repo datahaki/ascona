@@ -95,7 +95,7 @@ class CustomClothoidDemo extends ClothoidBaseDemo {
       Tensor points = Tensors.of(Tensors.of(reifs, RealScalar.ONE));
       show.add(ListPlot.of(points));
     }
-    Dimension dimension = getSize();
+    Dimension dimension = geometricComponent().getSize();
     show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width, dimension.height / 2));
   }
 

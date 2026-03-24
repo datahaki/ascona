@@ -45,7 +45,7 @@ class SpearheadDemo extends ClothoidBaseDemo {
 
   public SpearheadDemo() {
     super(param = new Param());
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
     setControlPointsSe2(Tensors.fromString("{{-0.5, -0.5, 0.3}}"));
   }
 

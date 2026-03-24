@@ -84,7 +84,7 @@ class TimeSeriesDemo extends EuclideanPlaneDemo {
     show.add(TsPlot.of(TsEntrywise.plus(timeSeries, custom))).setLabel("sum");
     show.add(TsPlot.of(product)).setLabel("times");
     show.add(TsPlot.of(TimeSeriesIntegrate.of(product))).setLabel("prd-integral");
-    Dimension dimension = getSize();
+    Dimension dimension = geometricComponent().getSize();
     FontMetrics fontMetrics = graphics.getFontMetrics();
     Optional<Rectangle> optional = Show.optionalDefaultInsets(dimension, fontMetrics);
     if (optional.isPresent()) {

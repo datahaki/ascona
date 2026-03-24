@@ -79,7 +79,7 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
       }
     }
     // ---
-    Dimension dimension = getSize();
+    Dimension dimension = geometricComponent().getSize();
     int width = dimension.width * 2 / 5;
     show1.render_autoIndent(graphics, new Rectangle(dimension.width - width, 0, width, dimension.height / 2));
     show2.render_autoIndent(graphics, new Rectangle(dimension.width - width, dimension.height / 2, width, dimension.height / 2));

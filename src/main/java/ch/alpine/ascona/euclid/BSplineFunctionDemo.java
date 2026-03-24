@@ -44,7 +44,7 @@ class BSplineFunctionDemo extends EuclideanPlaneDemo {
 
   public BSplineFunctionDemo() {
     super(param = new Param());
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
     setControlPointsSe2(Tensors.fromString("{{1,2,0},{0,0,0},{2,0,0}}"));
   }
 
@@ -76,7 +76,7 @@ class BSplineFunctionDemo extends EuclideanPlaneDemo {
       LeversRender leversRender = LeversRender.of(manifoldDisplay(), control, null, geometricLayer, graphics);
       leversRender.renderIndexP();
     }
-    Dimension dimension = getSize();
+    Dimension dimension = geometricComponent().getSize();
     dimension.width /= 2;
     dimension.height /= 2;
     param.cp.spawnXY(manifoldDisplay(), refined, new Rectangle(dimension.width, 0, dimension.width, dimension.height)) //

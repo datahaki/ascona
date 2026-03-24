@@ -55,7 +55,7 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
 
   public ClothoidBrushDemo() {
     super(param = new Param());
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
   }
 
   @Override

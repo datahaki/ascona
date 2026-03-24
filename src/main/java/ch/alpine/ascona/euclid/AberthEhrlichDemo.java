@@ -120,7 +120,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
       ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tuo, DoubleScalar.INDETERMINATE);
       Show show = new Show();
       FontMetrics fontMetrics = graphics.getFontMetrics();
-      Optional<Rectangle> optional = Show.optionalDefaultInsets(getSize(), fontMetrics);
+      Optional<Rectangle> optional = Show.optionalDefaultInsets(geometricComponent().getSize(), fontMetrics);
       if (optional.isPresent()) {
         Rectangle rectangle = optional.orElseThrow();
         CoordinateBoundingBox cbb = geometricLayer.fromRectangle(rectangle).orElseThrow();

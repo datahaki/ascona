@@ -69,7 +69,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
   public AbstractDeformationDemo(Object obj2) {
     super(param0 = new Param0(), obj2, param2 = new Param2());
     fieldsEditor(param0).addUniversalListener(this::shuffleSnap);
-    geometricComponent().addRenderInterfaceBackground(new GridRender(this::getSize));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
   }
 
   @Override
@@ -148,7 +148,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       Tensor weights = movingDomain2D.arrayReshape_weights();
       Show show = new Show();
       show.add(ArrayPlot.of(weights, param2.cdg));
-      Dimension dimension = getSize();
+      Dimension dimension = geometricComponent().getSize();
       show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width - 100, 300));
     }
   }

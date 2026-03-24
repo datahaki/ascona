@@ -54,7 +54,7 @@ abstract class AbstractCurveDemo extends PointSequenceDemo {
       Tensor refined = protected_render(geometricLayer, graphics, control);
       Tensor euclidXY = manifoldDisplay().point2xy().slash(refined);
       new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
-      Dimension dimension = getSize();
+      Dimension dimension = geometricComponent().getSize();
       abstractCurveParam.cp.spawnXY(manifoldDisplay(), euclidXY, new Rectangle(dimension.width - 400, 0, 400, 300)) //
           .render(geometricLayer, graphics);
     }

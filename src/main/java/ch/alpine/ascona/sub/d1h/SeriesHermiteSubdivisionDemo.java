@@ -85,7 +85,7 @@ class SeriesHermiteSubdivisionDemo extends EuclideanPlaneDemo {
         Tensor deltas = iterate.get(Tensor.ALL, 1);
         if (0 < deltas.length()) {
           Show show = StaticHelper.listPlot(deltas, delta, levels);
-          Dimension dimension = getSize();
+          Dimension dimension = geometricComponent().getSize();
           show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
         }
       }

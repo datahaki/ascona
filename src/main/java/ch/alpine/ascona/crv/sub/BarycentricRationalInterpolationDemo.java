@@ -100,7 +100,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
             .render(geometricLayer, graphics);
       }
       if (param.basis) {
-        Dimension dimension = getSize();
+        Dimension dimension = geometricComponent().getSize();
         {
           Show show = new Show();
           show.setShowLabel("Basis 1");

@@ -123,7 +123,7 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
         v0 = SnRotationMatrix.of(p, q).dot(v0);
       }
     }
-    Dimension dimension = getSize();
+    Dimension dimension = geometricComponent().getSize();
     int WIDTH = dimension.width / 4;
     int HEIGHT = dimension.height / 2;
     {
