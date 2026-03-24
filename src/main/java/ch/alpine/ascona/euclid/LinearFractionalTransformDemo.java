@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorStroke;
+import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -27,8 +28,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
-import ch.alpine.tensor.alg.Reverse;
-import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.ResourceData;
 import ch.alpine.tensor.img.ImageResize;
@@ -41,22 +40,31 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Clips;
 
 class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
-  final BufferedImage bi = ResourceData.bufferedImage("ch/alpine/ascona/image/album_it.jpg");
+  final BufferedImage bufferedImage = ResourceData.bufferedImage("ch/alpine/ascona/image/album_it.jpg");
 
   @ReflectionMarker
   static class Param {
     public ThreePointScalings tps = ThreePointScalings.MEAN_VALUE;
     public ImageResize imgRes = ImageResize.DEGREE_0;
+    public Integer resw = 40;
+    public Integer resh = 30;
     @FieldFuse
     public Boolean fuse = false;
   }
 
   private final Param param;
+  private final Tensor src;
+  private final Interpolation interpolation;
 
   public LinearFractionalTransformDemo() {
     super(param = new Param());
-    setGeodesicControlPoints(Tensors.fromString("{{46.25, 28.0}, {132.0, 1.0}, {132.0, 99.0}, {46.75, 51.0}}"));
+    setTitle("" + bufferedImage.getWidth() + " " + bufferedImage.getHeight());
+    src = ImageFormat.from(bufferedImage);
+    interpolation = LinearInterpolation.of(src);
+    // setGeodesicControlPoints(Tensors.fromString("{{46.25, 28.0}, {132.0, 1.0}, {132.0, 99.0}, {46.75, 51.0}}"));
+    setGeodesicControlPoints(Tensors.fromString("{{1.25, 1.5}, {132.0, 1.0}, {132.0, 99.0}, {1.0, 99.0}}"));
     geometricComponent().setModel2Pixel(Se2Matrix.flipY(500).dot(DiagonalMatrix.of(4, 4, 1)));
+    geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
   }
 
   @Override
@@ -72,9 +80,9 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
     }
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     CoordinateBoundingBox cbb = CoordinateBoundingBox.of( //
-        Clips.positive(bi.getWidth()), //
-        Clips.positive(bi.getHeight()));
-    ImageRender imageRender = new ImageRender(bi, cbb);
+        Clips.positive(bufferedImage.getWidth()), //
+        Clips.positive(bufferedImage.getHeight()));
+    ImageRender imageRender = new ImageRender(bufferedImage, cbb);
     imageRender.render(geometricLayer, graphics);
     Tensor sequence = getGeodesicControlPoints();
     {
@@ -82,11 +90,9 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
           LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
       new PathRender(ColorStroke.CONVEX_HULL, sequence, true).render(geometricLayer, graphics);
       leversRender.renderIndexP();
-      Tensor src = ImageFormat.from(bi);
-      int h = bi.getHeight();
-      int f = 3;
-      final int resw = bi.getWidth() / f;
-      final int resh = bi.getHeight() / f;
+      int h = bufferedImage.getHeight();
+      final int resw = bufferedImage.getWidth();
+      final int resh = bufferedImage.getHeight();
       Tensor points = Tensor.of(sequence.stream().map(p -> Tensors.of( //
           RealScalar.of(h).subtract(p.Get(1)), p.Get(0))));
       LinearFractionalTransform lft = lft(resw, resh, points);
@@ -105,11 +111,13 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
       {
         Show show = new Show();
         show.setShowLabel("Linear Fractional Transform");
-        LinearFractionalTransform lft2 = lft(resw, resh, points);
-        Interpolation interpolation = LinearInterpolation.of(Transpose.of(Reverse.of(src)));
-        TensorUnaryOperator tuo = lft2.andThen(interpolation::get);
-        TensorUnaryOperator tu1 = interpolation::get;
-        show.add(ImagePlot.of(ImageFormat.of(rectify2(tuo, resw, resh)), param.imgRes));
+        TensorUnaryOperator lft2 = lft(resw, resh, points).andThen(interpolation::get);
+        Meshgrid meshgrid = new Meshgrid( //
+            CoordinateBoundingBox.of( //
+                Clips.positive(bufferedImage.getWidth()), //
+                Clips.positive(bufferedImage.getHeight())), //
+            param.resw, param.resh);
+        show.add(ImagePlot.of(ImageFormat.of(rectify2(lft2, meshgrid)), param.imgRes));
         show.render_autoIndent(graphics, new Rectangle(dimension.width, 0, dimension.width, dimension.height));
       }
     }
@@ -117,7 +125,7 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
 
   private static Tensor reference(int width, int height) {
     return Tensors.matrixInt( //
-        new int[][] { { height, 0 }, { height, width }, { 0, width }, { 0, 0 } }) //
+        new int[][] { { 0, 0 }, { width, 0 }, { width, height }, { 0, height } }) //
         .maps(RealScalar.of(-0.5)::add);
   }
 
@@ -150,9 +158,7 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
    * @param width
    * @param height
    * @return */
-  private static Tensor rectify2(TensorUnaryOperator tuo, int width, int height) {
-    Meshgrid meshgrid = new Meshgrid( //
-        CoordinateBoundingBox.of(Clips.positive(width), Clips.positive(height)), width, height);
+  private static Tensor rectify2(TensorUnaryOperator tuo, Meshgrid meshgrid) {
     TensorUnaryOperator ttuo = x -> {
       try {
         return tuo.apply(x);
@@ -161,13 +167,6 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
       }
     };
     return meshgrid.image(ttuo);
-    // return Tensors.matrix((i, j) -> {
-    // try {
-    // return tuo.apply(Tensors.vectorDouble(i, j));
-    // } catch (Exception e) {
-    // return Array.zeros(4);
-    // }
-    // }, height, width);
   }
 
   static void main() {
