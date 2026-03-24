@@ -25,12 +25,10 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.hull.d2.ConvexHull2D;
 import ch.alpine.sophis.noise.NoiseFilteredSample;
-import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.opt.nd.BoxRandomSample;
@@ -121,9 +119,7 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
     }
     {
       graphics.setColor(Color.BLUE);
-      geometricLayer.pushMatrix(Se2Matrix.translation(Array.zeros(2)));
       graphics.draw(geometricLayer.toPath2D(centerNorms.shape().multiply(radius), true));
-      geometricLayer.popMatrix();
     }
     {
       graphics.setColor(Color.GRAY);

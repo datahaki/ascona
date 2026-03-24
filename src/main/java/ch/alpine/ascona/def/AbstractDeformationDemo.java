@@ -36,11 +36,11 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.jet.AppendOne;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.RandomSample;
-import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 abstract class AbstractDeformationDemo extends ControlPointsDemo {
@@ -51,7 +51,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
 
   @ReflectionMarker
   static class Param0 {
-    @FieldClip(min = "3", max = "12")
+    @FieldClip(min = "3", max = "15")
     public Integer length = 8;
   }
 
@@ -99,10 +99,8 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       return Meshgrid.of(Box2D.xy(Clips.absolute(1.0)), res).image(sedarim::sunder);
     case Se2C:
     case Se2: {
-      Clip clip = Clips.absolute(2);
-      CoordinateBoundingBox cbb = Box2D.xy(clip);
-      TensorUnaryOperator tuo = xy -> Append.of(xy, RealScalar.ONE);
-      return Meshgrid.of(cbb, res).image(tuo.andThen(sedarim::sunder));
+      CoordinateBoundingBox cbb = Box2D.xy(Clips.absolute(2.0));
+      return Meshgrid.of(cbb, res).image(AppendOne.FUNCTION.andThen(sedarim::sunder));
     }
     default:
       throw new IllegalArgumentException();
@@ -119,7 +117,6 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor origin = movingOrigin();
     Tensor target = getGeodesicControlPoints();
-    // ---
     {
       ColorDataGradient colorDataGradient = param2.cdg.deriveWithOpacity(RealScalar.of(0.5));
       new MeshRender(movingDomain2D.forward(target), colorDataGradient) //

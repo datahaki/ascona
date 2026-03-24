@@ -28,6 +28,7 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ArrayPlot;
 import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.sophis.crv.d2.alg.PolygonRegion;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.hull.d2.ConvexHull2D;
@@ -62,6 +63,8 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
     jToolBar().add(jToggleEntire);
     setManifoldDisplay(ManifoldDisplays.R2);
     setControlPointsSe2(Tensors.fromString("{{0, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}}"));
+    Tensor pvm = PvmBuilder.rhs().setOffset(200, 600).setPerPixel(100).digest();
+    geometricComponent().setModel2Pixel(pvm);
   }
 
   @Override

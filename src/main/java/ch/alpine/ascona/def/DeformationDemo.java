@@ -11,10 +11,11 @@ import ch.alpine.ascony.msh.MovingDomain2D;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
+import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.var.VariogramFunctions;
-import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.bm.BiinvariantMean;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -76,16 +77,18 @@ class DeformationDemo extends AbstractDeformationDemo {
     movingDomain2D = updateMovingDomain2D(param1.refine);
   }
 
-  private Sedarim operator(Tensor sequence) {
-    Manifold manifold = manifoldDisplay().manifold();
-    return param1.logWeightings.sedarim(param1.biinvariantsParam.ofSafe(manifold), param1.variogram(), sequence);
-  }
-
   /** @return method to compute mean (for instance approximation instead of exact mean) */
   private MovingDomain2D updateMovingDomain2D(int res) {
-    BiinvariantMean biinvariantMean = manifoldDisplay().homogeneousSpace().biinvariantMean();
-    Tensor weights = updateWeights(movingOrigin, res, param1.s2z, operator(movingOrigin));
-    return new AveragedMovingDomain2D(weights, biinvariantMean, manifoldDisplay().indetPoint());
+    HomogeneousSpace homogeneousSpace = manifoldDisplay().homogeneousSpace();
+    Biinvariant biinvariant = param1.biinvariantsParam.ofSafe(homogeneousSpace);
+    LogWeightings logWeightings = param1.logWeightings;
+    ScalarUnaryOperator vf = param1.variogram();
+    Tensor indetPoint = manifoldDisplay().indetPoint();
+    // ---
+    Sedarim sedarim = logWeightings.sedarim(biinvariant, vf, movingOrigin);
+    Tensor weights = updateWeights(movingOrigin, res, param1.s2z, sedarim);
+    BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean();
+    return new AveragedMovingDomain2D(weights, biinvariantMean, indetPoint);
   }
 
   static void main() {
