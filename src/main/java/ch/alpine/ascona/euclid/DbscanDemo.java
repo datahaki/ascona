@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 import java.util.stream.IntStream;
 
 import ch.alpine.ascona.ref.ShuffleFuse;
-import ch.alpine.ascony.msh.CenterNorms;
+import ch.alpine.ascony.api.CenterNorms;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;

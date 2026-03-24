@@ -7,10 +7,10 @@ import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Optional;
 
+import ch.alpine.ascony.api.CenterNorms;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.S2Display;
-import ch.alpine.ascony.msh.CenterNorms;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;

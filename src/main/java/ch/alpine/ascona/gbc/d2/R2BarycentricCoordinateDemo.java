@@ -44,7 +44,7 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDemo {
-  public static List<LogWeightings> list() {
+  public static List<LogWeightings> list2() {
     List<LogWeightings> list = new ArrayList<>();
     // list.addAll(List.of(PolygonCoordinates.values()));
     Arrays.stream(LogWeightings.values()).forEach(list::add);
@@ -56,7 +56,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
   private final JToggleButton jToggleEntire = new JToggleButton("entire");
 
   public R2BarycentricCoordinateDemo() {
-    super(list());
+    super(list2());
     geometricComponent().addRenderInterfaceBackground(AxesRender.INSTANCE);
     weightingsParam.logWeightings = LogWeightings.COORDINATE;
     jToolBar().add(jToggleEntire);
