@@ -20,6 +20,7 @@ import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.fig.Rasterize;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.plt.ArrayPlot;
@@ -137,7 +138,7 @@ class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
       Showable showable = ArrayPlot.of(matrix, cbb, COLOR_DATA_INDEXED);
       Show show = new Show();
       show.add(showable);
-      bufferedImage = show.image(new Dimension(200, 200));
+      bufferedImage = new Rasterize(show, new Dimension(200, 200)).image();
     } else {
       bufferedImage = null;
     }
