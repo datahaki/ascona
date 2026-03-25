@@ -12,7 +12,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.Cross;
 
-/* package */ record Se2HermiteRender(Tensor points, Scalar scale) implements RenderInterface {
+record Se2HermiteRender(Tensor points, Scalar scale) implements RenderInterface {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     for (Tensor point : points) {

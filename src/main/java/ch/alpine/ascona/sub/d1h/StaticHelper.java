@@ -9,7 +9,7 @@ import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.sca.pow.Power;
 
-/* package */ enum StaticHelper {
+enum StaticHelper {
   ;
   public static Show listPlot(Tensor deltas, Scalar delta, int levels) {
     Tensor domain = Range.of(0, deltas.length()).multiply(delta.divide(Power.of(2, levels)));

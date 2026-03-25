@@ -23,7 +23,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 /** the quaternions in the data set have norm of approximately
  * 1.00005... due to the use of float precision */
-/* package */ enum EurocData {
+enum EurocData {
   ;
   private static Tensor rowmap(Tensor row) {
     Tensor p = row.extract(1, 4);

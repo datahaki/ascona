@@ -29,7 +29,7 @@ import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.Integers;
 
-/* package */ enum CurveSubdivisionSchemes {
+enum CurveSubdivisionSchemes {
   BSPLINE1(false) {
     @Override
     public CurveOperator of(ManifoldDisplay manifoldDisplay) {

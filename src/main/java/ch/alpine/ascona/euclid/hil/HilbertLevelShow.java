@@ -15,7 +15,7 @@ import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.opt.nd.CoordinateBounds;
 
-/* package */ enum HilbertLevelShow {
+enum HilbertLevelShow {
   ;
   public static Showable of( //
       IterativeGenesis iterativeGenesis, //

@@ -16,7 +16,7 @@ import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Round;
 
-/* package */ enum StaticHelper {
+enum StaticHelper {
   ;
   static record IntBlend(Scalar radius) implements ScalarUnaryOperator {
     @Override

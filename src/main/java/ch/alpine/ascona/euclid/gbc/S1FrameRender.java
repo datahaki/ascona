@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.N;
 
-/* package */ enum S1FrameRender implements RenderInterface {
+enum S1FrameRender implements RenderInterface {
   INSTANCE;
 
   private static final Tensor CIRCLE = CirclePoints.of(61).maps(N.DOUBLE);

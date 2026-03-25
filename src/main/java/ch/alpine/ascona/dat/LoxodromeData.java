@@ -22,7 +22,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.sca.AbsSquared;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
-/* package */ enum LoxodromeData {
+enum LoxodromeData {
   ;
   static void main() throws IOException {
     Path path = HomeDirectory.Ephemeral.mk_dirs(LoxodromeData.class.getSimpleName());

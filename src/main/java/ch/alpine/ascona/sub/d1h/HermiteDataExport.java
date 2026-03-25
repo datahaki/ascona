@@ -33,7 +33,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.red.Nest;
 
-/* package */ class HermiteDataExport {
+class HermiteDataExport {
   private final int levels;
   private final Path folder;
   private final Tensor control = Tensors.empty();

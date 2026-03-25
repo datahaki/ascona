@@ -7,7 +7,7 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** parameterization */
-/* package */ enum ParameterizationPattern implements Function<TensorUnaryOperator, TensorScalarFunction> {
+enum ParameterizationPattern implements Function<TensorUnaryOperator, TensorScalarFunction> {
   CHECKER_BOARD(CheckerBoard::new), //
   GRID_LINES(GridLines::new), //
   ;

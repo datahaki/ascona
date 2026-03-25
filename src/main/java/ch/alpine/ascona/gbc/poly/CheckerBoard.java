@@ -13,7 +13,7 @@ import ch.alpine.tensor.chq.FiniteScalarQ;
 import ch.alpine.tensor.red.Total;
 import ch.alpine.tensor.sca.Floor;
 
-/* package */ class CheckerBoard implements TensorScalarFunction {
+class CheckerBoard implements TensorScalarFunction {
   private final TensorUnaryOperator tensorUnaryOperator;
 
   public CheckerBoard(TensorUnaryOperator tensorUnaryOperator) {

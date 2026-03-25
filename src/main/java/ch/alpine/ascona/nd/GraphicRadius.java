@@ -10,7 +10,7 @@ import ch.alpine.tensor.opt.nd.NdCenterInterface;
 import ch.alpine.tensor.opt.nd.NdCollectRadius;
 import ch.alpine.tensor.opt.nd.NdEntry;
 
-/* package */ class GraphicRadius<V> extends NdCollectRadius<V> {
+class GraphicRadius<V> extends NdCollectRadius<V> {
   private final GeometricLayer geometricLayer;
   private final Graphics2D graphics;
 

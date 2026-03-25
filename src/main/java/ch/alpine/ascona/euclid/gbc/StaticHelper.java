@@ -13,7 +13,7 @@ import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.red.Min;
 import ch.alpine.tensor.sca.N;
 
-/* package */ enum StaticHelper {
+enum StaticHelper {
   ;
   static final Stroke STROKE = //
       new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);

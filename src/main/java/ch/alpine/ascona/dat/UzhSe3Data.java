@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.dat;
 
-/* package */ enum UzhSe3Data {
+enum UzhSe3Data {
   indoor_forward_3_davis, //
   indoor_forward_5_davis, //
   indoor_forward_6_davis, //

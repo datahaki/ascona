@@ -17,7 +17,7 @@ import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.exp.Log;
 
-/* package */ class Hermite1ArrayShow extends HermiteArrayShow {
+class Hermite1ArrayShow extends HermiteArrayShow {
   public Hermite1ArrayShow(String name, Scalar period, int levels) {
     super(name, period, levels);
   }

@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.win.WindowFunctions;
 
 /** the quaternions in the data set have norm of approximately
  * 1.00005... due to the use of float precision */
-/* package */ enum UzhSe3Differences {
+enum UzhSe3Differences {
   ;
   private static final LieGroup LIE_GROUP = new SeNGroup(3);
 

@@ -13,7 +13,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
-/* package */ enum StaticHelper {
+enum StaticHelper {
   ;
   public static void draw(CoordinateBoundingBox coordinateBoundingBox, GeometricLayer geometricLayer, Graphics2D graphics) {
     Path2D path2d = geometricLayer.toPath2D(Box2D.polygon(coordinateBoundingBox), true);

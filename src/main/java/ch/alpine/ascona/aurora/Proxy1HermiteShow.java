@@ -16,7 +16,7 @@ import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.exp.Log;
 
-/* package */ class Proxy1HermiteShow extends ProxyHermiteShow {
+class Proxy1HermiteShow extends ProxyHermiteShow {
   public Proxy1HermiteShow(String name, int levels) {
     super(name, levels);
   }

@@ -9,7 +9,7 @@ import ch.alpine.tensor.opt.nd.NdCenterInterface;
 import ch.alpine.tensor.opt.nd.NdCollectNearest;
 import ch.alpine.tensor.opt.nd.NdEntry;
 
-/* package */ class GraphicNearest<V> extends NdCollectNearest<V> {
+class GraphicNearest<V> extends NdCollectNearest<V> {
   private final GeometricLayer geometricLayer;
   private final Graphics2D graphics;
 

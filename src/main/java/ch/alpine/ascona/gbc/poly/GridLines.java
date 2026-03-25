@@ -14,7 +14,7 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Mod;
 
-/* package */ class GridLines implements TensorScalarFunction {
+class GridLines implements TensorScalarFunction {
   private static final Mod MOD = Mod.function(1.0);
   private static final Clip CLIP = Clips.positive(0.25);
   // ---
