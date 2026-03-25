@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -71,7 +71,7 @@ class HermiteDatasetDemo extends AbstractHermiteDatasetDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     new PathRender(ColorStroke.CURVE, _control.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
     if (_control.length() <= 1000)
-      manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.ONE, _control.get(Tensor.ALL, 0)) //
+      manifoldDisplay.showPoints(ColorPairs.APPROXIMATION, RealScalar.ONE, _control.get(Tensor.ALL, 0)) //
           .render(geometricLayer, graphics);
     Scalar delta = getDelta();
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();

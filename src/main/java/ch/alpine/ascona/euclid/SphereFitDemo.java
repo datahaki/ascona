@@ -8,7 +8,7 @@ import java.awt.geom.Path2D;
 import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -72,7 +72,7 @@ class SphereFitDemo extends EuclideanPlaneDemo {
       }
     }
     new PathRender(ColorStroke.CONVEX_HULL, ConvexHull2D.of(control), true).render(geometricLayer, graphics);
-    manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.ONE, CIRCLE).render(geometricLayer, graphics);
+    manifoldDisplay.showPoints(ColorPairs.REFERENCE, RealScalar.ONE, CIRCLE).render(geometricLayer, graphics);
     if (!Tensors.isEmpty(control)) {
       graphics.setStroke(new BasicStroke());
       Tensor matrix = Outer.of(Vector2Norm::between, control, CIRCLE);
@@ -87,7 +87,7 @@ class SphereFitDemo extends EuclideanPlaneDemo {
     }
     if (!Tensors.isEmpty(control)) {
       Tensor weiszfeld = new WeiszfeldMethod(Chop._04).uniform(control).get();
-      manifoldDisplay.showPoints(ColorPair.SPACIAL_MEDIAN, RealScalar.of(1.1), Tensors.of(weiszfeld)) //
+      manifoldDisplay.showPoints(ColorPairs.SPACIAL_MEDIAN, RealScalar.of(1.1), Tensors.of(weiszfeld)) //
           .render(geometricLayer, graphics);
     }
     if (!Tensors.isEmpty(control)) {

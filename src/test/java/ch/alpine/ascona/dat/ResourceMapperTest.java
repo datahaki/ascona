@@ -13,7 +13,7 @@ class ResourceMapperTest {
     ResourceMapper resourceMapper = //
         ResourceMapper.of("ch/alpine/ascona/gokart/tpqv/resource_index.vector");
     for (String string : resourceMapper.list()) {
-      Tensor tensor = resourceMapper.importResource(string);
+      Tensor tensor = resourceMapper.importTensor(string);
       MatrixQ.require(tensor);
     }
   }

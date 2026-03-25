@@ -39,7 +39,7 @@ public enum GokartPosVel {
   }
 
   public Se2PosVelHz get(String key, int limit) {
-    Tensor tensor = Tensor.of(resourceMapper.importResource(key).stream().limit(limit));
+    Tensor tensor = Tensor.of(resourceMapper.importTensor(key).stream().limit(limit));
     Scalar samplingRate = Quantity.of(Mean.ofVector(Differences.of(tensor.get(Tensor.ALL, 0))).reciprocal(), "Hz");
     return new Se2PosVelHz(new Se2PosVel(EXTRACT.slash(tensor)), samplingRate);
   }

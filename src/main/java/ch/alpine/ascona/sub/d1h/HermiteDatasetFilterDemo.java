@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.awt.RenderQuality;
@@ -49,7 +49,7 @@ class HermiteDatasetFilterDemo extends AbstractHermiteDatasetDemo {
     LieGroup lieGroup = manifoldDisplay.lieGroup();
     new PathRender(ColorStroke.CURVE, _control.get(Tensor.ALL, 0), false).render(geometricLayer, graphics);
     if (_control.length() <= 1000)
-      manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.of(0.3), _control.get(Tensor.ALL, 0)) //
+      manifoldDisplay.showPoints(ColorPairs.APPROXIMATION, RealScalar.of(0.3), _control.get(Tensor.ALL, 0)) //
           .render(geometricLayer, graphics);
     graphics.setColor(Color.DARK_GRAY);
     Scalar delta = getDelta();
@@ -59,7 +59,7 @@ class HermiteDatasetFilterDemo extends AbstractHermiteDatasetDemo {
             .string(delta, _control);
     int levels = 2 * paran.level;
     Tensor refined = Do.of(_control, tensorIteration::iterate, levels);
-    manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.of(0.3), refined.get(Tensor.ALL, 0));
+    manifoldDisplay.showPoints(ColorPairs.APPROXIMATION, RealScalar.of(0.3), refined.get(Tensor.ALL, 0));
     new PathRender(ColorStroke.SECONDARY_CURVE, refined.get(Tensor.ALL, 0), false) //
         .render(geometricLayer, graphics);
     if (paran.derivat) {

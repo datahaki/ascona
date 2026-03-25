@@ -9,7 +9,7 @@ import java.util.Collection;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2Display;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.GridRender;
@@ -69,7 +69,7 @@ class HermiteSubdivisionDemo extends ControlPointsDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     final Tensor tensor = getControlPointsSe2();
-    Se2Display.INSTANCE.showPoints(ColorPair.DEC, RealScalar.ONE, tensor) //
+    Se2Display.INSTANCE.showPoints(ColorPairs.DEC, RealScalar.ONE, tensor) //
         .render(geometricLayer, graphics);
     ManifoldDisplays manifoldDisplays = getSelectedMD();
     if (1 < tensor.length()) {

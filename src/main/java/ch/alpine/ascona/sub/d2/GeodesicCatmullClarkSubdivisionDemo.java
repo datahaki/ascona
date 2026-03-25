@@ -7,7 +7,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -75,7 +75,7 @@ class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
         catmullClarkSubdivision::refine, //
         ArrayReshape.of(control, dims), //
         param.refine);
-    manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.of(0.5), Flatten.of(refined, 1)) //
+    manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.of(0.5), Flatten.of(refined, 1)) //
         .render(geometricLayer, graphics);
   }
 

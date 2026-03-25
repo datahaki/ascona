@@ -16,7 +16,7 @@ import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -143,7 +143,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       Optional<Tensor> optionalSM = spatialMedian.uniform(sequence);
       if (optionalSM.isPresent()) {
         Tensor median = optionalSM.orElseThrow();
-        manifoldDisplay.showPoints(ColorPair.SPACIAL_MEDIAN, RealScalar.of(0.7), Tensors.of(median)) //
+        manifoldDisplay.showPoints(ColorPairs.SPACIAL_MEDIAN, RealScalar.of(0.7), Tensors.of(median)) //
             .render(geometricLayer, graphics);
       } else {
         graphics.setColor(Color.RED);
@@ -186,7 +186,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
           graphics.drawString(string, pix, piy - fheight / 3);
         }
         geometricLayer.popMatrix();
-        manifoldDisplay.showPoints(ColorPair.APPROXIMATION, RealScalar.ONE, Tensors.of(origin)) //
+        manifoldDisplay.showPoints(ColorPairs.APPROXIMATION, RealScalar.ONE, Tensors.of(origin)) //
             .render(geometricLayer, graphics);
       }
     }

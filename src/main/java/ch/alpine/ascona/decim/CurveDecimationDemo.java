@@ -12,7 +12,7 @@ import ch.alpine.ascona.ref.GokartPosParam;
 import ch.alpine.ascony.dat.Se2Pos;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -102,7 +102,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
     // render dataset
     new PathRender(ColorStroke.CURVE, control, false).render(geometricLayer, graphics);
     if (control.length() <= 1000)
-      manifoldDisplay.showPoints(ColorPair.DEC, RealScalar.of(0.3), control) //
+      manifoldDisplay.showPoints(ColorPairs.DEC, RealScalar.of(0.3), control) //
           .render(geometricLayer, graphics);
     Scalar epsilon = Power.of(Rational.HALF, paran.level);
     CurveDecimation curveDecimation = CurveDecimation.of(paran.type.supply(homogeneousSpace), epsilon);
@@ -115,7 +115,7 @@ class CurveDecimationDemo extends ManifoldDisplayDemo {
         simplified, level);
     graphics.setColor(Color.DARK_GRAY);
     new PathRender(ColorStroke.SECONDARY_CURVE, refined, false).render(geometricLayer, graphics);
-    manifoldDisplay.showPoints(ColorPair.DED, RealScalar.of(0.8), simplified) //
+    manifoldDisplay.showPoints(ColorPairs.DED, RealScalar.of(0.8), simplified) //
         .render(geometricLayer, graphics);
     if (paran.error) {
       Dimension dimension = geometricComponent().getSize();

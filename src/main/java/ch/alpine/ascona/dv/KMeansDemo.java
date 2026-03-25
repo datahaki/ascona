@@ -10,8 +10,8 @@ import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.ColorPairIndexed;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -159,7 +159,7 @@ class KMeansDemo extends ControlPointsDemo {
         ++index;
       }
     } else {
-      manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.of(0.2), sequence) //
+      manifoldDisplay.showPoints(ColorPairs.REFERENCE, RealScalar.of(0.2), sequence) //
           .render(geometricLayer, graphics);
     }
   }

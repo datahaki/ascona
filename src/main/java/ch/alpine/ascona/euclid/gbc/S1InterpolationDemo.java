@@ -11,7 +11,7 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.reg.RegionRenders;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -93,7 +93,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
       graphics.setColor(Color.GREEN);
       for (int index = 0; index < target.length(); ++index)
         graphics.draw(geometricLayer.toLine2D(control.get(index), target.get(index)));
-      manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.ONE, target) //
+      manifoldDisplay.showPoints(ColorPairs.REFERENCE, RealScalar.ONE, target) //
           .render(geometricLayer, graphics);
       // ---
       Tensor values = Tensor.of(control.stream().map(Vector2Norm::of));

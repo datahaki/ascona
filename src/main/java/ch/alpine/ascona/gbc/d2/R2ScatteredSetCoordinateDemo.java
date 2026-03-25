@@ -16,7 +16,7 @@ import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.MatrixArray;
 import ch.alpine.ascony.msh.Thinning;
 import ch.alpine.ascony.reg.RegionRenders;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.bridge.fig.Meshgrid;
@@ -117,7 +117,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
       if (scatteredSetParam.arrows) {
         Tensor points = Thinning.flatten(array, 2, 2);
         manifoldDisplay.showPoints( //
-            ColorPair.INTERMEDIATE, //
+            ColorPairs.INTERMEDIATE, //
             RealScalar.of(Math.min(1, 3.0 / Math.sqrt(scatteredSetParam.refine))), //
             points) //
             .render(geometricLayer, graphics);

@@ -12,7 +12,7 @@ import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.fig.Show;
@@ -97,7 +97,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
         show.render_autoIndent(graphics, new Rectangle(dimension.width, 0, dimension.width, dimension.height));
       }
     }
-    manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.ONE, ground).render(geometricLayer, graphics);
+    manifoldDisplay.showPoints(ColorPairs.REFERENCE, RealScalar.ONE, ground).render(geometricLayer, graphics);
   }
 
   static void main() {

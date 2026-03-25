@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -79,7 +79,7 @@ class BezierFunctionDemo extends PointSequenceDemo {
           Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
         new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
         if (levels < 5)
-          manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
+          manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
         param.cp.spawnXY(manifoldDisplay, euclidXY, new Rectangle(0, 0, 400, 300)) //
             .render(geometricLayer, graphics);
       } catch (Exception e) {

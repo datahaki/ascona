@@ -18,7 +18,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.Thinning;
 import ch.alpine.ascony.ren.AxesRender;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -115,7 +115,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
           .render(geometricLayer, graphics);
       if (scatteredSetParam.arrows) {
         Tensor points = Thinning.flatten(array, 2, 2);
-        manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.of(0.5), points) //
+        manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.of(0.5), points) //
             .render(geometricLayer, graphics);
       }
     }

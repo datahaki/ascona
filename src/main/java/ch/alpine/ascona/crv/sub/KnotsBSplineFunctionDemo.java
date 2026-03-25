@@ -7,7 +7,7 @@ import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLinkImage;
@@ -71,13 +71,13 @@ class KnotsBSplineFunctionDemo extends AbstractCurveDemo {
         GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), abstractCurveParam.degree, knots, control);
     // ---
     Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << abstractCurveParam.refine))).maps(scalarTensorFunction);
-    manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Unprotect.byRef(scalarTensorFunction.apply(parameter))) //
+    manifoldDisplay.showPoints(ColorPairs.MARKER, RealScalar.of(1.2), Unprotect.byRef(scalarTensorFunction.apply(parameter))) //
         .render(geometricLayer, graphics);
     Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (abstractCurveParam.refine < 5)
-      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
+      manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);
       leversRender.renderIndexP();

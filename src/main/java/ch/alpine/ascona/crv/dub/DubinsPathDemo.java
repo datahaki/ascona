@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.dis.Se2CoveringDisplay;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -81,7 +81,7 @@ class DubinsPathDemo extends ControlPointsDemo {
     Tensor controlPointsSe2 = getControlPointsSe2();
     controlPointsSe2.set(Array.zeros(3), 0);
     Tensor START = controlPointsSe2.get(0);
-    manifoldDisplay().showPoints(ColorPair.IMMOVABLE, RealScalar.ONE, Tensors.of(START)) //
+    manifoldDisplay().showPoints(ColorPairs.IMMOVABLE, RealScalar.ONE, Tensors.of(START)) //
         .render(geometricLayer, graphics);
     Tensor mouse = controlPointsSe2.get(1);
     // ---

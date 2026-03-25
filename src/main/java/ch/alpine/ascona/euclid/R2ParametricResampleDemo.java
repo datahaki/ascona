@@ -5,7 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
@@ -66,7 +66,7 @@ class R2ParametricResampleDemo extends EuclideanPlaneDemo {
     ParametricResample parametricResample = param.parametricResample();
     ResampleResult resampleResult = parametricResample.apply(control);
     for (Tensor points : resampleResult.getPoints())
-      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, points) //
+      manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, points) //
           .render(geometricLayer, graphics);
   }
 

@@ -10,7 +10,7 @@ import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dat.PlaceWrap;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -118,9 +118,9 @@ class KNearestDemo extends ControlPointsDemo {
     int[] integers = Ordering.INCREASING.of(weights);
     Tensor seq = Permute.of(integers).apply(sequence);
     int k = param1.k;
-    manifoldDisplay.showPoints(ColorPair.GROUP_NEAR, RealScalar.ONE, seq.extract(0, k)) //
+    manifoldDisplay.showPoints(ColorPairs.GROUP_NEAR, RealScalar.ONE, seq.extract(0, k)) //
         .render(geometricLayer, graphics);
-    manifoldDisplay.showPoints(ColorPair.GROUP_AFAR, RealScalar.ONE, seq.extract(k, sequence.length())) //
+    manifoldDisplay.showPoints(ColorPairs.GROUP_AFAR, RealScalar.ONE, seq.extract(k, sequence.length())) //
         .render(geometricLayer, graphics);
     LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
     leversRender.renderOrigin();

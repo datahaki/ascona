@@ -8,7 +8,7 @@ import java.util.List;
 import ch.alpine.ascona.crv.CurvatureParam;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -94,7 +94,7 @@ class CatmullRomDemo extends PointSequenceDemo {
       Tensor refined = Subdivide.increasing(interval, Math.max(1, levels * control.length())).maps(scalarTensorFunction);
       {
         Tensor selected = scalarTensorFunction.apply(parameter);
-        manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, Tensors.of(selected)) //
+        manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, Tensors.of(selected)) //
             .render(geometricLayer, graphics);
       }
       Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);

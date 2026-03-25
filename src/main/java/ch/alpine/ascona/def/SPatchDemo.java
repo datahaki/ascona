@@ -13,7 +13,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
 import ch.alpine.ascony.msh.MovingDomain2D;
 import ch.alpine.ascony.msh.Thinning;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.MeshRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
@@ -99,7 +99,7 @@ class SPatchDemo extends ControlPointsDemo {
     {
       Tensor[][] forward = movingDomain2D.forward(sequence);
       Tensor points = Thinning.flatten(forward, 3, 3);
-      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.of(0.4), points) //
+      manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.of(0.4), points) //
           .render(geometricLayer, graphics);
       new MeshRender(forward, param1.cdg.deriveWithOpacity(Rational.HALF)) //
           .render(geometricLayer, graphics);

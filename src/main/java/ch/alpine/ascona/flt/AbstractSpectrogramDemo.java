@@ -14,7 +14,7 @@ import ch.alpine.ascona.ref.GokartPosParam;
 import ch.alpine.ascony.dat.Se2PosHz;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -22,6 +22,7 @@ import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.fig.plt.Spectrogram;
+import ch.alpine.bridge.gfx.ColorPair;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -85,7 +86,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     boolean conv = specParam.conv;
     if (specParam.data) {
       new PathRender(ColorStroke.SECONDARY_CURVE, control, false).render(geometricLayer, graphics);
-      ColorPair colorPair = conv ? ColorPair.ASC : ColorPair.ASN;
+      ColorPair colorPair = conv ? ColorPairs.ASC : ColorPairs.ASN;
       manifoldDisplay.showPoints(colorPair, markerScale(), control) //
           .render(geometricLayer, graphics);
     }
@@ -100,7 +101,7 @@ abstract class AbstractSpectrogramDemo extends ManifoldDisplayDemo {
     graphics.setStroke(new BasicStroke(1f));
     if (conv) {
       new PathRender(ColorStroke.CURVE, refined, false).render(geometricLayer, graphics);
-      manifoldDisplay.showPoints(ColorPair.ASD, markerScale(), refined) //
+      manifoldDisplay.showPoints(ColorPairs.ASD, markerScale(), refined) //
           .render(geometricLayer, graphics);
     }
     if (specParam.diff)

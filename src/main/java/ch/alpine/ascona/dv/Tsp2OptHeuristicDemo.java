@@ -14,7 +14,7 @@ import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
@@ -124,7 +124,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
       Path2D line = geometricLayer.toPath2D(tensor);
       graphics.draw(line);
     }
-    manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.of(0.3), sequence) //
+    manifoldDisplay.showPoints(ColorPairs.REFERENCE, RealScalar.of(0.3), sequence) //
         .render(geometricLayer, graphics);
     int[] index = tsp2OptHeuristic.index();
     graphics.setColor(new Color(0, 192, 192));

@@ -9,7 +9,7 @@ import java.util.Collection;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
@@ -88,7 +88,7 @@ class GeodesicDemo extends ControlPointsDemo {
       graphics.setColor(Color.DARK_GRAY);
       graphics.drawString("" + pseudoDistance.maps(Round._4), 10, 20);
     }
-    manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, Subdivide.of(0, 1, param.splits).maps(scalarTensorFunction)) //
+    manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, Subdivide.of(0, 1, param.splits).maps(scalarTensorFunction)) //
         .render(geometricLayer, graphics);
     {
       Tensor sequence = Subdivide.of(0, 1, 1).maps(scalarTensorFunction);
@@ -110,7 +110,7 @@ class GeodesicDemo extends ControlPointsDemo {
             .render(geometricLayer, graphics);
       }
       Tensor extrap = Subdivide.increasing(clip, param.splits).maps(scalarTensorFunction);
-      manifoldDisplay.showPoints(ColorPair.GROUP_NEAR, RealScalar.of(0.8), extrap) //
+      manifoldDisplay.showPoints(ColorPairs.GROUP_NEAR, RealScalar.of(0.8), extrap) //
           .render(geometricLayer, graphics);
     }
   }

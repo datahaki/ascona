@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLinkImages;
@@ -48,7 +48,7 @@ class GeodesicBSplineFunctionDemo extends AbstractCurveDemo {
         GeodesicBSplineFunction.of(manifoldDisplay.geodesicSpace(), abstractCurveParam.degree, effective);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
-      manifoldDisplay.showPoints(ColorPair.MARKER, RealScalar.of(1.2), Tensors.of(selected)) //
+      manifoldDisplay.showPoints(ColorPairs.MARKER, RealScalar.of(1.2), Tensors.of(selected)) //
           .render(geometricLayer, graphics);
     }
     int max = upper * (1 << abstractCurveParam.refine);
@@ -57,7 +57,7 @@ class GeodesicBSplineFunctionDemo extends AbstractCurveDemo {
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (abstractCurveParam.refine < 5)
-      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
+      manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
     return refined;
   }
 

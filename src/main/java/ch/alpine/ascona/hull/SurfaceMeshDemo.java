@@ -8,7 +8,7 @@ import java.util.Set;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.ren.SurfaceMeshRender;
@@ -49,7 +49,7 @@ class SurfaceMeshDemo extends ControlPointsDemo {
     @FieldPreferredWidth(100)
     @FieldClip(min = "0", max = "4")
     public transient Integer refine = 1;
-    public transient ColorDataGradients cdg = ColorDataGradients.COPPER;
+    public ColorDataGradients cdg = ColorDataGradients.COPPER;
   }
 
   private final Param param;
@@ -91,7 +91,7 @@ class SurfaceMeshDemo extends ControlPointsDemo {
       refine = surfaceMeshRefinement.refine(refine);
     new SurfaceMeshRender(refine, paran.cdg).render(geometricLayer, graphics);
     if (paran.inter)
-      manifoldDisplay.showPoints(ColorPair.APPROXIMATION, Rational.HALF, refine.vrt) //
+      manifoldDisplay.showPoints(ColorPairs.APPROXIMATION, Rational.HALF, refine.vrt) //
           .render(geometricLayer, graphics);
     if (paran.ctrl) {
       GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();

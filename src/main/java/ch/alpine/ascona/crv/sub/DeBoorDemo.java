@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLinkImages;
@@ -46,14 +46,14 @@ class DeBoorDemo extends AbstractCurveDemo {
         Math.max(1, upper * (1 << abstractCurveParam.refine))).maps(scalarTensorFunction);
     {
       Tensor selected = scalarTensorFunction.apply(parameter);
-      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, Tensors.of(selected)) //
+      manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, Tensors.of(selected)) //
           .render(geometricLayer, graphics);
     }
     Tensor render = manifoldDisplay.point2xy().slash(refined);
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (abstractCurveParam.refine < 5)
-      manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined) //
+      manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, refined) //
           .render(geometricLayer, graphics);
     {
       LeversRender leversRender = LeversRender.of(manifoldDisplay, control, null, geometricLayer, graphics);

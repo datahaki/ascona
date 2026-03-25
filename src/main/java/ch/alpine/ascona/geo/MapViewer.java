@@ -15,10 +15,9 @@ import java.util.stream.Stream;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.S2Display;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
-import ch.alpine.ascony.ren.TextContour;
 import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.Ticks;
@@ -28,6 +27,7 @@ import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
+import ch.alpine.bridge.gfx.TextContour;
 import ch.alpine.bridge.io.FileBlock;
 import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.pro.ManipulateProvider;
@@ -74,7 +74,7 @@ class MapViewer implements ManipulateProvider {
         int r = 3;
         graphics.drawLine(center.x - r, center.y, center.x + r, center.y);
         graphics.drawLine(center.x, center.y - r, center.x, center.y + r);
-        textContour.draw(ColorPair.TEXT, "z=" + tilePixel.tile().z(), 2, 20);
+        textContour.draw(ColorPairs.TEXT, "z=" + tilePixel.tile().z(), 2, 20);
       }
       if (gridlines && 2 < tilePixel.tile().z()) {
         ScalarUnaryOperator suo = UnitConvert.SI().to("deg");
@@ -98,7 +98,7 @@ class MapViewer implements ManipulateProvider {
             graphics.setColor(Color.BLACK);
             RenderQuality.smoothLine(graphics, false);
             graphics.drawLine(x - 10, y, x + 10, y);
-            textContour.draw(ColorPair.TEXT, Ticks.format(tick), x - 5, y - 2);
+            textContour.draw(ColorPairs.TEXT, Ticks.format(tick), x - 5, y - 2);
           }
         }
         { // lon
@@ -118,7 +118,7 @@ class MapViewer implements ManipulateProvider {
             graphics.setStroke(new BasicStroke()); // thickness of outline
             graphics.setColor(Color.BLACK);
             graphics.drawLine(x, y - 10, x, y + 10);
-            textContour.draw(ColorPair.TEXT, " " + Ticks.format(tick), x, (int) (y + delta_y));
+            textContour.draw(ColorPairs.TEXT, " " + Ticks.format(tick), x, (int) (y + delta_y));
           }
         }
       }
@@ -165,7 +165,7 @@ class MapViewer implements ManipulateProvider {
           Tensor tensor = Tensor.of(list.stream().map(TilePixel::lat_lon).map(GeoPosition::of));
           new PathRender(ColorStroke.CURVE, manifoldDisplay.point2xy().slash(tensor), true) //
               .render(geometricLayer, graphics);
-          manifoldDisplay.showPoints(ColorPair.CONTROL_POINTS, RealScalar.ONE, tensor) //
+          manifoldDisplay.showPoints(ColorPairs.CONTROL_POINTS, RealScalar.ONE, tensor) //
               .render(geometricLayer, graphics);
         }
         final Scalar d_lat;
@@ -184,7 +184,7 @@ class MapViewer implements ManipulateProvider {
               .map(TilePixel::lat_lon).map(GeoPosition::xyz));
           d_lon = Vector2Norm.between(tensor.get(0), tensor.get(1));
         }
-        textContour.draw(ColorPair.TEXT, "" + Tensors.of(d_lat, d_lon).maps(Round._2), 0, dimension.height - 20);
+        textContour.draw(ColorPairs.TEXT, "" + Tensors.of(d_lat, d_lon).maps(Round._2), 0, dimension.height - 20);
       }
     };
   };

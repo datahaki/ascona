@@ -10,7 +10,7 @@ import java.util.Optional;
 import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.msh.ArrayFunction;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -140,7 +140,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     {
       Tensor sequence = _zeros.maps(S2V);
       LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
-      manifoldDisplay.showPoints(ColorPair.REFERENCE, RealScalar.ONE, sequence) //
+      manifoldDisplay.showPoints(ColorPairs.REFERENCE, RealScalar.ONE, sequence) //
           .render(geometricLayer, graphics);
       leversRender.renderIndexP("z");
     }

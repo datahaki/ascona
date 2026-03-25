@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import ch.alpine.ascony.dat.PlaceWrap;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversHud;
 import ch.alpine.ascony.ren.LeversRender;
@@ -59,7 +59,7 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
       Tensor points = getControlPointsSe2();
       if (0 < points.length()) {
         points.set(Array.zeros(3), 0);
-        manifoldDisplay().showPoints(ColorPair.IMMOVABLE, RealScalar.ONE, Tensors.of(points.get(0))) //
+        manifoldDisplay().showPoints(ColorPairs.IMMOVABLE, RealScalar.ONE, Tensors.of(points.get(0))) //
             .render(geometricLayer, graphics);
       }
     }
@@ -81,7 +81,7 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
         Tensor circum = matrix.dot(sequence);
         leversRender.renderMatrix2(origin, matrix);
         LeversRender lr2 = LeversRender.of(manifoldDisplay, circum, origin, geometricLayer, graphics);
-        lr2.renderSequence(ColorPair.SPLIT_PROCESS);
+        lr2.renderSequence(ColorPairs.SPLIT_PROCESS);
         lr2.renderIndexP("c");
       } catch (Exception exception) {
         System.err.println(exception.getMessage());

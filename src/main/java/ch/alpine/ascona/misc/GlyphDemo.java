@@ -14,7 +14,7 @@ import java.awt.font.GlyphVector;
 import ch.alpine.ascony.dat.GlyphMesh;
 import ch.alpine.ascony.ren.BezierGlyphRender;
 import ch.alpine.ascony.ren.ClothoidGlyphRender;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
@@ -91,7 +91,7 @@ class GlyphDemo extends EuclideanPlaneDemo {
       Clip clip = Clips.positive(0.05);
       Tensor matrix = DistanceMatrix.of(surfaceMesh.vrt, Vector2Norm::between).maps(clip);
       if (param.hide)
-        manifoldDisplay().showPoints(ColorPair.CONTROL_POINTS, RealScalar.ONE, surfaceMesh.vrt) //
+        manifoldDisplay().showPoints(ColorPairs.CONTROL_POINTS, RealScalar.ONE, surfaceMesh.vrt) //
             .render(geometricLayer, graphics);
       Dimension dimension = geometricComponent().getSize();
       {

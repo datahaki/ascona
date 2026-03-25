@@ -6,7 +6,7 @@ import java.util.Collection;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.Curvature2DRender;
 import ch.alpine.ascony.ren.PathRender;
@@ -71,7 +71,7 @@ class GeodesicMeanFilterDemo extends ControlPointsDemo {
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
     new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
-    manifoldDisplay.showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
+    manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, refined).render(geometricLayer, graphics);
   }
 
   static void main() {

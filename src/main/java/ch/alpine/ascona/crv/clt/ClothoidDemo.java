@@ -7,7 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStrokeIndexed;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.fig.Show;
@@ -60,7 +60,7 @@ class ClothoidDemo extends ClothoidBaseDemo {
         Clothoid clothoid = clothoidBuilder.curve(start, mouse);
         Tensor points = DOMAIN.maps(clothoid);
         new PathRender(colorStrokeIndexed.getColorStroke(index), points, false).render(geometricLayer, graphics);
-        manifoldDisplay().showPoints(ColorPair.INTERMEDIATE, RealScalar.ONE, ARROWS.maps(clothoid)) //
+        manifoldDisplay().showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, ARROWS.maps(clothoid)) //
             .render(geometricLayer, graphics);
         ++index;
       }
