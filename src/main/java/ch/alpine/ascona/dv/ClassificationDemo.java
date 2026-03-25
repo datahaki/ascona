@@ -87,20 +87,6 @@ class ClassificationDemo extends ControlPointsDemo {
     // ---
     Sedarim sedarim = LogWeightings.DISTANCES.sedarim(param1.biinvariantsParam.ofSafe(manifold), null, sequence);
     Tensor weights = sedarim.sunder(origin);
-    // leversRender.renderInfluenceX(ColorDataGradients.JET);
-    // Tensor influence = new HsInfluence( //
-    // geodesicDisplay.vectorLogManifold().logAt(leversRender.getOrigin()), //
-    // control).matrix();
-    // List<Edge> list = PrimAlgorithm.of(influence);
-    // graphics.setColor(Color.BLACK);
-    // Tensor domain = Subdivide.of(0.0, 1.0, 10);
-    // for (Edge edge : list) {
-    // Tensor p = control.get(edge.i);
-    // Tensor q = control.get(edge.j);
-    // ScalarTensorFunction curve = geodesicInterface.curve(p, q);
-    // Path2D line = geometricLayer.toPath2D(domain.map(curve));
-    // graphics.draw(line);
-    // }
     LeversRender leversRender = LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
     if (param1.connect)
       leversRender.renderLevers(param1.labels.equals(Labels.ARG_MIN) //

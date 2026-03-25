@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JToggleButton;
 
 import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.crv.Box2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
@@ -23,7 +24,6 @@ import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ArrayPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.noise.SimplexContinuousNoise;

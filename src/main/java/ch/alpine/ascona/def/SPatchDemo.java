@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.util.Collection;
 
+import ch.alpine.ascony.crv.Box2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.AveragedMovingDomain2D;
@@ -24,7 +25,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.api.Genesis;
-import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.gbc.d2.InsidePolygonCoordinate;
 import ch.alpine.sophis.gbc.d2.SPatch;
 import ch.alpine.sophis.gbc.d2.ThreePointCoordinate;

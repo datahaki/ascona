@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ch.alpine.ascony.crv.CogPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPairIndexed;
 import ch.alpine.ascony.ren.ColorStrokeIndexed;
@@ -16,7 +17,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.d2.PolyclipResult;
 import ch.alpine.sophis.crv.d2.PolygonCentroid;
 import ch.alpine.sophis.crv.d2.alg.SutherlandHodgmanAlgorithm;
-import ch.alpine.sophis.crv.d2.ex.CogPoints;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

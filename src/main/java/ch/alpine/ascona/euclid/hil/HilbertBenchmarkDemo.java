@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Container;
 
 import ch.alpine.ascony.api.IterativeGenesis;
+import ch.alpine.ascony.crv.HilbertPolygon;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowGridComponent;
 import ch.alpine.bridge.fig.Showable;
@@ -14,7 +15,6 @@ import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.crv.d2.ex.HilbertPolygon;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.sca.pow.Power;

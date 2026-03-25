@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import ch.alpine.ascony.crv.HilbertPolygon;
 import ch.alpine.ascony.reg.BallRegionRender;
 import ch.alpine.ascony.reg.ConeRegionRender;
 import ch.alpine.ascony.reg.PolygonRegionRender;
@@ -15,7 +16,6 @@ import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.crv.d2.ex.HilbertPolygon;
 import ch.alpine.sophis.reg.BallRegion;
 import ch.alpine.sophis.reg.ConeRegion;
 import ch.alpine.sophis.reg.EllipsoidRegion;

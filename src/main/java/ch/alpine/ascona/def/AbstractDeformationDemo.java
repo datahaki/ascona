@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 
+import ch.alpine.ascony.crv.Box2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.msh.MovingDomain2D;
 import ch.alpine.ascony.ren.ColorPairs;
@@ -22,7 +23,6 @@ import ch.alpine.bridge.fig.plt.ArrayPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.bm.BiinvariantMean;

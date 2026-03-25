@@ -5,11 +5,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ch.alpine.ascony.crv.Arrowhead;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophus.clt.Clothoid;
 import ch.alpine.sophus.clt.ClothoidBuilder;
 import ch.alpine.sophus.clt.ClothoidBuilders;

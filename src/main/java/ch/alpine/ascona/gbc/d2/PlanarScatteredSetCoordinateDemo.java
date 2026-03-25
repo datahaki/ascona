@@ -12,6 +12,7 @@ import java.util.Objects;
 
 import ch.alpine.ascona.gbc.GenesisDequeParam;
 import ch.alpine.ascony.api.LogWeightings;
+import ch.alpine.ascony.crv.Box2D;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.msh.ArrayFunction;
@@ -23,7 +24,6 @@ import ch.alpine.bridge.fig.plt.ArrayPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;

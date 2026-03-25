@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.util.Optional;
 
+import ch.alpine.ascony.crv.StarPoints;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.ColorStroke;
@@ -16,7 +17,6 @@ import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophis.crv.d2.ex.StarPoints;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;

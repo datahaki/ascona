@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
+import ch.alpine.ascony.crv.Box2D;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 
 import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.api.CenterNorms;
+import ch.alpine.ascony.crv.Box2D;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -22,7 +23,6 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.sophis.hull.d2.ConvexHull2D;
 import ch.alpine.sophis.noise.NoiseFilteredSample;
 import ch.alpine.tensor.RealScalar;
