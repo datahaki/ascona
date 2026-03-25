@@ -51,7 +51,7 @@ class KMeansDemo extends ControlPointsDemo {
   static class Param0 {
     @FieldSelectionArray({ "100", "200", "500", "1000" })
     public Integer count = 200;
-    @FieldClip(min="1",max="20")
+    @FieldClip(min = "1", max = "20")
     public Integer initK = 5;
     public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
