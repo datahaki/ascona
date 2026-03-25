@@ -15,6 +15,7 @@ import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -50,7 +51,7 @@ class KMeansDemo extends ControlPointsDemo {
   static class Param0 {
     @FieldSelectionArray({ "100", "200", "500", "1000" })
     public Integer count = 200;
-    @FieldSelectionArray({ "2", "3", "4", "5" })
+    @FieldClip(min="1",max="20")
     public Integer initK = 5;
     public final ShuffleFuse shuffleFuse = new ShuffleFuse();
   }
