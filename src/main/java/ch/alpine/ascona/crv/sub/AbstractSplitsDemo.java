@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import ch.alpine.ascona.crv.sub.GeometricSymLinkRender.Link;
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.sym.SymLink;
@@ -24,7 +23,6 @@ public abstract class AbstractSplitsDemo extends PointSequenceDemo {
   protected AbstractSplitsDemo(Object... objects) {
     super(objects);
     geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
-    setManifoldDisplay(ManifoldDisplays.R2);
   }
 
   @Override // from RenderInterface

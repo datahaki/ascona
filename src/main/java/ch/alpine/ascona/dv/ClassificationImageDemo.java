@@ -71,11 +71,10 @@ class ClassificationImageDemo extends ControlPointsDemo {
 
   public ClassificationImageDemo() {
     super(param0 = new Param0(), param1 = new Param1());
-    geometricComponent().setRotatable(false);
-    addChangeListener(_ -> shuffle());
-    setManifoldDisplay(ManifoldDisplays.R2);
     fieldsEditor(param0).addUniversalListener(this::shuffle);
     fieldsEditor(param1).addUniversalListener(this::recompute);
+    geometricComponent().setRotatable(false);
+    addChangeListener(this::shuffle);
     {
       geometricComponent().addMouseMotionListener(new MouseMotionListener() {
         @Override

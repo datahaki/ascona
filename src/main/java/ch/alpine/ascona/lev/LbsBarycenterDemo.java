@@ -22,7 +22,6 @@ import ch.alpine.tensor.Tensors;
  * by Torsten Langer, Alexander Belyaev, Hans-Peter Seidel, 2005 */
 class LbsBarycenterDemo extends ControlPointsDemo {
   public LbsBarycenterDemo() {
-    setManifoldDisplay(ManifoldDisplays.S2);
     setControlPointsSe2(Tensors.fromString( //
         "{{-0.314, 0.662, 0.000}, {-0.809, 0.426, 0.000}, {-0.261, 0.927, 0.000}, {0.564, 0.685, 0.000}, {0.694, 0.220, 0.000}}"));
     Tensor pvm = PvmBuilder.rhs().setOffset(400, 400).setPerPixel(200).digest();

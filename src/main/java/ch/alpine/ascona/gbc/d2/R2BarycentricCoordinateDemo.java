@@ -61,7 +61,6 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
     geometricComponent().addRenderInterfaceBackground(AxesRender.INSTANCE);
     weightingsParam.logWeightings = LogWeightings.COORDINATE;
     jToolBar().add(jToggleEntire);
-    setManifoldDisplay(ManifoldDisplays.R2);
     setControlPointsSe2(Tensors.fromString("{{0, -2, 0}, {3, -2, -1}, {4, 2, 1}, {-1, 3, 2}}"));
     Tensor pvm = PvmBuilder.rhs().setOffset(200, 600).setPerPixel(100).digest();
     geometricComponent().setModel2Pixel(pvm);

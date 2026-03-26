@@ -65,7 +65,6 @@ class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
 
   public CheckerBoardDemo() {
     super(param1 = new Param1());
-    setManifoldDisplay(ManifoldDisplays.S2);
     // ---
     // fieldsEditor(0).addUniversalListener(this::spun);
     // fieldsEditor(1).addUniversalListener(this::recompute);

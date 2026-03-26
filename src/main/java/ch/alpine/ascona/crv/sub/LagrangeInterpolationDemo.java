@@ -58,7 +58,6 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
     Tensor tensor = Tensors.fromString("{{1, 0, 0}, {1, 0, 2.1}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
         Tensor.of(tensor.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
-    setManifoldDisplay(ManifoldDisplays.R2);
   }
 
   @Override

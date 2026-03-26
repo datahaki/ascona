@@ -38,13 +38,7 @@ class KnotsBSplineFunctionDemo extends AbstractCurveDemo {
   private final Param param;
 
   public KnotsBSplineFunctionDemo() {
-    this(new Param());
-  }
-
-  public KnotsBSplineFunctionDemo(Param param) {
-    super(param);
-    this.param = param;
-    // ---
+    super(param = new Param());
     setManifoldDisplay(ManifoldDisplays.R2);
     abstractCurveParam.refine = 5;
   }

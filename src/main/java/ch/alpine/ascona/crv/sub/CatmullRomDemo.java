@@ -55,12 +55,7 @@ class CatmullRomDemo extends PointSequenceDemo {
   private final Param param;
 
   public CatmullRomDemo() {
-    this(new Param());
-  }
-
-  public CatmullRomDemo(Param param) {
-    super(param);
-    this.param = param;
+    super(param = new Param());
     setManifoldDisplay(ManifoldDisplays.R2);
   }
 
