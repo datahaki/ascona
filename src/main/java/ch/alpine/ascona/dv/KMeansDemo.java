@@ -49,7 +49,7 @@ import ch.alpine.tensor.sca.Round;
 class KMeansDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param0 {
-    @FieldSelectionArray({ "100", "200", "500", "1000" })
+    @FieldSelectionArray({ "100", "200", "500" })
     public Integer count = 200;
     @FieldClip(min = "1", max = "20")
     public Integer initK = 5;
