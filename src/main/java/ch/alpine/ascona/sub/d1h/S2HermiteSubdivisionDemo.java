@@ -106,7 +106,7 @@ class S2HermiteSubdivisionDemo extends ControlPointsDemo {
           graphics.setStroke(new BasicStroke(1.5f));
           graphics.setColor(Color.GRAY);
           geometricLayer.pushMatrix(s2Display.matrixLift(p));
-          graphics.draw(geometricLayer.toLine2D(s2Display.tangentProjection(p).apply(v)));
+          graphics.draw(geometricLayer.toLine2D(s2Display.tangentProjectionM2P(p).apply(v)));
           geometricLayer.popMatrix();
         }
       }

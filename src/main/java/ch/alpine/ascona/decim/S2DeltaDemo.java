@@ -104,7 +104,7 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
           graphics.setStroke(new BasicStroke(1.5f));
           graphics.setColor(Color.GRAY);
           geometricLayer.pushMatrix(manifoldDisplay.matrixLift(p));
-          graphics.draw(geometricLayer.toLine2D(manifoldDisplay.tangentProjection(p).apply(v)));
+          graphics.draw(geometricLayer.toLine2D(manifoldDisplay.tangentProjectionM2P(p).apply(v)));
           geometricLayer.popMatrix();
         }
       }
@@ -116,7 +116,7 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
           graphics.setStroke(new BasicStroke(1.5f));
           graphics.setColor(Color.RED);
           geometricLayer.pushMatrix(manifoldDisplay.matrixLift(p));
-          graphics.draw(geometricLayer.toLine2D(manifoldDisplay.tangentProjection(p).apply(v0)));
+          graphics.draw(geometricLayer.toLine2D(manifoldDisplay.tangentProjectionM2P(p).apply(v0)));
           geometricLayer.popMatrix();
         }
         Tensor q = snDeltaRaw.sequence.get(index - 0);
