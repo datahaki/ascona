@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import ch.alpine.ascona.RandomPoints;
 import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -64,17 +65,10 @@ final class D2AveragingDemo extends ControlPointsDemo {
   private final Param param;
 
   public D2AveragingDemo() {
-    this(new Param());
-  }
-
-  public D2AveragingDemo(Param param) {
-    super(param);
+    super(param = new Param());
     geometricComponent().setRotatable(false);
-    this.param = param;
-    // ---
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
     fieldsEditor(param).addUniversalListener(this::recompute);
-    // ---
     addChangeListener(this::recompute);
   }
 
@@ -92,6 +86,7 @@ final class D2AveragingDemo extends ControlPointsDemo {
   private Scalar computeTime = Quantity.of(0, "s");
 
   protected void recompute() {
+    setGeodesicControlPoints(RandomPoints.scattered(manifoldDisplay(), 4));
     cache.clear();
   }
 

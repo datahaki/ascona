@@ -47,7 +47,6 @@ class DeformationDemo extends AbstractDeformationDemo {
   protected DeformationDemo() {
     super(param1 = new Param1());
     fieldsEditor(param1).addUniversalListener(this::recompute);
-    // ---
     addChangeListener(this::shuffleSnap);
     shuffleSnap();
   }

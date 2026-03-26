@@ -70,7 +70,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
     fieldsEditor(param0).addUniversalListener(this::shuffle);
     fieldsEditor(biinvariantsParam).addUniversalListener(this::distances);
     addChangeListener(this::shuffle);
-    setManifoldDisplay(ManifoldDisplays.R2);
+    shuffle();
   }
 
   @Override

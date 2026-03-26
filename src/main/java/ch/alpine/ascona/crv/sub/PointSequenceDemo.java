@@ -31,7 +31,7 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
       if (objects[index] instanceof SaveParam)
         fieldsEditor(objects[index]).addUniversalListener(this::save);
     addChangeListener(this::loadOrShuffle);
-    setManifoldDisplay(ManifoldDisplays.R2);
+    loadOrShuffle();
   }
 
   @Override

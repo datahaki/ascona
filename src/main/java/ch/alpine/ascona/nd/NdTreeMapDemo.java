@@ -67,10 +67,10 @@ class NdTreeMapDemo extends ManifoldDisplayDemo {
     super(param0 = new Param0(), param1 = new Param1());
     fieldsEditor(param0).addUniversalListener(this::shuffle);
     geometricComponent().setModel2Pixel(DiagonalMatrix.of(200, -200, 1));
-    addChangeListener(this::shuffle);
-    setManifoldDisplay(ManifoldDisplays.S2);
     Tensor pvm = PvmBuilder.rhs().setOffset(300, 300).setPerPixel(100).digest();
     geometricComponent().setModel2Pixel(pvm);
+    addChangeListener(this::shuffle);
+    shuffle();
   }
 
   @Override

@@ -55,10 +55,8 @@ class ClassificationDemo extends ControlPointsDemo {
 
   public ClassificationDemo() {
     super(param0 = new Param0(), param1 = new Param1());
-    setManifoldDisplay(ManifoldDisplays.Se2);
-    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}}"));
-    addChangeListener(this::shuffle);
     fieldsEditor(param0).addUniversalListener(this::shuffle);
+    addChangeListener(this::shuffle);
     shuffle();
   }
 
@@ -74,6 +72,7 @@ class ClassificationDemo extends ControlPointsDemo {
 
   protected void shuffle() {
     // assignment of random labels to points
+    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}}"));
     int n = param0.size;
     sequence = RandomSample.of(manifoldDisplay().randomSampleInterface(), n);
     vector = RandomVariate.of(DiscreteUniformDistribution.forArray(3), n);

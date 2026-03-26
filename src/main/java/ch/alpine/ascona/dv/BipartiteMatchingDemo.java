@@ -48,7 +48,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
     super(param = new Param());
     fieldsEditor(param).addUniversalListener(this::shuffle);
     addChangeListener(this::shuffle);
-    setManifoldDisplay(ManifoldDisplays.R2);
+    shuffle();
   }
 
   @Override

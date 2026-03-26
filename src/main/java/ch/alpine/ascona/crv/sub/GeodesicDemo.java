@@ -50,7 +50,7 @@ class GeodesicDemo extends ControlPointsDemo {
   public GeodesicDemo() {
     super(param = new Param());
     addChangeListener(this::shuffle);
-    setManifoldDisplay(ManifoldDisplays.S2);
+    shuffle();
   }
 
   @Override

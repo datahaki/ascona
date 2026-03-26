@@ -35,7 +35,6 @@ class R2MlsDemo extends AbstractDeformationDemo {
   public R2MlsDemo() {
     super(param1 = new Param1());
     fieldsEditor(param1).addUniversalListener(this::recompute);
-    // ---
     addChangeListener(this::shuffleSnap);
     shuffleSnap();
   }

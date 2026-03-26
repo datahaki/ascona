@@ -53,12 +53,10 @@ class LineDistanceDemo extends ControlPointsDemo {
   public LineDistanceDemo() {
     super(param = new Param());
     geometricComponent().setRotatable(false);
-    // ---
-    addChangeListener(() -> setControlPointsSe2(INITIAL));
-    setControlPointsSe2(INITIAL);
-    // ---
     Tensor pvm = PvmBuilder.rhs().setOffset(400, 400).setPerPixel(100).digest();
     geometricComponent().setModel2Pixel(pvm);
+    addChangeListener(this::reset);
+    reset();
   }
 
   @Override
@@ -69,6 +67,10 @@ class LineDistanceDemo extends ControlPointsDemo {
   @Override
   protected ControlPointType controlPointType() {
     return ControlPointType.HEAD_TAIL;
+  }
+
+  void reset() {
+    setControlPointsSe2(INITIAL);
   }
 
   TensorDistance tensorNorm() {

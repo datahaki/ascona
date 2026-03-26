@@ -34,8 +34,8 @@ abstract class AbstractHermiteDatasetDemo extends ManifoldDisplayDemo {
     super(gokartPosVelParam = new GokartPosVelParam(), param = new Param(), object);
     fieldsEditor(gokartPosVelParam).addUniversalListener(this::updateState);
     fieldsEditor(param).addUniversalListener(this::updateState);
-    addChangeListener(this::updateState);
     geometricComponent().setModel2Pixel(GokartPoseDatas.HANGAR_MODEL2PIXEL);
+    addChangeListener(this::updateState);
     updateState();
   }
 

@@ -37,7 +37,6 @@ class GeodesicCatmullClarkSubdivisionDemo extends ControlPointsDemo {
 
   public GeodesicCatmullClarkSubdivisionDemo() {
     super(param = new Param());
-    // ---
     addChangeListener(this::reset);
     reset();
   }

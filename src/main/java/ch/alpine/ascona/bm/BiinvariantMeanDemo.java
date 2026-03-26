@@ -73,7 +73,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
     // ---
     fieldsEditor(paran).addUniversalListener(this::shuffle);
     addChangeListener(this::shuffle);
-    setManifoldDisplay(ManifoldDisplays.H2);
+    shuffle();
   }
 
   @Override

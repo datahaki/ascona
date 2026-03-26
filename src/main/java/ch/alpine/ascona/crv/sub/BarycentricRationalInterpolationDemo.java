@@ -55,7 +55,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
     this.param = param;
     // ---
     addChangeListener(this::shuffle);
-    setManifoldDisplay(ManifoldDisplays.R2);
+    shuffle();
   }
 
   @Override

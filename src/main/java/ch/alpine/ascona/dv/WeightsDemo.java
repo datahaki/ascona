@@ -48,10 +48,9 @@ class WeightsDemo extends ControlPointsDemo {
 
   public WeightsDemo() {
     super(param0 = new Param0(), param1 = new Param1());
-    // ---
     fieldsEditor(param0).addUniversalListener(this::shuffle);
     addChangeListener(this::shuffle);
-    setManifoldDisplay(ManifoldDisplays.Se2);
+    shuffle();
   }
 
   @Override
@@ -65,11 +64,9 @@ class WeightsDemo extends ControlPointsDemo {
   }
 
   private void shuffle() {
-    int n = param0.size;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
-        .map(manifoldDisplay::point2xya));
-    setControlPointsSe2(tensor);
+    setControlPointsSe2(manifoldDisplay.point2xya() //
+        .slash(RandomSample.of(manifoldDisplay.randomSampleInterface(), param0.size)));
   }
 
   @Override // from RenderInterface
