@@ -12,7 +12,7 @@ import ch.alpine.bridge.pro.RunProvider;
 
 class RunProviderTest {
   @TestFactory
-  Stream<DynamicTest> dynamicTests() {
+  Stream<DynamicTest> dynamicTests() throws Exception {
     return InstanceDiscovery.of(getClass().getPackageName(), RunProvider.class).stream() //
         .map(instanceRecord -> DynamicTest.dynamicTest(instanceRecord.toString(), //
             () -> new SanityCheckAscony().accept(instanceRecord)));

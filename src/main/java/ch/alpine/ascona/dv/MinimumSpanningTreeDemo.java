@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.ascona.ref.BiinvariantsParam;
 import ch.alpine.ascona.ref.ShuffleFuse;
@@ -36,6 +35,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
+import ch.alpine.tensor.ext.Int;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.img.ColorDataLists;
 import ch.alpine.tensor.lie.Symmetrize;
@@ -134,7 +134,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
         graphics.draw(geometricLayer.toPath2D(tensor));
       }
     }
-    Map<Integer, Integer> map = disjointSets.createMap(new AtomicInteger()::getAndIncrement);
+    Map<Integer, Integer> map = disjointSets.createMap(new Int()::getAndIncrement);
     ColorPairIndexed colorPairIndexed = new ColorPairIndexed(param1.colorDataLists.cyclic(), 128, 255);
     for (int index = 0; index < sequence.length(); ++index) {
       int unique = map.get(disjointSets.key(index));

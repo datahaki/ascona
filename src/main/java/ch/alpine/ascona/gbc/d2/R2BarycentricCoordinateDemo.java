@@ -97,13 +97,13 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
       if (scatteredSetParam.show) { // render basis functions
         int n = weights.get(0, 0).length();
         Clip clip = cbb.clip(0);
-        Clip clipx = Clips.interval(clip.min(), clip.min().add(clip.width().multiply(RealScalar.of(n))));
+        Clip clipx = Clips.interval(clip.min(), clip.min().add(clip.length().multiply(RealScalar.of(n))));
         CoordinateBoundingBox cbb_ext = CoordinateBoundingBox.of(clipx, cbb.clip(1));
         Show show = new Show();
         show.add(ArrayPlot.of(averagedMovingDomain2D.arrayReshape_weights(), cbb_ext, colorDataGradient, false));
         for (int i = 0; i < n; ++i) {
           final int fi = i; // render polygon on top of basis function
-          TensorUnaryOperator tuo = p -> p.add(Tensors.of(clip.width().multiply(RealScalar.of(fi)), RealScalar.ZERO));
+          TensorUnaryOperator tuo = p -> p.add(Tensors.of(clip.length().multiply(RealScalar.of(fi)), RealScalar.ZERO));
           show.add(PolygonPlot.of(tuo.slash(controlPoints))).setColor(Color.BLACK);
         }
         Dimension dimension = geometricComponent().getSize();

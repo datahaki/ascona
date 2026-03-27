@@ -9,7 +9,7 @@ import ch.alpine.bridge.pro.RunProviderNamings;
 
 class CheckNames {
   @Test
-  void testSimple() {
+  void testSimple() throws Exception {
     assertTrue(RunProviderNamings.of(getClass().getPackageName()));
   }
 }
