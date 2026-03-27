@@ -1,4 +1,4 @@
-name: mvn test with JDK 26
+name: mvn test with JDK
 on:
   push:
     paths:
