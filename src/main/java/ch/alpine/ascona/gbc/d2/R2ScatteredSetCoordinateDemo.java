@@ -99,7 +99,7 @@ final class R2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingDe
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
       // ---
-      // TODO inv pow var configurable!?
+      // TODO ASCONA inv pow var configurable!?
       Sedarim sedarim = Biinvariants.METRIC.ofSafe(RGroup.INSTANCE).coordinate(InversePowerVariogram.of(2), domain);
       Tensor weights = Meshgrid.of(cbb, scatteredSetParam.refine).image(sedarim::sunder);
       Tensor fallback = manifoldDisplay.indetPoint();
