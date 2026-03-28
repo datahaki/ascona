@@ -112,6 +112,7 @@ class WeightsDemo extends ControlPointsDemo {
         }
         for (int index = 0; index < sequence.length(); ++index) {
           Tensor map = matrix.get(Tensor.ALL, index).maps(Tensors::of);
+          // TODO map may be empty
           leversRender.renderMatrix(sequence.get(index), map, colorDataIndexed);
         }
       }
