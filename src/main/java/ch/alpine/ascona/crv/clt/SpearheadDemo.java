@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 
-import ch.alpine.ascony.api.Spearhead;
+import ch.alpine.ascony.crv.Spearhead;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.ren.PathRender;

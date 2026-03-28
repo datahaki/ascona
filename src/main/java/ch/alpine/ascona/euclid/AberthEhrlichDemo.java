@@ -27,7 +27,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.lie.so2.So2;
-import ch.alpine.tensor.ComplexScalar;
+import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -88,7 +88,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
     return ControlPointType.SCATTERED;
   }
 
-  private static final TensorScalarFunction V2S = t -> ComplexScalar.of(t.Get(0), t.Get(1));
+  private static final TensorScalarFunction V2S = t -> Complex.of(t.Get(0), t.Get(1));
   private static final ScalarTensorFunction S2V = s -> ReIm.of(s).vector();
 
   private void shuffle() {

@@ -11,7 +11,6 @@ import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 
-import ch.alpine.ascony.dat.GlyphMesh;
 import ch.alpine.ascony.ren.BezierGlyphRender;
 import ch.alpine.ascony.ren.ClothoidGlyphRender;
 import ch.alpine.ascony.ren.ColorPairs;
@@ -27,9 +26,11 @@ import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.math.DistanceMatrix;
+import ch.alpine.sophis.srf.GlyphMesh;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.math.UpperVectorize;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
@@ -77,9 +78,10 @@ class GlyphDemo extends EuclideanPlaneDemo {
       Shape shape = gv.getGlyphOutline(index); // first character
       graphics.setColor(Color.BLACK);
       graphics.setStroke(new BasicStroke(2));
+      Rectangle rectangle = shape.getBounds();
       if (param.hide)
         new BezierGlyphRender(shape, domain).render(geometricLayer, graphics);
-      geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(10, 0)));
+      geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(rectangle.width, 0)));
       graphics.setColor(Color.RED);
       graphics.setStroke(new BasicStroke(1));
       new BezierGlyphRender(shape, domain).render(geometricLayer, graphics);
@@ -88,7 +90,7 @@ class GlyphDemo extends EuclideanPlaneDemo {
       new ClothoidGlyphRender(shape, domain).render(geometricLayer, graphics);
       geometricLayer.popMatrix();
       SurfaceMesh surfaceMesh = GlyphMesh.of(shape);
-      Clip clip = Clips.positive(0.05);
+      Clip clip = Clips.positive(0.2);
       Tensor matrix = DistanceMatrix.of(surfaceMesh.vrt, Vector2Norm::between).maps(clip);
       if (param.hide)
         manifoldDisplay().showPoints(ColorPairs.CONTROL_POINTS, RealScalar.ONE, surfaceMesh.vrt) //
@@ -96,7 +98,7 @@ class GlyphDemo extends EuclideanPlaneDemo {
       Dimension dimension = geometricComponent().getSize();
       {
         Show show = new Show();
-        show.add(MatrixPlot.of(matrix, param.cdg));
+        show.add(MatrixPlot.of(matrix, param.cdg.deriveWithOpacity(Rational.of(3, 4))));
         show.setShowLabel("Distance matrix");
         show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, 300));
       }
