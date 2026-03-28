@@ -19,6 +19,7 @@ import ch.alpine.tensor.io.Get;
 import ch.alpine.tensor.io.Put;
 
 abstract class PointSequenceDemo extends ControlPointsDemo {
+  // TODO ASCONA Sanity Check triggers save button ... not good! -> solution !?
   @ReflectionMarker
   static class SaveParam {
     @FieldFuse
