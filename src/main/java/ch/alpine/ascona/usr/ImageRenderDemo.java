@@ -7,7 +7,9 @@ import java.awt.image.BufferedImage;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.win.AbstractDemo;
+import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
@@ -25,7 +27,7 @@ class ImageRenderDemo extends AbstractDemo implements RenderInterface {
   private static final CoordinateBoundingBox COORDINATE_BOUNDING_BOX = //
       CoordinateBoundingBox.of(Clips.interval(-0.4, 1), Clips.interval(-0.35, 0.35));
   private static final Scalar SHIFT = RealScalar.of(1.5);
-  private final BufferedImage bufferedImage_c = ResourceData.bufferedImage("ch/alpine/curios/man/vehicle_c.png");
+  private final BufferedImage bufferedImage_c = ResourceData.bufferedImage("ch/alpine/ascona/image/vehicle_c.png");
   private final BufferedImage bufferedImage;
   private final BufferedImage grayscale_alpha;
   private final BufferedImage grayscale;
@@ -42,7 +44,9 @@ class ImageRenderDemo extends AbstractDemo implements RenderInterface {
       Tensor graysc = TensorMap.of(rgba -> Mean.of(rgba.extract(0, 3)), tensor, 2);
       grayscale = ImageFormat.of(graysc);
     }
-    geometricComponent().addRenderInterface(this);
+    GeometricComponent geometricComponent = geometricComponent();
+    geometricComponent.setModel2Pixel(PvmBuilder.rhs().setOffset(100, 400).setPerPixel(100).digest());
+    geometricComponent.addRenderInterface(this);
   }
 
   @Override // from RenderInterface
