@@ -41,6 +41,9 @@ import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataGradients;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.Timing;
 import ch.alpine.tensor.sca.Ceiling;
@@ -86,7 +89,11 @@ final class D2AveragingDemo extends ControlPointsDemo {
   private Scalar computeTime = Quantity.of(0, "s");
 
   protected void recompute() {
-    setGeodesicControlPoints(RandomPoints.scattered(manifoldDisplay(), 4));
+    Tensor xyv = RandomPoints.scattered(manifoldDisplay(), 4);
+    setGeodesicControlPoints(xyv);
+    Tensor xya = getControlPointsSe2();
+    Distribution d = NormalDistribution.standard();
+    xya.set(_ -> RandomVariate.of(d), Tensor.ALL, 2);
     cache.clear();
   }
 
