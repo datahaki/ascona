@@ -12,7 +12,6 @@ import java.util.stream.IntStream;
 
 import ch.alpine.ascona.ref.ShuffleFuse;
 import ch.alpine.ascony.api.CenterNorms;
-import ch.alpine.ascony.crv.Box2D;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -24,29 +23,23 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.hull.d2.ConvexHull2D;
-import ch.alpine.sophis.noise.NoiseFilteredSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorDataLists;
-import ch.alpine.tensor.opt.nd.BoxRandomSample;
 import ch.alpine.tensor.opt.nd.Dbscan;
 import ch.alpine.tensor.pdf.Distribution;
-import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomVariate;
 import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.qty.Timing;
-import ch.alpine.tensor.sca.Clip;
-import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
 @ReflectionMarker
 class DbscanDemo implements ManipulateProvider, RenderInterface {
-  public Scalar threshold = RealScalar.ZERO;
-  @FieldSelectionArray({ "100", "200", "500", "1000" })
+  @FieldSelectionArray({ "10", "50", "100", "200", "500", "1000" })
   public Integer count = 200;
   @FieldClip(min = "1", max = "10")
   public Integer minPts = 5;
@@ -64,10 +57,10 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
     geometricComponent.addRenderInterface(this);
     Tensor pvm = PvmBuilder.rhs().setOffset(100, 600).setPerPixel(50).digest();
     geometricComponent.setModel2Pixel(pvm);
-    pointsAll = recomp1();
+    pointsAll = shuffle();
   }
 
-  Tensor recomp1() {
+  private static Tensor shuffle() {
     Distribution dist_b = UniformDistribution.of(0, 10);
     Distribution dist_r = NormalDistribution.of(0, 1);
     Tensor points = Tensors.empty();
@@ -77,13 +70,6 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
         for (Tensor p : RandomVariate.of(dist_r, 10, 2))
           points.append(r.add(p));
     return points;
-  }
-
-  Tensor recomp2() {
-    Clip clip = Clips.positive(10);
-    BoxRandomSample rsi = new BoxRandomSample(Box2D.xy(clip));
-    NoiseFilteredSample noiseFilteredSample = new NoiseFilteredSample(rsi, threshold);
-    return RandomSample.of(noiseFilteredSample, 3000);
   }
 
   @Override
@@ -131,7 +117,7 @@ class DbscanDemo implements ManipulateProvider, RenderInterface {
   public Container getContainer() {
     if (shuffleFuse.shuffle) {
       shuffleFuse.shuffle = false;
-      pointsAll = recomp1();
+      pointsAll = shuffle();
     }
     return geometricComponent;
   }

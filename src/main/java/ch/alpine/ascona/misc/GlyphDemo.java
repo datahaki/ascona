@@ -27,11 +27,13 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.math.DistanceMatrix;
 import ch.alpine.sophis.srf.GlyphMesh;
+import ch.alpine.sophis.srf.ReduceMesh;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.math.UpperVectorize;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -55,6 +57,10 @@ class GlyphDemo extends EuclideanPlaneDemo {
     public Font font = new Font(Font.DIALOG, Font.PLAIN, 12);
     public ColorDataGradients cdg = ColorDataGradients.ALPINE;
     public Boolean hide = true;
+    public Boolean redux = true;
+    @FieldSlider(showValue = true)
+    @FieldClip(min = "0.0", max = "0.2")
+    public Scalar dist = RealScalar.of(1e-2);
   }
 
   private final Param param;
@@ -69,6 +75,7 @@ class GlyphDemo extends EuclideanPlaneDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor domain = Subdivide.intermediate_increasing(Clips.unit(), 1 + param.res);
+    domain = Subdivide.increasing(Clips.unit(), 1 + param.res);
     TableBuilder tableBuilder = new TableBuilder();
     String collect = new String(Character.toChars(param.charIndex));
     // collect = "$&%";
@@ -76,38 +83,43 @@ class GlyphDemo extends EuclideanPlaneDemo {
     GlyphVector gv = param.font.createGlyphVector(frc, collect); // or any string
     for (int index = 0; index < gv.getNumGlyphs(); ++index) {
       Shape shape = gv.getGlyphOutline(index); // first character
+      SurfaceMesh surfaceMesh = GlyphMesh.of(shape);
+      if (param.redux) //
+        surfaceMesh = new ReduceMesh(param.dist).of(surfaceMesh);
       graphics.setColor(Color.BLACK);
       graphics.setStroke(new BasicStroke(2));
       Rectangle rectangle = shape.getBounds();
       if (param.hide)
-        new BezierGlyphRender(shape, domain).render(geometricLayer, graphics);
+        new BezierGlyphRender(surfaceMesh, domain).render(geometricLayer, graphics);
       geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(rectangle.width, 0)));
       graphics.setColor(Color.RED);
       graphics.setStroke(new BasicStroke(1));
-      new BezierGlyphRender(shape, domain).render(geometricLayer, graphics);
+      new BezierGlyphRender(surfaceMesh, domain).render(geometricLayer, graphics);
       graphics.setColor(Color.BLACK);
       graphics.setStroke(new BasicStroke(2));
-      new ClothoidGlyphRender(shape, domain).render(geometricLayer, graphics);
+      new ClothoidGlyphRender(surfaceMesh, domain).render(geometricLayer, graphics);
       geometricLayer.popMatrix();
-      SurfaceMesh surfaceMesh = GlyphMesh.of(shape);
       Clip clip = Clips.positive(0.2);
       Tensor matrix = DistanceMatrix.of(surfaceMesh.vrt, Vector2Norm::between).maps(clip);
       if (param.hide)
         manifoldDisplay().showPoints(ColorPairs.CONTROL_POINTS, RealScalar.ONE, surfaceMesh.vrt) //
             .render(geometricLayer, graphics);
       Dimension dimension = geometricComponent().getSize();
+      dimension.height /= 2;
       {
         Show show = new Show();
         show.add(MatrixPlot.of(matrix, param.cdg.deriveWithOpacity(Rational.of(3, 4))));
         show.setShowLabel("Distance matrix");
-        show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, 300));
+        show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, dimension.height));
       }
       if (Tensors.nonEmpty(matrix)) {
         Tensor vec = Tensor.of(Flatten.scalars(UpperVectorize.of(matrix, 1)) //
-            .filter(Scalars.lessThan(RealScalar.of(0.04))).sorted());
+            .filter(Scalars.lessThan(param.dist)) //
+            .sorted());
         Show show = new Show();
         show.add(ListPlot.of(Range.of(0, vec.length()), vec));
-        show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 300, 400, 300));
+        show.setShowLabel("lowest dist.");
+        show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, dimension.height, 400, dimension.height));
       }
     }
     setGeodesicControlPoints(tableBuilder.getTable());
