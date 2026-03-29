@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.nio.file.Files;
@@ -57,6 +58,8 @@ class MapViewer implements ManipulateProvider {
   public Boolean gridlines = true;
   public Boolean availability = true;
   public Boolean showCycles = false;
+  public Integer minizoom = 3;
+  public Integer minilen = 256;
   public Color marker = Color.MAGENTA;
   private final GeoComponent geoComponent = new GeoComponent() {
     @Override
@@ -151,40 +154,53 @@ class MapViewer implements ManipulateProvider {
           graphics.drawLine(p1x, p1y, p2x, p2y);
         }
       }
-      if (5 < tilePixel.tile().z()) {
-        ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
-        Tensor pvm = PvmBuilder.rot().setOffset(100, 100).setPerPixel(100).digest();
-        GeometricLayer geometricLayer = new GeometricLayer(pvm);
-        manifoldDisplay.background().render(geometricLayer, graphics);
+      if (4 < tilePixel.tile().z()) {
         {
-          TilePixel p00 = tilePixel.shift(-center.x, -center.y);
-          TilePixel p10 = tilePixel.shift(+center.x, -center.y);
-          TilePixel p11 = tilePixel.shift(+center.x, +center.y);
-          TilePixel p01 = tilePixel.shift(-center.x, +center.y);
-          List<TilePixel> list = List.of(p00, p10, p11, p01);
-          Tensor tensor = Tensor.of(list.stream().map(TilePixel::lat_lon).map(GeoPosition::of));
-          new PathRender(ColorStroke.CURVE, manifoldDisplay.point2xy().slash(tensor), true) //
-              .render(geometricLayer, graphics);
-          manifoldDisplay.showPoints(ColorPairs.CONTROL_POINTS, RealScalar.ONE, tensor) //
-              .render(geometricLayer, graphics);
+          ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
+          Tensor pvm = PvmBuilder.rot().setOffset(100, 100).setPerPixel(100).digest();
+          GeometricLayer geometricLayer = new GeometricLayer(pvm);
+          manifoldDisplay.background().render(geometricLayer, graphics);
+          {
+            TilePixel p00 = tilePixel.shift(-center.x, -center.y);
+            TilePixel p10 = tilePixel.shift(+center.x, -center.y);
+            TilePixel p11 = tilePixel.shift(+center.x, +center.y);
+            TilePixel p01 = tilePixel.shift(-center.x, +center.y);
+            List<TilePixel> list = List.of(p00, p10, p11, p01);
+            Tensor tensor = Tensor.of(list.stream().map(TilePixel::lat_lon).map(GeoPosition::of));
+            new PathRender(ColorStroke.CURVE, manifoldDisplay.point2xy().slash(tensor), true) //
+                .render(geometricLayer, graphics);
+            manifoldDisplay.showPoints(ColorPairs.CONTROL_POINTS, RealScalar.ONE, tensor) //
+                .render(geometricLayer, graphics);
+          }
+          final Scalar d_lat;
+          {
+            TilePixel pp0 = tilePixel.shift(-center.x, 0);
+            TilePixel pm0 = tilePixel.shift(+center.x, 0);
+            Tensor tensor = Tensor.of(Stream.of(pp0, pm0) //
+                .map(TilePixel::lat_lon).map(GeoPosition::xyz));
+            d_lat = Vector2Norm.between(tensor.get(0), tensor.get(1));
+          }
+          final Scalar d_lon;
+          {
+            TilePixel pp0 = tilePixel.shift(0, -center.y);
+            TilePixel pm0 = tilePixel.shift(0, +center.y);
+            Tensor tensor = Tensor.of(Stream.of(pp0, pm0) //
+                .map(TilePixel::lat_lon).map(GeoPosition::xyz));
+            d_lon = Vector2Norm.between(tensor.get(0), tensor.get(1));
+          }
+          textContour.draw("" + Tensors.of(d_lat, d_lon).maps(Round._2), 0, dimension.height - 20);
         }
-        final Scalar d_lat;
         {
-          TilePixel pp0 = tilePixel.shift(-center.x, 0);
-          TilePixel pm0 = tilePixel.shift(+center.x, 0);
-          Tensor tensor = Tensor.of(Stream.of(pp0, pm0) //
-              .map(TilePixel::lat_lon).map(GeoPosition::xyz));
-          d_lat = Vector2Norm.between(tensor.get(0), tensor.get(1));
+          TilePixel zoom = tilePixel.zoom(-minizoom);
+          GeoComponent geoComponent2 = new GeoComponent();
+          geoComponent2.tilePixel = zoom;
+          geoComponent2.setSize(new Dimension(minilen, minilen));
+          graphics.setColor(Color.RED);
+          Graphics gfx = graphics.create(dimension.width - minilen, 0, minilen, minilen);
+          geoComponent2.printAll(gfx);
+          gfx.drawRect(0, 0, minilen - 1, minilen - 1);
+          gfx.dispose();
         }
-        final Scalar d_lon;
-        {
-          TilePixel pp0 = tilePixel.shift(0, -center.y);
-          TilePixel pm0 = tilePixel.shift(0, +center.y);
-          Tensor tensor = Tensor.of(Stream.of(pp0, pm0) //
-              .map(TilePixel::lat_lon).map(GeoPosition::xyz));
-          d_lon = Vector2Norm.between(tensor.get(0), tensor.get(1));
-        }
-        textContour.draw("" + Tensors.of(d_lat, d_lon).maps(Round._2), 0, dimension.height - 20);
       }
     };
   };
