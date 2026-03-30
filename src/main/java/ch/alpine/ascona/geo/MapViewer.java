@@ -60,9 +60,12 @@ import ch.alpine.tensor.sca.Round;
 class MapViewer implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
   public Boolean crosshair = true;
+  public Boolean ticks = true;
   public Boolean gridlines = true;
+  public Color gridLineCol = new Color(128, 128, 128, 64);
   public Boolean availability = true;
   public Boolean showCycles = false;
+  public Boolean showPoi = false;
   @FieldSlider
   @FieldClip(min = "0", max = "5")
   public Integer minizoom = 3;
@@ -87,7 +90,7 @@ class MapViewer implements ManipulateProvider {
         graphics.drawLine(center.x, center.y - r, center.x, center.y + r);
         textContour.draw("z=" + tilePixel.tile().z(), 2, 20);
       }
-      if (gridlines && 2 < tilePixel.tile().z()) {
+      if (ticks && 2 < tilePixel.tile().z()) {
         ScalarUnaryOperator suo = UnitConvert.SI().to("deg");
         FontMetrics fontMetrics = graphics.getFontMetrics();
         { // lat
@@ -98,13 +101,23 @@ class MapViewer implements ManipulateProvider {
           Clip clip = Clips.interval(min, max);
           List<Scalar> list = Ticks.stream(clip, Rational.of(100, dimension.height)).toList();
           Tensor lat_lon = tilePixel.lat_lon().maps(suo);
+          // establish longest string, e.g. "47.15"
           OptionalInt optionalInt = list.stream().map(Ticks::format).mapToInt(fontMetrics::stringWidth).max();
+          if (gridlines) {
+            graphics.setColor(gridLineCol);
+            for (Scalar tick : list) {
+              lat_lon.set(tick, 0);
+              TilePixel from = tilePixel.from(lat_lon);
+              int x = dimension.width;
+              int y = (int) (from.absY() - origin.absY());
+              graphics.drawLine(0, y, dimension.width, y);
+            }
+          }
           if (optionalInt.isPresent()) {
             int width = optionalInt.getAsInt() + 5;
             for (Scalar tick : list) {
               lat_lon.set(tick, 0);
               TilePixel from = tilePixel.from(lat_lon);
-              graphics.setColor(new Color(255, 255, 255, 128));
               int x = dimension.width - width;
               int y = (int) (from.absY() - origin.absY());
               graphics.setStroke(new BasicStroke()); // thickness of outline
@@ -128,8 +141,11 @@ class MapViewer implements ManipulateProvider {
           for (Scalar tick : list) {
             lat_lon.set(tick, 1);
             TilePixel from = tilePixel.from(lat_lon);
-            graphics.setColor(new Color(255, 255, 255, 128));
             int x = (int) (from.absX() - origin.absX());
+            if (gridlines) {
+              graphics.setColor(gridLineCol);
+              graphics.drawLine(x, 0, x, dimension.height);
+            }
             int y = dimension.height - 20;
             graphics.setStroke(new BasicStroke()); // thickness of outline
             graphics.setColor(Color.BLACK);
@@ -165,6 +181,17 @@ class MapViewer implements ManipulateProvider {
           int p2x = (int) (end.absX() - origin.absX());
           int p2y = (int) (end.absY() - origin.absY());
           graphics.drawLine(p1x, p1y, p2x, p2y);
+        }
+      }
+      if (showPoi) {
+        for (Pois pois : Pois.values()) {
+          TilePixel beg = tilePixel.from(pois.poi.vector());
+          int p1x = (int) (beg.absX() - origin.absX());
+          int p1y = (int) (beg.absY() - origin.absY());
+          graphics.setColor(marker);
+          graphics.setStroke(new BasicStroke(2));
+          graphics.draw(new Ellipse2D.Double(p1x - 5, p1y - 5, 10, 10));
+          textContour.draw(pois.name(), p1x + 8, p1y + 5);
         }
       }
       if (4 < tilePixel.tile().z()) {
