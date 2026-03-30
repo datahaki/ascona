@@ -6,12 +6,14 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.stream.Stream;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -32,6 +34,9 @@ import ch.alpine.bridge.gfx.TextContour;
 import ch.alpine.bridge.io.FileBlock;
 import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.pro.ManipulateProvider;
+import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldSelectionArray;
+import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.api.GeoPosition;
 import ch.alpine.tensor.Rational;
@@ -58,7 +63,10 @@ class MapViewer implements ManipulateProvider {
   public Boolean gridlines = true;
   public Boolean availability = true;
   public Boolean showCycles = false;
+  @FieldSlider
+  @FieldClip(min = "0", max = "5")
   public Integer minizoom = 3;
+  @FieldSelectionArray({ "128", "256", "384", "512" })
   public Integer minilen = 256;
   public Color marker = Color.MAGENTA;
   private final GeoComponent geoComponent = new GeoComponent() {
@@ -82,7 +90,6 @@ class MapViewer implements ManipulateProvider {
       if (gridlines && 2 < tilePixel.tile().z()) {
         ScalarUnaryOperator suo = UnitConvert.SI().to("deg");
         FontMetrics fontMetrics = graphics.getFontMetrics();
-        final double delta_y = (fontMetrics.getAscent() - fontMetrics.getDescent()) * 0.5;
         { // lat
           Scalar max = suo.apply(tilePixel.shift(0, -center.y).lat_lon().Get(0));
           Scalar min = suo.apply(tilePixel.shift(0, +center.y).lat_lon().Get(0));
@@ -91,17 +98,22 @@ class MapViewer implements ManipulateProvider {
           Clip clip = Clips.interval(min, max);
           List<Scalar> list = Ticks.stream(clip, Rational.of(100, dimension.height)).toList();
           Tensor lat_lon = tilePixel.lat_lon().maps(suo);
-          for (Scalar tick : list) {
-            lat_lon.set(tick, 0);
-            TilePixel from = tilePixel.from(lat_lon);
-            graphics.setColor(new Color(255, 255, 255, 128));
-            int x = dimension.width - 50;
-            int y = (int) (from.absY() - origin.absY());
-            graphics.setStroke(new BasicStroke()); // thickness of outline
-            graphics.setColor(Color.BLACK);
-            RenderQuality.smoothLine(graphics, false);
-            graphics.drawLine(x - 10, y, x + 10, y);
-            textContour.draw(Ticks.format(tick), x - 5, y - 2);
+          OptionalInt optionalInt = list.stream().map(Ticks::format).mapToInt(fontMetrics::stringWidth).max();
+          if (optionalInt.isPresent()) {
+            int width = optionalInt.getAsInt() + 5;
+            for (Scalar tick : list) {
+              lat_lon.set(tick, 0);
+              TilePixel from = tilePixel.from(lat_lon);
+              graphics.setColor(new Color(255, 255, 255, 128));
+              int x = dimension.width - width;
+              int y = (int) (from.absY() - origin.absY());
+              graphics.setStroke(new BasicStroke()); // thickness of outline
+              graphics.setColor(Color.BLACK);
+              RenderQuality.smoothLine(graphics, false);
+              graphics.drawLine(x, y, dimension.width, y);
+              String string = Ticks.format(tick);
+              textContour.draw(string, dimension.width - width, y - 2);
+            }
           }
         }
         { // lon
@@ -112,6 +124,7 @@ class MapViewer implements ManipulateProvider {
           Clip clip = Clips.interval(min, max);
           List<Scalar> list = Ticks.stream(clip, Rational.of(100, dimension.width)).toList();
           Tensor lat_lon = tilePixel.lat_lon().maps(suo);
+          int height = fontMetrics.getDescent();
           for (Scalar tick : list) {
             lat_lon.set(tick, 1);
             TilePixel from = tilePixel.from(lat_lon);
@@ -120,13 +133,13 @@ class MapViewer implements ManipulateProvider {
             int y = dimension.height - 20;
             graphics.setStroke(new BasicStroke()); // thickness of outline
             graphics.setColor(Color.BLACK);
-            graphics.drawLine(x, y - 10, x, y + 10);
-            textContour.draw(" " + Ticks.format(tick), x, (int) (y + delta_y));
+            graphics.drawLine(x, y - 10, x, dimension.height);
+            textContour.draw(" " + Ticks.format(tick), x, dimension.height - height - 2);
           }
         }
       }
       if (availability) {
-        MapImagesCache mapImagesCache = tileServers.cache();
+        MapImagesCache mapImagesCache = tileServer.cache();
         TilePixel zoom = origin.zoom(1);
         graphics.setColor(new Color(255, 0, 0, 16));
         for (int ix = 0; ix < dimension.width * 2 + 256; ix += 256)
@@ -188,17 +201,29 @@ class MapViewer implements ManipulateProvider {
                 .map(TilePixel::lat_lon).map(GeoPosition::xyz));
             d_lon = Vector2Norm.between(tensor.get(0), tensor.get(1));
           }
-          textContour.draw("" + Tensors.of(d_lat, d_lon).maps(Round._2), 0, dimension.height - 20);
+          textContour.draw("" + Tensors.of(d_lat, d_lon).maps(Round._2), 0, dimension.height - 40);
         }
-        {
-          TilePixel zoom = tilePixel.zoom(-minizoom);
-          GeoComponent geoComponent2 = new GeoComponent();
-          geoComponent2.tilePixel = zoom;
-          geoComponent2.setSize(new Dimension(minilen, minilen));
+        if (minizoom != 0) {
+          GeoComponent submap = new GeoComponent();
+          submap.tilePixel = tilePixel.zoom(-minizoom);
+          submap.tileServer = geoComponent.tileServer;
+          submap.setSize(new Dimension(minilen, minilen));
           graphics.setColor(Color.RED);
-          Graphics gfx = graphics.create(dimension.width - minilen, 0, minilen, minilen);
-          geoComponent2.printAll(gfx);
-          gfx.drawRect(0, 0, minilen - 1, minilen - 1);
+          Graphics2D gfx = (Graphics2D) graphics.create(dimension.width - minilen, 0, minilen, minilen);
+          Shape shape = new Ellipse2D.Double(0, 0, minilen, minilen);
+          gfx.setClip(shape);
+          submap.printAll(gfx);
+          gfx.setColor(Color.RED);
+          gfx.setStroke(new BasicStroke(3f));
+          gfx.draw(shape);
+          {
+            gfx.setColor(Color.BLACK);
+            gfx.setStroke(new BasicStroke(1));
+            TilePixel zoom = origin.zoom(-minizoom);
+            int delX = (int) (submap.tilePixel.absX() - zoom.absX());
+            int delY = (int) (submap.tilePixel.absY() - zoom.absY());
+            gfx.drawRect(minilen / 2 - delX, minilen / 2 - delY, 2 * delX, 2 * delY);
+          }
           gfx.dispose();
         }
       }
@@ -219,7 +244,7 @@ class MapViewer implements ManipulateProvider {
 
   @Override
   public Container getContainer() {
-    geoComponent.tileServers = tileServers;
+    geoComponent.tileServer = tileServers;
     geoComponent.getCache().debug_print = true;
     return geoComponent;
   }

@@ -10,6 +10,8 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 import ch.alpine.ascony.ren.BezierGlyphRender;
 import ch.alpine.ascony.ren.ClothoidGlyphRender;
@@ -79,11 +81,20 @@ class GlyphDemo extends EuclideanPlaneDemo {
     TableBuilder tableBuilder = new TableBuilder();
     String collect = new String(Character.toChars(param.charIndex));
     // collect = "$&%";
+    // AffineTransform affineTransform = null; // new AffineTransform(1, 0, 0, -1, 0, 0);
     FontRenderContext frc = new FontRenderContext(null, true, true);
     GlyphVector gv = param.font.createGlyphVector(frc, collect); // or any string
     for (int index = 0; index < gv.getNumGlyphs(); ++index) {
       Shape shape = gv.getGlyphOutline(index); // first character
-      SurfaceMesh surfaceMesh = GlyphMesh.of(shape);
+      {
+        graphics.setColor(Color.BLUE);
+        graphics.fill(shape);
+        Point2D point2d = geometricLayer.toPoint2D(Tensors.vector(0, 0));
+        graphics.drawGlyphVector(gv, (int) point2d.getX(), (int) point2d.getY());
+        // IO.println("draw glyph vec");
+      }
+      AffineTransform affineTransform = new AffineTransform(1, 0, 0, -1, 0, 0);
+      SurfaceMesh surfaceMesh = GlyphMesh.of(shape.getPathIterator(affineTransform));
       if (param.redux) //
         surfaceMesh = new ReduceMesh(param.dist).of(surfaceMesh);
       graphics.setColor(Color.BLACK);
