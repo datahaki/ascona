@@ -25,6 +25,7 @@ import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.Ticks;
 import ch.alpine.bridge.geo.GeoComponent;
+import ch.alpine.bridge.geo.GeoLayer;
 import ch.alpine.bridge.geo.MapImagesCache;
 import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
@@ -74,14 +75,13 @@ class MapViewer implements ManipulateProvider {
   public Color marker = Color.MAGENTA;
   private final GeoComponent geoComponent = new GeoComponent() {
     @Override
-    public void renderMore(Graphics2D graphics) {
+    public void renderMore(GeoLayer geoLayer, Graphics2D graphics) {
       RenderQuality.setQuality(graphics);
       RenderQuality.smoothLine(graphics, false);
       TextContour textContour = TextContour.of(graphics);
       Dimension dimension = getSize();
       final Point center = AwtUtil.center(dimension);
       /* upper left corner */
-      final TilePixel origin = tilePixel.shift(-center.x, -center.y);
       if (crosshair) { // draw crosshair
         graphics.setStroke(new BasicStroke());
         graphics.setColor(new Color(255, 0, 0, 192));
@@ -107,19 +107,17 @@ class MapViewer implements ManipulateProvider {
             graphics.setColor(gridLineCol);
             for (Scalar tick : list) {
               lat_lon.set(tick, 0);
-              TilePixel from = tilePixel.from(lat_lon);
-              int x = dimension.width;
-              int y = (int) (from.absY() - origin.absY());
-              graphics.drawLine(0, y, dimension.width, y);
+              Point point = geoLayer.toPoint(lat_lon);
+              graphics.drawLine(0, point.y, dimension.width, point.y);
             }
           }
           if (optionalInt.isPresent()) {
             int width = optionalInt.getAsInt() + 5;
             for (Scalar tick : list) {
               lat_lon.set(tick, 0);
-              TilePixel from = tilePixel.from(lat_lon);
+              Point point = geoLayer.toPoint(lat_lon);
               int x = dimension.width - width;
-              int y = (int) (from.absY() - origin.absY());
+              int y = point.y;
               graphics.setStroke(new BasicStroke()); // thickness of outline
               graphics.setColor(Color.BLACK);
               RenderQuality.smoothLine(graphics, false);
@@ -140,8 +138,8 @@ class MapViewer implements ManipulateProvider {
           int height = fontMetrics.getDescent();
           for (Scalar tick : list) {
             lat_lon.set(tick, 1);
-            TilePixel from = tilePixel.from(lat_lon);
-            int x = (int) (from.absX() - origin.absX());
+            Point point = geoLayer.toPoint(lat_lon);
+            int x = point.x;
             if (gridlines) {
               graphics.setColor(gridLineCol);
               graphics.drawLine(x, 0, x, dimension.height);
@@ -156,7 +154,7 @@ class MapViewer implements ManipulateProvider {
       }
       if (availability) {
         MapImagesCache mapImagesCache = tileServer.cache();
-        TilePixel zoom = origin.zoom(1);
+        TilePixel zoom = geoLayer.origin().zoom(1);
         graphics.setColor(new Color(255, 0, 0, 16));
         for (int ix = 0; ix < dimension.width * 2 + 256; ix += 256)
           for (int iy = 0; iy < dimension.height * 2 + 256; iy += 256) {
@@ -174,24 +172,18 @@ class MapViewer implements ManipulateProvider {
         graphics.setColor(marker);
         graphics.setStroke(new BasicStroke(4f));
         for (Tensor seg : segments) {
-          TilePixel beg = tilePixel.from(seg.get(0));
-          TilePixel end = tilePixel.from(seg.get(1));
-          int p1x = (int) (beg.absX() - origin.absX());
-          int p1y = (int) (beg.absY() - origin.absY());
-          int p2x = (int) (end.absX() - origin.absX());
-          int p2y = (int) (end.absY() - origin.absY());
-          graphics.drawLine(p1x, p1y, p2x, p2y);
+          Point p1 = geoLayer.toPoint(seg.get(0));
+          Point p2 = geoLayer.toPoint(seg.get(1));
+          graphics.drawLine(p1.x, p1.y, p2.x, p2.y);
         }
       }
       if (showPoi) {
         for (Pois pois : Pois.values()) {
-          TilePixel beg = tilePixel.from(pois.poi.vector());
-          int p1x = (int) (beg.absX() - origin.absX());
-          int p1y = (int) (beg.absY() - origin.absY());
+          Point point = geoLayer.toPoint(pois.poi.vector());
           graphics.setColor(marker);
           graphics.setStroke(new BasicStroke(2));
-          graphics.draw(new Ellipse2D.Double(p1x - 5, p1y - 5, 10, 10));
-          textContour.draw(pois.name(), p1x + 8, p1y + 5);
+          graphics.draw(new Ellipse2D.Double(point.x - 5, point.y - 5, 10, 10));
+          textContour.draw(pois.name(), point.x + 8, point.y + 5);
         }
       }
       if (4 < tilePixel.tile().z()) {
@@ -246,10 +238,9 @@ class MapViewer implements ManipulateProvider {
           {
             gfx.setColor(Color.BLACK);
             gfx.setStroke(new BasicStroke(1));
-            TilePixel zoom = origin.zoom(-minizoom);
-            int delX = (int) (submap.tilePixel.absX() - zoom.absX());
-            int delY = (int) (submap.tilePixel.absY() - zoom.absY());
-            gfx.drawRect(minilen / 2 - delX, minilen / 2 - delY, 2 * delX, 2 * delY);
+            TilePixel zoom = geoLayer.origin().zoom(-minizoom);
+            Point point = new GeoLayer(zoom).toPoint(submap.tilePixel);
+            gfx.drawRect(minilen / 2 - point.x, minilen / 2 - point.y, 2 * point.x, 2 * point.y);
           }
           gfx.dispose();
         }
