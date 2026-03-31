@@ -3,10 +3,8 @@ package ch.alpine.ascona.crv.clt;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import java.util.Objects;
 
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -40,14 +38,6 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
     @FieldSlider
     @FieldClip(min = "0.00", max = "1")
     public Scalar round = RealScalar.of(0.1);
-    public Boolean shade = true;
-    @FieldSlider
-    @FieldClip(min = "0", max = "1.5708")
-    public Scalar angle = RealScalar.of(0.8);
-    @FieldSlider
-    @FieldClip(min = "0", max = "0.7")
-    public Scalar width = RealScalar.of(0.3);
-    public Font font = new Font(Font.DIALOG, Font.BOLD, 500);
   }
 
   public final Cache<Tensor, Tensor> cache = Cache.of(ClothoidBrushDemo::sample, 100);
@@ -60,11 +50,6 @@ class ClothoidBrushDemo extends ClothoidSequenceDemo {
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    if (Objects.nonNull(param.font)) {
-      graphics.setColor(new Color(164, 164, 64));
-      graphics.setFont(param.font);
-      graphics.drawString("ABC", 0, 500);
-    }
     Tensor sequence = getGeodesicControlPoints();
     for (int index = 1; index < sequence.length(); ++index) {
       Tensor beg0 = sequence.get(index - 1);

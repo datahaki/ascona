@@ -49,6 +49,7 @@ class DubinsPathDemo extends ControlPointsDemo {
   private static final ClothoidBuilder CLOTHOID_BUILDER = ClothoidBuilders.SE2_ANALYTIC.clothoidBuilder();
   private static final int POINTS = 200;
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
+  private static final Tensor START = Array.zeros(3);
 
   @ReflectionMarker
   static class Param {
@@ -63,7 +64,7 @@ class DubinsPathDemo extends ControlPointsDemo {
   public DubinsPathDemo() {
     super(param = new Param());
     geometricComponent().addRenderInterfaceBackground(new GridRender(geometricComponent()::getSize));
-    setControlPointsSe2(Tensors.fromString("{{0, 0, 0}, {3, 0, 0}}"));
+    setControlPointsSe2(Tensors.fromString("{{3, 0, 0}}"));
   }
 
   @Override
@@ -78,12 +79,9 @@ class DubinsPathDemo extends ControlPointsDemo {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Tensor controlPointsSe2 = getControlPointsSe2();
-    controlPointsSe2.set(Array.zeros(3), 0);
-    Tensor START = controlPointsSe2.get(0);
     manifoldDisplay().showPoints(ColorPairs.IMMOVABLE, RealScalar.ONE, Tensors.of(START)) //
         .render(geometricLayer, graphics);
-    Tensor mouse = controlPointsSe2.get(1);
+    Tensor mouse = getControlPointsSe2().get(0);
     // ---
     DubinsPathGenerator dubinsPathGenerator = FixedRadiusDubins.of(START, mouse, RealScalar.of(1));
     List<DubinsPath> list = dubinsPathGenerator.stream().toList();
@@ -142,8 +140,6 @@ class DubinsPathDemo extends ControlPointsDemo {
   }
 
   private Tensor sample(DubinsPath dubinsPath) {
-    Tensor controlPointsSe2 = getControlPointsSe2();
-    Tensor START = controlPointsSe2.get(0);
     return Subdivide.of(0.0, 1.0, POINTS).maps(dubinsPath.unit(START));
   }
 
