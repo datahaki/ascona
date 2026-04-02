@@ -11,7 +11,7 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.img.ColorDataGradient;
+import ch.alpine.tensor.col.ColorDataGradient;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.opt.nd.CoordinateBounds;
 

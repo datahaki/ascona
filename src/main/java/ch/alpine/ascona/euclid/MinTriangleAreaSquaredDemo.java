@@ -15,8 +15,8 @@ import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.fit.MinTriangleAreaSquared;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.img.ColorDataIndexed;
-import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.col.ColorDataIndexed;
+import ch.alpine.tensor.col.ColorDataLists;
 import ch.alpine.tensor.jet.AppendOne;
 import ch.alpine.tensor.red.Times;
 

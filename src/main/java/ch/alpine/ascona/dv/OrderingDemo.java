@@ -27,9 +27,9 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Ordering;
-import ch.alpine.tensor.img.ColorDataGradient;
-import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.img.ColorFormat;
+import ch.alpine.tensor.col.ColorDataGradient;
+import ch.alpine.tensor.col.ColorDataGradients;
+import ch.alpine.tensor.col.ColorFormat;
 import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.sca.Clips;
 

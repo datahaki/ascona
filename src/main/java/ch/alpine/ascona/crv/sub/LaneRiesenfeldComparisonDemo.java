@@ -22,8 +22,8 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.img.ColorDataIndexed;
-import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.col.ColorDataIndexed;
+import ch.alpine.tensor.col.ColorDataLists;
 
 /** compare different levels of smoothing in the LaneRiesenfeldCurveSubdivision */
 class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {

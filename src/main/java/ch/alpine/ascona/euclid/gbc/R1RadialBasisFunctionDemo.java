@@ -26,7 +26,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Sort;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.col.ColorDataGradients;
 
 /** TODO ASCONA ALG investigate, this produces some nice results for kriging+metric+power */
 class R1RadialBasisFunctionDemo extends ControlPointsDemo {

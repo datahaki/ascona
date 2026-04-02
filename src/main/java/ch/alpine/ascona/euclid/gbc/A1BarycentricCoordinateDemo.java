@@ -24,9 +24,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarTensorFunction;
-import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.img.ColorDataIndexed;
-import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.col.ColorDataGradients;
+import ch.alpine.tensor.col.ColorDataIndexed;
+import ch.alpine.tensor.col.ColorDataLists;
 
 abstract class A1BarycentricCoordinateDemo extends EuclideanPlaneDemo {
   @ReflectionMarker

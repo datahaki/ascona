@@ -23,8 +23,8 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.img.ColorDataIndexed;
-import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.col.ColorDataIndexed;
+import ch.alpine.tensor.col.ColorDataLists;
 import ch.alpine.tensor.sca.exp.Exp;
 
 /** attempt to emulate a paintbrush along clothoid */

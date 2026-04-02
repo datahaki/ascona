@@ -42,7 +42,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.col.ColorDataGradients;
 import ch.alpine.tensor.io.TableBuilder;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Clip;
@@ -54,7 +54,7 @@ class GlyphDemo extends EuclideanPlaneDemo {
     @FieldClip(min = "0", max = "65500")
     public Integer charIndex = 32;
     @FieldSlider
-    @FieldClip(min = "0", max = "20")
+    @FieldClip(min = "0", max = "10")
     public Integer res = 20;
     public Font font = new Font(Font.DIALOG, Font.PLAIN, 12);
     public ColorDataGradients cdg = ColorDataGradients.ALPINE;

@@ -34,7 +34,7 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.col.ColorDataGradients;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.nrm.FrobeniusNorm;
 import ch.alpine.tensor.nrm.NormalizeTotal;

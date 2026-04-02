@@ -26,7 +26,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Subdivide;
-import ch.alpine.tensor.img.ColorDataGradient;
+import ch.alpine.tensor.col.ColorDataGradient;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;

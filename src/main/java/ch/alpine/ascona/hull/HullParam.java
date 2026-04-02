@@ -2,7 +2,7 @@
 package ch.alpine.ascona.hull;
 
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.col.ColorDataGradients;
 
 @ReflectionMarker
 class HullParam {

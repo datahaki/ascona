@@ -19,8 +19,8 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.img.ColorDataGradient;
-import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.col.ColorDataGradient;
+import ch.alpine.tensor.col.ColorDataGradients;
 import ch.alpine.tensor.pdf.RandomSample;
 
 final class GrassmannDemo extends ControlPointsDemo {

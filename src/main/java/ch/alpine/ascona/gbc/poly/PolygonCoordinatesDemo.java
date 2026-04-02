@@ -29,7 +29,7 @@ import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
-import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.col.ColorDataGradients;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /** transfer weights from barycentric coordinates defined by set of control points
