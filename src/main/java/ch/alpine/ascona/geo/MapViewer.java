@@ -10,8 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.stream.Stream;
@@ -27,6 +25,7 @@ import ch.alpine.bridge.fig.Ticks;
 import ch.alpine.bridge.geo.GeoComponent;
 import ch.alpine.bridge.geo.GeoLayer;
 import ch.alpine.bridge.geo.MapImagesCache;
+import ch.alpine.bridge.geo.Tile;
 import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -36,6 +35,7 @@ import ch.alpine.bridge.io.FileBlock;
 import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.FieldClip;
+import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
@@ -60,6 +60,7 @@ import ch.alpine.tensor.sca.Round;
 @ReflectionMarker
 class MapViewer implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
+  public Boolean debug_print = true;
   public Boolean crosshair = true;
   public Boolean ticks = true;
   public Boolean gridlines = true;
@@ -73,6 +74,9 @@ class MapViewer implements ManipulateProvider {
   @FieldSelectionArray({ "128", "256", "384", "512" })
   public Integer minilen = 256;
   public Color marker = Color.MAGENTA;
+  public Integer depth = 13;
+  @FieldFuse
+  public Boolean stats = false;
   private final GeoComponent geoComponent = new GeoComponent() {
     @Override
     public void renderMore(GeoLayer geoLayer, Graphics2D graphics) {
@@ -154,14 +158,14 @@ class MapViewer implements ManipulateProvider {
       }
       if (availability) {
         MapImagesCache mapImagesCache = tileServer.cache();
-        TilePixel zoom = geoLayer.origin().zoom(1);
+        // IO.println("ZERO " + geoLayer.origin());
+        TilePixel zoom = geoLayer.origin().zoomIncr(1);
+        // IO.println("ZOOM " + zoom);
         graphics.setColor(new Color(255, 0, 0, 16));
         for (int ix = 0; ix < dimension.width * 2 + 256; ix += 256)
           for (int iy = 0; iy < dimension.height * 2 + 256; iy += 256) {
             TilePixel shift = zoom.shift(ix, iy);
-            Path path = mapImagesCache.path(shift.tile());
-            boolean exists = Files.isRegularFile(path);
-            if (!exists) {
+            if (!mapImagesCache.isAvailableOffline(shift.tile())) {
               graphics.fillRect((ix - shift.pix()) / 2, (iy - shift.piy()) / 2, 128, 128);
             }
             // BufferedImage bufferedImage = mapImagesCache.getTile(shift.tile());
@@ -224,7 +228,7 @@ class MapViewer implements ManipulateProvider {
         }
         if (minizoom != 0) {
           GeoComponent submap = new GeoComponent();
-          submap.tilePixel = tilePixel.zoom(-minizoom);
+          submap.tilePixel = tilePixel.zoomIncr(-minizoom);
           submap.tileServer = geoComponent.tileServer;
           submap.setSize(new Dimension(minilen, minilen));
           graphics.setColor(Color.RED);
@@ -238,7 +242,7 @@ class MapViewer implements ManipulateProvider {
           {
             gfx.setColor(Color.BLACK);
             gfx.setStroke(new BasicStroke(1));
-            TilePixel zoom = geoLayer.origin().zoom(-minizoom);
+            TilePixel zoom = geoLayer.origin().zoomIncr(-minizoom);
             Point point = new GeoLayer(zoom).toPoint(submap.tilePixel);
             gfx.drawRect(minilen / 2 - point.x, minilen / 2 - point.y, 2 * point.x, 2 * point.y);
           }
@@ -247,7 +251,6 @@ class MapViewer implements ManipulateProvider {
       }
     };
   };
-  private TilePixel tilePixel;
   private final Tensor segments = StaticHelper.segments();
 
   public MapViewer() {
@@ -256,14 +259,41 @@ class MapViewer implements ManipulateProvider {
         Clips.interval(Quantity.of(-9, "deg"), Quantity.of(0, "deg")));
     // Quantity.of(38.343373, "deg"), Quantity.of(-0.762800, "deg") // Aspe
     BoxRandomSample boxRandomSample = new BoxRandomSample(cbb);
-    tilePixel = TilePixel.from(8, RandomSample.of(boxRandomSample));
-    geoComponent.tilePixel = tilePixel;
+    geoComponent.tilePixel = TilePixel.from(8, RandomSample.of(boxRandomSample));
   }
 
   @Override
   public Container getContainer() {
     geoComponent.tileServer = tileServers;
-    geoComponent.getCache().debug_print = true;
+    geoComponent.getCache().debug_print = debug_print;
+    if (stats) {
+      Dimension dimension = geoComponent.getSize();
+      Point center = AwtUtil.center(dimension);
+      // IO.println(geoComponent.tilePixel);
+      TilePixel beg = geoComponent.tilePixel.shift(-center.x, -center.y);
+      TilePixel end = geoComponent.tilePixel.shift(+center.x, +center.y);
+      int z_start = beg.tile().z();
+      // IO.println("START " + beg);
+      for (int z = z_start; z <= Math.min(depth, 19); ++z) {
+        int count = 0;
+        int total = 0;
+        for (int x = beg.tile().x(); x <= end.tile().x(); ++x) {
+          for (int y = beg.tile().y(); y <= end.tile().y(); ++y) {
+            Tile tile = new Tile(beg.tile().z(), x, y);
+            MapImagesCache mapImagesCache = geoComponent.getCache();
+            if (mapImagesCache.isAvailableOffline(tile)) {
+              ++count;
+            } else
+              mapImagesCache.getTile(tile);
+            ++total;
+          }
+        }
+        IO.println(z + " " + count + " / " + total);
+        beg = beg.zoomIncr(1);
+        end = end.zoomIncr(1);
+      }
+      stats = false;
+    }
     return geoComponent;
   }
 
