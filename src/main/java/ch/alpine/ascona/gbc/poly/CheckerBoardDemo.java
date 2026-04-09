@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,7 +40,6 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.col.ColorDataIndexed;
 import ch.alpine.tensor.col.ColorDataLists;
-import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /** transfe
@@ -96,21 +94,21 @@ class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
   public void actionPerformed(ActionEvent actionEvent) {
     System.out.println("export");
     if (param1.freeze) {
-      Tensor sequence = getGeodesicControlPoints();
+      // Tensor sequence = getGeodesicControlPoints();
       // LeversRender leversRender = LeversRender.of( //
       // geodesicDisplay(), getGeodesicControlPoints(), null, geometricLayer, graphics);
       // leversRender.renderSurfaceP();
-      Path folder = HomeDirectory.Pictures.mk_dirs(CheckerBoardDemo.class.getSimpleName());
+      // Path folder = HomeDirectory.Pictures.mk_dirs(CheckerBoardDemo.class.getSimpleName());
       for (LogWeighting logWeighting : PolygonCoordinates.list())
         try {
           System.out.println(logWeighting);
-          TensorScalarFunction tensorUnaryOperator = function(sequence, reference.multiply( //
-              DoubleScalar.of(param1.factor)));
-          ManifoldDisplay manifoldDisplay = manifoldDisplay();
+          // TensorScalarFunction tensorUnaryOperator = function(sequence, reference.multiply( //
+          // DoubleScalar.of(param1.factor)));
+          // ManifoldDisplay manifoldDisplay = manifoldDisplay();
           // TODO ASCONA ALG redundant
-          ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, DoubleScalar.INDETERMINATE);
-          CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
-          Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, 512);
+          // ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, DoubleScalar.INDETERMINATE);
+          // CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
+          // Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, 512);
           // BufferedImage bufferedImage = ArrayPlotRender.rescale(matrix, COLOR_DATA_INDEXED, 1, false).bufferedImage();
           // ImageIO.write(bufferedImage, "png", new File(folder, logWeighting.toString() + ".png"));
           // RenderQuality.setDefault(graphics); // default so that raster becomes visible

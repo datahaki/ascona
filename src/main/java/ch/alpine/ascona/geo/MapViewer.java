@@ -11,6 +11,7 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.util.List;
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.stream.Stream;
 
@@ -159,18 +160,21 @@ class MapViewer implements ManipulateProvider {
       if (availability) {
         MapImagesCache mapImagesCache = tileServer.cache();
         // IO.println("ZERO " + geoLayer.origin());
-        TilePixel zoom = geoLayer.origin().zoomIncr(1);
-        // IO.println("ZOOM " + zoom);
-        graphics.setColor(new Color(255, 0, 0, 16));
-        for (int ix = 0; ix < dimension.width * 2 + 256; ix += 256)
-          for (int iy = 0; iy < dimension.height * 2 + 256; iy += 256) {
-            TilePixel shift = zoom.shift(ix, iy);
-            if (!mapImagesCache.isAvailableOffline(shift.tile())) {
-              graphics.fillRect((ix - shift.pix()) / 2, (iy - shift.piy()) / 2, 128, 128);
+        Optional<TilePixel> optional = geoLayer.origin().zoomIncr(1, tileServer.z_max());
+        if (optional.isPresent()) {
+          // IO.println("ZOOM " + zoom);
+          TilePixel zoom = optional.orElseThrow();
+          graphics.setColor(new Color(255, 0, 0, 16));
+          for (int ix = 0; ix < dimension.width * 2 + 256; ix += 256)
+            for (int iy = 0; iy < dimension.height * 2 + 256; iy += 256) {
+              TilePixel shift = zoom.shift(ix, iy);
+              if (!mapImagesCache.isAvailableOffline(shift.tile())) {
+                graphics.fillRect((ix - shift.pix()) / 2, (iy - shift.piy()) / 2, 128, 128);
+              }
+              // BufferedImage bufferedImage = mapImagesCache.getTile(shift.tile());
+              // graphics.drawImage(bufferedImage, (ix - shift.pix()) / 2, (iy - shift.piy()) / 2, 128, 128, null);
             }
-            // BufferedImage bufferedImage = mapImagesCache.getTile(shift.tile());
-            // graphics.drawImage(bufferedImage, (ix - shift.pix()) / 2, (iy - shift.piy()) / 2, 128, 128, null);
-          }
+        }
       }
       if (showCycles) {
         graphics.setColor(marker);
@@ -228,25 +232,31 @@ class MapViewer implements ManipulateProvider {
         }
         if (minizoom != 0) {
           GeoComponent submap = new GeoComponent();
-          submap.tilePixel = tilePixel.zoomIncr(-minizoom);
-          submap.tileServer = geoComponent.tileServer;
-          submap.setSize(new Dimension(minilen, minilen));
-          graphics.setColor(Color.RED);
-          Graphics2D gfx = (Graphics2D) graphics.create(dimension.width - minilen, 0, minilen, minilen);
-          Shape shape = new Ellipse2D.Double(0, 0, minilen, minilen);
-          gfx.setClip(shape);
-          submap.printAll(gfx);
-          gfx.setColor(Color.RED);
-          gfx.setStroke(new BasicStroke(3f));
-          gfx.draw(shape);
-          {
-            gfx.setColor(Color.BLACK);
-            gfx.setStroke(new BasicStroke(1));
-            TilePixel zoom = geoLayer.origin().zoomIncr(-minizoom);
-            Point point = new GeoLayer(zoom).toPoint(submap.tilePixel);
-            gfx.drawRect(minilen / 2 - point.x, minilen / 2 - point.y, 2 * point.x, 2 * point.y);
+          Optional<TilePixel> optional = tilePixel.zoomIncr(-minizoom, tileServer.z_max());
+          if (optional.isPresent()) {
+            submap.tilePixel = optional.orElseThrow();
+            submap.tileServer = geoComponent.tileServer;
+            submap.setSize(new Dimension(minilen, minilen));
+            graphics.setColor(Color.RED);
+            Graphics2D gfx = (Graphics2D) graphics.create(dimension.width - minilen, 0, minilen, minilen);
+            Shape shape = new Ellipse2D.Double(0, 0, minilen, minilen);
+            gfx.setClip(shape);
+            submap.printAll(gfx);
+            gfx.setColor(Color.RED);
+            gfx.setStroke(new BasicStroke(3f));
+            gfx.draw(shape);
+            {
+              gfx.setColor(Color.BLACK);
+              gfx.setStroke(new BasicStroke(1));
+              Optional<TilePixel> zoomIncr = geoLayer.origin().zoomIncr(-minizoom, tileServer.z_max());
+              if (zoomIncr.isPresent()) {
+                TilePixel zoom = zoomIncr.orElseThrow();
+                Point point = new GeoLayer(zoom).toPoint(submap.tilePixel);
+                gfx.drawRect(minilen / 2 - point.x, minilen / 2 - point.y, 2 * point.x, 2 * point.y);
+              }
+            }
+            gfx.dispose();
           }
-          gfx.dispose();
         }
       }
     };
@@ -274,7 +284,7 @@ class MapViewer implements ManipulateProvider {
       TilePixel end = geoComponent.tilePixel.shift(+center.x, +center.y);
       int z_start = beg.tile().z();
       // IO.println("START " + beg);
-      for (int z = z_start; z <= Math.min(depth, 19); ++z) {
+      for (int z = z_start; z <= Math.min(depth, geoComponent.tileServer.z_max()); ++z) {
         int count = 0;
         int total = 0;
         for (int x = beg.tile().x(); x <= end.tile().x(); ++x) {
@@ -289,8 +299,8 @@ class MapViewer implements ManipulateProvider {
           }
         }
         IO.println(z + " " + count + " / " + total);
-        beg = beg.zoomIncr(1);
-        end = end.zoomIncr(1);
+        beg = beg.zoomIncr(1, geoComponent.tileServer.z_max()).orElseThrow();
+        end = end.zoomIncr(1, geoComponent.tileServer.z_max()).orElseThrow();
       }
       stats = false;
     }

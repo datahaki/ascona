@@ -29,7 +29,6 @@ import ch.alpine.bridge.fig.plt.ArrayPlot;
 import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
-import ch.alpine.sophis.crv.d2.alg.PolygonRegion;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.hull.d2.ConvexHull2D;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -85,7 +84,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
     // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
     if (2 < controlPoints.length()) {
       Tensor domain = Tensor.of(controlPoints.stream().map(manifoldDisplay::point2xy));
-      PolygonRegion polygonRegion = new PolygonRegion(domain);
+      // PolygonRegion polygonRegion = new PolygonRegion(domain);
       Tensor hull = ConvexHull2D.of(domain);
       new PathRender(ColorStroke.CONVEX_HULL, hull, true).render(geometricLayer, graphics);
       Sedarim sedarim = weightingsParam.operator(manifoldDisplay.manifold(), domain);

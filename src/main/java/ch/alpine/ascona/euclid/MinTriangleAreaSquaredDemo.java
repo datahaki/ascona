@@ -15,8 +15,6 @@ import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.fit.MinTriangleAreaSquared;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.col.ColorDataIndexed;
-import ch.alpine.tensor.col.ColorDataLists;
 import ch.alpine.tensor.jet.AppendOne;
 import ch.alpine.tensor.red.Times;
 
@@ -24,8 +22,6 @@ import ch.alpine.tensor.red.Times;
  * "Polygon Laplacian Made Simple"
  * by Astrid Bunge, Philipp Herholz, Misha Kazhdan, Mario Botsch, 2020 */
 class MinTriangleAreaSquaredDemo extends EuclideanPlaneDemo {
-  private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.cyclic();
-
   public MinTriangleAreaSquaredDemo() {
     Tensor blub = Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {2, 0, 2.5708}, {1, 0, 2.1}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 0), //
