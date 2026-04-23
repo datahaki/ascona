@@ -55,7 +55,7 @@ class GlyphDemo extends EuclideanPlaneDemo {
     public Integer charIndex = 32;
     @FieldSlider
     @FieldClip(min = "0", max = "10")
-    public Integer res = 20;
+    public Integer res = 5;
     public Font font = new Font(Font.DIALOG, Font.PLAIN, 12);
     public ColorDataGradients cdg = ColorDataGradients.ALPINE;
     public Boolean hide = true;
