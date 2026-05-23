@@ -72,6 +72,7 @@ import ch.alpine.tensor.sca.Round;
 class MapViewer implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
   public Boolean debug_print = true;
+  public Boolean download = true;
   public Boolean crosshair = true;
   public Boolean ticks = true;
   public Boolean gridlines = true;
@@ -294,7 +295,7 @@ class MapViewer implements ManipulateProvider {
     // Quantity.of(38.343373, "deg"), Quantity.of(-0.762800, "deg") // Aspe
     BoxRandomSample boxRandomSample = new BoxRandomSample(cbb);
     geoComponent.tilePixel = TilePixel.from(8, RandomSample.of(boxRandomSample));
-    geoComponent.tilePixel = TilePixel.from(9, Quantity.of(49.63, "deg"), Quantity.of(8.6, "deg"));
+    geoComponent.tilePixel = TilePixel.from(9, Quantity.of(52.4, "deg"), Quantity.of(11.5, "deg"));
     LazyMouseListener lml = new LazyMouseListener() {
       @Override
       public void lazyClicked(MouseEvent mouseEvent) {
@@ -349,7 +350,7 @@ class MapViewer implements ManipulateProvider {
     ResourceLocator resourceLocator = ResourceLocator.of(MapViewer.class);
     if (!FileBlock.of(resourceLocator.resolve(""))) {
       MapViewer mapViewer = new MapViewer();
-      Path path = resourceLocator.resolve("pathSeq.properties");
+      Path path = resourceLocator.resolve("leipzig2.properties");
       ObjectProperties.tryLoad(mapViewer.geoPath, path);
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
