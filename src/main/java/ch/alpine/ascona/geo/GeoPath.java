@@ -20,7 +20,7 @@ public class GeoPath {
   public Scalar distance() {
     TensorUnaryOperator tuo = GeoPosition::of;
     Tensor tensor = tuo.slash(pathSeq);
-    SnManifold snManifold=  Sphere.INSTANCE;
+    SnManifold snManifold = Sphere.INSTANCE;
     AdjacentReduce adjacentReduce = new AdjacentReduce((p, q) -> snManifold.bilinearForm(p).norm(snManifold.tangentSpace(p).log(q)));
     Tensor parts = adjacentReduce.apply(tensor);
     return Total.ofVector(parts).multiply(Quantity.of(6_378_137, "m"));

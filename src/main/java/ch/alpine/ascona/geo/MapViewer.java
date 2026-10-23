@@ -56,12 +56,11 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.ArrayReshape;
 import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.opt.nd.BoxRandomSample;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.qty.Quantity;
 import ch.alpine.tensor.qty.UnitConvert;
 import ch.alpine.tensor.sca.Clip;
@@ -179,20 +178,22 @@ class MapViewer implements ManipulateProvider {
       if (availability) {
         MapImagesCache mapImagesCache = tileServer.cache();
         // IO.println("ZERO " + geoLayer.origin());
-        Optional<TilePixel> optional = geoLayer.origin().zoomIncr(1, tileServer.z_max());
-        if (optional.isPresent()) {
-          // IO.println("ZOOM " + zoom);
-          TilePixel zoom = optional.orElseThrow();
-          graphics.setColor(new Color(255, 0, 0, 16));
-          for (int ix = 0; ix < dimension.width * 2 + 256; ix += 256)
-            for (int iy = 0; iy < dimension.height * 2 + 256; iy += 256) {
-              TilePixel shift = zoom.shift(ix, iy);
-              if (!mapImagesCache.isAvailableOffline(shift.tile())) {
-                graphics.fillRect((ix - shift.pix()) / 2, (iy - shift.piy()) / 2, 128, 128);
+        for (int iz = 1; iz <= 1; iz++) {
+          Optional<TilePixel> optional = geoLayer.origin().zoomIncr(iz, tileServer.z_max());
+          if (optional.isPresent()) {
+            TilePixel zoom = optional.orElseThrow();
+            graphics.setColor(new Color(128, 0, 128, 16));
+            int fac = 1 << iz;
+            for (int ix = 0; ix < dimension.width * fac + 256; ix += 256)
+              for (int iy = 0; iy < dimension.height * fac + 256; iy += 256) {
+                TilePixel shift = zoom.shift(ix, iy);
+                if (!mapImagesCache.isAvailableOffline(shift.tile())) {
+                  graphics.fillRect((ix - shift.pix() + 128) / fac - 4, (iy - shift.piy() + 128) / fac - 4, 8, 8);
+                }
+                // BufferedImage bufferedImage = mapImagesCache.getTile(shift.tile());
+                // graphics.drawImage(bufferedImage, (ix - shift.pix()) / 2, (iy - shift.piy()) / 2, 128, 128, null);
               }
-              // BufferedImage bufferedImage = mapImagesCache.getTile(shift.tile());
-              // graphics.drawImage(bufferedImage, (ix - shift.pix()) / 2, (iy - shift.piy()) / 2, 128, 128, null);
-            }
+          }
         }
       }
       if (showCycles) {
@@ -276,6 +277,18 @@ class MapViewer implements ManipulateProvider {
           gfx.dispose();
         }
       }
+      if (showCycles) {
+        graphics.setColor(marker);
+        graphics.setColor(Color.BLUE);
+        graphics.setStroke(new BasicStroke(4f));
+        int n = geoPath.pathSeq.length() / 2;
+        Tensor segDes = ArrayReshape.of(geoPath.pathSeq.stream().limit(n * 2), n, 2);
+        for (Tensor seg : segDes) {
+          Point p1 = geoLayer.toPoint(seg.get(0));
+          Point p2 = geoLayer.toPoint(seg.get(1));
+          graphics.drawLine(p1.x, p1.y, p2.x, p2.y);
+        }
+      } else //
       if (8 <= tilePixel.tile().z()) {
         graphics.setStroke(new BasicStroke(2f));
         Path2D path2d = geoLayer.toPath2D(geoPath.pathSeq);
@@ -289,19 +302,45 @@ class MapViewer implements ManipulateProvider {
   private GeoPath geoPath = new GeoPath();
 
   public MapViewer() {
-    CoordinateBoundingBox cbb = CoordinateBoundingBox.of( //
-        Clips.interval(Quantity.of(37, "deg"), Quantity.of(44, "deg")), //
-        Clips.interval(Quantity.of(-9, "deg"), Quantity.of(0, "deg")));
-    // Quantity.of(38.343373, "deg"), Quantity.of(-0.762800, "deg") // Aspe
-    BoxRandomSample boxRandomSample = new BoxRandomSample(cbb);
-    geoComponent.tilePixel = TilePixel.from(8, RandomSample.of(boxRandomSample));
-    geoComponent.tilePixel = TilePixel.from(9, Quantity.of(52.4, "deg"), Quantity.of(11.5, "deg"));
     LazyMouseListener lml = new LazyMouseListener() {
       @Override
       public void lazyClicked(MouseEvent mouseEvent) {
         TilePixel tilePixel = geoComponent.fromPoint(mouseEvent.getPoint());
-        geoPath.pathSeq.append(tilePixel.lat_lon());
-        geoComponent.repaint();
+        GeoLayer geoLayer = new GeoLayer(tilePixel);
+        int button = mouseEvent.getButton();
+        switch (button) {
+        case 1:
+          geoPath.pathSeq.append(tilePixel.lat_lon());
+          geoComponent.repaint();
+          break;
+        // case 3:
+        // int n = geoPath.pathSeq.length() / 2;
+        // Tensor segDes = ArrayReshape.of(geoPath.pathSeq.stream().limit(n * 2), n, 2);
+        // int index = 0;
+        // for (Tensor seg : segDes) {
+        // Point p1 = geoLayer.toPoint(seg.get(0));
+        // Point p2 = geoLayer.toPoint(seg.get(1));
+        // try {
+        // Tensor v1 = Tensors.vector(p1.x, p1.y);
+        // Tensor v2 = Tensors.vector(p2.x, p2.y);
+        // Tensor dir = v2.subtract(v1);
+        // Tensor nrm = Vector2Norm.NORMALIZE.apply(Cross.of(dir));
+        // Tensor mat = Transpose.of(Tensors.of(dir, nrm));
+        // Tensor sol = LinearSolve.of(mat, v1.negate());
+        // if (Clips.unit().isInside(sol.Get(0)) && Clips.absolute(15).isInside(sol.Get(1))) {
+        // IO.println("index=" + index);
+        // IO.println(sol);
+        // // IO.println();
+        // geoPath.pathSeq = Flatten.of(Drop.index(segDes, index));
+        // IO.println(geoPath.pathSeq);
+        // geoComponent.repaint();
+        // break;
+        // }
+        // } catch (Exception e) {
+        // }
+        // index += 1;
+        // }
+        }
       }
     };
     new LazyMouse(lml).addListenersTo(geoComponent);
@@ -350,10 +389,22 @@ class MapViewer implements ManipulateProvider {
     ResourceLocator resourceLocator = ResourceLocator.of(MapViewer.class);
     if (!FileBlock.of(resourceLocator.resolve(""))) {
       MapViewer mapViewer = new MapViewer();
-      Path path = resourceLocator.resolve("leipzig2.properties");
+      Path properties = resourceLocator.properties(MapParam.class);
+      {
+        MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
+        long[] array = Primitives.toLongArray(mapParam.center);
+        mapViewer.geoComponent.tilePixel = TilePixel.of((int) array[0], array[1], array[2]);
+      }
+      Path path = resourceLocator.resolve("francetours.properties");
       ObjectProperties.tryLoad(mapViewer.geoPath, path);
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
+      WindowClosed.runs(jFrame, () -> {
+        MapParam mapParam = new MapParam();
+        TilePixel tilePixel = mapViewer.geoComponent.tilePixel;
+        mapParam.center = Tensors.vector(tilePixel.tile().z(), tilePixel.absX(), tilePixel.absY());
+        ObjectProperties.trySave(mapParam, properties);
+      });
     }
   }
 }
