@@ -5,17 +5,16 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.stream.Stream;
 
 import javax.swing.JFrame;
@@ -30,7 +29,6 @@ import ch.alpine.bridge.awt.LazyMouse;
 import ch.alpine.bridge.awt.LazyMouseListener;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.awt.WindowClosed;
-import ch.alpine.bridge.fig.Ticks;
 import ch.alpine.bridge.geo.GeoComponent;
 import ch.alpine.bridge.geo.GeoLayer;
 import ch.alpine.bridge.geo.MapImagesCache;
@@ -50,33 +48,25 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ObjectProperties;
 import ch.alpine.sophis.api.GeoPosition;
-import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ArrayReshape;
 import ch.alpine.tensor.alg.Drop;
-import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.qty.Quantity;
-import ch.alpine.tensor.qty.UnitConvert;
-import ch.alpine.tensor.sca.Clip;
-import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
+/** For Java, I recommend an architecture based on
+ * ExecutorService + BlockingQueue (or CompletableFuture) +
+ * a thread-safe tile cache, with all GUI updates
+ * dispatched to the GUI's event thread. */
 @ReflectionMarker
 class MapViewer implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
   public Boolean debug_print = true;
   public Boolean download = true;
-  public Boolean crosshair = true;
-  public Boolean ticks = true;
-  public Boolean gridlines = true;
-  public Color gridLineCol = new Color(128, 128, 128, 64);
-  public Boolean availability = true;
   public Boolean showCycles = false;
   public Boolean showPoi = false;
   public Boolean showGlobe = false;
@@ -93,109 +83,20 @@ class MapViewer implements ManipulateProvider {
   public Boolean pathAdd = false;
   @FieldFuse
   public transient Boolean pathClear = false;
+  public String infoLine = "";
   // ---
   private final GeoComponent geoComponent = new GeoComponent() {
     @Override
     public void renderMore(GeoLayer geoLayer, Graphics2D graphics) {
+      {
+        graphics.setColor(Color.BLACK);
+        graphics.drawString(infoLine, 0, 150);
+      }
       RenderQuality.setQuality(graphics);
       RenderQuality.smoothLine(graphics, false);
       TextContour textContour = TextContour.of(graphics);
       Dimension dimension = getSize();
       final Point center = AwtUtil.center(dimension);
-      /* upper left corner */
-      if (crosshair) { // draw crosshair
-        graphics.setStroke(new BasicStroke());
-        graphics.setColor(new Color(255, 0, 0, 192));
-        int r = 3;
-        graphics.drawLine(center.x - r, center.y, center.x + r, center.y);
-        graphics.drawLine(center.x, center.y - r, center.x, center.y + r);
-        textContour.draw("z=" + tilePixel.tile().z(), 2, 20);
-      }
-      if (ticks && 2 < tilePixel.tile().z()) {
-        ScalarUnaryOperator suo = UnitConvert.SI().to("deg");
-        FontMetrics fontMetrics = graphics.getFontMetrics();
-        { // lat
-          Scalar max = suo.apply(tilePixel.shift(0, -center.y).lat_lon().Get(0));
-          Scalar min = suo.apply(tilePixel.shift(0, +center.y).lat_lon().Get(0));
-          while (Scalars.lessThan(max, min))
-            max = max.add(Quantity.of(180, "deg"));
-          Clip clip = Clips.interval(min, max);
-          List<Scalar> list = Ticks.stream(clip, Rational.of(100, dimension.height)).toList();
-          Tensor lat_lon = tilePixel.lat_lon().maps(suo);
-          // establish longest string, e.g. "47.15"
-          OptionalInt optionalInt = list.stream().map(Ticks::format).mapToInt(fontMetrics::stringWidth).max();
-          if (gridlines) {
-            graphics.setColor(gridLineCol);
-            for (Scalar tick : list) {
-              lat_lon.set(tick, 0);
-              Point point = geoLayer.toPoint(lat_lon);
-              graphics.drawLine(0, point.y, dimension.width, point.y);
-            }
-          }
-          if (optionalInt.isPresent()) {
-            int width = optionalInt.getAsInt() + 5;
-            for (Scalar tick : list) {
-              lat_lon.set(tick, 0);
-              Point point = geoLayer.toPoint(lat_lon);
-              int x = dimension.width - width;
-              int y = point.y;
-              graphics.setStroke(new BasicStroke()); // thickness of outline
-              graphics.setColor(Color.BLACK);
-              RenderQuality.smoothLine(graphics, false);
-              graphics.drawLine(x, y, dimension.width, y);
-              String string = Ticks.format(tick);
-              textContour.draw(string, dimension.width - width, y - 2);
-            }
-          }
-        }
-        { // lon
-          Scalar min = suo.apply(tilePixel.shift(-center.x, 0).lat_lon().Get(1));
-          Scalar max = suo.apply(tilePixel.shift(+center.x, 0).lat_lon().Get(1));
-          while (Scalars.lessThan(max, min))
-            max = max.add(Quantity.of(360, "deg"));
-          Clip clip = Clips.interval(min, max);
-          if (Scalars.nonZero(clip.length())) {
-            List<Scalar> list = Ticks.stream(clip, Rational.of(100, dimension.width)).toList();
-            Tensor lat_lon = tilePixel.lat_lon().maps(suo);
-            int height = fontMetrics.getDescent();
-            for (Scalar tick : list) {
-              lat_lon.set(tick, 1);
-              Point point = geoLayer.toPoint(lat_lon);
-              int x = point.x;
-              if (gridlines) {
-                graphics.setColor(gridLineCol);
-                graphics.drawLine(x, 0, x, dimension.height);
-              }
-              int y = dimension.height - 20;
-              graphics.setStroke(new BasicStroke()); // thickness of outline
-              graphics.setColor(Color.BLACK);
-              graphics.drawLine(x, y - 10, x, dimension.height);
-              textContour.draw(" " + Ticks.format(tick), x, dimension.height - height - 2);
-            }
-          }
-        }
-      }
-      if (availability) {
-        MapImagesCache mapImagesCache = tileServer.cache();
-        // IO.println("ZERO " + geoLayer.origin());
-        for (int iz = 1; iz <= 1; iz++) {
-          Optional<TilePixel> optional = geoLayer.origin().zoomIncr(iz, tileServer.z_max());
-          if (optional.isPresent()) {
-            TilePixel zoom = optional.orElseThrow();
-            graphics.setColor(new Color(128, 0, 128, 16));
-            int fac = 1 << iz;
-            for (int ix = 0; ix < dimension.width * fac + 256; ix += 256)
-              for (int iy = 0; iy < dimension.height * fac + 256; iy += 256) {
-                TilePixel shift = zoom.shift(ix, iy);
-                if (!mapImagesCache.isAvailableOffline(shift.tile())) {
-                  graphics.fillRect((ix - shift.pix() + 128) / fac - 4, (iy - shift.piy() + 128) / fac - 4, 8, 8);
-                }
-                // BufferedImage bufferedImage = mapImagesCache.getTile(shift.tile());
-                // graphics.drawImage(bufferedImage, (ix - shift.pix()) / 2, (iy - shift.piy()) / 2, 128, 128, null);
-              }
-          }
-        }
-      }
       if (showCycles) {
         graphics.setColor(marker);
         graphics.setStroke(new BasicStroke(4f));
@@ -249,6 +150,25 @@ class MapViewer implements ManipulateProvider {
         }
         textContour.draw("" + Tensors.of(d_lat, d_lon).maps(Round._2), 0, dimension.height - 40);
       }
+      if (showCycles) {
+        graphics.setColor(marker);
+        graphics.setColor(Color.BLUE);
+        graphics.setStroke(new BasicStroke(4f));
+        int n = geoPath.pathSeq.length() / 2;
+        Tensor segDes = ArrayReshape.of(geoPath.pathSeq.stream().limit(n * 2), n, 2);
+        for (Tensor seg : segDes) {
+          Point p1 = geoLayer.toPoint(seg.get(0));
+          Point p2 = geoLayer.toPoint(seg.get(1));
+          graphics.drawLine(p1.x, p1.y, p2.x, p2.y);
+        }
+      } else //
+      if (8 <= tilePixel.tile().z()) {
+        graphics.setStroke(new BasicStroke(2f));
+        Path2D path2d = geoLayer.toPath2D(geoPath.pathSeq);
+        graphics.setColor(Color.RED);
+        graphics.draw(path2d);
+        textContour.draw("" + geoPath.distance().maps(Round.FUNCTION), 0, 50);
+      }
       if (4 < tilePixel.tile().z() && minizoom != 0) {
         GeoComponent submap = new GeoComponent();
         Optional<TilePixel> optional = tilePixel.zoomIncr(-minizoom, tileServer.z_max());
@@ -277,25 +197,7 @@ class MapViewer implements ManipulateProvider {
           gfx.dispose();
         }
       }
-      if (showCycles) {
-        graphics.setColor(marker);
-        graphics.setColor(Color.BLUE);
-        graphics.setStroke(new BasicStroke(4f));
-        int n = geoPath.pathSeq.length() / 2;
-        Tensor segDes = ArrayReshape.of(geoPath.pathSeq.stream().limit(n * 2), n, 2);
-        for (Tensor seg : segDes) {
-          Point p1 = geoLayer.toPoint(seg.get(0));
-          Point p2 = geoLayer.toPoint(seg.get(1));
-          graphics.drawLine(p1.x, p1.y, p2.x, p2.y);
-        }
-      } else //
-      if (8 <= tilePixel.tile().z()) {
-        graphics.setStroke(new BasicStroke(2f));
-        Path2D path2d = geoLayer.toPath2D(geoPath.pathSeq);
-        graphics.setColor(Color.RED);
-        graphics.draw(path2d);
-        textContour.draw("" + geoPath.distance().maps(Round.FUNCTION), 0, 50);
-      }
+      
     };
   };
   private final Tensor segments = StaticHelper.segments();
@@ -344,12 +246,26 @@ class MapViewer implements ManipulateProvider {
       }
     };
     new LazyMouse(lml).addListenersTo(geoComponent);
+    // ---
+    geoComponent.addMouseMotionListener(new MouseMotionListener() {
+      @Override
+      public void mouseMoved(MouseEvent mouseEvent) {
+        TilePixel tilePixel = geoComponent.fromPoint(mouseEvent.getPoint());
+        Tensor lat_lon = tilePixel.lat_lon();
+        infoLine = lat_lon.toString();
+        geoComponent.repaint();
+      }
+
+      @Override
+      public void mouseDragged(MouseEvent e) {
+      }
+    });
   }
 
   @Override
   public Container getContainer() {
     geoComponent.tileServer = tileServers;
-    geoComponent.getCache().debug_print = debug_print;
+    // geoComponent.getCache().debug_print = debug_print;
     if (pathClear) {
       if (Tensors.nonEmpty(geoPath.pathSeq))
         geoPath.pathSeq = Drop.tail(geoPath.pathSeq, 1);
@@ -372,7 +288,7 @@ class MapViewer implements ManipulateProvider {
             if (mapImagesCache.isAvailableOffline(tile)) {
               ++count;
             } else
-              mapImagesCache.getTile(tile);
+              mapImagesCache.getTile(tile).bufferedImage();
             ++total;
           }
         }

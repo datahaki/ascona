@@ -23,6 +23,7 @@ public class GeoPath {
     SnManifold snManifold = Sphere.INSTANCE;
     AdjacentReduce adjacentReduce = new AdjacentReduce((p, q) -> snManifold.bilinearForm(p).norm(snManifold.tangentSpace(p).log(q)));
     Tensor parts = adjacentReduce.apply(tensor);
+    // TODO magic const radius of Earth
     return Total.ofVector(parts).multiply(Quantity.of(6_378_137, "m"));
   }
 }

@@ -108,7 +108,7 @@ class GeoPlot implements ManipulateProvider {
       for (int x = x0; x <= x1; ++x) {
         for (int y = y0; y <= y1; ++y) {
           Tile tile = new Tile(z, x, y);
-          graphics.drawImage(mapImagesCache.getTile(tile), (x - x0) << 8, (y - y0) << 8, null);
+          graphics.drawImage(mapImagesCache.getTile(tile).bufferedImage(), (x - x0) << 8, (y - y0) << 8, null);
         }
       }
     else

@@ -20,13 +20,13 @@ enum PlotAvailable {
   ;
   static void main() {
     MapImagesCache mapImagesCache = TileServers.OpenStreetMap.cache();
-    mapImagesCache.debug_print = true;
-    final int zpix = 4;
+    // mapImagesCache.debug_print = true;
+    final int zpix = 2;
     BufferedImage bufferedImage = MapOffscreen.world(zpix);
     Graphics2D graphics = bufferedImage.createGraphics();
     graphics.setColor(new Color(255, 0, 0, 128));
     graphics.setStroke(new BasicStroke());
-    int delta = 8;
+    int delta = 2;
     final int zmax = zpix + delta;
     int wid = 256 >> delta;
     long counted = 0;

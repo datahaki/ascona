@@ -32,12 +32,12 @@ enum MapOffscreen {
     BufferedImage bufferedImage = new BufferedImage(wid, wid, BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = bufferedImage.createGraphics();
     MapImagesCache mapImagesCache = TileServers.OpenStreetMap.cache();
-    mapImagesCache.debug_print = true;
+    // mapImagesCache.debug_print = true;
     int max = Tile.maxInclusive(z);
     for (int x = 0; x <= max; ++x)
       for (int y = 0; y <= max; ++y) {
         Tile tile = new Tile(z, x, y);
-        BufferedImage image = mapImagesCache.getTile(tile);
+        BufferedImage image = mapImagesCache.getTile(tile).bufferedImage();
         graphics.drawImage(image, x << 8, y << 8, null);
       }
     graphics.dispose();
