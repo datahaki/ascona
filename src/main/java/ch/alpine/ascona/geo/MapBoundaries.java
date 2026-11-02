@@ -200,7 +200,7 @@ class MapBoundaries implements ManipulateProvider {
       {
         MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
         long[] array = Primitives.toLongArray(mapParam.center);
-        mapViewer.geoComponent.tilePixel = TilePixel.of((int) array[0], array[1], array[2]);
+        mapViewer.geoComponent.tilePixel = TilePixel.of((int) array[0], (int) array[1], array[2], array[3]);
       }
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> {

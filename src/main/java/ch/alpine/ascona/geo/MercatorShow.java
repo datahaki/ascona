@@ -25,13 +25,13 @@ class MercatorShow implements ManipulateProvider {
   public Container getContainer() {
     Show show1 = new Show();
     {
-      ScalarUnaryOperator suo = s -> RealScalar.of(TilePixel.from(z, s, RealScalar.ZERO).absY());
+      ScalarUnaryOperator suo = s -> RealScalar.of(TilePixel.from(z, 256, s, RealScalar.ZERO).absY());
       show1.add(Plot.of(suo, TilePixel.LAT_DOMAIN, PlotOption.STRICT));
     }
     Show show2 = new Show();
     {
       Clip interval = Clips.interval(0, Tile.maxExclusive(z) * 256 - 1);
-      ScalarUnaryOperator suo = s -> TilePixel.of(z, 0, Floor.intValueExact(s)).lon_lat().Get(1);
+      ScalarUnaryOperator suo = s -> TilePixel.of(z, 256, 0, Floor.intValueExact(s)).lon_lat().Get(1);
       show2.add(Plot.of(suo, interval, PlotOption.STRICT));
     }
     return ShowGridComponent.of(show1, show2);

@@ -39,15 +39,15 @@ class GeoPlot implements ManipulateProvider {
     Tensor ll1 = seg.get(1);
     int z = 0;
     for (z = 3; z < 18; ++z) {
-      TilePixel pr = TilePixel.from(z, ll0);
-      TilePixel qr = TilePixel.from(z, ll1);
+      TilePixel pr = TilePixel.from(z, 256, ll0);
+      TilePixel qr = TilePixel.from(z, 256, ll1);
       long dx = Math.abs(pr.absX() - qr.absX());
       long dy = Math.abs(pr.absY() - qr.absY());
       long max = Math.max(dx, dy);
       if (512 < max / 4)
         break;
-      TilePixel p = TilePixel.from(z, ll0);
-      TilePixel q = TilePixel.from(z, ll1);
+      TilePixel p = TilePixel.from(z, 256, ll0);
+      TilePixel q = TilePixel.from(z, 256, ll1);
       int px = p.tile().x();
       int qx = q.tile().x();
       int py = p.tile().y();
@@ -78,8 +78,8 @@ class GeoPlot implements ManipulateProvider {
     Tensor ll1 = seg.get(1);
     int z = 0;
     for (z = 0; z < 18; ++z) {
-      TilePixel p = TilePixel.from(z, ll0);
-      TilePixel q = TilePixel.from(z, ll1);
+      TilePixel p = TilePixel.from(z, 256, ll0);
+      TilePixel q = TilePixel.from(z, 256, ll1);
       long dx = Math.abs(p.absX() - q.absX());
       long dy = Math.abs(p.absY() - q.absY());
       long max = Math.max(dx, dy);
@@ -89,8 +89,8 @@ class GeoPlot implements ManipulateProvider {
     --z;
     --z;
     --z;
-    TilePixel p = TilePixel.from(z, ll0);
-    TilePixel q = TilePixel.from(z, ll1);
+    TilePixel p = TilePixel.from(z, 256, ll0);
+    TilePixel q = TilePixel.from(z, 256, ll1);
     int px = p.tile().x();
     int qx = q.tile().x();
     int py = p.tile().y();
@@ -113,7 +113,7 @@ class GeoPlot implements ManipulateProvider {
       }
     else
       System.err.println(index);
-    TilePixel origin = new TilePixel(new Tile(z, x0, y0), 0, 0);
+    TilePixel origin = new TilePixel(new Tile(z, x0, y0), 256, 0, 0);
     {
       graphics.setColor(marker);
       graphics.setStroke(new BasicStroke(4f));

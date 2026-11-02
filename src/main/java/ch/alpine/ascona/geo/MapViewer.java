@@ -54,14 +54,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ArrayReshape;
 import ch.alpine.tensor.alg.Drop;
-import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Round;
 
-/** For Java, I recommend an architecture based on
- * ExecutorService + BlockingQueue (or CompletableFuture) +
- * a thread-safe tile cache, with all GUI updates
- * dispatched to the GUI's event thread. */
 @ReflectionMarker
 class MapViewer implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
@@ -164,7 +159,7 @@ class MapViewer implements ManipulateProvider {
       }
       if (4 < tilePixel.tile().z() && minizoom != 0) {
         GeoComponent submap = new GeoComponent();
-        Optional<TilePixel> optional = tilePixel.zoomIncr(-minizoom, tileServer.z_max());
+        Optional<TilePixel> optional = tilePixel.zoomIncr(-minizoom * 256, tileServer.z_max());
         if (optional.isPresent()) {
           submap.tilePixel = optional.orElseThrow();
           submap.tileServer = geoComponent.tileServer;
@@ -180,7 +175,7 @@ class MapViewer implements ManipulateProvider {
           {
             gfx.setColor(Color.BLACK);
             gfx.setStroke(new BasicStroke(1));
-            Optional<TilePixel> zoomIncr = geoLayer.origin().zoomIncr(-minizoom, tileServer.z_max());
+            Optional<TilePixel> zoomIncr = geoLayer.origin().zoomIncr(-minizoom * 256, tileServer.z_max());
             if (zoomIncr.isPresent()) {
               TilePixel zoom = zoomIncr.orElseThrow();
               Point point = new GeoLayer(zoom).toPoint(submap.tilePixel);
@@ -297,11 +292,15 @@ class MapViewer implements ManipulateProvider {
     IO.println(resourceLocator);
     if (!FileBlock.of(resourceLocator.resolve(""))) {
       MapViewer mapViewer = new MapViewer();
+      mapViewer.geoComponent.tilePixel = new TilePixel(new Tile(0, 0, 0), 256, 0, 0);
       Path properties = resourceLocator.properties(MapParam.class);
       {
         MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-        long[] array = Primitives.toLongArray(mapParam.center);
-        mapViewer.geoComponent.tilePixel = TilePixel.of((int) array[0], array[1], array[2]);
+        try {
+          mapViewer.geoComponent.tilePixel = mapParam.prod();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
       }
       Path path = resourceLocator.resolve("francetours.properties");
       {
@@ -314,7 +313,7 @@ class MapViewer implements ManipulateProvider {
         mapViewer.geoComponent.tileServer.cache().clearQueue();
         MapParam mapParam = new MapParam();
         TilePixel tilePixel = mapViewer.geoComponent.tilePixel;
-        mapParam.center = Tensors.vector(tilePixel.tile().z(), tilePixel.absX(), tilePixel.absY());
+        mapParam.read(tilePixel);
         ObjectProperties.trySave(mapParam, properties);
       });
     }
