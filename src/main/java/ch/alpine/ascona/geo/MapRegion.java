@@ -6,23 +6,22 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Path2D;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.awt.LazyMouse;
 import ch.alpine.bridge.awt.LazyMouseListener;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.awt.WindowClosed;
-import ch.alpine.bridge.fig.PlotOption;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.geo.GeoComponent;
@@ -48,7 +47,6 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.opt.nd.CoordinateBounds;
-import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Round;
 
 /** For Java, I recommend an architecture based on
@@ -58,8 +56,6 @@ import ch.alpine.tensor.sca.Round;
 @ReflectionMarker
 class MapRegion implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
-  public Boolean debug_print = true;
-  public Boolean download = true;
   public Boolean availability = true;
   @FieldFuse
   public transient Boolean pathClear = false;
@@ -74,7 +70,6 @@ class MapRegion implements ManipulateProvider {
       RenderQuality.smoothLine(graphics, false);
       TextContour textContour = TextContour.of(graphics);
       Dimension dimension = getSize();
-      final Point center = AwtUtil.center(dimension);
       if (availability) {
         MapImagesCache mapImagesCache = tileServer.cache();
         // IO.println("ZERO " + geoLayer.origin());
@@ -119,7 +114,7 @@ class MapRegion implements ManipulateProvider {
         switch (button) {
         case 1:
           TilePixel tilePixel = geoComponent.fromPoint(mouseEvent.getPoint());
-          geoPath.pathSeq.append(tilePixel.lat_lon());
+          geoPath.pathSeq.append(tilePixel.lon_lat());
           geoComponent.repaint();
           break;
         }
@@ -139,39 +134,51 @@ class MapRegion implements ManipulateProvider {
     }
     if (load) {
       // ObjectProperties.trySave(mapViewer.geoPath, path);
-      Tensor region = Reverse.of(geoPath.pathSeq);
-      CoordinateBoundingBox cbb = CoordinateBounds.of(geoPath.pathSeq);
-      Clip clip0 = cbb.clip(0);
-      Clip clip1 = cbb.clip(1);
-      List<Show> list = new LinkedList<Show>();
-      // IO.println("START " + beg);
-      int z_start = geoComponent.tilePixel.tile().z();
-      for (int z = z_start; z <= Math.min(depth, geoComponent.tileServer.z_max()); ++z) {
-        Show show = new Show();
-        show.add(PolygonPlot.of(region));
-        TilePixel beg = TilePixel.from(z, clip0.max(), clip1.min());
-        TilePixel end = TilePixel.from(z, clip0.min(), clip1.max());
-        for (int x = beg.tile().x(); x <= end.tile().x(); ++x) {
-          for (int y = beg.tile().y(); y <= end.tile().y(); ++y) {
-            Tile tile = new Tile(z, x, y);
+      Tensor all = Tensors.of(Reverse.of(geoPath.pathSeq));
+      if (Objects.nonNull(all)) {
+        List<Tile> prev0 = new LinkedList<>();
+        List<Tile> prev1 = new LinkedList<>();
+        List<Show> list = new LinkedList<Show>();
+        prev0.add(new Tile(0, 0, 0));
+        for (int z = 0; z < depth; ++z) {
+          IO.println(z + " " + prev0.size() + " " + prev1.size());
+          List<Tile> next0 = new LinkedList<>();
+          List<Tile> next1 = new LinkedList<>();
+          Show show = new Show();
+          show.add(PolygonPlot.of(all.get(0)));
+          for (Tile tile : prev0) {
             Tensor cbb_lat_lon = Reverse.of(tile.cbb_lat_lon());
-            show.add(PolygonPlot.of(cbb_lat_lon));
             TensorUnaryOperator tuo = PolygonClip.of(cbb_lat_lon);
-            Tensor tensor = tuo.apply(region);
-            show.add(PolygonPlot.of(tensor, PlotOption.FILL));
-            MapImagesCache mapImagesCache = geoComponent.getCache();
-            if (!mapImagesCache.isAvailableOffline(tile))
-              mapImagesCache.getTile(tile);
+            CoordinateBoundingBox cbb0 = CoordinateBounds.of(cbb_lat_lon);
+            for (Tensor region : all) {
+              Tensor tensor = tuo.apply(region);
+              if (!Tensors.isEmpty(tensor)) {
+                show.add(PolygonPlot.of(tensor));
+                CoordinateBoundingBox cbb1 = CoordinateBounds.of(tensor);
+                boolean exact = cbb0.equals(cbb1);
+                if (exact) {
+                  next1.addAll(tile.children());
+                } else
+                  next0.addAll(tile.children());
+                break;
+              }
+            }
           }
+          for (Tile tile : prev1)
+            next1.addAll(tile.children());
+          prev0 = next0;
+          prev1 = next1;
+          // if (download)
+          Stream.concat(prev0.stream(), prev1.stream()) //
+              .forEach(geoComponent.tileServer.cache()::getTile);
         }
-        list.add(show);
+        if (!list.isEmpty()) {
+          JDialog jDialog = ShowWindow.asDialog(list);
+          jDialog.setBounds(100, 100, 500, 500);
+          jDialog.setVisible(true);
+        }
       }
       load = false;
-      {
-        JDialog jDialog = ShowWindow.asDialog(list);
-        jDialog.setBounds(100, 100, 500, 500);
-        jDialog.setVisible(true);
-      }
     }
     return geoComponent;
   }
@@ -191,6 +198,7 @@ class MapRegion implements ManipulateProvider {
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
       WindowClosed.runs(jFrame, () -> {
+        mapViewer.geoComponent.tileServer.cache().clearQueue();
         MapParam mapParam = new MapParam();
         TilePixel tilePixel = mapViewer.geoComponent.tilePixel;
         mapParam.center = Tensors.vector(tilePixel.tile().z(), tilePixel.absX(), tilePixel.absY());

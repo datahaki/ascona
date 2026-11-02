@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.Point;
 
 import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -64,6 +65,22 @@ public enum GeoBoundaries {
     return Collections.unmodifiableList(all);
   }
 
+  public String inside(Point point) {
+    for (JsonNode feature : jsonNode.path("features")) {
+      JsonNode geometryNode = feature.path("geometry");
+      try {
+        Geometry geometry = objectMapper.treeToValue(geometryNode, Geometry.class);
+        if (geometry.contains(point)) {
+          String name = feature.path("properties").path("shapeName").asText("Unknown");
+          return name;
+        }
+      } catch (Exception e) {
+        // TODO handle exception
+      }
+    }
+    return "";
+  }
+
   private Tensor compute(Boundary boundary) {
     CurveDecimation curveDecimation = RnCurveDecimation.of(boundary.epsilon());
     try {
@@ -80,7 +97,6 @@ public enum GeoBoundaries {
             path.append(Tensors.of(lat, lon));
           }
           paths.append(Reverse.of(curveDecimation.apply(path)));
-          
         }
         return paths;
       }

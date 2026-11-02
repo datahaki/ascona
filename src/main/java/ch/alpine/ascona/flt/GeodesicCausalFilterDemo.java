@@ -52,7 +52,7 @@ class GeodesicCausalFilterDemo extends AbstractSpectrogramDemo {
           : null;
       ;
       GeodesicCausalFilters geodesicCausalFilters = paraf.gcf.ofSafe(geodesicSpace);
-      // TODO ASCONA ALG should be able to do with geodesicCausalFilters.supply, but doesn't
+      // TODO ALG should be able to do with geodesicCausalFilters.supply, but doesn't
       TensorUnaryOperator geodesicExtrapolation = GeodesicExtrapolation.of(geodesicSpace, windowFunctions);
       TensorUnaryOperator tuo = switch (geodesicCausalFilters) {
       case GEODESIC_FIR -> GeodesicFIRnFilter.of(geodesicExtrapolation, geodesicSpace, radius, alpha());

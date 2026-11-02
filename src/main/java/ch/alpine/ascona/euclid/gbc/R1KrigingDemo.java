@@ -34,7 +34,7 @@ import ch.alpine.tensor.col.ColorDataGradients;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.sca.Abs;
 
-// TODO ASCONA DEMO behaves counter intuitively!?
+// TODO DEMO behaves counter intuitively!?
 class R1KrigingDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param {
@@ -94,7 +94,7 @@ class R1KrigingDemo extends ControlPointsDemo {
       Sedarim sedarim = param.logWeightings.sedarim(param.biinvariants.ofSafe(manifold), InversePowerVariogram.of(2), sequence);
       // Sedarim sedarim = operator(sequence);
       try {
-        // TODO ASCONA this crashes gloriously
+        // TODO this crashes gloriously
         Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
         // ---
         Tensor domain = StaticHelper.domain(getControlPointsSe2());

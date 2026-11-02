@@ -44,7 +44,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 /** transfe
  * weights from barycentric coordinates defined by set of control points*in the square domain(subset of R^2)to means in non-linear spaces */
-class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
+class CheckerBoardDemo extends ControlPointsDemo { // FIXME SPIN
   public static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._000.strict();
   // ---
 
@@ -105,7 +105,7 @@ class CheckerBoardDemo extends ControlPointsDemo { // FIXME ASCONA SPIN
           // TensorScalarFunction tensorUnaryOperator = function(sequence, reference.multiply( //
           // DoubleScalar.of(param1.factor)));
           // ManifoldDisplay manifoldDisplay = manifoldDisplay();
-          // TODO ASCONA ALG redundant
+          // TODO ALG redundant
           // ArrayFunction<Scalar> arrayFunction = new ArrayFunction<>(tensorUnaryOperator, DoubleScalar.INDETERMINATE);
           // CoordinateBoundingBox cbb = manifoldDisplay.d2Raster_coordinateBoundingBox();
           // Tensor matrix = manifoldDisplay.d2Raster().of(arrayFunction, cbb, 512);

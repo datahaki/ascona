@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Path2D;
 import java.nio.file.Path;
 import java.util.LinkedList;
@@ -16,6 +17,12 @@ import java.util.stream.Stream;
 
 import javax.swing.JFrame;
 
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+
+import ch.alpine.bridge.awt.LazyMouse;
+import ch.alpine.bridge.awt.LazyMouseListener;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.bridge.geo.GeoComponent;
@@ -39,10 +46,12 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Reverse;
+import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.io.Primitives;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.opt.nd.CoordinateBounds;
+import ch.alpine.tensor.qty.QuantityMagnitude;
 
 /** For Java, I recommend an architecture based on
  * ExecutorService + BlockingQueue (or CompletableFuture) +
@@ -51,7 +60,6 @@ import ch.alpine.tensor.opt.nd.CoordinateBounds;
 @ReflectionMarker
 class MapBoundaries implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
-  public Boolean debug_print = true;
   public Boolean download = true;
   public Boolean availability = true;
   @FieldSelectionCallback("countries")
@@ -115,6 +123,30 @@ class MapBoundaries implements ManipulateProvider {
     };
   };
 
+  public MapBoundaries() {
+    LazyMouseListener lml = new LazyMouseListener() {
+      @Override
+      public void lazyClicked(MouseEvent mouseEvent) {
+        int button = mouseEvent.getButton();
+        switch (button) {
+        case 1:
+          TilePixel tilePixel = geoComponent.fromPoint(mouseEvent.getPoint());
+          Tensor lon_lat = tilePixel.lon_lat();
+          GeometryFactory gf = new GeometryFactory();
+          ScalarUnaryOperator suo = QuantityMagnitude.SI().in("deg");
+          Coordinate cd = new Coordinate( //
+              suo.apply(lon_lat.Get(0)).number().doubleValue(), //
+              suo.apply(lon_lat.Get(1)).number().doubleValue());
+          Point point = gf.createPoint(cd);
+          country = GeoBoundaries.INSTACE.inside(point);
+          geoComponent.repaint();
+          break;
+        }
+      }
+    };
+    new LazyMouse(lml).addListenersTo(geoComponent);
+  }
+
   public void load() {
     Boundary boundary = new Boundary(country, epsilon);
     Tensor all = GeoBoundaries.INSTACE.cache.apply(boundary);
@@ -147,11 +179,9 @@ class MapBoundaries implements ManipulateProvider {
           next1.addAll(tile.children());
         prev0 = next0;
         prev1 = next1;
-        if (download) {
-          MapImagesCache mapImagesCache = geoComponent.tileServer.cache();
-          List<Tile> list = Stream.concat(prev0.stream(), prev1.stream()).toList();
-          list.forEach(mapImagesCache::getTile);
-        }
+        if (download)
+          Stream.concat(prev0.stream(), prev1.stream()) //
+              .forEach(geoComponent.tileServer.cache()::getTile);
       }
     }
   }
@@ -159,7 +189,6 @@ class MapBoundaries implements ManipulateProvider {
   @Override
   public Container getContainer() {
     geoComponent.tileServer = tileServers;
-    // geoComponent.getCache().debug_print = debug_print;
     return geoComponent;
   }
 
@@ -173,11 +202,7 @@ class MapBoundaries implements ManipulateProvider {
         long[] array = Primitives.toLongArray(mapParam.center);
         mapViewer.geoComponent.tilePixel = TilePixel.of((int) array[0], array[1], array[2]);
       }
-      // Path path = resourceLocator.resolve("region.properties");
-      // ObjectProperties.tryLoad(mapViewer.geoPath, path);
       JFrame jFrame = mapViewer.runStandalone();
-      // WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
-
       WindowClosed.runs(jFrame, () -> {
         MapParam mapParam = new MapParam();
         mapViewer.geoComponent.tileServer.cache().clearQueue();

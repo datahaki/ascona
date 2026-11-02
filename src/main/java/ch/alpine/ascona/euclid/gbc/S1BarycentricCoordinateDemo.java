@@ -7,7 +7,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.lie.rot.AngleVector;
 import ch.alpine.tensor.num.Pi;
 
-// TODO ASCONA ALG crashes when only 2 control points exist
+// TODO ALG crashes when only 2 control points exist
 public class S1BarycentricCoordinateDemo extends A1BarycentricCoordinateDemo {
   @Override
   Tensor domain(Tensor support) {

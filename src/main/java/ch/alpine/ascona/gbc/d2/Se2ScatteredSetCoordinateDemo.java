@@ -65,7 +65,7 @@ final class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     }
     if (manifoldDisplay.dimensions() < controlPoints.length() && scatteredSetParam.show) { // render basis functions
       Tensor origin = getGeodesicControlPoints();
-      // TODO ASCONA use cache
+      // TODO use cache
       Tensor wgs = compute(weightingsParam.operator(manifoldDisplay.manifold(), origin), scatteredSetParam.refine, controlPoints.length());
       Tensor weights = ImageTiling.of(wgs);
       Show show = new Show();

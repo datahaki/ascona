@@ -65,8 +65,6 @@ import ch.alpine.tensor.sca.Round;
 @ReflectionMarker
 class MapViewer implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
-  public Boolean debug_print = true;
-  public Boolean download = true;
   public Boolean showCycles = false;
   public Boolean showPoi = false;
   public Boolean showGlobe = false;
@@ -83,15 +81,10 @@ class MapViewer implements ManipulateProvider {
   public Boolean pathAdd = false;
   @FieldFuse
   public transient Boolean pathClear = false;
-  public String infoLine = "";
   // ---
-  private final GeoComponent geoComponent = new GeoComponent() {
+  final GeoComponent geoComponent = new GeoComponent() {
     @Override
     public void renderMore(GeoLayer geoLayer, Graphics2D graphics) {
-      {
-        graphics.setColor(Color.BLACK);
-        graphics.drawString(infoLine, 0, 150);
-      }
       RenderQuality.setQuality(graphics);
       RenderQuality.smoothLine(graphics, false);
       TextContour textContour = TextContour.of(graphics);
@@ -126,7 +119,7 @@ class MapViewer implements ManipulateProvider {
           TilePixel p11 = tilePixel.shift(+center.x, +center.y);
           TilePixel p01 = tilePixel.shift(-center.x, +center.y);
           List<TilePixel> list = List.of(p00, p10, p11, p01);
-          Tensor tensor = Tensor.of(list.stream().map(TilePixel::lat_lon).map(GeoPosition::of));
+          Tensor tensor = Tensor.of(list.stream().map(TilePixel::lon_lat).map(GeoPosition::of));
           new PathRender(ColorStroke.CURVE, manifoldDisplay.point2xy().slash(tensor), true) //
               .render(geometricLayer, graphics);
           manifoldDisplay.showPoints(ColorPairs.CONTROL_POINTS, RealScalar.ONE, tensor) //
@@ -137,7 +130,7 @@ class MapViewer implements ManipulateProvider {
           TilePixel pp0 = tilePixel.shift(-center.x, 0);
           TilePixel pm0 = tilePixel.shift(+center.x, 0);
           Tensor tensor = Tensor.of(Stream.of(pp0, pm0) //
-              .map(TilePixel::lat_lon).map(GeoPosition::xyz));
+              .map(TilePixel::lon_lat).map(GeoPosition::xyz));
           d_lat = Vector2Norm.between(tensor.get(0), tensor.get(1));
         }
         final Scalar d_lon;
@@ -145,7 +138,7 @@ class MapViewer implements ManipulateProvider {
           TilePixel pp0 = tilePixel.shift(0, -center.y);
           TilePixel pm0 = tilePixel.shift(0, +center.y);
           Tensor tensor = Tensor.of(Stream.of(pp0, pm0) //
-              .map(TilePixel::lat_lon).map(GeoPosition::xyz));
+              .map(TilePixel::lon_lat).map(GeoPosition::xyz));
           d_lon = Vector2Norm.between(tensor.get(0), tensor.get(1));
         }
         textContour.draw("" + Tensors.of(d_lat, d_lon).maps(Round._2), 0, dimension.height - 40);
@@ -197,11 +190,10 @@ class MapViewer implements ManipulateProvider {
           gfx.dispose();
         }
       }
-      
     };
   };
   private final Tensor segments = StaticHelper.segments();
-  private GeoPath geoPath = new GeoPath();
+  GeoPath geoPath = new GeoPath();
 
   public MapViewer() {
     LazyMouseListener lml = new LazyMouseListener() {
@@ -212,7 +204,7 @@ class MapViewer implements ManipulateProvider {
         int button = mouseEvent.getButton();
         switch (button) {
         case 1:
-          geoPath.pathSeq.append(tilePixel.lat_lon());
+          geoPath.pathSeq.append(tilePixel.lon_lat());
           geoComponent.repaint();
           break;
         // case 3:
@@ -250,10 +242,9 @@ class MapViewer implements ManipulateProvider {
     geoComponent.addMouseMotionListener(new MouseMotionListener() {
       @Override
       public void mouseMoved(MouseEvent mouseEvent) {
-        TilePixel tilePixel = geoComponent.fromPoint(mouseEvent.getPoint());
-        Tensor lat_lon = tilePixel.lat_lon();
-        infoLine = lat_lon.toString();
-        geoComponent.repaint();
+        // TilePixel tilePixel = geoComponent.fromPoint(mouseEvent.getPoint());
+        // Tensor lat_lon = tilePixel.lat_lon();
+        // geoComponent.repaint();
       }
 
       @Override
@@ -303,6 +294,7 @@ class MapViewer implements ManipulateProvider {
 
   static void main() {
     ResourceLocator resourceLocator = ResourceLocator.of(MapViewer.class);
+    IO.println(resourceLocator);
     if (!FileBlock.of(resourceLocator.resolve(""))) {
       MapViewer mapViewer = new MapViewer();
       Path properties = resourceLocator.properties(MapParam.class);
@@ -312,10 +304,14 @@ class MapViewer implements ManipulateProvider {
         mapViewer.geoComponent.tilePixel = TilePixel.of((int) array[0], array[1], array[2]);
       }
       Path path = resourceLocator.resolve("francetours.properties");
-      ObjectProperties.tryLoad(mapViewer.geoPath, path);
+      {
+        ObjectProperties.tryLoad(mapViewer.geoPath, path);
+        // mapViewer.geoPath.pathSeq = Tensor.of(mapViewer.geoPath.pathSeq.stream().map(Reverse::of));
+      }
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
       WindowClosed.runs(jFrame, () -> {
+        mapViewer.geoComponent.tileServer.cache().clearQueue();
         MapParam mapParam = new MapParam();
         TilePixel tilePixel = mapViewer.geoComponent.tilePixel;
         mapParam.center = Tensors.vector(tilePixel.tile().z(), tilePixel.absX(), tilePixel.absY());

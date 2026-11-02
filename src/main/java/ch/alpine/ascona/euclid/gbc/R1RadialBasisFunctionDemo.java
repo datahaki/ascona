@@ -28,7 +28,7 @@ import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.col.ColorDataGradients;
 
-/** TODO ASCONA ALG investigate, this produces some nice results for kriging+metric+power */
+/** TODO ALG investigate, this produces some nice results for kriging+metric+power */
 class R1RadialBasisFunctionDemo extends ControlPointsDemo {
   @ReflectionMarker
   static class Param {

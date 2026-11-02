@@ -8,7 +8,7 @@ import ch.alpine.sophis.ref.d1h.HermiteSubdivision;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.sca.Chop;
 
-// TODO ASCONA all demos that use this should provide means to modify lambda, mu etc
+// TODO all demos that use this should provide means to modify lambda, mu etc
 enum HermiteSubdivisions {
   HERMITE1 {
     @Override

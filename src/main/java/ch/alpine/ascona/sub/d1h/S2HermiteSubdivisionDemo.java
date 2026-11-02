@@ -35,7 +35,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 class S2HermiteSubdivisionDemo extends ControlPointsDemo {
-  // TODO ASCONA redundant
+  // TODO redundant
   private static final Stroke STROKE = //
       new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   private static final Tensor GEODESIC_DOMAIN = Subdivide.of(0.0, 1.0, 11);
