@@ -4,30 +4,21 @@ package ch.alpine.ascona.geo;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Path2D;
 import java.nio.file.Path;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import ch.alpine.bridge.awt.LazyMouse;
 import ch.alpine.bridge.awt.LazyMouseListener;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.awt.WindowClosed;
-import ch.alpine.bridge.fig.Show;
-import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.geo.GeoComponent;
 import ch.alpine.bridge.geo.GeoLayer;
-import ch.alpine.bridge.geo.MapImagesCache;
-import ch.alpine.bridge.geo.Tile;
 import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
 import ch.alpine.bridge.gfx.TextContour;
@@ -38,15 +29,9 @@ import ch.alpine.bridge.pro.ShowWindow;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.bridge.ref.util.ObjectProperties;
-import ch.alpine.sophis.crv.d2.alg.PolygonClip;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Drop;
-import ch.alpine.tensor.alg.Reverse;
-import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.io.Primitives;
-import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.sca.Round;
 
 /** For Java, I recommend an architecture based on
@@ -56,12 +41,12 @@ import ch.alpine.tensor.sca.Round;
 @ReflectionMarker
 class MapRegion implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
-  public Boolean availability = true;
   @FieldFuse
   public transient Boolean pathClear = false;
   public Integer depth = 13;
   @FieldFuse
   public transient Boolean load = false;
+  public transient Boolean download = false;
   // ---
   private final GeoComponent geoComponent = new GeoComponent() {
     @Override
@@ -69,28 +54,6 @@ class MapRegion implements ManipulateProvider {
       RenderQuality.setQuality(graphics);
       RenderQuality.smoothLine(graphics, false);
       TextContour textContour = TextContour.of(graphics);
-      Dimension dimension = getSize();
-      if (availability) {
-        MapImagesCache mapImagesCache = tileServer.cache();
-        // IO.println("ZERO " + geoLayer.origin());
-        for (int iz = 1; iz <= 1; iz++) {
-          Optional<TilePixel> optional = geoLayer.origin().zoomIncr(iz, tileServer.z_max());
-          if (optional.isPresent()) {
-            TilePixel zoom = optional.orElseThrow();
-            graphics.setColor(new Color(128, 0, 128, 16));
-            int fac = 1 << iz;
-            for (int ix = 0; ix < dimension.width * fac + 256; ix += 256)
-              for (int iy = 0; iy < dimension.height * fac + 256; iy += 256) {
-                TilePixel shift = zoom.shift(ix, iy);
-                if (!mapImagesCache.isAvailableOffline(shift.tile())) {
-                  graphics.fillRect((ix - shift.pix() + 128) / fac - 4, (iy - shift.piy() + 128) / fac - 4, 8, 8);
-                }
-                // BufferedImage bufferedImage = mapImagesCache.getTile(shift.tile());
-                // graphics.drawImage(bufferedImage, (ix - shift.pix()) / 2, (iy - shift.piy()) / 2, 128, 128, null);
-              }
-          }
-        }
-      }
       {
         graphics.setStroke(new BasicStroke(2f));
         Path2D path2d = geoLayer.toPath2D(geoPath.pathSeq);
@@ -126,58 +89,23 @@ class MapRegion implements ManipulateProvider {
   @Override
   public Container getContainer() {
     geoComponent.tileServer = tileServers;
-    // geoComponent.getCache().debug_print = debug_print;
     if (pathClear) {
       if (Tensors.nonEmpty(geoPath.pathSeq))
         geoPath.pathSeq = Drop.tail(geoPath.pathSeq, 1);
       pathClear = false;
     }
     if (load) {
-      // ObjectProperties.trySave(mapViewer.geoPath, path);
-      Tensor all = Tensors.of(Reverse.of(geoPath.pathSeq));
-      if (Objects.nonNull(all)) {
-        List<Tile> prev0 = new LinkedList<>();
-        List<Tile> prev1 = new LinkedList<>();
-        List<Show> list = new LinkedList<Show>();
-        prev0.add(new Tile(0, 0, 0));
-        for (int z = 0; z < depth; ++z) {
-          IO.println(z + " " + prev0.size() + " " + prev1.size());
-          List<Tile> next0 = new LinkedList<>();
-          List<Tile> next1 = new LinkedList<>();
-          Show show = new Show();
-          show.add(PolygonPlot.of(all.get(0)));
-          for (Tile tile : prev0) {
-            Tensor cbb_lat_lon = Reverse.of(tile.cbb_lat_lon());
-            TensorUnaryOperator tuo = PolygonClip.of(cbb_lat_lon);
-            CoordinateBoundingBox cbb0 = CoordinateBounds.of(cbb_lat_lon);
-            for (Tensor region : all) {
-              Tensor tensor = tuo.apply(region);
-              if (!Tensors.isEmpty(tensor)) {
-                show.add(PolygonPlot.of(tensor));
-                CoordinateBoundingBox cbb1 = CoordinateBounds.of(tensor);
-                boolean exact = cbb0.equals(cbb1);
-                if (exact) {
-                  next1.addAll(tile.children());
-                } else
-                  next0.addAll(tile.children());
-                break;
-              }
-            }
-          }
-          for (Tile tile : prev1)
-            next1.addAll(tile.children());
-          prev0 = next0;
-          prev1 = next1;
-          // if (download)
-          Stream.concat(prev0.stream(), prev1.stream()) //
-              .forEach(geoComponent.tileServer.cache()::getTile);
-        }
-        if (!list.isEmpty()) {
-          JDialog jDialog = ShowWindow.asDialog(list);
+      new Thread(() -> {
+        Tensor all = Tensors.of(geoPath.pathSeq);
+        RegionTiles regionTiles = new RegionTiles(all, depth);
+        {
+          JDialog jDialog = ShowWindow.asDialog(regionTiles.shows());
           jDialog.setBounds(100, 100, 500, 500);
-          jDialog.setVisible(true);
+          SwingUtilities.invokeLater(() -> jDialog.setVisible(true));
         }
-      }
+        if (download)
+          regionTiles.stream().forEach(geoComponent.tileServer.cache()::getTile);
+      }).start();
       load = false;
     }
     return geoComponent;
@@ -188,20 +116,15 @@ class MapRegion implements ManipulateProvider {
     if (!FileBlock.of(resourceLocator.resolve(""))) {
       MapRegion mapViewer = new MapRegion();
       Path properties = resourceLocator.properties(MapParam.class);
-      {
-        MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-        long[] array = Primitives.toLongArray(mapParam.center);
-        mapViewer.geoComponent.tilePixel = TilePixel.of((int) array[0], (int) array[1], array[2], array[3]);
-      }
-      Path path = resourceLocator.resolve("region.properties");
+      MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
+      mapViewer.geoComponent.tilePixel = mapParam.prod();
+      Path path = resourceLocator.resolve("region2.properties");
       ObjectProperties.tryLoad(mapViewer.geoPath, path);
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
       WindowClosed.runs(jFrame, () -> {
         mapViewer.geoComponent.tileServer.cache().clearQueue();
-        MapParam mapParam = new MapParam();
-        TilePixel tilePixel = mapViewer.geoComponent.tilePixel;
-        mapParam.center = Tensors.vector(tilePixel.tile().z(), tilePixel.absX(), tilePixel.absY());
+        mapParam.read(mapViewer.geoComponent.tilePixel);
         ObjectProperties.trySave(mapParam, properties);
       });
     }

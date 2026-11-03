@@ -61,7 +61,6 @@ import ch.alpine.tensor.sca.Round;
 class MapViewer implements ManipulateProvider {
   public TileServers tileServers = TileServers.OpenStreetMap;
   public Boolean showCycles = false;
-  public Boolean showPoi = false;
   public Boolean showGlobe = false;
   @FieldSlider
   @FieldClip(min = "0", max = "5")
@@ -92,15 +91,6 @@ class MapViewer implements ManipulateProvider {
           Point p1 = geoLayer.toPoint(seg.get(0));
           Point p2 = geoLayer.toPoint(seg.get(1));
           graphics.drawLine(p1.x, p1.y, p2.x, p2.y);
-        }
-      }
-      if (showPoi) {
-        for (Pois pois : Pois.values()) {
-          Point point = geoLayer.toPoint(pois.poi.vector());
-          graphics.setColor(marker);
-          graphics.setStroke(new BasicStroke(2));
-          graphics.draw(new Ellipse2D.Double(point.x - 5, point.y - 5, 10, 10));
-          textContour.draw(pois.name(), point.x + 8, point.y + 5);
         }
       }
       if (showGlobe && 4 < tilePixel.tile().z()) {
@@ -159,7 +149,7 @@ class MapViewer implements ManipulateProvider {
       }
       if (4 < tilePixel.tile().z() && minizoom != 0) {
         GeoComponent submap = new GeoComponent();
-        Optional<TilePixel> optional = tilePixel.zoomIncr(-minizoom * 256, tileServer.z_max());
+        Optional<TilePixel> optional = tilePixel.widIncr(-minizoom * 256, tileServer.z_max());
         if (optional.isPresent()) {
           submap.tilePixel = optional.orElseThrow();
           submap.tileServer = geoComponent.tileServer;
@@ -175,7 +165,7 @@ class MapViewer implements ManipulateProvider {
           {
             gfx.setColor(Color.BLACK);
             gfx.setStroke(new BasicStroke(1));
-            Optional<TilePixel> zoomIncr = geoLayer.origin().zoomIncr(-minizoom * 256, tileServer.z_max());
+            Optional<TilePixel> zoomIncr = geoLayer.origin().widIncr(-minizoom * 256, tileServer.z_max());
             if (zoomIncr.isPresent()) {
               TilePixel zoom = zoomIncr.orElseThrow();
               Point point = new GeoLayer(zoom).toPoint(submap.tilePixel);
@@ -259,11 +249,9 @@ class MapViewer implements ManipulateProvider {
     if (stats) {
       Dimension dimension = geoComponent.getSize();
       Point center = AwtUtil.center(dimension);
-      // IO.println(geoComponent.tilePixel);
       TilePixel beg = geoComponent.tilePixel.shift(-center.x, -center.y);
       TilePixel end = geoComponent.tilePixel.shift(+center.x, +center.y);
       int z_start = beg.tile().z();
-      // IO.println("START " + beg);
       for (int z = z_start; z <= Math.min(depth, geoComponent.tileServer.z_max()); ++z) {
         int count = 0;
         int total = 0;
@@ -279,8 +267,8 @@ class MapViewer implements ManipulateProvider {
           }
         }
         IO.println(z + " " + count + " / " + total);
-        beg = beg.zoomIncr(1, geoComponent.tileServer.z_max()).orElseThrow();
-        end = end.zoomIncr(1, geoComponent.tileServer.z_max()).orElseThrow();
+        beg = beg.widIncr(256, geoComponent.tileServer.z_max()).orElseThrow();
+        end = end.widIncr(256, geoComponent.tileServer.z_max()).orElseThrow();
       }
       stats = false;
     }
@@ -292,28 +280,16 @@ class MapViewer implements ManipulateProvider {
     IO.println(resourceLocator);
     if (!FileBlock.of(resourceLocator.resolve(""))) {
       MapViewer mapViewer = new MapViewer();
-      mapViewer.geoComponent.tilePixel = new TilePixel(new Tile(0, 0, 0), 256, 0, 0);
       Path properties = resourceLocator.properties(MapParam.class);
-      {
-        MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-        try {
-          mapViewer.geoComponent.tilePixel = mapParam.prod();
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      }
+      MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
+      mapViewer.geoComponent.tilePixel = mapParam.prod();
       Path path = resourceLocator.resolve("francetours.properties");
-      {
-        ObjectProperties.tryLoad(mapViewer.geoPath, path);
-        // mapViewer.geoPath.pathSeq = Tensor.of(mapViewer.geoPath.pathSeq.stream().map(Reverse::of));
-      }
+      ObjectProperties.tryLoad(mapViewer.geoPath, path);
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
       WindowClosed.runs(jFrame, () -> {
         mapViewer.geoComponent.tileServer.cache().clearQueue();
-        MapParam mapParam = new MapParam();
-        TilePixel tilePixel = mapViewer.geoComponent.tilePixel;
-        mapParam.read(tilePixel);
+        mapParam.read(mapViewer.geoComponent.tilePixel);
         ObjectProperties.trySave(mapParam, properties);
       });
     }

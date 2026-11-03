@@ -21,23 +21,25 @@ import ch.alpine.sophis.decim.RnCurveDecimation;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Reverse;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.qty.Degree;
 
 public enum GeoBoundaries {
-  INSTACE;
+  INSTANCE;
+
+  private record Boundary(String name, Scalar epsilon) {
+  }
 
   private final ObjectMapper objectMapper = new ObjectMapper();
   private JsonNode jsonNode;
   private final List<String> all = new LinkedList<>();
-  final Cache<Boundary, Tensor> cache = Cache.of(this::compute, 1);
+  private final Cache<Boundary, Tensor> cache = Cache.of(this::compute, 1);
 
   private GeoBoundaries() {
     try {
       objectMapper.registerModule(new JtsModule());
-      File file = HomeDirectory.Downloads.resolve("geoBoundariesCGAZ_ADM0.geojson").toFile();
+      File file = HomeDirectory.Database.resolve("GeoBoundaries", "geoBoundariesCGAZ_ADM0.geojson").toFile();
       jsonNode = objectMapper.readTree(file);
       for (JsonNode feature : jsonNode.path("features")) {
         String name = feature.path("properties").path("shapeName").asText("Unknown");
@@ -92,11 +94,13 @@ public enum GeoBoundaries {
           Coordinate[] coordinates = polygon.getCoordinates();
           Tensor path = Tensors.empty();
           for (Coordinate coordinate : coordinates) {
-            Scalar lat = Degree.of(coordinate.y);
             Scalar lon = Degree.of(coordinate.x);
-            path.append(Tensors.of(lat, lon));
+            Scalar lat = Degree.of(coordinate.y);
+            path.append(Tensors.of(lon, lat));
           }
-          paths.append(Reverse.of(curveDecimation.apply(path)));
+          Tensor result = curveDecimation.apply(path);
+          if (2 < result.length())
+            paths.append(result);
         }
         return paths;
       }
@@ -104,5 +108,9 @@ public enum GeoBoundaries {
       // ---
     }
     return null;
+  }
+
+  Tensor cache_apply(String name, Scalar epsilon) {
+    return cache.apply(new Boundary(name, epsilon));
   }
 }
