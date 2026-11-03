@@ -168,7 +168,7 @@ class MapViewer implements ManipulateProvider {
             Optional<TilePixel> zoomIncr = geoLayer.origin().widIncr(-minizoom * 256, tileServer.z_max());
             if (zoomIncr.isPresent()) {
               TilePixel zoom = zoomIncr.orElseThrow();
-              Point point = new GeoLayer(zoom).toPoint(submap.tilePixel);
+              Point point = new GeoLayer(zoom, null).toPoint(submap.tilePixel);
               gfx.drawRect(minilen / 2 - point.x, minilen / 2 - point.y, 2 * point.x, 2 * point.y);
             }
           }
@@ -185,7 +185,7 @@ class MapViewer implements ManipulateProvider {
       @Override
       public void lazyClicked(MouseEvent mouseEvent) {
         TilePixel tilePixel = geoComponent.fromPoint(mouseEvent.getPoint());
-        GeoLayer geoLayer = new GeoLayer(tilePixel);
+        GeoLayer geoLayer = new GeoLayer(tilePixel, null);
         int button = mouseEvent.getButton();
         switch (button) {
         case 1:
