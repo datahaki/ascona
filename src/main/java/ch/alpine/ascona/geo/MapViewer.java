@@ -11,7 +11,6 @@ import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Path2D;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +33,6 @@ import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.ShowableConfig;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.geo.GeoComponent;
-import ch.alpine.bridge.geo.GeoLayer;
 import ch.alpine.bridge.geo.MapImagesCache;
 import ch.alpine.bridge.geo.Tile;
 import ch.alpine.bridge.geo.TilePixel;
@@ -84,21 +82,20 @@ class MapViewer implements ManipulateProvider {
   // ---
   final GeoComponent geoComponent = new GeoComponent() {
     @Override
-    public void renderMore(GeoLayer geoLayer, Graphics2D graphics) {
-      ShowableConfig showableConfig = geoLayer.showableConfig();
+    public void renderMore(Graphics2D graphics, ShowableConfig showableConfig) {
       RenderQuality.setQuality(graphics);
       RenderQuality.smoothLine(graphics, false);
       TextContour textContour = TextContour.of(graphics);
       Dimension dimension = getSize();
       final Point center = AwtUtil.center(dimension);
       if (showCycles) {
-        graphics.setColor(marker);
-        graphics.setStroke(new BasicStroke(4f));
+        Show show = Show.plain();
         for (Tensor seg : segments) {
-          Point p1 = geoLayer.toPoint(seg.get(0));
-          Point p2 = geoLayer.toPoint(seg.get(1));
-          graphics.drawLine(p1.x, p1.y, p2.x, p2.y);
+          Showable showable = show.add(ListLinePlot.of(seg.maps(UnitConvert.SI().to(Degree.UNIT))));
+          showable.setStroke(new BasicStroke(4));
+          showable.setColor(marker);
         }
+        show.showRender(graphics, showableConfig);
       }
       if (showGlobe && 4 < tilePixel.tile().z()) {
         ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
@@ -147,14 +144,14 @@ class MapViewer implements ManipulateProvider {
           showable.setStroke(new BasicStroke(3));
           showable.setColor(new Color(0, 0, 255, 128));
         }
-        show.showRender(showableConfig).render(graphics);
+        show.showRender(graphics, showableConfig);
       } else //
       if (8 <= tilePixel.tile().z()) {
-        graphics.setStroke(new BasicStroke(2f));
-        Path2D path2d = geoLayer.toPath2D(geoPath.pathSeq);
-        graphics.setColor(Color.RED);
-        graphics.draw(path2d);
-        textContour.draw("" + geoPath.distance().maps(Round.FUNCTION), 0, 50);
+        // graphics.setStroke(new BasicStroke(2f));
+        // Path2D path2d = geoLayer.toPath2D(geoPath.pathSeq);
+        // graphics.setColor(Color.RED);
+        // graphics.draw(path2d);
+        // textContour.draw("" + geoPath.distance().maps(Round.FUNCTION), 0, 50);
       }
       if (4 < tilePixel.tile().z() && minizoom != 0) {
         int inset = 50;
@@ -175,10 +172,10 @@ class MapViewer implements ManipulateProvider {
           {
             gfx.setColor(Color.BLACK);
             gfx.setStroke(new BasicStroke(1));
-            Optional<TilePixel> zoomIncr = geoLayer.origin().widIncr(-minizoom * 256, tileServer.z_max());
+            Optional<TilePixel> zoomIncr = origin().widIncr(-minizoom * 256, tileServer.z_max());
             if (zoomIncr.isPresent()) {
               TilePixel zoom = zoomIncr.orElseThrow();
-              Point point = new GeoLayer(zoom, null).toPoint(submap.tilePixel);
+              Point point = zoom.offsetTo(submap.tilePixel);
               gfx.drawRect(minilen / 2 - point.x, minilen / 2 - point.y, 2 * point.x, 2 * point.y);
             }
           }
@@ -195,7 +192,6 @@ class MapViewer implements ManipulateProvider {
       @Override
       public void lazyClicked(MouseEvent mouseEvent) {
         TilePixel tilePixel = geoComponent.fromPoint(mouseEvent.getPoint());
-        GeoLayer geoLayer = new GeoLayer(tilePixel, null);
         int button = mouseEvent.getButton();
         switch (button) {
         case 1:

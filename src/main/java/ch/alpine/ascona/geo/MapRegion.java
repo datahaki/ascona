@@ -20,7 +20,6 @@ import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.ShowableConfig;
 import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.geo.GeoComponent;
-import ch.alpine.bridge.geo.GeoLayer;
 import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
 import ch.alpine.bridge.io.FileBlock;
@@ -52,12 +51,11 @@ class MapRegion implements ManipulateProvider {
   // ---
   private final GeoComponent geoComponent = new GeoComponent() {
     @Override
-    public void renderMore(GeoLayer geoLayer, Graphics2D graphics) {
+    public void renderMore(Graphics2D graphics, ShowableConfig showableConfig) {
       Show show = Show.plain();
       Showable showable = show.add(PolygonPlot.of(geoPath.pathSeq.maps(UnitConvert.SI().to(Degree.UNIT)), PlotOption.FILL));
       showable.setColor(new Color(255, 0, 0, 32));
-      ShowableConfig showableConfig = geoLayer.showableConfig();
-      show.showRender(showableConfig).render(graphics);
+      show.showRender(graphics, showableConfig);
     };
   };
   private GeoPath geoPath = new GeoPath();
