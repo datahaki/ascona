@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Path2D;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +22,10 @@ import ch.alpine.bridge.awt.LazyMouse;
 import ch.alpine.bridge.awt.LazyMouseListener;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.awt.WindowClosed;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.Showable;
+import ch.alpine.bridge.fig.ShowableConfig;
+import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.geo.GeoComponent;
 import ch.alpine.bridge.geo.GeoLayer;
 import ch.alpine.bridge.geo.TilePixel;
@@ -41,7 +44,9 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
+import ch.alpine.tensor.qty.Degree;
 import ch.alpine.tensor.qty.QuantityMagnitude;
+import ch.alpine.tensor.qty.UnitConvert;
 
 /** For Java, I recommend an architecture based on
  * ExecutorService + BlockingQueue (or CompletableFuture) +
@@ -71,16 +76,16 @@ class MapBoundaries implements ManipulateProvider {
       RenderQuality.setQuality(graphics);
       {
         Tensor paths = GeoBoundaries.INSTANCE.cache_apply(country, epsilon);
-        if (Objects.nonNull(paths))
+        if (Objects.nonNull(paths)) {
+          Show show = Show.plain();
           for (Tensor path : paths) {
-            Tensor result = path;
-            Path2D path2d = geoLayer.toPath2D(result);
-            graphics.setColor(new Color(255, 0, 0, 64));
-            graphics.fill(path2d);
-            graphics.setColor(Color.RED);
-            graphics.setStroke(new BasicStroke());
-            graphics.draw(path2d);
+            Showable showable = show.add(PolygonPlot.of(path.maps(UnitConvert.SI().to(Degree.UNIT))));
+            showable.setStroke(new BasicStroke(3));
+            showable.setColor(new Color(255, 0, 0, 128 + 64));
           }
+          ShowableConfig showableConfig = geoLayer.showableConfig();
+          show.showRender(showableConfig).render(graphics);
+        }
       }
       if (load) {
         new Thread(() -> {

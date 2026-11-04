@@ -1,12 +1,10 @@
 // code by jph
 package ch.alpine.ascona.geo;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Path2D;
 import java.nio.file.Path;
 
 import javax.swing.JDialog;
@@ -15,13 +13,16 @@ import javax.swing.SwingUtilities;
 
 import ch.alpine.bridge.awt.LazyMouse;
 import ch.alpine.bridge.awt.LazyMouseListener;
-import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.awt.WindowClosed;
+import ch.alpine.bridge.fig.PlotOption;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.Showable;
+import ch.alpine.bridge.fig.ShowableConfig;
+import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.geo.GeoComponent;
 import ch.alpine.bridge.geo.GeoLayer;
 import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
-import ch.alpine.bridge.gfx.TextContour;
 import ch.alpine.bridge.io.FileBlock;
 import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.pro.ManipulateProvider;
@@ -32,7 +33,8 @@ import ch.alpine.bridge.ref.util.ObjectProperties;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Drop;
-import ch.alpine.tensor.sca.Round;
+import ch.alpine.tensor.qty.Degree;
+import ch.alpine.tensor.qty.UnitConvert;
 
 /** For Java, I recommend an architecture based on
  * ExecutorService + BlockingQueue (or CompletableFuture) +
@@ -51,20 +53,11 @@ class MapRegion implements ManipulateProvider {
   private final GeoComponent geoComponent = new GeoComponent() {
     @Override
     public void renderMore(GeoLayer geoLayer, Graphics2D graphics) {
-      RenderQuality.setQuality(graphics);
-      RenderQuality.smoothLine(graphics, false);
-      TextContour textContour = TextContour.of(graphics);
-      {
-        graphics.setStroke(new BasicStroke(2f));
-        Path2D path2d = geoLayer.toPath2D(geoPath.pathSeq);
-        graphics.setColor(Color.RED);
-        graphics.draw(path2d);
-        textContour.draw("" + geoPath.distance().maps(Round.FUNCTION), 0, 50);
-        if (0 < geoPath.pathSeq.length()) {
-          graphics.setColor(new Color(255, 0, 0, 32));
-          graphics.fill(path2d);
-        }
-      }
+      Show show = Show.plain();
+      Showable showable = show.add(PolygonPlot.of(geoPath.pathSeq.maps(UnitConvert.SI().to(Degree.UNIT)), PlotOption.FILL));
+      showable.setColor(new Color(255, 0, 0, 32));
+      ShowableConfig showableConfig = geoLayer.showableConfig();
+      show.showRender(showableConfig).render(graphics);
     };
   };
   private GeoPath geoPath = new GeoPath();

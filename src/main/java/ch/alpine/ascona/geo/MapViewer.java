@@ -29,6 +29,10 @@ import ch.alpine.bridge.awt.LazyMouse;
 import ch.alpine.bridge.awt.LazyMouseListener;
 import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.awt.WindowClosed;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.Showable;
+import ch.alpine.bridge.fig.ShowableConfig;
+import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.geo.GeoComponent;
 import ch.alpine.bridge.geo.GeoLayer;
 import ch.alpine.bridge.geo.MapImagesCache;
@@ -55,6 +59,8 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ArrayReshape;
 import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.qty.Degree;
+import ch.alpine.tensor.qty.UnitConvert;
 import ch.alpine.tensor.sca.Round;
 
 @ReflectionMarker
@@ -79,6 +85,7 @@ class MapViewer implements ManipulateProvider {
   final GeoComponent geoComponent = new GeoComponent() {
     @Override
     public void renderMore(GeoLayer geoLayer, Graphics2D graphics) {
+      ShowableConfig showableConfig = geoLayer.showableConfig();
       RenderQuality.setQuality(graphics);
       RenderQuality.smoothLine(graphics, false);
       TextContour textContour = TextContour.of(graphics);
@@ -134,11 +141,13 @@ class MapViewer implements ManipulateProvider {
         graphics.setStroke(new BasicStroke(4f));
         int n = geoPath.pathSeq.length() / 2;
         Tensor segDes = ArrayReshape.of(geoPath.pathSeq.stream().limit(n * 2), n, 2);
+        Show show = Show.plain();
         for (Tensor seg : segDes) {
-          Point p1 = geoLayer.toPoint(seg.get(0));
-          Point p2 = geoLayer.toPoint(seg.get(1));
-          graphics.drawLine(p1.x, p1.y, p2.x, p2.y);
+          Showable showable = show.add(ListLinePlot.of(seg.maps(UnitConvert.SI().to(Degree.UNIT))));
+          showable.setStroke(new BasicStroke(3));
+          showable.setColor(new Color(0, 0, 255, 128));
         }
+        show.showRender(showableConfig).render(graphics);
       } else //
       if (8 <= tilePixel.tile().z()) {
         graphics.setStroke(new BasicStroke(2f));
@@ -148,6 +157,7 @@ class MapViewer implements ManipulateProvider {
         textContour.draw("" + geoPath.distance().maps(Round.FUNCTION), 0, 50);
       }
       if (4 < tilePixel.tile().z() && minizoom != 0) {
+        int inset = 50;
         GeoComponent submap = new GeoComponent();
         Optional<TilePixel> optional = tilePixel.widIncr(-minizoom * 256, tileServer.z_max());
         if (optional.isPresent()) {
@@ -155,7 +165,7 @@ class MapViewer implements ManipulateProvider {
           submap.tileServer = geoComponent.tileServer;
           submap.setSize(new Dimension(minilen, minilen));
           graphics.setColor(Color.RED);
-          Graphics2D gfx = (Graphics2D) graphics.create(dimension.width - minilen, 0, minilen, minilen);
+          Graphics2D gfx = (Graphics2D) graphics.create(dimension.width - minilen - inset, inset, minilen, minilen);
           Shape shape = new Ellipse2D.Double(0, 0, minilen, minilen);
           gfx.setClip(shape);
           submap.printAll(gfx);
