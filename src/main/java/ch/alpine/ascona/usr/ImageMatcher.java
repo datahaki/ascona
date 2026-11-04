@@ -20,6 +20,7 @@ import ch.alpine.tensor.alg.Outer;
 import ch.alpine.tensor.alg.Partition;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
+import ch.alpine.tensor.ext.Integers;
 import ch.alpine.tensor.img.ImageResize;
 import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.io.Import;
@@ -39,7 +40,7 @@ enum ImageMatcher {
     int pnx = list.get(0) / SIZE;
     int pny = list.get(1) / SIZE;
     Tensor tensor = Tensors.reserve(pnx * pny);
-    List<Integer> sz = Arrays.asList(SIZE, SIZE);
+    List<Integer> sz = Integers.asList(new int[] { SIZE, SIZE });
     for (int pix = 0; pix < pnx; ++pix) {
       for (int piy = 0; piy < pny; ++piy) {
         tensor.append(Flatten.of(image.block(Arrays.asList(pix * SIZE, piy * SIZE), sz)));
