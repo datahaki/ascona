@@ -4,6 +4,7 @@ package ch.alpine.ascona.gbc.d2;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,6 +20,7 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.plt.DensityPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Sedarim;
@@ -35,6 +37,8 @@ import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.col.ColorDataGradients;
 import ch.alpine.tensor.ext.Cache;
+import ch.alpine.tensor.ext.HomeDirectory;
+import ch.alpine.tensor.io.Put;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.qty.Quantity;
@@ -68,14 +72,21 @@ class MaAveragingDemo extends ControlPointsDemo {
     public ColorDataGradients cdg = ColorDataGradients.PARULA;
   }
 
+  @ReflectionMarker
+  static class Param3 {
+    @FieldFuse
+    public transient Boolean export = false;
+  }
+
   private final Param0 param0;
   private final Param1 param1;
   private final Param2 param2;
+  private final Param3 param3;
   private final Cache<Tensor, Tensor> cache = Cache.of(this::computeImage, 1);
   private Scalar computeTime = Quantity.of(0, "s");
 
   public MaAveragingDemo() {
-    super(param0 = new Param0(), param1 = new Param1(), param2 = new Param2());
+    super(param0 = new Param0(), param1 = new Param1(), param2 = new Param2(), param3 = new Param3());
     geometricComponent().setRotatable(false);
     setControlPointsSe2(Tensors.fromString("{{0, 0, 1}, {1, 0, 1}, {-1, 1, 0}, {-0.5, -1, 0}, {0.4, 1, 0}}"));
     fieldsEditor(param0).addUniversalListener(this::shuffle);
@@ -146,6 +157,15 @@ class MaAveragingDemo extends ControlPointsDemo {
       Show show = new Show();
       Showable showable = show.add(DensityPlot.of(tensor, cbb, param2.cdg));
       show.render(graphics, geometricLayer.toRectangle(showable.fullPlotRange().orElseThrow()).orElseThrow());
+    }
+    if (param3.export) {
+      try {
+        Put.of(HomeDirectory.Ephemeral.resolve("interp2d.tensor"), tensor);
+        IO.println("saved");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      param3.export = false;
     }
     // ---
     graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));

@@ -15,7 +15,7 @@ import ch.alpine.tensor.Tensors;
 @ReflectionMarker
 class MpmDemo implements ManipulateProvider {
   @FieldFuse
-  public Boolean fuse = true;
+  public transient Boolean fuse = true;
   final MPM2D mpm2d = new MPM2D();
 
   @Override

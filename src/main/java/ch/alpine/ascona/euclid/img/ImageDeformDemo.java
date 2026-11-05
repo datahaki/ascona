@@ -54,7 +54,7 @@ class ImageDeformDemo extends EuclideanPlaneDemo {
     public Integer resw = 40;
     public Integer resh = 30;
     @FieldFuse
-    public Boolean fuse = false;
+    public transient Boolean fuse = false;
   }
 
   // private final BufferedImage bufferedImage = ResourceData.bufferedImage("ch/alpine/ascona/image/13_4017_3003.png");

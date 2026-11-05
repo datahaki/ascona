@@ -32,8 +32,6 @@ import ch.alpine.bridge.ref.util.ObjectProperties;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Drop;
-import ch.alpine.tensor.qty.Degree;
-import ch.alpine.tensor.qty.UnitConvert;
 
 /** For Java, I recommend an architecture based on
  * ExecutorService + BlockingQueue (or CompletableFuture) +
@@ -45,15 +43,15 @@ class MapRegion implements ManipulateProvider {
   @FieldFuse
   public transient Boolean pathClear = false;
   public Integer depth = 13;
+  public Boolean download = false;
   @FieldFuse
   public transient Boolean load = false;
-  public transient Boolean download = false;
   // ---
   private final GeoComponent geoComponent = new GeoComponent() {
     @Override
     public void renderMore(Graphics2D graphics, ShowableConfig showableConfig) {
       Show show = Show.plain();
-      Showable showable = show.add(PolygonPlot.of(geoPath.pathSeq.maps(UnitConvert.SI().to(Degree.UNIT)), PlotOption.FILL));
+      Showable showable = show.add(PolygonPlot.of(geoPath.pathSeq, PlotOption.FILL));
       showable.setColor(new Color(255, 0, 0, 32));
       show.showRender(graphics, showableConfig);
     };

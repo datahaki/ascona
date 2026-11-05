@@ -72,6 +72,7 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
   protected abstract int initialCount();
 
   private Path getResPath() {
+    // current directory
     Path user_dir = Path.of(System.getProperty("user.dir"));
     return user_dir.resolve("src/main/resources/ch/alpine/ascona/crv", getSelectedMD().toString().toLowerCase());
   }

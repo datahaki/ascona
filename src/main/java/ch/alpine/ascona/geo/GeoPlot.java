@@ -23,20 +23,20 @@ import ch.alpine.tensor.Tensor;
 
 @ReflectionMarker
 class GeoPlot implements ManipulateProvider {
-  static final Tensor segments = StaticHelper.segments();
+  static final List<RouteRecord> segments = StaticHelper.segments();
   public TileServers ts = TileServers.OpenStreetMap;
   @FieldSelectionCallback("select")
   public transient Integer index = 0;
   public Color marker = Color.MAGENTA;
 
   public List<Integer> select() {
-    return IntStream.range(Math.max(0, index - 5), Math.min(index + 6, segments.length())).boxed().toList();
+    return IntStream.range(Math.max(0, index - 5), Math.min(index + 6, segments.size())).boxed().toList();
   }
 
   public static void load(int index, TileServers ts) {
-    Tensor seg = segments.get(index);
-    Tensor ll0 = seg.get(0);
-    Tensor ll1 = seg.get(1);
+    RouteRecord seg = segments.get(index);
+    Tensor ll0 = seg.path().get(0);
+    Tensor ll1 = seg.path().get(1);
     int z = 0;
     for (z = 3; z < 18; ++z) {
       TilePixel pr = TilePixel.from(z, 256, ll0);
@@ -73,9 +73,9 @@ class GeoPlot implements ManipulateProvider {
 
   @Override
   public Container getContainer() {
-    Tensor seg = segments.get(index);
-    Tensor ll0 = seg.get(0);
-    Tensor ll1 = seg.get(1);
+    RouteRecord seg = segments.get(index);
+    Tensor ll0 = seg.path().get(0);
+    Tensor ll1 = seg.path().get(1);
     int z = 0;
     for (z = 0; z < 18; ++z) {
       TilePixel p = TilePixel.from(z, 256, ll0);
@@ -118,8 +118,8 @@ class GeoPlot implements ManipulateProvider {
       graphics.setColor(marker);
       graphics.setStroke(new BasicStroke(4f));
       {
-        TilePixel beg = origin.from(seg.get(0));
-        TilePixel end = origin.from(seg.get(1));
+        TilePixel beg = origin.from(seg.path().get(0));
+        TilePixel end = origin.from(seg.path().get(1));
         int p1x = (int) (beg.absX() - origin.absX());
         int p1y = (int) (beg.absY() - origin.absY());
         int p2x = (int) (end.absX() - origin.absX());

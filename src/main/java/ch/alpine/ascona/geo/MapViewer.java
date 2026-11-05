@@ -33,8 +33,6 @@ import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.ShowableConfig;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.geo.GeoComponent;
-import ch.alpine.bridge.geo.MapImagesCache;
-import ch.alpine.bridge.geo.Tile;
 import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -57,8 +55,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ArrayReshape;
 import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.qty.Degree;
-import ch.alpine.tensor.qty.UnitConvert;
 import ch.alpine.tensor.sca.Round;
 
 @ReflectionMarker
@@ -73,8 +69,6 @@ class MapViewer implements ManipulateProvider {
   public Integer minilen = 256;
   public Color marker = Color.MAGENTA;
   public Integer depth = 13;
-  @FieldFuse
-  public transient Boolean stats = false;
   public String pathName = "glbe";
   public Boolean pathAdd = false;
   @FieldFuse
@@ -90,8 +84,8 @@ class MapViewer implements ManipulateProvider {
       final Point center = AwtUtil.center(dimension);
       if (showCycles) {
         Show show = Show.plain();
-        for (Tensor seg : segments) {
-          Showable showable = show.add(ListLinePlot.of(seg.maps(UnitConvert.SI().to(Degree.UNIT))));
+        for (RouteRecord seg : segments) {
+          Showable showable = show.add(ListLinePlot.of(seg.path()));
           showable.setStroke(new BasicStroke(4));
           showable.setColor(marker);
         }
@@ -140,7 +134,7 @@ class MapViewer implements ManipulateProvider {
         Tensor segDes = ArrayReshape.of(geoPath.pathSeq.stream().limit(n * 2), n, 2);
         Show show = Show.plain();
         for (Tensor seg : segDes) {
-          Showable showable = show.add(ListLinePlot.of(seg.maps(UnitConvert.SI().to(Degree.UNIT))));
+          Showable showable = show.add(ListLinePlot.of(seg));
           showable.setStroke(new BasicStroke(3));
           showable.setColor(new Color(0, 0, 255, 128));
         }
@@ -162,7 +156,7 @@ class MapViewer implements ManipulateProvider {
           submap.tileServer = geoComponent.tileServer;
           submap.setSize(new Dimension(minilen, minilen));
           graphics.setColor(Color.RED);
-          Graphics2D gfx = (Graphics2D) graphics.create(dimension.width - minilen - inset, inset, minilen, minilen);
+          Graphics2D gfx = (Graphics2D) graphics.create(dimension.width - minilen - inset, 0, minilen, minilen);
           Shape shape = new Ellipse2D.Double(0, 0, minilen, minilen);
           gfx.setClip(shape);
           submap.printAll(gfx);
@@ -184,7 +178,7 @@ class MapViewer implements ManipulateProvider {
       }
     };
   };
-  private final Tensor segments = StaticHelper.segments();
+  private final List<RouteRecord> segments = StaticHelper.segments();
   GeoPath geoPath = new GeoPath();
 
   public MapViewer() {
@@ -251,32 +245,6 @@ class MapViewer implements ManipulateProvider {
     if (pathClear) {
       if (Tensors.nonEmpty(geoPath.pathSeq))
         geoPath.pathSeq = Drop.tail(geoPath.pathSeq, 1);
-    }
-    if (stats) {
-      Dimension dimension = geoComponent.getSize();
-      Point center = AwtUtil.center(dimension);
-      TilePixel beg = geoComponent.tilePixel.shift(-center.x, -center.y);
-      TilePixel end = geoComponent.tilePixel.shift(+center.x, +center.y);
-      int z_start = beg.tile().z();
-      for (int z = z_start; z <= Math.min(depth, geoComponent.tileServer.z_max()); ++z) {
-        int count = 0;
-        int total = 0;
-        for (int x = beg.tile().x(); x <= end.tile().x(); ++x) {
-          for (int y = beg.tile().y(); y <= end.tile().y(); ++y) {
-            Tile tile = new Tile(beg.tile().z(), x, y);
-            MapImagesCache mapImagesCache = geoComponent.getCache();
-            if (mapImagesCache.isAvailableOffline(tile)) {
-              ++count;
-            } else
-              mapImagesCache.getTile(tile).bufferedImage();
-            ++total;
-          }
-        }
-        IO.println(z + " " + count + " / " + total);
-        beg = beg.widIncr(256, geoComponent.tileServer.z_max()).orElseThrow();
-        end = end.widIncr(256, geoComponent.tileServer.z_max()).orElseThrow();
-      }
-      stats = false;
     }
     return geoComponent;
   }

@@ -21,9 +21,12 @@ import ch.alpine.sophis.decim.RnCurveDecimation;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Drop;
+import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.qty.Degree;
+import ch.alpine.tensor.sca.Chop;
 
 public enum GeoBoundaries {
   INSTANCE;
@@ -34,7 +37,7 @@ public enum GeoBoundaries {
   private final ObjectMapper objectMapper = new ObjectMapper();
   private JsonNode jsonNode;
   private final List<String> all = new LinkedList<>();
-  private final Cache<Boundary, Tensor> cache = Cache.of(this::compute, 1);
+  private final Cache<Boundary, Tensor> cache = Cache.of(this::compute, 10);
 
   private GeoBoundaries() {
     try {
@@ -98,7 +101,13 @@ public enum GeoBoundaries {
             Scalar lat = Degree.of(coordinate.y);
             path.append(Tensors.of(lon, lat));
           }
-          Tensor result = curveDecimation.apply(path);
+          Tensor result = path; // curveDecimation.apply(path);
+          if (2 < result.length()) {
+            if (Chop._14.isClose(result.get(0), Last.of(result)))
+              result = Drop.tail(result, 1);
+            else
+              IO.println("not dropped");
+          }
           if (2 < result.length())
             paths.append(result);
         }
