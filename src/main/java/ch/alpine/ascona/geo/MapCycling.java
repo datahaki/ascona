@@ -6,10 +6,11 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -107,12 +108,11 @@ class MapCycling implements ManipulateProvider {
       IO.println(line);
       Path user_dir = Path.of(System.getProperty("user.dir"));
       Path path = user_dir.resolve("src/main/resources/ch/alpine/ascona/geo/2024_routes.csv");
-      boolean exists = Files.exists(path);
-      IO.println(exists);
-      try (FileWriter fileWriter = new FileWriter(path.toFile(), true)) {
-        fileWriter.append(line + "\n");
+      path.toAbsolutePath().normalize();
+      try {
+        Files.writeString(path, line + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
       } catch (IOException e) {
-        e.printStackTrace();
+        throw new UncheckedIOException(e);
       }
       segments.add(routeParam.rec(geoPath.pathSeq));
       geoPath.pathSeq = Tensors.empty();

@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import ch.alpine.bridge.fig.PlotOption;
 import ch.alpine.bridge.fig.Show;
@@ -36,14 +37,12 @@ class GeoBoundariesDemo implements ManipulateProvider {
 
   @Override
   public Container getContainer() {
-    Tensor tensor = GeoBoundaries.INSTANCE.cache_apply(boundariesParam.country, boundariesParam.epsilon());
+    Tensor tensor = GeoBoundaries.INSTANCE.cache_apply(boundariesParam.country);
     if (Objects.isNull(tensor)) {
-      return new JLabel("no can do");
+      return new JLabel("country unknown", SwingConstants.CENTER);
     }
     List<Show> list = new ArrayList<>();
     for (Tensor path : tensor) {
-      if (1 < path.length()) {
-      }
       // Integer[] labels = Dbscan.of(path, NdCenters.VECTOR_2_NORM, RealScalar.ZERO, 1);
       long count = path.stream().distinct().count();
       Map<Tensor, Long> map = Tally.of(path);

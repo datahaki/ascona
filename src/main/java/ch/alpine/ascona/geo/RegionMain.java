@@ -12,7 +12,6 @@ import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.plt.Plot;
 import ch.alpine.bridge.pro.ShowWindow;
 import ch.alpine.sophis.crv.d2.PolygonArea;
-import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
@@ -23,7 +22,7 @@ import ch.alpine.tensor.sca.Abs;
 
 class RegionMain {
   static void main() {
-    Tensor all = GeoBoundaries.INSTANCE.cache_apply("Austria", RealScalar.of(0.001));
+    Tensor all = GeoBoundaries.INSTANCE.cache_apply("Albania");
     Integers.requireEquals(all.length(), 1);
     RegionTiles regionLoad = new RegionTiles(all, 13);
     List<Show> list = new LinkedList<>();

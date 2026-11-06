@@ -262,6 +262,7 @@ class MapViewer implements ManipulateProvider {
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
       WindowClosed.runs(jFrame, () -> {
+        // FIXME This design is bad if multiple viewers are using the static queue!!!!
         mapViewer.geoComponent.tileServer.cache().clearQueue();
         mapParam.read(mapViewer.geoComponent.tilePixel);
         ObjectProperties.trySave(mapParam, properties);

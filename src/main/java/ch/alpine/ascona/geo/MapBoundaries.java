@@ -57,7 +57,7 @@ class MapBoundaries implements ManipulateProvider {
     public void renderMore(Graphics2D graphics, ShowableConfig showableConfig) {
       RenderQuality.setQuality(graphics);
       {
-        Tensor paths = GeoBoundaries.INSTANCE.cache_apply(boundariesParam.country, boundariesParam.epsilon());
+        Tensor paths = GeoBoundaries.INSTANCE.cache_apply(boundariesParam.country);
         if (Objects.nonNull(paths)) {
           Show show = Show.plain();
           for (Tensor path : paths) {
@@ -70,7 +70,7 @@ class MapBoundaries implements ManipulateProvider {
       }
       if (load) {
         new Thread(() -> {
-          Tensor all = GeoBoundaries.INSTANCE.cache_apply(boundariesParam.country, boundariesParam.epsilon());
+          Tensor all = GeoBoundaries.INSTANCE.cache_apply(boundariesParam.country);
           if (Objects.nonNull(all)) {
             RegionTiles regionTiles = new RegionTiles(all, depth);
             {

@@ -2,10 +2,13 @@
 package ch.alpine.ascona.geo;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -16,28 +19,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ch.alpine.sophis.decim.CurveDecimation;
-import ch.alpine.sophis.decim.RnCurveDecimation;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Drop;
-import ch.alpine.tensor.alg.Last;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.qty.Degree;
-import ch.alpine.tensor.sca.Chop;
 
 public enum GeoBoundaries {
   INSTANCE;
 
-  private record Boundary(String name, Scalar epsilon) {
-  }
-
   private final ObjectMapper objectMapper = new ObjectMapper();
   private JsonNode jsonNode;
-  private final List<String> all = new LinkedList<>();
-  private final Cache<Boundary, Tensor> cache = Cache.of(this::compute, 10);
+  private final Set<String> set = new TreeSet<>();
+  private final List<String> all = new ArrayList<>();
+  private final Cache<String, Tensor> cache = Cache.of(this::compute, 10);
 
   private GeoBoundaries() {
     try {
@@ -46,24 +42,12 @@ public enum GeoBoundaries {
       jsonNode = objectMapper.readTree(file);
       for (JsonNode feature : jsonNode.path("features")) {
         String name = feature.path("properties").path("shapeName").asText("Unknown");
-        all.add(name);
+        set.add(name);
       }
-      Collections.sort(all);
-      IO.println("SIZE " + all.size());
-    } catch (Exception e) {
-      e.printStackTrace();
+      all.addAll(set);
+    } catch (Exception exception) {
+      exception.printStackTrace();
     }
-  }
-
-  private Geometry getCountry(String target) throws JsonProcessingException, IllegalArgumentException {
-    for (JsonNode feature : jsonNode.path("features")) {
-      String name = feature.path("properties").path("shapeName").asText("Unknown");
-      if (name.equals(target)) {
-        JsonNode geometryNode = feature.path("geometry");
-        return objectMapper.treeToValue(geometryNode, Geometry.class);
-      }
-    }
-    return null;
   }
 
   public List<String> countries() {
@@ -86,30 +70,41 @@ public enum GeoBoundaries {
     return "";
   }
 
-  private Tensor compute(Boundary boundary) {
-    CurveDecimation curveDecimation = RnCurveDecimation.of(boundary.epsilon());
+  private Geometry getCountry(String target) throws JsonProcessingException, IllegalArgumentException {
+    for (JsonNode feature : jsonNode.path("features")) {
+      String name = feature.path("properties").path("shapeName").asText("Unknown");
+      if (name.equals(target)) {
+        JsonNode geometryNode = feature.path("geometry");
+        return objectMapper.treeToValue(geometryNode, Geometry.class);
+      }
+    }
+    return null;
+  }
+
+  Tensor cache_apply(String name) {
+    return set.contains(name) //
+        ? cache.apply(name)
+        : null;
+  }
+
+  private Tensor compute(String name) {
+    Throw.unless(set.contains(name));
     try {
-      Geometry geometry = getCountry(boundary.name());
+      Geometry geometry = getCountry(name);
       if (Objects.nonNull(geometry)) {
         Tensor paths = Tensors.empty();
         for (int i = 0; i < geometry.getNumGeometries(); i++) {
           Geometry polygon = geometry.getGeometryN(i);
           Coordinate[] coordinates = polygon.getCoordinates();
-          Tensor path = Tensors.empty();
-          for (Coordinate coordinate : coordinates) {
-            Scalar lon = Degree.of(coordinate.x);
-            Scalar lat = Degree.of(coordinate.y);
-            path.append(Tensors.of(lon, lat));
+          int last = coordinates.length - 1;
+          boolean equals2d = coordinates[0].equals2D(coordinates[last], 1e-12);
+          int limit = equals2d ? last : coordinates.length;
+          if (3 < limit) {
+            Tensor path = Tensor.of(Stream.of(coordinates) //
+                .limit(limit) //
+                .map(GeoBoundaries::toPoint));
+            paths.append(path);
           }
-          Tensor result = path; // curveDecimation.apply(path);
-          if (2 < result.length()) {
-            if (Chop._14.isClose(result.get(0), Last.of(result)))
-              result = Drop.tail(result, 1);
-            else
-              IO.println("not dropped");
-          }
-          if (2 < result.length())
-            paths.append(result);
         }
         return paths;
       }
@@ -119,7 +114,9 @@ public enum GeoBoundaries {
     return null;
   }
 
-  Tensor cache_apply(String name, Scalar epsilon) {
-    return cache.apply(new Boundary(name, epsilon));
+  /** @param coordinate
+   * @return interprets the input coordinate as if with unit "deg" and maps to rad */
+  private static Tensor toPoint(Coordinate coordinate) {
+    return Tensors.of(Degree.of(coordinate.x), Degree.of(coordinate.y));
   }
 }

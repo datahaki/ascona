@@ -9,14 +9,14 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.sca.pow.Power;
+import ch.alpine.tensor.sca.exp.Exp;
 
 @ReflectionMarker
 public class BoundariesParam {
   @FieldSelectionCallback("countries")
   public String country = "Spain";
   @FieldSlider
-  @FieldClip(min = "-10", max = "-2")
+  @FieldClip(min = "-20", max = "-2")
   public Integer minizoom = -4;
 
   public List<String> countries() {
@@ -24,8 +24,8 @@ public class BoundariesParam {
   }
 
   public Scalar epsilon() {
-    if (minizoom == -10)
+    if (minizoom == -20)
       return RealScalar.ZERO;
-    return Power.of(10, minizoom);
+    return Exp.FUNCTION.apply(RealScalar.of(minizoom));
   }
 }
