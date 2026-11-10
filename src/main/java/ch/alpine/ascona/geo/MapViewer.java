@@ -9,7 +9,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.nio.file.Path;
 import java.util.List;
@@ -71,8 +70,10 @@ class MapViewer implements ManipulateProvider {
   public Integer depth = 13;
   public String pathName = "glbe";
   public Boolean pathAdd = false;
+  private final List<RouteRecord> segments = StaticHelper.segments();
   @FieldFuse
   public transient Boolean pathClear = false;
+  private GeoPath geoPath = new GeoPath();
   // ---
   final GeoComponent geoComponent = new GeoComponent() {
     @Override
@@ -91,16 +92,16 @@ class MapViewer implements ManipulateProvider {
         }
         show.showRender(graphics, showableConfig);
       }
-      if (showGlobe && 4 < tilePixel.tile().z()) {
+      if (showGlobe && 4 < getTilePixel().tile().z()) {
         ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
         Tensor pvm = PvmBuilder.rot().setOffset(100, 100).setPerPixel(100).digest();
         GeometricLayer geometricLayer = new GeometricLayer(pvm);
         manifoldDisplay.background().render(geometricLayer, graphics);
         {
-          TilePixel p00 = tilePixel.shift(-center.x, -center.y);
-          TilePixel p10 = tilePixel.shift(+center.x, -center.y);
-          TilePixel p11 = tilePixel.shift(+center.x, +center.y);
-          TilePixel p01 = tilePixel.shift(-center.x, +center.y);
+          TilePixel p00 = getTilePixel().shift(-center.x, -center.y);
+          TilePixel p10 = getTilePixel().shift(+center.x, -center.y);
+          TilePixel p11 = getTilePixel().shift(+center.x, +center.y);
+          TilePixel p01 = getTilePixel().shift(-center.x, +center.y);
           List<TilePixel> list = List.of(p00, p10, p11, p01);
           Tensor tensor = Tensor.of(list.stream().map(TilePixel::lon_lat).map(GeoPosition::of));
           new PathRender(ColorStroke.CURVE, manifoldDisplay.point2xy().slash(tensor), true) //
@@ -110,16 +111,16 @@ class MapViewer implements ManipulateProvider {
         }
         final Scalar d_lat;
         {
-          TilePixel pp0 = tilePixel.shift(-center.x, 0);
-          TilePixel pm0 = tilePixel.shift(+center.x, 0);
+          TilePixel pp0 = getTilePixel().shift(-center.x, 0);
+          TilePixel pm0 = getTilePixel().shift(+center.x, 0);
           Tensor tensor = Tensor.of(Stream.of(pp0, pm0) //
               .map(TilePixel::lon_lat).map(GeoPosition::xyz));
           d_lat = Vector2Norm.between(tensor.get(0), tensor.get(1));
         }
         final Scalar d_lon;
         {
-          TilePixel pp0 = tilePixel.shift(0, -center.y);
-          TilePixel pm0 = tilePixel.shift(0, +center.y);
+          TilePixel pp0 = getTilePixel().shift(0, -center.y);
+          TilePixel pm0 = getTilePixel().shift(0, +center.y);
           Tensor tensor = Tensor.of(Stream.of(pp0, pm0) //
               .map(TilePixel::lon_lat).map(GeoPosition::xyz));
           d_lon = Vector2Norm.between(tensor.get(0), tensor.get(1));
@@ -140,19 +141,19 @@ class MapViewer implements ManipulateProvider {
         }
         show.showRender(graphics, showableConfig);
       } else //
-      if (8 <= tilePixel.tile().z()) {
+      if (8 <= getTilePixel().tile().z()) {
         // graphics.setStroke(new BasicStroke(2f));
         // Path2D path2d = geoLayer.toPath2D(geoPath.pathSeq);
         // graphics.setColor(Color.RED);
         // graphics.draw(path2d);
         // textContour.draw("" + geoPath.distance().maps(Round.FUNCTION), 0, 50);
       }
-      if (4 < tilePixel.tile().z() && minizoom != 0) {
+      if (4 < getTilePixel().tile().z() && minizoom != 0) {
         int inset = 50;
         GeoComponent submap = new GeoComponent();
-        Optional<TilePixel> optional = tilePixel.widIncr(-minizoom * 256, tileServer.z_max());
+        Optional<TilePixel> optional = getTilePixel().widIncr(-minizoom * 256, tileServer.z_max());
         if (optional.isPresent()) {
-          submap.tilePixel = optional.orElseThrow();
+          submap.setTilePixel(optional.orElseThrow());
           submap.tileServer = geoComponent.tileServer;
           submap.setSize(new Dimension(minilen, minilen));
           graphics.setColor(Color.RED);
@@ -169,7 +170,7 @@ class MapViewer implements ManipulateProvider {
             Optional<TilePixel> zoomIncr = origin().widIncr(-minizoom * 256, tileServer.z_max());
             if (zoomIncr.isPresent()) {
               TilePixel zoom = zoomIncr.orElseThrow();
-              Point point = zoom.offsetTo(submap.tilePixel);
+              Point point = zoom.offsetTo(submap.getTilePixel());
               gfx.drawRect(minilen / 2 - point.x, minilen / 2 - point.y, 2 * point.x, 2 * point.y);
             }
           }
@@ -178,8 +179,6 @@ class MapViewer implements ManipulateProvider {
       }
     };
   };
-  private final List<RouteRecord> segments = StaticHelper.segments();
-  GeoPath geoPath = new GeoPath();
 
   public MapViewer() {
     LazyMouseListener lml = new LazyMouseListener() {
@@ -223,19 +222,6 @@ class MapViewer implements ManipulateProvider {
       }
     };
     new LazyMouse(lml).addListenersTo(geoComponent);
-    // ---
-    geoComponent.addMouseMotionListener(new MouseMotionListener() {
-      @Override
-      public void mouseMoved(MouseEvent mouseEvent) {
-        // TilePixel tilePixel = geoComponent.fromPoint(mouseEvent.getPoint());
-        // Tensor lat_lon = tilePixel.lat_lon();
-        // geoComponent.repaint();
-      }
-
-      @Override
-      public void mouseDragged(MouseEvent e) {
-      }
-    });
   }
 
   @Override
@@ -256,7 +242,7 @@ class MapViewer implements ManipulateProvider {
       MapViewer mapViewer = new MapViewer();
       Path properties = resourceLocator.properties(MapParam.class);
       MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-      mapViewer.geoComponent.tilePixel = mapParam.prod();
+      mapViewer.geoComponent.setTilePixel(mapParam.prod());
       Path path = resourceLocator.resolve("francetours.properties");
       ObjectProperties.tryLoad(mapViewer.geoPath, path);
       JFrame jFrame = mapViewer.runStandalone();
@@ -264,7 +250,7 @@ class MapViewer implements ManipulateProvider {
       WindowClosed.runs(jFrame, () -> {
         // FIXME This design is bad if multiple viewers are using the static queue!!!!
         mapViewer.geoComponent.tileServer.cache().clearQueue();
-        mapParam.read(mapViewer.geoComponent.tilePixel);
+        mapParam.read(mapViewer.geoComponent.getTilePixel());
         ObjectProperties.trySave(mapParam, properties);
       });
     }

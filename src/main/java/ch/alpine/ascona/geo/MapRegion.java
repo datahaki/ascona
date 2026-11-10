@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascona.geo;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics2D;
@@ -18,6 +19,7 @@ import ch.alpine.bridge.fig.PlotOption;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.ShowableConfig;
+import ch.alpine.bridge.fig.plt.ListPlot;
 import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.geo.GeoComponent;
 import ch.alpine.bridge.geo.TilePixel;
@@ -51,8 +53,14 @@ class MapRegion implements ManipulateProvider {
     @Override
     public void renderMore(Graphics2D graphics, ShowableConfig showableConfig) {
       Show show = Show.plain();
-      Showable showable = show.add(PolygonPlot.of(geoPath.pathSeq, PlotOption.FILL));
-      showable.setColor(new Color(255, 0, 0, 32));
+      {
+        Showable showable = show.add(PolygonPlot.of(geoPath.pathSeq, PlotOption.FILL));
+        showable.setStroke(new BasicStroke(4f));
+        showable.setColor(new Color(255, 0, 0, 32));
+      }
+      {
+        show.add(ListPlot.of(geoPath.pathSeq));
+      }
       show.showRender(graphics, showableConfig);
     };
   };
@@ -69,6 +77,12 @@ class MapRegion implements ManipulateProvider {
           geoPath.pathSeq.append(tilePixel.lon_lat());
           geoComponent.repaint();
           break;
+        case 3:
+          if (0 < geoPath.pathSeq.length()) {
+            geoPath.pathSeq = Drop.tail(geoPath.pathSeq, 1);
+            geoComponent.repaint();
+          }
+          break;
         }
       }
     };
@@ -79,8 +93,7 @@ class MapRegion implements ManipulateProvider {
   public Container getContainer() {
     geoComponent.tileServer = tileServers;
     if (pathClear) {
-      if (Tensors.nonEmpty(geoPath.pathSeq))
-        geoPath.pathSeq = Drop.tail(geoPath.pathSeq, 1);
+      geoPath.pathSeq = Tensors.empty();
       pathClear = false;
     }
     if (load) {
@@ -106,14 +119,14 @@ class MapRegion implements ManipulateProvider {
       MapRegion mapViewer = new MapRegion();
       Path properties = resourceLocator.properties(MapParam.class);
       MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-      mapViewer.geoComponent.tilePixel = mapParam.prod();
+      mapViewer.geoComponent.setTilePixel(mapParam.prod());
       Path path = resourceLocator.resolve("region2.properties");
       ObjectProperties.tryLoad(mapViewer.geoPath, path);
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
       WindowClosed.runs(jFrame, () -> {
         mapViewer.geoComponent.tileServer.cache().clearQueue();
-        mapParam.read(mapViewer.geoComponent.tilePixel);
+        mapParam.read(mapViewer.geoComponent.getTilePixel());
         ObjectProperties.trySave(mapParam, properties);
       });
     }

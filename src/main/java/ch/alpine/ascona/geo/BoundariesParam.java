@@ -17,15 +17,15 @@ public class BoundariesParam {
   public String country = "Spain";
   @FieldSlider
   @FieldClip(min = "-20", max = "-2")
-  public Integer minizoom = -4;
+  public Integer epsilon = -4;
 
   public List<String> countries() {
     return GeoBoundaries.INSTANCE.countries();
   }
 
   public Scalar epsilon() {
-    if (minizoom == -20)
+    if (epsilon == -20)
       return RealScalar.ZERO;
-    return Exp.FUNCTION.apply(RealScalar.of(minizoom));
+    return Exp.FUNCTION.apply(RealScalar.of(epsilon));
   }
 }

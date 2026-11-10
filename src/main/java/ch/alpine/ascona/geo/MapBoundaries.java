@@ -123,11 +123,11 @@ class MapBoundaries implements ManipulateProvider {
       MapBoundaries mapViewer = new MapBoundaries();
       Path properties = resourceLocator.properties(MapParam.class);
       MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-      mapViewer.geoComponent.tilePixel = mapParam.prod();
+      mapViewer.geoComponent.setTilePixel(mapParam.prod());
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> {
         mapViewer.geoComponent.tileServer.cache().clearQueue();
-        mapParam.read(mapViewer.geoComponent.tilePixel);
+        mapParam.read(mapViewer.geoComponent.getTilePixel());
         ObjectProperties.trySave(mapParam, properties);
       });
     }

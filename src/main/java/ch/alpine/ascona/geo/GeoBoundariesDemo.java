@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import ch.alpine.bridge.fig.PlotOption;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowGridComponent;
+import ch.alpine.bridge.fig.ShowOption;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.plt.ListPlot;
 import ch.alpine.bridge.fig.plt.PolygonPlot;
@@ -49,6 +50,7 @@ class GeoBoundariesDemo implements ManipulateProvider {
       Scalar area = PolygonArea.of(path);
       // ---
       Show show = new Show();
+      show.set(ShowOption.NON_LAT, false);
       {
         Showable showable = show.add(PolygonPlot.of(path, PlotOption.FILL));
         int count2 = (int) map.values().stream().distinct().count();

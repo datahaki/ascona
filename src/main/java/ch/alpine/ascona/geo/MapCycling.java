@@ -127,14 +127,14 @@ class MapCycling implements ManipulateProvider {
       MapCycling mapViewer = new MapCycling();
       Path properties = resourceLocator.properties(MapParam.class);
       MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-      mapViewer.geoComponent.tilePixel = mapParam.prod();
+      mapViewer.geoComponent.setTilePixel(mapParam.prod());
       Path path = resourceLocator.resolve("francetours.properties");
       ObjectProperties.tryLoad(mapViewer.geoPath, path);
       JFrame jFrame = mapViewer.runStandalone();
       WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
       WindowClosed.runs(jFrame, () -> {
         mapViewer.geoComponent.tileServer.cache().clearQueue();
-        mapParam.read(mapViewer.geoComponent.tilePixel);
+        mapParam.read(mapViewer.geoComponent.getTilePixel());
         ObjectProperties.trySave(mapParam, properties);
       });
     }
