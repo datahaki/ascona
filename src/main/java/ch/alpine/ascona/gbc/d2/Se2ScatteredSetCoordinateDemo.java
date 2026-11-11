@@ -74,7 +74,7 @@ final class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     }
   }
 
-  private Tensor compute(Sedarim tensorUnaryOperator, int n, int m) {
+  private static Tensor compute(Sedarim tensorUnaryOperator, int n, int m) {
     Tensor sX = Subdivide.intermediate_increasing(RANGE_X, n);
     Tensor sY = Subdivide.intermediate_decreasing(RANGE_X, n);
     Tensor sA = Subdivide.intermediate_increasing(RANGE_A, 6);

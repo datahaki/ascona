@@ -4,7 +4,6 @@ package ch.alpine.ascona.geo;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.api.GeoPosition;
 import ch.alpine.sophus.hs.s.SnManifold;
-import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -20,7 +19,7 @@ public class GeoPath {
   public Scalar distance() {
     TensorUnaryOperator tuo = GeoPosition::of;
     Tensor tensor = tuo.slash(pathSeq);
-    SnManifold snManifold = Sphere.INSTANCE;
+    SnManifold snManifold = SnManifold.INSTANCE;
     AdjacentReduce adjacentReduce = new AdjacentReduce((p, q) -> snManifold.bilinearForm(p).norm(snManifold.tangentSpace(p).log(q)));
     Tensor parts = adjacentReduce.apply(tensor);
     // TODO magic const radius of Earth

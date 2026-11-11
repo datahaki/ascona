@@ -139,7 +139,7 @@ class DubinsPathDemo extends ControlPointsDemo {
     }
   }
 
-  private Tensor sample(DubinsPath dubinsPath) {
+  private static Tensor sample(DubinsPath dubinsPath) {
     return Subdivide.of(0.0, 1.0, POINTS).maps(dubinsPath.unit(START));
   }
 

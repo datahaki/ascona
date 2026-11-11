@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 public class WindowBoundsExample {
   private static final Preferences PREFS = Preferences.userNodeForPackage(WindowBoundsExample.class);
@@ -32,7 +33,7 @@ public class WindowBoundsExample {
   public static void main(String[] args) {
     SwingUtilities.invokeLater(() -> {
       JFrame frame = new JFrame("Window Bounds Example");
-      frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+      frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
       frame.setMinimumSize(new Dimension(300, 200));
       frame.add(new JLabel("Window bounds are saved and restored.", SwingConstants.CENTER));
       // Restore the previous position and size.

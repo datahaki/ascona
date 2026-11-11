@@ -237,7 +237,6 @@ class MapViewer implements ManipulateProvider {
 
   static void main() {
     ResourceLocator resourceLocator = ResourceLocator.of(MapViewer.class);
-    IO.println(resourceLocator);
     if (!FileBlock.of(resourceLocator.resolve(""))) {
       MapViewer mapViewer = new MapViewer();
       Path properties = resourceLocator.properties(MapParam.class);
