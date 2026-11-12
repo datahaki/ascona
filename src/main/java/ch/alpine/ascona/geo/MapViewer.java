@@ -32,6 +32,7 @@ import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.ShowableConfig;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.geo.GeoComponent;
+import ch.alpine.bridge.geo.Sunpoint;
 import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -53,7 +54,9 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ArrayReshape;
 import ch.alpine.tensor.alg.Drop;
+import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Round;
 
 @ReflectionMarker
@@ -90,6 +93,16 @@ class MapViewer implements ManipulateProvider {
           showable.setStroke(new BasicStroke(4));
           showable.setColor(marker);
         }
+        show.showRender(graphics, showableConfig);
+      }
+      {
+        Sunpoint sunpoint = Sunpoint.now();
+        Tensor list = Tensors.empty();
+        for (Tensor x : Subdivide.of(Pi.VALUE.negate(), Pi.VALUE, 100))
+          list.append(Tensors.of(x, sunpoint.fromLongitude((Scalar) x)));
+        Show show = Show.plain();
+        Showable showable = show.add(ListLinePlot.of(list));
+        showable.setColor(new Color(0, 128, 128, 128));
         show.showRender(graphics, showableConfig);
       }
       if (showGlobe && 4 < getTilePixel().tile().z()) {
@@ -133,13 +146,15 @@ class MapViewer implements ManipulateProvider {
         graphics.setStroke(new BasicStroke(4f));
         int n = geoPath.pathSeq.length() / 2;
         Tensor segDes = ArrayReshape.of(geoPath.pathSeq.stream().limit(n * 2), n, 2);
-        Show show = Show.plain();
-        for (Tensor seg : segDes) {
-          Showable showable = show.add(ListLinePlot.of(seg));
-          showable.setStroke(new BasicStroke(3));
-          showable.setColor(new Color(0, 0, 255, 128));
+        {
+          Show show = Show.plain();
+          for (Tensor seg : segDes) {
+            Showable showable = show.add(ListLinePlot.of(seg));
+            showable.setStroke(new BasicStroke(3));
+            showable.setColor(new Color(0, 0, 255, 128));
+          }
+          show.showRender(graphics, showableConfig);
         }
-        show.showRender(graphics, showableConfig);
       } else //
       if (8 <= getTilePixel().tile().z()) {
         // graphics.setStroke(new BasicStroke(2f));
