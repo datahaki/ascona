@@ -56,7 +56,6 @@ import ch.alpine.tensor.alg.ArrayReshape;
 import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.sca.Round;
 
 @ReflectionMarker
@@ -95,15 +94,21 @@ class MapViewer implements ManipulateProvider {
         }
         show.showRender(graphics, showableConfig);
       }
-      {
+      try {
         Sunpoint sunpoint = Sunpoint.now();
         Tensor list = Tensors.empty();
-        for (Tensor x : Subdivide.of(Pi.VALUE.negate(), Pi.VALUE, 100))
-          list.append(Tensors.of(x, sunpoint.fromLongitude((Scalar) x)));
+        for (Tensor x : Subdivide.of(0, 6.2, 100)) {
+          Scalar lat = sunpoint.fromLongitude((Scalar) x);
+          if (TilePixel.LAT_DOMAIN.isInside(lat))
+            list.append(Tensors.of(x, lat));
+        }
+        // IO.println(list);
         Show show = Show.plain();
         Showable showable = show.add(ListLinePlot.of(list));
         showable.setColor(new Color(0, 128, 128, 128));
         show.showRender(graphics, showableConfig);
+      } catch (Exception e) {
+        System.err.println("no sunpoint available");
       }
       if (showGlobe && 4 < getTilePixel().tile().z()) {
         ManifoldDisplay manifoldDisplay = S2Display.INSTANCE;
