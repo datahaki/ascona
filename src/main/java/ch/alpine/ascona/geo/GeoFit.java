@@ -16,7 +16,7 @@ enum GeoFit {
     ShowableConfig sc0 = ShowableConfig.geo(rectangle, tilePixel);
     CoordinateBoundingBox cbb = sc0.cbb();
     IO.println(cbb);
-    TilePixel tilePixel2 = TilePixel.geo(rectangle, cbb);
+    TilePixel tilePixel2 = TilePixel.geo(rectangle, cbb).orElseThrow();
     IO.println(tilePixel2);
   }
 }

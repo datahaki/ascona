@@ -25,7 +25,7 @@ class MercatorShow implements ManipulateProvider {
   public Container getContainer() {
     Show show1 = new Show();
     {
-      ScalarUnaryOperator suo = s -> RealScalar.of(TilePixel.from(z, 256, s, RealScalar.ZERO).absY());
+      ScalarUnaryOperator suo = s -> RealScalar.of(TilePixel.from(z, 256, s, RealScalar.ZERO).orElseThrow().absY());
       show1.add(Plot.of(suo, TilePixel.LAT_DOMAIN, PlotOption.STRICT));
     }
     Show show2 = new Show();

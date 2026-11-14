@@ -97,7 +97,7 @@ class MapViewer implements ManipulateProvider {
       try {
         Sunpoint sunpoint = Sunpoint.now();
         Tensor list = Tensors.empty();
-        for (Tensor x : Subdivide.of(0, 6.2, 100)) {
+        for (Tensor x : Subdivide.of(-Math.PI,Math.PI, 100)) {
           Scalar lat = sunpoint.fromLongitude((Scalar) x);
           if (TilePixel.LAT_DOMAIN.isInside(lat))
             list.append(Tensors.of(x, lat));

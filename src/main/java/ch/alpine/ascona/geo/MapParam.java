@@ -18,7 +18,7 @@ class MapParam {
       return TilePixel.from( //
           center.Get(0).number().intValue(), //
           center.Get(1).number().intValue(), //
-          center.get(2));
+          center.get(2)).orElseThrow();
     } catch (Exception e) {
       return DEFAULT;
     }
