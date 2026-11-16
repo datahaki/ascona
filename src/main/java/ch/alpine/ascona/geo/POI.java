@@ -1,12 +1,12 @@
 // code by jph
 package ch.alpine.ascona.geo;
 
+import ch.alpine.bridge.lang.Unitless;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.qty.Degree;
 
 record POI(Scalar lat, Scalar lon) {
   private static final Tensor DOT = Tensors.fromString("{1,1/60,1/3600}");
@@ -24,8 +24,8 @@ record POI(Scalar lat, Scalar lon) {
     default -> throw new IllegalArgumentException("Unexpected value: " + lon);
     };
     return new POI( //
-        Degree.of((Scalar) DOT.dot(Tensors.of(_1, _2, _3))), //
-        Degree.of((Scalar) DOT.dot(Tensors.of(_4, _5, _6))).multiply(sign));
+        Unitless.DEGREES.of((Scalar) DOT.dot(Tensors.of(_1, _2, _3))), //
+        Unitless.DEGREES.of((Scalar) DOT.dot(Tensors.of(_4, _5, _6))).multiply(sign));
   }
 
   Tensor vector() {

@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import ch.alpine.bridge.lang.Unitless;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -13,13 +14,11 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Flatten;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.qty.DateTime;
-import ch.alpine.tensor.qty.Degree;
-import ch.alpine.tensor.qty.QuantityMagnitude;
 import ch.alpine.tensor.sca.Round;
 
 @ReflectionMarker
 class RouteParam {
-  static final ScalarUnaryOperator suo = QuantityMagnitude.SI().in(Degree.UNIT);
+  static final ScalarUnaryOperator SUO = Unitless.DEGREES.quantityMagnitude();
   public LocalDate localDate = LocalDate.now();
   public Scalar km = RealScalar.ZERO;
   public Integer up = 0;
@@ -32,7 +31,7 @@ class RouteParam {
   public String line(Tensor path) {
     return Stream.concat( //
         Stream.of(DateTime.of(localDate, LocalTime.MIDNIGHT), km, up, dn), //
-        Flatten.scalars(path).map(suo).map(Round._7)) //
+        Flatten.scalars(path).map(SUO).map(Round._7)) //
         .map(Object::toString) //
         .collect(Collectors.joining(","));
   }

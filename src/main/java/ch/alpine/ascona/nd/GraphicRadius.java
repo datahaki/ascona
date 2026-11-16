@@ -23,9 +23,9 @@ class GraphicRadius<V> extends NdCollectRadius<V> {
   }
 
   @Override
-  public boolean isViable(CoordinateBoundingBox coordinateBoundingBox) {
-    StaticHelper.draw(coordinateBoundingBox, geometricLayer, graphics);
-    return super.isViable(coordinateBoundingBox);
+  public boolean isViable(CoordinateBoundingBox cbb) {
+    StaticHelper.draw(cbb, geometricLayer, graphics);
+    return super.isViable(cbb);
   }
 
   @Override

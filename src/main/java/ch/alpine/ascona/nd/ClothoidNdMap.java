@@ -24,9 +24,9 @@ public class ClothoidNdMap<T> {
   final NdMap<T> ndMap;
   private final Function<T, Tensor> se2Projection;
 
-  public ClothoidNdMap(CoordinateBoundingBox coordinateBoundingBox, Function<T, Tensor> se2Projection) {
-    Integers.requireEquals(coordinateBoundingBox.dimensions(), 2);
-    ndMap = NdTreeMap.of(coordinateBoundingBox);
+  public ClothoidNdMap(CoordinateBoundingBox cbb, Function<T, Tensor> se2Projection) {
+    Integers.requireEquals(cbb.dimensions(), 2);
+    ndMap = NdTreeMap.of(cbb);
     this.se2Projection = se2Projection;
   }
 

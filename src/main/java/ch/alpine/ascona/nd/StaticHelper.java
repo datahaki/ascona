@@ -15,8 +15,8 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 enum StaticHelper {
   ;
-  public static void draw(CoordinateBoundingBox coordinateBoundingBox, GeometricLayer geometricLayer, Graphics2D graphics) {
-    Path2D path2d = geometricLayer.toPath2D(Box2D.polygon(coordinateBoundingBox), true);
+  public static void draw(CoordinateBoundingBox cbb, GeometricLayer geometricLayer, Graphics2D graphics) {
+    Path2D path2d = geometricLayer.toPath2D(Box2D.polygon(cbb), true);
     graphics.setColor(new Color(0, 128, 0, 8));
     graphics.fill(path2d);
     graphics.setColor(new Color(128, 128, 128, 32));

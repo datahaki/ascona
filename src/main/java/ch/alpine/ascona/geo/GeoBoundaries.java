@@ -19,12 +19,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ch.alpine.bridge.lang.Unitless;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.qty.Degree;
 
 public enum GeoBoundaries {
   INSTANCE;
@@ -117,6 +117,8 @@ public enum GeoBoundaries {
   /** @param coordinate
    * @return interprets the input coordinate as if with unit "deg" and maps to rad */
   private static Tensor toPoint(Coordinate coordinate) {
-    return Tensors.of(Degree.of(coordinate.x), Degree.of(coordinate.y));
+    return Tensors.of( //
+        Unitless.DEGREES.of(coordinate.x), //
+        Unitless.DEGREES.of(coordinate.y));
   }
 }

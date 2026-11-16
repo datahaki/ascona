@@ -49,7 +49,7 @@ import ch.alpine.tensor.sca.N;
 class S1KrigingDemo extends ControlPointsDemo {
   private static final double RANGE = 2;
   private static final Tensor DOMAIN = Drop.tail(CirclePoints.of(161).maps(N.DOUBLE), 80);
-  private static final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
+  private static final CoordinateBoundingBox CBB = Box2D.xy(Clips.absolute(RANGE));
 
   @ReflectionMarker
   static class Param {
@@ -72,7 +72,7 @@ class S1KrigingDemo extends ControlPointsDemo {
     this.param = param;
     // ---
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-1, 1, 0}}"));
-    geometricComponent().addRenderInterfaceBackground(RegionRenders.of(coordinateBoundingBox));
+    geometricComponent().addRenderInterfaceBackground(RegionRenders.of(CBB));
     geometricComponent().addRenderInterfaceBackground(S1FrameRender.INSTANCE);
   }
 

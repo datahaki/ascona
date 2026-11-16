@@ -1,3 +1,4 @@
+// code by jph
 package ch.alpine.ascona.geo;
 
 import java.awt.Color;
@@ -19,9 +20,15 @@ import ch.alpine.bridge.fig.plt.ImagePlot;
 import ch.alpine.bridge.geo.MapImagesCache;
 import ch.alpine.bridge.geo.Tile;
 import ch.alpine.bridge.geo.TileServers;
+import ch.alpine.bridge.lang.Unitless;
 import ch.alpine.bridge.pro.ShowProvider;
 import ch.alpine.tensor.Rational;
+import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.Integers;
+import ch.alpine.tensor.red.Mean;
+import ch.alpine.tensor.sca.Clip;
+import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Round;
 
 enum TileDiscovery {
@@ -62,7 +69,7 @@ enum TileDiscovery {
       }
       if (!missing.isEmpty()) {
         BufferedImage bufferedImage = here(prev, missing);
-        String label = "missing: " + Round._2.apply(Rational.of(missing.size() * 100, prev.size())) + "%";
+        String label = "missing: " + Round._2.apply(Unitless.PERCENT.unitConvert().apply(Rational.of(missing.size(), prev.size())));
         ShowProvider showProvider = new ShowProvider() {
           @Override
           public Show getShow() {
@@ -76,12 +83,16 @@ enum TileDiscovery {
       }
       mapImagesCache.blockUntilDone();
       List<Tile> next = new ArrayList<>(prev.size() * 4);
+      Clip absolute = Clips.absolute(Unitless.DEGREES.of(65));
       for (Tile tile : prev) {
         Path path = mapImagesCache.path(tile);
         try {
           long size = Files.size(path);
           if (size > 200) {
-            next.addAll(tile.children());
+            Tensor lat_lon = Mean.of(tile.cbb());
+            Scalar lon = lat_lon.Get(1);
+            if (absolute.isInside(lon))
+              next.addAll(tile.children());
           } else //
           if (size < 100) {
             IO.println("deleting " + size + " " + path);

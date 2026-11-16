@@ -55,7 +55,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
   }
 
   private static final double RANGE = 2;
-  private final CoordinateBoundingBox coordinateBoundingBox = Box2D.xy(Clips.absolute(RANGE));
+  private final CoordinateBoundingBox cbb = Box2D.xy(Clips.absolute(RANGE));
   private final Param param;
 
   public S1InterpolationDemo() {
@@ -67,7 +67,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
     this.param = param;
     // ---
     setControlPointsSe2(Tensors.fromString("{{1, 0, 0}, {0, 1.2, 0}, {-0.5, 0.8, 0}}"));
-    geometricComponent().addRenderInterfaceBackground(RegionRenders.of(coordinateBoundingBox));
+    geometricComponent().addRenderInterfaceBackground(RegionRenders.of(cbb));
     geometricComponent().addRenderInterfaceBackground(S1FrameRender.INSTANCE);
   }
 
