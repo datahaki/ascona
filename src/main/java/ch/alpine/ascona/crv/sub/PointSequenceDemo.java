@@ -15,8 +15,7 @@ import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.io.Get;
-import ch.alpine.tensor.io.Put;
+import ch.alpine.tensor.io.MathematicaFormat;
 
 abstract class PointSequenceDemo extends ControlPointsDemo {
   // TODO Sanity Check triggers save button ... not good! -> solution !?
@@ -50,7 +49,7 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
     if (Objects.nonNull(path))
       try {
         IO.println(path);
-        Put.of(path, getGeodesicControlPoints());
+        MathematicaFormat.Put.of(path, getGeodesicControlPoints());
       } catch (IOException ioException) {
         ioException.printStackTrace();
       }
@@ -62,7 +61,7 @@ abstract class PointSequenceDemo extends ControlPointsDemo {
     String name = getSelectedMD().toString().toLowerCase();
     try (InputStream inputStream = getClass().getResourceAsStream(name)) {
       if (Objects.nonNull(inputStream))
-        tensor = Get.of(inputStream);
+        tensor = MathematicaFormat.Get.of(inputStream);
     } catch (Exception exception) {
       System.err.println("cannot load: " + name);
     }

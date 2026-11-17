@@ -16,7 +16,7 @@ import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.Import;
-import ch.alpine.tensor.io.Put;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.lie.rot.Quaternion;
 import ch.alpine.tensor.lie.rot.QuaternionToRotationMatrix;
 import ch.alpine.tensor.sca.win.WindowFunctions;
@@ -46,7 +46,7 @@ enum EurocData {
     TensorUnaryOperator INSTANCE = LieDifferences.of(lieGroup);
     {
       Tensor delta = INSTANCE.apply(poses);
-      Put.of(path.resolve("MH_04_difficult_delta.file"), delta);
+      MathematicaFormat.Put.of(path.resolve("MH_04_difficult_delta.file"), delta);
     }
     IO.println("smooth");
     {
@@ -54,11 +54,11 @@ enum EurocData {
           new CenterFilter(GeodesicCenter.of(lieGroup, WindowFunctions.GAUSSIAN.get()), 4 * 3 * 2);
       Tensor smooth = tensorUnaryOperator.apply(poses);
       IO.println("store");
-      Put.of(path.resolve("MH_04_difficult_poses_smooth.file"), smooth);
+      MathematicaFormat.Put.of(path.resolve("MH_04_difficult_poses_smooth.file"), smooth);
       IO.println("differences");
       Tensor delta = INSTANCE.apply(smooth);
       IO.println("store");
-      Put.of(path.resolve("MH_04_difficult_delta_smooth.file"), delta);
+      MathematicaFormat.Put.of(path.resolve("MH_04_difficult_delta_smooth.file"), delta);
     }
   }
 }

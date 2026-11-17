@@ -14,7 +14,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.io.Put;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.lie.rot.Cross;
 import ch.alpine.tensor.nrm.Normalize;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -62,9 +62,9 @@ class Plot3DDesign {
       }
       matrix.append(row);
     }
-    Put.of(path.resolve("sinxy2in.mathematica"), matrix);
+    MathematicaFormat.Put.of(path.resolve("sinxy2in.mathematica"), matrix);
     GeodesicCatmullClarkSubdivision catmullClarkSubdivision = new GeodesicCatmullClarkSubdivision(R3S2Geodesic.INSTANCE);
     Tensor tensor = Nest.of(catmullClarkSubdivision::refine, matrix, 3);
-    Put.of(path.resolve("sinxy2.mathematica"), tensor);
+    MathematicaFormat.Put.of(path.resolve("sinxy2.mathematica"), tensor);
   }
 }

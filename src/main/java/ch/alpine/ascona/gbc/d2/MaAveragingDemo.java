@@ -38,7 +38,7 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.col.ColorDataGradients;
 import ch.alpine.tensor.ext.Cache;
 import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.io.Put;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.qty.Quantity;
@@ -160,7 +160,7 @@ class MaAveragingDemo extends ControlPointsDemo {
     }
     if (param3.export) {
       try {
-        Put.of(HomeDirectory.Ephemeral.resolve("interp2d.tensor"), tensor);
+        MathematicaFormat.Put.of(HomeDirectory.Ephemeral.resolve("interp2d.tensor"), tensor);
         IO.println("saved");
       } catch (IOException e) {
         e.printStackTrace();
