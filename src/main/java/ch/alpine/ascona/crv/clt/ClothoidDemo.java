@@ -65,8 +65,7 @@ class ClothoidDemo extends ClothoidBaseDemo {
         ++index;
       }
     }
-    Show show = new Show();
-    show.setShowLabel("Curvature Comparison");
+    Show show = new Show("Curvature Comparison");
     int index = 0;
     ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLOR_DATA_INDEXED, new BasicStroke());
     TensorUnaryOperator tuo = v -> v.extract(0, 2);

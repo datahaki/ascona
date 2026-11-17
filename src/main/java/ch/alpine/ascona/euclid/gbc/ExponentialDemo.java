@@ -85,9 +85,8 @@ class ExponentialDemo extends EuclideanPlaneDemo {
               .render(geometricLayer, graphics);
           geometricLayer.popMatrix();
           {
-            Show show = new Show();
+            Show show = new Show("Weights");
             show.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-            show.setShowLabel("Weights");
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;
@@ -98,8 +97,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
             show.render_autoIndent(graphics, new Rectangle(0 * WIDTH, 0, WIDTH, 200));
           }
           {
-            Show show = new Show();
-            show.setShowLabel("Factors");
+            Show show = new Show("Factors");
             Tensor domain = Range.of(0, deque.size());
             for (int index = 0; index < levers2.length(); ++index) {
               int fi = index;

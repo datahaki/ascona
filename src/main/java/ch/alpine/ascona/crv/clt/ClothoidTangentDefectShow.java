@@ -28,7 +28,7 @@ record ClothoidTangentDefectShow(Scalar s1, Scalar s2, Clip clip) implements Sho
   public Show getShow() {
     ClothoidTangentDefect clothoidTangentDefect = ClothoidTangentDefect.of(s1, s2);
     ClothoidSolutions clothoidSolutions = new ClothoidSolutions(clothoidTangentDefect, clip);
-    Show show = new Show();
+    Show show = new Show("Clothoid Tangent Defect");
     show.add(ReImPlot.of(clothoidTangentDefect, clip));
     Tensor zeros = Tensor.of(clothoidSolutions.lambdas().stream().map(l -> Tensors.of(l, l.maps(Scalar::zero))));
     show.add(ListPlot.of(zeros));
@@ -38,7 +38,6 @@ record ClothoidTangentDefectShow(Scalar s1, Scalar s2, Clip clip) implements Sho
       list.add(StringItem.of(Tensors.of(l, l.zero()), "" + l.maps(Round._4)));
     }
     show.add(StringPlot.of(list));
-    show.setShowLabel("Clothoid Tangent Defect");
     return show;
   }
 }

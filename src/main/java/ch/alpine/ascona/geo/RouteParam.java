@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import ch.alpine.bridge.lang.Unitless;
+import ch.alpine.bridge.math.Unitless;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;

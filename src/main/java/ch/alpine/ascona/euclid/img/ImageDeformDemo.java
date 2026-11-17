@@ -17,11 +17,11 @@ import ch.alpine.ascony.ren.ImageRender;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
-import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ImagePlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
+import ch.alpine.bridge.math.Meshgrid;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.dv.Biinvariant;
@@ -126,8 +126,7 @@ class ImageDeformDemo extends EuclideanPlaneDemo {
             Clips.positive(bufferedImage.getHeight())), //
         param.resw, param.resh);
     {
-      Show show = new Show();
-      show.setShowLabel("Inv. Dist Coordinate");
+      Show show = new Show("Inv. Dist Coordinate");
       HomogeneousSpace homogeneousSpace = manifoldDisplay().homogeneousSpace();
       Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(homogeneousSpace);
       ScalarUnaryOperator vf = VariogramFunctions.INVERSE_POWER.of(RealScalar.TWO);

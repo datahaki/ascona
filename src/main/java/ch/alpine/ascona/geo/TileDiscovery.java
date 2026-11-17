@@ -20,7 +20,7 @@ import ch.alpine.bridge.fig.plt.ImagePlot;
 import ch.alpine.bridge.geo.MapImagesCache;
 import ch.alpine.bridge.geo.Tile;
 import ch.alpine.bridge.geo.TileServers;
-import ch.alpine.bridge.lang.Unitless;
+import ch.alpine.bridge.math.Unitless;
 import ch.alpine.bridge.pro.ShowProvider;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;

@@ -17,11 +17,11 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
-import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ImagePlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
+import ch.alpine.bridge.math.Meshgrid;
 import ch.alpine.bridge.ref.ann.FieldFuse;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.api.Genesis;
@@ -118,15 +118,13 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
             Clips.positive(bufferedImage.getHeight())), //
         param.resw, param.resh);
     {
-      Show show = new Show();
-      show.setShowLabel("Linear Fractional Transform");
+      Show show = new Show("Linear Fractional Transform");
       TensorUnaryOperator tuo = lft.andThen(interpolation::get);
       show.add(ImagePlot.of(ImageFormat.of(imageOrTransparent(meshgrid, tuo)), param.imgRes));
       show.render_autoIndent(graphics, new Rectangle(dimension.width, 0, dimension.width, dimension.height));
     }
     {
-      Show show = new Show();
-      show.setShowLabel("Three Point: " + param.tps);
+      Show show = new Show("Three Point: " + param.tps);
       Genesis genesis = ThreePointCoordinate.of(param.tps);
       TensorUnaryOperator tuo = p -> {
         Tensor ref = Tensor.of(reference.stream().map(v -> v.subtract(p)));
@@ -136,8 +134,7 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
       show.render_autoIndent(graphics, new Rectangle(dimension.width, dimension.height, dimension.width, dimension.height));
     }
     {
-      Show show = new Show();
-      show.setShowLabel("Inv. Dist Coordinate");
+      Show show = new Show("Inv. Dist Coordinate");
       HomogeneousSpace homogeneousSpace = manifoldDisplay().homogeneousSpace();
       Biinvariant biinvariant = Biinvariants.METRIC.ofSafe(homogeneousSpace);
       LogWeightings logWeightings = LogWeightings.COORDINATE;

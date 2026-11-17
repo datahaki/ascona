@@ -141,14 +141,12 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
     dimension.width /= 2;
     dimension.height /= 2;
     {
-      Show show = new Show();
-      show.setShowLabel("Distance matrix");
+      Show show = new Show("Distance matrix");
       show.add(MatrixPlot.of(matrix));
       show.render_autoIndent(graphics, new Rectangle(dimension.width, 0, dimension.width, dimension.height));
     }
     {
-      Show show = new Show();
-      show.setShowLabel("Route length (search=" + total + ")");
+      Show show = new Show("Route length (search=" + total + ")");
       show.add(ListLinePlot.of(points));
       show.render_autoIndent(graphics, new Rectangle(dimension.width, dimension.height, dimension.width, dimension.height));
     }
