@@ -45,7 +45,7 @@ public class RegionTiles {
       for (Tile tile : prev.edge) {
         if (tile.z() != z)
           throw new IllegalArgumentException();
-        Tensor cbb_lon_lat = tile.cbb_lon_lat();
+        Tensor cbb_lon_lat = tile.quad();
         Scalar area0 = PolygonArea.of(cbb_lon_lat);
         Sign.requirePositive(area0);
         TensorUnaryOperator tuo = PolygonClip.of(cbb_lon_lat);

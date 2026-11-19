@@ -13,7 +13,7 @@ class MapViewerTest {
   @Test
   void test() {
     Tile tile = new Tile(8, 2, 4);
-    Tensor polygon = tile.cbb_lon_lat();
+    Tensor polygon = tile.quad();
     Scalar area = PolygonArea.of(polygon);
     Sign.requirePositive(area);
   }

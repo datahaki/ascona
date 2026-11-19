@@ -33,7 +33,7 @@ class RegionTilesTest {
             .map(PolygonArea::of) //
             .reduce(Scalar::add).orElse(RealScalar.ZERO);
         for (Tile tile : levelSet.intr) {
-          Tensor cbb_lon_lat = tile.cbb_lon_lat();
+          Tensor cbb_lon_lat = tile.quad();
           area = area.add(PolygonArea.of(cbb_lon_lat));
         }
         // IO.println(area + " " + levelSet.intr.size());
