@@ -9,6 +9,7 @@ import ch.alpine.sophis.flt.CenterFilter;
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.s.S2Loxodrome;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.Subdivide;
@@ -30,7 +31,7 @@ enum LoxodromeData {
     Export.of(path.resolve("loxodrome_exact.csv"), tensor);
     Tensor noise = RandomVariate.of(NormalDistribution.of(0, 0.05), Dimensions.of(tensor));
     tensor = tensor.add(noise);
-    tensor = Vector2Norm.NORMALIZE.slash(tensor);
+    tensor = Slash.of(tensor, Vector2Norm.NORMALIZE);
     Export.of(path.resolve("loxodrome_noise.csv"), tensor);
     GeodesicSpace geodesicSpace = S2Display.INSTANCE.geodesicSpace();
     for (WindowFunctions windowFunctions : WindowFunctions.values()) {

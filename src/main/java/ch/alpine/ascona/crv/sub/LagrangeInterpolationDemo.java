@@ -26,6 +26,7 @@ import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
@@ -87,7 +88,7 @@ class LagrangeInterpolationDemo extends ControlPointsDemo {
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
       Interpolation interpolation = LagrangeInterpolation.of(manifoldDisplay.geodesicSpace(), getGeodesicControlPoints());
       Tensor refined = Subdivide.of(0, sequence.length(), 1 << levels).maps(interpolation::at);
-      Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
+      Tensor euclidXY = Slash.of(refined, manifoldDisplay.point2xy());
       if (manifoldDisplay.isXYeuclid())
         Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
       new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);

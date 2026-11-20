@@ -20,6 +20,7 @@ import ch.alpine.sophis.crv.BezierCurve;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -69,12 +70,12 @@ class BezierFunctionDemo extends PointSequenceDemo {
           // BiinvariantMean biinvariantMean = homogeneousSpace.biinvariantMean(Chop._08);
           if (Objects.nonNull(homogeneousSpace)) {
             Tensor refined = domain.maps(BezierCurve.of(homogeneousSpace.biinvariantMean(), sequence));
-            Tensor render = manifoldDisplay.point2xy().slash(refined);
+            Tensor render = Slash.of(refined, manifoldDisplay.point2xy());
             new PathRender(ColorStroke.SECONDARY_CURVE, render, false).render(geometricLayer, graphics);
           }
         }
         Tensor refined = domain.maps(new BezierFunction(geodesicSpace, sequence));
-        Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
+        Tensor euclidXY = Slash.of(refined, manifoldDisplay.point2xy());
         if (manifoldDisplay.isXYeuclid())
           Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
         new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);

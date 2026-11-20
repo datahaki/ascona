@@ -22,6 +22,7 @@ import ch.alpine.sophus.clt.LagrangeQuadraticD;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -85,7 +86,7 @@ class ClothoidDemo extends ClothoidBaseDemo {
         Scalar angle = lagrangeQuadraticD.head();
         graphics.draw(geometricLayer.toLine2D(AngleVector.of(angle).multiply(RealScalar.of(2))));
       }
-      Tensor string = Curvature2D.INSTANCE.string(tuo.slash(points));
+      Tensor string = Curvature2D.INSTANCE.string(Slash.of(points, tuo));
       Showable showable = show.add(ListLinePlot.of(DOMAIN, string));
       showable.setLabel(clothoid.toString());
       ++index;

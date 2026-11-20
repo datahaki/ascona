@@ -7,6 +7,7 @@ import ch.alpine.ascony.dat.Se2PosVel;
 import ch.alpine.ascony.dat.Se2PosVelHz;
 import ch.alpine.ascony.res.ResourceMapper;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Differences;
@@ -41,6 +42,6 @@ public enum GokartPosVel {
   public Se2PosVelHz get(String key, int limit) {
     Tensor tensor = Tensor.of(resourceMapper.importTensor(key).stream().limit(limit));
     Scalar samplingRate = Quantity.of(Mean.ofVector(Differences.of(tensor.get(Tensor.ALL, 0))).reciprocal(), "Hz");
-    return new Se2PosVelHz(new Se2PosVel(EXTRACT.slash(tensor)), samplingRate);
+    return new Se2PosVelHz(new Se2PosVel(Slash.of(tensor, EXTRACT_POS)), samplingRate);
   }
 }

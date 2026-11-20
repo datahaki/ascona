@@ -17,6 +17,7 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
@@ -52,7 +53,7 @@ abstract class AbstractCurveDemo extends PointSequenceDemo {
       if (abstractCurveParam.symb)
         graphics.drawImage(createImage(), 0, 0, null);
       Tensor refined = protected_render(geometricLayer, graphics, control);
-      Tensor euclidXY = manifoldDisplay().point2xy().slash(refined);
+      Tensor euclidXY = Slash.of(refined, manifoldDisplay().point2xy());
       new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
       Dimension dimension = geometricComponent().getSize();
       abstractCurveParam.cp.spawnXY(manifoldDisplay(), euclidXY, new Rectangle(dimension.width - 400, 0, 400, 300)) //

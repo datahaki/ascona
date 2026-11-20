@@ -22,6 +22,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.ref.d1.BSpline1CurveSubdivision;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.red.Nest;
 
@@ -82,7 +83,7 @@ class CurveSubdivisionDemo extends PointSequenceDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     try {
       Tensor refined = param.scheme.refine(manifoldDisplay, control, levels, cyclic);
-      Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
+      Tensor euclidXY = Slash.of(refined, manifoldDisplay.point2xy());
       new PathRender(ColorStroke.CURVE, euclidXY, cyclic).render(geometricLayer, graphics);
       if (param.line) {
         GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();

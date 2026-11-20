@@ -38,6 +38,7 @@ import ch.alpine.sophus.hs.s.SnPhongMean;
 import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -131,7 +132,7 @@ class BiinvariantMeanDemo extends ControlPointsDemo {
       graphics.setStroke(STROKE);
       for (Tensor point : sequence) {
         Tensor curve = Subdivide.of(0, 1, 20).maps(homogeneousSpace.curve(point, mean));
-        graphics.draw(geometricLayer.toPath2D(manifoldDisplay.point2xy().slash(curve)));
+        graphics.draw(geometricLayer.toPath2D(Slash.of(curve, manifoldDisplay.point2xy())));
       }
     }
     graphics.setStroke(new BasicStroke());

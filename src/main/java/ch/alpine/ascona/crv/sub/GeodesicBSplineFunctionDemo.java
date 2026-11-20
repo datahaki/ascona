@@ -14,6 +14,7 @@ import ch.alpine.sophis.crv.GeodesicBSplineFunction;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -53,7 +54,7 @@ class GeodesicBSplineFunctionDemo extends AbstractCurveDemo {
     }
     int max = upper * (1 << abstractCurveParam.refine);
     Tensor refined = Subdivide.of(0, upper, Math.max(1, max)).maps(scalarTensorFunction);
-    Tensor render = manifoldDisplay.point2xy().slash(refined);
+    Tensor render = Slash.of(refined, manifoldDisplay.point2xy());
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (abstractCurveParam.refine < 5)

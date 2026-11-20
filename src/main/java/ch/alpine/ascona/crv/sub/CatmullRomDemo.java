@@ -26,6 +26,7 @@ import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -92,7 +93,7 @@ class CatmullRomDemo extends PointSequenceDemo {
         manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, Tensors.of(selected)) //
             .render(geometricLayer, graphics);
       }
-      Tensor euclidXY = manifoldDisplay.point2xy().slash(refined);
+      Tensor euclidXY = Slash.of(refined, manifoldDisplay.point2xy());
       if (manifoldDisplay.isXYeuclid())
         Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
       new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);

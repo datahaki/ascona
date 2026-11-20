@@ -24,6 +24,7 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -78,7 +79,7 @@ class GeodesicDemo extends ControlPointsDemo {
     {
       Tensor domain = Subdivide.of(0, 1, 30);
       Tensor points2 = domain.maps(scalarTensorFunction);
-      Tensor xys = manifoldDisplay.point2xy().slash(points2);
+      Tensor xys = Slash.of(points2, manifoldDisplay.point2xy());
       graphics.setColor(new Color(128, 255, 0));
       graphics.setStroke(new BasicStroke(1.5f));
       graphics.draw(geometricLayer.toPath2D(xys));
@@ -97,14 +98,14 @@ class GeodesicDemo extends ControlPointsDemo {
     }
     if (param.comb && manifoldDisplay.isXYeuclid()) {
       Tensor refined = Subdivide.of(0, 1, param.splits * 6).maps(scalarTensorFunction);
-      Tensor render = manifoldDisplay.point2xy().slash(refined);
+      Tensor render = Slash.of(refined, manifoldDisplay.point2xy());
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     }
     if (param.extrapolation) {
       Clip clip = Clips.interval(1, 2);
       {
         Tensor refined = Subdivide.increasing(clip, param.splits * 3).maps(scalarTensorFunction);
-        Tensor render = manifoldDisplay.point2xy().slash(refined);
+        Tensor render = Slash.of(refined, manifoldDisplay.point2xy());
         // CurveCurvatureRender.of(render, false, geometricLayer, graphics);
         new PathRender(ColorStroke.SECONDARY_CURVE, render, false) //
             .render(geometricLayer, graphics);

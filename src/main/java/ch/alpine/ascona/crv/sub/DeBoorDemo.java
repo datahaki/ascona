@@ -14,6 +14,7 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
@@ -49,7 +50,7 @@ class DeBoorDemo extends AbstractCurveDemo {
       manifoldDisplay.showPoints(ColorPairs.INTERMEDIATE, RealScalar.ONE, Tensors.of(selected)) //
           .render(geometricLayer, graphics);
     }
-    Tensor render = manifoldDisplay.point2xy().slash(refined);
+    Tensor render = Slash.of(refined, manifoldDisplay.point2xy());
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (abstractCurveParam.refine < 5)

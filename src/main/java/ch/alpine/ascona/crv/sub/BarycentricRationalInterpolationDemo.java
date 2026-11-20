@@ -24,6 +24,7 @@ import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophis.win.KnotSpacing;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Last;
 import ch.alpine.tensor.alg.Subdivide;
@@ -90,13 +91,13 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       {
         Tensor curve1 = Tensor.of(basis2.stream() //
             .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));
-        new PathRender(ColorStroke.SECONDARY_CURVE, manifoldDisplay.point2xy().slash(curve1), false).render(geometricLayer, graphics);
+        new PathRender(ColorStroke.SECONDARY_CURVE, Slash.of(curve1, manifoldDisplay.point2xy()), false).render(geometricLayer, graphics);
       }
       Tensor basis1 = domain.maps(BarycentricRationalInterpolation.of(knots, param.degree));
       {
         Tensor curve2 = Tensor.of(basis1.stream() //
             .flatMap(weights -> homogeneousSpace.biinvariantMean().optional(control, weights).stream()));
-        new PathRender(ColorStroke.CURVE, manifoldDisplay.point2xy().slash(curve2), false) //
+        new PathRender(ColorStroke.CURVE, Slash.of(curve2, manifoldDisplay.point2xy()), false) //
             .render(geometricLayer, graphics);
       }
       if (param.basis) {
