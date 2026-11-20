@@ -33,7 +33,7 @@ import ch.alpine.tensor.sca.Round;
 
 enum TileDiscovery {
   ;
-  static BufferedImage here(List<Tile> list, Set<Tile> missing) {
+  private static BufferedImage coverageImage(List<Tile> list, Set<Tile> missing) {
     int z = list.getFirst().z();
     int width = Tile.maxExclusive(z);
     BufferedImage bufferedImage = new BufferedImage(width, width, BufferedImage.TYPE_INT_ARGB);
@@ -57,7 +57,7 @@ enum TileDiscovery {
   static void main() {
     MapImagesCache mapImagesCache = TileServers.OpenStreetMap.cache();
     List<Tile> prev = List.of(new Tile(0, 0, 0));
-    while (prev.getFirst().z() <= 12) {
+    while (prev.getFirst().z() <= 11) {
       Collections.shuffle(prev);
       Set<Tile> missing = new HashSet<>();
       for (Tile tile : prev) {
@@ -68,7 +68,7 @@ enum TileDiscovery {
         }
       }
       if (!missing.isEmpty()) {
-        BufferedImage bufferedImage = here(prev, missing);
+        BufferedImage bufferedImage = coverageImage(prev, missing);
         String label = "missing: " + Round._2.apply(Unitless.PERCENT.unitConvert().apply(Rational.of(missing.size(), prev.size())));
         ShowProvider showProvider = new ShowProvider() {
           @Override

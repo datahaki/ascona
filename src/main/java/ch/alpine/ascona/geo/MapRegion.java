@@ -34,6 +34,7 @@ import ch.alpine.bridge.ref.util.ObjectProperties;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Drop;
+import ch.alpine.tensor.sca.Round;
 
 /** For Java, I recommend an architecture based on
  * ExecutorService + BlockingQueue (or CompletableFuture) +
@@ -48,6 +49,8 @@ class MapRegion implements ManipulateProvider {
   public Boolean download = false;
   @FieldFuse
   public transient Boolean load = false;
+  @FieldFuse
+  public transient Boolean print = false;
   // ---
   private final GeoComponent geoComponent = new GeoComponent() {
     @Override
@@ -109,6 +112,10 @@ class MapRegion implements ManipulateProvider {
           regionTiles.stream().forEach(geoComponent.tileServer.cache()::getTile);
       }).start();
       load = false;
+    }
+    if (print) {
+      IO.println(geoPath.pathSeq.maps(Round._6));
+      print = false;
     }
     return geoComponent;
   }
