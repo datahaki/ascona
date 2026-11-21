@@ -2,7 +2,6 @@
 package ch.alpine.ascona.decim;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
@@ -12,6 +11,7 @@ import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.sophus.hs.s.TSnMemberQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Range;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.col.ColorDataGradients;
@@ -33,8 +33,9 @@ public class SnDeltaContainer {
     endos = SnTransportChain.endos(sequence);
     differences = ManifoldDifferences.of(SnManifold.INSTANCE).apply(sequence);
     TSnMemberQ tSnMemberQ = new TSnMemberQ(sequence.get(0));
-    t0_deltas = Tensor.of(IntStream.range(0, differences.length()).mapToObj( //
-        index -> tSnMemberQ.require(endos.get(index).dot(differences.get(index, 1)))));
+    t0_deltas = Tensors.vector( //
+        index -> tSnMemberQ.require(endos.get(index).dot(differences.get(index, 1))), //
+        differences.length());
     // ---
     Tensor domain = Range.of(0, t0_deltas.length());
     SpectrogramArray spectrogramArray = SpectrogramArrays.FOURIER.operator().config(window);
