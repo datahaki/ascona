@@ -15,6 +15,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -48,7 +49,7 @@ class PrincipalComponentsDemo extends EuclideanPlaneDemo {
     Tensor t = Tensors.vector(4, 0);
     Tensor points = RandomSample.of(rsi, param.numel);
     TensorUnaryOperator tuo = t::add;
-    setGeodesicControlPoints(tuo.slash(points));
+    setGeodesicControlPoints(Slash.of(points, tuo));
   }
 
   @Override

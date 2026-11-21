@@ -28,6 +28,7 @@ import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Reverse;
@@ -88,7 +89,7 @@ public class S1InterpolationDemo extends ControlPointsDemo {
     Tensor control = Tensor.of(getGeodesicControlPoints().stream() //
         .filter(v -> Scalars.nonZero(Vector2Norm.of(v))));
     if (0 < control.length()) {
-      Tensor sequence = Vector2Norm.NORMALIZE.slash(control);
+      Tensor sequence = Slash.of(control, Vector2Norm.NORMALIZE);
       Tensor target = sequence;
       graphics.setColor(Color.GREEN);
       for (int index = 0; index < target.length(); ++index)

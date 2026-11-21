@@ -29,6 +29,7 @@ import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Drop;
@@ -93,7 +94,7 @@ class S1KrigingDemo extends ControlPointsDemo {
     Tensor control = Tensor.of(getGeodesicControlPoints().stream() //
         .filter(v -> Scalars.nonZero(Vector2Norm.of(v))));
     if (1 < control.length()) {
-      Tensor sequence = Vector2Norm.NORMALIZE.slash(control);
+      Tensor sequence = Slash.of(control, Vector2Norm.NORMALIZE);
       Tensor funceva = Tensor.of(control.stream().map(Vector2Norm::of));
       Tensor cvarian = getControlPointsSe2().get(Tensor.ALL, 2).multiply(Rational.HALF).maps(Abs.FUNCTION);
       // ---

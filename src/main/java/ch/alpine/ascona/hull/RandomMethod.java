@@ -9,6 +9,7 @@ import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.sophus.hs.st.StiefelManifold;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -40,7 +41,7 @@ enum RandomMethod {
     Tensor vertices(int n) {
       Clip[] clips = { Clips.absoluteOne(), Clips.absoluteOne(), Clips.absoluteOne() };
       CoordinateBoundingBox cbb = CoordinateBoundingBox.of(clips);
-      return cbb.mapInside().slash(RandomSample.of(new RnGroup(3).randomSampleInterface(), n));
+      return Slash.of(RandomSample.of(new RnGroup(3).randomSampleInterface(), n), cbb.mapInside());
     }
   },
   STIEFEL {

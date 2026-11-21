@@ -16,6 +16,7 @@ import ch.alpine.sophis.gbc.d2.ThreePointCoordinate;
 import ch.alpine.sophis.gbc.d2.ThreePointScalings;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -41,7 +42,7 @@ class AffineCoordinateDemo extends EuclideanPlaneDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     // ---
     Tensor sequence = getGeodesicControlPoints();
-    Tensor levers = Vector2Norm.NORMALIZE.slash(sequence);
+    Tensor levers = Slash.of(sequence,Vector2Norm.NORMALIZE);
     {
       LeversRender leversRender = LeversRender.of( //
           manifoldDisplay, sequence, Array.zeros(2), geometricLayer, graphics);

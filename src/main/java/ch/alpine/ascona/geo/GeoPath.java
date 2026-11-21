@@ -5,6 +5,7 @@ import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.api.GeoPosition;
 import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.AdjacentReduce;
@@ -18,7 +19,7 @@ public class GeoPath {
 
   public Scalar distance() {
     TensorUnaryOperator tuo = GeoPosition::of;
-    Tensor tensor = tuo.slash(pathSeq);
+    Tensor tensor = Slash.of(pathSeq, tuo);
     SnManifold snManifold = SnManifold.INSTANCE;
     AdjacentReduce adjacentReduce = new AdjacentReduce((p, q) -> snManifold.bilinearForm(p).norm(snManifold.tangentSpace(p).log(q)));
     Tensor parts = adjacentReduce.apply(tensor);

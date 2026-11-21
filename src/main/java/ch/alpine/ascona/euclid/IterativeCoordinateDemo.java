@@ -17,6 +17,7 @@ import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.gbc.d2.IterativeCoordinateMatrix;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -65,7 +66,7 @@ class IterativeCoordinateDemo extends EuclideanPlaneDemo {
       Manifold manifold = manifoldDisplay.manifold();
       try {
         Tensor matrix = new IterativeCoordinateMatrix(param.total).origin( //
-            manifold.tangentSpace(START).log().slash(sequence));
+            Slash.of(sequence, manifold.tangentSpace(START).log()));
         Tensor circum = matrix.dot(sequence);
         leversRender.renderMatrix2(START, matrix);
         LeversRender lr2 = LeversRender.of(manifoldDisplay, circum, START, geometricLayer, graphics);

@@ -31,6 +31,7 @@ import ch.alpine.tensor.Complex;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
@@ -93,13 +94,14 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
 
   private void shuffle() {
     RandomSampleInterface randomSampleInterface = manifoldDisplay().randomSampleInterface();
-    complexZeros = V2S.slash(RandomSample.of(randomSampleInterface, 100));
+    complexZeros = Slash.of(RandomSample.of(randomSampleInterface, 100), V2S);
   }
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor seeds = V2S.slash(getGeodesicControlPoints());
+    // Tensor seeds = V2S.slash(getGeodesicControlPoints());
+    Tensor seeds = Slash.of(getGeodesicControlPoints(), V2S);
     final int length = seeds.length();
     final Tensor _zeros = complexZeros.extract(0, length).unmodifiable();
     if (2 < length) {
@@ -155,7 +157,7 @@ class AberthEhrlichDemo extends EuclideanPlaneDemo {
       // IO.println(Pretty.of(table.maps(Round._1)));
       for (int index = 0; index < dimension1; ++index) {
         TensorUnaryOperator tuo = manifoldDisplay::point2xya;
-        Tensor points = tuo.slash(table.get(Tensor.ALL, index).maps(S2V));
+        Tensor points = Slash.of(table.get(Tensor.ALL, index).maps(S2V), tuo);
         new PathRender(ColorStroke.TRACE, points, false).render(geometricLayer, graphics);
       }
     }

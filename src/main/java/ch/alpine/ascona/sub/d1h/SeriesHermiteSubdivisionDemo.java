@@ -23,6 +23,7 @@ import ch.alpine.sophis.ref.d1h.TensorIteration;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
@@ -77,7 +78,7 @@ class SeriesHermiteSubdivisionDemo extends EuclideanPlaneDemo {
       int levels = param.refine;
       Tensor iterate = Do.of(control, tensorIteration::iterate, levels);
       Tensor positions = iterate.get(Tensor.ALL, 0);
-      Tensor euclidXY = manifoldDisplay.point2xy().slash(positions);
+      Tensor euclidXY = Slash.of(positions, manifoldDisplay.point2xy());
       Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);
       new PathRender(ColorStroke.CURVE, euclidXY, false).render(geometricLayer, graphics);
       // ---

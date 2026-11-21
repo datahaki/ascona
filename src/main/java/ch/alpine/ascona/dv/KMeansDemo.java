@@ -29,6 +29,7 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
@@ -145,7 +146,7 @@ class KMeansDemo extends ControlPointsDemo {
       Tensor seeds2 = kMeans.seeds();
       for (Tensor subset : partition) {
         if (homogeneousSpace instanceof MetricManifold && 1 < manifoldDisplay.dimensions()) {
-          Tensor projected = manifoldDisplay.point2xy().slash(subset);
+          Tensor projected = Slash.of(subset, manifoldDisplay.point2xy());
           Tensor tensor = ConvexHull2D.of(projected, Tolerance.CHOP);
           graphics.setColor(colorPairIndexed.getColorPair(index).fill());
           graphics.fill(geometricLayer.toPath2D(tensor, true));

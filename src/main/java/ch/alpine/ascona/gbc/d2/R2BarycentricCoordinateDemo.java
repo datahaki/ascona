@@ -34,6 +34,7 @@ import ch.alpine.sophis.hull.d2.ConvexHull2D;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -103,7 +104,7 @@ final class R2BarycentricCoordinateDemo extends AbstractScatteredSetWeightingDem
         for (int i = 0; i < n; ++i) {
           final int fi = i; // render polygon on top of basis function
           TensorUnaryOperator tuo = p -> p.add(Tensors.of(clip.length().multiply(RealScalar.of(fi)), RealScalar.ZERO));
-          show.add(PolygonPlot.of(tuo.slash(controlPoints))).setColor(Color.BLACK);
+          show.add(PolygonPlot.of(Slash.of(controlPoints, tuo))).setColor(Color.BLACK);
         }
         Dimension dimension = geometricComponent().getSize();
         show.render_autoIndent(graphics, new Rectangle(0, 0, dimension.width - 100, 300));

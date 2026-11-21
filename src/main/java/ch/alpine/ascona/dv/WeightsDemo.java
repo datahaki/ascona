@@ -22,6 +22,7 @@ import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.col.ColorDataIndexed;
@@ -65,8 +66,8 @@ class WeightsDemo extends ControlPointsDemo {
 
   private void shuffle() {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    setControlPointsSe2(manifoldDisplay.point2xya() //
-        .slash(RandomSample.of(manifoldDisplay.randomSampleInterface(), param0.size)));
+    setControlPointsSe2( //
+        Slash.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), param0.size), manifoldDisplay.point2xya()));
   }
 
   @Override // from RenderInterface

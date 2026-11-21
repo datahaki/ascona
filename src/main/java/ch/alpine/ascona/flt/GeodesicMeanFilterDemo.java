@@ -19,6 +19,7 @@ import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.flt.ga.GeodesicMeanFilter;
 import ch.alpine.sophis.ref.d1.BSpline4CurveSubdivision;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -66,7 +67,7 @@ class GeodesicMeanFilterDemo extends ControlPointsDemo {
     TensorUnaryOperator geodesicMeanFilter = GeodesicMeanFilter.of(manifoldDisplay.geodesicSpace(), _radius);
     Tensor refined = geodesicMeanFilter.apply(control);
     Tensor curve = Nest.of(BSpline4CurveSubdivision.split2lo(manifoldDisplay.geodesicSpace())::string, refined, 7);
-    Tensor euclidXY = manifoldDisplay.point2xy().slash(curve);
+    Tensor euclidXY = Slash.of(curve, manifoldDisplay.point2xy());
     // ---
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(euclidXY, false).render(geometricLayer, graphics);

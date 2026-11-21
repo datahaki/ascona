@@ -15,6 +15,7 @@ import ch.alpine.bridge.ref.ann.FieldSelectionArray;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -56,7 +57,7 @@ class Se2InvarianceDemo extends ControlPointsDemo {
       {
         Tensor sequence = controlPointsAll.extract(1, controlPointsAll.length());
         Tensor origin = controlPointsAll.get(0);
-        Tensor matrix = lieGroup.tangentSpace(origin).log().slash(sequence);
+        Tensor matrix = Slash.of(sequence, lieGroup.tangentSpace(origin).log());
         Tensor weights = InfluenceMatrix.of(matrix).leverages_sqrt();
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);
@@ -76,7 +77,7 @@ class Se2InvarianceDemo extends ControlPointsDemo {
         Tensor result = Tensor.of(allR.stream().map(lieGroupOp));
         Tensor sequence = result.extract(1, result.length());
         Tensor origin = result.get(0);
-        Tensor matrix = lieGroup.tangentSpace(origin).log().slash(sequence);
+        Tensor matrix = Slash.of(sequence, lieGroup.tangentSpace(origin).log());
         Tensor weights = InfluenceMatrix.of(matrix).leverages_sqrt();
         LeversRender leversRender = //
             LeversRender.of(manifoldDisplay, sequence, origin, geometricLayer, graphics);

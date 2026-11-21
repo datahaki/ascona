@@ -24,6 +24,7 @@ import ch.alpine.sophis.ts.Transition;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.opt.hun.BipartiteMatching;
@@ -73,7 +74,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
     Tensor control = getGeodesicControlPoints();
     if (0 < control.length()) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor matrix = param.biinvariantsParam.ofSafe(manifold).relative_distances(ground).sunder().slash(control);
+      Tensor matrix = Slash.of(control, param.biinvariantsParam.ofSafe(manifold).relative_distances(ground).sunder());
       BipartiteMatching bipartiteMatching = BipartiteMatching.of(matrix);
       int[] matching = bipartiteMatching.matching();
       graphics.setColor(Color.RED);
@@ -84,7 +85,7 @@ class BipartiteMatchingDemo extends ControlPointsDemo {
           Tensor tail = ground.get(matching[index]);
           Transition transition = transitionSpace.connect(head, tail);
           TensorUnaryOperator tuo = manifoldDisplay::point2xy;
-          Path2D path2d = geometricLayer.toPath2D(tuo.slash(transition.linearized(RealScalar.of(0.1))));
+          Path2D path2d = geometricLayer.toPath2D(Slash.of(transition.linearized(RealScalar.of(0.1)), tuo));
           graphics.draw(path2d);
         }
       Dimension dimension = geometricComponent().getSize();

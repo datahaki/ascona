@@ -2,6 +2,7 @@
 package ch.alpine.ascona.dv;
 
 import ch.alpine.sophis.dv.Biinvariant;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.Symmetrize;
 
@@ -12,6 +13,6 @@ enum StaticHelper {
   }
 
   public static Tensor distanceMatrix(Biinvariant biinvariant, Tensor sequence) {
-    return biinvariant.relative_distances(sequence).sunder().slash(sequence);
+    return Slash.of(sequence, biinvariant.relative_distances(sequence).sunder());
   }
 }

@@ -29,6 +29,7 @@ import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Range;
@@ -62,7 +63,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
       final Tensor origin = optional.get();
       Manifold manifold = manifoldDisplay.manifold();
       final Tensor sequence = placeWrap.getSequence();
-      final Tensor levers2 = manifold.tangentSpace(origin).log().slash(sequence);
+      final Tensor levers2 = Slash.of(sequence, manifold.tangentSpace(origin).log());
       {
         Tensor hull = ConvexHull2D.of(sequence);
         new PathRender(ColorStroke.CURVE, hull, true) //

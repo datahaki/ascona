@@ -25,6 +25,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 import ch.alpine.tensor.DoubleScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.ConstantArray;
 import ch.alpine.tensor.alg.PadRight;
@@ -67,7 +68,7 @@ final class PlanarScatteredSetCoordinateDemo extends AbstractScatteredSetWeighti
       geometricComponent().addMouseListener(mouseAdapter);
       geometricComponent().addMouseMotionListener(mouseAdapter);
     } // ---
-    setControlPointsSe2(PadRight.zeros(3).slash(CirclePoints.of(7)));
+    setControlPointsSe2(Slash.of(CirclePoints.of(7), PadRight.zeros(3)));
     recompute();
   }
 

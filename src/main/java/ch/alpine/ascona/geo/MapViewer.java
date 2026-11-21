@@ -50,6 +50,7 @@ import ch.alpine.bridge.ref.util.ObjectProperties;
 import ch.alpine.sophis.api.GeoPosition;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ArrayReshape;
@@ -122,7 +123,7 @@ class MapViewer implements ManipulateProvider {
           TilePixel p01 = getTilePixel().shift(-center.x, +center.y);
           List<TilePixel> list = List.of(p00, p10, p11, p01);
           Tensor tensor = Tensor.of(list.stream().map(TilePixel::lon_lat).map(GeoPosition::of));
-          new PathRender(ColorStroke.CURVE, manifoldDisplay.point2xy().slash(tensor), true) //
+          new PathRender(ColorStroke.CURVE, Slash.of(tensor, manifoldDisplay.point2xy()), true) //
               .render(geometricLayer, graphics);
           manifoldDisplay.showPoints(ColorPairs.CONTROL_POINTS, RealScalar.ONE, tensor) //
               .render(geometricLayer, graphics);

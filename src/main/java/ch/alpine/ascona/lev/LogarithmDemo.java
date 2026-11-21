@@ -27,6 +27,7 @@ import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.sophus.lie.so2.So2;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Differences;
@@ -101,7 +102,7 @@ class LogarithmDemo extends ControlPointsDemo {
         final Tensor domain = Drop.tail(Subdivide.of(0.0, 1.0, param.length), 1);
         geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(10, 0)));
         GRID_RENDER.render(geometricLayer, graphics);
-        Tensor planar = homogeneousSpace.tangentSpace(origin).log().slash(refined);
+        Tensor planar = Slash.of(refined, homogeneousSpace.tangentSpace(origin).log());
         {
           Path2D path2d = geometricLayer.toPath2D(planar, true);
           graphics.setColor(DOMAIN_F);

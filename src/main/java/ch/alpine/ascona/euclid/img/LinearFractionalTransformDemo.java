@@ -34,6 +34,7 @@ import ch.alpine.sophis.var.VariogramFunctions;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -102,7 +103,7 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
     ImageRender imageRender = new ImageRender(bufferedImage, cbb);
     imageRender.render(geometricLayer, graphics);
     Tensor sequence = getGeodesicControlPoints();
-    Tensor points = toImagePixel(bufferedImage.getHeight()).slash(sequence);
+    Tensor points = Slash.of(sequence, toImagePixel(bufferedImage.getHeight()));
     LinearFractionalTransform lft = LinearFractionalTransform.fit(reference, points);
     new PathRender(ColorStroke.HI_CONTRAST, sequence, true).render(geometricLayer, graphics);
     LeversRender leversRender = //

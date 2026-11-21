@@ -30,6 +30,7 @@ import ch.alpine.sophis.ts.Transition;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -120,7 +121,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
       Tensor q = sequence.get(directedEdge.j());
       Transition transition = transitionSpace.connect(p, q);
       Tensor linearized = transition.linearized(RealScalar.ONE);
-      Tensor tensor = manifoldDisplay.point2xy().slash(linearized);
+      Tensor tensor = Slash.of(linearized, manifoldDisplay.point2xy());
       Path2D line = geometricLayer.toPath2D(tensor);
       graphics.draw(line);
     }
@@ -134,7 +135,7 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
       Tensor head = sequence.get(index[i]);
       Tensor tail = sequence.get(index[(i + 1) % index.length]);
       Tensor tensor = transitionSpace.connect(head, tail).linearized(RealScalar.ONE);
-      Path2D line = geometricLayer.toPath2D(tuo.slash(tensor));
+      Path2D line = geometricLayer.toPath2D(Slash.of(tensor, tuo));
       graphics.draw(line);
     }
     Dimension dimension = geometricComponent().getSize();

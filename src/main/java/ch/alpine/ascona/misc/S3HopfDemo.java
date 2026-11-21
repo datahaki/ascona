@@ -14,6 +14,7 @@ import ch.alpine.ascony.win.ControlPointsDemo;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.sophus.hs.s.S3Hopf;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
@@ -47,7 +48,7 @@ class S3HopfDemo extends ControlPointsDemo {
       TensorUnaryOperator tuo = t -> Tensors.of(t.Get(1), t.Get(3));
       for (Tensor xyz : getGeodesicControlPoints()) {
         S3Hopf s3Hopf = S3Hopf.northernHemisphereGauge(xyz);
-        Tensor tensor = tuo.slash(domain.maps(s3Hopf::lift));
+        Tensor tensor = Slash.of(domain.maps(s3Hopf::lift), tuo);
         new PathRender(ColorStroke.CURVE, tensor, true) //
             .render(geometricLayer, graphics);
       }

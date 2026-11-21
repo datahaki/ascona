@@ -26,6 +26,7 @@ import ch.alpine.sophis.srf.d3.PlatonicSolid;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Rational;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Sort;
@@ -66,7 +67,7 @@ class SurfaceMeshDemo extends ControlPointsDemo {
   private void compute() {
     surfaceMesh = param.mesh.surfaceMesh();
     if (getSelectedMD().equals(ManifoldDisplays.S2))
-      surfaceMesh.vrt = Vector2Norm.NORMALIZE.slash(surfaceMesh.vrt);
+      surfaceMesh.vrt = Slash.of(surfaceMesh.vrt, Vector2Norm.NORMALIZE);
     setControlPointsSe2(surfaceMesh.vrt);
   }
 
