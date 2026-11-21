@@ -9,6 +9,7 @@ import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Accumulate;
 import ch.alpine.tensor.alg.Differences;
@@ -27,7 +28,7 @@ public class CurveVisualSet {
   /** @param points {{x1, y1}, {x2, y2}, ..., {xn, yn}} */
   public CurveVisualSet(Tensor points) {
     differences = Differences.of(points);
-    differencesNorm = Tensor.of(differences.stream().map(Vector2Norm::of));
+    differencesNorm = Slash.of(differences, Vector2Norm::of);
     curvature = Curvature2D.INSTANCE.string(points);
     arcLength0 = Accumulate.of(differencesNorm);
     arcLength1 = FoldList.of(Tensor::add, RealScalar.ZERO, differencesNorm);
@@ -43,7 +44,7 @@ public class CurveVisualSet {
   }
 
   public void addArcTan(Show show, Tensor refined) {
-    Tensor arcTan2D = Tensor.of(differences.stream().map(ArcTan2D::of));
+    Tensor arcTan2D = Slash.of(differences, ArcTan2D::of);
     Tensor extract = refined.get(Tensor.ALL, 2).extract(0, arcTan2D.length());
     Showable showable = show.add(ListLinePlot.of(arcLength0, arcTan2D.subtract(extract).maps(So2.MOD)));
     showable.setLabel("arcTan[dx, dy] - phase");

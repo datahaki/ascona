@@ -20,6 +20,7 @@ import ch.alpine.sophis.fit.Se2RigidMotionFit;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2ForwardAction;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Append;
@@ -60,14 +61,14 @@ class RigidMotionFitDemo extends EuclideanPlaneDemo {
     Tensor xya = RandomVariate.of(distribution, 3);
     setControlPointsSe2(Tensor.of(points.stream() //
         .map(new Se2ForwardAction(xya)) //
-        .map(row -> row.append(RealScalar.ZERO))));
+        .map(row -> row.append(RealScalar.ZERO)), points.length()));
   }
 
   @Override // from RenderInterface
   public synchronized void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor sequence = getGeodesicControlPoints();
     {
-      Tensor target = Tensor.of(sequence.stream().map(R2Display.INSTANCE::xya2point));
+      Tensor target = Slash.of(sequence, R2Display.INSTANCE::xya2point);
       Tensor solve = Se2RigidMotionFit.of(points, target);
       Se2Display.INSTANCE.showPoints(ColorPairs.ORIGIN, RealScalar.ONE, Tensors.of(solve)) //
           .render(geometricLayer, graphics);

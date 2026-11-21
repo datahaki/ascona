@@ -22,6 +22,7 @@ import ch.alpine.sophus.lie.se2.Se2ForwardAction;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -48,7 +49,7 @@ class SutherlandHodgmanAlgorithmDemo extends EuclideanPlaneDemo {
 
   public SutherlandHodgmanAlgorithmDemo() {
     super(param = new Param());
-    setControlPointsSe2(Tensor.of(CirclePoints.of(4).stream().map(row -> row.append(RealScalar.ZERO))));
+    setControlPointsSe2(Slash.of(CirclePoints.of(4), row -> row.append(RealScalar.ZERO)));
   }
 
   @Override
@@ -64,7 +65,7 @@ class SutherlandHodgmanAlgorithmDemo extends EuclideanPlaneDemo {
     if (isMoving) {
       Tensor mouse = geometricComponent().getMouseSe2CState();
       TensorUnaryOperator se2Bijection = new Se2ForwardAction(Times.of(mouse, Tensors.vector(1, 1, 0.3)));
-      Tensor sequence = Tensor.of(getGeodesicControlPoints().stream().map(se2Bijection));
+      Tensor sequence = Slash.of(getGeodesicControlPoints(), se2Bijection);
       // ---
       Tensor CIRCLE = CirclePoints.of(param.n).multiply(RealScalar.of(2));
       SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);

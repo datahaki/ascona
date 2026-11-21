@@ -33,6 +33,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.PadRight;
@@ -121,7 +122,7 @@ class SPatchDemo extends ControlPointsDemo {
           int i0 = sPatch.basis(r0);
           int i1 = sPatch.basis(r1);
           ScalarTensorFunction stf = homogeneousSpace.curve(sequence.get(i0), sequence.get(i1));
-          Tensor points = Tensor.of(domain.maps(stf).stream().map(manifoldDisplay::point2xy));
+          Tensor points = Slash.of(domain.maps(stf), manifoldDisplay::point2xy);
           Path2D path2d = geometricLayer.toPath2D(points);
           graphics.draw(path2d);
         }

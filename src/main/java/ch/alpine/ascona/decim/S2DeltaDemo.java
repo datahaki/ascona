@@ -27,6 +27,7 @@ import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.sophus.hs.s.SnRotationMatrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.UnitVector;
@@ -83,7 +84,7 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
     CurveOperator curveOperator = UniformResample.of(SnManifold.INSTANCE, SnManifold.INSTANCE, param.delta);
     sequence = curveOperator.string(sequence);
     TensorUnaryOperator tuo = t -> t; // SnPerturbation.of(NormalDistribution.of(param.noise.zero(), param.noise));
-    sequence = Tensor.of(sequence.stream().map(tuo));
+    sequence = Slash.of(sequence, tuo);
     ScalarUnaryOperator s_window = param.s_window.get();
     snDeltaRaw = new SnDeltaContainer(sequence, s_window);
     TensorUnaryOperator tensorUnaryOperator = new CenterFilter( //
@@ -94,7 +95,7 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    new PathRender(ColorStroke.CURVE, Tensor.of(snDeltaRaw.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
+    new PathRender(ColorStroke.CURVE, Slash.of(snDeltaRaw.sequence, manifoldDisplay::point2xy), false).render(geometricLayer, graphics);
     new PathRender(ColorStroke.SECONDARY_CURVE, Tensor.of(snDeltaFil.sequence.stream().map(manifoldDisplay::point2xy)), false).render(geometricLayer, graphics);
     if (param.differences)
       for (Tensor ctrl : snDeltaRaw.differences) {

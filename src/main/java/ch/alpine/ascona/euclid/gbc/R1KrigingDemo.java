@@ -98,8 +98,8 @@ class R1KrigingDemo extends ControlPointsDemo {
         Kriging kriging = Kriging.regression(sedarim, sequence, funceva, covariance);
         // ---
         Tensor domain = StaticHelper.domain(getControlPointsSe2());
-        Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(kriging::estimate));
-        Tensor errors = Tensor.of(domain.stream().map(Tensors::of).map(kriging::variance));
+        Tensor result = Tensor.of(domain.stream().map(Tensors::of).map(kriging::estimate), domain.length());
+        Tensor errors = Tensor.of(domain.stream().map(Tensors::of).map(kriging::variance), domain.length());
         // ---
         Path2D path2d = geometricLayer.toPath2D(Join.of( //
             Transpose.of(Tensors.of(domain, result.add(errors))), //

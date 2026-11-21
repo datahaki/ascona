@@ -30,6 +30,7 @@ import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Flatten;
@@ -93,8 +94,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
   private void shuffle() {
     int n = param0.size;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
-        .map(manifoldDisplay::point2xya));
+    Tensor tensor = Slash.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n), manifoldDisplay::point2xya);
     setControlPointsSe2(tensor);
   }
 
@@ -130,7 +130,7 @@ class MinimumSpanningTreeDemo extends ControlPointsDemo {
         Tensor p = sequence.get(directedEdge.i());
         Tensor q = sequence.get(directedEdge.j());
         ScalarTensorFunction curve = geodesicSpace.curve(p, q);
-        Tensor tensor = Tensor.of(domain.maps(curve).stream().map(manifoldDisplay::point2xy));
+        Tensor tensor = Slash.of(domain.maps(curve), manifoldDisplay::point2xy);
         graphics.draw(geometricLayer.toPath2D(tensor));
       }
     }

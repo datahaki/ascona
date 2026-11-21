@@ -21,6 +21,7 @@ import ch.alpine.sophis.win.KnotSpacing;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Last;
@@ -67,7 +68,7 @@ class KnotsBSplineFunctionDemo extends AbstractCurveDemo {
     Tensor refined = Subdivide.of(RealScalar.ZERO, upper, Math.max(1, control.length() * (1 << abstractCurveParam.refine))).maps(scalarTensorFunction);
     manifoldDisplay.showPoints(ColorPairs.MARKER, RealScalar.of(1.2), Unprotect.byRef(scalarTensorFunction.apply(parameter))) //
         .render(geometricLayer, graphics);
-    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
+    Tensor render = Slash.of(refined, manifoldDisplay::point2xy);
     if (manifoldDisplay.isXYeuclid())
       Curvature2DRender.of(render, false).render(geometricLayer, graphics);
     if (abstractCurveParam.refine < 5)

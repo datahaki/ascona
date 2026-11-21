@@ -20,6 +20,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.col.ColorDataIndexed;
@@ -68,7 +69,7 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     for (int i = 0; i < CURVE_SUBDIVISION_SCHEMES.size(); ++i) {
       Tensor refined = curve(geometricLayer, graphics, i);
       if (1 < refined.length()) {
-        Tensor tensor = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
+        Tensor tensor = Slash.of(refined, manifoldDisplay::point2xy);
         CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
         curveVisualSet.addCurvature(show1);
         curveVisualSet.addCurvatureD(show2);
@@ -89,7 +90,7 @@ class LaneRiesenfeldComparisonDemo extends ControlPointsDemo {
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
     Tensor refined = scheme.refine(manifoldDisplay, control, levels, false);
     // ---
-    Tensor render = Tensor.of(refined.stream().map(manifoldDisplay::point2xy));
+    Tensor render = Slash.of(refined, manifoldDisplay::point2xy);
     ColorStrokeIndexed colorStrokeIndexed = new ColorStrokeIndexed(COLORS, new BasicStroke());
     new PathRender(colorStrokeIndexed.getColorStroke(index), render, false) //
         .render(geometricLayer, graphics);

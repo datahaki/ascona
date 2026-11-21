@@ -18,6 +18,7 @@ import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.ScalarTensorFunction;
@@ -58,7 +59,7 @@ class GeometricSymLinkRender {
           {
             Transition transition = transitionSpace.connect(posP, posM);
             Tensor tensor = transition.linearized(resolution);
-            Tensor points = Tensor.of(tensor.stream().map(manifoldDisplay::point2xy));
+            Tensor points = Slash.of(tensor, manifoldDisplay::point2xy);
             Path2D path2d = geometricLayer.toPath2D(points);
             graphics.setStroke(new BasicStroke(1.5f));
             graphics.draw(path2d);
@@ -66,7 +67,7 @@ class GeometricSymLinkRender {
           {
             Transition transition = transitionSpace.connect(posM, posQ);
             Tensor tensor = transition.linearized(resolution);
-            Tensor points = Tensor.of(tensor.stream().map(manifoldDisplay::point2xy));
+            Tensor points = Slash.of(tensor, manifoldDisplay::point2xy);
             Path2D path2d = geometricLayer.toPath2D(points);
             graphics.setStroke(STROKE);
             graphics.draw(path2d);

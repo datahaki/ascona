@@ -14,6 +14,7 @@ import ch.alpine.sophus.clt.ClothoidContext;
 import ch.alpine.sophus.clt.ClothoidSolutions;
 import ch.alpine.sophus.clt.ClothoidTangentDefect;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.sca.Clip;
@@ -30,7 +31,7 @@ record ClothoidTangentDefectShow(Scalar s1, Scalar s2, Clip clip) implements Sho
     ClothoidSolutions clothoidSolutions = new ClothoidSolutions(clothoidTangentDefect, clip);
     Show show = new Show("Clothoid Tangent Defect");
     show.add(ReImPlot.of(clothoidTangentDefect, clip));
-    Tensor zeros = Tensor.of(clothoidSolutions.lambdas().stream().map(l -> Tensors.of(l, l.maps(Scalar::zero))));
+    Tensor zeros = Slash.of(clothoidSolutions.lambdas(), l -> Tensors.of(l, l.maps(Scalar::zero)));
     show.add(ListPlot.of(zeros));
     List<StringItem> list = new LinkedList<>();
     for (Tensor _l : clothoidSolutions.lambdas()) {

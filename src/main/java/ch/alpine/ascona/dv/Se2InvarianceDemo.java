@@ -72,9 +72,9 @@ class Se2InvarianceDemo extends ControlPointsDemo {
       geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(10, 0)));
       try {
         TensorUnaryOperator lieGroupOR = lieGroup.actionR(param.xya);
-        Tensor allR = Tensor.of(controlPointsAll.stream().map(lieGroupOR));
+        Tensor allR = Slash.of(controlPointsAll, lieGroupOR);
         TensorUnaryOperator lieGroupOp = lieGroup.actionL(lieGroup.invert(allR.get(0)));
-        Tensor result = Tensor.of(allR.stream().map(lieGroupOp));
+        Tensor result = Slash.of(allR, lieGroupOp);
         Tensor sequence = result.extract(1, result.length());
         Tensor origin = result.get(0);
         Tensor matrix = Slash.of(sequence, lieGroup.tangentSpace(origin).log());

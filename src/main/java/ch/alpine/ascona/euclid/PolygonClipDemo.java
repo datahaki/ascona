@@ -20,6 +20,7 @@ import ch.alpine.sophis.crv.d2.alg.SutherlandHodgmanAlgorithm;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -36,7 +37,7 @@ class PolygonClipDemo extends EuclideanPlaneDemo {
   private static final SutherlandHodgmanAlgorithm POLYGON_CLIP = SutherlandHodgmanAlgorithm.of(CIRCLE);
 
   public PolygonClipDemo() {
-    setControlPointsSe2(Tensor.of(CogPoints.of(4, RealScalar.of(5), RealScalar.of(-2)).stream().map(row -> row.append(RealScalar.ZERO))));
+    setControlPointsSe2(Slash.of(CogPoints.of(4, RealScalar.of(5), RealScalar.of(-2)), row -> row.append(RealScalar.ZERO)));
   }
 
   @Override

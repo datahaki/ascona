@@ -25,6 +25,7 @@ import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Ordering;
@@ -93,14 +94,14 @@ class KNearestDemo extends ControlPointsDemo {
         {
           geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(8, 0)));
           TensorUnaryOperator lieGroupOp = lieGroup.conjugation(shift);
-          render(geometricLayer, graphics, Tensor.of(sequence.stream().map(lieGroupOp)), lieGroupOp.apply(origin), "'");
+          render(geometricLayer, graphics, Slash.of(sequence, lieGroupOp), lieGroupOp.apply(origin), "'");
           geometricLayer.popMatrix();
         }
         {
           Tensor invert = Se2Group.INSTANCE.invert(shift);
           geometricLayer.pushMatrix(Se2Matrix.translation(Tensors.vector(16, 0)));
           TensorUnaryOperator lieGroupOp = lieGroup.conjugation(invert);
-          render(geometricLayer, graphics, Tensor.of(sequence.stream().map(lieGroupOp)), lieGroupOp.apply(origin), "\"");
+          render(geometricLayer, graphics, Slash.of(sequence, lieGroupOp), lieGroupOp.apply(origin), "\"");
           geometricLayer.popMatrix();
         }
       } catch (Exception exception) {

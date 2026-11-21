@@ -13,6 +13,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.d2.PolygonCentroid;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.sophis.fit.MinTriangleAreaSquared;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.jet.AppendOne;
@@ -25,7 +26,7 @@ class MinTriangleAreaSquaredDemo extends EuclideanPlaneDemo {
   public MinTriangleAreaSquaredDemo() {
     Tensor blub = Tensors.fromString("{{1, 0, 0}, {0, 1, 0}, {2, 0, 2.5708}, {1, 0, 2.1}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 0), //
-        Tensor.of(blub.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
+        Slash.of(blub, Times.operator(Tensors.vector(2, 1, 1)))));
   }
 
   @Override
@@ -39,7 +40,7 @@ class MinTriangleAreaSquaredDemo extends EuclideanPlaneDemo {
     Tensor sequence = getGeodesicControlPoints();
     if (0 < sequence.length()) {
       new PathRender(ColorStroke.CURVE, sequence, true).render(geometricLayer, graphics);
-      Tensor polygon = Tensor.of(sequence.stream().map(AppendOne.FUNCTION));
+      Tensor polygon = Slash.of(sequence, AppendOne.FUNCTION);
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       {
         Tensor origin = weights.dot(polygon).extract(0, 2);

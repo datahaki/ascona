@@ -93,7 +93,7 @@ class ExponentialDemo extends EuclideanPlaneDemo {
               int fi = index;
               show.add(ListLinePlot.of(domain, Tensor.of(deque.stream() //
                   .map(WeightsFactors::weights) //
-                  .map(tensor -> tensor.Get(fi)))));
+                  .map(tensor -> tensor.Get(fi)), deque.size())));
             }
             show.render_autoIndent(graphics, new Rectangle(0 * WIDTH, 0, WIDTH, 200));
           }

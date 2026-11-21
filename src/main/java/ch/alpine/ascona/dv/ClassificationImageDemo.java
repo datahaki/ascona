@@ -31,6 +31,7 @@ import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalars;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -105,8 +106,7 @@ class ClassificationImageDemo extends ControlPointsDemo {
   private void shuffle() {
     int n = param0.size;
     ManifoldDisplay manifoldDisplay = manifoldDisplay();
-    Tensor tensor = Tensor.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n).stream() //
-        .map(manifoldDisplay::point2xya));
+    Tensor tensor = Slash.of(RandomSample.of(manifoldDisplay.randomSampleInterface(), n), manifoldDisplay::point2xya);
     setControlPointsSe2(tensor);
     // assignment of random labels to points
     int k = param0.labels;

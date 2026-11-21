@@ -31,6 +31,7 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Outer;
@@ -48,7 +49,7 @@ class SphereFitDemo extends EuclideanPlaneDemo {
     Tensor blub = Tensors.fromString(
         "{{1, 0, 0}, {1, 0, 0}, {2, 0, 2.5708}, {1, 0, 2.1}, {1.5, 0, 0}, {2.3, 0, -1.2}, {1.5, 0, 0}, {4, 0, 3.14159}, {2, 0, 3.14159}, {2, 0, 0}}");
     setControlPointsSe2(DubinsGenerator.of(Tensors.vector(0, 0, 2.1), //
-        Tensor.of(blub.stream().map(Times.operator(Tensors.vector(2, 1, 1))))));
+        Slash.of(blub, Times.operator(Tensors.vector(2, 1, 1)))));
   }
 
   @Override

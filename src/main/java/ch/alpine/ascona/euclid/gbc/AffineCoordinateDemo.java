@@ -28,7 +28,7 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 
 class AffineCoordinateDemo extends EuclideanPlaneDemo {
   public AffineCoordinateDemo() {
-    Tensor sequence = Tensor.of(CirclePoints.of(7).multiply(RealScalar.of(2)).stream().map(PadRight.zeros(3)));
+    Tensor sequence = Slash.of(CirclePoints.of(7).multiply(RealScalar.of(2)), PadRight.zeros(3));
     setControlPointsSe2(sequence);
   }
 
@@ -73,7 +73,7 @@ class AffineCoordinateDemo extends EuclideanPlaneDemo {
         Genesis genesis = AffineCoordinate.INSTANCE;
         Tensor weights = genesis.origin(levers);
         leversRender.renderWeights(weights);
-        Tensor lhs = Tensor.of(levers.stream().map(AppendOne.FUNCTION));
+        Tensor lhs = Slash.of(levers, AppendOne.FUNCTION);
         Tensor rhs = weights;
         Tensor sol = LeastSquares.of(lhs, rhs);
         // System.out.println(sol.map(Chop._12));

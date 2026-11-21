@@ -29,6 +29,7 @@ import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Subdivide;
@@ -129,8 +130,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
       for (int index = 0; index < origin.length(); ++index) {
         ScalarTensorFunction scalarTensorFunction = //
             geodesicSpace.curve(origin.get(index), target.get(index));
-        Tensor points = Tensor.of(DOMAIN.maps(scalarTensorFunction).stream() //
-            .map(manifoldDisplay::point2xy));
+        Tensor points = Slash.of(DOMAIN.maps(scalarTensorFunction), manifoldDisplay::point2xy);
         graphics.draw(geometricLayer.toPath2D(points));
       }
       graphics.setStroke(new BasicStroke());

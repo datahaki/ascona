@@ -22,6 +22,7 @@ import ch.alpine.sophus.clt.ClothoidBuilder;
 import ch.alpine.sophus.clt.ClothoidSampler;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.Reverse;
@@ -76,12 +77,12 @@ class ClothoidTransitionDemo extends ClothoidSequenceDemo {
             .render(geometricLayer, graphics);
       if (param.plot)
         show.add(ListLinePlot.of(samples, RnLineTrim.TRIPLE_REDUCE_EXTRAPOLATION.apply( //
-            Tensor.of(linearized.stream().map(Extract2D.FUNCTION)))));
+            Slash.of(linearized, Extract2D.FUNCTION))));
       if (param.shade) {
         Tensor ofs = AngleVector.of(param.angle).multiply(param.width);
-        Tensor center = Tensor.of(linearized.stream().map(Extract2D.FUNCTION));
-        Tensor hi = Tensor.of(center.stream().map(ofs::add));
-        Tensor lo = Tensor.of(center.stream().map(ofs.negate()::add));
+        Tensor center = Slash.of(linearized, Extract2D.FUNCTION);
+        Tensor hi = Slash.of(center, ofs::add);
+        Tensor lo = Slash.of(center, ofs.negate()::add);
         graphics.setColor(new Color(128, 128, 128, 64));
         Path2D path2d = geometricLayer.toPath2D(Join.of(hi, Reverse.of(lo)), true);
         graphics.setStroke(new BasicStroke());

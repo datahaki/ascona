@@ -22,6 +22,7 @@ import ch.alpine.sophis.ts.ClothoidTransitionSpace;
 import ch.alpine.sophus.clt.Clothoid;
 import ch.alpine.sophus.clt.LagrangeQuadraticD;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.ConstantArray;
@@ -66,7 +67,7 @@ class ClothoidComparisonDemo extends ClothoidBaseDemo {
       new PathRender(colorStrokeIndexed.getColorStroke(ordinal), points, false) //
           .render(geometricLayer, graphics);
       // ---
-      Tensor tensor = Tensor.of(points.stream().map(manifoldDisplay::point2xy));
+      Tensor tensor = Slash.of(points, manifoldDisplay::point2xy);
       CurveVisualSet curveVisualSet = new CurveVisualSet(tensor);
       curveVisualSet.addCurvature(show);
       {
