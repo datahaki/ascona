@@ -13,6 +13,7 @@ import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.ControlPointsDemo;
+import ch.alpine.bridge.fig.GraphicsGrid;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -102,17 +103,19 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       }
       if (param.basis) {
         Dimension dimension = geometricComponent().getSize();
+        List<Rectangle> list = //
+            GraphicsGrid.rectanglesCol(2, new Rectangle(dimension.width - WIDTH, 0, WIDTH, dimension.height));
         {
           Show show = new Show("Basis 1");
           for (Tensor values : Transpose.of(basis1))
             show.add(ListLinePlot.of(domain, values));
-          show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, 0, WIDTH, HEIGHT));
+          show.render_autoIndent(graphics, list.get(0));
         }
         {
           Show show = new Show("Basis 2");
           for (Tensor values : Transpose.of(basis2))
             show.add(ListLinePlot.of(domain, values));
-          show.render_autoIndent(graphics, new Rectangle(dimension.width - WIDTH, HEIGHT, WIDTH, HEIGHT));
+          show.render_autoIndent(graphics, list.get(1));
         }
       }
     }

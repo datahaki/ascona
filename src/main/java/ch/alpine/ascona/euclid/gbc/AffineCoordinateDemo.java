@@ -21,7 +21,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.PadRight;
-import ch.alpine.tensor.jet.AppendOne;
+import ch.alpine.tensor.jet.AffineAppend;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.mat.pi.LeastSquares;
 import ch.alpine.tensor.nrm.Vector2Norm;
@@ -73,7 +73,7 @@ class AffineCoordinateDemo extends EuclideanPlaneDemo {
         Genesis genesis = AffineCoordinate.INSTANCE;
         Tensor weights = genesis.origin(levers);
         leversRender.renderWeights(weights);
-        Tensor lhs = Slash.of(levers, AppendOne.FUNCTION);
+        Tensor lhs = Slash.of(levers, AffineAppend.M1);
         Tensor rhs = weights;
         Tensor sol = LeastSquares.of(lhs, rhs);
         // System.out.println(sol.map(Chop._12));

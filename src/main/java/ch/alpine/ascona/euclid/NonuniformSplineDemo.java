@@ -2,7 +2,6 @@
 package ch.alpine.ascona.euclid;
 
 import java.awt.Graphics2D;
-import java.util.Arrays;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.ColorStroke;
@@ -18,6 +17,7 @@ import ch.alpine.bridge.ref.ann.FieldSlider;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.sophis.crv.GeodesicBSplineFunction;
 import ch.alpine.sophus.lie.rn.RGroup;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Last;
@@ -61,8 +61,8 @@ class NonuniformSplineDemo extends EuclideanPlaneDemo {
       Tensor _effective = control;
       // ---
       int[] array = Ordering.INCREASING.of(_effective.get(Tensor.ALL, 0));
-      Tensor x = Tensor.of(Arrays.stream(array).mapToObj(i -> _effective.get(i, 0)));
-      Tensor y = Tensor.of(Arrays.stream(array).mapToObj(i -> _effective.get(i, 1)));
+      Tensor x = Slash.of(array, i -> _effective.get(i, 0));
+      Tensor y = Slash.of(array, i -> _effective.get(i, 1));
       ScalarTensorFunction scalarTensorFunction = //
           GeodesicBSplineFunction.of(RGroup.INSTANCE, _degree, x, y);
       Clip clip = Clips.interval(x.Get(0), Last.of(x));

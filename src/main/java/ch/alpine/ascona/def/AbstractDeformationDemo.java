@@ -37,7 +37,7 @@ import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.col.ColorDataGradient;
 import ch.alpine.tensor.col.ColorDataGradients;
-import ch.alpine.tensor.jet.AppendOne;
+import ch.alpine.tensor.jet.AffineAppend;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -101,7 +101,7 @@ abstract class AbstractDeformationDemo extends ControlPointsDemo {
     case Se2C:
     case Se2: {
       CoordinateBoundingBox cbb = Box2D.xy(Clips.absolute(2.0));
-      return Meshgrid.of(cbb, res).image(AppendOne.FUNCTION.andThen(sedarim::sunder));
+      return Meshgrid.of(cbb, res).image(AffineAppend.M1.andThen(sedarim::sunder));
     }
     default:
       throw new IllegalArgumentException();

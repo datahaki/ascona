@@ -16,7 +16,7 @@ import ch.alpine.sophis.fit.MinTriangleAreaSquared;
 import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.jet.AppendOne;
+import ch.alpine.tensor.jet.AffineAppend;
 import ch.alpine.tensor.red.Times;
 
 /** Reference:
@@ -40,7 +40,7 @@ class MinTriangleAreaSquaredDemo extends EuclideanPlaneDemo {
     Tensor sequence = getGeodesicControlPoints();
     if (0 < sequence.length()) {
       new PathRender(ColorStroke.CURVE, sequence, true).render(geometricLayer, graphics);
-      Tensor polygon = Slash.of(sequence, AppendOne.FUNCTION);
+      Tensor polygon = Slash.of(sequence, AffineAppend.M1);
       Tensor weights = MinTriangleAreaSquared.INSTANCE.origin(polygon);
       {
         Tensor origin = weights.dot(polygon).extract(0, 2);
