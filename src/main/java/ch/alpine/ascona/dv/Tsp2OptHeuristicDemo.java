@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.util.List;
@@ -16,6 +17,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
+import ch.alpine.bridge.fig.GraphicsGrid;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListLinePlot;
 import ch.alpine.bridge.fig.plt.MatrixPlot;
@@ -140,16 +142,16 @@ class Tsp2OptHeuristicDemo extends ManifoldDisplayDemo {
     }
     Dimension dimension = geometricComponent().getSize();
     dimension.width /= 2;
-    dimension.height /= 2;
+    List<Rectangle> rectangles = GraphicsGrid.rectangles(2, new Rectangle(new Point(dimension.width, 0), dimension));
     {
       Show show = new Show("Distance matrix");
       show.add(MatrixPlot.of(matrix));
-      show.render_autoIndent(graphics, new Rectangle(dimension.width, 0, dimension.width, dimension.height));
+      show.render_autoIndent(graphics, rectangles.get(0));
     }
     {
       Show show = new Show("Route length (search=" + total + ")");
       show.add(ListLinePlot.of(points));
-      show.render_autoIndent(graphics, new Rectangle(dimension.width, dimension.height, dimension.width, dimension.height));
+      show.render_autoIndent(graphics, rectangles.get(1));
     }
   }
 

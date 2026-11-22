@@ -17,6 +17,7 @@ import ch.alpine.ascony.msh.ImageTiling;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ArrayPlot;
+import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.tensor.DoubleScalar;
@@ -54,7 +55,7 @@ final class Se2ScatteredSetCoordinateDemo extends AbstractScatteredSetWeightingD
     ColorDataGradient colorDataGradient = scatteredSetParam.cdg;
     Tensor controlPoints = getGeodesicControlPoints();
     {
-      Tensor box = Box2D.polygon(Box2D.xy(RANGE_X));
+      Tensor box = PolygonPlot.polygon(Box2D.xy(RANGE_X));
       Path2D path2d = geometricLayer.toPath2D(box, true);
       graphics.setColor(Color.LIGHT_GRAY);
       graphics.draw(path2d);

@@ -5,14 +5,17 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Collection;
+import java.util.List;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorStroke;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ManifoldDisplayDemo;
+import ch.alpine.bridge.fig.GraphicsGrid;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.FieldClip;
 import ch.alpine.bridge.ref.ann.FieldSelectionArray;
@@ -125,17 +128,17 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
       }
     }
     Dimension dimension = geometricComponent().getSize();
-    int WIDTH = dimension.width / 4;
-    int HEIGHT = dimension.height / 2;
+    dimension.width /=2 ;
+    Rectangle rectangle = new Rectangle(new Point(dimension.width,0), dimension);
+    List<Rectangle> rectangles = GraphicsGrid.rectangles(4, rectangle);
     {
       int ofs = dimension.width / 2;
-      snDeltaRaw.show1.render_autoIndent(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
-      snDeltaRaw.shows[0].render_autoIndent(graphics, new Rectangle(ofs, HEIGHT, WIDTH, HEIGHT));
+      snDeltaRaw.show1.render_autoIndent(graphics, rectangles.get(0));
+      snDeltaRaw.shows[0].render_autoIndent(graphics, rectangles.get(2));
     }
     {
-      int ofs = dimension.width * 3 / 4;
-      snDeltaFil.show1.render_autoIndent(graphics, new Rectangle(ofs, 0, WIDTH, HEIGHT));
-      snDeltaFil.shows[0].render_autoIndent(graphics, new Rectangle(ofs, HEIGHT, WIDTH, HEIGHT));
+      snDeltaFil.show1.render_autoIndent(graphics, rectangles.get(1));
+      snDeltaFil.shows[0].render_autoIndent(graphics, rectangles.get(3));
     }
   }
 

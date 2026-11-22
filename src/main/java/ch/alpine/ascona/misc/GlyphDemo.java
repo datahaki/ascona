@@ -6,12 +6,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.util.List;
 
 import ch.alpine.ascony.ren.BezierGlyphRender;
 import ch.alpine.ascony.ren.ClothoidGlyphRender;
@@ -19,6 +21,7 @@ import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.GridRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
+import ch.alpine.bridge.fig.GraphicsGrid;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ListPlot;
 import ch.alpine.bridge.fig.plt.MatrixPlot;
@@ -116,12 +119,13 @@ class GlyphDemo extends EuclideanPlaneDemo {
         manifoldDisplay().showPoints(ColorPairs.CONTROL_POINTS, RealScalar.ONE, surfaceMesh.vrt) //
             .render(geometricLayer, graphics);
       Dimension dimension = geometricComponent().getSize();
-      dimension.height /= 2;
+      List<Rectangle> rectangles = GraphicsGrid.rectangles(2, //
+          new Rectangle(new Point(dimension.width - 400, 0), new Dimension(400, dimension.height)));
       {
         Show show = new Show();
         show.add(MatrixPlot.of(matrix, param.cdg.deriveWithOpacity(Rational.of(3, 4))));
         show.setShowLabel("Distance matrix");
-        show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, 0, 400, dimension.height));
+        show.render_autoIndent(graphics, rectangles.get(0));
       }
       if (Tensors.nonEmpty(matrix)) {
         Tensor vec = Tensor.of(Flatten.scalars(UpperVectorize.of(matrix, 1)) //
@@ -130,7 +134,7 @@ class GlyphDemo extends EuclideanPlaneDemo {
         Show show = new Show();
         show.add(ListPlot.of(Range.of(0, vec.length()), vec));
         show.setShowLabel("lowest dist.");
-        show.render_autoIndent(graphics, new Rectangle(dimension.width - 400, dimension.height, 400, dimension.height));
+        show.render_autoIndent(graphics, rectangles.get(1));
       }
     }
     setGeodesicControlPoints(tableBuilder.getTable());

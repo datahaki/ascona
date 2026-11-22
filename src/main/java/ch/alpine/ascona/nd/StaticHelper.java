@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
-import ch.alpine.ascony.crv.Box2D;
+import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
@@ -16,7 +16,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 enum StaticHelper {
   ;
   public static void draw(CoordinateBoundingBox cbb, GeometricLayer geometricLayer, Graphics2D graphics) {
-    Path2D path2d = geometricLayer.toPath2D(Box2D.polygon(cbb), true);
+    Path2D path2d = geometricLayer.toPath2D(PolygonPlot.polygon(cbb), true);
     graphics.setColor(new Color(0, 128, 0, 8));
     graphics.fill(path2d);
     graphics.setColor(new Color(128, 128, 128, 32));

@@ -3,8 +3,10 @@ package ch.alpine.ascona.euclid.img;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import ch.alpine.ascony.api.LogWeightings;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -17,6 +19,7 @@ import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.PathRender;
 import ch.alpine.ascony.win.ControlPointType;
 import ch.alpine.ascony.win.EuclideanPlaneDemo;
+import ch.alpine.bridge.fig.GraphicsGrid;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.plt.ImagePlot;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -110,19 +113,19 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
         LeversRender.of(manifoldDisplay, sequence, null, geometricLayer, graphics);
     leversRender.renderIndexP();
     leversRender.renderMatrix2(Tensors.vector(0, 0, 0), lft.matrix());
-    Dimension dimension = geometricComponent().getSize();
-    dimension.width /= 2;
-    dimension.height /= 3;
     Meshgrid meshgrid = new Meshgrid( //
         CoordinateBoundingBox.of( //
             Clips.positive(bufferedImage.getWidth()), //
             Clips.positive(bufferedImage.getHeight())), //
         param.resw, param.resh);
+    Dimension dimension = geometricComponent().getSize();
+    dimension.width /= 2;
+    List<Rectangle> rectangles = GraphicsGrid.rectangles(3, new Rectangle(new Point(dimension.width, 0), dimension));
     {
       Show show = new Show("Linear Fractional Transform");
       TensorUnaryOperator tuo = lft.andThen(interpolation::get);
       show.add(ImagePlot.of(ImageFormat.of(imageOrTransparent(meshgrid, tuo)), param.imgRes));
-      show.render_autoIndent(graphics, new Rectangle(dimension.width, 0, dimension.width, dimension.height));
+      show.render_autoIndent(graphics, rectangles.get(0));
     }
     {
       Show show = new Show("Three Point: " + param.tps);
@@ -132,7 +135,7 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
         return interpolation.get(genesis.origin(ref).dot(points));
       };
       show.add(ImagePlot.of(ImageFormat.of(imageOrTransparent(meshgrid, tuo)), param.imgRes));
-      show.render_autoIndent(graphics, new Rectangle(dimension.width, dimension.height, dimension.width, dimension.height));
+      show.render_autoIndent(graphics, rectangles.get(1));
     }
     {
       Show show = new Show("Inv. Dist Coordinate");
@@ -149,7 +152,7 @@ class LinearFractionalTransformDemo extends EuclideanPlaneDemo {
       TensorUnaryOperator tuo = interpolation::get;
       Tensor lift = averagedMovingDomain2D.forward(points, safeWrap(tuo));
       show.add(ImagePlot.of(ImageFormat.of(lift), param.imgRes));
-      show.render_autoIndent(graphics, new Rectangle(dimension.width, dimension.height * 2, dimension.width, dimension.height));
+      show.render_autoIndent(graphics, rectangles.get(2));
     }
   }
 
