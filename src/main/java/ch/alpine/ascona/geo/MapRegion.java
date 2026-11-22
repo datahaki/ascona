@@ -9,12 +9,10 @@ import java.awt.event.MouseEvent;
 import java.nio.file.Path;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import ch.alpine.bridge.awt.LazyMouse;
 import ch.alpine.bridge.awt.LazyMouseListener;
-import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.bridge.fig.PlotOption;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
@@ -24,7 +22,6 @@ import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.geo.GeoComponent;
 import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
-import ch.alpine.bridge.io.FileBlock;
 import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.pro.ShowWindow;
@@ -68,8 +65,14 @@ class MapRegion implements ManipulateProvider {
     };
   };
   private GeoPath geoPath = new GeoPath();
+  ResourceLocator resourceLocator = ResourceLocator.of(MapRegion.class);
+  Path properties = resourceLocator.properties(MapParam.class);
+  Path path = resourceLocator.resolve("region2.properties");
+  MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
 
   public MapRegion() {
+    geoComponent.setTilePixel(mapParam.prod());
+    ObjectProperties.tryLoad(geoPath, path);
     LazyMouseListener lml = new LazyMouseListener() {
       @Override
       public void lazyClicked(MouseEvent mouseEvent) {
@@ -120,22 +123,15 @@ class MapRegion implements ManipulateProvider {
     return geoComponent;
   }
 
+  @Override
+  public void windowClosed() {
+    ObjectProperties.trySave(geoPath, path);
+    geoComponent.tileServer.cache().clearQueue();
+    mapParam.read(geoComponent.getTilePixel());
+    ObjectProperties.trySave(mapParam, properties);
+  }
+
   static void main() {
-    ResourceLocator resourceLocator = ResourceLocator.of(MapRegion.class);
-    if (!FileBlock.of(resourceLocator.resolve(""))) {
-      MapRegion mapViewer = new MapRegion();
-      Path properties = resourceLocator.properties(MapParam.class);
-      MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-      mapViewer.geoComponent.setTilePixel(mapParam.prod());
-      Path path = resourceLocator.resolve("region2.properties");
-      ObjectProperties.tryLoad(mapViewer.geoPath, path);
-      JFrame jFrame = mapViewer.runStandalone();
-      WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
-      WindowClosed.runs(jFrame, () -> {
-        mapViewer.geoComponent.tileServer.cache().clearQueue();
-        mapParam.read(mapViewer.geoComponent.getTilePixel());
-        ObjectProperties.trySave(mapParam, properties);
-      });
-    }
+    new MapRegion().runStandalone();
   }
 }

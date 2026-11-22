@@ -13,12 +13,9 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
-import javax.swing.JFrame;
-
 import ch.alpine.bridge.awt.LazyMouse;
 import ch.alpine.bridge.awt.LazyMouseListener;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.ShowableConfig;
@@ -27,7 +24,6 @@ import ch.alpine.bridge.fig.plt.ListPlot;
 import ch.alpine.bridge.geo.GeoComponent;
 import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
-import ch.alpine.bridge.io.FileBlock;
 import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.FieldFuse;
@@ -74,9 +70,15 @@ class MapCycling implements ManipulateProvider {
     };
   };
   private final List<RouteRecord> segments = StaticHelper.segments();
+  ResourceLocator resourceLocator = ResourceLocator.of(MapCycling.class);
+  Path properties = resourceLocator.properties(MapParam.class);
+  Path path = resourceLocator.resolve("francetours.properties");
+  MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
   GeoPath geoPath = new GeoPath();
 
   public MapCycling() {
+    geoComponent.setTilePixel(mapParam.prod());
+    ObjectProperties.tryLoad(geoPath, path);
     LazyMouseListener lml = new LazyMouseListener() {
       @Override
       public void lazyClicked(MouseEvent mouseEvent) {
@@ -120,23 +122,15 @@ class MapCycling implements ManipulateProvider {
     return geoComponent;
   }
 
+  @Override
+  public void windowClosed() {
+    ObjectProperties.trySave(geoPath, path);
+    geoComponent.tileServer.cache().clearQueue();
+    mapParam.read(geoComponent.getTilePixel());
+    ObjectProperties.trySave(mapParam, properties);
+  }
+
   static void main() {
-    ResourceLocator resourceLocator = ResourceLocator.of(MapCycling.class);
-    IO.println(resourceLocator);
-    if (!FileBlock.of(resourceLocator.resolve(""))) {
-      MapCycling mapViewer = new MapCycling();
-      Path properties = resourceLocator.properties(MapParam.class);
-      MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-      mapViewer.geoComponent.setTilePixel(mapParam.prod());
-      Path path = resourceLocator.resolve("francetours.properties");
-      ObjectProperties.tryLoad(mapViewer.geoPath, path);
-      JFrame jFrame = mapViewer.runStandalone();
-      WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
-      WindowClosed.runs(jFrame, () -> {
-        mapViewer.geoComponent.tileServer.cache().clearQueue();
-        mapParam.read(mapViewer.geoComponent.getTilePixel());
-        ObjectProperties.trySave(mapParam, properties);
-      });
-    }
+    new MapCycling().runStandalone();
   }
 }

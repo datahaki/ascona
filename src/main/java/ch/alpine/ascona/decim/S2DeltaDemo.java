@@ -128,8 +128,8 @@ class S2DeltaDemo extends ManifoldDisplayDemo {
       }
     }
     Dimension dimension = geometricComponent().getSize();
-    dimension.width /=2 ;
-    Rectangle rectangle = new Rectangle(new Point(dimension.width,0), dimension);
+    dimension.width /= 2;
+    Rectangle rectangle = new Rectangle(new Point(dimension.width, 0), dimension);
     List<Rectangle> rectangles = GraphicsGrid.rectangles(4, rectangle);
     {
       int ofs = dimension.width / 2;

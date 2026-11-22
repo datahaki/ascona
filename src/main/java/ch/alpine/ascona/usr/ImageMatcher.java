@@ -51,7 +51,10 @@ enum ImageMatcher {
 
   public static Tensor build(List<Integer> list, Tensor blocks, int[] matching) {
     int pny = list.get(1) / SIZE;
-    Tensor res = Tensor.of(IntStream.of(matching).mapToObj(blocks::get).map(r -> ArrayReshape.of(r, SIZE, SIZE, 4)));
+    Tensor res = Tensor.of( //
+        IntStream.of(matching) //
+            .mapToObj(blocks::get) //
+            .map(r -> ArrayReshape.of(r, SIZE, SIZE, 4)));
     res = Partition.of(res, pny);
     Tensor[][] tensors = MatrixArray.from(res).arrays();
     return ArrayFlatten.of(tensors);

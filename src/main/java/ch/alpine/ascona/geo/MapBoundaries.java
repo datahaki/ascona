@@ -10,7 +10,6 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -20,7 +19,6 @@ import org.locationtech.jts.geom.Point;
 import ch.alpine.bridge.awt.LazyMouse;
 import ch.alpine.bridge.awt.LazyMouseListener;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.ShowableConfig;
@@ -28,7 +26,6 @@ import ch.alpine.bridge.fig.plt.PolygonPlot;
 import ch.alpine.bridge.geo.GeoComponent;
 import ch.alpine.bridge.geo.TilePixel;
 import ch.alpine.bridge.geo.TileServers;
-import ch.alpine.bridge.io.FileBlock;
 import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.pro.ShowWindow;
@@ -86,8 +83,12 @@ class MapBoundaries implements ManipulateProvider {
       }
     };
   };
+  private final ResourceLocator resourceLocator = ResourceLocator.of(getClass());
+  private final Path properties = resourceLocator.properties(MapParam.class);
+  private final MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
 
   public MapBoundaries() {
+    geoComponent.setTilePixel(mapParam.prod());
     LazyMouseListener lml = new LazyMouseListener() {
       @Override
       public void lazyClicked(MouseEvent mouseEvent) {
@@ -117,19 +118,14 @@ class MapBoundaries implements ManipulateProvider {
     return geoComponent;
   }
 
+  @Override
+  public void windowClosed() {
+    geoComponent.tileServer.cache().clearQueue();
+    mapParam.read(geoComponent.getTilePixel());
+    ObjectProperties.trySave(mapParam, properties);
+  }
+
   static void main() {
-    ResourceLocator resourceLocator = ResourceLocator.of(MapBoundaries.class);
-    if (!FileBlock.of(resourceLocator.resolve(""))) {
-      MapBoundaries mapViewer = new MapBoundaries();
-      Path properties = resourceLocator.properties(MapParam.class);
-      MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-      mapViewer.geoComponent.setTilePixel(mapParam.prod());
-      JFrame jFrame = mapViewer.runStandalone();
-      WindowClosed.runs(jFrame, () -> {
-        mapViewer.geoComponent.tileServer.cache().clearQueue();
-        mapParam.read(mapViewer.geoComponent.getTilePixel());
-        ObjectProperties.trySave(mapParam, properties);
-      });
-    }
+    new MapBoundaries().runStandalone();
   }
 }

@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import javax.swing.JFrame;
-
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.ascony.ren.ColorPairs;
@@ -26,7 +24,6 @@ import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.awt.LazyMouse;
 import ch.alpine.bridge.awt.LazyMouseListener;
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.Showable;
 import ch.alpine.bridge.fig.ShowableConfig;
@@ -38,7 +35,6 @@ import ch.alpine.bridge.geo.TileServers;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.TextContour;
-import ch.alpine.bridge.io.FileBlock;
 import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.pro.ManipulateProvider;
 import ch.alpine.bridge.ref.ann.FieldClip;
@@ -200,8 +196,15 @@ class MapViewer implements ManipulateProvider {
       }
     };
   };
+  final ResourceLocator resourceLocator = ResourceLocator.of(MapViewer.class);
+  Path properties = resourceLocator.properties(MapParam.class);
+  Path path = resourceLocator.resolve("francetours.properties");
+  MapParam mapParam;
 
   public MapViewer() {
+    mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
+    geoComponent.setTilePixel(mapParam.prod());
+    ObjectProperties.tryLoad(geoPath, path);
     LazyMouseListener lml = new LazyMouseListener() {
       @Override
       public void lazyClicked(MouseEvent mouseEvent) {
@@ -256,23 +259,16 @@ class MapViewer implements ManipulateProvider {
     return geoComponent;
   }
 
+  @Override
+  public void windowClosed() {
+    ObjectProperties.trySave(geoPath, path);
+    // FIXME This design is bad if multiple viewers are using the static queue!!!!
+    geoComponent.tileServer.cache().clearQueue();
+    mapParam.read(geoComponent.getTilePixel());
+    ObjectProperties.trySave(mapParam, properties);
+  }
+
   static void main() {
-    ResourceLocator resourceLocator = ResourceLocator.of(MapViewer.class);
-    if (!FileBlock.of(resourceLocator.resolve(""))) {
-      MapViewer mapViewer = new MapViewer();
-      Path properties = resourceLocator.properties(MapParam.class);
-      MapParam mapParam = ObjectProperties.tryLoad(new MapParam(), properties);
-      mapViewer.geoComponent.setTilePixel(mapParam.prod());
-      Path path = resourceLocator.resolve("francetours.properties");
-      ObjectProperties.tryLoad(mapViewer.geoPath, path);
-      JFrame jFrame = mapViewer.runStandalone();
-      WindowClosed.runs(jFrame, () -> ObjectProperties.trySave(mapViewer.geoPath, path));
-      WindowClosed.runs(jFrame, () -> {
-        // FIXME This design is bad if multiple viewers are using the static queue!!!!
-        mapViewer.geoComponent.tileServer.cache().clearQueue();
-        mapParam.read(mapViewer.geoComponent.getTilePixel());
-        ObjectProperties.trySave(mapParam, properties);
-      });
-    }
+    new MapViewer().runStandalone();
   }
 }
