@@ -66,7 +66,6 @@ class MapViewer implements ManipulateProvider {
   @FieldSelectionArray({ "128", "256", "384", "512" })
   public Integer minilen = 256;
   public Color marker = Color.MAGENTA;
-  public Integer depth = 13;
   public String pathName = "glbe";
   public Boolean pathAdd = false;
   private final List<RouteRecord> segments = StaticHelper.segments();

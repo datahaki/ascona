@@ -34,7 +34,7 @@ import ch.alpine.tensor.alg.Drop;
 
 @ReflectionMarker
 class MapCycling implements ManipulateProvider {
-  public TileServers tileServers = TileServers.OpenStreetMap;
+  public final TileServers tileServers = TileServers.OpenStreetMap;
   public Color marker = Color.MAGENTA;
   public Color insert = Color.BLUE;
   public final RouteParam routeParam = new RouteParam();

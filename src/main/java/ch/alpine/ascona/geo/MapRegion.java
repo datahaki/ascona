@@ -39,7 +39,7 @@ import ch.alpine.tensor.sca.Round;
  * dispatched to the GUI's event thread. */
 @ReflectionMarker
 class MapRegion implements ManipulateProvider {
-  public TileServers tileServers = TileServers.OpenStreetMap;
+  public final TileServers tileServers = TileServers.OpenStreetMap;
   @FieldFuse
   public transient Boolean pathClear = false;
   public Integer depth = 13;
