@@ -104,7 +104,7 @@ class BarycentricRationalInterpolationDemo extends ControlPointsDemo {
       if (param.basis) {
         Dimension dimension = geometricComponent().getSize();
         List<Rectangle> list = //
-            GraphicsGrid.rectanglesCol(2, new Rectangle(dimension.width - WIDTH, 0, WIDTH, dimension.height));
+            GraphicsGrid.column(2, new Rectangle(dimension.width - WIDTH, 0, WIDTH, dimension.height));
         {
           Show show = new Show("Basis 1");
           for (Tensor values : Transpose.of(basis1))
