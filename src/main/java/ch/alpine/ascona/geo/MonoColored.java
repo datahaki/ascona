@@ -6,9 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import ch.alpine.bridge.geo.TileServers;
-import ch.alpine.bridge.pro.VoidProvider;
 
-class MonoColored implements VoidProvider {
+class MonoColored {
   public TileServers tileServers = TileServers.OpenStreetMap;
 
   private void recur(Path dir) throws IOException {
@@ -33,14 +32,12 @@ class MonoColored implements VoidProvider {
     }
   }
 
-  @Override
-  public Void runStandalone() {
+  public void runStandalone() {
     try {
       recur(tileServers.path());
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return null;
   }
 
   static void main() {
