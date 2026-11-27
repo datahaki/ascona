@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ch.alpine.bridge.math.Unitless;
+import ch.alpine.bridge.math.SI;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Throw;
@@ -118,7 +118,7 @@ public enum GeoBoundaries {
    * @return interprets the input coordinate as if with unit "deg" and maps to rad */
   private static Tensor toPoint(Coordinate coordinate) {
     return Tensors.of( //
-        Unitless.DEGREES.of(coordinate.x), //
-        Unitless.DEGREES.of(coordinate.y));
+        SI.DEGREES.equipWithUnitNormalize(coordinate.x), //
+        SI.DEGREES.equipWithUnitNormalize(coordinate.y));
   }
 }

@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import ch.alpine.bridge.math.Unitless;
+import ch.alpine.bridge.math.SI;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -18,7 +18,7 @@ import ch.alpine.tensor.sca.Round;
 
 @ReflectionMarker
 class RouteParam {
-  static final ScalarUnaryOperator SUO = Unitless.DEGREES.quantityMagnitude();
+  static final ScalarUnaryOperator SUO = SI.DEGREES.quantityMagnitude();
   public LocalDate localDate = LocalDate.now();
   public Scalar km = RealScalar.ZERO;
   public Integer up = 0;

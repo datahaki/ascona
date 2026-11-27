@@ -1,14 +1,14 @@
 // code by jph
 package ch.alpine.ascona.geo;
 
-import ch.alpine.bridge.math.Unitless;
+import ch.alpine.bridge.math.SI;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Partition;
 
 record RouteRecord(Scalar localDate, Scalar dist, Scalar up, Scalar dn, Tensor path) {
   static RouteRecord of(Tensor row) {
-    Tensor path = Partition.of(row.extract(4, row.length()).maps(Unitless.DEGREES::equipWithUnit), 2);
+    Tensor path = Partition.of(row.extract(4, row.length()).maps(SI.DEGREES::equipWithUnit), 2);
     // date, km, up, dn, path coordinates
     return new RouteRecord( //
         row.Get(0), //

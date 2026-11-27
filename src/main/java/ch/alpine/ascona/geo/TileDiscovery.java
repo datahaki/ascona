@@ -20,7 +20,7 @@ import ch.alpine.bridge.fig.plt.ImagePlot;
 import ch.alpine.bridge.geo.MapImagesCache;
 import ch.alpine.bridge.geo.Tile;
 import ch.alpine.bridge.geo.TileServers;
-import ch.alpine.bridge.math.Unitless;
+import ch.alpine.bridge.math.SI;
 import ch.alpine.bridge.pro.ShowProvider;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.Scalar;
@@ -69,7 +69,7 @@ enum TileDiscovery {
       }
       if (!missing.isEmpty()) {
         BufferedImage bufferedImage = coverageImage(prev, missing);
-        String label = "missing: " + Round._2.apply(Unitless.PERCENT.unitConvert().apply(Rational.of(missing.size(), prev.size())));
+        String label = "missing: " + Round._2.apply(SI.PERCENT.unitConvert(Rational.of(missing.size(), prev.size())));
         ShowProvider showProvider = new ShowProvider() {
           @Override
           public Show getShow() {
@@ -83,7 +83,7 @@ enum TileDiscovery {
       }
       mapImagesCache.blockUntilDone();
       List<Tile> next = new ArrayList<>(prev.size() * 4);
-      Clip absolute = Clips.absolute(Unitless.DEGREES.of(65));
+      Clip absolute = Clips.absolute(SI.DEGREES.equipWithUnitNormalize(65));
       for (Tile tile : prev) {
         Path path = mapImagesCache.path(tile);
         try {

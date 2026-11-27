@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascona.geo;
 
-import ch.alpine.bridge.math.Unitless;
+import ch.alpine.bridge.math.SI;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
@@ -24,8 +24,8 @@ record POI(Scalar lat, Scalar lon) {
     default -> throw new IllegalArgumentException("Unexpected value: " + lon);
     };
     return new POI( //
-        Unitless.DEGREES.of((Scalar) DOT.dot(Tensors.of(_1, _2, _3))), //
-        Unitless.DEGREES.of((Scalar) DOT.dot(Tensors.of(_4, _5, _6))).multiply(sign));
+        SI.DEGREES.equipWithUnitNormalize((Scalar) DOT.dot(Tensors.of(_1, _2, _3))), //
+        SI.DEGREES.equipWithUnitNormalize((Scalar) DOT.dot(Tensors.of(_4, _5, _6))).multiply(sign));
   }
 
   Tensor vector() {
